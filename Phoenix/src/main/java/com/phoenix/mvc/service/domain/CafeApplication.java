@@ -15,7 +15,8 @@ public class CafeApplication {
 	private String answer2;
 	private String answer3;
 	private String acceptStatusCode;
-
+	private String cafeNickname;
+	
 	public CafeApplication() {
 
 	}
@@ -129,13 +130,23 @@ public class CafeApplication {
 		this.acceptStatusCode = acceptStatusCode;
 	}
 
+	public String getCafeNickname() {
+		return cafeNickname;
+	}
+
+	public void setCafeNickname(String cafeNickname) {
+		this.cafeNickname = cafeNickname;
+	}
+
 	@Override
 	public String toString() {
 		return "CafeApplication [applicationNo=" + applicationNo + ", userNo=" + userNo + ", cafeNo=" + cafeNo
 				+ ", regDate=" + regDate + ", question1=" + question1 + ", question2=" + question2 + ", question3="
 				+ question3 + ", answer1=" + answer1 + ", answer2=" + answer2 + ", answer3=" + answer3
-				+ ", acceptStatusCode=" + acceptStatusCode + "]";
+				+ ", acceptStatusCode=" + acceptStatusCode + ", cafeNickname=" + cafeNickname + "]";
 	}
+
+
 
 
 }
