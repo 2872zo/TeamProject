@@ -7,12 +7,12 @@ import org.springframework.stereotype.Repository;
 
 import com.phoenix.mvc.service.cafe.CafeMemberDao;
 import com.phoenix.mvc.service.domain.CafeApplication;
+import com.phoenix.mvc.service.domain.CafeMember;
 
 @Repository("cafeMemberDaoImpl")
 public class CafeMemberDaoImpl implements CafeMemberDao{
 
 	@Autowired
-	@Qualifier("sqlSessionTemplate")
 	private SqlSession sqlSession;
 	
 	public CafeMemberDaoImpl(SqlSession sqlSession) {
@@ -23,6 +23,12 @@ public class CafeMemberDaoImpl implements CafeMemberDao{
 	@Override
 	public void addCafeApplication(CafeApplication cafeApplication) {
 		sqlSession.insert("addCafeApplication",cafeApplication);
+	}
+
+	@Override
+	public void updateCafeMember(CafeMember cafeMember) {
+		sqlSession.update("CafeMemberMapper.updateCafeMember", cafeMember);
+		
 	}
 	
 }
