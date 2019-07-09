@@ -7,6 +7,7 @@
 <html lang="ko">
 
 <head>
+<title>CafeTabMain</title>
 <meta charset="EUC-KR">
 
 
@@ -25,37 +26,42 @@ $(function() {
 	$("#addCafe").on("click" , function() {
 		$(self.location).attr("href","/cafe/addCafe");
 	});
+	$("#explore").on("click" , function() {
+		$("form").attr("method" , "POST").attr("action" , "/cafe/search").submit();
+	});
 	
 });
 </script>
+	<!-- ToolBar Start /////////////////////////////////////-->
+	<jsp:include page="../common/cafeToolbar.jsp" />
+	<!-- ToolBar End /////////////////////////////////////-->
 </head>
 
 <body>
 
-	<!-- ToolBar Start /////////////////////////////////////-->
-	<jsp:include page="../common/cafeToolbar.jsp" />
-	<!-- ToolBar End /////////////////////////////////////-->
+
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
-	<div class="container-fluid">
-	
+	<div class="container">
+<br/>		
+<form>
+	<div class="input-group mb-3">
+	  <div class="input-group-prepend">
+	   <select class="custom-select custom-select-lg" aria-label="Example select with button addon" name='searchCondition'>
+	    <option selected value="0">통합검색</option>
+	    <option value="1">카페이름</option>
+	    <option value="2">카페게시글</option>
+	   </select>
+	    </div>
+	  <input type="text" class="form-control form-control-lg" placeholder="검색어 입력해주세요" aria-label="Text input with dropdown button" aria-describedby="button-addon2" name="searchKeyword" id="searchKeyword">
+	 <div class="input-group-append">
+	    <button class="btn btn-outline-secondary" type="button" id="explore">검색</button>
+	 </div>
+	</div>
+</form>	
 	<br/>
 		<button type="button" class="btn btn-outline-warning btn-block" id='addCafe'>카페만들기</button>
 	<br/>
-	
-	<div class="input-group mb-3">
-  <div class="input-group-prepend">
-   <select class="custom-select custom-select-lg" aria-label="Example select with button addon">
-    <option selected value="0">통합검색</option>
-    <option value="1">카페이름</option>
-    <option value="2">카페게시글</option>
-   </select>
-    </div>
-  <input type="text" class="form-control form-control-lg" placeholder="검색어 입력해주세요" aria-label="Text input with dropdown button" aria-describedby="button-addon2">
- <div class="input-group-append">
-    <button class="btn btn-outline-secondary" type="button" id="explore">검색</button>
-  </div>
-</div>
 	
 	<div class="center-block">
 	<div class="btn-group btn-group-toggle" data-toggle="buttons" id='cafeListing' style="float:none; margin:0 auto">
