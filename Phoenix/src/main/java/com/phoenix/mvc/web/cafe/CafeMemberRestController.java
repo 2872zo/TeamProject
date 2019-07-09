@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.phoenix.mvc.common.Search;
+import com.phoenix.mvc.service.cafe.CafeMemberService;
 import com.phoenix.mvc.service.domain.User;
 import com.phoenix.mvc.service.user.UserDao;
 import com.phoenix.mvc.service.user.UserService;
@@ -16,9 +17,9 @@ import com.phoenix.mvc.service.user.impl.UserDaoImpl;
 
 @RestController
 public class CafeMemberRestController {
-//	@Autowired
-//	@Qualifier("cafeServiceImpl")
-//	private CafeService cafeService;
+	@Autowired
+	@Qualifier("cafeMemberServiceImpl")
+	private CafeMemberService cafeMemberService;
 	
 	
 	public CafeMemberRestController() {

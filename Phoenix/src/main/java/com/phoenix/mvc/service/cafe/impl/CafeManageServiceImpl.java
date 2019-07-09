@@ -21,16 +21,17 @@ public class CafeManageServiceImpl implements CafeManageService {
 		this.cafeManageDao = cafeManageDao;
 	}
 
-	public CafeManageServiceImpl() {
+	public CafeManageServiceImpl() { //생성자
 		
 		System.out.println(this.getClass().getName());
 	}
 
 	@Override
 	public List getCafeBoard(String cafeURL) {
-
+		
+		int cafeNo = cafeManageDao.getCafeNo(cafeURL);
 	
-		return cafeManageDao.getCafeBoard(cafeURL);
+		return cafeManageDao.getCafeBoard(cafeNo);
 	}
 
 }

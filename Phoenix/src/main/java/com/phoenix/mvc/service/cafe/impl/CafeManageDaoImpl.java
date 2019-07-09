@@ -25,11 +25,17 @@ public class CafeManageDaoImpl implements CafeManageDao {
 	}
 
 	@Override
-	public List getCafeBoard(String cafeURL) { //카페번호
+	public List getCafeBoard(int cafeNo) { //카페번호
 		
-		List boardList = sqlSession.selectList("getBoard", cafeURL);
+		List boardList = sqlSession.selectList("getBoardList", cafeNo);
 		
 		return boardList;
+	}
+
+	@Override
+	public int getCafeNo(String cafeURL) {
+		
+		return sqlSession.selectOne("getCafeNo", cafeURL);
 	}
 
 }
