@@ -1,13 +1,27 @@
 package com.phoenix.mvc.web.cafe;
 
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.phoenix.mvc.common.Search;
+import com.phoenix.mvc.service.cafe.CafePostService;
+import com.phoenix.mvc.service.domain.Post;
+
 @Controller
 public class CafePostContoller {
+	@Autowired
+	@Qualifier("cafePostServiceImpl")
+	private CafePostService cafePostService;
+	
 	public CafePostContoller() {
 		System.out.println(getClass().getName() + "default Constuctor");
 	}
@@ -24,12 +38,15 @@ public class CafePostContoller {
 		System.out.println("CafeInnerSearch : " + cafeURL);
 		System.out.println(keyword);
 		
-		return "cafesearch";
+		return "cafe/listCafeInnerSearch";
 	}
 	
-	@PostMapping("/cafe/{cafeURL}/")
-	public String getBoard(@PathVariable String cafeURL) {
+	@GetMapping("/cafe/{cafeURL}/getBoard/{boardNo}")
+	public String getBoard(Map<String, String> result, @ModelAttribute Search search) {
+		System.out.println("Search : " + search);
 		
-		return "listCafePostByBoard";
+		List<Post> postList = cafePostService.getBoard(search);
+		
+		return "cafe/listCafePostByBoard";
 	}
 }
