@@ -8,15 +8,16 @@ import com.phoenix.mvc.service.cafe.CafeTabDao;
 import com.phoenix.mvc.service.cafe.CafeTabService;
 import com.phoenix.mvc.service.domain.Cafe;
 
-@Service("cafeServiceImpl")
+
+@Service("cafeTabServiceImpl")
 public class CafeTabServiceImpl implements CafeTabService{
 	
 	@Autowired
-	@Qualifier("cafeDaoImpl")	
-	private CafeTabDao cafeDao;
+	@Qualifier("cafeTabDaoImpl")	
+	private CafeTabDao cafeTabDao;
 	
 	public void setCafeDao(CafeTabDao cafeDao) {
-	this.cafeDao= cafeDao;
+	this.cafeTabDao= cafeDao;
 	}
 	
 	public CafeTabServiceImpl() {
@@ -25,6 +26,6 @@ public class CafeTabServiceImpl implements CafeTabService{
 	
 	@Override
 	public void addCafe(Cafe cafe) throws Exception {
-		cafeDao.addCafe(cafe);
+		cafeTabDao.addCafe(cafe);
 	}
 }

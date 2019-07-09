@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.phoenix.mvc.service.cafe.CafeTabDao;
 import com.phoenix.mvc.service.domain.Cafe;
 
-@Repository("cafeDaoImpl")
+@Repository("cafeTabDaoImpl")
 public class CafeTabDaoImpl implements CafeTabDao{
 	
 	@Autowired
