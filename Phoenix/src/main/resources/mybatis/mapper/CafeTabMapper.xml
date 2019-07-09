@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CafeTabMapper">
+ 	
+	<resultMap id="cafeTabSelectMap" type="com.phoenix.mvc.service.domain.Cafe">
+		<result property="cafeNo" 					 column="CAFE_NO" 						jdbcType="VARCHAR"/>
+		<result property="cafeName"					 column="CAFE_NAME" 					jdbcType="VARCHAR" />
+		<result property="cafeIcon" 				 column="CAFE_ICON" 					jdbcType="VARCHAR" />
+		<result property="manageUserNo" 			 column="MANAGE_USER_NO" 				jdbcType="VARCHAR" />
+		<result property="regDate" 					 column="REG_DATE" 						jdbcType="DATE" />
+		<result property="url" 						 column="URL" 							jdbcType="VARCHAR" />
+		<result property="cafeDetail" 				 column="CAFE_DETAIL" 					jdbcType="VARCHAR" />
+		<result property="bannerImg" 				 column="BANNER_IMG" 					jdbcType="VARCHAR"  />
+		<result property="mainImg" 					 column="MAIN_IMG" 						jdbcType="VARCHAR" />
+		<result property="category" 				 column="CAFE_TYPE" 					jdbcType="VARCHAR" />
+		<result property="applicationDetail" 		 column="APPLICATION_DETAIL" 			jdbcType="VARCHAR" />
+		<result property="closeReason" 				 column="CLOSE_REASON" 					jdbcType="VARCHAR"  />
+		<result property="applicationQuestion1" 	 column="APPLICATION_QUESTION1" 		jdbcType="VARCHAR" />
+		<result property="applicationQuestion2"  	 column="APPLICATION_QUESTION2" 		jdbcType="VARCHAR" />
+		<result property="applicationQuestion3" 	 column="APPLICATION_QUESTION3" 		jdbcType="VARCHAR" />
+		<result property="cafeNickNameFlag" 		 column="MEMBER_NICKNAME_FLAG" 			jdbcType="VARCHAR" />
+		<result property="autoApplicationAcceptFlag" column="AUTO_APPLICATION_ACCEPT_FLAG" 	jdbcType="VARCHAR" />
+		<result property="closedFlag" 				 column="CLOSED_FLAG" 					jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<!-- SQL : SELECT -->
+	<select id="searchCafe" parameterType="com.phoenix.mvc.common.Search" resultMap="cafeTabSelectMap">
+	 	SELECT
+		c.cafe_name, c.cafe_icon, c.manage_user_no, c.reg_date, c.url, c.cafe_detail, c.cafe_type, c.closed_flag, u.user_nickname
+		FROM cafe c, users u
+		WHERE c.manage_user_no=u.user_no
+		AND c.cafe_name like '%' ||#{searchKeyword}|| '%'	 	
+	 </select>
+	
+	 
+</mapper>

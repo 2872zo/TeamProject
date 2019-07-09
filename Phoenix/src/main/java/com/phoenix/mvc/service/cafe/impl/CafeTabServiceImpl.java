@@ -1,5 +1,7 @@
 package com.phoenix.mvc.service.cafe.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -27,5 +29,11 @@ public class CafeTabServiceImpl implements CafeTabService{
 	@Override
 	public void addCafe(Cafe cafe) throws Exception {
 		cafeTabDao.addCafe(cafe);
+	}
+
+	@Override
+	public List searchCafe(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return cafeTabDao.searchCafe(search);
 	}
 }

@@ -4,6 +4,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -13,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.phoenix.mvc.service.cafe.CafeTabService;
-import com.phoenix.mvc.service.cafe.impl.CafeTabServiceImpl;
 import com.phoenix.mvc.service.domain.Cafe;
+
+
+import com.phoenix.mvc.common.Search;
 
 
 @Controller
@@ -33,20 +37,7 @@ public class CafeTabContoller {
 		System.out.println("/cafe/main입니다.");
 		return "forward:/WEB-INF/views/cafe/cafeHomeMain.jsp";
 	}
-/*	
-	@RequestMapping(value="addCafe", method=RequestMethod.GET)
-	public String addCafeView(@ModelAttribute("cafe") Cafe cafe, Model model, HttpServletRequest request )throws Exception{
-		
-		System.out.println("/addCafe : POST");
-		
-		Map<String , Object> map= cafeTabService.getAddCafe(cafe);
-		
 
-		model.addAttribute("list", map.get("list"));
-
-
-		return "forward:/cafe/addCafe.jsp";
-	}*/
 	
 	@RequestMapping(value= "/{cafeURL}/addCafe", method=RequestMethod.GET)
 	public String addCafe(@ModelAttribute("cafe") Cafe cafe)throws Exception{
@@ -81,4 +72,16 @@ public class CafeTabContoller {
 	
 	
 	
+	
+	@RequestMapping("/cafe/search")
+	public String cafeSearch(@ModelAttribute("search") Search search, Model model) throws Exception {
+		System.out.println("/cafe/search입니다.");
+		System.out.println(search.getSearchCondition());
+		System.out.println(search.getSearchKeyword());
+		
+	
+		List list =cafeTabService.searchCafe(search);
+		model.addAttribute("cafeList", list);
+		return "forward:/WEB-INF/views/cafe/listCafeSearch.jsp";
+	}
 }

@@ -4,5 +4,8 @@ import java.util.List;
 
 public interface CafeManageDao {
 
-	public List getCafeBoard(String cafeURL);
+	public List getCafeBoard(int cafeNo);
+	
+	public int getCafeNo(String cafeURL);
+	
 }

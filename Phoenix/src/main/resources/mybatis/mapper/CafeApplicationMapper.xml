@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CafeApplicationMapper">
+ 	
+	
+	<resultMap id="cafeApplicationSelectMap" type="com.phoenix.mvc.service.domain.CafeApplication">
+		<result property="applicationNo" 			column="application_no" 			jdbcType="NUMERIC"/>
+		<result property="userNo"			column="user_no" 			jdbcType="NUMERIC" />
+		<result property="cafeNo" 		column="cafe_no" 			jdbcType="NUMERIC" />
+		<result property="regDate" 			column="reg_date" 				jdbcType="DATE" />
+		<result property="question1" 				column="question1" 				jdbcType="VARCHAR" />
+		<result property="question2" 			column="question2" 		jdbcType="VARCHAR" />
+		<result property="question3" 			column="question3" 				jdbcType="VARCHAR" />
+		<result property="answer1" 			column="answer1" 				jdbcType="NUMERIC"  />
+		<result property="answer2" 			column="answer2" 			jdbcType="VARCHAR" />
+		<result property="answer3" 			column="answer3" 				jdbcType="VARCHAR" />
+		<result property="acceptStatusCode" 			column="accept_status_code" 				jdbcType="VARCHAR" />
+		<result property="memberNickname" 			column="member_nickname" 				jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<!-- SQL : INSERT -->
+	<insert 	id="addCafeApplication"		parameterType="com.phoenix.mvc.service.domain.CafeApplication" >
+	 	INSERT
+		INTO cafe_application( application_no , user_no , cafe_no , reg_date , question1, question2, question3 , answer1, answer2, answer3, accept_status_code, member_nickname ) 
+		VALUES	 (	seq_application_no.NEXTVAL , #{userNo} , #{cafeNo} , SYSDATE , #{question1:VARCHAR} , 
+							#{question2:VARCHAR} , #{question3:VARCHAR} , #{answer1:VARCHAR} , #{answer2:VARCHAR}, #{answer3:VARCHAR}, 'CA001', #{memberNickname})
+	 </insert>
+	 
+</mapper>
