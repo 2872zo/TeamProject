@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.phoenix.mvc.common.Search;
@@ -41,11 +42,16 @@ public class CafePostContoller {
 		return "cafe/listCafeInnerSearch";
 	}
 	
-	@GetMapping("/cafe/{cafeURL}/getBoard/{boardNo}")
-	public String getBoard(Map<String, String> result, @ModelAttribute Search search) {
+	@RequestMapping("/cafe/{cafeURL}/getBoard/{boardNo}")
+	public String getBoard(Map<String, String> result, @ModelAttribute Search search, Map<String, Object> map) {
 		System.out.println("Search : " + search);
 		
+
+		
 		List<Post> postList = cafePostService.getBoard(search);
+//		System.out.println("postList : " + postList);
+		
+		map.put("postList", postList);
 		
 		return "cafe/listCafePostByBoard";
 	}

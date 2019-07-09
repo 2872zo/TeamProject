@@ -23,6 +23,6 @@ public class CafePostDaoImpl implements CafePostDao{
 
 	@Override
 	public List<Post> getBoard(Search search) {
-		return sqlSession.selectList("getBoard",search);
+		return sqlSession.selectList("PostMapper.getBoard",search);
 	}
 }
