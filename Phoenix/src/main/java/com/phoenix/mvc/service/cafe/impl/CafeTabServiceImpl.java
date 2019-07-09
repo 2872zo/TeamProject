@@ -1,22 +1,25 @@
 package com.phoenix.mvc.service.cafe.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.cafe.CafeTabDao;
 import com.phoenix.mvc.service.cafe.CafeTabService;
 import com.phoenix.mvc.service.domain.Cafe;
 
-@Service("cafeServiceImpl")
+@Service
 public class CafeTabServiceImpl implements CafeTabService{
 	
 	@Autowired
-	@Qualifier("cafeDaoImpl")	
-	private CafeTabDao cafeDao;
+	@Qualifier("cafeTabDaoImpl")
+	private CafeTabDao cafeTabDao;
 	
 	public void setCafeDao(CafeTabDao cafeDao) {
-	this.cafeDao= cafeDao;
+	this.cafeTabDao= cafeDao;
 	}
 	
 	public CafeTabServiceImpl() {
@@ -25,6 +28,12 @@ public class CafeTabServiceImpl implements CafeTabService{
 	
 	@Override
 	public void addCafe(Cafe cafe) throws Exception {
-		cafeDao.addCafe(cafe);
+		cafeTabDao.addCafe(cafe);
+	}
+
+	@Override
+	public List searchCafe(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return cafeTabDao.searchCafe(search);
 	}
 }

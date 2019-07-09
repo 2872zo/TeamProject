@@ -1,14 +1,17 @@
 package com.phoenix.mvc.service.cafe.impl;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.cafe.CafeTabDao;
 import com.phoenix.mvc.service.domain.Cafe;
 
-@Repository("cafeDaoImpl")
+@Repository
 public class CafeTabDaoImpl implements CafeTabDao{
 	
 	@Autowired
@@ -24,4 +27,12 @@ public class CafeTabDaoImpl implements CafeTabDao{
 	public void addCafe(Cafe cafe) throws Exception {
 		sqlSession.insert("CafeMapper.addCafe", cafe);
 	}
+	
+	@Override
+	public List searchCafe(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		
+		return sqlSession.selectList("CafeTabMapper.searchCafe", search);
+	}
+	
 }
