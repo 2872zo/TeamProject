@@ -96,4 +96,12 @@ public class Board {
 		this.boardDetail = boardDetail;
 	}
 
+
+	@Override
+	public String toString() {
+		return "Board [boardNo=" + boardNo + ", cafeNo=" + cafeNo + ", boardName=" + boardName + ", accessGrade="
+				+ accessGrade + ", boardIndex=" + boardIndex + ", privateFlag=" + privateFlag + ", boardType="
+				+ boardType + ", boardDetail=" + boardDetail + "]";
+	}
+
 }

@@ -7,22 +7,22 @@
 <mapper namespace="PostMapper">
 	
 	
-	<resultMap id="postSelectMap" type="Post">
-		<result property="postNo" 			column="post_no" 			jdbcType="NUMERIC"/>
-		<result property="boardNo"			column="board_no" 			jdbcType="NUMERIC" />
-		<result property="memberNo" 		column="member_no" 			jdbcType="NUMERIC" />
-		<result property="postTitle" 		column="post_title" 		jdbcType="VARCHAR" />
-		<result property="postContent" 		column="post_content" 		jdbcType="VARCHAR" />
-		<result property="regDate" 			column="reg_date" 			jdbcType="CHAR" />
-		<result property="viewCount" 		column="view_count" 		jdbcType="NUMERIC" />
+	<resultMap id="postResultMap" type="Post">
+		<result property="postNo" 			column="post_no" 			jdbcType="NUMERIC"	/>
+		<result property="boardNo"			column="board_no" 			jdbcType="NUMERIC" 	/>
+		<result property="memberNo" 		column="member_no" 			jdbcType="NUMERIC" 	/>
+		<result property="postTitle" 		column="post_title" 		jdbcType="VARCHAR" 	/>
+		<result property="postContent" 		column="post_content" 		jdbcType="VARCHAR" 	/>
+		<result property="regDate" 			column="reg_date" 			jdbcType="CHAR" 	/>
+		<result property="viewCount" 		column="view_count" 		jdbcType="NUMERIC" 	/>
 		<result property="likeCount" 		column="like_count" 		jdbcType="NUMERIC"  />
 		<result property="memberNickname" 	column="member_nickname" 	jdbcType="VARCHAR"  />
-		<result property="postStatusFlag" 	column="post_status_flag" 	jdbcType="CHAR"  />
-		<result property="postNoticeFlag" 	column="post_notice_flag" 	jdbcType="CHAR"  />
+		<result property="postStatusFlag" 	column="post_status_flag" 	jdbcType="CHAR"  	/>
+		<result property="postNoticeFlag" 	column="post_notice_flag" 	jdbcType="CHAR"  	/>
 		<result property="noticeIndex" 		column="notice_index" 		jdbcType="NUMERIC"  />
 	</resultMap>
 
-	<select  id="getBoard"   parameterType="Search"  resultMap="postSelectMap">
+	<sql id="select-post-list">
 		SELECT 
 			post_no, 
 			board_no, 
@@ -39,6 +39,98 @@
 		FROM post 
 		WHERE board_no = #{boardNo}
 		ORDER BY reg_date DESC
-	</select>
+	</sql>
+	
+	<sql id="select-post-list-search">
+		SELECT 
+			post_no, 
+			board_no, 
+			member_no, 
+			post_title, 
+			post_content, 
+			TO_CHAR(reg_date, 'YYYY-MM-DD HH24:MM:SS') AS reg_date, 
+			view_count, 
+			like_count, 
+			member_nickname, 
+			post_status_flag, 
+			post_notice_flag, 
+			notice_index 
+		FROM post 
+		<where>
+			cafe_url = #{cafeURL}
+			<if test="termStart != null">
+				AND reg_date &gt;= #{termStart}
+			</if>
+			<if test="termEnd != null">
+				AND reg_date &lt;= #{termEnd}
+			</if>
+			<if test="boardNo != 0">
+				AND board_no = #{boardNo}
+			</if>
+			<choose>
+				<when test="searchCondition  == 0">
+					AND (member_nickname like '%${searchKeyword}%'
+					OR post_title like '%${searchKeyword}%'
+					OR post_content like '%${searchKeyword}%')
+				</when>
+				<when test="searchCondition  == 1">
+					AND member_nickname like '%${searchKeyword}%'
+				</when>
+				<when test="searchCondition == 2">
+					AND post_title like '%${searchKeyword}%'
+				</when>
+				<when test="searchCondition  == 3">
+					AND post_content like '%${searchKeyword}%'
+				</when>
+			</choose>
+		</where>
+		ORDER BY reg_date DESC
+	</sql>
 
+	<select id="listPostByBoard"   parameterType="Search"  resultMap="postResultMap">
+		SELECT
+		*
+		FROM
+		(SELECT
+		 inner_table.*, ROWNUM AS row_seq
+		 FROM 
+		 (<include refid="select-post-list"/>) inner_table
+		 <where>
+		 	ROWNUM &lt;= #{endRowNum}
+		 </where>)
+		<where>
+			row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+		</where>
+	</select>
+	
+	<select id="postTotalCount" parameterType="Search" resultType="int">
+		SELECT
+		COUNT(*)
+		FROM
+		(<include refid="select-post-list"/>)
+	</select>
+	
+	<select id="listPostBySearch"   parameterType="Search"  resultMap="postResultMap">
+		SELECT
+		*
+		FROM
+		(SELECT
+		 inner_table.*, ROWNUM AS row_seq
+		 FROM 
+			 (<include refid="select-post-list-search"/>) inner_table
+		 <where>
+		 	AND ROWNUM &lt;= #{endRowNum}
+		 </where>)
+		<where>
+			row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+		</where>
+	</select>
+	
+	<select id="searchTotalCount" parameterType="Search" resultType="int">
+		SELECT
+		COUNT(*)
+		FROM
+		(<include refid="select-post-list-search"/>)
+	</select>
+	
 </mapper>
