@@ -22,7 +22,22 @@ public class CafePostDaoImpl implements CafePostDao{
 	}
 
 	@Override
-	public List<Post> getBoard(Search search) {
-		return sqlSession.selectList("PostMapper.getBoard",search);
+	public List<Post> listPostBySearch(Search search) {
+		return sqlSession.selectList("PostMapper.listPostBySearch", search);
+	}
+	
+	@Override
+	public List<Post> listPostByBoard(Search search) {
+		return sqlSession.selectList("PostMapper.listPostByBoard",search);
+	}
+
+	@Override
+	public int postTotalCount(Search search) {
+		return sqlSession.selectOne("PostMapper.postTotalCount", search);
+	}
+
+	@Override
+	public int searchTotalCount(Search search) {
+		return sqlSession.selectOne("PostMapper.searchTotalCount", search);
 	}
 }
