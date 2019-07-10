@@ -25,7 +25,7 @@ public class CafeMemberDaoImpl implements CafeMemberDao{
 	
 	@Override
 	public void addCafeApplication(CafeApplication cafeApplication) {
-		sqlSession.insert("addCafeApplication",cafeApplication);
+		sqlSession.insert("CafeApplicationMapper.addCafeApplication",cafeApplication);
 	}
 
 	@Override

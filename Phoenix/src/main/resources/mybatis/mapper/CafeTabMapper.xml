@@ -35,6 +35,8 @@
 		WHERE c.manage_user_no=u.user_no
 		AND c.cafe_name like '%' ||#{searchKeyword}|| '%'	 	
 	 </select>
+	 
+	 
 	
 	 
 </mapper>

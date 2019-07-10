@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.cafe.CafeManageDao;
+import com.phoenix.mvc.service.domain.CafeApplication;
+import com.phoenix.mvc.service.domain.Cafe;
 
 @Repository("cafeManageDaoImpl")
 public class CafeManageDaoImpl implements CafeManageDao {
@@ -45,6 +48,27 @@ public class CafeManageDaoImpl implements CafeManageDao {
 	public int getCafeNo(String cafeURL) {
 		
 		return sqlSession.selectOne("getCafeNo", cafeURL);
+	}
+	@Override
+	public void updateCafeInfo(Cafe cafe)throws Exception{
+		sqlSession.update("CafeMapper.updateCafeInfo", cafe);
+	}
+	
+	@Override
+	public Cafe getCafeInfo(String cafeNo) throws Exception {
+		return sqlSession.selectOne("CafeManageMapper.getCafeInfo", cafeNo);
+	}
+	
+	@Override
+	public List<CafeApplication> getCafeApplicationList(Search search) {
+		
+		return sqlSession.selectList("CafeApplicationMapper.getCafeApplicationList", search);
+	}
+
+	@Override
+	public int getTotalCount(Search search) {
+		
+		return sqlSession.selectOne("CafeApplicationMapper.getTotalCount", search);
 	}
 
 	@Override

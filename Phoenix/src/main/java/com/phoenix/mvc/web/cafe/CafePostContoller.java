@@ -1,10 +1,15 @@
 package com.phoenix.mvc.web.cafe;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.jdt.internal.compiler.ast.ArrayAllocationExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -13,47 +18,92 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.phoenix.mvc.common.Page;
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.cafe.CafePostService;
+import com.phoenix.mvc.service.domain.Board;
 import com.phoenix.mvc.service.domain.Post;
 
 @Controller
 public class CafePostContoller {
+	private int pageSize = 3;
+	private int pageUnit = 2;
+
 	@Autowired
 	@Qualifier("cafePostServiceImpl")
 	private CafePostService cafePostService;
-	
+
 	public CafePostContoller() {
 		System.out.println(getClass().getName() + "default Constuctor");
 	}
-	
-	/*
-	@GetMapping("/cafe/{cafeURL}")
-	public String CafeMain(@PathVariable String cafeURL) {
-		System.out.println("CafeMain : " + cafeURL);
+
+	@RequestMapping("/cafe/{cafeURL}/search")
+	public String CafeInnerSearchList(@ModelAttribute Search search, Map<String, Object> map) {
+		System.out.println("[CafeInnerSearchList] Search : " + search);
+
+		//임시 데이터
+		search.setTermStart(search.getTermStart());
+		search.setTermEnd(search.getTermEnd());
+		//임시데이터
+		List<Board> boardList = new ArrayList<Board>();
+		Board board = new Board();
+		board.setBoardNo(10000);
+		board.setBoardName("공지게시판");
+		boardList.add(board);
+		board = new Board();
+		board.setBoardNo(10001);
+		board.setBoardName("신고게시판");
+		boardList.add(board);
+		board = new Board();
+		board.setBoardNo(10003);
+		board.setBoardName("자유게시판");
+		boardList.add(board);
 		
-		return "cafe/menubar_temp";
-	}
-	*/
-	@PostMapping("/cafe/{cafeURL}/search")
-	public String CafeInnerSearchList(@RequestParam String keyword, @PathVariable String cafeURL) {
-		System.out.println("CafeInnerSearch : " + cafeURL);
-		System.out.println(keyword);
 		
-		return "cafe/listCafeInnerSearch";
-	}
-	
-	@RequestMapping("/cafe/{cafeURL}/getBoard/{boardNo}")
-	public String getBoard(Map<String, String> result, @ModelAttribute Search search, Map<String, Object> map) {
-		System.out.println("Search : " + search);
 		
+		
+		search.setPageSize(pageSize);
+		if (search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+		System.out.println("[CafeInnerSearchList] Search : " + search);
+
+		Map<String, Object> queryResultMap = cafePostService.listPostBySearch(search);
+
+		int postTotalCount = (int) queryResultMap.get("postTotalCount");
+		Page page = new Page(search.getCurrentPage(), postTotalCount, pageUnit, pageSize);
 
 		
-		List<Post> postList = cafePostService.getBoard(search);
-//		System.out.println("postList : " + postList);
+		System.out.println(boardList);
 		
-		map.put("postList", postList);
 		
+		map.put("boardList", boardList);
+		map.put("postList", (List<Post>) queryResultMap.get("postList"));
+		map.put("postTotalCount", postTotalCount);
+		map.put("page", page);
+
+		return "cafe/listCafeInnerSearch";
+	}
+
+	@RequestMapping("/cafe/{cafeURL}/getBoard/{boardNo}")
+	public String listPostByBoard(Map<String, String> result, @ModelAttribute Search search, Map<String, Object> map) {
+		int pageSize = 3;
+		int pageUnit = 2;
+
+		search.setPageSize(pageSize);
+		if (search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+		System.out.println("[getBoard] Search : " + search);
+
+		Map<String, Object> queryResultMap = cafePostService.listPostByBoard(search);
+		int postTotalCount = (int) queryResultMap.get("postTotalCount");
+		Page page = new Page(search.getCurrentPage(), postTotalCount, pageUnit, pageSize);
+
+		map.put("postList", (List<Post>) queryResultMap.get("postList"));
+		map.put("postTotalCount", postTotalCount);
+		map.put("page", page);
+
 		return "cafe/listCafePostByBoard";
 	}
 }

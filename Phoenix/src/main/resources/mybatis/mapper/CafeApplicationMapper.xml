@@ -7,7 +7,7 @@
 <mapper namespace="CafeApplicationMapper">
  	
 	
-	<resultMap id="cafeApplicationSelectMap" type="com.phoenix.mvc.service.domain.CafeApplication">
+	<resultMap id="cafeApplicationSelectMap" type="CafeApplication">
 		<result property="applicationNo" 			column="application_no" 			jdbcType="NUMERIC"/>
 		<result property="userNo"			column="user_no" 			jdbcType="NUMERIC" />
 		<result property="cafeNo" 		column="cafe_no" 			jdbcType="NUMERIC" />
@@ -20,6 +20,7 @@
 		<result property="answer3" 			column="answer3" 				jdbcType="VARCHAR" />
 		<result property="acceptStatusCode" 			column="accept_status_code" 				jdbcType="VARCHAR" />
 		<result property="memberNickname" 			column="member_nickname" 				jdbcType="VARCHAR" />
+		<result property="userId" 			column="user_id" 				jdbcType="VARCHAR" />
 	</resultMap>
 	
 	<!-- SQL : INSERT -->
@@ -29,5 +30,48 @@
 		VALUES	 (	seq_application_no.NEXTVAL , #{userNo} , #{cafeNo} , SYSDATE , #{question1:VARCHAR} , 
 							#{question2:VARCHAR} , #{question3:VARCHAR} , #{answer1:VARCHAR} , #{answer2:VARCHAR}, #{answer3:VARCHAR}, 'CA001', #{memberNickname})
 	 </insert>
+	 
+	 	
+	<select  id="getCafeApplicationList"  parameterType="search"	resultMap="cafeApplicationSelectMap">
+	  	SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(		SELECT u.user_id,c.member_nickname, c.application_no, c.user_no, c.cafe_no, c.reg_date, c.question1, c.question2, c.question3, c.answer1, c.answer2, c.answer3, c.accept_status_code 
+	  									FROM cafe_application c, users u
+	  									<where>
+	  									c.user_no = u.user_no(+)
+											<if test="searchCondition != null">
+													<if test="searchCondition == 0 and searchKeyword !='' ">
+										 				AND c.member_nickname like '%' || #{searchKeyword}||'%'
+													</if>
+													<if test="searchCondition == 1 and searchKeyword !='' ">
+										 				AND u.user_id like '%' || #{searchKeyword}||'%'
+													</if>
+											</if>
+											</where>
+											ORDER BY application_no ) inner_table
+						WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+	 </select>
+	 
+	 	
+	 	
+	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM(	SELECT *
+						FROM cafe_application c, users u
+							<where>
+							c.user_no = u.user_no(+)
+								<if test="searchCondition != null">
+								<if test="searchCondition == 0 and searchKeyword !='' ">
+						 			AND c.member_nickname like '%' || #{searchKeyword}||'%'
+								</if>
+								<if test="searchCondition == 1 and searchKeyword !='' ">
+						 			AND u.user_id like '%' || #{searchKeyword}||'%'
+								</if>
+								</if> 
+							</where>) countTable						
+	 </select>
+	 
+
 	 
 </mapper>

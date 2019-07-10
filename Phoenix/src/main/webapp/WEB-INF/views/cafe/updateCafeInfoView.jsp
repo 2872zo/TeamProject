@@ -7,7 +7,7 @@
 <html lang="ko">
 	
 <head>
-	
+	<meta charset="EUC-KR">
 	
 	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -20,7 +20,7 @@
 
 	
 	<header>
-		<title>카페만들기화완료면</title>
+		<title>카페정보수정화면</title>
 	</header>
 	
 		<script type="text/javascript">
@@ -30,7 +30,7 @@
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$( "button.btn.btn-success" ).on("click" , function() {
 				alert("수정");
-				$("form").attr("method" , "GET").attr("action" , "/cafe/updateCafeInfoView").submit();
+				$("form").attr("method" , "POST").attr("action" , "/cafe/updateCafeInfo").submit();
 			});
 		});	
 
@@ -42,20 +42,38 @@
 
 
 		<div class="row" align="center">
-	  		<div class="col-sm-4"><strong>가입환영</strong></div>
+	  		<div class="col-sm-4"><strong>카페수정화면</strong></div>
 		</div>
 		
-	
-		  카페이름:&nbsp;&nbsp;[${cafe.cafeName }]</br>
-		  카페url:&nbsp;&nbsp;[${cafe.url }]</br>
-		  카페설명:&nbsp;&nbsp;[${cafe.cafeDetail }]</br>
-		  카페카테고리:&nbsp;&nbsp;[${cafe.cafeType }]</br>
-		  가입안내:&nbsp;&nbsp;[${cafe.applicationDetail }]</br>
-		  질문설정:&nbsp;&nbsp;[${cafe.applicationQuestion1 }]</br>
-		  		 
+		<input type="hidden" name="cafeNo" value="${cafe.cafeNo }"/>
+		
+					<div>
+						카페이름<input type="text" name="cafeName" class="ct_input_g" 
+									style="width: 100px; height: 19px" maxLength="20" value="${cafe.cafeName} "  >
+					</div>					
+		
+					<div>
+						카페설명<input type="text" name="cafeDetail" class="ct_input_g" 
+									style="width: 100px; height: 19px" maxLength="20" value="${cafe.cafeDetail} ">
+					</div>
+		
+					<div>
+						배너이미지<input type="text" name="bannerImg" class="ct_input_g" 
+									style="width: 100px; height: 19px" maxLength="20" value="${cafe.bannerImg} ">
+					</div>
+					
+					<div>
+						메인이미지<input type="text" name="mainImg" class="ct_input_g" 
+									style="width: 100px; height: 19px" maxLength="20" value="${cafe.mainImg} ">
+					</div>
+			
+					<div>
+						카페카테고리<input type="text" name="cafeType" class="ct_input_g" 
+									style="width: 100px; height: 19px" maxLength="20" value="${cafe.cafeType} ">
+					</div>
+		
 		  
-		  
-		  
+				  
 		
 		  
 		  <div class="form-group">
@@ -63,14 +81,13 @@
 		      <button type="button" class="btn btn-success"  >수정</button>
 		    </div>
 		  </div>
-		  
 		</form>
 		<!-- form Start /////////////////////////////////////-->
-	
+		
+ 	</div>
 	<!--  화면구성 div end /////////////////////////////////////-->
 	
 </body>
 
 </html>
-
 					
