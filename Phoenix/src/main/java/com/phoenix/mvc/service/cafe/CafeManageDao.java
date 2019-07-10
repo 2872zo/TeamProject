@@ -8,4 +8,6 @@ public interface CafeManageDao {
 	
 	public int getCafeNo(String cafeURL);
 	
+	public List getBoardPost(int boardNo);
+	
 }

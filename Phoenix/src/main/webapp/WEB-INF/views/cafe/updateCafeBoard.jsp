@@ -24,6 +24,44 @@
 			$("#plusBoard").on("click", function(){ //게시판추가
 				
 				alert($("select[name=addableBoard]").val());
+				var appendBoard = "<option value='"+$("select[name=addableBoard]").val()+"'>"+$("select[name=addableBoard]").val()+"</option>"
+				$("select[name=board]").append(appendBoard);
+				
+			});
+
+			$("#delete").on("click", function(){
+				//1.선택된 게시판을 가져옴  2.ajax로 게시판있는지 체크
+				if( typeof $("select[name=board] option:selected").val() != "undefined")//삭제할 게시판이 선택되었으면
+				{
+					alert($("select[name=board] option:selected").attr("id")); //board_no
+					var boardNo = $("select[name=board] option:selected").attr("id");
+					//ajax로 게시판에 물려있는 게시물이 있는지 체크
+					//board_no,cafe_URL을 보내서 board_no를 가지고있는 post가 있는지 post table에서 검사 
+					$.ajax({
+
+						url : "/cafe/json/cafe01/checkCafePost",
+						method : "POST",
+						headers : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json ; charset=UTF-8"
+						},
+						data : JSON.stringify({ //보내는 data jsonString 화
+
+							boardNo : boardNo
+						}),
+						dataType : "text",
+						success : function(serverData){
+
+							alert("serverData : "+serverData);
+						}
+
+					});//ajax끝
+				}
+				
+				var deleteBoard = $("select[name=board] option:selected").remove();
+				//alert(this.html());
+
+				
 			});
 
 		});
@@ -71,8 +109,8 @@
 			<c:forEach var="board" items="${boardList}">
 				<c:set var="i" value="${ i+1 }" />
 			
-			<option value="${board.boardName}">${board.boardName}</option>
-		
+			<option value="${board.boardName}" id="${board.boardNo}">${board.boardName}</option>
+			
 			</c:forEach>
     		
     		

@@ -30,6 +30,11 @@
 		WHERE url = #{value}
 	</select>
 
+	<select id ="getBoardPostList" parameterType="int" resultMap="postSelectMap">
+		SELECT *
+		FROM post
+		WHERE board_no = #{value}
+	</select>
 
 
 

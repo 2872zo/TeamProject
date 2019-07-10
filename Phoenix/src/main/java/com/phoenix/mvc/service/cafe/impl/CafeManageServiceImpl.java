@@ -34,4 +34,22 @@ public class CafeManageServiceImpl implements CafeManageService {
 		return cafeManageDao.getCafeBoard(cafeNo);
 	}
 
+	@Override
+	public int checkCafePost(String cafeURL,int boardNo) {
+		
+		cafeManageDao.getCafeNo(cafeURL); // 꼭 받아야하나? 그냥 post table에서만 체크하면 된다 안해도댐
+		
+		List postList = cafeManageDao.getBoardPost(boardNo); //boardNo에 해당하는 post list를 가져옴
+		
+		if(postList.size()==0) // 해당하는 게시판에 게시글이 없음
+		{
+			return 0;
+		}
+		else //게시글 있음.
+		{
+			return 1;
+		}
+		
+	}
+
 }

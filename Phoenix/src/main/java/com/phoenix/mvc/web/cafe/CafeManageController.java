@@ -38,6 +38,8 @@ public class CafeManageController {
 		
 		model.addAttribute("boardList", boardList);
 		
+		//모델에 cafeURL의 cafe 객체도 같이 넘겨줌
+		
 		return "/cafe/updateCafeBoard";
 	}
 	
