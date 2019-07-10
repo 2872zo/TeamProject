@@ -1,6 +1,5 @@
 package com.phoenix.mvc.common;
 
-import java.util.Date;
 
 public class Search{
 	///Field
@@ -102,19 +101,19 @@ public class Search{
 		this.sortCode = sortCode;
 	}
 
-	public Date getTermStart() {
+	public String getTermStart() {
 		return termStart;
 	}
 
-	public void setTermStart(Date termStart) {
+	public void setTermStart(String termStart){
 		this.termStart = termStart;
 	}
 
-	public Date getTermEnd() {
+	public String getTermEnd() {
 		return termEnd;
 	}
 
-	public void setTermEnd(Date termEnd) {
+	public void setTermEnd(String termEnd){
 		this.termEnd = termEnd;
 	}
 

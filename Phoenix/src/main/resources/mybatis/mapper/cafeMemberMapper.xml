@@ -7,7 +7,7 @@
 <mapper namespace="CafeMemberMapper">
 
 	
-	<resultMap id="cafeMemberSelectMap" type="CafeMember">
+	<resultMap id="cafeMemberSelectMap" type="com.phoenix.mvc.service.domain.CafeMember">
 		<result property="memberNo" 			column="member_no" 			jdbcType="NUMERIC"/>
 		<result property="cafeNo"			column="cafe_no" 			jdbcType="NUMERIC" />
 		<result property="userNo" 		column="user_no" 			jdbcType="NUMERIC" />
@@ -20,7 +20,7 @@
 		<result property="visitCount" 			column="visit_count" 				jdbcType="NUMERIC" />
 	</resultMap>
 	
-	  <update	id="updateCafeMember"	parameterType="cafeMember" >
+	  <update	id="updateCafeMember"	parameterType="CafeMember">
 	   	UPDATE cafe_member
 	   	<set>
 		member_status_code=#{memberStatusCode}	

@@ -5,28 +5,32 @@
 <html>
 	
 	<header>
-		<style>
-			table, td, tr{
-				border:1px solid #444444;
-			}
-		</style>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 		<script>
-			$(function(){
-				var cafeURL = "aaaa";
+			var cafeURL = '${search.cafeURL}';
+			var boardNo = ${search.boardNo};
+			
+			function fncGetList(idx){
+				$("[name=currentPage]").val(idx);
+				$("form").attr("method","POST").attr("action", "/cafe/" + cafeURL + "/getBoard/" + boardNo).submit();
+			};
 
-				$("[type=submit]").on("click", function(){
-					alert("aa");
-					$("form").attr("method","POST").attr("action","/cafe/" + cafeURL + "/search").submit();	
-				});
+			$(function(){
+				$("[name=currentPage]").val(${search.currentPage });	
 			});
 		</script>
-		<title>index</title>
+		<title>${search.cafeURL}</title>
 	</header>
 	
 	<body>
+		<form>
+			<input type="hidden" name="currentPage">
+		</form>
 		<h1>listCafePostByBoard</h1>
-		<table>
+		<p>총 ${postTotalCount }개</p>
+		<table class="table table-striped table-bordered">
 			<tr>
 				<td>postNo</td>
 				<td>boardNo</td>
@@ -42,7 +46,7 @@
 				<td>noticeIndex</td>
 			</tr>
 			
-			<c:forEach items="${postList}" var="post">
+			<c:forEach items="${postList }" var="post">
 				<tr>
 					<td>${post.postNo}</td>
 					<td>${post.boardNo }</td>
@@ -59,6 +63,15 @@
 				</tr>
 			</c:forEach>
 		</table>
+		
+		<table>
+			<tr>
+				<td align="center">
+					<c:import url="/WEB-INF/views/common/pageNavigator.jsp"/>
+				</td>
+			</tr>
+		</table>
+		
 	</body>
 
 </html>

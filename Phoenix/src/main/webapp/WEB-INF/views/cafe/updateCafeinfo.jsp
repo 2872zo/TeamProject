@@ -20,7 +20,7 @@
 
 	
 	<header>
-		<title>카페만들기화완료면</title>
+		<title>카페정보수정완료창</title>
 	</header>
 	
 		<script type="text/javascript">
@@ -29,8 +29,8 @@
 		 $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$( "button.btn.btn-success" ).on("click" , function() {
-				alert("수정");
-				$("form").attr("method" , "GET").attr("action" , "/cafe/updateCafeInfoView").submit();
+				alert("만들기");
+				$("form").attr("method" , "POST").attr("action" , "/cafe/1234/addCafe").submit();
 			});
 		});	
 
@@ -60,7 +60,7 @@
 		  
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-success"  >수정</button>
+		      <button type="button" class="btn btn-success"  >만들기</button>
 		    </div>
 		  </div>
 		  
