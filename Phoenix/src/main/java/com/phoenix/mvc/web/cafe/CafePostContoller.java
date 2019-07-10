@@ -25,9 +25,13 @@ import com.phoenix.mvc.service.domain.Board;
 import com.phoenix.mvc.service.domain.Post;
 
 @Controller
+@PropertySource("common.properties")
 public class CafePostContoller {
-	private int pageSize = 3;
-	private int pageUnit = 2;
+	@Value("${pageSize}")
+	private int pageSize;
+	
+	@Value("${pageUnit}")
+	private int pageUnit;
 
 	@Autowired
 	@Qualifier("cafePostServiceImpl")
@@ -59,9 +63,6 @@ public class CafePostContoller {
 		board.setBoardName("자유게시판");
 		boardList.add(board);
 		
-		
-		
-		
 		search.setPageSize(pageSize);
 		if (search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
@@ -87,8 +88,8 @@ public class CafePostContoller {
 
 	@RequestMapping("/cafe/{cafeURL}/getBoard/{boardNo}")
 	public String listPostByBoard(Map<String, String> result, @ModelAttribute Search search, Map<String, Object> map) {
-		int pageSize = 3;
-		int pageUnit = 2;
+		
+		System.out.println("PageSize : " + this.pageSize);
 
 		search.setPageSize(pageSize);
 		if (search.getCurrentPage() == 0) {
