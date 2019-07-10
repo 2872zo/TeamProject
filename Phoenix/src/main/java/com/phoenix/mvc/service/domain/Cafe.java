@@ -24,7 +24,7 @@ public class Cafe {
 	private String autoApplicationAcceptFlag;
 	private String closedFlag;
 	private int members;
-
+	
 	/// Constructor
 	public Cafe() {
 	}

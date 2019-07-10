@@ -7,12 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.cafe.CafeManageDao;
+import com.phoenix.mvc.service.domain.CafeApplication;
+import com.phoenix.mvc.service.domain.Cafe;
 
 @Repository("cafeManageDaoImpl")
 public class CafeManageDaoImpl implements CafeManageDao {
 
 	@Autowired
+	@Qualifier("sqlSessionTemplate")
 	private SqlSession sqlSession;
 	
 	public void setSqlSession(SqlSession sqlSession) {
@@ -32,6 +36,14 @@ public class CafeManageDaoImpl implements CafeManageDao {
 		return boardList;
 		
 	}
+	
+	@Override
+	public List getCafeBoard(String cafeURL) { //mapper구현x
+	
+		List boardList = sqlSession.selectList("getBoardListByURL", cafeURL);
+		
+		return boardList;
+	}
 
 	@Override
 	public int getCafeNo(String cafeURL) {
@@ -39,5 +51,37 @@ public class CafeManageDaoImpl implements CafeManageDao {
 		return sqlSession.selectOne("getCafeNo", cafeURL);
 		
 	}
+	@Override
+	public void updateCafeInfo(Cafe cafe)throws Exception{
+		sqlSession.update("CafeMapper.updateCafeInfo", cafe);
+	}
+	
+	@Override
+	public Cafe getCafeInfo(String cafeNo) throws Exception {
+		return sqlSession.selectOne("CafeManageMapper.getCafeInfo", cafeNo);
+	}
+	
+	@Override
+	public List<CafeApplication> getCafeApplicationList(Search search) {
+		
+		return sqlSession.selectList("CafeApplicationMapper.getCafeApplicationList", search);
+	}
+
+	@Override
+	public int getTotalCount(Search search) {
+		
+		return sqlSession.selectOne("CafeApplicationMapper.getTotalCount", search);
+	}
+
+	@Override
+	public List getBoardPost(int boardNo) { 
+		//...이거 공지 가져오기 근데 그럼 카페의 공지게시판의 boardno를 알아야함 (게시판코드,게시판No)
+		
+		List postList = sqlSession.selectList("getBoardPostList", boardNo);
+		
+		return postList;
+	}
+
+	
 
 }

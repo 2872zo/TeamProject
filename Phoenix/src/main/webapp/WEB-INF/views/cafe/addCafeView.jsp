@@ -1,44 +1,96 @@
-<%@ page contentType="text/html; charset=euc-kr"%>
-
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 
-
 <html lang="ko">
-
+	
 <head>
 	<meta charset="EUC-KR">
+	
+	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	
+	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 
-	<title>Insert title here</title>
+	
+	<header>
+		<title>카페가입신청화면</title>
+	</header>
+	
+		<script type="text/javascript">
 
-	<script type="text/javascript">
+		//============= "가입"  Event 연결 =============
+		 $(function() {
+			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			$( "button.btn.btn-success" ).on("click" , function() {
+				alert("만들기");
+				$("form").attr("method" , "POST").attr("action" , "/cafe/addCafe").submit();
+			});
+		});	
 
-	</script>
-
-</head>
-
+			
+		</script>
 <body>
 	
-					<td width="105">
-						<input type="text" name="cafeName" class="ct_input_g" 
-									style="width: 100px; height: 19px" maxLength="20">
-					</td>
-					<td width="105">
-						<input type="text" name="cafeIcon" class="ct_input_g" 
-									style="width: 100px; height: 19px" maxLength="20">
-					</td>
-					<td width="105">
-						<input type="text" name="url" class="ct_input_g" 
-									style="width: 100px; height: 19px" maxLength="20">
-					</td>
-					<td width="105">
-						<input type="text" name="cafeDetail" class="ct_input_g" 
-									style="width: 100px; height: 19px" maxLength="20">
-					</td>
-		
-					
+<form class="form-horizontal">
 
+
+		<div class="row" align="center">
+	  		<div class="col-sm-4"><strong>카페만들기</strong></div>
+		</div>
+		
+		
+					<div>
+						카페이름<input type="text" name="cafeName" class="ct_input_g" 
+									style="width: 100px; height: 19px" maxLength="20">
+					</div>
+					
+					<div>
+						카페url<input type="text" name="url" class="ct_input_g" 
+									style="width: 100px; height: 19px" maxLength="20">
+					</div>
+		
+					<div>
+						카페설명<input type="text" name="cafeDetail" class="ct_input_g" 
+									style="width: 100px; height: 19px" maxLength="20">
+					</div>
+		
+					<div>
+						카페카테고리<input type="text" name="cafeType" class="ct_input_g" 
+									style="width: 100px; height: 19px" maxLength="20">
+					</div>
+					<div>
+						가입안내<input type="text" name="applicationDetail" class="ct_input_g" 
+									style="width: 100px; height: 19px" maxLength="20">
+					</div>
+			
+					<div>
+						가입질문<input type="text" name="applicationQuestion1" class="ct_input_g" 
+									style="width: 100px; height: 19px" maxLength="20">
+					</div>
+		
+		  
+				  
+		
+		  
+		  <div class="form-group">
+		    <div class="col-sm-offset-4  col-sm-4 text-center">
+		      <button type="button" class="btn btn-success"  >만들기</button>
+		    </div>
+		  </div>
+		</form>
+		<!-- form Start /////////////////////////////////////-->
+		
+ 	</div>
+	<!--  화면구성 div end /////////////////////////////////////-->
+	
 </body>
+
 </html>
+					

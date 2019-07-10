@@ -23,6 +23,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web-services</artifactId>
@@ -44,7 +45,8 @@
 			<artifactId>spring-boot-devtools</artifactId>
 			<optional>true</optional>
 		</dependency>
-				
+		
+		
 		<!-- ojdbc6 로컬사용 설정-->
 		<dependency>
 		    <groupId>com.oracle</groupId>
@@ -64,13 +66,19 @@
 			<artifactId>tomcat-embed-jasper</artifactId>
 		</dependency>
 		
+		<!--  json simple -->
+		 <dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1</version>
+  		</dependency>
+	
 		<!-- log4jdbc -->
 		<dependency>
 		    <groupId>org.bgee.log4jdbc-log4j2</groupId>
 		    <artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
 		    <version>1.16</version>
 		</dependency>    
-		
 	</dependencies>
 
 	<build>

@@ -14,12 +14,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.phoenix.mvc.service.cafe.CafeTabService;
 import com.phoenix.mvc.service.domain.Cafe;
 import com.phoenix.mvc.common.Page;
+import com.phoenix.mvc.service.domain.User;
 import com.phoenix.mvc.common.Search;
 
 
 @Controller
 @RequestMapping("/cafe/*")
 public class CafeTabContoller {
+	
 	@Autowired
 	@Qualifier("cafeTabServiceImpl")
 	private CafeTabService cafeTabService;
@@ -37,36 +39,27 @@ public class CafeTabContoller {
 		return "forward:/WEB-INF/views/cafe/cafeHomeMain.jsp";
 	}
 
+	@RequestMapping(value= "/cafe/addCafeView", method=RequestMethod.GET)
+	public String addCafeView(@ModelAttribute("cafe") Cafe cafe)throws Exception{
+		
+		System.out.println("/addCafe : GET");
+		
+		
+		
+		return "cafe/addCafeView";
+	}
 	
-	@RequestMapping(value= "/cafe/addCafe", method=RequestMethod.GET)
+	@RequestMapping(value= "/cafe/addCafe", method=RequestMethod.POST)
 	public String addCafe(@ModelAttribute("cafe") Cafe cafe)throws Exception{
 		
 		System.out.println("/addCafe : POST");
 		
-		cafe.setCafeNo("10001");
-		cafe.setCafeName("gd");
-		cafe.setCafeIcon("dsa");		
-		cafe.setManageUserNo("10001");		
-		cafe.setUrl("dsada");
-		cafe.setCafeDetail("111");
-		cafe.setBannerImg("dsada");
-		cafe.setMainImg("dsada");
-		cafe.setCafeType("dsada");
-		cafe.setApplicationDetail("adsada");
-		cafe.setCloseReason("dsada");
-		cafe.setApplicationQuestion1("111");
-		cafe.setApplicationQuestion2("sdada");
-		cafe.setApplicationQuestion3("dsada");
-		cafe.setCafeNickNameFlag("0");
-		cafe.setAutoApplicationAcceptFlag("0");
-		cafe.setClosedFlag("1");
 		
-		
-		
-		
+		cafe.setManageUserNo("10012");		
+
 		cafeTabService.addCafe(cafe);
 		
-		return "forward:/cafe/addCafe.jsp";
+		return "cafe/addCafe";
 	}
 	
 	

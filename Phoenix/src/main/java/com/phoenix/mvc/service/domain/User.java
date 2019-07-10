@@ -5,6 +5,7 @@ import java.sql.Date;
 public class User {
 	
 	///Field
+	private int userNo;
 	private String userId;
 	private String userName;
 	private String password;
@@ -25,6 +26,16 @@ public class User {
 	private String kakao;
 
 	
+	
+	public int getUserNo() {
+		return userNo;
+	}
+
+	public void setUserNo(int userNo) {
+		this.userNo = userNo;
+	}
+
+	////////////////////////////////////////////////////////////////////userNo추가
 	
 	///Constructor
 	public User(){

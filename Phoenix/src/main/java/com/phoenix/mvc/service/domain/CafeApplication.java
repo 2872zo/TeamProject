@@ -16,6 +16,7 @@ public class CafeApplication {
 	private String answer3;
 	private String acceptStatusCode;
 	private String memberNickname;
+	private String userId;
 	
 	public CafeApplication() {
 
@@ -138,13 +139,23 @@ public class CafeApplication {
 		this.memberNickname = memberNickname;
 	}
 
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
 	@Override
 	public String toString() {
 		return "CafeApplication [applicationNo=" + applicationNo + ", userNo=" + userNo + ", cafeNo=" + cafeNo
 				+ ", regDate=" + regDate + ", question1=" + question1 + ", question2=" + question2 + ", question3="
 				+ question3 + ", answer1=" + answer1 + ", answer2=" + answer2 + ", answer3=" + answer3
-				+ ", acceptStatusCode=" + acceptStatusCode + ", memberNickname=" + memberNickname + "]";
+				+ ", acceptStatusCode=" + acceptStatusCode + ", memberNickname=" + memberNickname + ", userId=" + userId
+				+ "]";
 	}
+
 
 
 

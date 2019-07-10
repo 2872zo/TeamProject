@@ -66,5 +66,7 @@
 		(c.cafe_name like '%' ||#{searchKeyword}|| '%'	
 		OR c.cafe_detail like '%' ||#{searchKeyword}|| '%')
 	 </select>
+	 
+	 
 	
 </mapper>
