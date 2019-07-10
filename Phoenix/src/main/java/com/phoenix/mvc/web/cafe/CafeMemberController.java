@@ -48,29 +48,29 @@ public class CafeMemberController {
 		System.out.println("들어온 cafeApplication 값?" + cafeApplication);
 		cafeMemberService.addCafeApplication(cafeApplication);
 
-		return "cafe/{cafeURL}/main";
+		return "cafe/{cafeURL}/main";//메인으로 이동!
 
 	}
 
-	@RequestMapping(value = "/{cafeURL}/updateCafeMember", method = RequestMethod.GET)
+	@RequestMapping(value = "/{cafeURL}/updateCafeMemberView", method = RequestMethod.GET)
 	public String updateCafeMember(@PathVariable String cafeURL) {
 
-		System.out.println("/cafe/{cafeURL}/updateCafeMember : GET");
+		System.out.println("/cafe/{cafeURL}/updateCafeMemberView : GET");
 
 		return "cafe/updateCafeMember";
 
 	}
 	
-	@RequestMapping(value = "/{cafeURL}/updateCafeMember", method = RequestMethod.POST)
+	@RequestMapping(value = "/{cafeURL}/updateCafeMember", method = RequestMethod.GET)
 	public String updateCafeMember(@PathVariable String cafeURL, @RequestParam("memberStatusCode") String memberStatusCode,
 			HttpSession session) {
 
-		System.out.println("/cafe/{cafeURL}/updateCafeMember : POST");
+		System.out.println("/cafe/{cafeURL}/updateCafeMember : GET");
 		
 		//세션 memberNo가져오기!
 		//memberNo으로 getMember member 가져오기
 		CafeMember cafeMember = new CafeMember();
-		cafeMember.setCafeNo("10001");
+		cafeMember.setMemberNo("10001");
 		cafeMember.setCafeNo("10000");
 		cafeMember.setUserNo("10001");
 		cafeMember.setNoticeFlag('0');
@@ -80,9 +80,11 @@ public class CafeMemberController {
 		cafeMember.setRegDate(null);
 		cafeMember.setVisitCount("1");
 		cafeMember.setMemberStatusCode(memberStatusCode);
+		
+		System.out.println("cafemember 값 : "+cafeMember);
 		cafeMemberService.updateCafeMember(cafeMember);
 
-		return "cafe/updateCafeMember";
+		return "cafe/{cafeURL}/main";//메인으로 이동!
 
 	}
 

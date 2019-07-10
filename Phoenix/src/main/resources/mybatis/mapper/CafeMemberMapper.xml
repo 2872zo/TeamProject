@@ -7,7 +7,7 @@
 <mapper namespace="CafeMemberMapper">
 
 	
-	<resultMap id="cafeMemberSelectMap" type="com.phoenix.mvc.service.domain.CafeMember">
+	<resultMap id="cafeMemberSelectMap" type="CafeMember">
 		<result property="memberNo" 			column="member_no" 			jdbcType="NUMERIC"/>
 		<result property="cafeNo"			column="cafe_no" 			jdbcType="NUMERIC" />
 		<result property="userNo" 		column="user_no" 			jdbcType="NUMERIC" />

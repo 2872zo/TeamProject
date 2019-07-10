@@ -1,11 +1,13 @@
 package com.phoenix.mvc.common;
 
-import java.util.Arrays;
+import java.util.Date;
 
 public class Search{
 	///Field
+	private int cafeNo;
 	private String cafeURL;
 	private int boardNo;
+	private String boardName;
 	private String searchCondition;
 	private String searchKeyword;
 	private int currentPage;
@@ -13,9 +15,19 @@ public class Search{
 	private int endRowNum;
 	private int startRowNum;
 	private int sortCode;
+	private Date termStart;
+	private Date termEnd;
 	
 	///Constructor
 	public Search() {
+	}
+
+	public int getCafeNo() {
+		return cafeNo;
+	}
+
+	public void setCafeNo(int cafeNo) {
+		this.cafeNo = cafeNo;
 	}
 
 	public String getCafeURL() {
@@ -32,6 +44,14 @@ public class Search{
 
 	public void setBoardNo(int boardNo) {
 		this.boardNo = boardNo;
+	}
+
+	public String getBoardName() {
+		return boardName;
+	}
+
+	public void setBoardName(String boardName) {
+		this.boardName = boardName;
 	}
 
 	public String getSearchCondition() {
@@ -67,19 +87,11 @@ public class Search{
 	}
 
 	public int getEndRowNum() {
-		return endRowNum;
-	}
-
-	public void setEndRowNum(int endRowNum) {
-		this.endRowNum = endRowNum;
+		return getCurrentPage()*getPageSize();
 	}
 
 	public int getStartRowNum() {
-		return startRowNum;
-	}
-
-	public void setStartRowNum(int startRowNum) {
-		this.startRowNum = startRowNum;
+		return (getCurrentPage()-1)*getPageSize()+1;
 	}
 
 	public int getSortCode() {
@@ -89,7 +101,23 @@ public class Search{
 	public void setSortCode(int sortCode) {
 		this.sortCode = sortCode;
 	}
-	
+
+	public Date getTermStart() {
+		return termStart;
+	}
+
+	public void setTermStart(Date termStart) {
+		this.termStart = termStart;
+	}
+
+	public Date getTermEnd() {
+		return termEnd;
+	}
+
+	public void setTermEnd(Date termEnd) {
+		this.termEnd = termEnd;
+	}
+
 	@Override
 	public String toString() {
 		return "Search [cafeURL=" + cafeURL + ", boardNo=" + boardNo + ", searchCondition=" + searchCondition

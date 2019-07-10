@@ -1,13 +1,17 @@
 package com.phoenix.mvc.service.cafe.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.cafe.CafeManageDao;
 import com.phoenix.mvc.service.cafe.CafeManageService;
+import com.phoenix.mvc.service.domain.CafeApplication;
 
 @Service("cafeManageServiceImpl")
 public class CafeManageServiceImpl implements CafeManageService {
@@ -32,6 +36,19 @@ public class CafeManageServiceImpl implements CafeManageService {
 		int cafeNo = cafeManageDao.getCafeNo(cafeURL);
 	
 		return cafeManageDao.getCafeBoard(cafeNo);
+	}
+
+	@Override
+	public Map<String, Object> getCafeApplicationList(Search search) {
+		
+		List<CafeApplication> list = cafeManageDao.getCafeApplicationList(search);
+		int totalCount = cafeManageDao.getTotalCount(search);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		map.put("totalCount", new Integer(totalCount));
+		
+		return map;
 	}
 
 }
