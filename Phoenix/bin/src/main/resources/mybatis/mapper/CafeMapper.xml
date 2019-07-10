@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="CafeMapper">
+ 	
+ 	
+	<resultMap id="cafeSelectMap" type="com.phoenix.mvc.service.domain.Cafe">
+		<result property="cafeNo" 			column="cafe_no" 			jdbcType="NUMERIC"/>
+		<result property="cafeName" 			column="cafe_name" 			jdbcType="VARCHAR"/>
+		<result property="cafeIcon"	column="cafe_icon" 		jdbcType="VARCHAR" />
+		<result property="manageUserNo" 	column="manage_user_no" 		jdbcType="NUMERIC" />
+		<result property="url" 				column="url" 					jdbcType="VARCHAR" />
+		<result property="cafeDetail" 			column="cafe_detail" 		jdbcType="VARCHAR" />
+		<result property="regDate" 		column="reg_date" 			jdbcType="DATE" />
+		<result property="bannerImg" 			column="banner_img" 			jdbcType="VARCHAR"/>
+		<result property="mainImg" 			column="main_img" 			jdbcType="VARCHAR"/>
+		<result property="cafeType"	column="cafe_type" 		jdbcType="VARCHAR" />
+		<result property="applicationDetail" 	column="application_detail" 		jdbcType="VARCHAR" />
+		<result property="closeReason" 				column="close_reason" 					jdbcType="VARCHAR" />
+		<result property="applicationQuestion1" 		column="application_question1" 			jdbcType="VARCHAR" />
+		<result property="applicationQuestion2" 	column="application_question2" 		jdbcType="VARCHAR" />
+		<result property="applicationQuestion3" 				column="application_question3" 					jdbcType="VARCHAR" />
+		<result property="cafeNickNameFlag" 			column="cafe_nickname_flag" 		jdbcType="CHAR" />
+		<result property="autoApplicationAcceptFlag" 			column="auto_application_accept_flag" 		jdbcType="CHAR" />
+		<result property="closedFlag" 			column="close_flag" 		jdbcType="CHAR" />
+	</resultMap>
+	
+	<insert 	id="addCafe"		parameterType="cafe" >
+	 	INSERT
+		INTO cafe( cafe_no , cafe_name , cafe_icon , manage_user_no , url, cafe_detail, reg_date, banner_img, main_img, cafe_type, 
+						application_detail, close_reason, application_question1, application_question2, application_question3, cafe_nickname_flag,
+						auto_application_accept_flag, close_flag) 
+		VALUES	 (	seq_cafe_cafe_no.nextval , #{cafeName:VARCHAR} , #{cafeIcon:VARCHAR} ,#{manageUserNo:NUMERIC} , 
+							#{url:VARCHAR}, #{cafeDetail:VARCHAR}, SYSDATE, #{bannerImg:VARCHAR}, #{mainImg:VARCHAR},
+							#{cafeType:VARCHAR}, #{applicationDetail:VARCHAR}, #{closeReason:VARCHAR}, #{applicationQuestion1:VARCHAR}, 
+							#{applicationQuestion2:VARCHAR}, #{applicationQuestion3:VARCHAR}, #{cafeNickNameFlag:CHAR}, 
+							#{autoApplicationAcceptFlag:CHAR}, #{closedFlag:CHAR})
+	 </insert>
+	 
+</mapper>

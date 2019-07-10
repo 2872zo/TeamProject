@@ -14,15 +14,15 @@ public class Cafe {
 	private String cafeDetail;
 	private String bannerImg;
 	private String mainImg;
-	private String category;
+	private String cafeType;
 	private String applicationDetail;
 	private String closeReason;
 	private String applicationQuestion1;
 	private String applicationQuestion2;
 	private String applicationQuestion3;
-	private boolean cafeNickNameFlag;
-	private boolean autoApplicationAcceptFlag;
-	private boolean closedFlag;
+	private String cafeNickNameFlag;
+	private String autoApplicationAcceptFlag;
+	private String closedFlag;
 
 	/// Constructor
 	public Cafe() {
@@ -100,35 +100,35 @@ public class Cafe {
 		this.mainImg = mainImg;
 	}
 
-	public String getCategory() {
-		return category;
+	public String getcafeType() {
+		return cafeType;
 	}
 
-	public void setCategory(String category) {
-		this.category = category;
+	public void setCafeType(String cafeType) {
+		this.cafeType = cafeType;
 	}
 
-	public boolean isCafeNickNameFlag() {
+	public String isCafeNickNameFlag() {
 		return cafeNickNameFlag;
 	}
 
-	public void setCafeNickNameFlag(boolean cafeNickNameFlag) {
+	public void setCafeNickNameFlag(String cafeNickNameFlag) {
 		this.cafeNickNameFlag = cafeNickNameFlag;
 	}
 
-	public boolean isAutoApplicationAcceptFlag() {
+	public String isAutoApplicationAcceptFlag() {
 		return autoApplicationAcceptFlag;
 	}
 
-	public void setAutoApplicationAcceptFlag(boolean autoApplicationAcceptFlag) {
+	public void setAutoApplicationAcceptFlag(String autoApplicationAcceptFlag) {
 		this.autoApplicationAcceptFlag = autoApplicationAcceptFlag;
 	}
 
-	public boolean isClosedFlag() {
+	public String isClosedFlag() {
 		return closedFlag;
 	}
 
-	public void setClosedFlag(boolean closedFlag) {
+	public void setClosedFlag(String closedFlag) {
 		this.closedFlag = closedFlag;
 	}
 
@@ -176,7 +176,7 @@ public class Cafe {
 	public String toString() {
 		return "Cafe [cafeNo=" + cafeNo + ", cafeName=" + cafeName + ", cafeIcon=" + cafeIcon + ", manageUserNo="
 				+ manageUserNo + ", regDate=" + regDate + ", url=" + url + ", cafeDetail=" + cafeDetail + ", bannerImg="
-				+ bannerImg + ", mainImg=" + mainImg + ", category=" + category + ", applicationDetail="
+				+ bannerImg + ", mainImg=" + mainImg + ", category=" + cafeType + ", applicationDetail="
 				+ applicationDetail + ", closeReason=" + closeReason + ", applicationQuestion1=" + applicationQuestion1
 				+ ", applicationQuestion2=" + applicationQuestion2 + ", applicationQuestion3=" + applicationQuestion3
 				+ ", cafeNickNameFlag=" + cafeNickNameFlag + ", autoApplicationAcceptFlag=" + autoApplicationAcceptFlag
