@@ -18,8 +18,16 @@
 		<result property="boardDetail" 		column="board_detail" 				jdbcType="NUMERIC"  />
 	</resultMap>
 
-	<select  id="getBoardList"   parameterType="string"  resultMap="boardSelectMap">
-		
+	<select  id="getBoardList"   parameterType="int"  resultMap="boardSelectMap">
+		SELECT *
+		FROM board
+		WHERE cafe_no = #{value}
+	</select>
+	
+	<select id="getCafeNo" parameterType ="string" resultType="int">
+		SELECT cafe_no
+		FROM cafe
+		WHERE url = #{value}
 	</select>
 
 

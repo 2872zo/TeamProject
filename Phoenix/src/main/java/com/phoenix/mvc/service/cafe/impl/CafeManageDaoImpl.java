@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.phoenix.mvc.service.cafe.CafeManageDao;
@@ -24,11 +25,17 @@ public class CafeManageDaoImpl implements CafeManageDao {
 	}
 
 	@Override
-	public List getCafeBoard(String cafeURL) { //카페번호
+	public List getCafeBoard(int cafeNo) { //카페번호
 		
-		List boardList = sqlSession.selectList("getBoardList", cafeURL);
+		List boardList = sqlSession.selectList("getBoardList", cafeNo);
 		
 		return boardList;
+	}
+
+	@Override
+	public int getCafeNo(String cafeURL) {
+		
+		return sqlSession.selectOne("getCafeNo", cafeURL);
 	}
 
 }

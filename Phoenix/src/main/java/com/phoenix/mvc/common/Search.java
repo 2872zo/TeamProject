@@ -5,14 +5,6 @@ import java.util.Arrays;
 public class Search{
 	///Field
 	private String cafeURL;
-	public String getCafeURL() {
-		return cafeURL;
-	}
-
-	public void setCafeURL(String cafeURL) {
-		this.cafeURL = cafeURL;
-	}
-
 	private int boardNo;
 	private String searchCondition;
 	private String searchKeyword;
@@ -24,6 +16,14 @@ public class Search{
 	
 	///Constructor
 	public Search() {
+	}
+
+	public String getCafeURL() {
+		return cafeURL;
+	}
+
+	public void setCafeURL(String cafeURL) {
+		this.cafeURL = cafeURL;
 	}
 
 	public int getBoardNo() {
@@ -89,7 +89,7 @@ public class Search{
 	public void setSortCode(int sortCode) {
 		this.sortCode = sortCode;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "Search [cafeURL=" + cafeURL + ", boardNo=" + boardNo + ", searchCondition=" + searchCondition

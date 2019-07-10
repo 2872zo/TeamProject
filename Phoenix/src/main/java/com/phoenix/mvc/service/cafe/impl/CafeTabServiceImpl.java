@@ -11,11 +11,12 @@ import com.phoenix.mvc.service.cafe.CafeTabDao;
 import com.phoenix.mvc.service.cafe.CafeTabService;
 import com.phoenix.mvc.service.domain.Cafe;
 
-@Service
+
+@Service("cafeTabServiceImpl")
 public class CafeTabServiceImpl implements CafeTabService{
 	
 	@Autowired
-	@Qualifier("cafeTabDaoImpl")
+	@Qualifier("cafeTabDaoImpl")	
 	private CafeTabDao cafeTabDao;
 	
 	public void setCafeDao(CafeTabDao cafeDao) {

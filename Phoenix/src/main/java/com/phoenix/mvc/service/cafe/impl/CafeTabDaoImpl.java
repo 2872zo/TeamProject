@@ -11,7 +11,7 @@ import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.cafe.CafeTabDao;
 import com.phoenix.mvc.service.domain.Cafe;
 
-@Repository
+@Repository("cafeTabDaoImpl")
 public class CafeTabDaoImpl implements CafeTabDao{
 	
 	@Autowired
@@ -27,12 +27,9 @@ public class CafeTabDaoImpl implements CafeTabDao{
 	public void addCafe(Cafe cafe) throws Exception {
 		sqlSession.insert("CafeMapper.addCafe", cafe);
 	}
-	
 	@Override
 	public List searchCafe(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		
 		return sqlSession.selectList("CafeTabMapper.searchCafe", search);
 	}
-	
 }

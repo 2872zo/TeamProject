@@ -31,13 +31,14 @@ public class CafeManageController {
 	public String updateCafeBoardView( @PathVariable String cafeURL , HttpSession session, Model model)//session user정보, 카페번호
 	{
 		System.out.println("/{cafeURL}/updateCafeBoardView : GET");
-		//session 으로  1.로그인되어있는지 2.cafeURL의 카페매니저인지 확인
+		//session 으로  1.로그인되어있는지 2.카페에 가입되어있는지 3.cafeURL의 카페매니저인지 확인
+		System.out.println("cafeURL : "+cafeURL);
 		
 		List boardList = cafeManageService.getCafeBoard(cafeURL);
 		
 		model.addAttribute("boardList", boardList);
 		
-		return "updateCafeBoard";
+		return "/cafe/updateCafeBoard";
 	}
 	
 	@RequestMapping(value = "/{cafeURL}/updateCafeBoard", method = RequestMethod.POST)
