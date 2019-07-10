@@ -70,12 +70,14 @@ public class CafeTabContoller {
 		System.out.println("/cafe/search입니다.");
 		System.out.println(search.getSearchCondition());
 		System.out.println(search.getSearchKeyword());
-		
+		System.out.println("서치전"+search);
 		if(search.getCurrentPage() == 0 ){
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
-
+		System.out.println("서치후"+search);
+		
+		
 		Map<String, Object> map = cafeTabService.searchCafe(search);
 		List cafeList = (List) map.get("cafeList");
 		List postList = (List) map.get("postList");

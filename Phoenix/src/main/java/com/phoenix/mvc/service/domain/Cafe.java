@@ -9,6 +9,7 @@ public class Cafe {
 	private String cafeName;
 	private String cafeIcon;
 	private String manageUserNo;
+	private String managerNickname;
 	private Date regDate;
 	private String url;
 	private String cafeDetail;
@@ -179,6 +180,14 @@ public class Cafe {
 
 	public void setMembers(int members) {
 		this.members = members;
+	}
+
+	public String getManagerNickname() {
+		return managerNickname;
+	}
+
+	public void setManagerNickname(String managerNickname) {
+		this.managerNickname = managerNickname;
 	}
 
 	@Override
