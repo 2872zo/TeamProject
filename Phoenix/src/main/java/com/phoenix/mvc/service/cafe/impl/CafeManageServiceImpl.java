@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.phoenix.mvc.service.cafe.CafeManageDao;
 import com.phoenix.mvc.service.cafe.CafeManageService;
+import com.phoenix.mvc.service.domain.Cafe;
 
 @Service("cafeManageServiceImpl")
 public class CafeManageServiceImpl implements CafeManageService {
@@ -33,5 +34,13 @@ public class CafeManageServiceImpl implements CafeManageService {
 	
 		return cafeManageDao.getCafeBoard(cafeNo);
 	}
-
+	@Override
+	public void updateCafeInfo(Cafe cafe) throws Exception {
+		cafeManageDao.updateCafeInfo(cafe);
+	}
+	
+	@Override
+	public Cafe getCafeInfo(String cafeNo) throws Exception {
+		return cafeManageDao.getCafeInfo(cafeNo);
+	}
 }

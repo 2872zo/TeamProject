@@ -24,7 +24,7 @@
 <script type="text/javascript">
 $(function() {
 	$("#addCafe").on("click" , function() {
-		$(self.location).attr("href","/cafe/addCafe");
+		$(self.location).attr("href","/cafe/addCafeView");
 	});
 	$("#explore").on("click" , function() {
 		$("form").attr("method" , "POST").attr("action" , "/cafe/search").submit();

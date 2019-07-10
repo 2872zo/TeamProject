@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="CafeMapper">
+ 	
+ 	
+	<resultMap id="cafeSelectMap" type="com.phoenix.mvc.service.domain.Cafe">
+		<result property="cafeNo" 						column="cafe_no" 							jdbcType="NUMERIC"/>
+		<result property="cafeName" 					column="cafe_name" 							jdbcType="VARCHAR"/>
+		<result property="cafeIcon"						column="cafe_icon" 							jdbcType="VARCHAR" />
+		<result property="manageUserNo" 				column="manage_user_no" 					jdbcType="NUMERIC" />
+		<result property="url" 							column="url" 								jdbcType="VARCHAR" />
+		<result property="cafeDetail" 					column="cafe_detail" 						jdbcType="VARCHAR" />
+		<result property="regDate" 						column="reg_date" 							jdbcType="DATE" />
+		<result property="bannerImg" 					column="banner_img" 						jdbcType="VARCHAR"/>
+		<result property="mainImg" 						column="main_img" 							jdbcType="VARCHAR"/>
+		<result property="cafeType"						column="cafe_type" 							jdbcType="VARCHAR" />
+		<result property="applicationDetail" 			column="application_detail" 				jdbcType="VARCHAR" />
+		<result property="closeReason" 					column="close_reason" 						jdbcType="VARCHAR" />
+		<result property="applicationQuestion1" 		column="application_question1" 				jdbcType="VARCHAR" />
+		<result property="applicationQuestion2"			column="application_question2" 				jdbcType="VARCHAR" />
+		<result property="applicationQuestion3" 		column="application_question3"				jdbcType="VARCHAR" />
+		<result property="cafeNickNameFlag" 			column="cafe_nickname_flag" 				jdbcType="CHAR" />
+		<result property="autoApplicationAcceptFlag" 	column="auto_application_accept_flag" 		jdbcType="CHAR" />
+		<result property="closedFlag" 					column="close_flag" 						jdbcType="CHAR" />
+		<result property="members" 						column="members" 							jdbcType="NUMERIC" />
+	</resultMap>
+	
+	<insert 	id="addCafe"		parameterType="com.phoenix.mvc.service.domain.Cafe" >
+	 	
+		INSERT INTO CAFE (cafe_no, cafe_name, manage_user_no, reg_date, url, cafe_detail, banner_img, main_img, cafe_type, application_detail) 
+VALUES ( SEQ_CAFE_CAFE_NO.NEXTVAL, #{cafeName:VARCHAR}, 10001, SYSDATE, #{url:VARCHAR}, #{cafeDetail:VARCHAR}, #{bannerImg:VARCHAR}, #{mainImg:VARCHAR}, #{cafeType:VARCHAR}, #{applicationDetail:VARCHAR})
+
+	 </insert>
+	 
+	 <update	id="updateCafeInfo"	parameterType="com.phoenix.mvc.service.domain.Cafe" >
+	   	UPDATE cafe
+	   	<set>
+	   		cafe_name 	= #{cafeName:VARCHAR} ,
+			cafe_Detail	= #{cafeDetail:VARCHAR},
+			banner_img = #{bannerImg:VARCHAR},
+			main_img = #{mainImg:VARCHAR},
+			cafe_type = #{cafeType:VARCHAR}
+							
+	   	</set>
+	  WHERE cafe_no = #{cafeNo:NUMERIC}
+	 </update>
+	 
+</mapper>

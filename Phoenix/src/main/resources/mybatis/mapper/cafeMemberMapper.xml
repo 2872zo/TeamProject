@@ -20,7 +20,7 @@
 		<result property="visitCount" 			column="visit_count" 				jdbcType="NUMERIC" />
 	</resultMap>
 	
-	  <update	id="updateCafeMember"	parameterType="purchase" >
+	  <update	id="updateCafeMember"	>
 	   	UPDATE cafe_member
 	   	<set>
 		member_status_code=#{memberStatusCode}	
