@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.cafe.CafeTabDao;
 import com.phoenix.mvc.service.cafe.CafeTabService;
 import com.phoenix.mvc.service.domain.Cafe;

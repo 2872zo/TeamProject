@@ -57,10 +57,13 @@ $(function() {
 
   카페전체검색창입니다.
   
-  <c:forEach var="cafe" items="${cafeList}">
+  <c:forEach var="cafe" items="${list}">
   ${cafe.cafeNo}/${cafe.cafeName}/${cafe.cafeDetail}/${cafe.url}
   <br/>
   </c:forEach>
+  
+  
+  
 </div>
 </body>
 </html>
