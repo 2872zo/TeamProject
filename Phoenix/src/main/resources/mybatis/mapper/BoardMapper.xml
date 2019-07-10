@@ -17,12 +17,43 @@
 		<result property="boardType" 		column="board_type" 				jdbcType="VARCHAR" />
 		<result property="boardDetail" 		column="board_detail" 				jdbcType="NUMERIC"  />
 	</resultMap>
+	
+	<resultMap id="postSelectMap" type="com.phoenix.mvc.service.domain.Post">
+		<result property="postNo" 			column="post_no" 			jdbcType="NUMERIC"/>
+		<result property="boardNo"			column="board_no" 			jdbcType="NUMERIC" />
+		<result property="memberNo" 		column="member_no" 			jdbcType="NUMERIC" />
+		<result property="postTitle" 		column="post_title" 		jdbcType="VARCHAR" />
+		<result property="postContent" 		column="post_content" 		jdbcType="VARCHAR" />
+		<result property="regDate" 			column="reg_date" 			jdbcType="CHAR" />
+		<result property="viewCount" 		column="view_count" 		jdbcType="NUMERIC" />
+		<result property="likeCount" 		column="like_count" 		jdbcType="NUMERIC"  />
+		<result property="memberNickname" 	column="member_nickname" 	jdbcType="VARCHAR"  />
+		<result property="postStatusFlag" 	column="post_status_flag" 	jdbcType="CHAR"  />
+		<result property="postNoticeFlag" 	column="post_notice_flag" 	jdbcType="CHAR"  />
+		<result property="noticeIndex" 		column="notice_index" 		jdbcType="NUMERIC"  />
+	</resultMap>
+	
+	<resultMap id="cafeMemberSelectMap" type="com.phoenix.mvc.service.domain.CafeMember">
+		<result property="memberNo" 			column="member_no" 			jdbcType="NUMERIC"/>
+		<result property="cafeNo"			column="cafe_no" 			jdbcType="NUMERIC" />
+		<result property="userNo" 		column="user_no" 			jdbcType="NUMERIC" />
+		<result property="cafeMemberGradeNo" 			column="cafe_member_grade_no" 				jdbcType="NUMERIC" />
+		<result property="noticeFlag" 				column="notice_flag" 				jdbcType="CHAR" />
+		<result property="memberNickname" 			column="member_nickname" 		jdbcType="VARCHAR" />
+		<result property="memberStatusCode" 			column="member_status_code" 				jdbcType="VARCHAR" />
+		<result property="favoriteFlag" 			column="favorite_flag" 				jdbcType="CHAR"  />
+		<result property="regDate" 			column="reg_date" 			jdbcType="DATE" />
+		<result property="visitCount" 			column="visit_count" 				jdbcType="NUMERIC" />
+		<result property="gradeName"			column="grade_name"  jdbcType="VARCHAR"/>
+	</resultMap>
 
 	<select  id="getBoardList"   parameterType="int"  resultMap="boardSelectMap">
 		SELECT *
 		FROM board
 		WHERE cafe_no = #{value}
+		ORDER BY board_index
 	</select>
+	
 	
 	<select id="getCafeNo" parameterType ="string" resultType="int">
 		SELECT cafe_no
@@ -34,6 +65,14 @@
 		SELECT *
 		FROM post
 		WHERE board_no = #{value}
+	</select>
+	
+	<select id="getCafeMember" parameterType="hashmap" resultMap="cafeMemberSelectMap"> 
+		
+		SELECT me.member_no, me.cafe_no, me.user_no, me.notice_flag, me.member_nickname, me.cafe_member_grade_no, mg.grade_name, me.member_status_code, me.favorite_flag, me.visit_count, me.reg_date
+		FROM cafe_member me,cafe_member_grade mg
+		WHERE (me.cafe_member_grade_no = mg.cafe_member_grade_no ) AND me.user_no = #{userNo} AND me.cafe_no = #{cafeNo}
+		
 	</select>
 
 

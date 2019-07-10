@@ -1,5 +1,6 @@
 package com.phoenix.mvc.web.cafe;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,20 +32,33 @@ public class CafeManageRestController {
 	}
 	
 	@RequestMapping(value = "json/{cafeURL}/checkCafePost", method = RequestMethod.POST )
-	public void updateCafeBoardView( @PathVariable String cafeURL , HttpSession session
+	public Map checkCafePost( @PathVariable String cafeURL , HttpSession session
 			, @RequestBody String jsonQuery)//session user정보, 카페번호
 	{
 		System.out.println("/{cafeURL}/checkCafePost : POST");
 		//session 으로  1.로그인되어있는지 2.카페에 가입되어있는지 3.cafeURL의 카페매니저인지 확인
+		
 		System.out.println("cafeURL : "+cafeURL);
 		System.out.println("넘어온데이터 : "+jsonQuery);
 		
 		JSONObject jsonobj = (JSONObject) JSONValue.parse(jsonQuery);
-		int boardNo = (int) jsonobj.get("boardNo");
+		String boardNo = (String) jsonobj.get("boardNo");
 		
-		cafeManageService.checkCafePost(cafeURL,boardNo);
+		Map map = new HashMap();
 		
-		//return ;
+		boolean isPost = cafeManageService.checkCafePost(cafeURL,Integer.parseInt(boardNo));
+		
+		if(isPost)// true면
+		{
+			map.put("isPost", "true");
+		
+		}
+		else 
+		{
+			map.put("isPost", "false");
+		}
+		
+		return map;
 	}
 
 }

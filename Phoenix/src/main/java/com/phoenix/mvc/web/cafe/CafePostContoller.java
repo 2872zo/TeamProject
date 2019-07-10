@@ -27,13 +27,14 @@ public class CafePostContoller {
 		System.out.println(getClass().getName() + "default Constuctor");
 	}
 	
+	/*
 	@GetMapping("/cafe/{cafeURL}")
 	public String CafeMain(@PathVariable String cafeURL) {
 		System.out.println("CafeMain : " + cafeURL);
 		
 		return "cafe/menubar_temp";
 	}
-	
+	*/
 	@PostMapping("/cafe/{cafeURL}/search")
 	public String CafeInnerSearchList(@RequestParam String keyword, @PathVariable String cafeURL) {
 		System.out.println("CafeInnerSearch : " + cafeURL);

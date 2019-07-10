@@ -6,6 +6,8 @@ public interface CafeManageDao {
 
 	public List getCafeBoard(int cafeNo);
 	
+	public List getCafeBoard(String cafeURL);
+	
 	public int getCafeNo(String cafeURL);
 	
 	public List getBoardPost(int boardNo);

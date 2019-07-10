@@ -10,4 +10,5 @@ public interface CafeMemberDao {
 	//카페탈퇴
 	public void updateCafeMember(CafeMember cafeMember);
 
+	public CafeMember getCafeMember(int cafeNo,int userNo);  //예림예림
 }

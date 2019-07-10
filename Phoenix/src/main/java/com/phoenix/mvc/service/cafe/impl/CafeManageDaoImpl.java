@@ -32,6 +32,14 @@ public class CafeManageDaoImpl implements CafeManageDao {
 		
 		return boardList;
 	}
+	
+	@Override
+	public List getCafeBoard(String cafeURL) { //mapper구현x
+	
+		List boardList = sqlSession.selectList("getBoardListByURL", cafeURL);
+		
+		return boardList;
+	}
 
 	@Override
 	public int getCafeNo(String cafeURL) {
@@ -40,11 +48,14 @@ public class CafeManageDaoImpl implements CafeManageDao {
 	}
 
 	@Override
-	public List getBoardPost(int boardNo) {
+	public List getBoardPost(int boardNo) { 
+		//...이거 공지 가져오기 근데 그럼 카페의 공지게시판의 boardno를 알아야함 (게시판코드,게시판No)
 		
 		List postList = sqlSession.selectList("getBoardPostList", boardNo);
 		
 		return postList;
 	}
+
+	
 
 }

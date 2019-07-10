@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=euc-kr"%>
+<%@ page contentType="text/html; charset=utf-8"%>
 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -11,9 +11,7 @@
 <html lang="ko">
 
 <head>
-	<meta charset="EUC-KR">
 
-	<title>Insert title here</title>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 
 	<script type="text/javascript">
@@ -21,48 +19,83 @@
 
 		$(function() {
 
-			$("#plusBoard").on("click", function(){ //°Ô½ÃÆÇÃß°¡
+			$("select[name=board]").change(function(){ // listboxì„ íƒí•˜ë©´
+					alert($(this).val()); //ok
+
+				 //ì—¬ê¸°ì„œ display noneë“± ì„¤ì •
+			});
+
+			$("#plusBoard").on("click", function(){ //ê²Œì‹œíŒì¶”ê°€
 				
 				alert($("select[name=addableBoard]").val());
-				var appendBoard = "<option value='"+$("select[name=addableBoard]").val()+"'>"+$("select[name=addableBoard]").val()+"</option>"
+				var appendBoard = "<option value='"+$("select[name=addableBoard]").val()+"' id=''>"+$("select[name=addableBoard]").val()+"</option>"
 				$("select[name=board]").append(appendBoard);
+
+				//ê²Œì‹œíŒ ì¶”ê°€í•˜ë©´  ë°‘ì— input type textì¶”ê°€í•˜ê³  
 				
 			});
 
+			//ë°‘ì— ê²Œì‹œê¸€ ìˆ˜ì •í•˜ë©´ list box ê°’ ë°”ë€Œì–´ì•¼í•˜ëŠ”ë° 
+
 			$("#delete").on("click", function(){
-				//1.¼±ÅÃµÈ °Ô½ÃÆÇÀ» °¡Á®¿È  2.ajax·Î °Ô½ÃÆÇÀÖ´ÂÁö Ã¼Å©
-				if( typeof $("select[name=board] option:selected").val() != "undefined")//»èÁ¦ÇÒ °Ô½ÃÆÇÀÌ ¼±ÅÃµÇ¾úÀ¸¸é
+				
+				//1.ì„ íƒëœ ê²Œì‹œíŒì„ ê°€ì ¸ì˜´  2.ajaxë¡œ ê²Œì‹œíŒìˆëŠ”ì§€ ì²´í¬
+				if( typeof $("select[name=board] option:selected").val() != "undefined")//ì‚­ì œí•  ê²Œì‹œíŒì´ ì„ íƒë˜ì—ˆìœ¼ë©´
 				{
+					//alert("_"+$("select[name=board] option:selected").attr("id")+"_");
+
+					if($("select[name=board] option:selected").attr("id")!='')
+					{
+					
 					alert($("select[name=board] option:selected").attr("id")); //board_no
 					var boardNo = $("select[name=board] option:selected").attr("id");
-					//ajax·Î °Ô½ÃÆÇ¿¡ ¹°·ÁÀÖ´Â °Ô½Ã¹°ÀÌ ÀÖ´ÂÁö Ã¼Å©
-					//board_no,cafe_URLÀ» º¸³»¼­ board_no¸¦ °¡Áö°íÀÖ´Â post°¡ ÀÖ´ÂÁö post table¿¡¼­ °Ë»ç 
+					//ajaxë¡œ ê²Œì‹œíŒì— ë¬¼ë ¤ìˆëŠ” ê²Œì‹œë¬¼ì´ ìˆëŠ”ì§€ ì²´í¬
+					//board_no,cafe_URLì„ ë³´ë‚´ì„œ board_noë¥¼ ê°€ì§€ê³ ìˆëŠ” postê°€ ìˆëŠ”ì§€ post tableì—ì„œ ê²€ì‚¬ 
 					$.ajax({
 
-						url : "/cafe/json/cafe01/checkCafePost",
+						url : "/cafe/json/no1cafe/checkCafePost",
 						method : "POST",
 						headers : {
 							"Accept" : "application/json",
 							"Content-Type" : "application/json ; charset=UTF-8"
 						},
-						data : JSON.stringify({ //º¸³»´Â data jsonString È­
+						data : JSON.stringify({ //ë³´ë‚´ëŠ” data jsonString í™”
 
 							boardNo : boardNo
 						}),
 						dataType : "text",
 						success : function(serverData){
 
-							alert("serverData : "+serverData);
-						}
+							//alert("serverData : "+serverData);
 
-					});//ajax³¡
+							var data = JSON.parse(serverData);
+							if(data.isPost=="true"){
+
+								alert("í•´ë‹¹ ê²Œì‹œíŒì— ê²Œì‹œë¬¼ì´ ì¡´ì¬í•©ë‹ˆë‹¤!");
+							}
+							else{
+								
+								var deleteBoard = $("select[name=board] option:selected").remove();
+							}
+							
+						}//success
+
+
+					});//ajaxë
+
+					}//ë°©ê¸ˆì¶”ê°€ëœ ì• ê°€ ì•„ë‹ë•Œ.
+
+					else //ë°©ê¸ˆì¶”ê°€ëœì• 
+					{
+					   alert("ì‚­ì œ");	
+					   $("select[name=board] option:selected").remove();
+					}
+							   
+
 				}
-				
-				var deleteBoard = $("select[name=board] option:selected").remove();
-				//alert(this.html());
 
 				
-			});
+			});//ì‚­ì œë²„íŠ¼ onClick
 
 		});
 	
@@ -73,70 +106,74 @@
 
 <body>
 	
-	¸Ş´º°ü¸®
-	<button type="button" id ="cancel"> Ãë¼Ò </button>
-	<button type="button" id ="save"> ÀúÀåÇÏ±â</button>
+	ë©”ë‰´ê´€ë¦¬
+	<button type="button" id ="cancel"> ì·¨ì†Œ </button>
+	<button type="button" id ="save"> ì €ì¥í•˜ê¸°</button>
 	<br/>
 	<br/>
 	<br/>
 	
-	Ãß°¡¸Ş´º
+	ì¶”ê°€ë©”ë‰´
 
 	<select name="addableBoard" size="2">
-		<option value="ÀÚÀ¯°Ô½ÃÆÇ">ÀÚÀ¯°Ô½ÃÆÇ</option>
-		<option value="±¸ºĞ¼±">±¸ºĞ¼±</option>
+		<option value="ììœ ê²Œì‹œíŒ" selected="selected">ììœ ê²Œì‹œíŒ</option>
+		<option value="êµ¬ë¶„ì„ ">êµ¬ë¶„ì„ </option>
 	</select>
 	
-	<button type="button" id ="plusBoard"> +°Ô½ÃÆÇÃß°¡ </button>
+	<button type="button" id ="plusBoard"> +ê²Œì‹œíŒì¶”ê°€ </button>
 	<br/>
 	<br/>
-	<button type="button" id ="goDown"> ¾Æ·¡·Î</button>
-	<button type="button" id ="goUp"> À§·Î</button>
-	<button type="button" id ="goStart"> ¸ÇÀ§·Î </button>
-	<button type="button" id ="goEnd"> ¸Ç¾Æ·¡·Î </button>
-	<button type="button" id ="delete"> »èÁ¦ </button>
+	<button type="button" id ="goDown"> ì•„ë˜ë¡œ</button>
+	<button type="button" id ="goUp"> ìœ„ë¡œ</button>
+	<button type="button" id ="goStart"> ë§¨ìœ„ë¡œ </button>
+	<button type="button" id ="goEnd"> ë§¨ì•„ë˜ë¡œ </button>
+	<button type="button" id ="delete"> ì‚­ì œ </button>
 	
 	
-	<!--  °Ô½ÃÆÇ ¸®½ºÆ® ºÒ·¯¿À±â -->
+	<!--  ê²Œì‹œíŒ ë¦¬ìŠ¤íŠ¸ ë¶ˆëŸ¬ì˜¤ê¸° -->
 		
 		
 		<br/>
 		<br/>
 		
-		<select name="board" size="${fn:length(boardList)} ">
+		<select name="board" size=10>
     		
     		<c:set var="i" value="0" />  
+			
 			<c:forEach var="board" items="${boardList}">
 				<c:set var="i" value="${ i+1 }" />
 			
-			<option value="${board.boardName}" id="${board.boardNo}">${board.boardName}</option>
+			
+			<c:if test="${i eq 1}">
+				<option  value="${board.boardName}" id="${board.boardNo}" selected="selected">${board.boardName}</option>
+			</c:if>
+			
+			<c:if test="${i ne 1}">
+				<option value="${board.boardName}" id="${board.boardNo}">${board.boardName}</option>
+			</c:if>
 			
 			</c:forEach>
-    		
-    		
    			
 		</select>
 		
 		
-		<br/>
-		<br/>
-		¸Ş´º¸í  <input type="text" id="boardName" name="boardName" value="${boardList[0].boardName}"/>
-		<br/>
-		¸Ş´º¼³¸í <input type="text" id="boardDetail" name="boardDetail" width ="50" value="${boardList[0].boardDetail}">
-		<br/>
-		<br/>
+		<c:forEach var="board" items="${boardList}">
+				<c:set var="i" value="${ i+1 }" />
 		
-		°Ô½ÃÆÇ °ø°³¿©ºÎ¸¦ ¼³Á¤ÇÕ´Ï´Ù. ¸â¹ö°ø°³¸¦ ¼±ÅÃ½Ã, °Ô½ÃÆÇÀº ¸â¹ö¿¡°Ô¸¸ º¸¿©Áı´Ï´Ù.
-		<br/>
-		<br/>
-		µî±Ş¼³Á¤
-		<select name="accessGrade">
-    		<option value="">Á÷¾÷¼±ÅÃ</option>
-   			 <option value="ÇĞ»ı">ÇĞ»ı</option>
-    		<option value="È¸»ç¿ø">È¸»ç¿ø</option>
-    		<option value="±âÅ¸">±âÅ¸</option>
-		</select>
-			
+			<br/>
+			<br/>
+			ë©”ë‰´ëª…  <input type="text" name="boardName" value="${board.boardName}" />
+			<br />
+			ë©”ë‰´ì„¤ëª… <input type="text"  name="boardDetail" width="50" value="${board.boardDetail}">
+			<br/>
+			<br/>
+		
+			ê²Œì‹œíŒ ê³µê°œì—¬ë¶€ë¥¼ ì„¤ì •í•©ë‹ˆë‹¤. ë©¤ë²„ê³µê°œë¥¼ ì„ íƒì‹œ, ê²Œì‹œíŒì€ ë©¤ë²„ì—ê²Œë§Œ ë³´ì—¬ì§‘ë‹ˆë‹¤.
+			<br/>
+			<br/>
+		
+		
+		</c:forEach>
 	
 
 </body>

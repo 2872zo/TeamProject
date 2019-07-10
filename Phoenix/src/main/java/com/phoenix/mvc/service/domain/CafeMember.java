@@ -14,7 +14,17 @@ public class CafeMember {
 	private Character favoriteFlag;
 	private Date regDate;
 	private String visitCount;
+	private String gradeName; //예림예림
 	
+	////////////////////////////////////////////////////////////예림예림
+	public String getGradeName() {
+		return gradeName;
+	}
+
+	public void setGradeName(String gradeName) {
+		this.gradeName = gradeName;
+	}
+/////////////////////////////////////////////////////////////
 	public CafeMember() {
 
 	}
