@@ -16,7 +16,7 @@
 		<result property="cafeDetail" 				 column="CAFE_DETAIL" 					jdbcType="VARCHAR" />
 		<result property="bannerImg" 				 column="BANNER_IMG" 					jdbcType="VARCHAR"  />
 		<result property="mainImg" 					 column="MAIN_IMG" 						jdbcType="VARCHAR" />
-		<result property="category" 				 column="CAFE_TYPE" 					jdbcType="VARCHAR" />
+		<result property="cafeType" 				 column="CAFE_TYPE" 					jdbcType="VARCHAR" />
 		<result property="applicationDetail" 		 column="APPLICATION_DETAIL" 			jdbcType="VARCHAR" />
 		<result property="closeReason" 				 column="CLOSE_REASON" 					jdbcType="VARCHAR"  />
 		<result property="applicationQuestion1" 	 column="APPLICATION_QUESTION1" 		jdbcType="VARCHAR" />
@@ -25,16 +25,46 @@
 		<result property="cafeNickNameFlag" 		 column="MEMBER_NICKNAME_FLAG" 			jdbcType="VARCHAR" />
 		<result property="autoApplicationAcceptFlag" column="AUTO_APPLICATION_ACCEPT_FLAG" 	jdbcType="VARCHAR" />
 		<result property="closedFlag" 				 column="CLOSED_FLAG" 					jdbcType="VARCHAR" />
+		<result property="members" 					 column="members" 						jdbcType="NUMERIC" />
 	</resultMap>
 	
 	<!-- SQL : SELECT -->
-	<select id="searchCafe" parameterType="com.phoenix.mvc.common.Search" resultMap="cafeTabSelectMap">
+	<select id="searchCafe" parameterType="Search" resultMap="cafeTabSelectMap">
 	 	SELECT
-		c.cafe_name, c.cafe_icon, c.manage_user_no, c.reg_date, c.url, c.cafe_detail, c.cafe_type, c.closed_flag, u.user_nickname
+		c.cafe_no, c.cafe_name, c.cafe_icon, c.manage_user_no, c.reg_date, c.url, c.cafe_detail, c.cafe_type, c.closed_flag, c.reg_date, c.members, u.user_nickname
 		FROM cafe c, users u
 		WHERE c.manage_user_no=u.user_no
-		AND c.cafe_name like '%' ||#{searchKeyword}|| '%'	 	
+		AND
+		(c.cafe_name like '%' ||#{searchKeyword}|| '%'	
+		OR c.cafe_detail like '%' ||#{searchKeyword}|| '%')
+		ORDER BY c.reg_date DESC	
+	 </select>
+	 
+	 <select id="listCafe" parameterType="Search" resultMap="cafeTabSelectMap">
+	 	SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(
+	 	SELECT
+		c.cafe_no, c.cafe_name, c.cafe_icon, c.manage_user_no, c.reg_date, c.url, c.cafe_detail, c.cafe_type, c.closed_flag, c.reg_date, c.members, u.user_nickname
+		FROM cafe c, users u
+		WHERE c.manage_user_no=u.user_no
+		AND
+		(c.cafe_name like '%' ||#{searchKeyword}|| '%'	
+		OR c.cafe_detail like '%' ||#{searchKeyword}|| '%')
+		ORDER BY c.reg_date DESC
+		) inner_table
+		WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+	 </select>
+	 
+	 <select  id="searchCafeTotalCount"   parameterType="Search"  resultType="int">
+		SELECT
+		count(*)
+		FROM cafe c, users u
+		WHERE c.manage_user_no=u.user_no
+		AND
+		(c.cafe_name like '%' ||#{searchKeyword}|| '%'	
+		OR c.cafe_detail like '%' ||#{searchKeyword}|| '%')
 	 </select>
 	
-	 
 </mapper>

@@ -23,23 +23,15 @@
 
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
-function fncGetList(currentPage) {
-	  $("#currentPage").val(currentPage)
-	  $("form").attr("method" , "POST").attr("action" , "/cafe/search").submit();
-	}
-	
 $(function() {
 	$("#addCafe").on("click" , function() {
 		$(self.location).attr("href","/cafe/addCafe");
 	});
-	
-	$("#moreCafe").on("click" , function() {
-		$("#searchCondition").val(1);
+	$("#explore").on("click" , function() {
 		$("form").attr("method" , "POST").attr("action" , "/cafe/search").submit();
 	});
-	$("#morePost").on("click" , function() {
-		$("#searchCondition").val(2);
-		$("form").attr("method" , "POST").attr("action" , "/cafe/search").submit();
+	$(".searchCondition").on("click" , function() {
+		$("#searchCondition").val($(".searchCondition").index(this));
 	});
 	
 });
@@ -49,23 +41,33 @@ $(function() {
 
 <body>
 <div class="container">
+<br/>
+<form>
+	<div class="input-group mb-3">
+	  <div class="input-group-prepend">
+	   <select class="custom-select custom-select-lg" aria-label="Example select with button addon" name='searchCondition' id='searchCondition'>
+	    <option class='searchCondition' value="0" ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>카페+게시글</option>
+	    <option class='searchCondition' value="1" ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>카페이름</option>
+	    <option class='searchCondition' value="2" ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>게시글</option>
+	   </select>
+	    </div>
+	  <input type="text" class="form-control form-control-lg" placeholder="검색어 입력해주세요" aria-label="Text input with dropdown button" aria-describedby="button-addon2" name="searchKeyword" id="searchKeyword" value='${! empty search.searchKeyword ? search.searchKeyword : '' }'>
+	 <div class="input-group-append">
+	    <button class="btn btn-outline-secondary" type="button" id="explore">검색</button>
+	 </div>
+	</div>
+</form>	
 
 
   카페전체검색창입니다.
   <c:if test="${!empty cafeList}">
   <br/>
-  카페번호/카페이름/카페설명/카페유알엘/카페회원수
+  카페번호/카페이름/카페설명/카페유알엘
   <br/>
   <c:forEach var="cafe" items="${cafeList}">
-  ${cafe.cafeNo}/${cafe.cafeName}/${cafe.cafeDetail}/${cafe.url}/${cafe.members}
+  ${cafe.cafeNo}/${cafe.cafeName}/${cafe.cafeDetail}/${cafe.url}
   <br/>
   </c:forEach>
-  <c:if test="${ !empty search.searchCondition && search.searchCondition==0}">
-  <button type="button" class="btn btn-outline-primary" id='moreCafe'>카페 더보기</button>
-  </c:if>
-   <c:if test="${ !empty search.searchCondition && search.searchCondition==1}">
-  <jsp:include page="../common/pageNavigator.jsp" />
-  </c:if>
   </c:if>
   <br/>
   <c:if test="${!empty postList}">
@@ -75,12 +77,6 @@ $(function() {
   ${post.cafeUrl}/${post.cafeName}/${post.cafeIcon}/${post.postTitle}/${post.postNo}
   <br/>
   </c:forEach>
-  <c:if test="${ !empty search.searchCondition && search.searchCondition==0}">
-  <button type="button" class="btn btn-outline-success" id='morePost'>게시글 더보기</button>
-  </c:if>
-   <c:if test="${ !empty search.searchCondition && search.searchCondition==2}">
-  <jsp:include page="../common/pageNavigator.jsp" />
-  </c:if>
   </c:if>
   
   

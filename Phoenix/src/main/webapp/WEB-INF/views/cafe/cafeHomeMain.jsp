@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=euc-kr"%>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
@@ -8,7 +8,7 @@
 
 <head>
 <title>CafeTabMain</title>
-<meta charset="EUC-KR">
+
 
 
 <!--  /////////////////////////  jQuery CDN ////////////////////////// -->
@@ -26,10 +26,16 @@ $(function() {
 	$("#addCafe").on("click" , function() {
 		$(self.location).attr("href","/cafe/addCafe");
 	});
-	$("#explore").on("click" , function() {
-		$("form").attr("method" , "POST").attr("action" , "/cafe/search").submit();
+
+	$(".cafeListing").on("click" , function() {
+		alert("ì¹´í˜ì¢…ë¥˜ì•¼");
+		//alert($(".cafeListing").index(this).val());
 	});
-	
+
+	$(".cafeCategory").on("click" , function() {
+		alert("ì¹´í˜ì¹´í…Œê³ ë¦¬ì•¼");
+		//alert($(".cafeCategory").index(this).val());
+	});
 });
 </script>
 	<!-- ToolBar Start /////////////////////////////////////-->
@@ -41,47 +47,32 @@ $(function() {
 
 
 
-	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
+	<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
 	<div class="container">
-<br/>		
-<form>
-	<div class="input-group mb-3">
-	  <div class="input-group-prepend">
-	   <select class="custom-select custom-select-lg" aria-label="Example select with button addon" name='searchCondition'>
-	    <option selected value="0">ÅëÇÕ°Ë»ö</option>
-	    <option value="1">Ä«ÆäÀÌ¸§</option>
-	    <option value="2">Ä«Æä°Ô½Ã±Û</option>
-	   </select>
-	    </div>
-	  <input type="text" class="form-control form-control-lg" placeholder="°Ë»ö¾î ÀÔ·ÂÇØÁÖ¼¼¿ä" aria-label="Text input with dropdown button" aria-describedby="button-addon2" name="searchKeyword" id="searchKeyword">
-	 <div class="input-group-append">
-	    <button class="btn btn-outline-secondary" type="button" id="explore">°Ë»ö</button>
-	 </div>
-	</div>
-</form>	
+
 	<br/>
-		<button type="button" class="btn btn-outline-warning btn-block" id='addCafe'>Ä«Æä¸¸µé±â</button>
+		<button type="button" class="btn btn-outline-warning btn-block" id='addCafe'>ì¹´í˜ë§Œë“¤ê¸°</button>
 	<br/>
 	
 	<div class="center-block">
 	<div class="btn-group btn-group-toggle" data-toggle="buttons" id='cafeListing' style="float:none; margin:0 auto">
   <label class="btn btn-lg btn-outline-primary active">
-    <input type="radio" name="options" id="managed" autocomplete="off" checked> ¿î¿µÁßÀÎ Ä«Æä
+    <input type="radio" name="options" class ='cafeListing' id="managed" value='managed' autocomplete="off" checked> ìš´ì˜ì¤‘ì¸ ì¹´í˜
   </label>
   <label class="btn btn-lg btn-outline-primary">
-    <input type="radio" name="options" id="open" autocomplete="off"> È°µ¿ÁßÀÎ Ä«Æä
+    <input type="radio" name="options" class ='cafeListing' id="open" value='open' autocomplete="off"> í™œë™ì¤‘ì¸ ì¹´í˜
   </label>
   <label class="btn btn-lg btn-outline-primary">
-    <input type="radio" name="options" id="favorite" autocomplete="off"> Áñ°ÜÃ£±â Ä«Æä
+    <input type="radio" name="options" class ='cafeListing' id="favorite" value='favorite' autocomplete="off"> ì¦ê²¨ì°¾ê¸° ì¹´í˜
   </label>
   <label class="btn btn-lg btn-outline-primary">
-    <input type="radio" name="options" id="application" autocomplete="off"> °¡ÀÔ ½ÅÃ»³»¿ª
+    <input type="radio" name="options" class ='cafeListing' id="application" value='application' autocomplete="off"> ê°€ì… ì‹ ì²­ë‚´ì—­
   </label>
   <label class="btn btn-lg btn-outline-primary">
-    <input type="radio" name="options" id="blocked" autocomplete="off"> Á¤Áö´çÇÑ Ä«Æä
+    <input type="radio" name="options" class ='cafeListing' id="blocked" value='blocked' autocomplete="off"> ì •ì§€ë‹¹í•œ ì¹´í˜
   </label>
 	<label class="btn btn-lg btn-outline-primary">
-    <input type="radio" name="options" id="newsfeed" autocomplete="off"> Ä«Æä »õ°Ô½Ã±Û
+    <input type="radio" name="options" class ='cafeListing' id="newsfeed" value='newsfeed' autocomplete="off"> ì¹´í˜ ìƒˆê²Œì‹œê¸€
   </label>
 	</div>
 	</div>
@@ -93,29 +84,32 @@ $(function() {
 <div class="center-block">
 	<div class="btn-group btn-group-toggle" data-toggle="buttons" id='cafeCategorized' style="float:none; margin:0 auto">
   <label class="btn btn-outline-success active">
-    <input type="radio" name="options" id="friendship" checked> Ä£¸ñ/¸ğÀÓ
+    <input type="radio" class ='cafeCategory' name="options" id="friendship" value='friendship' checked> ì¹œëª©/ëª¨ì„
   </label>
   <label class="btn btn-outline-success">
-    <input type="radio" name="options" id="sports"> ½ºÆ÷Ã÷/·¹Àú
+    <input type="radio" class ='cafeCategory' name="options" id="sports" value='sports'> ìŠ¤í¬ì¸ /ë ˆì €
   </label>
   <label class="btn btn-outline-success">
-    <input type="radio" name="options" id="movie"> ¿µÈ­
+    <input type="radio" class ='cafeCategory' name="options" id="movie" value='movie'> ì˜í™”
   </label>
   <label class="btn btn-outline-success">
-    <input type="radio" name="options" id="game"> °ÔÀÓ
+    <input type="radio" class ='cafeCategory' name="options" id="game" value='game'> ê²Œì„
   </label>
   <label class="btn btn-outline-success">
-    <input type="radio" name="options" id="music"> À½¾Ç
+    <input type="radio" class ='cafeCategory' name="options" id="music" value='music'> ìŒì•…
   </label>
   <label class="btn btn-outline-success">
-    <input type="radio" name="options" id="trip"> ¿©Çà
+    <input type="radio" class ='cafeCategory' name="options" id="trip" value='trip'> ì—¬í–‰
   </label>
 </div>
 </div>
 
+
+
+
 	
 </div>
-	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
+	<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
 
 </body>
 </html>

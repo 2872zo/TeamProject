@@ -20,6 +20,9 @@
 		<result property="postStatusFlag" 	column="post_status_flag" 	jdbcType="CHAR"  />
 		<result property="postNoticeFlag" 	column="post_notice_flag" 	jdbcType="CHAR"  />
 		<result property="noticeIndex" 		column="notice_index" 		jdbcType="NUMERIC"  />
+		<result property="cafeName" 		column="cafe_name" 			jdbcType="VARCHAR"  />
+		<result property="cafeUrl" 			column="url" 				jdbcType="VARCHAR"  />
+		<result property="cafeIcon" 		column="cafe_icon" 			jdbcType="VARCHAR"  />
 	</resultMap>
 
 	<select  id="getBoard"   parameterType="Search"  resultMap="postSelectMap">
@@ -39,6 +42,33 @@
 		FROM post 
 		WHERE board_no = #{boardNo}
 		ORDER BY reg_date DESC
+	</select>
+	
+	<select  id="searchCafePost"   parameterType="Search"  resultMap="postSelectMap">
+		SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(
+	  	SELECT
+		c.url, c.cafe_name, c.cafe_icon, b.board_no, p.post_title, p.reg_date
+		FROM	cafe c, board b, post p
+		WHERE	c.cafe_no=b.cafe_no
+		AND		p.board_no=b.board_no
+		AND		p.post_status_flag='0'
+		AND		p.post_title like '%' ||#{searchKeyword}|| '%'
+		ORDER BY p.reg_date DESC
+		 ) inner_table
+		WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+	</select>
+	
+	<select  id="searchPostTotalCount"   parameterType="Search"  resultType="int">
+		SELECT
+		count(*)
+		FROM	cafe c, board b, post p
+		WHERE	c.cafe_no=b.cafe_no
+		AND		p.board_no=b.board_no
+		AND		p.post_status_flag='0'
+		AND		p.post_title like '%' ||#{searchKeyword}|| '%'
 	</select>
 
 </mapper>

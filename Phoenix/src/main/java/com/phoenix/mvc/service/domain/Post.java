@@ -4,6 +4,9 @@ import java.util.Date;
 
 public class Post {
 	private int postNo;
+	private String cafeName;
+	private String cafeUrl;
+	private String cafeIcon;
 	private int boardNo;
 	private int memberNo;
 	private String postTitle;
@@ -87,6 +90,25 @@ public class Post {
 	}
 	public void setNoticeIndex(int noticeIndex) {
 		this.noticeIndex = noticeIndex;
+	}
+	
+	public String getCafeName() {
+		return cafeName;
+	}
+	public void setCafeName(String cafeName) {
+		this.cafeName = cafeName;
+	}
+	public String getCafeUrl() {
+		return cafeUrl;
+	}
+	public void setCafeUrl(String cafeUrl) {
+		this.cafeUrl = cafeUrl;
+	}
+	public String getCafeIcon() {
+		return cafeIcon;
+	}
+	public void setCafeIcon(String cafeIcon) {
+		this.cafeIcon = cafeIcon;
 	}
 	
 	@Override

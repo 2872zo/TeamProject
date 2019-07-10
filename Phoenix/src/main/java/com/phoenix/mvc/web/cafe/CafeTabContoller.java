@@ -1,10 +1,7 @@
 package com.phoenix.mvc.web.cafe;
 
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,8 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.phoenix.mvc.service.cafe.CafeTabService;
 import com.phoenix.mvc.service.domain.Cafe;
-
-
+import com.phoenix.mvc.common.Page;
 import com.phoenix.mvc.common.Search;
 
 
@@ -27,6 +23,9 @@ public class CafeTabContoller {
 	@Autowired
 	@Qualifier("cafeTabServiceImpl")
 	private CafeTabService cafeTabService;
+	
+	int pageSize = 2;
+	int pageUnit = 3;
 	
 	public CafeTabContoller() {
 		System.out.println(getClass().getName() + "default Constuctor");
@@ -39,7 +38,7 @@ public class CafeTabContoller {
 	}
 
 	
-	@RequestMapping(value= "/{cafeURL}/addCafe", method=RequestMethod.GET)
+	@RequestMapping(value= "/cafe/addCafe", method=RequestMethod.GET)
 	public String addCafe(@ModelAttribute("cafe") Cafe cafe)throws Exception{
 		
 		System.out.println("/addCafe : POST");
@@ -79,9 +78,20 @@ public class CafeTabContoller {
 		System.out.println(search.getSearchCondition());
 		System.out.println(search.getSearchKeyword());
 		
-	
-		List list =cafeTabService.searchCafe(search);
-		model.addAttribute("cafeList", list);
+		if(search.getCurrentPage() == 0 ){
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(pageSize);
+
+		Map<String, Object> map = cafeTabService.searchCafe(search);
+		List cafeList = (List) map.get("cafeList");
+		List postList = (List) map.get("postList");
+		Page page = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+		//Page page = new Page();
+		model.addAttribute("cafeList", cafeList);
+		model.addAttribute("postList", postList);
+		model.addAttribute("search", search);
+		model.addAttribute("page", page);
 		return "forward:/WEB-INF/views/cafe/listCafeSearch.jsp";
 	}
 }

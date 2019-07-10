@@ -23,6 +23,7 @@ public class Cafe {
 	private String cafeNickNameFlag;
 	private String autoApplicationAcceptFlag;
 	private String closedFlag;
+	private int members;
 
 	/// Constructor
 	public Cafe() {
@@ -100,52 +101,12 @@ public class Cafe {
 		this.mainImg = mainImg;
 	}
 
-	public String getcafeType() {
+	public String getCafeType() {
 		return cafeType;
 	}
 
 	public void setCafeType(String cafeType) {
 		this.cafeType = cafeType;
-	}
-
-	public String isCafeNickNameFlag() {
-		return cafeNickNameFlag;
-	}
-
-	public void setCafeNickNameFlag(String cafeNickNameFlag) {
-		this.cafeNickNameFlag = cafeNickNameFlag;
-	}
-
-	public String isAutoApplicationAcceptFlag() {
-		return autoApplicationAcceptFlag;
-	}
-
-	public void setAutoApplicationAcceptFlag(String autoApplicationAcceptFlag) {
-		this.autoApplicationAcceptFlag = autoApplicationAcceptFlag;
-	}
-
-	public String isClosedFlag() {
-		return closedFlag;
-	}
-
-	public void setClosedFlag(String closedFlag) {
-		this.closedFlag = closedFlag;
-	}
-
-	public String getCloseReason() {
-		return closeReason;
-	}
-
-	public void setCloseReason(String closeReason) {
-		this.closeReason = closeReason;
-	}
-
-	public String getApplicationQuestion2() {
-		return applicationQuestion2;
-	}
-
-	public void setApplicationQuestion2(String applicationQuestion2) {
-		this.applicationQuestion2 = applicationQuestion2;
 	}
 
 	public String getApplicationDetail() {
@@ -156,12 +117,28 @@ public class Cafe {
 		this.applicationDetail = applicationDetail;
 	}
 
+	public String getCloseReason() {
+		return closeReason;
+	}
+
+	public void setCloseReason(String closeReason) {
+		this.closeReason = closeReason;
+	}
+
 	public String getApplicationQuestion1() {
 		return applicationQuestion1;
 	}
 
 	public void setApplicationQuestion1(String applicationQuestion1) {
 		this.applicationQuestion1 = applicationQuestion1;
+	}
+
+	public String getApplicationQuestion2() {
+		return applicationQuestion2;
+	}
+
+	public void setApplicationQuestion2(String applicationQuestion2) {
+		this.applicationQuestion2 = applicationQuestion2;
 	}
 
 	public String getApplicationQuestion3() {
@@ -172,17 +149,57 @@ public class Cafe {
 		this.applicationQuestion3 = applicationQuestion3;
 	}
 
+	public String getCafeNickNameFlag() {
+		return cafeNickNameFlag;
+	}
+
+	public void setCafeNickNameFlag(String cafeNickNameFlag) {
+		this.cafeNickNameFlag = cafeNickNameFlag;
+	}
+
+	public String getAutoApplicationAcceptFlag() {
+		return autoApplicationAcceptFlag;
+	}
+
+	public void setAutoApplicationAcceptFlag(String autoApplicationAcceptFlag) {
+		this.autoApplicationAcceptFlag = autoApplicationAcceptFlag;
+	}
+
+	public String getClosedFlag() {
+		return closedFlag;
+	}
+
+	public void setClosedFlag(String closedFlag) {
+		this.closedFlag = closedFlag;
+	}
+
+	public int getMembers() {
+		return members;
+	}
+
+	public void setMembers(int members) {
+		this.members = members;
+	}
+
 	@Override
 	public String toString() {
 		return "Cafe [cafeNo=" + cafeNo + ", cafeName=" + cafeName + ", cafeIcon=" + cafeIcon + ", manageUserNo="
 				+ manageUserNo + ", regDate=" + regDate + ", url=" + url + ", cafeDetail=" + cafeDetail + ", bannerImg="
-				+ bannerImg + ", mainImg=" + mainImg + ", category=" + cafeType + ", applicationDetail="
+				+ bannerImg + ", mainImg=" + mainImg + ", cafeType=" + cafeType + ", applicationDetail="
 				+ applicationDetail + ", closeReason=" + closeReason + ", applicationQuestion1=" + applicationQuestion1
 				+ ", applicationQuestion2=" + applicationQuestion2 + ", applicationQuestion3=" + applicationQuestion3
 				+ ", cafeNickNameFlag=" + cafeNickNameFlag + ", autoApplicationAcceptFlag=" + autoApplicationAcceptFlag
-				+ ", closedFlag=" + closedFlag + "]";
+				+ ", closedFlag=" + closedFlag + ", members=" + members + ", getCafeNo()=" + getCafeNo()
+				+ ", getCafeName()=" + getCafeName() + ", getCafeIcon()=" + getCafeIcon() + ", getManageUserNo()="
+				+ getManageUserNo() + ", getRegDate()=" + getRegDate() + ", getUrl()=" + getUrl() + ", getCafeDetail()="
+				+ getCafeDetail() + ", getBannerImg()=" + getBannerImg() + ", getMainImg()=" + getMainImg()
+				+ ", getCafeType()=" + getCafeType() + ", getApplicationDetail()=" + getApplicationDetail()
+				+ ", getCloseReason()=" + getCloseReason() + ", getApplicationQuestion1()=" + getApplicationQuestion1()
+				+ ", getApplicationQuestion2()=" + getApplicationQuestion2() + ", getApplicationQuestion3()="
+				+ getApplicationQuestion3() + ", getCafeNickNameFlag()=" + getCafeNickNameFlag()
+				+ ", getAutoApplicationAcceptFlag()=" + getAutoApplicationAcceptFlag() + ", getClosedFlag()="
+				+ getClosedFlag() + ", getMembers()=" + getMembers() + ", getClass()=" + getClass() + ", hashCode()="
+				+ hashCode() + ", toString()=" + super.toString() + "]";
 	}
-
-
 
 }

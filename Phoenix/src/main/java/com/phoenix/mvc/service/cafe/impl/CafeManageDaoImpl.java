@@ -30,12 +30,14 @@ public class CafeManageDaoImpl implements CafeManageDao {
 		List boardList = sqlSession.selectList("getBoardList", cafeNo);
 		
 		return boardList;
+		
 	}
 
 	@Override
 	public int getCafeNo(String cafeURL) {
 		
 		return sqlSession.selectOne("getCafeNo", cafeURL);
+		
 	}
 
 }
