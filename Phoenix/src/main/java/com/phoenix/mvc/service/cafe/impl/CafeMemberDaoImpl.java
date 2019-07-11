@@ -47,10 +47,10 @@ public class CafeMemberDaoImpl implements CafeMemberDao {
 
 		cafeMember = sqlSession.selectOne("getCafeMember", map);
 
-		if (cafeMember.getUserNo() == null) // 유저가 해당하는 카페 멤버가아닌경우(db값이 없으면)
-		{
-			cafeMember.setUserNo("500"); // cafe
-		}
+	//	if (cafeMember.getUserNo() == null) // 유저가 해당하는 카페 멤버가아닌경우(db값이 없으면) 형님때문에
+	//	{
+	//		cafeMember.setUserNo(500); // cafe
+	//	}
 
 		return cafeMember;
 	}

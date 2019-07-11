@@ -108,11 +108,11 @@ public class CafeTabServiceImpl implements CafeTabService{
 			System.out.println("cafeMember: "+cafeMember);
 			
 		}
-		else //로그인이 되어있지않음.
+		//else //로그인이 되어있지않음.
 			
-		{
-			cafeMember.setUserNo("400");
-		}
+		//{
+		//	cafeMember.setUserNo("400"); 형님때문에
+		//}
 		map.put("cafeMember", cafeMember);
 		
 		
