@@ -82,10 +82,10 @@ public class CafeMemberController {
 		cafeMember.setMemberNo(10001);
 		cafeMember.setCafeNo(10000);
 		cafeMember.setUserNo(10001);
-		cafeMember.setNoticeFlag('0');
+//		cafeMember.setNoticeFlag('0');	//에러변경=========================================================
 		cafeMember.setMemberNickname("멤버1");
 		cafeMember.setCafeMemberGradeNo(10002);
-		cafeMember.setFavoriteFlag('0');
+//		cafeMember.setFavoriteFlag('0'); //에러변경=========================================================
 		cafeMember.setRegDate(null);
 		cafeMember.setVisitCount(1);
 		cafeMember.setMemberStatusCode(memberStatusCode);

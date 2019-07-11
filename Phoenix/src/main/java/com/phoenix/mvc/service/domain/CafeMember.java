@@ -9,8 +9,8 @@ public class CafeMember {
 	private int userNo;
 	private String memberNickname;
 	private String memberStatusCode;
-	private Character noticeFlag;
-	private Character favoriteFlag;
+	private boolean noticeFlag;
+	private boolean favoriteFlag;
 	private int cafeMemberGradeNo;
 	private String memberGrade;
 	private String gradeName;
@@ -18,7 +18,6 @@ public class CafeMember {
 	private int visitCount;
 	private int postCount;
 	private int replyCount;
-
 	public int getMemberNo() {
 		return memberNo;
 	}
@@ -49,16 +48,16 @@ public class CafeMember {
 	public void setMemberStatusCode(String memberStatusCode) {
 		this.memberStatusCode = memberStatusCode;
 	}
-	public Character getNoticeFlag() {
+	public boolean isNoticeFlag() {
 		return noticeFlag;
 	}
-	public void setNoticeFlag(Character noticeFlag) {
+	public void setNoticeFlag(boolean noticeFlag) {
 		this.noticeFlag = noticeFlag;
 	}
-	public Character getFavoriteFlag() {
+	public boolean isFavoriteFlag() {
 		return favoriteFlag;
 	}
-	public void setFavoriteFlag(Character favoriteFlag) {
+	public void setFavoriteFlag(boolean favoriteFlag) {
 		this.favoriteFlag = favoriteFlag;
 	}
 	public int getCafeMemberGradeNo() {
@@ -112,5 +111,5 @@ public class CafeMember {
 				+ memberGrade + ", gradeName=" + gradeName + ", regDate=" + regDate + ", visitCount=" + visitCount
 				+ ", postCount=" + postCount + ", replyCount=" + replyCount + "]";
 	}
-	
+
 }
