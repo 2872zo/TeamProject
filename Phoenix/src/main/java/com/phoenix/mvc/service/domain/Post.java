@@ -1,5 +1,6 @@
 package com.phoenix.mvc.service.domain;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Post {
@@ -8,13 +9,14 @@ public class Post {
 	private String cafeUrl;
 	private String cafeIcon;
 	private int boardNo;
+	private String boardName;
 	private int memberNo;
+	private String memberNickname;
 	private String postTitle;
 	private String postContent;
 	private Date regDate;
 	private int viewCount;
 	private int likeCount;
-	private String memberNickname;
 	private boolean postStatusFlag;
 	private boolean postNoticeFlag;
 	private int noticeIndex;
@@ -30,6 +32,12 @@ public class Post {
 	}
 	public void setBoardNo(int boardNo) {
 		this.boardNo = boardNo;
+	}
+	public String getBoardName() {
+		return boardName;
+	}
+	public void setBoardName(String boardName) {
+		this.boardName = boardName;
 	}
 	public int getMemberNo() {
 		return memberNo;
@@ -49,8 +57,10 @@ public class Post {
 	public void setPostContent(String postContent) {
 		this.postContent = postContent;
 	}
-	public Date getRegDate() {
-		return regDate;
+	public String getRegDate() {
+		SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-DD HH:MM:SS");
+		
+		return format.format(regDate);
 	}
 	public void setRegDate(Date regDate) {
 		this.regDate = regDate;
@@ -113,9 +123,10 @@ public class Post {
 	
 	@Override
 	public String toString() {
-		return "Post [postNo=" + postNo + ", boardNo=" + boardNo + ", memberNo=" + memberNo + ", postTitle=" + postTitle
-				+ ", postContent=" + postContent + ", regDate=" + regDate + ", viewCount=" + viewCount + ", likeCount="
-				+ likeCount + ", memberNickname=" + memberNickname + ", postStatusFlag=" + postStatusFlag
-				+ ", postNoticeFlag=" + postNoticeFlag + ", noticeIndex=" + noticeIndex + "]";
+		return "Post [postNo=" + postNo + ", cafeName=" + cafeName + ", cafeUrl=" + cafeUrl + ", cafeIcon=" + cafeIcon
+				+ ", boardNo=" + boardNo + ", boardName=" + boardName + ", memberNo=" + memberNo + ", postTitle="
+				+ postTitle + ", postContent=" + postContent + ", regDate=" + regDate + ", viewCount=" + viewCount
+				+ ", likeCount=" + likeCount + ", memberNickname=" + memberNickname + ", postStatusFlag="
+				+ postStatusFlag + ", postNoticeFlag=" + postNoticeFlag + ", noticeIndex=" + noticeIndex + "]";
 	}
 }

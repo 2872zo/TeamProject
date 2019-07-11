@@ -22,22 +22,47 @@ public class CafePostDaoImpl implements CafePostDao{
 	}
 
 	@Override
-	public List<Post> listPostBySearch(Search search) {
-		return sqlSession.selectList("PostMapper.listPostBySearch", search);
+	public List<Post> getPostListBySearch(Search search) {
+		return sqlSession.selectList("CafePostMapper.getPostListBySearch", search);
 	}
 	
 	@Override
-	public List<Post> listPostByBoard(Search search) {
-		return sqlSession.selectList("PostMapper.listPostByBoard",search);
+	public List<Post> getPostListByBoard(Search search) {
+		return sqlSession.selectList("CafePostMapper.getPostListByBoard",search);
 	}
 
 	@Override
 	public int postTotalCount(Search search) {
-		return sqlSession.selectOne("PostMapper.postTotalCount", search);
+		return sqlSession.selectOne("CafePostMapper.postTotalCount", search);
 	}
 
 	@Override
 	public int searchTotalCount(Search search) {
-		return sqlSession.selectOne("PostMapper.searchTotalCount", search);
+		return sqlSession.selectOne("CafePostMapper.searchTotalCount", search);
+	}
+
+	@Override
+	public List<Post> getPostListByNotice(Search search) {
+		return sqlSession.selectList("CafePostMapper.getPostListByNotice", search);
+	}
+
+	@Override
+	public boolean addPost(Post post) {
+		return (sqlSession.insert("CafePostMapper.addPost", post) == 1? true : false);
+	}
+
+	@Override
+	public Post getPost(int postNo) {
+		return sqlSession.selectOne("CafePostMapper.getPost", postNo);
+	}
+
+	@Override
+	public boolean updatePost(Post post) {
+		return (sqlSession.insert("CafePostMapper.updatePost", post) == 1? true : false);
+	}
+
+	@Override
+	public boolean deletePost(int postNo) {
+		return (sqlSession.insert("CafePostMapper.deletePost", postNo) == 1? true : false);
 	}
 }

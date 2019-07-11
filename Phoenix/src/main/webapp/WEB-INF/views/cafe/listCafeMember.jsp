@@ -8,7 +8,7 @@
 <html lang="ko">
 
 <head>
-<title>CafeSearch</title>
+<title>카페멤버조회화면임</title>
 
 
 
@@ -23,16 +23,14 @@
 
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
+
+	function fncGetList(currentPage) {
+	  $("#memberCurrentPage").val(currentPage)
+	  $("#memberListingForm").attr("method" , "POST").attr("action" , "/cafe/randomURL/getCafeMemberList").submit();
+	}
+	
 $(function() {
-	$("#addCafe").on("click" , function() {
-		$(self.location).attr("href","/cafe/addCafe");
-	});
-	$("#explore").on("click" , function() {
-		$("form").attr("method" , "POST").attr("action" , "/cafe/search").submit();
-	});
-	$(".searchCondition").on("click" , function() {
-		$("#searchCondition").val($(".searchCondition").index(this));
-	});
+	
 	
 });
 </script>
@@ -41,45 +39,47 @@ $(function() {
 
 <body>
 <div class="container">
-<br/>
-<form>
-	<div class="input-group mb-3">
-	  <div class="input-group-prepend">
-	   <select class="custom-select custom-select-lg" aria-label="Example select with button addon" name='searchCondition' id='searchCondition'>
-	    <option class='searchCondition' value="0" ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>카페+게시글</option>
-	    <option class='searchCondition' value="1" ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>카페이름</option>
-	    <option class='searchCondition' value="2" ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>게시글</option>
-	   </select>
-	    </div>
-	  <input type="text" class="form-control form-control-lg" placeholder="검색어 입력해주세요" aria-label="Text input with dropdown button" aria-describedby="button-addon2" name="searchKeyword" id="searchKeyword" value='${! empty search.searchKeyword ? search.searchKeyword : '' }'>
-	 <div class="input-group-append">
-	    <button class="btn btn-outline-secondary" type="button" id="explore">검색</button>
-	 </div>
-	</div>
-</form>	
-
-
-  카페전체검색창입니다.
-  <c:if test="${!empty cafeList}">
-  <br/>
-  카페번호/카페이름/카페설명/카페유알엘
-  <br/>
-  <c:forEach var="cafe" items="${cafeList}">
-  ${cafe.cafeNo}/${cafe.cafeName}/${cafe.cafeDetail}/${cafe.url}
-  <br/>
-  </c:forEach>
-  </c:if>
-  <br/>
-  <c:if test="${!empty postList}">
-  아래는 게시글임
-  <br/>
-  <c:forEach var="post" items="${postList}">
-  ${post.cafeUrl}/${post.cafeName}/${post.cafeIcon}/${post.postTitle}/${post.postNo}
-  <br/>
-  </c:forEach>
-  </c:if>
+  카페멤버리스트조회 화면입니다
   
+  <br/>
+  <table class="table table-borderless">
+  <thead>
+    <tr>
+      <th scope="col">멤버번호</th>
+      <th scope="col">닉네임</th>
+      <th scope="col">가입일</th>
+      <th scope="col">카페번호</th>
+    </tr>
+  </thead>
+  <tbody>
+  <c:forEach var="cafeMember" items="${memberList}">
+  <tr>
+      <th scope="row">${cafeMember.memberNo}</th>
+      <td>${cafeMember.memberNickname}</td>
+      <td>${cafeMember.regDate}</td>
+      <td>${cafeMember.cafeNo}</td>
+  </tr>
+  </c:forEach>
+    </tbody>
+</table>
+<br/><br/><br/>
+  <div class = 'container'>
+
+<div class="input-group">
+<form id='memberListingForm'>
+	<input type="hidden" id="memberCurrentPage" name="currentPage" value="0"/>
+	<input type="text" class="form-control" placeholder="카페번호" name = 'cafeNo' value='${ !empty search.cafeNo ? search.cafeNo : "" }'  aria-describedby="button-addon4">
+	<input type="text" class="form-control" placeholder="멤버번호" name = 'boardName' value='${ !empty search.boardName ? search.boardName : "" }' aria-describedby="button-addon4">
+	</form>
+	<div class="input-group-append" id="button-addon4">
+    <button class="btn btn-outline-warning" type="button" id = 'memberList'>맴버리스트</button>
+    <button class="btn btn-outline-success" type="button" id= 'memberDetail'>멤버상세</button>
+  </div>
+</div>
+
+</div>
   
+  <jsp:include page="../common/pageNavigator.jsp" />
 </div>
 </body>
 </html>

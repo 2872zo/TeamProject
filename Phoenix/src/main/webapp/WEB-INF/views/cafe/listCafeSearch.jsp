@@ -54,7 +54,11 @@ $(function() {
   카페전체검색창입니다.
   <c:if test="${!empty cafeList}">
   <br/>
-  카페번호/카페이름/카페설명/카페유알엘/카페회원수
+  <c:if test="${ !empty search.searchCondition && search.searchCondition==1}">
+ 	총 ${totalCount} 건 입니다.
+ 	</c:if>
+ 	<br/>
+  카페번호/카페이름/카페설명/카페유알엘/카페회원수/매니저닉네임
   <br/>
   <c:forEach var="cafe" items="${cafeList}">
   ${cafe.cafeNo}/${cafe.cafeName}/${cafe.cafeDetail}/${cafe.url}/${cafe.members}
@@ -71,8 +75,12 @@ $(function() {
   <c:if test="${!empty postList}">
   아래는 게시글임
   <br/>
+ 	<c:if test="${ !empty search.searchCondition && search.searchCondition==2}">
+ 	총 ${totalCount} 건 입니다.
+ 	</c:if>
+  <br/>
   <c:forEach var="post" items="${postList}">
-  ${post.cafeUrl}/${post.cafeName}/${post.cafeIcon}/${post.postTitle}/${post.postNo}
+  ${post.cafeUrl}/${post.cafeName}/${post.cafeIcon}/${post.postTitle}/${post.postNo}/${post.memberNickname}
   <br/>
   </c:forEach>
   <c:if test="${ !empty search.searchCondition && search.searchCondition==0}">
