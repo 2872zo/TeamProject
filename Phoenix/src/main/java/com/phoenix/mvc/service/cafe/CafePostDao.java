@@ -6,11 +6,21 @@ import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.domain.Post;
 
 public interface CafePostDao {
-	public List<Post> listPostBySearch(Search search);
+	public List<Post> getPostListBySearch(Search search);
+	
+	public int searchTotalCount(Search search);
 
-	public List<Post> listPostByBoard(Search search);
+	public List<Post> getPostListByBoard(Search search);
 
 	public int postTotalCount(Search search);
 	
-	public int searchTotalCount(Search search);
+	public List<Post> getPostListByNotice(Search search);
+	
+	public boolean addPost(Post post);
+
+	public Post getPost(int postNo);
+
+	public boolean updatePost(Post post);
+
+	public boolean deletePost(int postNo);
 }

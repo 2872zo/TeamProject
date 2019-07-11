@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CafeMemberMapper">
+
+	
+	<resultMap id="cafeMemberSelectMap" type="CafeMember">
+		<result property="memberNo" 			column="member_no" 				jdbcType="NUMERIC"/>
+		<result property="cafeNo" 				column="cafe_no" 				jdbcType="NUMERIC" />
+		<result property="userNo" 				column="user_no" 				jdbcType="NUMERIC" />
+		<result property="cafeMemberGradeNo" 	column="cafe_member_grade_no" 	jdbcType="NUMERIC" />
+		<result property="noticeFlag" 			column="notice_flag" 			jdbcType="CHAR" />
+		<result property="memberNickname" 		column="member_nickname" 		jdbcType="VARCHAR" />
+		<result property="memberStatusCode" 	column="member_status_code" 	jdbcType="VARCHAR" />
+		<result property="favoriteFlag" 		column="favorite_flag" 			jdbcType="CHAR"  />
+		<result property="regDate" 				column="reg_date" 				jdbcType="DATE" />
+		<result property="visitCount" 			column="visit_count" 			jdbcType="NUMERIC" />
+		<result property="gradeName"  			column="grade_name" 			jdbcType="VARCHAR"/>
+		<result property="memberGrade" 			column="member_grade_code" 		jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	  <update	id="updateCafeMember"	parameterType="CafeMember" >
+	   	UPDATE cafe_member
+	   	<set>
+		member_status_code=#{memberStatusCode}	
+	   	</set>
+	   	WHERE member_no = #{memberNo}
+	 </update>
+	 
+	 <sql id="memberListing">
+		SELECT
+		m.cafe_no, m.member_no, m.member_nickname, 
+		g.member_grade_code, g.grade_name, 
+		m.reg_date, m.visit_count,m.member_status_code
+		FROM
+		cafe_member m, cafe_member_grade g
+		WHERE
+		m.cafe_member_grade_no=g.cafe_member_grade_no
+		AND
+		m.cafe_no = #{cafeNo}
+	</sql>
+	 
+	<select id="getCafeMemeber" parameterType="Search" resultMap="cafeMemberSelectMap">
+	
+	 <include refid="memberListing"/>
+		AND
+		m.member_no = #{boardNo}
+	</select>
+	
+	<select id="getMemberCount" parameterType="Search" resultType="int">
+	SELECT
+	COUNT(*)
+	FROM
+	(<include refid="memberListing"/>)
+	
+	</select>
+	 
+	<select id="listCafeMemeber" parameterType="com.phoenix.mvc.common.Search" resultMap="cafeMemberSelectMap">
+		SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(
+		<include refid="memberListing"/>
+		) inner_table
+		WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+		
+	</select>
+	 
+</mapper>

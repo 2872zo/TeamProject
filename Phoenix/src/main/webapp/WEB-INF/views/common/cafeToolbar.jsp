@@ -36,7 +36,7 @@ $(function() {
 	});
 
 	$("#explore").on("click" , function() {
-		$("form").attr("method" , "POST").attr("action" , "/cafe/search").submit();
+		$("#cafeSearch").attr("method" , "POST").attr("action" , "/cafe/search").submit();
 	});
 	
 	$(".searchCondition").on("click" , function() {
@@ -80,7 +80,7 @@ $(function() {
 
  <br/>	
  <div class ='container'>
-<form>
+<form id='cafeSearch'>
 <input type="hidden" id="currentPage" name="currentPage" value="0"/>
 <input type ="hidden" name = 'cafeURL' value='${ !empty search.cafeURL ? search.cafeURL : "" }'>
 <input type ="hidden" name = 'boardName' value='${ !empty search.boardName ? search.boardName : "" }'>

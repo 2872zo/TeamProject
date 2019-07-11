@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import com.phoenix.mvc.common.Event;
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.cafe.CafeManageDao;
 import com.phoenix.mvc.service.domain.CafeApplication;
@@ -28,6 +29,37 @@ public class CafeManageDaoImpl implements CafeManageDao {
 		System.out.println(this.getClass().getName());
 	}
 
+
+	/////////////////////////////////지니//////////////////////////////
+	@Override
+	public List<CafeApplication> getCafeApplicationList(Search search) {
+		
+		return sqlSession.selectList("CafeApplicationMapper.getCafeApplicationList", search);
+	}
+
+	@Override
+	public int getTotalCount(Search search) {
+		
+		return sqlSession.selectOne("CafeApplicationMapper.getTotalCount", search);
+	}
+	
+	@Override
+	public void updateAcceptStatusCode(CafeApplication cafeApplication) {
+		sqlSession.update("CafeApplicationMapper.updateCafeApplication", cafeApplication);
+		
+	}
+
+	@Override
+	public CafeApplication getCafeApplication(int userNo) {
+		
+		return sqlSession.selectOne("CafeApplicationMapper.getCafeApplication",userNo);
+	}
+	
+	////////////////////////////////지니끝//////////////////////////////////
+
+	
+	
+	/////////////////////////////////////예림/////////////////////////////////////
 	@Override
 	public List getCafeBoard(int cafeNo) { //카페번호
 		
@@ -51,6 +83,57 @@ public class CafeManageDaoImpl implements CafeManageDao {
 		return sqlSession.selectOne("getCafeNo", cafeURL);
 		
 	}
+	
+	@Override
+	public List getBoardPost(int boardNo) { 
+		//...이거 공지 가져오기 근데 그럼 카페의 공지게시판의 boardno를 알아야함 (게시판코드,게시판No)
+		
+		List postList = sqlSession.selectList("getBoardPostList", boardNo);
+		
+		return postList;
+	}
+
+	@Override
+	public boolean addEventLog(Event event) {//예림예림  add되면(1) true return. 근데안되면 어짜피 error아닌가여(아직test x)
+		
+		int addOk = sqlSession.insert("addEventLog",event);
+		
+		if(addOk==1) //
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+
+	}
+
+	@Override
+	public boolean checkCafeTodayVisitLog(Event event) { //예림예림 오늘방문했는지 아닌지 판별 (아직 test x)
+		
+		Event visitEvent  = sqlSession.selectOne("checkCafeTodayVisitLog", event); //있으면 returnType event겠지ㅡ므ㅏ
+		
+		if(visitEvent == null) //오늘 방문한적 없음
+		{
+			return false;
+		}
+		else
+		{
+			return true;  //오늘 방문함
+		}
+		
+	}
+
+	@Override
+	public List getCafeStatistics(Event event) { //예림예림 작업중
+		
+		//sqlSession.select
+		return null;
+	}
+	
+	//////////////////////////////////////////////////////////예림끝////////////////////////////////////
+	
 	///////////////////////////////준호시작///////////////////////////////////////	
 	@Override//준호
 	public void updateCafeInfo(Cafe cafe)throws Exception{
@@ -67,27 +150,5 @@ public class CafeManageDaoImpl implements CafeManageDao {
 		sqlSession.update("CafeMapper.updateCafeApplicationForm", cafe);
 	}
 	///////////////////////////////준호끝///////////////////////////////////////	
-	@Override
-	public List<CafeApplication> getCafeApplicationList(Search search) {
-		
-		return sqlSession.selectList("CafeApplicationMapper.getCafeApplicationList", search);
-	}
-
-	@Override
-	public int getTotalCount(Search search) {
-		
-		return sqlSession.selectOne("CafeApplicationMapper.getTotalCount", search);
-	}
-
-	@Override
-	public List getBoardPost(int boardNo) { 
-		//...이거 공지 가져오기 근데 그럼 카페의 공지게시판의 boardno를 알아야함 (게시판코드,게시판No)
-		
-		List postList = sqlSession.selectList("getBoardPostList", boardNo);
-		
-		return postList;
-	}
-
-	
 
 }

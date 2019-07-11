@@ -18,11 +18,10 @@
 
 
 	
-		function fncGetBoardPostList(boardNo) { 
+		function fncGetBoardPostList(boardNo,cafeURL) { 
 
 			//boardNo가지고 게시글 목록으로이동.
-			
-			//$(".form-inline").attr("method", "POST").attr("action","/product/listProduct?menu=search").submit();
+			self.location ="/cafe/"+cafeURL+"/getBoard/"+boardNo;
 
 		}
 		
@@ -31,8 +30,9 @@
 	<style>
 		#div_menu{
 			width:20%;
-			height:300px;
+			height:500px;
 			float:left;
+			background-color:#82FA58;
 		}
 		
 		#div_con{

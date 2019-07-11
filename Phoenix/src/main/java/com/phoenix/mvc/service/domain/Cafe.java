@@ -9,6 +9,7 @@ public class Cafe {
 	private String cafeName;
 	private String cafeIcon;
 	private String manageUserNo;
+	private String managerNickname;
 	private Date regDate;
 	private String url;
 	private String cafeDetail;

@@ -67,7 +67,7 @@ public class CafeTabServiceImpl implements CafeTabService{
 		List postList = new ArrayList();
 		if (search.getSearchCondition().equals("0")) {
 			cafeList = cafeTabDao.searchCafe(search);
-			postList = cafeTabDao.seachPost(search);
+//			postList = cafeTabDao.seachPost(search);
 			map.put("cafeList", cafeList);
 			map.put("postList", postList);
 			map.put("totalCount", new Integer(10));
@@ -79,7 +79,7 @@ public class CafeTabServiceImpl implements CafeTabService{
 			map.put("totalCount", new Integer(totalCount));
 		}
 		if (search.getSearchCondition().equals("2")) {
-			postList = cafeTabDao.seachPost(search);
+//			postList = cafeTabDao.seachPost(search);
 			totalCount = cafeTabDao.postTotalCount(search);
 			map.put("postList", postList);
 			map.put("totalCount", new Integer(totalCount));
@@ -87,6 +87,8 @@ public class CafeTabServiceImpl implements CafeTabService{
 		
 		return map;
 	}
+	
+	///////////////////////////////////////예림//////////////////////////////////////////
 
 	@Override
 	public Map getCafeMain(User user, String cafeURL) { //예림예림
@@ -103,17 +105,19 @@ public class CafeTabServiceImpl implements CafeTabService{
 			cafeMember = cafeMemberDao.getCafeMember(cafeNo,user.getUserNo());//카페번호랑회원번호로
 			//cafeMember.getUserNo().equals("500") 이면
 			//500설정은 dao에서해줬음.
+			System.out.println("cafeMember: "+cafeMember);
 			
 		}
-		else //로그인이 되어있지않음.
-		{
-			cafeMember.setUserNo("400");
-		}
+		//else //로그인이 되어있지않음.
+			
+		//{
+		//	cafeMember.setUserNo("400"); 형님때문에
+		//}
 		map.put("cafeMember", cafeMember);
 		
 		
 		//공통
-		//1.카페의 공지게시글 가져오기 ->승규 dao 
+		//1.카페의 공지게시글 가져오기 ->승규 dao (카페URL , 보드코드)
 		
 		//2.cafe정보가져오기 ->준호
 		
@@ -123,4 +127,20 @@ public class CafeTabServiceImpl implements CafeTabService{
 		
 		return map;
 	}
+	
+	///////////////////////////////////////////////예림 끝/////////////////////////////////////
+	
+	@Override
+	public Map getCategorizedCafeList(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		
+		int totalCount = cafeTabDao.cafeTotalCount(search);
+		Map map = new HashMap();
+		List cafeList = new ArrayList();
+		cafeList = cafeTabDao.getCategorizedCafeList(search);
+		map.put("totalCount", new Integer(totalCount));
+		return map;
+	}
+
+
 }

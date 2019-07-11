@@ -46,6 +46,15 @@
 		<result property="visitCount" 			column="visit_count" 				jdbcType="NUMERIC" />
 		<result property="gradeName"			column="grade_name"  jdbcType="VARCHAR"/>
 	</resultMap>
+	
+	<resultMap id="eventSelectMap" type="com.phoenix.mvc.common.Event">
+		<result property="eventNo" 			column="event_no" 			jdbcType="NUMERIC"/>
+		<result property="targetNo"			column="target_no" 			jdbcType="NUMERIC" />
+		<result property="eventType" 		column="event_type" 			jdbcType="VARCHAR" />
+		<result property="cafeNo" 			column="cafe_no" 				jdbcType="NUMERIC" />
+		<result property="eventUserNo" 		column="event_user_no" 				jdbcType="NUMERIC" />
+		<result property="regDate" 			column="reg_date" 		jdbcType="DATE" />
+	</resultMap>
 
 	<select  id="getBoardList"   parameterType="int"  resultMap="boardSelectMap">
 		SELECT *
@@ -73,6 +82,24 @@
 		FROM cafe_member me,cafe_member_grade mg
 		WHERE (me.cafe_member_grade_no = mg.cafe_member_grade_no ) AND me.user_no = #{userNo} AND me.cafe_no = #{cafeNo}
 		
+	</select>
+	
+	<insert id="addEventLog" parameterType="Event">
+		INSERT INTO event_log (event_no,event_type,cafe_no,reg_date,event_user_no,target_no)
+		VALUES(SEQ_EVENT_LOG_EVENT_NO.NEXTVAL,
+				#{eventType:VARCHAR},
+				#{cafeNo:NUMERIC},
+				SYSDATE,
+				#{eventUserNo:NUMERIC},
+				#{targetNo:NUMERIC});
+	</insert>
+	
+	<select id="checkCafeTodayVisitLog" parameterType="Event" resultMap="eventSelectMap">
+		SELECT * FROM event_log
+		WHERE event_user_no =#{eventUserNo:NUMERIC}
+			  AND event_type='et001' 
+			  AND cafe_no=#{cafeNo:NUMERIC}
+			  AND to_char(reg_date,'yyyy-mm-dd') = to_char(SYSDATE,'yyyy-mm-dd');
 	</select>
 
 
