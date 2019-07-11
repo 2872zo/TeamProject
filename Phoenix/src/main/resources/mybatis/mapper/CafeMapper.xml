@@ -24,7 +24,7 @@
 		<result property="applicationQuestion1" 		column="application_question1" 				jdbcType="VARCHAR" />
 		<result property="applicationQuestion2"			column="application_question2" 				jdbcType="VARCHAR" />
 		<result property="applicationQuestion3" 		column="application_question3"				jdbcType="VARCHAR" />
-		<result property="cafeNickNameFlag" 			column="cafe_nickname_flag" 				jdbcType="CHAR" />
+		<result property="memberNickNameFlag" 			column="member_nickname_flag" 				jdbcType="CHAR" />
 		<result property="autoApplicationAcceptFlag" 	column="auto_application_accept_flag" 		jdbcType="CHAR" />
 		<result property="closedFlag" 					column="close_flag" 						jdbcType="CHAR" />
 		<result property="members" 						column="members" 							jdbcType="NUMERIC" />

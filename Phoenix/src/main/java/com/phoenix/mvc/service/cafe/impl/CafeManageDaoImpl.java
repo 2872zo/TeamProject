@@ -28,6 +28,33 @@ public class CafeManageDaoImpl implements CafeManageDao {
 		
 		System.out.println(this.getClass().getName());
 	}
+	
+	/////////////////////////////////지니//////////////////////////////
+	@Override
+	public List<CafeApplication> getCafeApplicationList(Search search) {
+		
+		return sqlSession.selectList("CafeApplicationMapper.getCafeApplicationList", search);
+	}
+
+	@Override
+	public int getTotalCount(Search search) {
+		
+		return sqlSession.selectOne("CafeApplicationMapper.getTotalCount", search);
+	}
+	
+	@Override
+	public void updateAcceptStatusCode(CafeApplication cafeApplication) {
+		sqlSession.update("CafeApplicationMapper.updateCafeApplication", cafeApplication);
+		
+	}
+
+	@Override
+	public CafeApplication getCafeApplication(int userNo) {
+		
+		return sqlSession.selectOne("CafeApplicationMapper.getCafeApplication",userNo);
+	}
+	
+	////////////////////////////////지니끝//////////////////////////////////
 
 	
 	
@@ -117,21 +144,14 @@ public class CafeManageDaoImpl implements CafeManageDao {
 		return sqlSession.selectOne("CafeManageMapper.getCafeInfo", cafeNo);
 	}
 	
-	@Override
-	public List<CafeApplication> getCafeApplicationList(Search search) {
-		
-		return sqlSession.selectList("CafeApplicationMapper.getCafeApplicationList", search);
-	}
-
-	@Override
-	public int getTotalCount(Search search) {
-		
-		return sqlSession.selectOne("CafeApplicationMapper.getTotalCount", search);
-	}
+	
 
 	
 	
 	
+
+
+
 
 	
 

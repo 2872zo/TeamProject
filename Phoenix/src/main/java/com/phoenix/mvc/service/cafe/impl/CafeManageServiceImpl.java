@@ -21,92 +21,100 @@ public class CafeManageServiceImpl implements CafeManageService {
 	@Autowired
 	@Qualifier("cafeManageDaoImpl")
 	private CafeManageDao cafeManageDao;
-	
 
 	public void setCafeManageDao(CafeManageDao cafeManageDao) {
 		this.cafeManageDao = cafeManageDao;
 	}
 
-	public CafeManageServiceImpl() { //생성자
-		
+	public CafeManageServiceImpl() { // 생성자
+
 		System.out.println(this.getClass().getName());
 	}
 
-	///////////////////////////////////////////////////예림/////////////////////////////////
+	/////////////////////////////////////////////////// 예림
+	/////////////////////////////////////////////////// 시작/////////////////////////////////
 	@Override
 	public List getCafeBoard(String cafeURL) {
-		
+
 		int cafeNo = cafeManageDao.getCafeNo(cafeURL);
-	
+
 		return cafeManageDao.getCafeBoard(cafeNo);
 	}
-	
+
 	@Override
-	public boolean checkCafePost(String cafeURL,int boardNo) { // false이면  게시글 없음,  true 이면 게시글 존재
-		
-		//cafeManageDao.getCafeNo(cafeURL); // 꼭 받아야하나? 그냥 post table에서만 체크하면 된다 안해도댐
-		
-		List postList = cafeManageDao.getBoardPost(boardNo); //boardNo에 해당하는 post list를 가져옴
-		
-		if(postList!=null)
-		{
+	public boolean checkCafePost(String cafeURL, int boardNo) { // false이면 게시글 없음, true 이면 게시글 존재
+
+		// cafeManageDao.getCafeNo(cafeURL); // 꼭 받아야하나? 그냥 post table에서만 체크하면 된다 안해도댐
+
+		List postList = cafeManageDao.getBoardPost(boardNo); // boardNo에 해당하는 post list를 가져옴
+
+		if (postList != null) {
 			System.out.println(postList.size());
 
-			if(postList.size()==0) // 해당하는 게시판에 게시글이 없음
+			if (postList.size() == 0) // 해당하는 게시판에 게시글이 없음
 			{
 				return false;
-			}
-			else //게시글 있음.
+			} else // 게시글 있음.
 			{
 				return true;
 			}
-		}
-		else
-		{
+		} else {
 			return false;
 		}
-		
+
 	}
 
 	@Override
-	public List getCafeStatistics(Event event, String cafeURL) { //예림예림 작업중
-		
+	public List getCafeStatistics(Event event, String cafeURL) { // 예림예림 작업중
+
 		int cafeNo = cafeManageDao.getCafeNo(cafeURL);
-		
-		event.setCafeNo(cafeNo); //cafeNo를 set
-		List statisticsList = cafeManageDao.getCafeStatistics(event); //모든 카페는 통계가 있다. count라서 0이더라도
-		
+
+		event.setCafeNo(cafeNo); // cafeNo를 set
+		List statisticsList = cafeManageDao.getCafeStatistics(event); // 모든 카페는 통계가 있다. count라서 0이더라도
+
 		return statisticsList;
 	}
-	
-	
-	///////////////////////////////////////////////////끝//////////////////////////////////////////////
-	
-	
-	
+
+	/////////////////////////////////////////////////// 예림
+	/////////////////////////////////////////////////// 끝//////////////////////////////////////////////
+
+/////////////////////////////////지니//////////////////////////////
+	@Override
+	public Map<String, Object> getCafeApplicationList(Search search) {
+
+		List<CafeApplication> list = cafeManageDao.getCafeApplicationList(search);
+		int totalCount = cafeManageDao.getTotalCount(search);
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		map.put("totalCount", new Integer(totalCount));
+
+		return map;
+	}
+
+	@Override
+	public void updateAcceptStatusCode(CafeApplication cafeApplication) {
+
+		cafeManageDao.updateAcceptStatusCode(cafeApplication);
+
+	}
+
+	@Override
+	public CafeApplication getCafeApplication(int userNo) {
+
+		return cafeManageDao.getCafeApplication(userNo);
+	}
+
+////////////////////////////////지니끝//////////////////////////////////
+
 	@Override
 	public void updateCafeInfo(Cafe cafe) throws Exception {
 		cafeManageDao.updateCafeInfo(cafe);
 	}
-	
+
 	@Override
 	public Cafe getCafeInfo(String cafeNo) throws Exception {
 		return cafeManageDao.getCafeInfo(cafeNo);
 	}
-	
-	@Override
-	public Map<String, Object> getCafeApplicationList(Search search) {
-		
-		List<CafeApplication> list = cafeManageDao.getCafeApplicationList(search);
-		int totalCount = cafeManageDao.getTotalCount(search);
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("list", list);
-		map.put("totalCount", new Integer(totalCount));
-		
-		return map;
-	}
-
-	
 
 }

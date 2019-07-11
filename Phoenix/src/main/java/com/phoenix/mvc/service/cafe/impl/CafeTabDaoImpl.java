@@ -26,7 +26,7 @@ public class CafeTabDaoImpl implements CafeTabDao{
 	public void addCafe(Cafe cafe) throws Exception {
 		sqlSession.insert("CafeMapper.addCafe", cafe);
 	}
-	
+	//////////////////////////////기황///////////////////////////////
 	@Override
 	public List searchCafe(Search search) throws Exception {
 		// TODO Auto-generated method stub			
@@ -38,14 +38,20 @@ public class CafeTabDaoImpl implements CafeTabDao{
 	}
 	
 	
-	@Override
-	public List seachPost(Search search) throws Exception {
-		// TODO Auto-generated method stub
-		return sqlSession.selectList("PostMapper.searchCafePost", search);
-	}
-	
 	public int postTotalCount(Search search) throws Exception {
 		return sqlSession.selectOne("PostMapper.searchPostTotalCount",search);
 	}
 	
+	@Override
+	public List getCategorizedCafeList(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("CafeTabMapper.categorizedCafeList", search);
+	}
+	
+	@Override
+	public int countCategorizedCafe(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("CafeTabMapper.countCategorizedCafe", search);
+	}
+	//////////////////////////////////////끝//////////////////////////////////
 }

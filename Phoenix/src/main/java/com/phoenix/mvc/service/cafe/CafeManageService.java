@@ -9,7 +9,15 @@ import com.phoenix.mvc.service.domain.CafeApplication;
 import com.phoenix.mvc.service.domain.Cafe;
 
 public interface CafeManageService {
-
+	
+	/////////////////////////////////지니//////////////////////////////
+	public Map<String, Object> getCafeApplicationList(Search search);
+	
+	public void updateAcceptStatusCode(CafeApplication cafeApplication);
+	
+	public CafeApplication getCafeApplication(int userNo);
+	////////////////////////////////지니끝//////////////////////////////////
+	
 	/////////////////////////////////////예림/////////////////////////////////////////
 	public List getCafeBoard(String cafeURL);
 	
@@ -18,7 +26,7 @@ public interface CafeManageService {
 	public List getCafeStatistics(Event event, String cafeURL);
 	/////////////////////////////예림///////////////////////////////////////////
 	
-	public Map<String, Object> getCafeApplicationList(Search search);
+
 	
 	public void updateCafeInfo(Cafe cafe) throws Exception ;
 	

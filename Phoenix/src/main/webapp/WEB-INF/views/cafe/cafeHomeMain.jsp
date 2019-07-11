@@ -9,14 +9,21 @@
 <head>
 <title>CafeTabMain</title>
 
-
-
-<!--  /////////////////////////  jQuery CDN ////////////////////////// -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<!-- Bootstrap CDN -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<!-- ////////////////////////////// jQuery CDN ////////////////////////////// -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+ integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+ crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+ integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+ crossorigin="anonymous"></script>
+<!-- ////////////////////////////// bootstrap CDN ////////////////////////////// -->
+<link rel="stylesheet"
+ href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+ integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+ crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+ integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+ crossorigin="anonymous"></script>
 
 <!--  ///////////////////////// CSS ////////////////////////// -->
 
@@ -27,6 +34,10 @@ $(function() {
 		$(self.location).attr("href","/cafe/addCafeView");
 	});
 
+	$("#managed").on("click" , function() {
+		alert("운영중이야");
+	});
+	
 	$(".cafeListing").on("click" , function() {
 		alert("카페종류야");
 		//alert($(".cafeListing").index(this).val());
@@ -35,6 +46,15 @@ $(function() {
 	$(".cafeCategory").on("click" , function() {
 		alert("카페카테고리야");
 		//alert($(".cafeCategory").index(this).val());
+	});
+
+	$("#memberList").on("click" , function() {
+		//alert("멤버리스트조회");
+		$("#memberListingForm").attr("method" , "POST").attr("action" , "/cafe/randomCafe/getCafeMemberList").submit();
+		
+	});
+	$("#memberDetail").on("click" , function() {
+		$("#memberListingForm").attr("method" , "POST").attr("action" , "/cafe/randomCafe/getCafeMember").submit();
 	});
 });
 </script>
@@ -54,56 +74,57 @@ $(function() {
 		<button type="button" class="btn btn-outline-warning btn-block" id='addCafe'>카페만들기</button>
 	<br/>
 	
-	<div class="center-block">
-	<div class="btn-group btn-group-toggle" data-toggle="buttons" id='cafeListing' style="float:none; margin:0 auto">
-  <label class="btn btn-lg btn-outline-primary active">
-    <input type="radio" name="options" class ='cafeListing' id="managed" value='managed' autocomplete="off" checked> 운영중인 카페
-  </label>
-  <label class="btn btn-lg btn-outline-primary">
-    <input type="radio" name="options" class ='cafeListing' id="open" value='open' autocomplete="off"> 활동중인 카페
-  </label>
-  <label class="btn btn-lg btn-outline-primary">
-    <input type="radio" name="options" class ='cafeListing' id="favorite" value='favorite' autocomplete="off"> 즐겨찾기 카페
-  </label>
-  <label class="btn btn-lg btn-outline-primary">
-    <input type="radio" name="options" class ='cafeListing' id="application" value='application' autocomplete="off"> 가입 신청내역
-  </label>
-  <label class="btn btn-lg btn-outline-primary">
-    <input type="radio" name="options" class ='cafeListing' id="blocked" value='blocked' autocomplete="off"> 정지당한 카페
-  </label>
-	<label class="btn btn-lg btn-outline-primary">
-    <input type="radio" name="options" class ='cafeListing' id="newsfeed" value='newsfeed' autocomplete="off"> 카페 새게시글
-  </label>
-	</div>
-	</div>
-	<br/>
-	<br/>
-	<br/>
 	
-	
-<div class="center-block">
-	<div class="btn-group btn-group-toggle" data-toggle="buttons" id='cafeCategorized' style="float:none; margin:0 auto">
-  <label class="btn btn-outline-success active">
-    <input type="radio" class ='cafeCategory' name="options" id="friendship" value='friendship' checked> 친목/모임
-  </label>
-  <label class="btn btn-outline-success">
-    <input type="radio" class ='cafeCategory' name="options" id="sports" value='sports'> 스포츠/레저
-  </label>
-  <label class="btn btn-outline-success">
-    <input type="radio" class ='cafeCategory' name="options" id="movie" value='movie'> 영화
-  </label>
-  <label class="btn btn-outline-success">
-    <input type="radio" class ='cafeCategory' name="options" id="game" value='game'> 게임
-  </label>
-  <label class="btn btn-outline-success">
-    <input type="radio" class ='cafeCategory' name="options" id="music" value='music'> 음악
-  </label>
-  <label class="btn btn-outline-success">
-    <input type="radio" class ='cafeCategory' name="options" id="trip" value='trip'> 여행
-  </label>
+	<div class="btn-group center-block" role="group" aria-label="Basic example">
+  <button type="button" class="btn btn-outline-primary cafeListing">운영중인 카페</button>
+  <button type="button" class="btn btn-outline-primary cafeListing">활동중인 카페</button>
+  <button type="button" class="btn btn-outline-primary cafeListing">즐겨찾기 카페</button>
+  <button type="button" class="btn btn-outline-primary cafeListing">가입신청 내역</button>
+  <button type="button" class="btn btn-outline-primary cafeListing">정지당한 카페</button>
+  <button type="button" class="btn btn-outline-primary cafeListing">카페 새게시글</button>
 </div>
+	
+	
+	
+
+	<br/>
+	<br/>
+	<br/>
+	
+	
+<div class="btn-group" role="group" aria-label="Basic example">
+  <button type="button" class="btn btn-outline-success cafeCategory" checked>친목/모임</button>
+  <button type="button" class="btn btn-outline-success cafeCategory">스포츠/레저</button>
+  <button type="button" class="btn btn-outline-success cafeCategory">영화</button>
+  <button type="button" class="btn btn-outline-success cafeCategory">게임</button>
+  <button type="button" class="btn btn-outline-success cafeCategory">음악</button>
+  <button type="button" class="btn btn-outline-success cafeCategory">여행</button>
 </div>
 
+
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+<div class = 'container'>
+
+<div class="input-group">
+
+	<form id='memberListingForm'>
+	<input type="text" class="form-control" placeholder="카페번호" name = 'cafeNo'  aria-describedby="button-addon4">
+	
+	<input type="text" class="form-control" placeholder="멤버번호" name = 'boardNo' aria-describedby="button-addon4">
+</form>
+	<div class="input-group-append" id="button-addon4">
+    <button class="btn btn-outline-warning" type="button" id = 'memberList'>맴버리스트</button>
+    <button class="btn btn-outline-success" type="button" id= 'memberDetail'>멤버상세</button>
+  </div>
+</div>
+
+</div>
 
 
 

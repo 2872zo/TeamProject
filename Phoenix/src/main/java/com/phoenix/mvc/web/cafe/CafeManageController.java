@@ -2,17 +2,22 @@ package com.phoenix.mvc.web.cafe;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +27,7 @@ import com.phoenix.mvc.common.Page;
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.cafe.CafeManageService;
 import com.phoenix.mvc.service.domain.Cafe;
+import com.phoenix.mvc.service.domain.CafeApplication;
 
 @Controller
 @RequestMapping("/cafe/*")
@@ -85,8 +91,11 @@ public class CafeManageController {
 	}
 	
 	
-	//////////////////////////////////////끝////////////////////////////////////////////
+	//////////////////////////////////////예림 끝////////////////////////////////////////////
 	
+	
+
+	/////////////////////////////////지니//////////////////////////////
 	
 	@RequestMapping(value = "/{cafeURL}/manage/getCafeApplicationList")
 	public String getCafeApplicationList(@ModelAttribute("search") Search search, Model model) {
@@ -112,7 +121,58 @@ public class CafeManageController {
 		
 	}
 	
-
+	@RequestMapping(value="/{cafeURL}/manage/updateCafeApplication", method=RequestMethod.POST)
+	public String updateCafeApplication(@RequestBody String application) {
+		
+		System.out.println("/{cafeURL}/manage/updateCafeApplication : POST");
+		System.out.println("엥??");
+		System.out.println(application);
+		
+		JSONObject obj = (JSONObject) JSONValue.parse(application);
+		String cafeApplication = (String)obj.get("application");
+		
+		//System.out.println("뽑은 : "+ cafeApplication);
+		
+		String split[]= cafeApplication.split(",");
+		String result[];
+		
+		List nickName = new ArrayList<String>();
+		List userNo = new ArrayList<String>();
+		List cafeNo = new ArrayList<String>();
+	
+		int count = split.length;
+		
+		//멤버닉네임,userNo,cafeNo
+		for(int i =0; i<split.length;i++) {
+			System.out.println("값 몇개인지부터 확인: "+split.length);
+			System.out.println("split"+split[i]);
+			result= split[i].split("&");
+				nickName.add(result[0]);
+				userNo.add(result[1]);
+				cafeNo.add(result[2]);
+			}
+			
+		System.out.println(userNo);
+		for(int i = 0; i<count; i++) {
+			
+			System.out.println(userNo.get(i));
+			//CafeApplication cafe =cafeManageService.getCafeApplication((Integer) userNo.get(i));
+			//System.out.println(cafe);
+		}
+		
+		System.out.println(nickName);
+		System.out.println(userNo);
+		System.out.println(cafeNo);
+		
+		
+		
+		//System.out.println(cafe);
+		
+		//ca102
+		return null;
+		
+	}
+	////////////////////////////////지니끝//////////////////////////////////
 	
 	@RequestMapping(value= "/cafe/updateCafeInfoView", method=RequestMethod.GET)
 	public String updateCafeInfoView(@ModelAttribute("cafe") Cafe cafe)throws Exception{
