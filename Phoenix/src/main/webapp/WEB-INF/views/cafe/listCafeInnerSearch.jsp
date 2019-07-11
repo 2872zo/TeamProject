@@ -37,7 +37,7 @@
 				    }
 				});
 				$(".searchOption").each(function(){
-				    if($(this).val()==${search.searchCondition}){
+				    if($(this).val()==${empty search.searchCondition? 0 : search.searchCondition}){
 				      $(this).attr("selected","selected");
 				    }
 				});
@@ -74,8 +74,12 @@
 				<option value="4" class="searchOption">댓글</option>
 			</select> 
 			
-			<input type="text" name="searchKeyword"> 
-			<input type="submit" id="submitButton" value="검색">
+			<div class="input-group">
+	          <input type="text" name="searchKeyword"> 
+	          <div class="input-group-append">
+	            <button type="submit" class="btn btn-secondary">검색</button>
+	          </div>
+	        </div>
 		</form>
 	
 		<p>총 ${postTotalCount }개</p>
