@@ -13,11 +13,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<!-- Bootstrap CDN -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 	
 	<header>
 		<title>카페만들기화완료면</title>
@@ -30,7 +30,7 @@
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$( "button.btn.btn-success" ).on("click" , function() {
 				alert("수정");
-				$("form").attr("method" , "GET").attr("action" , "/cafe/updateCafeInfoView").submit();
+				$("form").attr("method" , "POST").attr("action" , "/cafe/getCafeInfo?cafeNo=${cafe.cafeNo}").submit();
 			});
 		});	
 
@@ -41,23 +41,49 @@
 <form class="form-horizontal">
 
 
-		<div class="row" align="center">
-	  		<div class="col-sm-4"><strong>가입환영</strong></div>
-		</div>
+
 		
-	
-		  카페이름:&nbsp;&nbsp;[${cafe.cafeName }]</br>
-		  카페url:&nbsp;&nbsp;[${cafe.url }]</br>
-		  카페설명:&nbsp;&nbsp;[${cafe.cafeDetail }]</br>
-		  카페카테고리:&nbsp;&nbsp;[${cafe.cafeType }]</br>
-		  가입안내:&nbsp;&nbsp;[${cafe.applicationDetail }]</br>
-		  질문설정:&nbsp;&nbsp;[${cafe.applicationQuestion1 }]</br>
-		  		 
-		  
-		  
-		  
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">카페생성완료</th>
+		<th scope="col">정보</th>		  
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">카페번호</th>
+      <td>${cafe.cafeNo}</td>
+    </tr>
+    <tr>
+      <th scope="row">카페이름</th>
+      <td>${cafe.cafeName}</td>
+    </tr>
+    <tr>
+      <th scope="row">카페URL</th>
+      <td>${cafe.url}</td>
+    </tr>
+    <tr>
+      <th scope="row">카페설명</th>
+      <td>${cafe.cafeDetail}</td>
+    </tr>
+    <tr>
+      <th scope="row">카페카테고리</th>
+      <td>${cafe.cafeType}</td>
+    </tr>
+    <tr>
+      <th scope="row">가입안내</th>
+      <td>${cafe.applicationDetail}</td>
+    </tr>
+    <tr>
+      <th scope="row">질문설정</th>
+      <td>${cafe.applicationQuestion1}</td>
+    </tr>
+    
+  </tbody>
+</table>
+
 		
-		  
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
 		      <button type="button" class="btn btn-success"  >수정</button>

@@ -51,16 +51,22 @@ public class CafeManageDaoImpl implements CafeManageDao {
 		return sqlSession.selectOne("getCafeNo", cafeURL);
 		
 	}
-	@Override
+	///////////////////////////////준호시작///////////////////////////////////////	
+	@Override//준호
 	public void updateCafeInfo(Cafe cafe)throws Exception{
 		sqlSession.update("CafeMapper.updateCafeInfo", cafe);
 	}
 	
-	@Override
+	@Override//준호
 	public Cafe getCafeInfo(String cafeNo) throws Exception {
-		return sqlSession.selectOne("CafeManageMapper.getCafeInfo", cafeNo);
+		return sqlSession.selectOne("CafeMapper.getCafeInfo", cafeNo);
 	}
 	
+	@Override//준호
+	public void updateCafeApplicationForm(Cafe cafe)throws Exception{
+		sqlSession.update("CafeMapper.updateCafeApplicationForm", cafe);
+	}
+	///////////////////////////////준호끝///////////////////////////////////////	
 	@Override
 	public List<CafeApplication> getCafeApplicationList(Search search) {
 		

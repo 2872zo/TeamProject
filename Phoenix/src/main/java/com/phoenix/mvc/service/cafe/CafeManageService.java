@@ -14,9 +14,11 @@ public interface CafeManageService {
 	public boolean checkCafePost(String cafeURL,int boardNo); //아니면 null이면?? 으로할까 일단 조원들상의 void도 int return
 	
 	public Map<String, Object> getCafeApplicationList(Search search);
-	
+	///////////////////////////////준호시작///////////////////////////////////////
 	public void updateCafeInfo(Cafe cafe) throws Exception ;
 	
 	public Cafe getCafeInfo(String cafeNo)throws Exception;
 	
+	public void updateCafeApplicationForm(Cafe cafe) throws Exception ;
+	///////////////////////////////준호끝///////////////////////////////////////
 }

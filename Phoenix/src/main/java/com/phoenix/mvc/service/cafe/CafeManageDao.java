@@ -19,9 +19,11 @@ public interface CafeManageDao {
 	public List<CafeApplication> getCafeApplicationList(Search search);
 	
 	public int getTotalCount(Search search);
-	
+	///////////////////////////////준호시작///////////////////////////////////////
 	public void updateCafeInfo(Cafe cafe) throws Exception ;
 	
 	public Cafe getCafeInfo(String cafeNo)throws Exception;
 	
+	public void updateCafeApplicationForm(Cafe cafe) throws Exception ;
+	///////////////////////////////준호끝///////////////////////////////////////	
 }

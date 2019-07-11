@@ -22,11 +22,12 @@ public class CafeTabDaoImpl implements CafeTabDao{
 	public CafeTabDaoImpl() {
 		System.out.println(getClass().getName() + "default Constuctor");
 	}
-	
+	///////////////////////////////준호시작///////////////////////////////////////	
 	public void addCafe(Cafe cafe) throws Exception {
 		sqlSession.insert("CafeMapper.addCafe", cafe);
 	}
 	
+	///////////////////////////////준호끝///////////////////////////////////////	
 	@Override
 	public List searchCafe(Search search) throws Exception {
 		// TODO Auto-generated method stub			

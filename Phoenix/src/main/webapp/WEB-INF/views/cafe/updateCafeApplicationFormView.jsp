@@ -7,7 +7,7 @@
 <html lang="ko">
 	
 <head>
-	
+	<meta charset="EUC-KR">
 	
 	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -20,7 +20,7 @@
 
 	
 	<header>
-		<title>카페정보수정완료창</title>
+		<title>카페가입양식관리화면</title>
 	</header>
 	
 		<script type="text/javascript">
@@ -29,8 +29,8 @@
 		 $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$( "button.btn.btn-success" ).on("click" , function() {
-				alert("만들기");
-				$("form").attr("method" , "POST").attr("action" , "/cafe/1234/addCafe").submit();
+				alert("수정");
+				$("form").attr("method" , "POST").attr("action" , "/cafe/updateCafeApplicationForm").submit();
 			});
 		});	
 
@@ -42,35 +42,52 @@
 
 
 		<div class="row" align="center">
-	  		<div class="col-sm-4"><strong>가입환영</strong></div>
+	  		<div class="col-sm-4"><strong>가입양식관리수정</strong></div>
 		</div>
 		
-	
-		  카페이름:&nbsp;&nbsp;[${cafe.cafeName }]</br>
-		  카페url:&nbsp;&nbsp;[${cafe.url }]</br>
-		  카페설명:&nbsp;&nbsp;[${cafe.cafeDetail }]</br>
-		  카페카테고리:&nbsp;&nbsp;[${cafe.cafeType }]</br>
-		  가입안내:&nbsp;&nbsp;[${cafe.applicationDetail }]</br>
-		  질문설정:&nbsp;&nbsp;[${cafe.applicationQuestion1 }]</br>
-		  		 
+		<input type="hidden" name="cafeNo" value="${cafe.cafeNo }"/>
+				
+					<div>
+						자동가입승인<input type="text" name="autoApplicationAcceptFlag" class="ct_input_g" 
+									style="width: 100px; height: 19px" maxLength="20" value="${cafe.autoApplicationAcceptFlag}"  >
+					</div>					
+		
+					<div>
+						카페전용 별명사용여부<input type="text" name="memberNickNameFlag" class="ct_input_g" 
+									style="width: 100px; height: 19px" maxLength="20" value="${cafe.memberNickNameFlag}">
+					</div>
+		
+					<div>
+						질문1<input type="text" name="applicationQuestion1" class="ct_input_g" 
+									style="width: 100px; height: 19px" maxLength="20" value="${cafe.applicationQuestion1}">
+					</div>
+					
+					<div>
+						질문2<input type="text" name="applicationQuestion2" class="ct_input_g" 
+									style="width: 100px; height: 19px" maxLength="20" value="${cafe.applicationQuestion2}">
+					</div>
+			
+					<div>
+						질문3<input type="text" name="applicationQuestion3" class="ct_input_g" 
+									style="width: 100px; height: 19px" maxLength="20" value="${cafe.applicationQuestion3}">
+					</div>
+		
 		  
-		  
-		  
+				  
 		
 		  
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-success"  >만들기</button>
+		      <button type="button" class="btn btn-success"  >수정</button>
 		    </div>
 		  </div>
-		  
 		</form>
 		<!-- form Start /////////////////////////////////////-->
-	
+		
+ 	</div>
 	<!--  화면구성 div end /////////////////////////////////////-->
 	
 </body>
 
 </html>
-
 					

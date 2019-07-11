@@ -38,16 +38,22 @@ public class CafeManageServiceImpl implements CafeManageService {
 	
 		return cafeManageDao.getCafeBoard(cafeNo);
 	}
-	@Override
+	///////////////////////////////준호시작///////////////////////////////////////	
+	@Override//준호
 	public void updateCafeInfo(Cafe cafe) throws Exception {
 		cafeManageDao.updateCafeInfo(cafe);
 	}
 	
-	@Override
+	@Override//준호
+	public void updateCafeApplicationForm(Cafe cafe) throws Exception {
+		cafeManageDao.updateCafeApplicationForm(cafe);
+	}
+	
+	@Override//준호
 	public Cafe getCafeInfo(String cafeNo) throws Exception {
 		return cafeManageDao.getCafeInfo(cafeNo);
 	}
-	
+	///////////////////////////////준호끝///////////////////////////////////////	
 	@Override
 	public Map<String, Object> getCafeApplicationList(Search search) {
 		

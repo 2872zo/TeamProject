@@ -52,12 +52,12 @@ public class CafeTabServiceImpl implements CafeTabService{
 	public CafeTabServiceImpl() {
 		System.out.println(getClass().getName() + "default Constuctor");
 	}
-	
+	///////////////////////////////준호시작///////////////////////////////////////		
 	@Override
 	public void addCafe(Cafe cafe) throws Exception {
 		cafeTabDao.addCafe(cafe);
 	}
-
+	///////////////////////////////준호끝///////////////////////////////////////	
 	@Override
 	public Map searchCafe(Search search) throws Exception {
 		// TODO Auto-generated method stub

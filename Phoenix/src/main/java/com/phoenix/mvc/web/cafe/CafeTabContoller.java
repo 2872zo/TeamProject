@@ -38,7 +38,7 @@ public class CafeTabContoller {
 		System.out.println("/cafe/main입니다.");
 		return "forward:/WEB-INF/views/cafe/cafeHomeMain.jsp";
 	}
-
+	///////////////////////////////준호시작///////////////////////////////////////	
 	@RequestMapping(value= "/cafe/addCafeView", method=RequestMethod.GET)
 	public String addCafeView(@ModelAttribute("cafe") Cafe cafe)throws Exception{
 		
@@ -55,14 +55,14 @@ public class CafeTabContoller {
 		System.out.println("/addCafe : POST");
 		
 		
-		cafe.setManageUserNo("10012");		
+		//cafe.setManageUserNo("10012");		
 
 		cafeTabService.addCafe(cafe);
 		
 		return "cafe/addCafe";
 	}
 	
-	
+	///////////////////////////////준호끝///////////////////////////////////////		
 	
 	
 	@RequestMapping("/cafe/search")

@@ -8,9 +8,9 @@ import com.phoenix.mvc.service.domain.User;
 
 
 public interface CafeTabService {
-	
+	///////////////////////////////준호시작///////////////////////////////////////	
 	public void addCafe(Cafe cafe)throws Exception;
-	
+	///////////////////////////////준호끝///////////////////////////////////////	
 	public Map searchCafe(Search search)throws Exception;
 	
 	public Map getCafeMain(User user,String cafeURL);
