@@ -38,12 +38,6 @@ public class CafeTabDaoImpl implements CafeTabDao{
 	}
 	
 	
-	@Override
-	public List seachPost(Search search) throws Exception {
-		// TODO Auto-generated method stub
-		return sqlSession.selectList("PostMapper.searchCafePost", search);
-	}
-	
 	public int postTotalCount(Search search) throws Exception {
 		return sqlSession.selectOne("PostMapper.searchPostTotalCount",search);
 	}

@@ -7,12 +7,12 @@ import com.phoenix.mvc.service.domain.Post;
 
 public interface CafePostDao {
 	public List<Post> getPostListBySearch(Search search);
+	
+	public int searchTotalCount(Search search);
 
 	public List<Post> getPostListByBoard(Search search);
 
 	public int postTotalCount(Search search);
-	
-	public int searchTotalCount(Search search);
 	
 	public List<Post> getPostListByNotice(Search search);
 	

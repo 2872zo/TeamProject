@@ -234,33 +234,4 @@
 	<update id="deletePost">
 		
 	</update>
-	
-	<!-- 카페 전체 검색 -->
-	<select  id="searchCafePost"   parameterType="Search"  resultMap="postResultMap">
-		SELECT *
-	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(
-	  	SELECT
-		c.url, c.cafe_name, c.cafe_icon, b.board_no, p.post_title, p.reg_date, p. member_nickname
-		FROM	cafe c, board b, post p
-		WHERE	c.cafe_no=b.cafe_no
-		AND		p.board_no=b.board_no
-		AND		p.post_status_flag='0'
-		AND		p.post_title like '%' ||#{searchKeyword}|| '%'
-		ORDER BY p.reg_date DESC
-		 ) inner_table
-		WHERE ROWNUM &lt;= #{endRowNum} )
-		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
-	</select>
-	
-	<select  id="searchPostTotalCount"   parameterType="Search"  resultType="int">
-		SELECT
-		count(*)
-		FROM	cafe c, board b, post p
-		WHERE	c.cafe_no=b.cafe_no
-		AND		p.board_no=b.board_no
-		AND		p.post_status_flag='0'
-		AND		p.post_title like '%' ||#{searchKeyword}|| '%'
-		ORDER BY p.reg_date DESC
-	</select>
 </mapper>

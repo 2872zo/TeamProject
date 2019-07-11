@@ -15,8 +15,6 @@ public interface CafeTabDao {
 	
 	public int cafeTotalCount(Search search) throws Exception;
 	
-	public List seachPost(Search search)throws Exception;
-	
 	public int postTotalCount(Search search) throws Exception;
 	
 	public List getCategorizedCafeList(Search search)throws Exception;
