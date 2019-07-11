@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.phoenix.mvc.common.Page;
 import com.phoenix.mvc.common.Search;
+import com.phoenix.mvc.service.cafe.CafeManageService;
 import com.phoenix.mvc.service.cafe.CafePostService;
 import com.phoenix.mvc.service.domain.Board;
 import com.phoenix.mvc.service.domain.Post;
@@ -36,6 +37,10 @@ public class CafePostContoller {
 	@Autowired
 	@Qualifier("cafePostServiceImpl")
 	private CafePostService cafePostService;
+	
+	@Autowired
+	@Qualifier("cafeManageServiceImpl")
+	private CafeManageService cafeManageService;
 
 	public CafePostContoller() {
 		System.out.println(getClass().getName() + "default Constuctor");
@@ -45,23 +50,25 @@ public class CafePostContoller {
 	public String getCafeInnerSearchList(@ModelAttribute Search search, Map<String, Object> map) {
 		System.out.println("[CafeInnerSearchList] Search : " + search);
 
-		//임시 데이터
-		search.setTermStart(search.getTermStart());
-		search.setTermEnd(search.getTermEnd());
+//		search.setTermStart(search.getTermStart());
+//		search.setTermEnd(search.getTermEnd());
+
 		//임시데이터
-		List<Board> boardList = new ArrayList<Board>();
-		Board board = new Board();
-		board.setBoardNo(10000);
-		board.setBoardName("공지게시판");
-		boardList.add(board);
-		board = new Board();
-		board.setBoardNo(10001);
-		board.setBoardName("신고게시판");
-		boardList.add(board);
-		board = new Board();
-		board.setBoardNo(10003);
-		board.setBoardName("자유게시판");
-		boardList.add(board);
+//		List<Board> boardList = new ArrayList<Board>();
+//		Board board = new Board();
+//		board.setBoardNo(10000);
+//		board.setBoardName("공지게시판");
+//		boardList.add(board);
+//		board = new Board();
+//		board.setBoardNo(10001);
+//		board.setBoardName("신고게시판");
+//		boardList.add(board);
+//		board = new Board();
+//		board.setBoardNo(10003);
+//		board.setBoardName("자유게시판");
+//		boardList.add(board);
+		
+		List<Board> boardList = cafeManageService.getCafeBoard(search.getCafeURL());
 		
 		search.setPageSize(pageSize);
 		if (search.getCurrentPage() == 0) {
@@ -112,19 +119,21 @@ public class CafePostContoller {
 	@GetMapping("/cafe/{cafeURL}/addPost")
 	public String addPostView(@ModelAttribute Search search, Map<String, Object> map) {
 		//임시데이터
-		List<Board> boardList = new ArrayList<Board>();
-		Board board = new Board();
-		board.setBoardNo(10000);
-		board.setBoardName("공지게시판");
-		boardList.add(board);
-		board = new Board();
-		board.setBoardNo(10001);
-		board.setBoardName("신고게시판");
-		boardList.add(board);
-		board = new Board();
-		board.setBoardNo(10003);
-		board.setBoardName("자유게시판");
-		boardList.add(board);
+//		List<Board> boardList = new ArrayList<Board>();
+//		Board board = new Board();
+//		board.setBoardNo(10000);
+//		board.setBoardName("공지게시판");
+//		boardList.add(board);
+//		board = new Board();
+//		board.setBoardNo(10001);
+//		board.setBoardName("신고게시판");
+//		boardList.add(board);
+//		board = new Board();
+//		board.setBoardNo(10003);
+//		board.setBoardName("자유게시판");
+//		boardList.add(board);
+		
+		List<Board> boardList = cafeManageService.getCafeBoard(search.getCafeURL());
 		
 		map.put("boardList", boardList);
 				
@@ -135,6 +144,7 @@ public class CafePostContoller {
 	public String addPost(@ModelAttribute Search search, @ModelAttribute Post post) {
 		System.out.println("[addPost] POST : " + post);
 		
+		post.setPostContent(post.getPostContent().replaceAll(System.getProperty("line.separator"), ""));
 		System.out.println("Post Insert 결과 : " + cafePostService.addPost(post));
 				
 		return "/cafe/"+post.getCafeUrl()+"/getPost/"+post.getPostNo();
@@ -152,26 +162,29 @@ public class CafePostContoller {
 	}
 	
 	@GetMapping("/cafe/{cafeURL}/updatePost/{postNo}")
-	public String updatePostView(@PathVariable int postNo, Map<String, Object> map) {
+	public String updatePostView(@PathVariable int postNo, @PathVariable String cafeURL, Map<String, Object> map) {
 		System.out.println("[updatePostView] postNo : " + postNo);
 		
 		//임시데이터
-		List<Board> boardList = new ArrayList<Board>();
-		Board board = new Board();
-		board.setBoardNo(10000);
-		board.setBoardName("공지게시판");
-		boardList.add(board);
-		board = new Board();
-		board.setBoardNo(10001);
-		board.setBoardName("신고게시판");
-		boardList.add(board);
-		board = new Board();
-		board.setBoardNo(10003);
-		board.setBoardName("자유게시판");
-		boardList.add(board);
+//		List<Board> boardList = new ArrayList<Board>();
+//		Board board = new Board();
+//		board.setBoardNo(10000);
+//		board.setBoardName("공지게시판");
+//		boardList.add(board);
+//		board = new Board();
+//		board.setBoardNo(10001);
+//		board.setBoardName("신고게시판");
+//		boardList.add(board);
+//		board = new Board();
+//		board.setBoardNo(10003);
+//		board.setBoardName("자유게시판");
+//		boardList.add(board);
+		
+		List<Board> boardList = cafeManageService.getCafeBoard(cafeURL);
 		
 		Post post = cafePostService.getPost(postNo);
 		
+		System.out.println("================postcontent : " + post.getPostContent());
 		map.put("post", post);
 		map.put("boardList", boardList);
 		
@@ -182,8 +195,9 @@ public class CafePostContoller {
 	public String updatePost(@ModelAttribute Post post) {
 		System.out.println("[updatePost] post : " + post);
 		
+		post.setPostContent(post.getPostContent().replaceAll(System.getProperty("line.separator"), ""));
 		System.out.println(cafePostService.updatePost(post));
 		
-		return "/cafe/"+post.getCafeUrl()+"/getPost/"+post.getPostNo();
+		return "redirect:/cafe/"+post.getCafeUrl()+"/getPost/"+post.getPostNo();
 	}
 }

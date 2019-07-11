@@ -25,13 +25,17 @@
 			$("#submitButton").on("click",function(e){
 				$("[name=boardName]").val( $("[name=boardNo] option:selected").text());
 			});
+
+			$("[name=update]").on("click",function(){
+				location.href = "/cafe/${post.cafeUrl}/updatePost/${post.postNo}";
+			});
 		});
 
 		
 	</script>
 
 
-	<title>${search.cafeURL}</title>
+	<title>${post.cafeUrl}</title>
 </header>
 
 <body>
@@ -45,28 +49,24 @@
 				<input type="hidden" name="cafeUrl"> <input type="hidden"name="memberNo"> 
 				<input type="hidden" name="memberNickname">
 				<input type="hidden" name="boardName">
-	
-				<div class="row">
-					<div class="col-md-8 mb-3">
-						게시판 번호 : ${post.boardNo }<br/>
-						게시판 : ${post.boardName }<br/>
-						작성자 멤버 번호 : ${post.memberNo }<br/>
-						작성자 : ${post.memberNickname }<br/>
-						추천수 : ${post.likeCount }<br/>
-						조회수 : ${post.viewCount }<br/>
-						작성일 : ${post.regDate }<br/>
-						
-					</div>
-	
-				</div>
 
-					제목 : ${post.postTitle } 
-					
-					<br/>
-					
-					내용 : ${post.postContent }
+		<div class="row">
+			<div class="col-md-8 mb-3">
+				게시판 번호 : ${post.boardNo }<br /> 
+				게시판 : ${post.boardName }<br /> 
+				작성자 멤버 번호 : ${post.memberNo }<br /> 
+				작성자 : ${post.memberNickname }<br />
+				추천수 : ${post.likeCount }<br /> 
+				조회수 : ${post.viewCount }<br /> 
+				작성일 : ${post.regDate }<br />
+			</div>
+		</div>
+
+		제목 : ${post.postTitle } <br /> 
+		내용 : ${post.postContent } <br />
 		
-					<br/>
+		<button name="update" class="btn btn-primary btn-lg btn-block">수정</button>
+		<button name="delete" class="btn btn-primary btn-lg btn-block">삭제</button>
 	</div>
 </body>
 </html>

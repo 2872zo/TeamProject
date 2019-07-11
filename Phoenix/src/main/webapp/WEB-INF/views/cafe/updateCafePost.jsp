@@ -41,16 +41,20 @@
 			$("[name=cafeUrl]").val('${post.cafeUrl}');
 			$("[name=memberNo]").val('${post.memberNo}');
 			$("[name=memberNickname]").val('${post.memberNickname}');
-			$("form").attr("method", "POST").attr("action",	"addPost");
+			$("form").attr("method", "POST").attr("action",	"/cafe/${post.cafeUrl}/updatePost/${post.postNo}");
 
-			$(".searchOption").each(function(){
+			$(".boardOption").each(function(){
 			    if($(this).val()==${post.boardNo}){
 			      $(this).attr("selected","selected");
 			    }
 			});
+
+			if(${post.postNoticeFlag}){
+				$("[name=postNoticeFlag]").attr("checked","checked");
+			}
 			
 			$("[name=postTitle]").val('${post.postTitle}');
-			$("[name=postContent]").val('${post.postContent}');
+			$("[name=postContent]").val("${post.postContent}");
 			
 			$("#submitButton").on("click",function(e){
 				$("[name=boardName]").val( $("[name=boardNo] option:selected").text());

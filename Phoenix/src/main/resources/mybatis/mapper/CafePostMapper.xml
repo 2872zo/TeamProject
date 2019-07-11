@@ -10,7 +10,7 @@
 	<resultMap id="postResultMap" type="Post">
 		<result property="postNo" 			column="post_no" 			jdbcType="NUMERIC"/>
 		<result property="cafeName" 		column="cafe_name" 			jdbcType="VARCHAR"  />
-		<result property="cafeUrl" 			column="url" 				jdbcType="VARCHAR"  />
+		<result property="cafeUrl" 			column="cafe_url" 				jdbcType="VARCHAR"  />
 		<result property="cafeIcon" 		column="cafe_icon" 			jdbcType="VARCHAR"  />
 		<result property="boardNo"			column="board_no" 			jdbcType="NUMERIC" />
 		<result property="boardName"		column="board_name"			jdbcType="VARCHAR" />
@@ -205,30 +205,16 @@
 		WHERE post_no = #{value}
 	</select>
 	
-	<update id="updatePost">
-		UPDATE 
-		INTO post 
-			( post_no, 
-			  post_title, 
-			  board_no, 
-			  board_name, 
-			  member_no, 
-			  cafe_url, 
-			  post_content, 
-			  reg_date, 
-			  member_nickname,
-			  post_notice_flag) 
-		VALUES 
-			( SEQ_POST_POST_NO.NEXTVAL, 
-			  #{postTitle},  
-			  #{boardNo}, 
-			  #{boardName}, 
-			  #{memberNo}, 
-			  #{cafeUrl}, 
-			  #{postContent}, 
-			  SYSDATE, 
-			  #{memberNickname},
-			  #{postNoticeFlag})
+	<update id="updatePost" parameterType="Post">
+		UPDATE post
+		SET
+			  post_title = #{postTitle}, 
+			  board_no = #{boardNo}, 
+			  board_name = #{boardName}, 
+			  post_content = #{postContent}, 
+			  post_notice_flag = #{postNoticeFlag}
+		WHERE
+			post_no = #{postNo}			  
 	</update>
 	
 	<update id="deletePost">
