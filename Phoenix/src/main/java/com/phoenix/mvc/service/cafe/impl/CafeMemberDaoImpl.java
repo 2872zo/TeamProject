@@ -1,13 +1,12 @@
 package com.phoenix.mvc.service.cafe.impl;
 
 import java.util.HashMap;
-import java.util.Map;
-
+import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.cafe.CafeMemberDao;
 import com.phoenix.mvc.service.domain.CafeApplication;
 import com.phoenix.mvc.service.domain.CafeMember;
@@ -45,12 +44,32 @@ public class CafeMemberDaoImpl implements CafeMemberDao{
 		
 		cafeMember = sqlSession.selectOne("getCafeMember", map);
 		
-		if(cafeMember.getUserNo() == null) // 유저가 해당하는 카페 멤버가아닌경우(db값이 없으면)
+		if(cafeMember.getUserNo() == 0) // 유저가 해당하는 카페 멤버가아닌경우(db값이 없으면)
 		{
-			cafeMember.setUserNo("500"); //cafe
+			cafeMember.setUserNo(500); //cafe
 		}
 		
 		return cafeMember;
 	}
+////////////////////////////////////기황///////////////////////////////////////
+	@Override
+	public List getCafeMemberList(Search search) throws Exception {
+		// TODO Auto-generated method stub
+			return sqlSession.selectList("CafeMemberMapper.listCafeMemeber", search);
+	}
+	
+	@Override
+	public int getCafeMemberCount(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("CafeMemberMapper.getMemberCount", search);
+	}
+
+	@Override
+	public CafeMember getCafeMember(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("CafeMemberMapper.getCafeMemeber", search);
+	}
+//////////////////////////////끝///////////////////////////////////////	
+
 	
 }

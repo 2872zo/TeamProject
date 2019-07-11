@@ -1,5 +1,8 @@
 package com.phoenix.mvc.service.cafe;
 
+import java.util.Map;
+
+import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.domain.CafeApplication;
 import com.phoenix.mvc.service.domain.CafeMember;
 
@@ -9,5 +12,12 @@ public interface CafeMemberService {
 	
 	//카페탈퇴
 	public void updateCafeMember(CafeMember cafeMember);
+	////////////////////////////기황////////////////////////////////////
+
+	public Map getCafeMemberList(Search search) throws Exception;
+	
+	public CafeMember getCafeMember(Search search) throws Exception;
+	////////////////////////////끝////////////////////////////////////
+
 
 }

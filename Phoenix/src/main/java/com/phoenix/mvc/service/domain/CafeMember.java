@@ -4,60 +4,38 @@ import java.util.Date;
 
 public class CafeMember {
 
-	private String memberNo;
-	private String cafeNo;
-	private String userNo;
-	private String cafeMemberGradeNo;
-	private Character noticeFlag;
+	private int memberNo;
+	private int cafeNo;
+	private int userNo;
 	private String memberNickname;
 	private String memberStatusCode;
+	private Character noticeFlag;
 	private Character favoriteFlag;
+	private int cafeMemberGradeNo;
+	private String memberGrade;
+	private String gradeName;
 	private Date regDate;
-	private String visitCount;
-	private String gradeName; //예림예림
-	
-	////////////////////////////////////////////////////////////예림예림
-	public String getGradeName() {
-		return gradeName;
-	}
+	private int visitCount;
+	private int postCount;
+	private int replyCount;
 
-	public void setGradeName(String gradeName) {
-		this.gradeName = gradeName;
-	}
-/////////////////////////////////////////////////////////////
-	public CafeMember() {
-
-	}
-	
-	public String getMemberNo() {
+	public int getMemberNo() {
 		return memberNo;
 	}
-	public void setMemberNo(String memberNo) {
+	public void setMemberNo(int memberNo) {
 		this.memberNo = memberNo;
 	}
-	public String getCafeNo() {
+	public int getCafeNo() {
 		return cafeNo;
 	}
-	public void setCafeNo(String cafeNo) {
+	public void setCafeNo(int cafeNo) {
 		this.cafeNo = cafeNo;
 	}
-	public String getUserNo() {
+	public int getUserNo() {
 		return userNo;
 	}
-	public void setUserNo(String userNo) {
+	public void setUserNo(int userNo) {
 		this.userNo = userNo;
-	}
-	public String getCafeMemberGradeNo() {
-		return cafeMemberGradeNo;
-	}
-	public void setCafeMemberGradeNo(String cafeMemberGradeNo) {
-		this.cafeMemberGradeNo = cafeMemberGradeNo;
-	}
-	public Character getNoticeFlag() {
-		return noticeFlag;
-	}
-	public void setNoticeFlag(Character noticeFlag) {
-		this.noticeFlag = noticeFlag;
 	}
 	public String getMemberNickname() {
 		return memberNickname;
@@ -71,11 +49,35 @@ public class CafeMember {
 	public void setMemberStatusCode(String memberStatusCode) {
 		this.memberStatusCode = memberStatusCode;
 	}
+	public Character getNoticeFlag() {
+		return noticeFlag;
+	}
+	public void setNoticeFlag(Character noticeFlag) {
+		this.noticeFlag = noticeFlag;
+	}
 	public Character getFavoriteFlag() {
 		return favoriteFlag;
 	}
 	public void setFavoriteFlag(Character favoriteFlag) {
 		this.favoriteFlag = favoriteFlag;
+	}
+	public int getCafeMemberGradeNo() {
+		return cafeMemberGradeNo;
+	}
+	public void setCafeMemberGradeNo(int cafeMemberGradeNo) {
+		this.cafeMemberGradeNo = cafeMemberGradeNo;
+	}
+	public String getMemberGrade() {
+		return memberGrade;
+	}
+	public void setMemberGrade(String memberGrade) {
+		this.memberGrade = memberGrade;
+	}
+	public String getGradeName() {
+		return gradeName;
+	}
+	public void setGradeName(String gradeName) {
+		this.gradeName = gradeName;
 	}
 	public Date getRegDate() {
 		return regDate;
@@ -83,21 +85,32 @@ public class CafeMember {
 	public void setRegDate(Date regDate) {
 		this.regDate = regDate;
 	}
-	public String getVisitCount() {
+	public int getVisitCount() {
 		return visitCount;
 	}
-	public void setVisitCount(String visitCount) {
+	public void setVisitCount(int visitCount) {
 		this.visitCount = visitCount;
 	}
-
-	@Override
-	public String toString() {
-		return "CafeMember [memberNo=" + memberNo + ", cafeNo=" + cafeNo + ", userNo=" + userNo + ", cafeMemberGradeNo="
-				+ cafeMemberGradeNo + ", noticeFlag=" + noticeFlag + ", memberNickname=" + memberNickname
-				+ ", memberStatusCode=" + memberStatusCode + ", favoriteFlag=" + favoriteFlag + ", regDate=" + regDate
-				+ ", visitCount=" + visitCount + "]";
+	public int getPostCount() {
+		return postCount;
+	}
+	public void setPostCount(int postCount) {
+		this.postCount = postCount;
+	}
+	public int getReplyCount() {
+		return replyCount;
+	}
+	public void setReplyCount(int replyCount) {
+		this.replyCount = replyCount;
 	}
 	
+	@Override
+	public String toString() {
+		return "CafeMember [memberNo=" + memberNo + ", cafeNo=" + cafeNo + ", userNo=" + userNo + ", memberNickname="
+				+ memberNickname + ", memberStatusCode=" + memberStatusCode + ", noticeFlag=" + noticeFlag
+				+ ", favoriteFlag=" + favoriteFlag + ", cafeMemberGradeNo=" + cafeMemberGradeNo + ", memberGrade="
+				+ memberGrade + ", gradeName=" + gradeName + ", regDate=" + regDate + ", visitCount=" + visitCount
+				+ ", postCount=" + postCount + ", replyCount=" + replyCount + "]";
+	}
 	
-
 }

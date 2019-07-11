@@ -13,6 +13,8 @@ public interface CafeTabService {
 	
 	public Map searchCafe(Search search)throws Exception;
 	
+	public Map getCategorizedCafeList(Search search)throws Exception;
+	
 	public Map getCafeMain(User user,String cafeURL);
 	
 }
