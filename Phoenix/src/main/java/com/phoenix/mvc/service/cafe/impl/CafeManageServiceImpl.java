@@ -30,7 +30,36 @@ public class CafeManageServiceImpl implements CafeManageService {
 		
 		System.out.println(this.getClass().getName());
 	}
+	/////////////////////////////////지니//////////////////////////////
+	@Override
+	public Map<String, Object> getCafeApplicationList(Search search) {
+		
+		List<CafeApplication> list = cafeManageDao.getCafeApplicationList(search);
+		int totalCount = cafeManageDao.getTotalCount(search);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		map.put("totalCount", new Integer(totalCount));
+		
+		return map;
+	}
+	
+	@Override
+	public void updateAcceptStatusCode(CafeApplication cafeApplication) {
+		
+		cafeManageDao.updateAcceptStatusCode(cafeApplication);
+		
+	}
 
+	@Override
+	public CafeApplication getCafeApplication(int userNo) {
+		
+		return cafeManageDao.getCafeApplication(userNo);
+	}
+
+	////////////////////////////////지니끝//////////////////////////////////
+
+	
 	@Override
 	public List getCafeBoard(String cafeURL) {
 		
@@ -48,18 +77,7 @@ public class CafeManageServiceImpl implements CafeManageService {
 		return cafeManageDao.getCafeInfo(cafeNo);
 	}
 	
-	@Override
-	public Map<String, Object> getCafeApplicationList(Search search) {
-		
-		List<CafeApplication> list = cafeManageDao.getCafeApplicationList(search);
-		int totalCount = cafeManageDao.getTotalCount(search);
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("list", list);
-		map.put("totalCount", new Integer(totalCount));
-		
-		return map;
-	}
+	
 
 	@Override
 	public boolean checkCafePost(String cafeURL,int boardNo) { // false이면  게시글 없음,  true 이면 게시글 존재
@@ -87,5 +105,7 @@ public class CafeManageServiceImpl implements CafeManageService {
 		}
 		
 	}
+
+
 
 }

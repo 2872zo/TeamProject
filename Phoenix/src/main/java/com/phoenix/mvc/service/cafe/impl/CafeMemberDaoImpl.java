@@ -23,6 +23,7 @@ public class CafeMemberDaoImpl implements CafeMemberDao{
 		this.sqlSession = sqlSession;
 	}
 	
+	/////////////////////////////////지니//////////////////////////////
 	@Override
 	public void addCafeApplication(CafeApplication cafeApplication) {
 		sqlSession.insert("CafeApplicationMapper.addCafeApplication",cafeApplication);
@@ -33,7 +34,8 @@ public class CafeMemberDaoImpl implements CafeMemberDao{
 		sqlSession.update("CafeMemberMapper.updateCafeMember", cafeMember);
 		
 	}
-
+	////////////////////////////////지니끝//////////////////////////////////
+	
 	@Override //예림예림
 	public CafeMember getCafeMember(int cafeNo, int userNo) {
 		

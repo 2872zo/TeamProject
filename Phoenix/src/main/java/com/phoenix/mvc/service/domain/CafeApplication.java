@@ -4,9 +4,9 @@ import java.util.Date;
 
 public class CafeApplication {
 
-	private String applicationNo;
-	private String userNo;
-	private String cafeNo;
+	private int applicationNo;
+	private int userNo;
+	private int cafeNo;
 	private Date regDate;
 	private String question1;
 	private String question2;
@@ -22,32 +22,32 @@ public class CafeApplication {
 
 	}
 	
-	public String getApplicationNo() {
+	public int getApplicationNo() {
 		return applicationNo;
 	}
 
 
-	public void setApplicationNo(String applicationNo) {
+	public void setApplicationNo(int applicationNo) {
 		this.applicationNo = applicationNo;
 	}
 
 
-	public String getUserNo() {
+	public int getUserNo() {
 		return userNo;
 	}
 
 
-	public void setUserNo(String userNo) {
+	public void setUserNo(int userNo) {
 		this.userNo = userNo;
 	}
 
 
-	public String getCafeNo() {
+	public int getCafeNo() {
 		return cafeNo;
 	}
 
 
-	public void setCafeNo(String cafeNo) {
+	public void setCafeNo(int cafeNo) {
 		this.cafeNo = cafeNo;
 	}
 

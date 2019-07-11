@@ -1,16 +1,21 @@
 package com.phoenix.mvc.web.cafe;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +24,7 @@ import com.phoenix.mvc.common.Page;
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.cafe.CafeManageService;
 import com.phoenix.mvc.service.domain.Cafe;
+import com.phoenix.mvc.service.domain.CafeApplication;
 
 @Controller
 @RequestMapping("/cafe/*")
@@ -33,28 +39,8 @@ public class CafeManageController {
 		System.out.println(this.getClass().getName()+"생성자 start");
 	}
 
-	@RequestMapping(value = "/{cafeURL}/updateCafeBoardView", method = RequestMethod.GET )
-	public String updateCafeBoardView( @PathVariable String cafeURL , HttpSession session, Model model)//session user정보, 카페번호
-	{
-		System.out.println("/{cafeURL}/updateCafeBoardView : GET");
-		//session 으로  1.로그인되어있는지 2.카페에 가입되어있는지 3.cafeURL의 카페매니저인지 확인
-		System.out.println("cafeURL : "+cafeURL);
-		
-		List boardList = cafeManageService.getCafeBoard(cafeURL);
-		
-		model.addAttribute("boardList", boardList);
-		
-		//모델에 cafeURL의 cafe 객체도 같이 넘겨줌
-		
-		return "/cafe/updateCafeBoard";
-	}
+	/////////////////////////////////지니//////////////////////////////
 	
-	@RequestMapping(value = "/{cafeURL}/updateCafeBoard", method = RequestMethod.POST)
-	public String updateCafeBoard()
-	{
-		
-		return "";// 다시 updateCafeBoardView 호출하고 싶은데.
-	}
 	@RequestMapping(value = "/{cafeURL}/manage/getCafeApplicationList")
 	public String getCafeApplicationList(@ModelAttribute("search") Search search, Model model) {
 		int pageUnit = 5;
@@ -79,7 +65,83 @@ public class CafeManageController {
 		
 	}
 	
-
+	@RequestMapping(value="/{cafeURL}/manage/updateCafeApplication", method=RequestMethod.POST)
+	public String updateCafeApplication(@RequestBody String application) {
+		
+		System.out.println("/{cafeURL}/manage/updateCafeApplication : POST");
+		System.out.println("엥??");
+		System.out.println(application);
+		
+		JSONObject obj = (JSONObject) JSONValue.parse(application);
+		String cafeApplication = (String)obj.get("application");
+		
+		//System.out.println("뽑은 : "+ cafeApplication);
+		
+		String split[]= cafeApplication.split(",");
+		String result[];
+		
+		List nickName = new ArrayList<String>();
+		List userNo = new ArrayList<String>();
+		List cafeNo = new ArrayList<String>();
+	
+		int count = split.length;
+		
+		//멤버닉네임,userNo,cafeNo
+		for(int i =0; i<split.length;i++) {
+			System.out.println("값 몇개인지부터 확인: "+split.length);
+			System.out.println("split"+split[i]);
+			result= split[i].split("&");
+				nickName.add(result[0]);
+				userNo.add(result[1]);
+				cafeNo.add(result[2]);
+			}
+			
+		System.out.println(userNo);
+		for(int i = 0; i<count; i++) {
+			
+			System.out.println(userNo.get(i));
+			//CafeApplication cafe =cafeManageService.getCafeApplication((Integer) userNo.get(i));
+			//System.out.println(cafe);
+		}
+		
+		System.out.println(nickName);
+		System.out.println(userNo);
+		System.out.println(cafeNo);
+		
+		
+		
+		//System.out.println(cafe);
+		
+		//ca102
+		return null;
+		
+	}
+	////////////////////////////////지니끝//////////////////////////////////
+	
+	@RequestMapping(value = "/{cafeURL}/updateCafeBoardView", method = RequestMethod.GET )
+	public String updateCafeBoardView( @PathVariable String cafeURL , HttpSession session, Model model)//session user정보, 카페번호
+	{
+		System.out.println("/{cafeURL}/updateCafeBoardView : GET");
+		//session 으로  1.로그인되어있는지 2.카페에 가입되어있는지 3.cafeURL의 카페매니저인지 확인
+		System.out.println("cafeURL : "+cafeURL);
+		
+		List boardList = cafeManageService.getCafeBoard(cafeURL);
+		
+		model.addAttribute("boardList", boardList);
+		
+		//모델에 cafeURL의 cafe 객체도 같이 넘겨줌
+		
+		return "/cafe/updateCafeBoard";
+	}
+	
+	@RequestMapping(value = "/{cafeURL}/updateCafeBoard", method = RequestMethod.POST)
+	public String updateCafeBoard()
+	{
+		
+		return "";// 다시 updateCafeBoardView 호출하고 싶은데.
+	}
+	
+	
 	
 	@RequestMapping(value= "/cafe/updateCafeInfoView", method=RequestMethod.GET)
 	public String updateCafeInfoView(@ModelAttribute("cafe") Cafe cafe)throws Exception{
@@ -101,5 +163,8 @@ public class CafeManageController {
 		
 		return "cafe/updateCafeInfo";
 	}
+	
+	
+	
 	
 }

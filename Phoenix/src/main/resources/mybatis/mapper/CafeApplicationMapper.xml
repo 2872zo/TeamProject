@@ -72,6 +72,22 @@
 							</where>) countTable						
 	 </select>
 	 
+	 
+	 <update	id="updateAcceptStatusCode"	parameterType="CafeApplication" >
+	   	UPDATE cafe_application
+	   	<set>
+		accept_status_code=#{acceptStatusCode}	
+	   	</set>
+	   	WHERE user_no = #{userNo}
+	 </update>
+	 
+	 <select id="getCafeApplication" parameterType="int" resultMap="cafeApplicationSelectMap">
+  		SELECT 
+		*
+		FROM cafe_application
+		WHERE user_no = #{userNo}
+  	</select>
+	 
 
 	 
 </mapper>

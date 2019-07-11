@@ -118,10 +118,13 @@ public class Search{
 
 	@Override
 	public String toString() {
-		return "Search [cafeURL=" + cafeURL + ", boardNo=" + boardNo + ", searchCondition=" + searchCondition
-				+ ", searchKeyword=" + searchKeyword + ", currentPage=" + currentPage + ", pageSize=" + pageSize
-				+ ", endRowNum=" + endRowNum + ", startRowNum=" + startRowNum + ", sortCode=" + sortCode + "]";
+		return "Search [cafeNo=" + cafeNo + ", cafeURL=" + cafeURL + ", boardNo=" + boardNo + ", boardName=" + boardName
+				+ ", searchCondition=" + searchCondition + ", searchKeyword=" + searchKeyword + ", currentPage="
+				+ currentPage + ", pageSize=" + pageSize + ", endRowNum=" + endRowNum + ", startRowNum=" + startRowNum
+				+ ", sortCode=" + sortCode + ", termStart=" + termStart + ", termEnd=" + termEnd + "]";
 	}
+
+
 
 	///Method
 

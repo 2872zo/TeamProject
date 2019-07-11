@@ -27,7 +27,8 @@ public class CafeMemberController {
 	public CafeMemberController() {
 		System.out.println(getClass().getName() + "default Constuctor");
 	}
-
+	/////////////////////////////////지니//////////////////////////////
+	
 	@RequestMapping(value = "/{cafeURL}/addCafeApplication", method = RequestMethod.GET)
 	public String addCafeApplication(@PathVariable String cafeURL) {
 
@@ -43,8 +44,8 @@ public class CafeMemberController {
 
 		System.out.println("/cafe/{cafeURL}/addCafeApplication : POST");
 
-		cafeApplication.setUserNo("10001");
-		cafeApplication.setCafeNo("10000");
+		cafeApplication.setUserNo(10001);
+		cafeApplication.setCafeNo(10000);
 		System.out.println("들어온 cafeApplication 값?" + cafeApplication);
 		cafeMemberService.addCafeApplication(cafeApplication);
 
@@ -87,5 +88,7 @@ public class CafeMemberController {
 		return "cafe/{cafeURL}/main";//메인으로 이동!
 
 	}
+	////////////////////////////////지니끝//////////////////////////////////
+
 
 }

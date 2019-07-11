@@ -4,11 +4,14 @@ import com.phoenix.mvc.service.domain.CafeApplication;
 import com.phoenix.mvc.service.domain.CafeMember;
 
 public interface CafeMemberDao {
+	
+	/////////////////////////////////지니//////////////////////////////
 	//카페가입신청
 	public void addCafeApplication(CafeApplication cafeApplication);
 	
 	//카페탈퇴
 	public void updateCafeMember(CafeMember cafeMember);
+	////////////////////////////////지니끝//////////////////////////////////
 
 	public CafeMember getCafeMember(int cafeNo,int userNo);  //예림예림
 }
