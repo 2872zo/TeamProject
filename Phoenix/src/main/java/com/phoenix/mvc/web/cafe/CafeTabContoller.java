@@ -64,29 +64,38 @@ public class CafeTabContoller {
 	
 	
 	
-	
+	/////////////////////////////////기황//////////////////////////////////////
 	@RequestMapping("/cafe/search")
 	public String cafeSearch(@ModelAttribute("search") Search search, Model model) throws Exception {
+	
 		System.out.println("/cafe/search입니다.");
-		System.out.println(search.getSearchCondition());
-		System.out.println(search.getSearchKeyword());
-		System.out.println("서치전"+search);
+
 		if(search.getCurrentPage() == 0 ){
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
-		System.out.println("서치후"+search);
-		
-		
+	
 		Map<String, Object> map = cafeTabService.searchCafe(search);
 		List cafeList = (List) map.get("cafeList");
 		List postList = (List) map.get("postList");
+		int totalCount = (int) map.get("totalCount");
 		Page page = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		//Page page = new Page();
 		model.addAttribute("cafeList", cafeList);
 		model.addAttribute("postList", postList);
 		model.addAttribute("search", search);
 		model.addAttribute("page", page);
+		model.addAttribute("totalCount", totalCount);
 		return "forward:/WEB-INF/views/cafe/listCafeSearch.jsp";
 	}
+	
+	@RequestMapping("/cafe/category")
+	public String getCategorizedCafe () {
+		
+		System.out.println("/cafe/category입니다.");
+		return "forward:/WEB-INF/views/cafe/listCafeSearch.jsp";
+	}
+	
+	/////////////////////////////////끝//////////////////////////////////////
+
 }

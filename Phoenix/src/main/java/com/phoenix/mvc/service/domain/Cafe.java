@@ -21,7 +21,7 @@ public class Cafe {
 	private String applicationQuestion1;
 	private String applicationQuestion2;
 	private String applicationQuestion3;
-	private String cafeNickNameFlag;
+	private String memberNickNameFlag;
 	private String autoApplicationAcceptFlag;
 	private String closedFlag;
 	private int members;
@@ -151,11 +151,11 @@ public class Cafe {
 	}
 
 	public String getCafeNickNameFlag() {
-		return cafeNickNameFlag;
+		return memberNickNameFlag;
 	}
 
 	public void setCafeNickNameFlag(String cafeNickNameFlag) {
-		this.cafeNickNameFlag = cafeNickNameFlag;
+		this.memberNickNameFlag = cafeNickNameFlag;
 	}
 
 	public String getAutoApplicationAcceptFlag() {
@@ -197,7 +197,7 @@ public class Cafe {
 				+ bannerImg + ", mainImg=" + mainImg + ", cafeType=" + cafeType + ", applicationDetail="
 				+ applicationDetail + ", closeReason=" + closeReason + ", applicationQuestion1=" + applicationQuestion1
 				+ ", applicationQuestion2=" + applicationQuestion2 + ", applicationQuestion3=" + applicationQuestion3
-				+ ", cafeNickNameFlag=" + cafeNickNameFlag + ", autoApplicationAcceptFlag=" + autoApplicationAcceptFlag
+				+ ", cafeNickNameFlag=" + memberNickNameFlag + ", autoApplicationAcceptFlag=" + autoApplicationAcceptFlag
 				+ ", closedFlag=" + closedFlag + ", members=" + members + ", getCafeNo()=" + getCafeNo()
 				+ ", getCafeName()=" + getCafeName() + ", getCafeIcon()=" + getCafeIcon() + ", getManageUserNo()="
 				+ getManageUserNo() + ", getRegDate()=" + getRegDate() + ", getUrl()=" + getUrl() + ", getCafeDetail()="

@@ -6,36 +6,31 @@
 
 <mapper namespace="CafeTabMapper">
  	
-	<resultMap id="cafeTabSelectMap" type="com.phoenix.mvc.service.domain.Cafe">
-		<result property="cafeNo" 					 column="CAFE_NO" 						jdbcType="VARCHAR"/>
-		<result property="cafeName"					 column="CAFE_NAME" 					jdbcType="VARCHAR" />
-		<result property="cafeIcon" 				 column="CAFE_ICON" 					jdbcType="VARCHAR" />
-		<result property="manageUserNo" 			 column="MANAGE_USER_NO" 				jdbcType="VARCHAR" />
-		<result property="regDate" 					 column="REG_DATE" 						jdbcType="DATE" />
-		<result property="url" 						 column="URL" 							jdbcType="VARCHAR" />
-		<result property="cafeDetail" 				 column="CAFE_DETAIL" 					jdbcType="VARCHAR" />
-		<result property="bannerImg" 				 column="BANNER_IMG" 					jdbcType="VARCHAR"  />
-		<result property="mainImg" 					 column="MAIN_IMG" 						jdbcType="VARCHAR" />
-		<result property="cafeType" 				 column="CAFE_TYPE" 					jdbcType="VARCHAR" />
-		<result property="applicationDetail" 		 column="APPLICATION_DETAIL" 			jdbcType="VARCHAR" />
-		<result property="closeReason" 				 column="CLOSE_REASON" 					jdbcType="VARCHAR"  />
+	<resultMap id="cafeTabSelectMap" type="Cafe">
+		<result property="cafeNo" 					 column="cafe_no" 						jdbcType="VARCHAR"/>
+		<result property="cafeName"					 column="cafe_name" 					jdbcType="VARCHAR" />
+		<result property="cafeIcon" 				 column="cafe_icon" 					jdbcType="VARCHAR" />
+		<result property="manageUserNo" 			 column="manage_user_no" 				jdbcType="VARCHAR" />
+		<result property="regDate" 					 column="reg_date" 						jdbcType="DATE" />
+		<result property="url" 						 column="url" 							jdbcType="VARCHAR" />
+		<result property="cafeDetail" 				 column="cafe_detail" 					jdbcType="VARCHAR" />
+		<result property="bannerImg" 				 column="banner_img" 					jdbcType="VARCHAR"  />
+		<result property="mainImg" 					 column="main_img" 						jdbcType="VARCHAR" />
+		<result property="cafeType" 				 column="cafe_type" 					jdbcType="VARCHAR" />
+		<result property="applicationDetail" 		 column="application_detail" 			jdbcType="VARCHAR" />
+		<result property="closeReason" 				 column="close_reason" 					jdbcType="VARCHAR"  />
 		<result property="applicationQuestion1" 	 column="APPLICATION_QUESTION1" 		jdbcType="VARCHAR" />
 		<result property="applicationQuestion2"  	 column="APPLICATION_QUESTION2" 		jdbcType="VARCHAR" />
 		<result property="applicationQuestion3" 	 column="APPLICATION_QUESTION3" 		jdbcType="VARCHAR" />
 		<result property="cafeNickNameFlag" 		 column="MEMBER_NICKNAME_FLAG" 			jdbcType="VARCHAR" />
 		<result property="autoApplicationAcceptFlag" column="AUTO_APPLICATION_ACCEPT_FLAG" 	jdbcType="VARCHAR" />
-		<result property="closedFlag" 				 column="CLOSED_FLAG" 					jdbcType="VARCHAR" />
+		<result property="closedFlag" 				 column="closed_flag" 					jdbcType="VARCHAR" />
 		<result property="members" 					 column="members" 						jdbcType="NUMERIC" />
 		<result property="managerNickname"			 column="user_nickname" 				jdbcType="VARCHAR" />
 		
 	</resultMap>
-	
-	<!-- SQL : SELECT -->
-	<select id="searchCafe" parameterType="Search" resultMap="cafeTabSelectMap">
-		SELECT *
-	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(
-	 	SELECT
+	<sql id="listCafe">
+		SELECT
 		c.cafe_no, c.url, c.cafe_name, c.members, u.user_nickname
 		FROM cafe c, users u
 		WHERE c.manage_user_no=u.user_no
@@ -43,19 +38,66 @@
 		(c.cafe_name like '%' ||#{searchKeyword}|| '%'	
 		OR c.cafe_detail like '%' ||#{searchKeyword}|| '%')
 		ORDER BY c.reg_date DESC
-		 ) inner_table
+	</sql>
+	
+	<!-- SQL : SELECT -->
+	<select id="searchCafe" parameterType="Search" resultMap="cafeTabSelectMap">
+		SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(
+	 	<include refid="listCafe"></include>
+	 	 ) inner_table
 		WHERE ROWNUM &lt;= #{endRowNum} )
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
 	 </select>
 	 
-	 <select  id="searchCafeTotalCount"   parameterType="Search"  resultType="int">
+	 <select id="searchCafeTotalCount" parameterType="Search" resultType="int">
 		SELECT
 		count(*)
-		FROM cafe c, users u
-		WHERE c.manage_user_no=u.user_no
-		AND
-		(c.cafe_name like '%' ||#{searchKeyword}|| '%'	
-		OR c.cafe_detail like '%' ||#{searchKeyword}|| '%')
+		FROM (<include refid="listCafe"></include>)
+	 </select>
+	 
+	 <sql id="categoryCafe">
+	 	SELECT
+		cafe_icon, cafe_name, cafe_detail, cafe_type, url, reg_date, members
+		FROM
+		cafe
+		<where>
+		CLOSED_FLAG = '0'
+		AND cafe_type = 
+		<if test="boardName==0">
+		'cc100'
+		</if>
+		<if test="boardName==1">
+		'cc101'
+		</if>
+		<if test="boardName==2">
+		'cc102'
+		</if>
+		<if test="boardName==3">
+		'cc103'
+		</if>
+		<if test="boardName==4">
+		'cc104'
+		</if>
+		<if test="boardName==5">
+		'cc105'
+		</if>
+		<if test="boardName==6">
+		'cc106'
+		</if>
+		</where> 
+		</sql>
+	 <select id="categorizedCafeList" parameterType="Search" resultType="int">
+		<include refid="categoryCafe"/>
+	 </select>
+	 
+	 <select id="countCategorizedCafe" parameterType="Search" resultType="int">
+		SELECT
+		count(*)
+		FROM (
+		<include refid="categoryCafe"/>
+		)
 	 </select>
 	 
 </mapper>

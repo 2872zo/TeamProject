@@ -107,7 +107,7 @@ public class CafeTabServiceImpl implements CafeTabService{
 		}
 		else //로그인이 되어있지않음.
 		{
-			cafeMember.setUserNo("400");
+			cafeMember.setUserNo(400);
 		}
 		map.put("cafeMember", cafeMember);
 		
@@ -121,6 +121,18 @@ public class CafeTabServiceImpl implements CafeTabService{
 		List boardList = cafeManageDao.getCafeBoard(cafeNo);
 		map.put("boardList", boardList);
 		
+		return map;
+	}
+
+	@Override
+	public Map getCategorizedCafeList(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		
+		int totalCount = cafeTabDao.cafeTotalCount(search);
+		Map map = new HashMap();
+		List cafeList = new ArrayList();
+		cafeList = cafeTabDao.getCategorizedCafeList(search);
+		map.put("totalCount", new Integer(totalCount));
 		return map;
 	}
 }
