@@ -34,6 +34,7 @@ public class CafeMemberDaoImpl implements CafeMemberDao{
 		
 	}
 
+	//////////////////////////////////////////////////예림///////////////////////////////////
 	@Override //예림예림
 	public CafeMember getCafeMember(int cafeNo, int userNo) {
 		
@@ -52,5 +53,5 @@ public class CafeMemberDaoImpl implements CafeMemberDao{
 		
 		return cafeMember;
 	}
-	
+	/////////////////////////////////////////끝///////////////////////////////////////////////
 }

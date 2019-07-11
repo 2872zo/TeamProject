@@ -87,6 +87,8 @@ public class CafeTabServiceImpl implements CafeTabService{
 		
 		return map;
 	}
+	
+	///////////////////////////////////////예림//////////////////////////////////////////
 
 	@Override
 	public Map getCafeMain(User user, String cafeURL) { //예림예림
@@ -103,9 +105,11 @@ public class CafeTabServiceImpl implements CafeTabService{
 			cafeMember = cafeMemberDao.getCafeMember(cafeNo,user.getUserNo());//카페번호랑회원번호로
 			//cafeMember.getUserNo().equals("500") 이면
 			//500설정은 dao에서해줬음.
+			System.out.println("cafeMember: "+cafeMember);
 			
 		}
 		else //로그인이 되어있지않음.
+			
 		{
 			cafeMember.setUserNo("400");
 		}
@@ -113,7 +117,7 @@ public class CafeTabServiceImpl implements CafeTabService{
 		
 		
 		//공통
-		//1.카페의 공지게시글 가져오기 ->승규 dao 
+		//1.카페의 공지게시글 가져오기 ->승규 dao (카페URL , 보드코드)
 		
 		//2.cafe정보가져오기 ->준호
 		
@@ -123,4 +127,6 @@ public class CafeTabServiceImpl implements CafeTabService{
 		
 		return map;
 	}
+	
+	///////////////////////////////////////////////끝/////////////////////////////////////
 }

@@ -16,13 +16,32 @@
 
 	<script type="text/javascript">
 
-
+		var totalBoardSize ;
+	
 		$(function() {
+
+			for(var i=0; i<$("input[id=totalBoardsize]").val(); i++) 
+			{
+
+				if(i!=0)
+				{
+					$(".boardDetail"+i).hide();
+				}
+				else
+				{
+					$(".boardDetail"+i).show();
+				}
+				
+			}
+
 
 			$("select[name=board]").change(function(){ // listbox선택하면
 					alert($(this).val()); //ok
-
+					alert($("input[id=totalBoardsize]").val());
 				 //여기서 display none등 설정
+
+					
+					 
 			});
 
 			$("#plusBoard").on("click", function(){ //게시판추가
@@ -30,8 +49,24 @@
 				alert($("select[name=addableBoard]").val());
 				var appendBoard = "<option value='"+$("select[name=addableBoard]").val()+"' id=''>"+$("select[name=addableBoard]").val()+"</option>"
 				$("select[name=board]").append(appendBoard);
-
+				$("input[id=totalBoardsize]").val($("input[id=totalBoardsize]").val()-0+1);
 				//게시판 추가하면  밑에 input type text추가하고 
+				var appendBoardDetail = <div class ="boardDetail${j}">
+				
+				<br/>
+				<br/>
+				메뉴명  <input type="text" name="boardName" value="${board.boardName}" />
+				<br />
+				메뉴설명 <input type="text"  name="boardDetail" width="50" value="${board.boardDetail}">
+				<br/>
+				<br/>
+		
+				게시판 공개여부를 설정합니다. 멤버공개를 선택시, 게시판은 멤버에게만 보여집니다.
+				<br/>
+				<br/>
+		
+			</div>
+				$(".boardDetail").append(appendBoardDetail);
 				
 			});
 
@@ -153,28 +188,36 @@
 			</c:if>
 			
 			</c:forEach>
+			
    			
 		</select>
+		<input type="hidden" id="totalBoardsize" value="${i}">
 		
 		
+		<div class="boardDetail">
+		<c:set var="j" value="0" />  
 		<c:forEach var="board" items="${boardList}">
-				<c:set var="i" value="${ i+1 }" />
+				<c:set var="j" value="${ j+1 }" />
 		
-			<br/>
-			<br/>
-			메뉴명  <input type="text" name="boardName" value="${board.boardName}" />
-			<br />
-			메뉴설명 <input type="text"  name="boardDetail" width="50" value="${board.boardDetail}">
-			<br/>
-			<br/>
+			<div class ="boardDetail${j}">
+				
+				<br/>
+				<br/>
+				메뉴명  <input type="text" name="boardName" value="${board.boardName}" />
+				<br />
+				메뉴설명 <input type="text"  name="boardDetail" width="50" value="${board.boardDetail}">
+				<br/>
+				<br/>
 		
-			게시판 공개여부를 설정합니다. 멤버공개를 선택시, 게시판은 멤버에게만 보여집니다.
-			<br/>
-			<br/>
+				게시판 공개여부를 설정합니다. 멤버공개를 선택시, 게시판은 멤버에게만 보여집니다.
+				<br/>
+				<br/>
 		
-		
+			</div>
 		</c:forEach>
-	
+		
+		</div>
+		
 
 </body>
 </html>

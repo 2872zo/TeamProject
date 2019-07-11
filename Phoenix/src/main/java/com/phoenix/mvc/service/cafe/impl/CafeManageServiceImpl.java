@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.phoenix.mvc.common.Event;
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.cafe.CafeManageDao;
 import com.phoenix.mvc.service.cafe.CafeManageService;
@@ -31,6 +32,7 @@ public class CafeManageServiceImpl implements CafeManageService {
 		System.out.println(this.getClass().getName());
 	}
 
+	///////////////////////////////////////////////////예림/////////////////////////////////
 	@Override
 	public List getCafeBoard(String cafeURL) {
 		
@@ -38,29 +40,7 @@ public class CafeManageServiceImpl implements CafeManageService {
 	
 		return cafeManageDao.getCafeBoard(cafeNo);
 	}
-	@Override
-	public void updateCafeInfo(Cafe cafe) throws Exception {
-		cafeManageDao.updateCafeInfo(cafe);
-	}
 	
-	@Override
-	public Cafe getCafeInfo(String cafeNo) throws Exception {
-		return cafeManageDao.getCafeInfo(cafeNo);
-	}
-	
-	@Override
-	public Map<String, Object> getCafeApplicationList(Search search) {
-		
-		List<CafeApplication> list = cafeManageDao.getCafeApplicationList(search);
-		int totalCount = cafeManageDao.getTotalCount(search);
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("list", list);
-		map.put("totalCount", new Integer(totalCount));
-		
-		return map;
-	}
-
 	@Override
 	public boolean checkCafePost(String cafeURL,int boardNo) { // false이면  게시글 없음,  true 이면 게시글 존재
 		
@@ -87,5 +67,46 @@ public class CafeManageServiceImpl implements CafeManageService {
 		}
 		
 	}
+
+	@Override
+	public List getCafeStatistics(Event event, String cafeURL) { //예림예림 작업중
+		
+		int cafeNo = cafeManageDao.getCafeNo(cafeURL);
+		
+		event.setCafeNo(cafeNo); //cafeNo를 set
+		List statisticsList = cafeManageDao.getCafeStatistics(event); //모든 카페는 통계가 있다. count라서 0이더라도
+		
+		return statisticsList;
+	}
+	
+	
+	///////////////////////////////////////////////////끝//////////////////////////////////////////////
+	
+	
+	
+	@Override
+	public void updateCafeInfo(Cafe cafe) throws Exception {
+		cafeManageDao.updateCafeInfo(cafe);
+	}
+	
+	@Override
+	public Cafe getCafeInfo(String cafeNo) throws Exception {
+		return cafeManageDao.getCafeInfo(cafeNo);
+	}
+	
+	@Override
+	public Map<String, Object> getCafeApplicationList(Search search) {
+		
+		List<CafeApplication> list = cafeManageDao.getCafeApplicationList(search);
+		int totalCount = cafeManageDao.getTotalCount(search);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		map.put("totalCount", new Integer(totalCount));
+		
+		return map;
+	}
+
+	
 
 }

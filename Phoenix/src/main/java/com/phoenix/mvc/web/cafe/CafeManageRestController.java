@@ -31,6 +31,7 @@ public class CafeManageRestController {
 		System.out.println(this.getClass().getName()+"생성자 start");
 	}
 	
+	/////////////////////////////////////////////예림////////////////////////////////////////////
 	@RequestMapping(value = "json/{cafeURL}/checkCafePost", method = RequestMethod.POST )
 	public Map checkCafePost( @PathVariable String cafeURL , HttpSession session
 			, @RequestBody String jsonQuery)//session user정보, 카페번호
@@ -61,4 +62,5 @@ public class CafeManageRestController {
 		return map;
 	}
 
+	////////////////////////////////////////////////////끝//////////////////////////////////////
 }
