@@ -146,7 +146,7 @@ public class CafeTabServiceImpl implements CafeTabService{
 	public Map getCategorizedCafeList(Search search) throws Exception {
 		// TODO Auto-generated method stub
 		Map map = new HashMap();
-		int totalCount = cafeTabDao.cafeTotalCount(search);
+		int totalCount = cafeTabDao.countCategorizedCafe(search);
 		List cafeList = cafeTabDao.getCategorizedCafeList(search);
 		map.put("cafeList", cafeList);
 		map.put("totalCount", new Integer(totalCount));

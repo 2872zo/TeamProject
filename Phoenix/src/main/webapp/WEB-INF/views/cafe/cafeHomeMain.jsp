@@ -98,12 +98,36 @@ $(function() {
   <button type="button" class="btn btn-outline-success cafeCategory">음악</button>
   <button type="button" class="btn btn-outline-success cafeCategory">여행</button>
 </div>
+<br/>
+<c:if test="${!empty categoryCafeList}"><table class="table table-borderless">
+<table class="table table-borderless">
+	<thead>
+    <tr>
+  	  <th scope="col">카페번호</th>
+      <th scope="col">카페URL</th>
+      <th scope="col">카페이름</th>
+      <th scope="col">카페아이콘</th>
+      <th scope="col">카페설명</th>
+      <th scope="col">개설일</th>
+    </tr>
+	</thead>
+	<tbody>
+  <tr>
 
+</c:if>
  <c:forEach var="categoryCafe" items="${categoryCafeList}">
-  ${categoryCafe.cafeUrl}/${post.cafeName}/${post.cafeIcon}/${post.postTitle}/${post.postNo}/${post.memberNickname}
-  <br/>
+  <th scope="row">${categoryCafe.cafeNo}</th>
+  <td>${categoryCafe.url}</td>
+  <td>${categoryCafe.cafeName}</td>
+  <td>${categoryCafe.cafeIcon}</td>
+	<td>${categoryCafe.cafeDetail}</td>
+	<td>${categoryCafe.regDate}</td>
   </c:forEach>
-
+<c:if test="${!empty categoryCafeList}">
+  </tr>
+	</tbody>
+</table>
+</c:if>
 
 
 <br/>
