@@ -28,9 +28,10 @@
 		//============= "가입"  Event 연결 =============
 		 $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			var cafeURL = "22";
 			$( "button.btn.btn-success" ).on("click" , function() {
 				alert("수정");
-				$("form").attr("method" , "POST").attr("action" , "/cafe/getCafeInfo?cafeNo=${cafe.cafeNo}").submit();
+				$("form").attr("method" , "POST").attr("action" , "/cafe/"+cafeURL+"/manage/getCafeInfo?cafeNo=${cafe.cafeNo}").submit();
 			});
 		});	
 

@@ -16,7 +16,7 @@ public interface CafeManageService {
 	public void updateAcceptStatusCode(CafeApplication cafeApplication);
 
 	public CafeApplication getCafeApplication(int userNo);
-	
+
 	public CafeApplication getCafeApplication2(int applicationNo);
 ////////////////////////////////지니끝//////////////////////////////////
 
@@ -31,7 +31,7 @@ public interface CafeManageService {
 ///////////////////////////////준호시작///////////////////////////////////////
 	public void updateCafeInfo(Cafe cafe) throws Exception;
 
-	public Cafe getCafeInfo(String cafeNo) throws Exception;
+	public Cafe getCafeInfo(int cafeNo) throws Exception;
 
 	public void updateCafeApplicationForm(Cafe cafe) throws Exception;
 	/////////////////////////////// 준호끝///////////////////////////////////////

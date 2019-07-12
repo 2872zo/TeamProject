@@ -125,7 +125,7 @@ public class CafeManageServiceImpl implements CafeManageService {
 	}
 
 	@Override // 준호
-	public Cafe getCafeInfo(String cafeNo) throws Exception {
+	public Cafe getCafeInfo(int cafeNo) throws Exception {
 		return cafeManageDao.getCafeInfo(cafeNo);
 	}
 

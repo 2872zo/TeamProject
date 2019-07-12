@@ -25,7 +25,6 @@ import com.phoenix.mvc.common.Event;
 import com.phoenix.mvc.common.Page;
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.cafe.CafeManageService;
-import com.phoenix.mvc.service.cafe.CafeMemberService;
 import com.phoenix.mvc.service.domain.Cafe;
 import com.phoenix.mvc.service.domain.CafeApplication;
 import com.phoenix.mvc.service.domain.CafeMember;
@@ -206,70 +205,70 @@ public class CafeManageController {
 
 	//////////////////////////////// 지니끝//////////////////////////////////
 
-	/////////////////////////////// 준호시작///////////////////////////////////////
-	// 준호
-	@RequestMapping(value = "/cafe/updateCafeInfoView", method = RequestMethod.GET)
-	public String updateCafeInfoView(@RequestParam("cafeNo") String cafeNo, Model model) throws Exception {
+///////////////////////////////준호시작///////////////////////////////////////
+//준호
+@RequestMapping(value= "/{cafeURL}/manage/updateCafeInfoView", method=RequestMethod.GET)
+public String updateCafeInfoView(@RequestParam("cafeNo") int cafeNo, Model model)throws Exception{
 
-		System.out.println("/updateCafeInfoView : GET");
+System.out.println("/updateCafeInfoView : GET");
 
-		Cafe cafe = cafeManageService.getCafeInfo(cafeNo);
-		// Model �� View ����
-		model.addAttribute("cafe", cafe);
+Cafe cafe = cafeManageService.getCafeInfo(cafeNo);
+// Model �� View ����
+model.addAttribute("cafe", cafe);
 
-		return "cafe/updateCafeInfoView";
-	}
+return "cafe/updateCafeInfoView";
+}
+//준호
+@RequestMapping(value= "/{cafeURL}/manage/updateCafeInfo", method=RequestMethod.POST)
+public String updateCafeInfo(@ModelAttribute("cafe") Cafe cafe)throws Exception{
 
-	// 준호
-	@RequestMapping(value = "/cafe/updateCafeInfo", method = RequestMethod.POST)
-	public String updateCafeInfo(@ModelAttribute("cafe") Cafe cafe) throws Exception {
+System.out.println("/updateCafeInfoView : POST");
 
-		System.out.println("/updateCafeInfoView : POST");
+cafeManageService.updateCafeInfo(cafe);
 
-		cafeManageService.updateCafeInfo(cafe);
+return "cafe/updateCafeInfo";
+}
+//준호
+@RequestMapping(value= "/{cafeURL}/manage/getCafeInfo", method=RequestMethod.POST)
+public String getCafeInfo(@RequestParam("cafeNo") int cafeNo, Model model)throws Exception{
 
-		return "cafe/updateCafeInfo";
-	}
+Cafe cafe = cafeManageService.getCafeInfo(cafeNo);
 
-	// 준호
-	@RequestMapping(value = "/cafe/getCafeInfo", method = RequestMethod.POST)
-	public String getCafeInfo(@RequestParam("cafeNo") String cafeNo, Model model) throws Exception {
+model.addAttribute("cafe",cafe);
 
-		Cafe cafe = cafeManageService.getCafeInfo(cafeNo);
+return "cafe/getCafeInfo";
 
-		model.addAttribute("cafe", cafe);
+}
 
-		return "cafe/getCafeInfo";
+//준호
+@RequestMapping(value= "/{cafeURL}/manage/updateCafeApplicationFormView", method=RequestMethod.GET)
+public String updateCafeApplicationFormView(@RequestParam("cafeNo") int cafeNo, Model model)throws Exception{
 
-	}
 
-	// 준호
-	@RequestMapping(value = "/cafe/updateCafeApplicationFormView", method = RequestMethod.GET)
-	public String updateCafeApplicationFormView(@RequestParam("cafeNo") String cafeNo, Model model) throws Exception {
+System.out.println(cafeNo+"카페번호뭐냐");
 
-		System.out.println(cafeNo + "카페번호뭐냐");
+System.out.println("/updateCafeApplicationFormView : GET");
 
-		System.out.println("/updateCafeApplicationFormView : GET");
+Cafe cafe = cafeManageService.getCafeInfo(cafeNo);
+// Model �� View ����
+model.addAttribute("cafe", cafe);
 
-		Cafe cafe = cafeManageService.getCafeInfo(cafeNo);
-		// Model �� View ����
-		model.addAttribute("cafe", cafe);
+System.out.println(cafe+"카페도메인찍자");
 
-		System.out.println(cafe + "카페도메인찍자");
+return "cafe/updateCafeApplicationFormView";
+}
 
-		return "cafe/updateCafeApplicationFormView";
-	}
+//준호
+@RequestMapping(value= "/{cafeURL}/manage/updateCafeApplicationForm", method=RequestMethod.POST)
+public String updateCafeApplicationForm(@ModelAttribute("cafe") Cafe cafe)throws Exception{
 
-	// 준호
-	@RequestMapping(value = "/cafe/updateCafeApplicationForm", method = RequestMethod.POST)
-	public String updateCafeApplicationForm(@ModelAttribute("cafe") Cafe cafe) throws Exception {
+System.out.println("/updateCafeApplicationFormView : POST");
 
-		System.out.println("/updateCafeApplicationFormView : POST");
+cafeManageService.updateCafeApplicationForm(cafe);
 
-		cafeManageService.updateCafeApplicationForm(cafe);
+return "cafe/updateCafeApplicationForm";
+}
+///////////////////////////////준호끝///////////////////////////////////////		
 
-		return "cafe/updateCafeApplicationForm";
-	}
-	/////////////////////////////// 준호끝///////////////////////////////////////
 
 }
