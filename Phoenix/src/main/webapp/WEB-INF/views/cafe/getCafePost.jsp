@@ -17,7 +17,7 @@
 		
 	<script>
 		$(function() {
-			$("[name=cafeUrl]").val('${search.cafeURL}');
+			$("[name=cafeURL]").val('${search.cafeURL}');
 			$("[name=memberNo]").val('10000');
 			$("[name=memberNickname]").val('매니저1');
 			$("form").attr("method", "POST").attr("action",	"addPost");
@@ -27,15 +27,21 @@
 			});
 
 			$("[name=update]").on("click",function(){
-				location.href = "/cafe/${post.cafeUrl}/updatePost/${post.postNo}";
+				location.href = "/cafe/${post.cafeURL}/updatePost/${post.postNo}";
+			});
+
+			$("[name=delete]").on("click",function(){
+				location.href = "/cafe/${post.cafeURL}/deletePost?postNo=${post.postNo}&boardNo=${post.boardNo}";
 			});
 		});
 
-		
+		function getReplyList(idx){
+			//리플가져와서 추가하는거 필요
+		}
 	</script>
 
 
-	<title>${post.cafeUrl}</title>
+	<title>${post.cafeURL}</title>
 </header>
 
 <body>
@@ -46,7 +52,7 @@
 			<h1>게시글 조회</h1>
 		</div>
 
-				<input type="hidden" name="cafeUrl"> <input type="hidden"name="memberNo"> 
+				<input type="hidden" name="cafeURL"> <input type="hidden"name="memberNo"> 
 				<input type="hidden" name="memberNickname">
 				<input type="hidden" name="boardName">
 

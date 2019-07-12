@@ -12,10 +12,18 @@
 
 <head>
 
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script>
+		var cafeURL = "${cafeURL}";
+		function fncGetBoardPostList(boardNo, cafeURL){
+			location.href = "/cafe/" + cafeURL + "/getBoard/" + boardNo;  
+		}
+	</script>
 	
 	<script type="text/javascript">
 
+
+
+	
 		$(function(){
 
 			$(".myDetail").hide();

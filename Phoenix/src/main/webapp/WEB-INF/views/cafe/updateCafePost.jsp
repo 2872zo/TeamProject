@@ -38,10 +38,10 @@
 		});
 
 		$(function() {
-			$("[name=cafeUrl]").val('${post.cafeUrl}');
+			$("[name=cafeURL]").val('${post.cafeURL}');
 			$("[name=memberNo]").val('${post.memberNo}');
 			$("[name=memberNickname]").val('${post.memberNickname}');
-			$("form").attr("method", "POST").attr("action",	"/cafe/${post.cafeUrl}/updatePost/${post.postNo}");
+			$("form").attr("method", "POST").attr("action",	"/cafe/${post.cafeURL}/updatePost/${post.postNo}");
 
 			$(".boardOption").each(function(){
 			    if($(this).val()==${post.boardNo}){
@@ -77,14 +77,13 @@
 		</div>
 
 			<form class="needs-validation" novalidate>
-				<input type="hidden" name="cafeUrl"> <input type="hidden"name="memberNo"> 
+				<input type="hidden" name="cafeURL"> <input type="hidden"name="memberNo"> 
 				<input type="hidden" name="memberNickname">
 				<input type="hidden" name="boardName">
 	
 				<div class="row">
 					<div class="col-md-8 mb-3">
 						<select class="form-control hideOption" name="boardNo">
-							<option value="0" class="boardOption">전체</option>
 							<c:forEach var="board" items="${boardList }">
 								<option value="${board.boardNo }" class="boardOption">${board.boardName }</option>
 							</c:forEach>
