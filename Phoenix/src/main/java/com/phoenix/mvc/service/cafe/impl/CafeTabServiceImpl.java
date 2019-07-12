@@ -63,14 +63,18 @@ public class CafeTabServiceImpl implements CafeTabService{
 		cafeTabDao.addCafe(cafe);
 	}
 	
-	public boolean checkDuplication(int cafeNo) throws Exception {
-		boolean result=true;
-		Cafe cafe = cafeManageDao.getCafeInfo(cafeNo);
+	public boolean checkCafeNameDuplication(String cafeName) throws Exception {
+		
+		boolean JSONData=true;
+		
+		Cafe cafe = cafeManageDao.getCafeName(cafeName);			
+		
 		if(cafe != null) {
-			result=false;
+			JSONData=false;
 		}
-		return result;
+		return JSONData;
 	}
+	
 	///////////////////////////////준호끝///////////////////////////////////////	
 
 	///////////////////////////////////////예림시작//////////////////////////////////////////
@@ -162,5 +166,7 @@ public class CafeTabServiceImpl implements CafeTabService{
 		return map;
 	}
 	//////////////////////////////기황끝/////////////////////////////////////
+
+
 
 }

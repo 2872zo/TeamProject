@@ -52,7 +52,7 @@
   <div class="form-group">
     <label for="exampleFormControlInput1" class="col-sm-offset-3 col-sm-3 control-label">카 페 이 름</label>
     <div class="col-sm-4">
-    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="" name="cafeName">
+    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="" name="cafeName" value="${cafe.cafeName}">
     </div>
   </div>
 
@@ -66,7 +66,7 @@
   <div class="form-group">
     <label for="exampleFormControlTextarea1" class="col-sm-offset-3 col-sm-3 control-label">카페 설명</label>
     <div class="col-sm-4">
-    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="cafeDetail"></textarea>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="cafeDetail" value="${cafe.cafeDetail}"></textarea>
     </div>
   </div>  
 
@@ -118,7 +118,7 @@
   <div class="form-group">
     <label for="exampleFormControlSelect1" class="col-sm-offset-3 col-sm-3 control-label">자동가입승인여부</label>
     <div class="col-sm-4">
-    <select class="form-control" id="exampleFormControlSelect1" name="autoApplicationAcceptFlag" value="${cafe.autoApplicationAcceptFlag} ">
+    <select class="form-control" id="exampleFormControlSelect1" name="autoApplicationAcceptFlag" value="${cafe.autoApplicationAcceptFlag}">
       <option>0</option>
       <option>1</option>
     </select>

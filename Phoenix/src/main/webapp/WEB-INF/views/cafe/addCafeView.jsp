@@ -31,10 +31,10 @@
           
          $("input[name='cafeName']").on('input' , function() {
             
-             var inputed = $("input[name='cafeName']").val();                   
-                   
+             var inputed = $("input[name='cafeName']").val();                  
+             //alert("입력  : "+inputed);
               $.ajax({
-                 url : "cafe/json/checkDuplication",
+                 url : "/json/checkCafeNameDuplication",
                   method :  "POST" ,
                   dataType : "json" ,
                headers : {
@@ -46,7 +46,8 @@
                }),
                
                    success : function(JSONData) {               
-            
+                       alert(JSONData);
+                       alert(typeof(JSONData));
                       if(JSONData && inputed!="" ) {
                          $("#check").children("strong").remove();
                      $("#check").append("<strong class=\"text-success\">사용 가능합니다.</strong>");
@@ -60,8 +61,7 @@
                    }
                   } 
             });  
-         });
-         
+         });         
       });
 		
 		
@@ -102,6 +102,9 @@
     <label for="exampleFormControlInput1" class="col-sm-offset-3 col-sm-3 control-label">카페 URL</label>
     <div class="col-sm-4">
     <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="" name="url">
+    	<span id="check1">
+    		<strong>카페URL을 입력해주세요</strong>
+    	</span>    	
     </div>
   </div>
   <div class="form-group">
@@ -142,42 +145,6 @@
     </div>
   </div> 
 
-
-
-					
-					<!--  <div>
-						카페이름<input type="text" name="cafeName" class="ct_input_g" 
-									style="width: 100px; height: 19px" maxLength="20">
-					</div>
-					
-					<div>
-						카페url<input type="text" name="url" class="ct_input_g" 
-									style="width: 100px; height: 19px" maxLength="20">
-					</div>
-		
-					<div>
-						카페설명<input type="text" name="cafeDetail" class="ct_input_g" 
-									style="width: 100px; height: 19px" maxLength="20">
-					</div>
-		
-					<div>
-						카페카테고리<input type="text" name="cafeType" class="ct_input_g" 
-									style="width: 100px; height: 19px" maxLength="20">
-					</div>
-					<div>
-						가입안내<input type="text" name="applicationDetail" class="ct_input_g" 
-									style="width: 100px; height: 19px" maxLength="20">
-					</div>
-			
-					<div>
-						가입질문<input type="text" name="applicationQuestion1" class="ct_input_g" 
-									style="width: 100px; height: 19px" maxLength="20">
-					</div>-->
-		
-		  
-				  
-		
-		  
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
 		      <button type="button" class="btn btn-success"  >만들기</button>

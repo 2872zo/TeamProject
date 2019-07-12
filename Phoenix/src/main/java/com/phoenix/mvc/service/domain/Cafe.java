@@ -8,7 +8,7 @@ public class Cafe {
 	private int cafeNo;
 	private String cafeName;
 	private String cafeIcon;
-	private String manageUserNo;//이것도 int
+	private int manageUserNo;
 	private String managerNickname;
 	private Date regDate;
 	private String url;
@@ -54,11 +54,11 @@ public class Cafe {
 		this.cafeIcon = cafeIcon;
 	}
 
-	public String getManageUserNo() {
+	public int getManageUserNo() {
 		return manageUserNo;
 	}
 
-	public void setManageUserNo(String manageUserNo) {
+	public void setManageUserNo(int manageUserNo) {
 		this.manageUserNo = manageUserNo;
 	}
 
@@ -201,5 +201,7 @@ public class Cafe {
 				+ ", autoApplicationAcceptFlag=" + autoApplicationAcceptFlag + ", closedFlag=" + closedFlag
 				+ ", members=" + members + "]";
 	}
+
+	
 
 }

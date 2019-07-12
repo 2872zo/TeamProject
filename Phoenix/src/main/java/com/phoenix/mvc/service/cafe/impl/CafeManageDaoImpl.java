@@ -149,6 +149,10 @@ public class CafeManageDaoImpl implements CafeManageDao {
 	public void updateCafeApplicationForm(Cafe cafe)throws Exception{
 		sqlSession.update("CafeMapper.updateCafeApplicationForm", cafe);
 	}
+	
+	public Cafe getCafeName(String cafeName) throws Exception {
+		return sqlSession.selectOne("CaferMapper.getCafeName", cafeName);
+	}
 	///////////////////////////////준호끝///////////////////////////////////////	
 
 }

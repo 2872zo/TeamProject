@@ -194,6 +194,10 @@ public class CafeManageController {
 		
 		cafeManageService.updateCafeInfo(cafe);
 		
+		Cafe cafe2 = cafeManageService.getCafeInfo(cafe.getCafeNo());
+		
+		cafe = cafe2;
+		
 		return "cafe/updateCafeInfo";
 	}
 	//준호

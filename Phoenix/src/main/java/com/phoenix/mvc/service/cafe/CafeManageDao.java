@@ -42,7 +42,9 @@ public List getCafeStatistics(Event event);
 	
 	public Cafe getCafeInfo(int cafeNo)throws Exception;
 	
-	public void updateCafeApplicationForm(Cafe cafe) throws Exception ;	
+	public void updateCafeApplicationForm(Cafe cafe) throws Exception ;
+	
+	public Cafe getCafeName(String cafeName)throws Exception;
 	
 	///////////////////////////////준호끝///////////////////////////////////////	
 }

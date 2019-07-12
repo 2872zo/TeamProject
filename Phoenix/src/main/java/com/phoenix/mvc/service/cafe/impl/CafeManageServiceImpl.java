@@ -122,7 +122,12 @@ public class CafeManageServiceImpl implements CafeManageService {
 	public Cafe getCafeInfo(int cafeNo) throws Exception {
 		return cafeManageDao.getCafeInfo(cafeNo);
 	}
-
+	
+	@Override // 준호
+	public Cafe getCafeName(String cafeName) throws Exception {
+		return cafeManageDao.getCafeName(cafeName);
+	}
+	
 	/////////////////////////////// 준호끝///////////////////////////////////////
 	
 }

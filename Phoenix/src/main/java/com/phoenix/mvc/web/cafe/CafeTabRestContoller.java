@@ -18,21 +18,24 @@ public class CafeTabRestContoller {
 	@Qualifier("cafeTabServiceImpl")
 	private CafeTabService cafeTabService;
 	
+
+	
 	public CafeTabRestContoller() {
 		System.out.println(getClass().getName() + "default Constuctor");
 	}
 ///////////////////////////////준호시작///////////////////////////////////////
-	@RequestMapping(value = "cafe/json/checkDuplication", method=RequestMethod.POST)
-	public boolean checkDuplication(@RequestBody Cafe cafe)throws Exception{
+	@RequestMapping(value = "/json/checkCafeNameDuplication", method=RequestMethod.POST)
+	public boolean checkCafeNameDuplication(@RequestBody Cafe cafe)throws Exception{
 		
 		System.out.println("/Cafe/json/checkDuplication : POST");
 		
-		boolean result = cafeTabService.checkDuplication(cafe.getCafeNo());
+		boolean JSONData = cafeTabService.checkCafeNameDuplication(cafe.getCafeName());
 		
-		System.out.println(result);
+		System.out.println(JSONData);
 		
-		return result;
+		return JSONData;
 	}
+
 
 	
 ///////////////////////////////준호끝///////////////////////////////////////	

@@ -48,6 +48,13 @@
 		WHERE cafe_No = #{value}
 	 </select>
 	 
+	 <select 	id="getCafeName"	parameterType= "String"	resultMap="cafeSelectMap">
+		SELECT			
+		FROM cafe 
+		WHERE cafe_Name = #{value}
+	 </select>
+	 
+	 
 	 
 	 <update	id="updateCafeInfo"	parameterType="com.phoenix.mvc.service.domain.Cafe" >
 	   	UPDATE cafe
