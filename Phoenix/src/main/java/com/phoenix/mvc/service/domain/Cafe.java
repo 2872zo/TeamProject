@@ -11,7 +11,7 @@ public class Cafe {
 	private int manageUserNo;
 	private String managerNickname;
 	private Date regDate;
-	private String url;
+	private String URL;
 	private String cafeDetail;
 	private String bannerImg;
 	private String mainImg;
@@ -78,12 +78,12 @@ public class Cafe {
 		this.regDate = regDate;
 	}
 
-	public String getUrl() {
-		return url;
+	public String getURL() {
+		return URL;
 	}
 
-	public void setUrl(String url) {
-		this.url = url;
+	public void setURL(String uRL) {
+		URL = uRL;
 	}
 
 	public String getCafeDetail() {
@@ -193,7 +193,7 @@ public class Cafe {
 	@Override
 	public String toString() {
 		return "Cafe [cafeNo=" + cafeNo + ", cafeName=" + cafeName + ", cafeIcon=" + cafeIcon + ", manageUserNo="
-				+ manageUserNo + ", managerNickname=" + managerNickname + ", regDate=" + regDate + ", url=" + url
+				+ manageUserNo + ", managerNickname=" + managerNickname + ", regDate=" + regDate + ", URL=" + URL
 				+ ", cafeDetail=" + cafeDetail + ", bannerImg=" + bannerImg + ", mainImg=" + mainImg + ", cafeType="
 				+ cafeType + ", applicationDetail=" + applicationDetail + ", closeReason=" + closeReason
 				+ ", applicationQuestion1=" + applicationQuestion1 + ", applicationQuestion2=" + applicationQuestion2

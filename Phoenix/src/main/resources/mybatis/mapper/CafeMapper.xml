@@ -49,7 +49,7 @@
 	 </select>
 	 
 	 <select 	id="getCafeName"	parameterType= "String"	resultMap="cafeSelectMap">
-		SELECT			
+		SELECT	 cafe_Name		
 		FROM cafe 
 		WHERE cafe_Name = #{value}
 	 </select>
