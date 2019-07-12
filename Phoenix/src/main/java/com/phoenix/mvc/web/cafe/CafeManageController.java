@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -48,55 +49,55 @@ public class CafeManageController {
 	}
 
 ////////////////////////////////////////////예림//////////////////////////////////////////////
-@RequestMapping(value = "/{cafeURL}/manage/updateCafeBoardView", method = RequestMethod.GET) // 예림예림
-public String updateCafeBoardView(@PathVariable String cafeURL, HttpSession session, Model model)// session user정보,
-																// 카페번호
-{
-System.out.println("/{cafeURL}/manage/updateCafeBoardView : GET");
+	@RequestMapping(value = "/{cafeURL}/manage/updateCafeBoardView", method = RequestMethod.GET) // 예림예림
+	public String updateCafeBoardView(@PathVariable String cafeURL, HttpSession session, Model model)// session user정보,
+	// 카페번호
+	{
+		System.out.println("/{cafeURL}/manage/updateCafeBoardView : GET");
 // session 으로 1.로그인되어있는지 2.카페에 가입되어있는지 3.cafeURL의 카페매니저인지 확인
-System.out.println("cafeURL : " + cafeURL);
+		System.out.println("cafeURL : " + cafeURL);
 
-Search search = new Search();
-search.setCafeURL(cafeURL);
-List boardList = cafeManageService.getCafeBoard(search);
+		Search search = new Search();
+		search.setCafeURL(cafeURL);
+		List boardList = cafeManageService.getCafeBoard(search);
 
-model.addAttribute("boardList", boardList);
+		model.addAttribute("boardList", boardList);
 
 // 모델에 cafeURL의 cafe 객체도 같이 넘겨줌
 
-return "/cafe/updateCafeBoard";
-}
+		return "/cafe/updateCafeBoard";
+	}
 
-@RequestMapping(value = "/{cafeURL}/manage/updateCafeBoard", method = RequestMethod.POST) // 예림예림
-public String updateCafeBoard() {
+	@RequestMapping(value = "/{cafeURL}/manage/updateCafeBoard", method = RequestMethod.POST) // 예림예림
+	public String updateCafeBoard() {
 
-return "";// 다시 updateCafeBoardView 호출하고 싶은데.
-}
+		return "";// 다시 updateCafeBoardView 호출하고 싶은데.
+	}
 
-@RequestMapping(value = "/{cafeURL}/manage/getCafeStatistics") // 예림예림 여기는 처음에만 들어온다.
-public String getCafeStatistics(@PathVariable String cafeURL, Model model)// 카페no랑 , 시작날, 끝날 받아오기
-{
-System.out.println("/cafe/{CafeURL}/manage/getCafeStatistics");
+	@RequestMapping(value = "/{cafeURL}/manage/getCafeStatistics") // 예림예림 여기는 처음에만 들어온다.
+	public String getCafeStatistics(@PathVariable String cafeURL, Model model)// 카페no랑 , 시작날, 끝날 받아오기
+	{
+		System.out.println("/cafe/{CafeURL}/manage/getCafeStatistics");
 
 // modelAttribute는 SpringMVC가 default생성자를 불러서 인스턴스를 생성하는것이기 때문에 null값이 올수 없다.
 
 // 가짜데이터
-Event event = new Event();
+		Event event = new Event();
 
-SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd", Locale.KOREA);
-Date currentTime = new Date();
-String dTime = formatter.format(currentTime);
-System.out.println(dTime);
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd", Locale.KOREA);
+		Date currentTime = new Date();
+		String dTime = formatter.format(currentTime);
+		System.out.println(dTime);
 
-event.setStartDate(dTime);
-event.setEndDate(dTime);
+		event.setStartDate(dTime);
+		event.setEndDate(dTime);
 
-Map<String, String> cafeStatistics = cafeManageService.getCafeStatistics(event, cafeURL);
+		Map<String, String> cafeStatistics = cafeManageService.getCafeStatistics(event, cafeURL);
 
-model.addAttribute("statisticMap", cafeStatistics);
+		model.addAttribute("statisticMap", cafeStatistics);
 
-return "cafe/statisticsCafe";
-}
+		return "cafe/statisticsCafe";
+	}
 
 ////////////////////////////////////// 예림
 ////////////////////////////////////// 끝////////////////////////////////////////////
@@ -233,68 +234,68 @@ return "cafe/statisticsCafe";
 	//////////////////////////////// 지니끝//////////////////////////////////
 ///////////////////////////////준호시작///////////////////////////////////////
 //준호
-@RequestMapping(value = "/{cafeURL}/manage/updateCafeInfoView", method = RequestMethod.GET)
-public String updateCafeInfoView(@RequestParam("cafeNo") int cafeNo, Model model) throws Exception {
+	@RequestMapping(value = "/{cafeURL}/manage/updateCafeInfoView", method = RequestMethod.GET)
+	public String updateCafeInfoView(@RequestParam("cafeNo") int cafeNo, Model model) throws Exception {
 
-System.out.println("/updateCafeInfoView : GET");
+		System.out.println("/updateCafeInfoView : GET");
 
-Cafe cafe = cafeManageService.getCafeInfo(cafeNo);
+		Cafe cafe = cafeManageService.getCafeInfo(cafeNo);
 //Model �� View ����
-model.addAttribute("cafe", cafe);
+		model.addAttribute("cafe", cafe);
 
-return "cafe/updateCafeInfoView";
-}
-
-//준호
-@RequestMapping(value = "/{cafeURL}/manage/updateCafeInfo", method = RequestMethod.POST)
-public String updateCafeInfo(@ModelAttribute("cafe") Cafe cafe) throws Exception {
-
-System.out.println("/updateCafeInfoView : POST");
-
-cafeManageService.updateCafeInfo(cafe);
-
-return "cafe/updateCafeInfo";
-}
+		return "cafe/updateCafeInfoView";
+	}
 
 //준호
-@RequestMapping(value = "/{cafeURL}/manage/getCafeInfo", method = RequestMethod.POST)
-public String getCafeInfo(@RequestParam("cafeNo") int cafeNo, Model model) throws Exception {
+	@RequestMapping(value = "/{cafeURL}/manage/updateCafeInfo", method = RequestMethod.POST)
+	public String updateCafeInfo(@ModelAttribute("cafe") Cafe cafe) throws Exception {
 
-Cafe cafe = cafeManageService.getCafeInfo(cafeNo);
+		System.out.println("/updateCafeInfoView : POST");
 
-model.addAttribute("cafe", cafe);
+		cafeManageService.updateCafeInfo(cafe);
 
-return "cafe/getCafeInfo";
-
-}
+		return "cafe/updateCafeInfo";
+	}
 
 //준호
-@RequestMapping(value = "/{cafeURL}/manage/updateCafeApplicationFormView", method = RequestMethod.GET)
-public String updateCafeApplicationFormView(@RequestParam("cafeNo") int cafeNo, Model model) throws Exception {
+	@RequestMapping(value = "/{cafeURL}/manage/getCafeInfo", method = RequestMethod.POST)
+	public String getCafeInfo(@RequestParam("cafeNo") int cafeNo, Model model) throws Exception {
 
-System.out.println(cafeNo + "카페번호뭐냐");
+		Cafe cafe = cafeManageService.getCafeInfo(cafeNo);
 
-System.out.println("/updateCafeApplicationFormView : GET");
+		model.addAttribute("cafe", cafe);
 
-Cafe cafe = cafeManageService.getCafeInfo(cafeNo);
+		return "cafe/getCafeInfo";
+
+	}
+
+//준호
+	@RequestMapping(value = "/{cafeURL}/manage/updateCafeApplicationFormView", method = RequestMethod.GET)
+	public String updateCafeApplicationFormView(@RequestParam("cafeNo") int cafeNo, Model model) throws Exception {
+
+		System.out.println(cafeNo + "카페번호뭐냐");
+
+		System.out.println("/updateCafeApplicationFormView : GET");
+
+		Cafe cafe = cafeManageService.getCafeInfo(cafeNo);
 //Model �� View ����
-model.addAttribute("cafe", cafe);
+		model.addAttribute("cafe", cafe);
 
-System.out.println(cafe + "카페도메인찍자");
+		System.out.println(cafe + "카페도메인찍자");
 
-return "cafe/updateCafeApplicationFormView";
-}
+		return "cafe/updateCafeApplicationFormView";
+	}
 
 //준호
-@RequestMapping(value = "/{cafeURL}/manage/updateCafeApplicationForm", method = RequestMethod.POST)
-public String updateCafeApplicationForm(@ModelAttribute("cafe") Cafe cafe) throws Exception {
+	@RequestMapping(value = "/{cafeURL}/manage/updateCafeApplicationForm", method = RequestMethod.POST)
+	public String updateCafeApplicationForm(@ModelAttribute("cafe") Cafe cafe) throws Exception {
 
-System.out.println("/updateCafeApplicationFormView : POST");
+		System.out.println("/updateCafeApplicationFormView : POST");
 
-cafeManageService.updateCafeApplicationForm(cafe);
+		cafeManageService.updateCafeApplicationForm(cafe);
 
-return "cafe/updateCafeApplicationForm";
-}
+		return "cafe/updateCafeApplicationForm";
+	}
 ///////////////////////////////준호끝///////////////////////////////////////		
 
 }
