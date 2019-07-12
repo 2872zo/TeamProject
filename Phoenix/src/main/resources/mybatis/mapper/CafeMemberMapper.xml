@@ -46,15 +46,42 @@
 		cafe_member m, cafe_member_grade g
 		WHERE
 		m.cafe_member_grade_no=g.cafe_member_grade_no
-		AND
-		m.cafe_no = #{cafeNo}
+		AND	m.cafe_no = #{cafeNo}
+		<if test="boardNo==0">
+		AND g.member_grade_code= 'cg100'
+		</if>
+		<if test="boardNo==0">
+		AND g.member_grade_code= 'cg101'		
+		</if>
+		<if test="boardNo==0">
+		AND g.member_grade_code= 'cg102'
+		</if>
+		<if test="boardNo==0">
+		AND g.member_grade_code= 'cg103'
+		</if>
+		<if test="boardNo==0">
+		AND g.member_grade_code= 'cg104'
+		</if>
+		<if test="boardNo==0">
+		AND g.member_grade_code= 'cg105'
+		</if>
+		<if test="boardNo==0">
+		AND g.member_grade_code= 'cg106'
+		</if>
+		
 	</sql>
 	 
 	<select id="getCafeMemeber" parameterType="Search" resultMap="cafeMemberSelectMap">
-	
-	 <include refid="memberListing"/>
+	 	SELECT
+		m.cafe_no, m.member_no, m.member_nickname, 
+		g.member_grade_code, g.grade_name, 
+		m.reg_date, m.visit_count,m.member_status_code
+		FROM
+		cafe_member m, cafe_member_grade g
+		WHERE
+		m.cafe_member_grade_no=g.cafe_member_grade_no	
 		AND
-		m.member_no = #{boardNo}
+		m.member_no = #{memberNo}
 	</select>
 	
 	<select id="getMemberCount" parameterType="Search" resultType="int">
@@ -62,7 +89,6 @@
 	COUNT(*)
 	FROM
 	(<include refid="memberListing"/>)
-	
 	</select>
 	 
 	<select id="listCafeMemeber" parameterType="com.phoenix.mvc.common.Search" resultMap="cafeMemberSelectMap">
@@ -72,8 +98,7 @@
 		<include refid="memberListing"/>
 		) inner_table
 		WHERE ROWNUM &lt;= #{endRowNum} )
-		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
-		
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}	
 	</select>
 	 
 </mapper>

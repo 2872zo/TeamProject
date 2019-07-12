@@ -92,6 +92,7 @@ public class CafeTabContoller {
 		model.addAttribute("cafeList", cafeList);
 		model.addAttribute("postList", postList);
 		model.addAttribute("search", search);
+		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("page", page);
 		return "forward:/WEB-INF/views/cafe/listCafeSearch.jsp";
 	}

@@ -49,21 +49,41 @@ $(function() {
 
 <body>
 <div class="container">
-
-
-  카페전체검색창입니다.
+  카페검색창입니다.
+    <br/>
   <c:if test="${!empty cafeList}">
-  <br/>
+
   <c:if test="${ !empty search.searchCondition && search.searchCondition==1}">
- 	총 ${totalCount} 건 입니다.
+ 	카페 검색결과 총 ${totalCount} 건 입니다.
  	</c:if>
- 	<br/>
-  카페번호/카페이름/카페설명/카페유알엘/카페회원수/매니저닉네임
-  <br/>
+    <br/>
+ <table class="table table-borderless">
+	<thead>
+    <tr>
+  	  <th scope="col">카페번호</th>
+      <th scope="col">카페이름</th>
+      <th scope="col">카페설명</th>
+      <th scope="col">카페주소</th>
+      <th scope="col">카페회원수</th>
+      <th scope="col">매니저닉네임</th>
+    </tr>
+	</thead>
+	<tbody>
+ 
   <c:forEach var="cafe" items="${cafeList}">
-  ${cafe.cafeNo}/${cafe.cafeName}/${cafe.cafeDetail}/${cafe.url}/${cafe.members}
-  <br/>
+   <tr>
+  <th scope="row">${cafe.cafeNo}</th>
+  <td>${cafe.cafeName}</td>
+  <td>${cafe.cafeDetail}</td>
+  <td>${cafe.url}</td>
+  <td>${cafe.members}</td>
+  <td>${cafe.managerNickname}</td>
+    </tr>
   </c:forEach>
+
+	</tbody>
+</table>
+
   <c:if test="${ !empty search.searchCondition && search.searchCondition==0}">
   <button type="button" class="btn btn-outline-primary" id='moreCafe'>카페 더보기</button>
   </c:if>
@@ -73,16 +93,37 @@ $(function() {
   </c:if>
   <br/>
   <c:if test="${!empty postList}">
-  아래는 게시글임
-  <br/>
  	<c:if test="${ !empty search.searchCondition && search.searchCondition==2}">
- 	총 ${totalCount} 건 입니다.
+  	 게시글 검색결과 총 ${totalCount} 건 입니다.
  	</c:if>
-  <br/>
+ 	<br/>
+   <table class="table table-borderless">
+	<thead>
+    <tr> 
+      <th scope="col">카페이름</th>
+      <th scope="col">카페아이콘</th>
+      <th scope="col">게시글제목</th> 
+      <th scope="col">작성자닉네임</th>
+      <th scope="col">작성시간</th>
+      <th scope="col">게시글 번호</th>
+    </tr>
+	</thead>
+	<tbody>
+  
   <c:forEach var="post" items="${postList}">
-  ${post.cafeUrl}/${post.cafeName}/${post.cafeIcon}/${post.postTitle}/${post.postNo}/${post.memberNickname}
-  <br/>
+  	<tr>
+	  <th scope="row">${post.cafeName}</th>
+	  <td>${post.cafeIcon}</td>
+	  <td>${post.postTitle}</td>
+	  <td>${post.memberNickname}</td>
+	  <td>${post.regDate}</td>
+	  <td>${post.postNo}</td>
+	  
+    </tr>
   </c:forEach>
+  	</tbody>
+</table>
+  
   <c:if test="${ !empty search.searchCondition && search.searchCondition==0}">
   <button type="button" class="btn btn-outline-success" id='morePost'>게시글 더보기</button>
   </c:if>
