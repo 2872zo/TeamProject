@@ -141,7 +141,7 @@ public class CafeManageDaoImpl implements CafeManageDao {
 	}
 	
 	@Override//준호
-	public Cafe getCafeInfo(String cafeNo) throws Exception {
+	public Cafe getCafeInfo(int cafeNo) throws Exception {
 		return sqlSession.selectOne("CafeMapper.getCafeInfo", cafeNo);
 	}
 	

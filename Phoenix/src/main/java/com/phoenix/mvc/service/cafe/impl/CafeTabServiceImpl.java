@@ -57,6 +57,15 @@ public class CafeTabServiceImpl implements CafeTabService{
 	public void addCafe(Cafe cafe) throws Exception {
 		cafeTabDao.addCafe(cafe);
 	}
+	
+	public boolean checkDuplication(int cafeNo) throws Exception {
+		boolean result=true;
+		Cafe cafe = cafeManageDao.getCafeInfo(cafeNo);
+		if(cafe != null) {
+			result=false;
+		}
+		return result;
+	}
 	///////////////////////////////준호끝///////////////////////////////////////	
 	@Override
 	public Map searchCafe(Search search) throws Exception {

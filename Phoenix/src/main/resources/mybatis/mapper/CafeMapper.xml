@@ -24,14 +24,14 @@
 		<result property="applicationQuestion1" 		column="application_question1" 				jdbcType="VARCHAR" />
 		<result property="applicationQuestion2"			column="application_question2" 				jdbcType="VARCHAR" />
 		<result property="applicationQuestion3" 		column="application_question3"				jdbcType="VARCHAR" />
-		<result property="memberNickNameFlag" 			column="member_nickname_flag" 				jdbcType="CHAR" />
+		<result property="memberNicknameFlag" 			column="member_nickname_flag" 				jdbcType="CHAR" />
 		<result property="autoApplicationAcceptFlag" 	column="auto_application_accept_flag" 		jdbcType="CHAR" />
 		<result property="closedFlag" 					column="closed_flag" 						jdbcType="CHAR" />
 		<result property="members" 						column="members" 							jdbcType="NUMERIC" />
 	</resultMap>
 	
 	<insert 	id="addCafe"		parameterType="com.phoenix.mvc.service.domain.Cafe" >
-	 	<selectKey keyProperty="cafeNo" resultType="String" order="BEFORE">
+	 	<selectKey keyProperty="cafeNo" resultType="int" order="BEFORE">
 	 		SELECT SEQ_CAFE_CAFE_NO.NEXTVAL FROM DUAL
 	 	</selectKey>
 		INSERT INTO CAFE (cafe_no, cafe_name, manage_user_no, reg_date, url, cafe_detail, banner_img, main_img, cafe_type, application_detail) 
@@ -39,7 +39,7 @@
 
 	 </insert>
 	 
-	 <select 	id="getCafeInfo"	parameterType= "String"	resultMap="cafeSelectMap">
+	 <select 	id="getCafeInfo"	parameterType= "int"	resultMap="cafeSelectMap">
 		SELECT
 		cafe_no , cafe_Name ,cafe_icon, manage_user_no , url , cafe_detail, banner_img, main_img, cafe_type, application_detail, reg_date,
 		close_reason, application_question1, application_question2, application_question3, member_nickname_flag, auto_application_accept_flag,
@@ -68,7 +68,7 @@
 	   	UPDATE cafe
 	   	<set>
 	   		auto_application_accept_flag = #{autoApplicationAcceptFlag:CHAR} ,
-			member_nickname_flag	= #{memberNickNameFlag:CHAR},
+			member_nickname_flag	= #{memberNicknameFlag:CHAR},
 			application_question1 = #{applicationQuestion1:VARCHAR},
 			application_question2 = #{applicationQuestion2:VARCHAR},
 			application_question3 = #{applicationQuestion3:VARCHAR}				

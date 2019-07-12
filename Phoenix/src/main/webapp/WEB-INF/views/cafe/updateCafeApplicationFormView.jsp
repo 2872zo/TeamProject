@@ -28,9 +28,10 @@
 		//============= "가입"  Event 연결 =============
 		 $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			var cafeURL = "22";
 			$( "button.btn.btn-success" ).on("click" , function() {
 				alert("수정");
-				$("form").attr("method" , "POST").attr("action" , "/cafe/updateCafeApplicationForm").submit();
+				$("form").attr("method" , "POST").attr("action" , "/cafe/"+cafeURL+"/manage/updateCafeApplicationForm").submit();
 			});
 		});	
 
@@ -53,8 +54,8 @@
 					</div>					
 		
 					<div>
-						카페전용 별명사용여부<input type="text" name="memberNickNameFlag" class="ct_input_g" 
-									style="width: 100px; height: 19px" maxLength="20" value="${cafe.memberNickNameFlag}">
+						카페전용 별명사용여부<input type="text" name="memberNicknameFlag" class="ct_input_g" 
+									style="width: 100px; height: 19px" maxLength="20" value="${cafe.memberNicknameFlag}">
 					</div>
 		
 					<div>

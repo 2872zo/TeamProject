@@ -8,7 +8,7 @@ public class Cafe {
 	private int cafeNo;
 	private String cafeName;
 	private String cafeIcon;
-	private String manageUserNo;
+	private String manageUserNo;//이것도 int
 	private String managerNickname;
 	private Date regDate;
 	private String url;
