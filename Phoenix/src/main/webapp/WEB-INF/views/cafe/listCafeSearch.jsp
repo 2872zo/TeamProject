@@ -75,7 +75,7 @@ $(function() {
   <th scope="row">${cafe.cafeNo}</th>
   <td>${cafe.cafeName}</td>
   <td>${cafe.cafeDetail}</td>
-  <td>${cafe.url}</td>
+  <td>${cafe.URL}</td>
   <td>${cafe.members}</td>
   <td>${cafe.managerNickname}</td>
     </tr>

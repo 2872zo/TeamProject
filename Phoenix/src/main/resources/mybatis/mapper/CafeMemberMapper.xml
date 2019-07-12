@@ -6,7 +6,6 @@
 
 <mapper namespace="CafeMemberMapper">
 
-	
 	<resultMap id="cafeMemberSelectMap" type="CafeMember">
 		<result property="memberNo" 			column="member_no" 				jdbcType="NUMERIC"/>
 		<result property="cafeNo" 				column="cafe_no" 				jdbcType="NUMERIC" />
@@ -41,34 +40,67 @@
 		SELECT
 		m.cafe_no, m.member_no, m.member_nickname, 
 		g.member_grade_code, g.grade_name, 
-		m.reg_date, m.visit_count,m.member_status_code
+		m.reg_date, m.visit_count, m.member_status_code
 		FROM
 		cafe_member m, cafe_member_grade g
 		WHERE
 		m.cafe_member_grade_no=g.cafe_member_grade_no
 		AND	m.cafe_no = #{cafeNo}
-		<if test="boardNo==0">
-		AND g.member_grade_code= 'cg100'
+		<if test="memberGrade!=0">
+		AND g.member_grade_code=
 		</if>
-		<if test="boardNo==0">
-		AND g.member_grade_code= 'cg101'		
+		<if test="memberGrade==1">
+		'cg100'
 		</if>
-		<if test="boardNo==0">
-		AND g.member_grade_code= 'cg102'
+		<if test="memberGrade==2">
+		'cg101'
 		</if>
-		<if test="boardNo==0">
-		AND g.member_grade_code= 'cg103'
+		<if test="memberGrade==3">
+		'cg102'
 		</if>
-		<if test="boardNo==0">
-		AND g.member_grade_code= 'cg104'
+		<if test="memberGrade==4">
+		'cg103'
 		</if>
-		<if test="boardNo==0">
-		AND g.member_grade_code= 'cg105'
+		<if test="memberGrade==5">
+		'cg104'
 		</if>
-		<if test="boardNo==0">
-		AND g.member_grade_code= 'cg106'
+		<if test="memberGrade==6">
+		'cg105'
 		</if>
-		
+		<if test="memberGrade==7">
+		'cg106'
+		</if>
+		<if test="status!=0">
+		AND m.member_status_code =
+		</if>
+		<if test="status==1">
+		'cs100'
+		</if>
+		<if test="status==2">
+		'cs101'
+		</if>
+		<if test="status==3">
+		'cs102'
+		</if>		
+		ORDER BY
+		<if test="sortCode==0">
+		m.reg_date DESC
+		</if>
+		<if test="sortCode==1">
+		m.reg_date ASC
+		</if>
+		<if test="sortCode==2">
+		m.member_nickname ASC
+		</if>
+		<if test="sortCode==3">
+		m.member_nickname DESC
+		</if>
+		<if test="sortCode==4">
+		m.visit_count DESC
+		</if>
+		<if test="sortCode==5">
+		m.visit_count ASC
+		</if>
 	</sql>
 	 
 	<select id="getCafeMemeber" parameterType="Search" resultMap="cafeMemberSelectMap">
