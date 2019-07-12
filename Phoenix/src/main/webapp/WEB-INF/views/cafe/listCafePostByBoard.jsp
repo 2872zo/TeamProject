@@ -8,6 +8,16 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+		
+		<style>
+			.postTitle{
+				text-decoration: underline;
+			}
+			.postTitle:hover{
+				color: blue;
+			}
+		</style>
+		
 		<script>
 			var cafeURL = '${search.cafeURL}';
 			var boardNo = ${search.boardNo};
@@ -20,6 +30,13 @@
 			$(function(){
 				$("[name=currentPage]").val(${search.currentPage });	
 			});
+
+			//게시글 조회
+			$(function(){
+				$(".postTitle").on("click", function(){
+					location.href = "/cafe/" + cafeURL + "/getPost/" + 	$(this).parent().find(".postNo").val();				
+				});			
+			});
 		</script>
 		<title>${search.cafeURL}</title>
 	</header>
@@ -31,35 +48,36 @@
 		<h1>listCafePostByBoard</h1>
 		<p>총 ${postTotalCount }개</p>
 		<table class="table table-striped table-bordered">
+			<table class="table table-striped table-bordered">
 			<tr>
-				<td>postNo</td>
-				<td>boardNo</td>
-				<td>memberNo</td>
-				<td>postTitle</td>
-				<td>postContent</td>
-				<td>regDate</td>
-				<td>viewCount</td>
-				<td>likeCount</td>
-				<td>memberNickname</td>
-				<td>postStatusFlag</td>
-				<td>postNoticeFlag;</td>
-				<td>noticeIndex</td>
+<!-- 				<td>게시글 번호</td> -->
+<!-- 				<td>게시판 번호</td> -->
+<!-- 				<td>memberNo</td> -->
+				<td>게시판</td>
+				<td>제목</td>
+				<td>작성자</td>
+				<td>작성일</td>
+				<td>조회수</td>
+				<td>추천수</td>
+<!-- 				<td>postStatusFlag</td> -->
+<!-- 				<td>postNoticeFlag;</td> -->
+<!-- 				<td>noticeIndex</td> -->
 			</tr>
 			
 			<c:forEach items="${postList }" var="post">
 				<tr>
-					<td>${post.postNo}</td>
-					<td>${post.boardNo }</td>
-					<td>${post.memberNo }</td>
-					<td>${post.postTitle }</td>
-					<td>${post.postContent }</td>
+					<input type="hidden" class="postNo" value="${post.postNo }"/>
+					<input type="hidden" class="boardNo" value="${post.boardNo }"/>
+					<input type="hidden" class="memberNo" value="${post.memberNo }"/>
+					<td class="boardName">${post.boardName }</td>
+					<td class="postTitle">${post.postTitle }</td>
+					<td>${post.memberNickname }</td>
 					<td>${post.regDate }</td>
 					<td>${post.viewCount }</td>
 					<td>${post.likeCount }</td>
-					<td>${post.memberNickname }</td>
-					<td>${post.postStatusFlag }</td>
-					<td>${post.postNoticeFlag }</td>
-					<td>${post.noticeIndex }</td>				
+<%-- 					<td>${post.postStatusFlag }</td> --%>
+<%-- 					<td>${post.postNoticeFlag }</td> --%>
+<%-- 					<td>${post.noticeIndex }</td> --%>
 				</tr>
 			</c:forEach>
 		</table>

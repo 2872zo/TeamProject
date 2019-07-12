@@ -29,6 +29,8 @@ public class CafeMemberServiceImpl implements CafeMemberService {
 		System.out.println(getClass().getName() + "default Constuctor");
 	}
 	
+	
+	
 	/////////////////////////////////지니//////////////////////////////
 	@Override
 	public void addCafeApplication(CafeApplication cafeApplication) {
@@ -38,6 +40,11 @@ public class CafeMemberServiceImpl implements CafeMemberService {
 	@Override
 	public void updateCafeMember(CafeMember cafeMember) {
 		cafeMemberDao.updateCafeMember(cafeMember);	
+	}
+	
+	@Override
+	public void addCafeMember(CafeMember cafeMember) {
+		cafeMemberDao.addCafeMember(cafeMember);
 	}
 	
 /////////////////////////////////////기황 /////////////////////////////////////
@@ -58,4 +65,6 @@ public class CafeMemberServiceImpl implements CafeMemberService {
 		return cafeMemberDao.getCafeMember(search);
 	}
 //////////////////////////////////기황끝///////////////////////////////////////
+
+
 }

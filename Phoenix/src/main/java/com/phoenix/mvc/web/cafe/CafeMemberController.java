@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -29,8 +30,12 @@ public class CafeMemberController {
 	@Qualifier("cafeMemberServiceImpl")
 	private CafeMemberService cafeMemberService;
 	
-	int pageSize = 2;
-	int pageUnit = 5;
+	@Value("${pageSize}")
+	private int pageSize;
+	
+	@Value("${pageUnit}")
+	private int pageUnit;
+
 
 	public CafeMemberController() {
 		System.out.println(getClass().getName() + "default Constuctor");
@@ -51,7 +56,8 @@ public class CafeMemberController {
 			@ModelAttribute("cafeApplication") CafeApplication cafeApplication) {
 
 		System.out.println("/cafe/{cafeURL}/addCafeApplication : POST");
-
+		
+		//userNo 값 추가해야함, 카페도 가입하려는 카페 번호 추가해!
 		cafeApplication.setUserNo(10001);
 		cafeApplication.setCafeNo(10000);
 		System.out.println("들어온 cafeApplication 값?" + cafeApplication);
@@ -82,10 +88,10 @@ public class CafeMemberController {
 		cafeMember.setMemberNo(10001);
 		cafeMember.setCafeNo(10000);
 		cafeMember.setUserNo(10001);
-//		cafeMember.setNoticeFlag('0');	//에러변경=========================================================
+		cafeMember.setNoticeFlag(false);	
 		cafeMember.setMemberNickname("멤버1");
 		cafeMember.setCafeMemberGradeNo(10002);
-//		cafeMember.setFavoriteFlag('0'); //에러변경=========================================================
+		cafeMember.setFavoriteFlag(false); 
 		cafeMember.setRegDate(null);
 		cafeMember.setVisitCount(1);
 		cafeMember.setMemberStatusCode(memberStatusCode);
@@ -98,13 +104,12 @@ public class CafeMemberController {
 	}
 	////////////////////////////////지니끝//////////////////////////////////
 
-	
-	/////////////////////////////////기황//////////////////////////////////////
+	/////////////////////////////////기황시작//////////////////////////////////////
 	@RequestMapping(value = "/{cafeURL}/getCafeMemberList")
 	public String getCafeMemberList(@PathVariable String cafeURL, @ModelAttribute("search") Search search, Model model) throws Exception {
 
 		System.out.println("/cafe/{cafeURL}/getCafeMemberList");
-	
+		pageSize=2;
 		if(search.getCurrentPage() == 0 ){
 			search.setCurrentPage(1);
 		}

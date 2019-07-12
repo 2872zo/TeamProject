@@ -1,12 +1,14 @@
 package com.phoenix.mvc.service.domain;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class Post {
 	private int postNo;
 	private String cafeName;
-	private String cafeUrl;
+	private String cafeURL;
 	private String cafeIcon;
 	private int boardNo;
 	private String boardName;
@@ -20,6 +22,7 @@ public class Post {
 	private boolean postStatusFlag;
 	private boolean postNoticeFlag;
 	private int noticeIndex;
+	private List<Reply> replyList;
 	
 	public int getPostNo() {
 		return postNo;
@@ -58,11 +61,11 @@ public class Post {
 		this.postContent = postContent;
 	}
 	public String getRegDate() {
-		SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-DD HH:MM:SS");
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		
 		return format.format(regDate);
 	}
-	public void setRegDate(Date regDate) {
+	public void setRegDate(Date regDate) throws ParseException {
 		this.regDate = regDate;
 	}
 	public int getViewCount() {
@@ -95,24 +98,17 @@ public class Post {
 	public void setPostNoticeFlag(boolean postNoticeFlag) {
 		this.postNoticeFlag = postNoticeFlag;
 	}
-	public int getNoticeIndex() {
-		return noticeIndex;
-	}
-	public void setNoticeIndex(int noticeIndex) {
-		this.noticeIndex = noticeIndex;
-	}
-	
 	public String getCafeName() {
 		return cafeName;
 	}
 	public void setCafeName(String cafeName) {
 		this.cafeName = cafeName;
 	}
-	public String getCafeUrl() {
-		return cafeUrl;
+	public String getCafeURL() {
+		return cafeURL;
 	}
-	public void setCafeUrl(String cafeUrl) {
-		this.cafeUrl = cafeUrl;
+	public void setCafeURL(String cafeURL) {
+		this.cafeURL = cafeURL;
 	}
 	public String getCafeIcon() {
 		return cafeIcon;
@@ -120,13 +116,26 @@ public class Post {
 	public void setCafeIcon(String cafeIcon) {
 		this.cafeIcon = cafeIcon;
 	}
+	public int getNoticeIndex() {
+		return noticeIndex;
+	}
+	public void setNoticeIndex(int noticeIndex) {
+		this.noticeIndex = noticeIndex;
+	}
+	public List<Reply> getReplyList() {
+		return replyList;
+	}
+	public void setReplyList(List<Reply> replyList) {
+		this.replyList = replyList;
+	}
 	
 	@Override
 	public String toString() {
-		return "Post [postNo=" + postNo + ", cafeName=" + cafeName + ", cafeUrl=" + cafeUrl + ", cafeIcon=" + cafeIcon
-				+ ", boardNo=" + boardNo + ", boardName=" + boardName + ", memberNo=" + memberNo + ", postTitle="
-				+ postTitle + ", postContent=" + postContent + ", regDate=" + regDate + ", viewCount=" + viewCount
-				+ ", likeCount=" + likeCount + ", memberNickname=" + memberNickname + ", postStatusFlag="
-				+ postStatusFlag + ", postNoticeFlag=" + postNoticeFlag + ", noticeIndex=" + noticeIndex + "]";
+		return "Post [postNo=" + postNo + ", cafeName=" + cafeName + ", cafeURL=" + cafeURL + ", cafeIcon=" + cafeIcon
+				+ ", boardNo=" + boardNo + ", boardName=" + boardName + ", memberNo=" + memberNo + ", memberNickname="
+				+ memberNickname + ", postTitle=" + postTitle + ", postContent=" + postContent + ", regDate=" + regDate
+				+ ", viewCount=" + viewCount + ", likeCount=" + likeCount + ", postStatusFlag=" + postStatusFlag
+				+ ", postNoticeFlag=" + postNoticeFlag + ", noticeIndex=" + noticeIndex + ", replyList=" + replyList
+				+ "]";
 	}
 }

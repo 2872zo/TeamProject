@@ -59,36 +59,36 @@
 	 
 	 <sql id="categoryCafe">
 	 	SELECT
-		cafe_icon, cafe_name, cafe_detail, cafe_type, url, reg_date, members
+		cafe_no, cafe_icon, cafe_name, cafe_detail, cafe_type, url, reg_date, members
 		FROM
 		cafe
 		<where>
 		CLOSED_FLAG = '0'
 		AND cafe_type = 
-		<if test="boardName==0">
+		<if test="boardNo==0">
 		'cc100'
 		</if>
-		<if test="boardName==1">
+		<if test="boardNo==1">
 		'cc101'
 		</if>
-		<if test="boardName==2">
+		<if test="boardNo==2">
 		'cc102'
 		</if>
-		<if test="boardName==3">
+		<if test="boardNo==3">
 		'cc103'
 		</if>
-		<if test="boardName==4">
+		<if test="boardNo==4">
 		'cc104'
 		</if>
-		<if test="boardName==5">
+		<if test="boardNo==5">
 		'cc105'
 		</if>
-		<if test="boardName==6">
+		<if test="boardNo==6">
 		'cc106'
 		</if>
 		</where> 
 		</sql>
-	 <select id="categorizedCafeList" parameterType="Search" resultType="int">
+	 <select id="categorizedCafeList" parameterType="Search" resultMap="cafeTabSelectMap">
 		<include refid="categoryCafe"/>
 	 </select>
 	 

@@ -26,13 +26,52 @@
 	</header>
 	
 		<script type="text/javascript">
-
+		//카페이름 중복확인
+		 $(function() {
+          
+         $("input[name='cafeName']").on('input' , function() {
+            
+             var inputed = $("input[name='cafeName']").val();                   
+                   
+              $.ajax({
+                 url : "cafe/json/checkDuplication",
+                  method :  "POST" ,
+                  dataType : "json" ,
+               headers : {
+                  "Accept" : "application/json",
+                  "Content-Type" : "application/json"
+               },
+                 data : JSON.stringify({
+                  cafeName : inputed,
+               }),
+               
+                   success : function(JSONData) {               
+            
+                      if(JSONData && inputed!="" ) {
+                         $("#check").children("strong").remove();
+                     $("#check").append("<strong class=\"text-success\">사용 가능합니다.</strong>");
+                      } else {
+                         $("#check").children("strong").remove();
+                     $("#check").append("<strong  class=\"text-danger\">사용 불가능합니다.</strong>");
+                      } 
+                   if(inputed=="" ){
+                         $("#check").children("strong").remove();
+                      $("#check").append("<strong class=\"text-muted\">카페이름을 입력해주세요.</strong>");                
+                   }
+                  } 
+            });  
+         });
+         
+      });
+		
+		
 		//============= "가입"  Event 연결 =============
 		 $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			var cafeURL = "22";
 			$( "button.btn.btn-success" ).on("click" , function() {
 				alert("만들기");
-				$("form").attr("method" , "POST").attr("action" , "/cafe/addCafe").submit();
+				$("form").attr("method" , "POST").attr("action" , "/cafe/"+cafeURL+"/addCafe").submit();
 			});
 		});
 
@@ -53,7 +92,10 @@
   <div class="form-group">
     <label for="exampleFormControlInput1" class="col-sm-offset-3 col-sm-3 control-label">카 페 이 름</label>
     <div class="col-sm-4">
-    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="" name="cafeName">
+    <input type="text" class="form-control" id="check" placeholder="" name="cafeName">
+    	<span id="check">
+    		<strong>카페이름을 입력해주세요</strong>
+    	</span>
     </div>
   </div>
   <div class="form-group">

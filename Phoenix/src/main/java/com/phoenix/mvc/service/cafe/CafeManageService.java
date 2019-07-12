@@ -11,11 +11,13 @@ import com.phoenix.mvc.service.domain.Cafe;
 public interface CafeManageService {
 
 /////////////////////////////////지니//////////////////////////////
-	public Map<String, Object> getCafeApplicationList(Search search);
+public Map<String, Object> getCafeApplicationList(Search search);
 
-	public void updateAcceptStatusCode(CafeApplication cafeApplication);
+public void updateAcceptStatusCode(CafeApplication cafeApplication);
 
-	public CafeApplication getCafeApplication(int userNo);
+public CafeApplication getCafeApplication(int userNo);
+
+public CafeApplication getCafeApplication2(int applicationNo);
 ////////////////////////////////지니끝//////////////////////////////////
 
 /////////////////////////////////////예림시작/////////////////////////////////////////
@@ -27,10 +29,10 @@ public interface CafeManageService {
 /////////////////////////////예림끝///////////////////////////////////////////
 
 ///////////////////////////////준호시작///////////////////////////////////////
-	public void updateCafeInfo(Cafe cafe) throws Exception;
+public void updateCafeInfo(Cafe cafe) throws Exception;
 
-	public Cafe getCafeInfo(String cafeNo) throws Exception;
+public Cafe getCafeInfo(int cafeNo) throws Exception;
 
-	public void updateCafeApplicationForm(Cafe cafe) throws Exception;
-	/////////////////////////////// 준호끝///////////////////////////////////////
+public void updateCafeApplicationForm(Cafe cafe) throws Exception;
+/////////////////////////////// 준호끝///////////////////////////////////////
 }
