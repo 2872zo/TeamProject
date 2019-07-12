@@ -1,7 +1,7 @@
 package com.phoenix.mvc.common;
 
-public class Search{
-	///Field
+public class Search {
+	/// Field
 	private int cafeNo;
 	private String cafeURL;
 	private int boardNo;
@@ -16,8 +16,8 @@ public class Search{
 	private int sortCode;
 	private String termStart;
 	private String termEnd;
-	
-	///Constructor
+
+	/// Constructor
 	public Search() {
 	}
 
@@ -94,11 +94,11 @@ public class Search{
 	}
 
 	public int getEndRowNum() {
-		return getCurrentPage()*getPageSize();
+		return getCurrentPage() * getPageSize();
 	}
 
 	public int getStartRowNum() {
-		return (getCurrentPage()-1)*getPageSize()+1;
+		return (getCurrentPage() - 1) * getPageSize() + 1;
 	}
 
 	public int getSortCode() {
@@ -134,6 +134,6 @@ public class Search{
 				+ termEnd + "]";
 	}
 
-	///Method
+	/// Method
 
-}//end of class
+}// end of class

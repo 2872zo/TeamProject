@@ -22,6 +22,13 @@
 		<result property="memberGrade" 			column="member_grade_code" 		jdbcType="VARCHAR"/>
 	</resultMap>
 	
+	<insert 	id="addCafeMember"		parameterType="CafeMember" >
+	 	INSERT
+		INTO cafe_member( member_no , cafe_no , user_no , cafe_member_grade_no , notice_flag, member_nickname, member_status_code , favorite_flag, reg_date, visit_count ) 
+		VALUES	 (	seq_member_no.NEXTVAL , #{cafeNo} , #{userNo} , #{cafeMemberGradeNo} , 
+							'0' , #{memberNickname} , 'cs101', '0', SYSDATE,'0')
+	 </insert>
+	
 	  <update	id="updateCafeMember"	parameterType="CafeMember" >
 	   	UPDATE cafe_member
 	   	<set>

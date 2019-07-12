@@ -23,8 +23,8 @@
 		<result property="userId" 			column="user_id" 				jdbcType="VARCHAR" />
 	</resultMap>
 	
-	<!-- SQL : INSERT -->
-	<insert 	id="addCafeApplication"		parameterType="com.phoenix.mvc.service.domain.CafeApplication" >
+	
+	<insert 	id="addCafeApplication"		parameterType="CafeApplication" >
 	 	INSERT
 		INTO cafe_application( application_no , user_no , cafe_no , reg_date , question1, question2, question3 , answer1, answer2, answer3, accept_status_code, member_nickname ) 
 		VALUES	 (	seq_application_no.NEXTVAL , #{userNo} , #{cafeNo} , SYSDATE , #{question1:VARCHAR} , 
@@ -73,7 +73,7 @@
 	 </select>
 	 
 	 
-	 <update	id="updateAcceptStatusCode"	parameterType="CafeApplication" >
+	 <update id="updateAcceptStatusCode"	parameterType="CafeApplication" >
 	   	UPDATE cafe_application
 	   	<set>
 		accept_status_code=#{acceptStatusCode}	
@@ -86,6 +86,13 @@
 		*
 		FROM cafe_application
 		WHERE user_no = #{userNo}
+  	</select>
+  	
+  	<select id="getCafeApplication2" parameterType="int" resultMap="cafeApplicationSelectMap">
+  		SELECT 
+		*
+		FROM cafe_application
+		WHERE application_no = #{applicationNo}
   	</select>
 	 
 

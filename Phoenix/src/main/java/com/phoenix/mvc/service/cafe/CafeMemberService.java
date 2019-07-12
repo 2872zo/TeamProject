@@ -9,11 +9,12 @@ import com.phoenix.mvc.service.domain.CafeMember;
 public interface CafeMemberService {
 	
 	/////////////////////////////////지니//////////////////////////////
-	//카페가입신청
-	public void addCafeApplication(CafeApplication cafeApplication);
+
+	public void addCafeApplication(CafeApplication cafeApplication);//카페가입신청
+
+	public void updateCafeMember(CafeMember cafeMember);//카페탈퇴
 	
-	//카페탈퇴
-	public void updateCafeMember(CafeMember cafeMember);
+	public void addCafeMember(CafeMember cafeMember);//가입승인
 	////////////////////////////////지니끝//////////////////////////////////
 	
 	////////////////////////////기황////////////////////////////////////
