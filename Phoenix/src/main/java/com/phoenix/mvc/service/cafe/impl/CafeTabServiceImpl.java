@@ -80,35 +80,8 @@ public class CafeTabServiceImpl implements CafeTabService {
 	}
 
 ///////////////////////////////준호끝///////////////////////////////////////	
-	@Override
-	public Map searchCafe(Search search) throws Exception {
-		// TODO Auto-generated method stub
-		int totalCount;
-		Map map = new HashMap();
-		List cafeList = new ArrayList();
-		List postList = new ArrayList();
-		if (search.getSearchCondition().equals("0")) {
-			cafeList = cafeTabDao.searchCafe(search);
-//			postList = cafeTabDao.seachPost(search);
-			map.put("cafeList", cafeList);
-			map.put("postList", postList);
-			map.put("totalCount", new Integer(10));
-		}
-		if (search.getSearchCondition().equals("1")) {
-			cafeList = cafeTabDao.searchCafe(search);
-			totalCount = cafeTabDao.cafeTotalCount(search);
-			map.put("cafeList", cafeList);
-			map.put("totalCount", new Integer(totalCount));
-		}
-		if (search.getSearchCondition().equals("2")) {
-//			postList = cafeTabDao.seachPost(search);
-			totalCount = cafeTabDao.postTotalCount(search);
-			map.put("postList", postList);
-			map.put("totalCount", new Integer(totalCount));
-		}
+	
 
-		return map;
-	}
 
 	/////////////////////////////////////// 예림//////////////////////////////////////////
 

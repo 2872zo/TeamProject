@@ -265,13 +265,14 @@ public class CafeManageController {
 	}
 
 //준호
-@RequestMapping(value= "/{cafeURL}/manage/updateCafeApplicationForm", method=RequestMethod.POST)
-public String updateCafeApplicationForm(@ModelAttribute("cafe") Cafe cafe)throws Exception{
+	@RequestMapping(value = "/{cafeURL}/manage/updateCafeApplicationForm", method = RequestMethod.POST)
+	public String updateCafeApplicationForm(@ModelAttribute("cafe") Cafe cafe) throws Exception {
 
-System.out.println("/updateCafeApplicationFormView : POST");
+		System.out.println("/updateCafeApplicationFormView : POST");
 
-cafeManageService.updateCafeApplicationForm(cafe);
+		cafeManageService.updateCafeApplicationForm(cafe);
 
-return "cafe/updateCafeApplicationForm";
-}
+		return "cafe/updateCafeApplicationForm";
+	}
 ///////////////////////////////준호끝///////////////////////////////////////		
+}

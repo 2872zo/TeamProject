@@ -73,13 +73,13 @@ public class CafePostContoller {
 		//메뉴바를 위한 정보
 		String cafeURL = search.getCafeURL();
 		CafeMember cafeMember = cafeMemberService.getCafeMember(search);
-		List<Board> boardList = cafeManageService.getCafeBoard(search.getCafeURL());
+		//List<Board> boardList = cafeManageService.getCafeBoard(search.getCafeURL());
 		
-		System.out.println(boardList);
+	//	System.out.println(boardList);
 		
 		map.put("cafeURL", cafeURL);
 		map.put("cafeMember", cafeMember);
-		map.put("boardList", boardList);
+	//	map.put("boardList", boardList);
 		map.put("postList", (List<Post>) queryResultMap.get("postList"));
 		map.put("postTotalCount", postTotalCount);
 		map.put("page", page);
@@ -122,9 +122,9 @@ public class CafePostContoller {
 	@GetMapping("/cafe/{cafeURL}/addPost")
 	public String addPostView(@ModelAttribute Search search, Map<String, Object> map) {
 		
-		List<Board> boardList = cafeManageService.getCafeBoard(search.getCafeURL());
+		//List<Board> boardList = cafeManageService.getCafeBoard(search.getCafeURL());
 		
-		map.put("boardList", boardList);
+	//	map.put("boardList", boardList);
 				
 		return "/cafe/addCafePost";
 	}
@@ -154,13 +154,13 @@ public class CafePostContoller {
 	public String updatePostView(@PathVariable int postNo, @PathVariable String cafeURL, Map<String, Object> map) {
 		System.out.println("[updatePostView] postNo : " + postNo);
 		
-		List<Board> boardList = cafeManageService.getCafeBoard(cafeURL);
+		//List<Board> boardList = cafeManageService.getCafeBoard(cafeURL);
 		
 		Post post = cafePostService.getPost(postNo);
 		
 		System.out.println("================postcontent : " + post.getPostContent());
 		map.put("post", post);
-		map.put("boardList", boardList);
+		//map.put("boardList", boardList);
 		
 		return "/cafe/updateCafePost";
 	}
