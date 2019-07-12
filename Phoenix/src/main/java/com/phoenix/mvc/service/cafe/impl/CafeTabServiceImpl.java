@@ -87,11 +87,45 @@ public class CafeTabServiceImpl implements CafeTabService{
 	///////////////////////////////준호끝///////////////////////////////////////	
 
 
-	List boardList = cafeManageDao.getCafeBoard(cafeNo);
-	map.put("boardList", boardList);
+	@Override
+	public Map getCafeMain(User user, String cafeURL) { // 예림예림
 
-	return map;
-}
+		CafeMember cafeMember = new CafeMember();
+		Map map = new HashMap();
+		Search search = new Search();
+
+		// 여기서 userNo 검사해서 400 이면 로그인되어있지않음.
+		int cafeNo = cafeManageDao.getCafeNo(cafeURL);
+
+		if (user.getUserNo() != 400) // 로그인이되어있을때
+		{
+			// 1.카페멤버인지 확인 (=카페멤버이면 정보가져오고 아니면 못가져옴)
+			cafeMember = cafeMemberDao.getCafeMember(cafeNo, user.getUserNo());// 카페번호랑회원번호로
+			// cafeMember.getUserNo().equals("500") 이면
+			// 500설정은 dao에서해줬음.
+			System.out.println("cafeMember: " + cafeMember);
+
+		} else // 로그인이 되어있지않음.
+
+		{
+			cafeMember.setUserNo(400); // 형님때문에
+		}
+		map.put("cafeMember", cafeMember);
+
+		map.put("cafeURL", cafeURL);
+		// 공통
+		// 1.카페의 공지게시글 가져오기 ->승규 dao (카페URL , 보드코드)
+		search.setCafeURL(cafeURL);
+		List<Post> noticePostList = cafePostDao.getPostListByNotice(search);
+		map.put("noticePostList", noticePostList);
+		// 2.cafe정보가져오기 ->준호
+
+		// 3.카페 게시판 list ->내가한거네
+		List boardList = cafeManageDao.getCafeBoard(cafeNo);
+		map.put("boardList", boardList);
+
+		return map;
+	}
 
 /////////////////////////////////////////////// 예림
 /////////////////////////////////////////////// 끝/////////////////////////////////////
