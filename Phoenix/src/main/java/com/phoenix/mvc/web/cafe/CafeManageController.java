@@ -25,6 +25,7 @@ import com.phoenix.mvc.common.Event;
 import com.phoenix.mvc.common.Page;
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.cafe.CafeManageService;
+import com.phoenix.mvc.service.cafe.CafeMemberService;
 import com.phoenix.mvc.service.domain.Cafe;
 import com.phoenix.mvc.service.domain.CafeApplication;
 import com.phoenix.mvc.service.domain.CafeMember;
