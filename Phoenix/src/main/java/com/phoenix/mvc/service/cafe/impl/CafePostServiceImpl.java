@@ -11,6 +11,7 @@ import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.cafe.CafePostDao;
 import com.phoenix.mvc.service.cafe.CafePostService;
 import com.phoenix.mvc.service.domain.Post;
+import com.phoenix.mvc.service.domain.Reply;
 
 @Service
 public class CafePostServiceImpl implements CafePostService {
@@ -65,5 +66,30 @@ public class CafePostServiceImpl implements CafePostService {
 	@Override
 	public boolean deletePost(int postNo) {
 		return cafePostDao.deletePost(postNo);
+	}
+
+	@Override
+	public boolean addReply(Reply reply) {
+		return cafePostDao.addReply(reply);
+	}
+	
+	@Override
+	public Map<String, Object> getReplyList(Search search) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("replyList", cafePostDao.getReplyList(search));
+		map.put("replyTotalCount", cafePostDao.replyTotalCount(search));
+		
+		return map;
+	}
+	
+	@Override
+	public boolean updateReply(Reply reply) {
+		return cafePostDao.updateReply(reply);
+	}
+
+	@Override
+	public boolean deleteReply(int replyNo) {
+		return cafePostDao.deleteReply(replyNo);
 	}
 }

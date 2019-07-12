@@ -50,7 +50,7 @@ $(function() {
 		
 	});
 	$("#memberDetail").on("click" , function() {
-		$("#memberListingForm").attr("method" , "POST").attr("action" , "/cafe/randomCafe/getCafeMember").submit();
+		$("#memberDetailForm").attr("method" , "POST").attr("action" , "/cafe/randomCafe/getCafeMember").submit();
 	});
 });
 </script>
@@ -73,7 +73,7 @@ $(function() {
 	<br/>
 	
 	
-	<div class="btn-group center-block" role="group" aria-label="Basic example">
+	<div class="btn-group" role="group" aria-label="Basic example">
   <button type="button" class="btn btn-outline-primary cafeListing">운영중인 카페</button>
   <button type="button" class="btn btn-outline-primary cafeListing">활동중인 카페</button>
   <button type="button" class="btn btn-outline-primary cafeListing">즐겨찾기 카페</button>
@@ -82,7 +82,32 @@ $(function() {
   <button type="button" class="btn btn-outline-primary cafeListing">카페 새게시글</button>
 </div>
 	
-	
+	<c:if test="${!empty myCafeList}">
+<table class="table table-borderless">
+	<thead>
+    <tr>
+  	  <th scope="col">카페번호</th>
+      <th scope="col">카페URL</th>
+      <th scope="col">카페이름</th>
+      <th scope="col">카페아이콘</th>
+      <th scope="col">카페설명</th>
+      <th scope="col">개설일</th>
+    </tr>
+	</thead>
+	<tbody>
+  <tr>
+	<c:forEach var="myCafe" items="${myCafeList}">
+	 <th scope="row">${myCafe.cafeNo}</th>
+	 <td>${myCafe.url}</td>
+	 <td>${myCafe.cafeName}</td>
+	 <td>${myCafe.cafeIcon}</td>
+	 <td>${myCafe.cafeDetail}</td>
+	 <td>${myCafe.regDate}</td>
+	</c:forEach>
+  </tr>
+	</tbody>
+</table>
+</c:if>
 	
 
 	<br/>
@@ -98,34 +123,60 @@ $(function() {
   <button type="button" class="btn btn-outline-success cafeCategory">음악</button>
   <button type="button" class="btn btn-outline-success cafeCategory">여행</button>
 </div>
-
- <c:forEach var="categoryCafe" items="${categoryCafeList}">
-  ${categoryCafe.cafeUrl}/${post.cafeName}/${post.cafeIcon}/${post.postTitle}/${post.postNo}/${post.memberNickname}
-  <br/>
-  </c:forEach>
-
-
-
 <br/>
-<br/>
+<c:if test="${!empty categoryCafeList}">
+<table class="table table-borderless">
+	<thead>
+    <tr>
+  	  <th scope="col">카페번호</th>
+      <th scope="col">카페URL</th>
+      <th scope="col">카페이름</th>
+      <th scope="col">카페아이콘</th>
+      <th scope="col">카페설명</th>
+      <th scope="col">개설일</th>
+      <th scope="col">카페카테고리</th>
+    </tr>
+	</thead>
+	<tbody>
+  
+	<c:forEach var="categoryCafe" items="${categoryCafeList}">
+	<tr>
+	 <th scope="row">${categoryCafe.cafeNo}</th>
+	 <td>${categoryCafe.url}</td>
+	 <td>${categoryCafe.cafeName}</td>
+	 <td>${categoryCafe.cafeIcon}</td>
+	 <td>${categoryCafe.cafeDetail}</td>
+	 <td>${categoryCafe.regDate}</td>
+	 <td>${categoryCafe.cafeType}</td>
+	  </tr>
+	</c:forEach>
+ 
+	</tbody>
+</table>
+</c:if>
+
 <br/>
 <br/>
 <br/>
 
 <div class = 'container'>
 
-<div class="input-group">
-
 	<form id='memberListingForm'>
-	<input type="text" class="form-control" placeholder="카페번호" name = 'cafeNo'  aria-describedby="button-addon4">
-	
-	<input type="text" class="form-control" placeholder="멤버번호" name = 'boardNo' aria-describedby="button-addon4">
-</form>
-	<div class="input-group-append" id="button-addon4">
-    <button class="btn btn-outline-warning" type="button" id = 'memberList'>맴버리스트</button>
-    <button class="btn btn-outline-success" type="button" id= 'memberDetail'>멤버상세</button>
-  </div>
-</div>
+		<div class="input-group">
+		<input type="text" class="form-control" placeholder="카페번호" name = 'cafeNo'  aria-describedby="button-addon1">
+		<div class="input-group-append" id="button-addon1">
+	    <button class="btn btn-outline-warning" type="button" id = 'memberList'>맴버리스트</button>
+	    </div>
+	    </div>
+	</form>
+	<form id='memberDetailForm'>
+		<div class="input-group">
+		<input type="text" class="form-control" placeholder="멤버번호" name = 'memberNo' aria-describedby="button-addon2">
+		<div class="input-group-append" id="button-addon2">
+    	<button class="btn btn-outline-success" type="button" id= 'memberDetail'>멤버디테일</button>
+  		</div>
+		</div>
+	</form>
 
 </div>
 

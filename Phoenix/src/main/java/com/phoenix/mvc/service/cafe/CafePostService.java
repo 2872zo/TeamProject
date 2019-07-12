@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.domain.Post;
+import com.phoenix.mvc.service.domain.Reply;
 
 public interface CafePostService {
 	public Map<String, Object> getPostListByBoard(Search search);
@@ -17,4 +18,12 @@ public interface CafePostService {
 	public boolean updatePost(Post post);
 	
 	public boolean deletePost(int postNo);
+	
+	public boolean addReply(Reply reply);
+	
+	public Map<String, Object> getReplyList(Search search);
+	
+	public boolean updateReply(Reply reply);
+	
+	public boolean deleteReply(int replyNo);
 }

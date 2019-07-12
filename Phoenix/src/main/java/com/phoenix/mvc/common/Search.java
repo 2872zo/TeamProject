@@ -2,23 +2,57 @@ package com.phoenix.mvc.common;
 
 public class Search{
 	///Field
+	private int userNo;
+	private int memberNo;
+
+	private int memberGrade;
+
 	private int cafeNo;
 	private String cafeURL;
 	private int boardNo;
 	private String boardName;
 	private int postNo;
+	private int replyNo;
+
+	private int status;
+	private int sortCode;
+
 	private String searchCondition;
 	private String searchKeyword;
 	private int currentPage;
 	private int pageSize;
 	private int endRowNum;
 	private int startRowNum;
-	private int sortCode;
 	private String termStart;
 	private String termEnd;
 	
 	///Constructor
 	public Search() {
+	}
+
+	public int getUserNo() {
+		return userNo;
+	}
+
+	public void setUserNo(int userNo) {
+		this.userNo = userNo;
+	}
+
+	public int getMemberNo() {
+		return memberNo;
+	}
+
+	public void setMemberNo(int memberNo) {
+		this.memberNo = memberNo;
+	}
+
+
+	public int getMemberGrade() {
+		return memberGrade;
+	}
+
+	public void setMemberGrade(int memberGrade) {
+		this.memberGrade = memberGrade;
 	}
 
 	public int getCafeNo() {
@@ -61,6 +95,23 @@ public class Search{
 		this.postNo = postNo;
 	}
 
+	public int getReplyNo() {
+		return replyNo;
+	}
+
+	public void setReplyNo(int replyNo) {
+		this.replyNo = replyNo;
+	}
+
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
 	public String getSearchCondition() {
 		return searchCondition;
 	}
@@ -93,12 +144,14 @@ public class Search{
 		this.pageSize = pageSize;
 	}
 
+	//==> Select Query 시 ROWNUM 마지막 값 
 	public int getEndRowNum() {
-		return getCurrentPage()*getPageSize();
+		return getCurrentPage() * getPageSize();
 	}
 
+	// ==> Select Query 시 ROWNUM 시작 값
 	public int getStartRowNum() {
-		return (getCurrentPage()-1)*getPageSize()+1;
+		return (getCurrentPage() - 1) * getPageSize() + 1;
 	}
 
 	public int getSortCode() {
@@ -127,13 +180,15 @@ public class Search{
 
 	@Override
 	public String toString() {
-		return "Search [cafeNo=" + cafeNo + ", cafeURL=" + cafeURL + ", boardNo=" + boardNo + ", boardName=" + boardName
-				+ ", postNo=" + postNo + ", searchCondition=" + searchCondition + ", searchKeyword=" + searchKeyword
-				+ ", currentPage=" + currentPage + ", pageSize=" + pageSize + ", endRowNum=" + endRowNum
-				+ ", startRowNum=" + startRowNum + ", sortCode=" + sortCode + ", termStart=" + termStart + ", termEnd="
-				+ termEnd + "]";
-	}
 
-	///Method
+
+
+		return "Search [userNo=" + userNo + ", memberNo=" + memberNo + ", cafeNo=" + cafeNo + ", cafeURL=" + cafeURL
+				+ ", boardNo=" + boardNo + ", boardName=" + boardName + ", postNo=" + postNo + ", replyNo=" + replyNo
+				+ ", searchCondition=" + searchCondition + ", searchKeyword=" + searchKeyword + ", currentPage="
+				+ currentPage + ", pageSize=" + pageSize + ", endRowNum=" + getEndRowNum() + ", startRowNum=" + getStartRowNum()
+				+ ", sortCode=" + sortCode + ", termStart=" + termStart + ", termEnd=" + termEnd + "]";
+
+	}
 
 }//end of class

@@ -1,6 +1,7 @@
 package com.phoenix.mvc.service.cafe;
 
 import java.util.List;
+import java.util.Map;
 
 import com.phoenix.mvc.common.Event;
 import com.phoenix.mvc.common.Search;
@@ -17,13 +18,16 @@ public CafeApplication getCafeApplication(int userNo);
 public int getTotalCount(Search search);
 
 public void updateAcceptStatusCode(CafeApplication cafeApplication);
+
+public CafeApplication getCafeApplication2(int applicationNo);
 ////////////////////////////////지니끝//////////////////////////////////
+
 
 /////////////////////////////////// 예림시작//////////////////////////////////////////
 
 public List getCafeBoard(int cafeNo);
 
-public List getCafeBoard(String cafeURL);
+public List getCafeBoard(Search search);
 
 public int getCafeNo(String cafeURL);
 
@@ -33,7 +37,7 @@ public boolean addEventLog(Event event);// 예림예림 add되면 true return
 
 public boolean checkCafeTodayVisitLog(Event event); // 예림예림 return true- 오늘방문함 false -오늘첫방문
 
-public List getCafeStatistics(Event event);
+public Map<String,String> getCafeStatistics(Event event);
 
 ///////////////////////////////////////// 예림 끝////////////////////////////////////////////////
 

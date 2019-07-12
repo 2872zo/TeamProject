@@ -1,5 +1,8 @@
 package com.phoenix.mvc.web.cafe;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,8 +23,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.phoenix.mvc.common.Event;
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.cafe.CafeManageService;
+import com.phoenix.mvc.service.domain.CafeApplication;
+import com.phoenix.mvc.service.domain.CafeMember;
 
 @RestController
 @RequestMapping("/cafe/*")
@@ -64,46 +70,99 @@ public class CafeManageRestController {
 
 		return map;
 	}
+	
+	@RequestMapping(value="json/{cafeURL}/manage/getCafeStatistics", method= RequestMethod.POST) //예림예림 여기는 처음에만 들어온다.
+	public Map getCafeStatistics(@RequestBody Event event, @PathVariable String cafeURL)// 카페no랑 , 시작날, 끝날 받아오기
+	{
+		System.out.println("json/cafe/{CafeURL}/manage/getCafeStatistics");
+		
+		
+		//가짜데이터
+		//event.setStartDate("20190709");
+		//event.setEndDate("20190712");
+		String date[] = event.getStartDate().split("/");
+		String startDate = date[2]+date[0]+date[1];
+		//System.out.println(startDate);
+		date = event.getEndDate().split("/");
+		String endDate = date[2]+date[0]+date[1];
+		
+		event.setStartDate(startDate);
+		event.setEndDate(endDate);
+		Map<String,String> cafeStatistics = cafeManageService.getCafeStatistics(event,cafeURL);
+		
+	
+		if(cafeStatistics.get("et001")==null){
+			cafeStatistics.put("et001", "0");
+		}
+		
+		for(int i=4; i<8; i++) 
+		{
+			if(cafeStatistics.get("et00"+i)==null)
+				cafeStatistics.put("et00"+i, "0");
+		}
+		
+		
+		return cafeStatistics;
+	}
+	
 
 	////////////////////////////////////////////////////예림 끝//////////////////////////////////////
 
 	/////////////////////////////////지니//////////////////////////////
-
-//지니
-//@RequestMapping(value = "json/{cafeURL}/manage/updateCafeApplication", method = RequestMethod.POST )
-	public Map updateCafeApplication(@RequestBody String application) {
-
-		System.out.println("json/{cafeURL}/manage/updateCafeApplication : POST");
-
+	//@RequestMapping(value="/{cafeURL}/manage/updateCafeApplication", method=RequestMethod.POST)
+	public String updateCafeApplication(@RequestBody String application) {
+		
+		System.out.println("/{cafeURL}/manage/updateCafeApplication : POST");
+		System.out.println("엥??");
 		System.out.println(application);
-
+		
 		JSONObject obj = (JSONObject) JSONValue.parse(application);
-		String cafeApplication = (String) obj.get("application");
-
-		System.out.println("뽑은 : " + cafeApplication);
-
-		String split[] = cafeApplication.split(",");
+		String cafeApplication = (String)obj.get("application");
+		
+		//System.out.println("뽑은 : "+ cafeApplication);
+		
+		String split[]= cafeApplication.split(",");
 		String result[];
-
-		Map<String, String> map = new HashMap<String, String>();
-
-//멤버닉네임,userNo,cafeNo
-		for (int i = 0; i < split.length; i++) {
-			System.out.println("값 몇개인지부터 확인: " + split.length);
-			System.out.println(split[i]);
-			for (int j = 0; j < 3; j++) {// 값은 3개니까 고정
-				result = split[i].split("&");
-//System.out.println(result[j]);
-				map.put("nickName", result[0]);
-				map.put("userNo", result[1]);
-				map.put("cafeNo", result[2]);
-				System.out.println("map" + map);
-
+		
+		List<String> nickName = new ArrayList<String>();
+		List<Integer> userNo  = new ArrayList<Integer>();
+		List<Integer> cafeNo = new ArrayList<Integer>();
+	
+		int count = split.length;
+		
+		//멤버닉네임,userNo,cafeNo
+		for(int i =0; i<split.length;i++) {
+			System.out.println("값 몇개인지부터 확인: "+split.length);
+			System.out.println("split"+split[i]);
+			result= split[i].split("&");
+				nickName.add(result[0]);
+				userNo.add(Integer.parseInt(result[1]));
+				cafeNo.add(Integer.parseInt(result[2]));
 			}
+			
+		System.out.println(userNo);
+		for(int i = 0; i<count; i++) {
+			System.out.println(userNo.get(i));
+			CafeApplication cafe =cafeManageService.getCafeApplication(userNo.get(i));	
+			System.out.println(cafe);
+			cafe.setAcceptStatusCode("ca102");
+			cafeManageService.updateAcceptStatusCode(cafe);
+			
+			CafeMember member = new CafeMember();
+			member.setCafeNo(cafeNo.get(i));
+			member.setUserNo(userNo.get(i));
+			member.setMemberNickname(nickName.get(i));
+			//member.setMemberStatusCode(memberStatusCode);//이거 나중에 조인해서 추가해
+			//member.setCafeMemberGradeNo(cafeMemberGradeNo);//이거 나중에 조인해서 추가해2
+
 		}
+		
+//		System.out.println(nickName);
+//		System.out.println(userNo);
+//		System.out.println(cafeNo);
 
-		return map;
-
+		return "/cafe/listCafeApplication";
+		
 	}
 
 ////////////////////////////////지니끝//////////////////////////////////

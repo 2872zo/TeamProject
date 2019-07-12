@@ -16,14 +16,16 @@ public Map<String, Object> getCafeApplicationList(Search search);
 public void updateAcceptStatusCode(CafeApplication cafeApplication);
 
 public CafeApplication getCafeApplication(int userNo);
+
+public CafeApplication getCafeApplication2(int applicationNo);
 ////////////////////////////////지니끝//////////////////////////////////
 
 /////////////////////////////////////예림시작/////////////////////////////////////////
-public List getCafeBoard(String cafeURL);
+public List getCafeBoard(Search search);
 
-public boolean checkCafePost(String cafeURL,int boardNo); //아니면 null이면?? 으로할까 일단 조원들상의 void도 int return
+public boolean checkCafePost(String cafeURL, int boardNo); // 아니면 null이면?? 으로할까 일단 조원들상의 void도 int return
 
-public List getCafeStatistics(Event event, String cafeURL);
+public Map<String,String> getCafeStatistics(Event event, String cafeURL);
 /////////////////////////////예림끝///////////////////////////////////////////
 
 ///////////////////////////////준호시작///////////////////////////////////////

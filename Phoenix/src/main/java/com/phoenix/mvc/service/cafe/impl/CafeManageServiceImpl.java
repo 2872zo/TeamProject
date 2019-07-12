@@ -34,11 +34,11 @@ public class CafeManageServiceImpl implements CafeManageService {
 /////////////////////////////////////////////////// 예림
 /////////////////////////////////////////////////// 시작/////////////////////////////////
 	@Override
-	public List getCafeBoard(String cafeURL) {
+	public List getCafeBoard(Search search) {
 
-		int cafeNo = cafeManageDao.getCafeNo(cafeURL);
+		int cafeNo = cafeManageDao.getCafeNo(search.getCafeURL());
 
-		return cafeManageDao.getCafeBoard(cafeNo);
+		return cafeManageDao.getCafeBoard(search);
 	}
 
 	@Override
@@ -65,12 +65,12 @@ public class CafeManageServiceImpl implements CafeManageService {
 	}
 
 	@Override
-	public List getCafeStatistics(Event event, String cafeURL) { // 예림예림 작업중
+	public Map<String,String> getCafeStatistics(Event event, String cafeURL) { // 예림예림 작업중
 
 		int cafeNo = cafeManageDao.getCafeNo(cafeURL);
 
 		event.setCafeNo(cafeNo); // cafeNo를 set
-		List statisticsList = cafeManageDao.getCafeStatistics(event); // 모든 카페는 통계가 있다. count라서 0이더라도
+		Map<String,String> statisticsList = cafeManageDao.getCafeStatistics(event); // 모든 카페는 통계가 있다. count라서 0이더라도
 
 		return statisticsList;
 	}
@@ -105,6 +105,12 @@ public class CafeManageServiceImpl implements CafeManageService {
 		return cafeManageDao.getCafeApplication(userNo);
 	}
 
+	@Override
+	public CafeApplication getCafeApplication2(int applicationNo) {
+
+		return cafeManageDao.getCafeApplication2(applicationNo);
+	}
+
 ////////////////////////////////지니끝//////////////////////////////////
 
 	/////////////////////////////// 준호시작///////////////////////////////////////
@@ -129,5 +135,5 @@ public class CafeManageServiceImpl implements CafeManageService {
 	}
 	
 	/////////////////////////////// 준호끝///////////////////////////////////////
-	
+
 }
