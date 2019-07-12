@@ -29,8 +29,9 @@
 		 $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$( "button.btn.btn-success" ).on("click" , function() {
+				var cafeURL = "22";
 				alert("가입양식관리");
-				self.location = "/cafe/updateCafeApplicationFormView?cafeNo=${cafe.cafeNo}"
+				self.location = "/cafe/"+cafeURL+"/manage/updateCafeApplicationFormView?cafeNo=${cafe.cafeNo}"
 				//$("form").attr("method" , "POST").attr("action" , "/cafe/1234/addCafe").submit();
 			});
 		});	

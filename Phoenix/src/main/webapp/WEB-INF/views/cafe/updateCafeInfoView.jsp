@@ -31,7 +31,8 @@
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$( "button.btn.btn-success" ).on("click" , function() {
 				alert("수정");
-				$("form").attr("method" , "POST").attr("action" , "/cafe/updateCafeInfo").submit();
+				var cafeURL = "22";
+				$("form").attr("method" , "POST").attr("action" , "/cafe/"+cafeURL+"/manage/updateCafeInfo").submit();
 			});
 		});	
 
@@ -76,7 +77,7 @@
     </div>
   </div>		
 <div class="form-group">
-    <label for="exampleFormControlInput1" class="col-sm-offset-3 col-sm-3 control-label">배너이미지</label>
+    <label for="exampleFormControlInput1" class="col-sm-offset-3 col-sm-3 control-label">메인이미지</label>
     <div class="col-sm-4">
     <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="" name="mainImg">
     </div>
@@ -120,10 +121,6 @@
     <select class="form-control" id="exampleFormControlSelect1" name="autoApplicationAcceptFlag" value="${cafe.autoApplicationAcceptFlag} ">
       <option>0</option>
       <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
     </select>
     </div>
     </div>

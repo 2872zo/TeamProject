@@ -46,7 +46,7 @@ public class CafeTabContoller {
 		return "forward:/WEB-INF/views/cafe/cafeHomeMain.jsp";
 	}
 	///////////////////////////////준호시작///////////////////////////////////////	
-	@RequestMapping(value= "/cafe/addCafeView", method=RequestMethod.GET)
+	@RequestMapping(value= "/addCafeView", method=RequestMethod.GET)
 	public String addCafeView(@ModelAttribute("cafe") Cafe cafe)throws Exception{
 		
 		System.out.println("/addCafe : GET");
@@ -56,7 +56,7 @@ public class CafeTabContoller {
 		return "cafe/addCafeView";
 	}
 	
-	@RequestMapping(value= "/cafe/addCafe", method=RequestMethod.POST)
+	@RequestMapping(value= "/{cafeURL}/addCafe", method=RequestMethod.POST)
 	public String addCafe(@ModelAttribute("cafe") Cafe cafe)throws Exception{
 		
 		System.out.println("/addCafe : POST");
