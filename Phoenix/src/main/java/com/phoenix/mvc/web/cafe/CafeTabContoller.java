@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -29,8 +30,11 @@ public class CafeTabContoller {
 	@Qualifier("cafeTabServiceImpl")
 	private CafeTabService cafeTabService;
 	
-	int pageSize = 2;
-	int pageUnit = 3;
+	@Value("${pageSize}")
+	private int pageSize;
+	
+	@Value("${pageUnit}")
+	private int pageUnit;
 	
 	public CafeTabContoller() {
 		System.out.println(getClass().getName() + "default Constuctor");
@@ -72,6 +76,8 @@ public class CafeTabContoller {
 	public String cafeSearch(@ModelAttribute("search") Search search, Model model) throws Exception {
 	
 		System.out.println("/cafe/search입니다.");
+		
+		pageSize=2;
 
 		if(search.getCurrentPage() == 0 ){
 			search.setCurrentPage(1);
@@ -83,7 +89,6 @@ public class CafeTabContoller {
 		List postList = (List) map.get("postList");
 		int totalCount = (int) map.get("totalCount");
 		Page page = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
-		//Page page = new Page();
 		model.addAttribute("cafeList", cafeList);
 		model.addAttribute("postList", postList);
 		model.addAttribute("search", search);
@@ -92,10 +97,27 @@ public class CafeTabContoller {
 	}
 	
 	@RequestMapping("/cafe/category")
-	public String getCategorizedCafe () {
+	public String getCategorizedCafe(@ModelAttribute("search") Search search, Model model) throws Exception {
 		
 		System.out.println("/cafe/category입니다.");
-		return "forward:/WEB-INF/views/cafe/listCafeSearch.jsp";
+		pageSize=2;
+
+		if(search.getCurrentPage() == 0 ){
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(pageSize);
+		
+		Map<String, Object> map = cafeTabService.getCategorizedCafeList(search);
+		
+		List cafeList = (List) map.get("cafeList");
+		int totalCount = (int) map.get("totalCount");
+		Page page = new Page( search.getCurrentPage(), totalCount, pageUnit, pageSize);
+
+		model.addAttribute("categoryCafeList", cafeList);
+		model.addAttribute("search", search);
+		model.addAttribute("page", page);
+			
+		return "forward:/WEB-INF/views/cafe/cafeHomeMain.jsp";
 	}
 	
 	/////////////////////////////////기황 끝//////////////////////////////////////

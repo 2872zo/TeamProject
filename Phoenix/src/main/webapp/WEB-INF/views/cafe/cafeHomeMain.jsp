@@ -33,19 +33,15 @@ $(function() {
 	$("#addCafe").on("click" , function() {
 		$(self.location).attr("href","/cafe/addCafeView");
 	});
-
-	$("#managed").on("click" , function() {
-		alert("운영중이야");
-	});
 	
 	$(".cafeListing").on("click" , function() {
-		alert("카페종류야");
-		//alert($(".cafeListing").index(this).val());
+		alert($(".cafeListing").index(this));
 	});
 
 	$(".cafeCategory").on("click" , function() {
-		alert("카페카테고리야");
-		//alert($(".cafeCategory").index(this).val());
+		var count = $(".cafeCategory").index(this);
+		$("#boardNo").val(count);
+		$("#cafeCategorizing").attr("method" , "POST").attr("action" , "/cafe/category").submit();	
 	});
 
 	$("#memberList").on("click" , function() {
@@ -64,7 +60,9 @@ $(function() {
 </head>
 
 <body>
-
+<form id="cafeCategorizing">
+<input type="hidden" id="boardNo" name="boardNo" value="0"/>
+</form>
 
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
@@ -93,13 +91,18 @@ $(function() {
 	
 	
 <div class="btn-group" role="group" aria-label="Basic example">
-  <button type="button" class="btn btn-outline-success cafeCategory" checked>친목/모임</button>
+  <button type="button" class="btn btn-outline-success cafeCategory">친목/모임</button>
   <button type="button" class="btn btn-outline-success cafeCategory">스포츠/레저</button>
   <button type="button" class="btn btn-outline-success cafeCategory">영화</button>
   <button type="button" class="btn btn-outline-success cafeCategory">게임</button>
   <button type="button" class="btn btn-outline-success cafeCategory">음악</button>
   <button type="button" class="btn btn-outline-success cafeCategory">여행</button>
 </div>
+
+ <c:forEach var="categoryCafe" items="${categoryCafeList}">
+  ${categoryCafe.cafeUrl}/${post.cafeName}/${post.cafeIcon}/${post.postTitle}/${post.postNo}/${post.memberNickname}
+  <br/>
+  </c:forEach>
 
 
 
