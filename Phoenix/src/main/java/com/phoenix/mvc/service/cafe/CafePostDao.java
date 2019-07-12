@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.domain.Post;
+import com.phoenix.mvc.service.domain.Reply;
 
 public interface CafePostDao {
 	public List<Post> getPostListBySearch(Search search);
@@ -23,4 +24,15 @@ public interface CafePostDao {
 	public boolean updatePost(Post post);
 
 	public boolean deletePost(int postNo);
+
+	public boolean addReply(Reply reply);
+	
+	public List<Reply> getReplyList(Search search);
+
+	public int replyTotalCount(Search search);	
+	
+	public boolean updateReply(Reply reply);
+
+	public boolean deleteReply(int replyNo);
+
 }

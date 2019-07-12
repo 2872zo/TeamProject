@@ -63,6 +63,16 @@
 		ORDER BY board_index
 	</select>
 	
+	<select  id="getBoardListBySearch"   parameterType="search"  resultMap="boardSelectMap">
+		SELECT *
+		FROM board
+		WHERE cafe_url = #{cafeURL}
+		<if test="searchCondition==1">
+			AND board_type !='cb102'
+		</if>
+		ORDER BY board_index
+	</select>
+	
 	
 	<select id="getCafeNo" parameterType ="string" resultType="int">
 		SELECT cafe_no
@@ -101,7 +111,15 @@
 			  AND cafe_no=#{cafeNo:NUMERIC}
 			  AND to_char(reg_date,'yyyy-mm-dd') = to_char(SYSDATE,'yyyy-mm-dd');
 	</select>
-
+	
+	<select id="getCafeStatistics" parameterType="Event" resultType="map">
+		SELECT event_type , count(*) counts
+		FROM event_log
+		WHERE reg_date BETWEEN TO_DATE(#{startDate},'yyyymmdd') AND TO_DATE(#{endDate},'yyyymmdd')+ 0.99999
+		AND cafe_no = #{cafeNo}
+		GROUP BY event_type
+		ORDER BY event_type
+	</select>
 
 
 </mapper>

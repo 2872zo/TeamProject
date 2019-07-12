@@ -17,7 +17,7 @@
 		
 	<script>
 		$(function() {
-			$("[name=cafeUrl]").val('${search.cafeURL}');
+			$("[name=cafeURL]").val('${search.cafeURL}');
 			$("[name=memberNo]").val('10000');
 			$("[name=memberNickname]").val('매니저1');
 			$("form").attr("method", "POST").attr("action",	"addPost");
@@ -25,13 +25,23 @@
 			$("#submitButton").on("click",function(e){
 				$("[name=boardName]").val( $("[name=boardNo] option:selected").text());
 			});
+
+			$("[name=update]").on("click",function(){
+				location.href = "/cafe/${post.cafeURL}/updatePost/${post.postNo}";
+			});
+
+			$("[name=delete]").on("click",function(){
+				location.href = "/cafe/${post.cafeURL}/deletePost?postNo=${post.postNo}&boardNo=${post.boardNo}";
+			});
 		});
 
-		
+		function getReplyList(idx){
+			//리플가져와서 추가하는거 필요
+		}
 	</script>
 
 
-	<title>${search.cafeURL}</title>
+	<title>${post.cafeURL}</title>
 </header>
 
 <body>
@@ -42,31 +52,27 @@
 			<h1>게시글 조회</h1>
 		</div>
 
-				<input type="hidden" name="cafeUrl"> <input type="hidden"name="memberNo"> 
+				<input type="hidden" name="cafeURL"> <input type="hidden"name="memberNo"> 
 				<input type="hidden" name="memberNickname">
 				<input type="hidden" name="boardName">
-	
-				<div class="row">
-					<div class="col-md-8 mb-3">
-						게시판 번호 : ${post.boardNo }<br/>
-						게시판 : ${post.boardName }<br/>
-						작성자 멤버 번호 : ${post.memberNo }<br/>
-						작성자 : ${post.memberNickname }<br/>
-						추천수 : ${post.likeCount }<br/>
-						조회수 : ${post.viewCount }<br/>
-						작성일 : ${post.regDate }<br/>
-						
-					</div>
-	
-				</div>
 
-					제목 : ${post.postTitle } 
-					
-					<br/>
-					
-					내용 : ${post.postContent }
+		<div class="row">
+			<div class="col-md-8 mb-3">
+				게시판 번호 : ${post.boardNo }<br /> 
+				게시판 : ${post.boardName }<br /> 
+				작성자 멤버 번호 : ${post.memberNo }<br /> 
+				작성자 : ${post.memberNickname }<br />
+				추천수 : ${post.likeCount }<br /> 
+				조회수 : ${post.viewCount }<br /> 
+				작성일 : ${post.regDate }<br />
+			</div>
+		</div>
+
+		제목 : ${post.postTitle } <br /> 
+		내용 : ${post.postContent } <br />
 		
-					<br/>
+		<button name="update" class="btn btn-primary btn-lg btn-block">수정</button>
+		<button name="delete" class="btn btn-primary btn-lg btn-block">삭제</button>
 	</div>
 </body>
 </html>

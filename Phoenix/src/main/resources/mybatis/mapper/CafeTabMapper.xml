@@ -59,7 +59,7 @@
 	 
 	 <sql id="categoryCafe">
 	 	SELECT
-		cafe_icon, cafe_name, cafe_detail, cafe_type, url, reg_date, members
+		cafe_no, cafe_icon, cafe_name, cafe_detail, cafe_type, url, reg_date, members
 		FROM
 		cafe
 		<where>
@@ -80,7 +80,7 @@
 		<if test="boardNo==4">
 		'cc104'
 		</if>
-		<if test="boardNo=5">
+		<if test="boardNo==5">
 		'cc105'
 		</if>
 		<if test="boardNo==6">

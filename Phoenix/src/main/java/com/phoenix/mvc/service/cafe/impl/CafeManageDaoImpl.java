@@ -1,6 +1,8 @@
 package com.phoenix.mvc.service.cafe.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,9 @@ import com.phoenix.mvc.common.Event;
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.cafe.CafeManageDao;
 import com.phoenix.mvc.service.domain.CafeApplication;
+
+import oracle.net.aso.e;
+
 import com.phoenix.mvc.service.domain.Cafe;
 
 @Repository("cafeManageDaoImpl")
@@ -76,9 +81,9 @@ public class CafeManageDaoImpl implements CafeManageDao {
 	}
 	
 	@Override
-	public List getCafeBoard(String cafeURL) { //mapper구현x
+	public List getCafeBoard(Search search) { //mapper구현x
 	
-		List boardList = sqlSession.selectList("getBoardListByURL", cafeURL);
+		List boardList = sqlSession.selectList("getBoardListBySearch", search);
 		
 		return boardList;
 	}
@@ -132,10 +137,17 @@ public class CafeManageDaoImpl implements CafeManageDao {
 	}
 
 	@Override
-	public List getCafeStatistics(Event event) { //예림예림 작업중
+	public Map<String,String> getCafeStatistics(Event event) { //예림예림 작업중
 		
-		//sqlSession.select
-		return null;
+		List<Map<String,String>> result = sqlSession.selectList("getCafeStatistics", event);
+		//System.out.println(statisticResult);
+		Map<String,String> statisticResultMap = new HashMap<String,String>();
+		
+		for(int i=0; i<result.size(); i++)
+		{
+			statisticResultMap.put(result.get(i).get("EVENT_TYPE"),String.valueOf(result.get(i).get("COUNTS")) );
+		}
+		return statisticResultMap;
 	}
 	
 	//////////////////////////////////////////////////////////예림끝////////////////////////////////////

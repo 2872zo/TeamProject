@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.cafe.CafePostDao;
 import com.phoenix.mvc.service.domain.Post;
+import com.phoenix.mvc.service.domain.Reply;
 
 @Repository
 public class CafePostDaoImpl implements CafePostDao{
@@ -48,7 +49,7 @@ public class CafePostDaoImpl implements CafePostDao{
 
 	@Override
 	public boolean addPost(Post post) {
-		return (sqlSession.insert("CafePostMapper.addPost", post) == 1? true : false);
+		return (sqlSession.insert("CafePostMapper.addPost", post) == 1 ? true : false);
 	}
 
 	@Override
@@ -64,5 +65,30 @@ public class CafePostDaoImpl implements CafePostDao{
 	@Override
 	public boolean deletePost(int postNo) {
 		return (sqlSession.insert("CafePostMapper.deletePost", postNo) == 1? true : false);
+	}
+
+	@Override
+	public boolean addReply(Reply reply) {
+		return (sqlSession.insert("CafePostMapper.addReply", reply) == 1? true : false);
+	}
+	
+	@Override
+	public List<Reply> getReplyList(Search search) {
+		return sqlSession.selectList("CafePostMapper.getReplyList", search);
+	}
+
+	@Override
+	public int replyTotalCount(Search search) {
+		return sqlSession.selectOne("CafePostMapper.replyTotalCount", search);
+	}
+	
+	@Override
+	public boolean updateReply(Reply reply) {
+		return (sqlSession.insert("CafePostMapper.updateReply", reply) == 1? true : false);
+	}
+
+	@Override
+	public boolean deleteReply(int replyNo) {
+		return (sqlSession.insert("CafePostMapper.deleteReply", replyNo) == 1? true : false);
 	}
 }

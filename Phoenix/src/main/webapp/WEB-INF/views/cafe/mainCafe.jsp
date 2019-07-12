@@ -55,7 +55,36 @@
 	</div>
 
 	<div id="div_con">
-		아하하ㅏㅎ하하ㅏ
+		공지게시글
+		<table>
+			<thead>
+			</thead>
+				<tr>
+					<th>게시글 제목  </th>
+					<th>작성자      </th>
+					<th>등록일      </th>
+					<th>조회수      </th>
+				</tr>
+				
+				
+			<tbody>
+				
+				<c:forEach var="post" items="${noticePostList}" > <!-- 링크이어야함 -->
+					<tr>
+						<td>${post.postTitle}  </td>
+						<td>${post.memberNickname}  </td>
+						<td>${post.regDate}  </td>
+						<td>${post.viewCount}  </td>
+					</tr>
+				</c:forEach>
+			</tbody>
+			
+		</table>
+		
+		
+		
+		
+		
 	</div>
 
 </body>

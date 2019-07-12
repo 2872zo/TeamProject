@@ -38,7 +38,7 @@
 		});
 
 		$(function() {
-			$("[name=cafeUrl]").val('${search.cafeURL}');
+			$("[name=cafeURL]").val('${search.cafeURL}');
 			$("[name=memberNo]").val('10000');
 			$("[name=memberNickname]").val('매니저1');
 			$("form").attr("method", "POST").attr("action",	"addPost");
@@ -64,14 +64,14 @@
 		</div>
 
 			<form class="needs-validation" novalidate>
-				<input type="hidden" name="cafeUrl"> <input type="hidden"name="memberNo"> 
+				<input type="hidden" name="cafeURL"> 
+				<input type="hidden"name="memberNo"> 
 				<input type="hidden" name="memberNickname">
 				<input type="hidden" name="boardName">
 	
 				<div class="row">
 					<div class="col-md-8 mb-3">
 						<select class="form-control hideOption" name="boardNo">
-							<option value="0" class="boardOption">전체</option>
 							<c:forEach var="board" items="${boardList }">
 								<option value="${board.boardNo }" class="boardOption">${board.boardName }</option>
 							</c:forEach>
