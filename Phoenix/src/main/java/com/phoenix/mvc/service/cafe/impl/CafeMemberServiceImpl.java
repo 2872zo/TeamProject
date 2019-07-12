@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.phoenix.mvc.common.Search;
+import com.phoenix.mvc.service.cafe.CafeManageDao;
 import com.phoenix.mvc.service.cafe.CafeMemberDao;
 import com.phoenix.mvc.service.cafe.CafeMemberService;
 import com.phoenix.mvc.service.domain.CafeApplication;
@@ -21,6 +22,10 @@ public class CafeMemberServiceImpl implements CafeMemberService {
 	@Qualifier("cafeMemberDaoImpl")
 	private CafeMemberDao cafeMemberDao;
 	
+	@Autowired
+	@Qualifier("cafeManageDaoImpl")
+	private CafeManageDao cafeManageDao;
+	
 	public void setCafeMemberDao(CafeMemberDao cafeMemberDao) {
 		this.cafeMemberDao = cafeMemberDao;
 	}
@@ -32,8 +37,15 @@ public class CafeMemberServiceImpl implements CafeMemberService {
 	
 	
 	/////////////////////////////////지니//////////////////////////////
+	public int getCafeNo(String cafeURL) {
+		
+		return cafeManageDao.getCafeNo(cafeURL);
+		
+	}
+	
 	@Override
 	public void addCafeApplication(CafeApplication cafeApplication) {
+
 		cafeMemberDao.addCafeApplication(cafeApplication);
 	}
 

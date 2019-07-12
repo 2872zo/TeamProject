@@ -38,8 +38,15 @@ $(function() {
 $(function() {
 	var cafeURL = "1234";
 	$(".accept").on("click", function(){
-		alert("gqg")
-		var whether= "true";
+		alert($("#applicationNo").text())
+		var whether= "true"+$("#applicationNo").text();
+		$("#boardName").val(whether);
+		$("#whether").attr("method" , "POST").attr("action" , "/cafe/"+cafeURL+"/manage/updateCafeApplication").submit();	
+	})
+
+	$(".reject").on("click", function(){
+		alert($("#applicationNo").text())
+		var whether= "false"+$("#applicationNo").text();
 		$("#boardName").val(whether);
 		$("#whether").attr("method" , "POST").attr("action" , "/cafe/"+cafeURL+"/manage/updateCafeApplication").submit();	
 	})
@@ -64,7 +71,7 @@ $(function() {
 			<div class="col-xs-4 col-md-2">
 				<strong>가입신청번호</strong>
 			</div>
-			<div class="col-xs-8 col-md-4">${cafeApplication.applicationNo}</div>
+			<div class="col-xs-8 col-md-4" id = "applicationNo">${cafeApplication.applicationNo}</div>
 		</div>
 
 		<hr />

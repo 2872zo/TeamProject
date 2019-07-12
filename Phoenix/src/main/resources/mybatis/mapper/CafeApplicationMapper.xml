@@ -28,7 +28,7 @@
 	 	INSERT
 		INTO cafe_application( application_no , user_no , cafe_no , reg_date , question1, question2, question3 , answer1, answer2, answer3, accept_status_code, member_nickname ) 
 		VALUES	 (	seq_application_no.NEXTVAL , #{userNo} , #{cafeNo} , SYSDATE , #{question1:VARCHAR} , 
-							#{question2:VARCHAR} , #{question3:VARCHAR} , #{answer1:VARCHAR} , #{answer2:VARCHAR}, #{answer3:VARCHAR}, 'CA001', #{memberNickname})
+							#{question2:VARCHAR} , #{question3:VARCHAR} , #{answer1:VARCHAR} , #{answer2:VARCHAR}, #{answer3:VARCHAR}, 'ca101', #{memberNickname})
 	 </insert>
 	 
 	 	

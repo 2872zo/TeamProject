@@ -131,57 +131,81 @@ public class CafeManageController {
 		System.out.println("/{cafeURL}/manage/updateCafeApplication : POST");
 		System.out.println(search.getBoardName());
 
+		int applicationNo;
 		String cafeApplication = search.getBoardName();
 
-		String split[] = cafeApplication.split(",");
-		String result[];
-		int count = split.length;
-		String start = split[0];
+		if (cafeApplication.contains("true")) {// 상세조회에서 승인할때
 
-		List<String> nickName = new ArrayList<String>();
-		List<Integer> userNo = new ArrayList<Integer>();
-		List<Integer> cafeNo = new ArrayList<Integer>();
+			applicationNo = (Integer.parseInt(cafeApplication.substring(4, 9))); // true4,no5
+			CafeApplication cafe = cafeManageService.getCafeApplication2(applicationNo);
+			cafe.setAcceptStatusCode("ca102");
+			cafeManageService.updateAcceptStatusCode(cafe);
 
-		int applicationNo;
+			CafeMember member = new CafeMember();
+			member.setCafeNo(cafe.getCafeNo());
+			member.setUserNo(cafe.getUserNo());
+			member.setMemberNickname(cafe.getMemberNickname());
+			member.setCafeMemberGradeNo(10006);// 이거 나중에 조인해서 추가해11
+			cafeMemberService.addCafeMember(member);
 
-		System.out.println("true는 승인,false는 거절  " + start.contains("&"));
+		} else if (cafeApplication.contains("false")) {// 상세조회에서 거절할때
 
-		if (start.contains("&")) {
-			// 멤버닉네임,userNo,cafeNo 받아오기
-			for (int i = 0; i < split.length; i++) {
-				System.out.println("값 몇개인지부터 확인: " + split.length);
-				System.out.println("split" + split[i]);
-				result = split[i].split("&");
-				nickName.add(result[0]);
-				userNo.add(Integer.parseInt(result[1]));
-				cafeNo.add(Integer.parseInt(result[2]));
-			}
+			applicationNo = (Integer.parseInt(cafeApplication.substring(5, 10)));// false5,no10
+			CafeApplication cafe = cafeManageService.getCafeApplication2(applicationNo);
+			cafe.setAcceptStatusCode("ca103");
+			cafeManageService.updateAcceptStatusCode(cafe);
 
-			// 가입승인으로 cafeApplication 코드 업데이트, 카페멤버에 멤버추가
-			for (int i = 0; i < count; i++) {
-				System.out.println(userNo.get(i));
-				CafeApplication cafe = cafeManageService.getCafeApplication(userNo.get(i));
-				System.out.println(cafe);
-				cafe.setAcceptStatusCode("ca102");
-				cafeManageService.updateAcceptStatusCode(cafe);
+		} else {// 리스트에서 승인, 거절할때
 
-				CafeMember member = new CafeMember();
-				member.setCafeNo(cafeNo.get(i));
-				member.setUserNo(userNo.get(i));
-				member.setMemberNickname(nickName.get(i));
-				member.setCafeMemberGradeNo(10006);// 이거 나중에 조인해서 추가해
-				cafeMemberService.addCafeMember(member);
+			String split[] = cafeApplication.split(",");
+			String result[];
+			int count = split.length;
+			String start = split[0];
 
-			}
+			List<String> nickName = new ArrayList<String>();
+			List<Integer> userNo = new ArrayList<Integer>();
+			List<Integer> cafeNo = new ArrayList<Integer>();
 
-		} else {
-			// 가입거절로 cafeApplication 코드 업데이트
-			for (int i = 0; i < count; i++) {
-				applicationNo = (Integer.parseInt(split[i]));
-				System.out.println("여기 값?" + applicationNo);
-				CafeApplication cafe = cafeManageService.getCafeApplication2(applicationNo);
-				cafe.setAcceptStatusCode("ca103");
-				cafeManageService.updateAcceptStatusCode(cafe);
+			System.out.println("true는 승인,false는 거절  " + start.contains("&"));
+
+			if (start.contains("&")) {
+				// 멤버닉네임,userNo,cafeNo 받아오기
+				for (int i = 0; i < split.length; i++) {
+					System.out.println("값 몇개인지부터 확인: " + split.length);
+					System.out.println("split" + split[i]);
+					result = split[i].split("&");
+					nickName.add(result[0]);
+					userNo.add(Integer.parseInt(result[1]));
+					cafeNo.add(Integer.parseInt(result[2]));
+				}
+
+				// 가입승인으로 cafeApplication 코드 업데이트, 카페멤버에 멤버추가
+				for (int i = 0; i < count; i++) {
+					System.out.println(userNo.get(i));
+					CafeApplication cafe = cafeManageService.getCafeApplication(userNo.get(i));
+					System.out.println(cafe);
+					cafe.setAcceptStatusCode("ca102");
+					cafeManageService.updateAcceptStatusCode(cafe);
+
+					CafeMember member = new CafeMember();
+					member.setCafeNo(cafeNo.get(i));
+					member.setUserNo(userNo.get(i));
+					member.setMemberNickname(nickName.get(i));
+					member.setCafeMemberGradeNo(10006);// 이거 나중에 조인해서 추가해22
+					cafeMemberService.addCafeMember(member);
+
+				}
+
+			} else {
+				// 가입거절로 cafeApplication 코드 업데이트
+				for (int i = 0; i < count; i++) {
+					applicationNo = (Integer.parseInt(split[i]));
+					System.out.println("여기 값?" + applicationNo);
+					CafeApplication cafe = cafeManageService.getCafeApplication2(applicationNo);
+					cafe.setAcceptStatusCode("ca103");
+					cafeManageService.updateAcceptStatusCode(cafe);
+				}
+
 			}
 
 		}
@@ -208,68 +232,68 @@ public class CafeManageController {
 
 ///////////////////////////////준호시작///////////////////////////////////////
 //준호
-@RequestMapping(value= "/{cafeURL}/manage/updateCafeInfoView", method=RequestMethod.GET)
-public String updateCafeInfoView(@RequestParam("cafeNo") int cafeNo, Model model)throws Exception{
+	@RequestMapping(value = "/{cafeURL}/manage/updateCafeInfoView", method = RequestMethod.GET)
+	public String updateCafeInfoView(@RequestParam("cafeNo") int cafeNo, Model model) throws Exception {
 
-System.out.println("/updateCafeInfoView : GET");
+		System.out.println("/updateCafeInfoView : GET");
 
-Cafe cafe = cafeManageService.getCafeInfo(cafeNo);
+		Cafe cafe = cafeManageService.getCafeInfo(cafeNo);
 // Model �� View ����
-model.addAttribute("cafe", cafe);
+		model.addAttribute("cafe", cafe);
 
-return "cafe/updateCafeInfoView";
-}
-//준호
-@RequestMapping(value= "/{cafeURL}/manage/updateCafeInfo", method=RequestMethod.POST)
-public String updateCafeInfo(@ModelAttribute("cafe") Cafe cafe)throws Exception{
-
-System.out.println("/updateCafeInfoView : POST");
-
-cafeManageService.updateCafeInfo(cafe);
-
-return "cafe/updateCafeInfo";
-}
-//준호
-@RequestMapping(value= "/{cafeURL}/manage/getCafeInfo", method=RequestMethod.POST)
-public String getCafeInfo(@RequestParam("cafeNo") int cafeNo, Model model)throws Exception{
-
-Cafe cafe = cafeManageService.getCafeInfo(cafeNo);
-
-model.addAttribute("cafe",cafe);
-
-return "cafe/getCafeInfo";
-
-}
+		return "cafe/updateCafeInfoView";
+	}
 
 //준호
-@RequestMapping(value= "/{cafeURL}/manage/updateCafeApplicationFormView", method=RequestMethod.GET)
-public String updateCafeApplicationFormView(@RequestParam("cafeNo") int cafeNo, Model model)throws Exception{
+	@RequestMapping(value = "/{cafeURL}/manage/updateCafeInfo", method = RequestMethod.POST)
+	public String updateCafeInfo(@ModelAttribute("cafe") Cafe cafe) throws Exception {
 
+		System.out.println("/updateCafeInfoView : POST");
 
-System.out.println(cafeNo+"카페번호뭐냐");
+		cafeManageService.updateCafeInfo(cafe);
 
-System.out.println("/updateCafeApplicationFormView : GET");
+		return "cafe/updateCafeInfo";
+	}
 
-Cafe cafe = cafeManageService.getCafeInfo(cafeNo);
+//준호
+	@RequestMapping(value = "/{cafeURL}/manage/getCafeInfo", method = RequestMethod.POST)
+	public String getCafeInfo(@RequestParam("cafeNo") int cafeNo, Model model) throws Exception {
+
+		Cafe cafe = cafeManageService.getCafeInfo(cafeNo);
+
+		model.addAttribute("cafe", cafe);
+
+		return "cafe/getCafeInfo";
+
+	}
+
+//준호
+	@RequestMapping(value = "/{cafeURL}/manage/updateCafeApplicationFormView", method = RequestMethod.GET)
+	public String updateCafeApplicationFormView(@RequestParam("cafeNo") int cafeNo, Model model) throws Exception {
+
+		System.out.println(cafeNo + "카페번호뭐냐");
+
+		System.out.println("/updateCafeApplicationFormView : GET");
+
+		Cafe cafe = cafeManageService.getCafeInfo(cafeNo);
 // Model �� View ����
-model.addAttribute("cafe", cafe);
+		model.addAttribute("cafe", cafe);
 
-System.out.println(cafe+"카페도메인찍자");
+		System.out.println(cafe + "카페도메인찍자");
 
-return "cafe/updateCafeApplicationFormView";
-}
+		return "cafe/updateCafeApplicationFormView";
+	}
 
 //준호
-@RequestMapping(value= "/{cafeURL}/manage/updateCafeApplicationForm", method=RequestMethod.POST)
-public String updateCafeApplicationForm(@ModelAttribute("cafe") Cafe cafe)throws Exception{
+	@RequestMapping(value = "/{cafeURL}/manage/updateCafeApplicationForm", method = RequestMethod.POST)
+	public String updateCafeApplicationForm(@ModelAttribute("cafe") Cafe cafe) throws Exception {
 
-System.out.println("/updateCafeApplicationFormView : POST");
+		System.out.println("/updateCafeApplicationFormView : POST");
 
-cafeManageService.updateCafeApplicationForm(cafe);
+		cafeManageService.updateCafeApplicationForm(cafe);
 
-return "cafe/updateCafeApplicationForm";
-}
+		return "cafe/updateCafeApplicationForm";
+	}
 ///////////////////////////////준호끝///////////////////////////////////////		
-
 
 }

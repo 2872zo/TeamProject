@@ -9,6 +9,7 @@ import com.phoenix.mvc.service.domain.CafeMember;
 public interface CafeMemberService {
 	
 	/////////////////////////////////지니//////////////////////////////
+	public int getCafeNo(String URL);
 
 	public void addCafeApplication(CafeApplication cafeApplication);//카페가입신청
 
