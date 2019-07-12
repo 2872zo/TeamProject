@@ -70,46 +70,55 @@
 
 <body>
 	<div class="container">
-		<div class="py-5 text-center">
-			<!-- <img class="d-block mx-auto mb-4" src="/docs/4.3/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72"> -->
-			카페 아이콘 넣을것
-			<h1>게시글 수정</h1>
-		</div>
-
-			<form class="needs-validation" novalidate>
-				<input type="hidden" name="cafeURL"> <input type="hidden"name="memberNo"> 
-				<input type="hidden" name="memberNickname">
-				<input type="hidden" name="boardName">
-	
-				<div class="row">
-					<div class="col-md-8 mb-3">
-						<select class="form-control hideOption" name="boardNo">
-							<c:forEach var="board" items="${boardList }">
-								<option value="${board.boardNo }" class="boardOption">${board.boardName }</option>
-							</c:forEach>
-						</select>
-					</div>
-	
-					<div class="custom-control custom-checkbox">
-						<input type="checkbox" class="custom-control-input"	id="postNoticeFlag" name="postNoticeFlag"> 
-						<label	class="custom-control-label" for="postNoticeFlag">공지로 등록</label>
-					</div>
+		<div class="row">
+			
+			<div class="col-2">
+				<c:import url="/WEB-INF/views/cafe/menubarCafe.jsp"></c:import>
+			</div>
+			
+			<div class="col-10">
+				<div class="py-5 text-center">
+					<!-- <img class="d-block mx-auto mb-4" src="/docs/4.3/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72"> -->
+					카페 아이콘 넣을것
+					<h1>게시글 수정</h1>
 				</div>
 	
-					<label for="postTitle">제목</label> 
-					<input type="text" class="form-control" id="postTitle" name="postTitle" required="">
-					<div class="invalid-feedback">제목은 생략할 수 없습니다.</div>
-					
-					<br/>
-					
-					<label for="editor">내용</label>
-					<textarea class="form-control" name="postContent" id="editor" required=""></textarea>
-					<div class="invalid-feedback">내용은 생략할 수 없습니다.</div>
+				<form class="needs-validation" novalidate>
+					<input type="hidden" name="cafeURL"> <input type="hidden"name="memberNo"> 
+					<input type="hidden" name="memberNickname">
+					<input type="hidden" name="boardName">
 		
-					<br/>
-					
-					<input type="submit" class="btn btn-primary btn-lg btn-block" id="submitButton" value="저장">
-			</form>
-	</div>
+					<div class="row">
+						<div class="col-md-8 mb-3">
+							<select class="form-control hideOption" name="boardNo">
+								<c:forEach var="board" items="${boardOption }">
+									<option value="${board.boardNo }" class="boardOption">${board.boardName }</option>
+								</c:forEach>
+							</select>
+						</div>
+		
+						<div class="custom-control custom-checkbox">
+							<input type="checkbox" class="custom-control-input"	id="postNoticeFlag" name="postNoticeFlag"> 
+							<label	class="custom-control-label" for="postNoticeFlag">공지로 등록</label>
+						</div>
+					</div>
+		
+						<label for="postTitle">제목</label> 
+						<input type="text" class="form-control" id="postTitle" name="postTitle" required="">
+						<div class="invalid-feedback">제목은 생략할 수 없습니다.</div>
+						
+						<br/>
+						
+						<label for="editor">내용</label>
+						<textarea class="form-control" name="postContent" id="editor" required=""></textarea>
+						<div class="invalid-feedback">내용은 생략할 수 없습니다.</div>
+			
+						<br/>
+						
+						<input type="submit" class="btn btn-primary btn-lg btn-block" id="submitButton" value="저장">
+				</form>
+			</div><!-- main content end -->
+		</div><!-- row end -->
+	</div><!-- container end -->
 </body>
 </html>

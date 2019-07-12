@@ -210,7 +210,7 @@ public class CafePostContoller {
 		map.put("boardList", boardList);
 		
 		map.put("post", post);
-		map.put("boardList", boardList);
+		map.put("boardOption", boardOption);
 
 		return "/cafe/updateCafePost";
 	}
