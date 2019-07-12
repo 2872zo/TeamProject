@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.cafe.CafeManageDao;
 import com.phoenix.mvc.service.cafe.CafeMemberDao;
+import com.phoenix.mvc.service.cafe.CafePostService;
 import com.phoenix.mvc.service.cafe.CafeTabDao;
 import com.phoenix.mvc.service.cafe.CafeTabService;
 import com.phoenix.mvc.service.domain.Cafe;
@@ -33,6 +34,10 @@ public class CafeTabServiceImpl implements CafeTabService{
 	@Autowired
 	@Qualifier("cafeMemberDaoImpl")
 	private CafeMemberDao cafeMemberDao;
+	
+	@Autowired
+	@Qualifier("cafePostServiceImpl")
+	private CafePostService cafePostServiceImpl;
 	
 	public void setCafeDao(CafeTabDao cafeDao) {
 	this.cafeTabDao= cafeDao;
@@ -57,38 +62,18 @@ public class CafeTabServiceImpl implements CafeTabService{
 	public void addCafe(Cafe cafe) throws Exception {
 		cafeTabDao.addCafe(cafe);
 	}
-	///////////////////////////////준호끝///////////////////////////////////////	
-	@Override
-	public Map searchCafe(Search search) throws Exception {
-		// TODO Auto-generated method stub
-		int totalCount;
-		Map map = new HashMap();
-		List cafeList = new ArrayList();
-		List postList = new ArrayList();
-		if (search.getSearchCondition().equals("0")) {
-			cafeList = cafeTabDao.searchCafe(search);
-//			postList = cafeTabDao.seachPost(search);
-			map.put("cafeList", cafeList);
-			map.put("postList", postList);
-			map.put("totalCount", new Integer(10));
-		}
-		if (search.getSearchCondition().equals("1")) {
-			cafeList = cafeTabDao.searchCafe(search);
-			totalCount = cafeTabDao.cafeTotalCount(search);
-			map.put("cafeList", cafeList);
-			map.put("totalCount", new Integer(totalCount));
-		}
-		if (search.getSearchCondition().equals("2")) {
-//			postList = cafeTabDao.seachPost(search);
-			totalCount = cafeTabDao.postTotalCount(search);
-			map.put("postList", postList);
-			map.put("totalCount", new Integer(totalCount));
-		}
-		
-		return map;
-	}
 	
-	///////////////////////////////////////예림//////////////////////////////////////////
+	public boolean checkDuplication(int cafeNo) throws Exception {
+		boolean result=true;
+		Cafe cafe = cafeManageDao.getCafeInfo(cafeNo);
+		if(cafe != null) {
+			result=false;
+		}
+		return result;
+	}
+	///////////////////////////////준호끝///////////////////////////////////////	
+
+	///////////////////////////////////////예림시작//////////////////////////////////////////
 
 	@Override
 	public Map getCafeMain(User user, String cafeURL) { //예림예림
@@ -129,18 +114,53 @@ public class CafeTabServiceImpl implements CafeTabService{
 	}
 	
 	///////////////////////////////////////////////예림 끝/////////////////////////////////////
+	//////////////////////////////기황시작//////////////////////////////////////
+	
+	@Override
+	public Map searchCafe(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		int totalCount;
+		Map map = new HashMap();
+		List cafeList = new ArrayList();
+		List postList = new ArrayList();
+		if (search.getSearchCondition().equals("0")) {
+			cafeList = cafeTabDao.searchCafe(search);
+			Map postMap = cafePostServiceImpl.getPostListBySearch(search);
+			postList = (List) postMap.get("postList");
+//			totalCount = (int) postMap.get("postTotalCount");
+//			postList = cafeTabDao.seachPost(search);
+			map.put("cafeList", cafeList);
+			map.put("postList", postList);
+			map.put("totalCount", new Integer(10));
+		}
+		if (search.getSearchCondition().equals("1")) {
+			cafeList = cafeTabDao.searchCafe(search);
+			totalCount = cafeTabDao.cafeTotalCount(search);
+			map.put("cafeList", cafeList);
+			map.put("totalCount", new Integer(totalCount));
+		}
+		if (search.getSearchCondition().equals("2")) {
+			Map postMap = cafePostServiceImpl.getPostListBySearch(search);
+			postList = (List) postMap.get("postList");
+			totalCount = (int) postMap.get("postTotalCount");
+			map.put("postList", postList);
+			map.put("totalCount", new Integer(totalCount));
+		}
+		
+		return map;
+	}
+	
 	
 	@Override
 	public Map getCategorizedCafeList(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		
-		int totalCount = cafeTabDao.cafeTotalCount(search);
 		Map map = new HashMap();
-		List cafeList = new ArrayList();
-		cafeList = cafeTabDao.getCategorizedCafeList(search);
+		int totalCount = cafeTabDao.countCategorizedCafe(search);
+		List cafeList = cafeTabDao.getCategorizedCafeList(search);
+		map.put("cafeList", cafeList);
 		map.put("totalCount", new Integer(totalCount));
 		return map;
 	}
-
+	//////////////////////////////기황끝/////////////////////////////////////
 
 }

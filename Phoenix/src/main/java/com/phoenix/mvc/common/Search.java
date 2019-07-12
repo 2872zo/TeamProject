@@ -4,15 +4,21 @@ public class Search{
 	///Field
 	private int userNo;
 	private int memberNo;
+<<<<<<< HEAD
 	private int memberGrade;
+=======
+>>>>>>> refs/remotes/origin/master
 	private int cafeNo;
 	private String cafeURL;
 	private int boardNo;
 	private String boardName;
 	private int postNo;
 	private int replyNo;
+<<<<<<< HEAD
 	private int status;
 	private int sortCode;
+=======
+>>>>>>> refs/remotes/origin/master
 	private String searchCondition;
 	private String searchKeyword;
 	private int currentPage;
@@ -42,6 +48,7 @@ public class Search{
 		this.memberNo = memberNo;
 	}
 
+<<<<<<< HEAD
 	public int getMemberGrade() {
 		return memberGrade;
 	}
@@ -50,6 +57,8 @@ public class Search{
 		this.memberGrade = memberGrade;
 	}
 
+=======
+>>>>>>> refs/remotes/origin/master
 	public int getCafeNo() {
 		return cafeNo;
 	}
@@ -98,6 +107,7 @@ public class Search{
 		this.replyNo = replyNo;
 	}
 
+<<<<<<< HEAD
 	public int getStatus() {
 		return status;
 	}
@@ -106,6 +116,8 @@ public class Search{
 		this.status = status;
 	}
 
+=======
+>>>>>>> refs/remotes/origin/master
 	public String getSearchCondition() {
 		return searchCondition;
 	}
@@ -174,12 +186,20 @@ public class Search{
 
 	@Override
 	public String toString() {
+<<<<<<< HEAD
 		return "Search [userNo=" + userNo + ", memberNo=" + memberNo + ", memberGrade=" + memberGrade + ", cafeNo="
 				+ cafeNo + ", cafeURL=" + cafeURL + ", boardNo=" + boardNo + ", boardName=" + boardName + ", postNo="
 				+ postNo + ", replyNo=" + replyNo + ", status=" + status + ", sortCode=" + sortCode
 				+ ", searchCondition=" + searchCondition + ", searchKeyword=" + searchKeyword + ", currentPage="
 				+ currentPage + ", pageSize=" + pageSize + ", endRowNum=" + getEndRowNum() + ", startRowNum=" + getStartRowNum()
 				+ ", termStart=" + termStart + ", termEnd=" + termEnd + "]";
+=======
+		return "Search [userNo=" + userNo + ", memberNo=" + memberNo + ", cafeNo=" + cafeNo + ", cafeURL=" + cafeURL
+				+ ", boardNo=" + boardNo + ", boardName=" + boardName + ", postNo=" + postNo + ", replyNo=" + replyNo
+				+ ", searchCondition=" + searchCondition + ", searchKeyword=" + searchKeyword + ", currentPage="
+				+ currentPage + ", pageSize=" + pageSize + ", endRowNum=" + getEndRowNum() + ", startRowNum=" + getStartRowNum()
+				+ ", sortCode=" + sortCode + ", termStart=" + termStart + ", termEnd=" + termEnd + "]";
+>>>>>>> refs/remotes/origin/master
 	}
 
 }//end of class

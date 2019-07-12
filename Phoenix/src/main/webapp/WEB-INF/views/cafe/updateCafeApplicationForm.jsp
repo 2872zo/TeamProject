@@ -47,7 +47,7 @@
 		
 	
 		  자동가입승인:&nbsp;&nbsp;[${cafe.autoApplicationAcceptFlag}]</br>
-		  카페전용 별명사용여부:&nbsp;&nbsp;[${cafe.memberNickNameFlag}]</br>
+		  카페전용 별명사용여부:&nbsp;&nbsp;[${cafe.memberNicknameFlag}]</br>
 		  질문1:&nbsp;&nbsp;[${cafe.applicationQuestion1 }]</br>
 		  질문2:&nbsp;&nbsp;[${cafe.applicationQuestion2 }]</br>
 		  질문3:&nbsp;&nbsp;[${cafe.applicationQuestion3 }]</br>

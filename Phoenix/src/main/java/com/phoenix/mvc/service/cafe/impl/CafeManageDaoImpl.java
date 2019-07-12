@@ -45,14 +45,20 @@ public class CafeManageDaoImpl implements CafeManageDao {
 	
 	@Override
 	public void updateAcceptStatusCode(CafeApplication cafeApplication) {
-		sqlSession.update("CafeApplicationMapper.updateCafeApplication", cafeApplication);
+		sqlSession.update("CafeApplicationMapper.updateAcceptStatusCode", cafeApplication);
 		
 	}
 
 	@Override
 	public CafeApplication getCafeApplication(int userNo) {
-		
+	
 		return sqlSession.selectOne("CafeApplicationMapper.getCafeApplication",userNo);
+	}
+	
+	@Override
+	public CafeApplication getCafeApplication2(int applicationNo) {
+		
+		return sqlSession.selectOne("CafeApplicationMapper.getCafeApplication2",applicationNo);
 	}
 	
 	////////////////////////////////지니끝//////////////////////////////////
@@ -141,7 +147,7 @@ public class CafeManageDaoImpl implements CafeManageDao {
 	}
 	
 	@Override//준호
-	public Cafe getCafeInfo(String cafeNo) throws Exception {
+	public Cafe getCafeInfo(int cafeNo) throws Exception {
 		return sqlSession.selectOne("CafeMapper.getCafeInfo", cafeNo);
 	}
 	
