@@ -99,7 +99,7 @@ $(function() {
   <button type="button" class="btn btn-outline-success cafeCategory">여행</button>
 </div>
 <br/>
-<c:if test="${!empty categoryCafeList}"><table class="table table-borderless">
+<c:if test="${!empty categoryCafeList}">
 <table class="table table-borderless">
 	<thead>
     <tr>
@@ -113,17 +113,14 @@ $(function() {
 	</thead>
 	<tbody>
   <tr>
-
-</c:if>
- <c:forEach var="categoryCafe" items="${categoryCafeList}">
-  <th scope="row">${categoryCafe.cafeNo}</th>
-  <td>${categoryCafe.url}</td>
-  <td>${categoryCafe.cafeName}</td>
-  <td>${categoryCafe.cafeIcon}</td>
-	<td>${categoryCafe.cafeDetail}</td>
-	<td>${categoryCafe.regDate}</td>
-  </c:forEach>
-<c:if test="${!empty categoryCafeList}">
+	<c:forEach var="categoryCafe" items="${categoryCafeList}">
+	 <th scope="row">${categoryCafe.cafeNo}</th>
+	 <td>${categoryCafe.url}</td>
+	 <td>${categoryCafe.cafeName}</td>
+	 <td>${categoryCafe.cafeIcon}</td>
+	 <td>${categoryCafe.cafeDetail}</td>
+	 <td>${categoryCafe.regDate}</td>
+	</c:forEach>
   </tr>
 	</tbody>
 </table>
