@@ -56,7 +56,8 @@ public class CafeMemberController {
 			@ModelAttribute("cafeApplication") CafeApplication cafeApplication) {
 
 		System.out.println("/cafe/{cafeURL}/addCafeApplication : POST");
-
+		
+		//userNo 값 추가해야함, 카페도 가입하려는 카페 번호 추가해!
 		cafeApplication.setUserNo(10001);
 		cafeApplication.setCafeNo(10000);
 		System.out.println("들어온 cafeApplication 값?" + cafeApplication);
@@ -87,10 +88,10 @@ public class CafeMemberController {
 		cafeMember.setMemberNo(10001);
 		cafeMember.setCafeNo(10000);
 		cafeMember.setUserNo(10001);
-//		cafeMember.setNoticeFlag('0');	//에러변경=========================================================
+		cafeMember.setNoticeFlag(false);	
 		cafeMember.setMemberNickname("멤버1");
 		cafeMember.setCafeMemberGradeNo(10002);
-//		cafeMember.setFavoriteFlag('0'); //에러변경=========================================================
+		cafeMember.setFavoriteFlag(false); 
 		cafeMember.setRegDate(null);
 		cafeMember.setVisitCount(1);
 		cafeMember.setMemberStatusCode(memberStatusCode);

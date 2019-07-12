@@ -24,42 +24,46 @@
 					alert("검색");
 					fncGetList(1);
 				});
-			});
-			
-			/*  체크박스 전체선택 전체삭제   */     
-			$(function(){
-	            $("#allCheck").click(function(){
-	                //클릭되었으면
-	                if($("#allCheck").not(":disabled").prop("checked")){
-	                    //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
-	                    $("input[name=applicationCheck]").not(":disabled").prop("checked",true);
-	                    //클릭이 안되있으면
-	                }else{
-	                    //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
-	                    $("input[name=applicationCheck]").not(":disabled").prop("checked",false);
-	                }
-	            });
-			});
+			});//검색
 
 			$(function(){
+				$(".applicationNo").on("click", function(){
+					alert($(this).text());
+					var cafeURL = 1234;
+					self.location ="/cafe/"+cafeURL+"/manage/getCafeApplication?applicationNo="+$(this).text().trim();
+				});
+			});
+
+
+			$(function(){
+				$("#allCheck").click(function(){
+	                  //클릭되었으면
+	                  if($("#allCheck").not(":disabled").prop("checked")){
+	                      //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
+	                      $(".applicationCheck").not(":disabled").prop("checked",true);
+	                      //클릭이 안되있으면
+	                  }else{
+	                      //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
+	                      $(".applicationCheck").not(":disabled").prop("checked",false);
+	                  }
+	              });
 				$(".accept").on("click", function(){
-					var count;
 					var application="";
 					
 					$("input[type=checkbox]:checked").each(function(){
 					//alert($(".applicationCheck").index(this));
 					var count = $(".applicationCheck").index(this);
 					application += $($(".nickname")[count]).text()+"&"+$($(".userNo")[count]).val()+"&"+$($(".cafeNo")[count]).val();
-					
 					application+=",";
-					
 					
 					});
 				//alert(application);
-				
 					var cafeURL = "1234";
+					$("#boardName").val(application);
+					$("#checkBox").attr("method" , "POST").attr("action" , "/cafe/"+cafeURL+"/manage/updateCafeApplication").submit();	
 					
-					$.ajax({
+					
+					/* $.ajax({
 						
 						url: "/cafe/"+cafeURL+"/manage/updateCafeApplication",
 						method: "POST",
@@ -77,10 +81,25 @@
 						success : function(serverData){
 							//alert("serverData : "+serverData);
 							}
+						});// */
+					});//승인
+				$(".reject").on("click",function(){
+					var reject='';
+					$("input[type=checkbox]:checked").each(function(){
+						var count = $(".applicationCheck").index(this);
+						reject += $($(".applicationNo")[count]).text();
+						reject+=",";
+						
 						});
-					});
+					alert(reject);
+						var cafeURL = "1234";
+						$("#boardName").val(reject);
+						$("#checkBox").attr("method" , "POST").attr("action" , "/cafe/"+cafeURL+"/manage/updateCafeApplication").submit();	
+					
+					});//거절
+					
 
-				});
+				});//끝
 			
 
 		</script>
@@ -148,7 +167,7 @@
 		  <c:forEach var="cafeApplication" items="${list}">
 			<tr>
 			<td><input type="checkbox" class="applicationCheck"></td>
-			  <td align="center">${cafeApplication.applicationNo}</td>
+			  <td align="center" class="applicationNo" value="${cafeApplication.applicationNo}">${cafeApplication.applicationNo}</td>
 			  <td align="left" >${cafeApplication.userId}</td>
 			  <td align="left" class="nickname" value="${cafeApplication.memberNickname}">${cafeApplication.memberNickname}</td>
 			  <td align="left">${cafeApplication.regDate}</td>
