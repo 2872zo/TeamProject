@@ -3,7 +3,9 @@ package com.phoenix.mvc.web.cafe;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -42,14 +44,19 @@ public class CafeManageController {
 
 	
 	////////////////////////////////////////////예림//////////////////////////////////////////////
-	@RequestMapping(value = "/{cafeURL}/updateCafeBoardView", method = RequestMethod.GET )//예림예림
+	@RequestMapping(value = "/{cafeURL}/manage/updateCafeBoardView", method = RequestMethod.GET )//예림예림
 	public String updateCafeBoardView( @PathVariable String cafeURL , HttpSession session, Model model)//session user정보, 카페번호
 	{
-		System.out.println("/{cafeURL}/updateCafeBoardView : GET");
+		System.out.println("/{cafeURL}/manage/updateCafeBoardView : GET");
 		//session 으로  1.로그인되어있는지 2.카페에 가입되어있는지 3.cafeURL의 카페매니저인지 확인
 		System.out.println("cafeURL : "+cafeURL);
 		
-		List boardList = cafeManageService.getCafeBoard(cafeURL);
+		
+		
+
+		Search search = new Search();
+		search.setCafeURL(cafeURL);
+		List boardList = cafeManageService.getCafeBoard(search);
 		
 		model.addAttribute("boardList", boardList);
 		
@@ -58,7 +65,7 @@ public class CafeManageController {
 		return "/cafe/updateCafeBoard";
 	}
 	
-	@RequestMapping(value = "/{cafeURL}/updateCafeBoard", method = RequestMethod.POST)//예림예림
+	@RequestMapping(value = "/{cafeURL}/manage/updateCafeBoard", method = RequestMethod.POST)//예림예림
 	public String updateCafeBoard()
 	{
 		
@@ -67,23 +74,27 @@ public class CafeManageController {
 	
 	
 
-	@RequestMapping(value="/cafe/{CafeURL}/getCafeStatistics") //예림예림
-	public String getCafeStatistics(@ModelAttribute("event") Event event, @PathVariable String cafeURL,Model model)// 카페no랑 , 시작날, 끝날 받아오기
+	@RequestMapping(value="/{cafeURL}/manage/getCafeStatistics") //예림예림 여기는 처음에만 들어온다.
+	public String getCafeStatistics(@PathVariable String cafeURL,Model model)// 카페no랑 , 시작날, 끝날 받아오기
 	{
-		System.out.println("/cafe/{CafeURL}/getCafeStatistics");
+		System.out.println("/cafe/{CafeURL}/manage/getCafeStatistics");
 		
 		//modelAttribute는 SpringMVC가 default생성자를 불러서 인스턴스를 생성하는것이기 때문에 null값이 올수 없다.
 		
-		if(event.getStartDate()== null) // startDate endDate 하나만 null이어도 (= 통계섹션에 처음 들어왔을때)
-		{
-			Date today = new Date();
-			SimpleDateFormat date = new SimpleDateFormat("yyyymmdd");
-			event.setStartDate(date.format(today));
-		}
+		//가짜데이터
+		Event event = new Event();
 		
-		List cafeStatistics = cafeManageService.getCafeStatistics(event,cafeURL); //얠 map으로 받는걸로 할까.
+		SimpleDateFormat formatter = new SimpleDateFormat ( "yyyyMMdd", Locale.KOREA );
+		Date currentTime = new Date ( );
+		String dTime = formatter.format ( currentTime );
+		System.out.println ( dTime );
+			
+		event.setStartDate(dTime);
+		event.setEndDate(dTime);
 		
-		model.addAttribute("list", cafeStatistics); //일단데려가~~~ list를 파악해야겠지만
+		Map<String,String> cafeStatistics = cafeManageService.getCafeStatistics(event,cafeURL);
+		
+		model.addAttribute("statisticMap", cafeStatistics); 
 		
 		return "cafe/statisticsCafe";
 	}
@@ -227,7 +238,8 @@ public class CafeManageController {
 	}
 	
 	//준호
-	@RequestMapping(value= "/cafe/updateCafeApplicationForm", method=RequestMethod.POST)
+	@RequestMapping(value= "/cafe/"
+			+ "updateCafeApplicationForm", method=RequestMethod.POST)
 	public String updateCafeApplicationForm(@ModelAttribute("cafe") Cafe cafe)throws Exception{
 		
 		System.out.println("/updateCafeApplicationFormView : POST");

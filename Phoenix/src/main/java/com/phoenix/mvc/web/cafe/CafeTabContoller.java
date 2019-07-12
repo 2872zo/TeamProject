@@ -123,8 +123,11 @@ public class CafeTabContoller {
 			//가짜데이터
 			user.setUserNo(10000);
 			Map map = cafeTabService.getCafeMain(user, cafeURL);
-			model.addAttribute("cafeMember", map.get("cafeMember"));
-			model.addAttribute("boardList", map.get("boardList"));
+			
+			model.addAttribute("cafeURL", map.get("cafeURL"));
+			model.addAttribute("noticePostList", map.get("noticePostList"));//공지게시글리스트
+			model.addAttribute("cafeMember", map.get("cafeMember"));//내정보
+			model.addAttribute("boardList", map.get("boardList"));//카페게시판리스트
 			
 			return "cafe/mainCafe";
 		}

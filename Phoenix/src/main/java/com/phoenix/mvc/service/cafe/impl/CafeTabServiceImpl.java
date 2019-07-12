@@ -12,10 +12,12 @@ import org.springframework.stereotype.Service;
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.cafe.CafeManageDao;
 import com.phoenix.mvc.service.cafe.CafeMemberDao;
+import com.phoenix.mvc.service.cafe.CafePostDao;
 import com.phoenix.mvc.service.cafe.CafeTabDao;
 import com.phoenix.mvc.service.cafe.CafeTabService;
 import com.phoenix.mvc.service.domain.Cafe;
 import com.phoenix.mvc.service.domain.CafeMember;
+import com.phoenix.mvc.service.domain.Post;
 import com.phoenix.mvc.service.domain.User;
 
 
@@ -34,6 +36,12 @@ public class CafeTabServiceImpl implements CafeTabService{
 	@Qualifier("cafeMemberDaoImpl")
 	private CafeMemberDao cafeMemberDao;
 	
+	@Autowired
+	@Qualifier("cafePostDaoImpl")
+	private CafePostDao cafePostDao ;
+	
+	
+	
 	public void setCafeDao(CafeTabDao cafeDao) {
 	this.cafeTabDao= cafeDao;
 	}
@@ -46,6 +54,11 @@ public class CafeTabServiceImpl implements CafeTabService{
 	public void setCafeMemberDao(CafeMemberDao cafeMemberDao)
 	{
 		this.cafeMemberDao = cafeMemberDao;
+	}
+	
+	public void setCafePostDao(CafePostDao cafePostDao)
+	{
+		this.cafePostDao = cafePostDao;
 	}
 	
 	
@@ -95,6 +108,7 @@ public class CafeTabServiceImpl implements CafeTabService{
 		
 		CafeMember cafeMember = new CafeMember();
 		Map map = new HashMap();
+		Search search = new Search();
 		
 		//여기서 userNo 검사해서 400 이면 로그인되어있지않음. 
 		int cafeNo = cafeManageDao.getCafeNo(cafeURL);
@@ -108,17 +122,19 @@ public class CafeTabServiceImpl implements CafeTabService{
 			System.out.println("cafeMember: "+cafeMember);
 			
 		}
-		//else //로그인이 되어있지않음.
+		else //로그인이 되어있지않음.
 			
-		//{
-		//	cafeMember.setUserNo("400"); 형님때문에
-		//}
+		{
+			cafeMember.setUserNo(400); //형님때문에
+		}
 		map.put("cafeMember", cafeMember);
 		
-		
+		map.put("cafeURL", cafeURL);
 		//공통
 		//1.카페의 공지게시글 가져오기 ->승규 dao (카페URL , 보드코드)
-		
+		search.setCafeURL(cafeURL);
+		List<Post> noticePostList = cafePostDao.getPostListByNotice(search);
+		map.put("noticePostList", noticePostList);
 		//2.cafe정보가져오기 ->준호
 		
 		//3.카페 게시판 list ->내가한거네

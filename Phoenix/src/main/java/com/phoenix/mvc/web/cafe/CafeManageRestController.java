@@ -1,5 +1,7 @@
 package com.phoenix.mvc.web.cafe;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.phoenix.mvc.common.Event;
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.cafe.CafeManageService;
 
@@ -64,6 +67,41 @@ public class CafeManageRestController {
 
 		return map;
 	}
+	
+	@RequestMapping(value="json/{cafeURL}/manage/getCafeStatistics", method= RequestMethod.POST) //예림예림 여기는 처음에만 들어온다.
+	public Map getCafeStatistics(@RequestBody Event event, @PathVariable String cafeURL)// 카페no랑 , 시작날, 끝날 받아오기
+	{
+		System.out.println("json/cafe/{CafeURL}/manage/getCafeStatistics");
+		
+		
+		//가짜데이터
+		//event.setStartDate("20190709");
+		//event.setEndDate("20190712");
+		String date[] = event.getStartDate().split("/");
+		String startDate = date[2]+date[0]+date[1];
+		//System.out.println(startDate);
+		date = event.getEndDate().split("/");
+		String endDate = date[2]+date[0]+date[1];
+		
+		event.setStartDate(startDate);
+		event.setEndDate(endDate);
+		Map<String,String> cafeStatistics = cafeManageService.getCafeStatistics(event,cafeURL);
+		
+	
+		if(cafeStatistics.get("et001")==null){
+			cafeStatistics.put("et001", "0");
+		}
+		
+		for(int i=4; i<8; i++) 
+		{
+			if(cafeStatistics.get("et00"+i)==null)
+				cafeStatistics.put("et00"+i, "0");
+		}
+		
+		
+		return cafeStatistics;
+	}
+	
 
 	////////////////////////////////////////////////////예림 끝//////////////////////////////////////
 
