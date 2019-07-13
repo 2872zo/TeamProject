@@ -39,6 +39,12 @@ public class CafeMemberDaoImpl implements CafeMemberDao {
 		sqlSession.insert("CafeMemberMapper.addCafeMember", cafeMember);
 		
 	}
+	
+	@Override
+	public void updateCafeMemberProfile(CafeMember cafeMember) {
+		sqlSession.update("CafeMemberMapper.updateCafeMemberProfile", cafeMember);
+		
+	}
 ////////////////////////////////지니끝//////////////////////////////////
 
 	////////////////////////////////////////////////// 예림 시작///////////////////////////////////
@@ -81,6 +87,8 @@ public class CafeMemberDaoImpl implements CafeMemberDao {
 		return sqlSession.selectOne("CafeMemberMapper.getCafeMemeber", search);
 	}
 //////////////////////////////기황 끝///////////////////////////////////////	
+
+
 
 
 

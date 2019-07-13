@@ -13,6 +13,7 @@ import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.cafe.CafeManageDao;
 import com.phoenix.mvc.service.cafe.CafeManageService;
 import com.phoenix.mvc.service.domain.CafeApplication;
+import com.phoenix.mvc.service.domain.CafeGrade;
 import com.phoenix.mvc.service.domain.Cafe;
 
 @Service("cafeManageServiceImpl")
@@ -65,12 +66,12 @@ public class CafeManageServiceImpl implements CafeManageService {
 	}
 
 	@Override
-	public Map<String,String> getCafeStatistics(Event event, String cafeURL) { // 예림예림 작업중
+	public Map<String, String> getCafeStatistics(Event event, String cafeURL) { // 예림예림 작업중
 
 		int cafeNo = cafeManageDao.getCafeNo(cafeURL);
 
 		event.setCafeNo(cafeNo); // cafeNo를 set
-		Map<String,String> statisticsList = cafeManageDao.getCafeStatistics(event); // 모든 카페는 통계가 있다. count라서 0이더라도
+		Map<String, String> statisticsList = cafeManageDao.getCafeStatistics(event); // 모든 카페는 통계가 있다. count라서 0이더라도
 
 		return statisticsList;
 	}
@@ -111,6 +112,26 @@ public class CafeManageServiceImpl implements CafeManageService {
 		return cafeManageDao.getCafeApplication2(applicationNo);
 	}
 
+	@Override
+	public List getCafeGrade(int cafeNo) {
+
+		return cafeManageDao.getCafeGrade(cafeNo);
+	}
+
+	@Override
+	public void addCafeGrade(CafeGrade cafeGrade) {
+		
+		cafeManageDao.addCafeGrade(cafeGrade);
+
+	}
+
+	@Override
+	public void updateCafeGrade(CafeGrade cafeGrade) {
+		
+		cafeManageDao.updateCafeGrade(cafeGrade);
+
+	}
+
 ////////////////////////////////지니끝//////////////////////////////////
 
 	/////////////////////////////// 준호시작///////////////////////////////////////
@@ -128,12 +149,12 @@ public class CafeManageServiceImpl implements CafeManageService {
 	public Cafe getCafeInfo(int cafeNo) throws Exception {
 		return cafeManageDao.getCafeInfo(cafeNo);
 	}
-	
+
 	@Override // 준호
 	public Cafe getCafeName(String cafeName) throws Exception {
 		return cafeManageDao.getCafeName(cafeName);
 	}
-	
+
 	/////////////////////////////// 준호끝///////////////////////////////////////
 
 }

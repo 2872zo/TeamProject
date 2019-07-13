@@ -120,28 +120,56 @@ public class CafeMemberController {
 	}
 
 	@RequestMapping(value = "/{cafeURL}/updateCafeMember", method = RequestMethod.GET)
-	public String updateCafeMember(@RequestParam("memberStatusCode") String memberStatusCode) {
+	public String updateCafeMember(@RequestParam("cafeNo") int cafeNo) {
 
 		System.out.println("/cafe/{cafeURL}/updateCafeMember : GET");
+		// System.out.println(cafeNo);
 
-		// 세션 userNo가져오기!
-		// memberNo으로 getMember member 가져오기
-		CafeMember cafeMember = new CafeMember();
-		cafeMember.setMemberNo(10001);
-		cafeMember.setCafeNo(10000);
-		cafeMember.setUserNo(10001);
-		cafeMember.setNoticeFlag(false);
-		cafeMember.setMemberNickname("멤버1");
-		cafeMember.setCafeMemberGradeNo(10002);
-		cafeMember.setFavoriteFlag(false);
-		cafeMember.setRegDate(null);
-		cafeMember.setVisitCount(1);
-		cafeMember.setMemberStatusCode(memberStatusCode);
+		CafeMember cafeMember = cafeMemberService.getCafeMember(cafeNo, 10011);
+		cafeMember.setMemberStatusCode("cs103");
+		System.out.println(cafeMember);
 
-		System.out.println("cafemember 값 : " + cafeMember);
 		cafeMemberService.updateCafeMember(cafeMember);
 
 		return "cafe/{cafeURL}/home";// 메인으로 이동!
+
+	}
+
+	@RequestMapping(value = "/{cafeURL}/updateCafeMemberProfileView", method = RequestMethod.GET)
+	public String updateCafeMemberProfileView(@RequestParam("memberNo") int memberNo, @PathVariable String cafeURL,
+			Model model) throws Exception {
+
+		System.out.println("/cafe/{cafeURL}/updateCafeMemberProfileView : GET");
+		System.out.println(cafeURL);
+
+		int cafeNo = cafeMemberService.getCafeNo(cafeURL);// 카페 url으로 cafeNo 확인
+
+		Search search = new Search();
+		search.setCafeNo(cafeNo);
+		search.setMemberNo(memberNo);
+		search.setCafeURL(cafeURL);
+
+		CafeMember cafeMember = cafeMemberService.getCafeMember(search);
+
+		if (cafeMember.getMemberNo() == memberNo) {
+			System.out.println("카페url=cafeNo, 해당 카페의 멤버인지 확인 완료!");
+			model.addAttribute("cafeMember", cafeMember);
+			model.addAttribute("search", search);
+		}
+
+		return "cafe/updateCafeMemberProfile";
+
+	}
+
+	@RequestMapping(value = "/{cafeURL}/updateCafeMemberProfile", method = RequestMethod.POST)
+	public String updateCafeMemberProfile(@ModelAttribute("cafeMember") CafeMember cafeMember) {
+
+		System.out.println("/cafe/{cafeURL}/updateCafeMemberProfile : POST");
+		
+
+		cafeMemberService.updateCafeMemberProfile(cafeMember);
+
+		return null;//메인으로 이동
 
 	}
 	//////////////////////////////// 지니끝//////////////////////////////////

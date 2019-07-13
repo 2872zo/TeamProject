@@ -17,32 +17,36 @@ import com.phoenix.mvc.service.domain.CafeMember;
 
 @Service
 public class CafeMemberServiceImpl implements CafeMemberService {
-	
+
 	@Autowired
 	@Qualifier("cafeMemberDaoImpl")
 	private CafeMemberDao cafeMemberDao;
-	
+
 	@Autowired
 	@Qualifier("cafeManageDaoImpl")
 	private CafeManageDao cafeManageDao;
-	
+
 	public void setCafeMemberDao(CafeMemberDao cafeMemberDao) {
 		this.cafeMemberDao = cafeMemberDao;
 	}
-	
+
 	public CafeMemberServiceImpl() {
 		System.out.println(getClass().getName() + "default Constuctor");
 	}
-	
-	
-	
-	/////////////////////////////////지니//////////////////////////////
+
+	///////////////////////////////// 지니//////////////////////////////
 	public int getCafeNo(String cafeURL) {
-		
+
 		return cafeManageDao.getCafeNo(cafeURL);
-		
+
 	}
 	
+	public CafeMember getCafeMember(int cafeNo, int userNo) {
+		
+		return cafeMemberDao.getCafeMember(cafeNo, userNo);
+	
+	}
+
 	@Override
 	public void addCafeApplication(CafeApplication cafeApplication) {
 
@@ -51,14 +55,20 @@ public class CafeMemberServiceImpl implements CafeMemberService {
 
 	@Override
 	public void updateCafeMember(CafeMember cafeMember) {
-		cafeMemberDao.updateCafeMember(cafeMember);	
+		cafeMemberDao.updateCafeMember(cafeMember);
 	}
-	
+
 	@Override
 	public void addCafeMember(CafeMember cafeMember) {
 		cafeMemberDao.addCafeMember(cafeMember);
 	}
-	
+
+	@Override
+	public void updateCafeMemberProfile(CafeMember cafeMember) {
+		cafeMemberDao.updateCafeMemberProfile(cafeMember);
+		
+	}
+
 /////////////////////////////////////기황 /////////////////////////////////////
 	@Override
 	public Map getCafeMemberList(Search search) throws Exception {
@@ -70,7 +80,7 @@ public class CafeMemberServiceImpl implements CafeMemberService {
 		map.put("totalCount", new Integer(totalCount));
 		return map;
 	}
-	
+
 	@Override
 	public CafeMember getCafeMember(Search search) throws Exception {
 		// TODO Auto-generated method stub

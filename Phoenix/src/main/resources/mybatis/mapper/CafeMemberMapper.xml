@@ -100,5 +100,15 @@
 		WHERE ROWNUM &lt;= #{endRowNum} )
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}	
 	</select>
+	
+	<update	id="updateCafeMemberProfile"	parameterType="CafeMember" >
+	   	UPDATE cafe_member
+	   	<set>
+		notice_flag=#{noticeFlag},
+		member_nickname=#{memberNickname},
+		favorite_flag=#{favoriteFlag},
+	   	</set>
+	   	WHERE member_no = #{memberNo}
+	 </update>
 	 
 </mapper>
