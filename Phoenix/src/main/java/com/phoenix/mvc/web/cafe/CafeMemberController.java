@@ -25,6 +25,7 @@ import com.phoenix.mvc.service.cafe.CafeMemberService;
 import com.phoenix.mvc.service.domain.Cafe;
 import com.phoenix.mvc.service.domain.CafeApplication;
 import com.phoenix.mvc.service.domain.CafeMember;
+import com.phoenix.mvc.service.domain.CafeMemberBlock;
 
 @Controller
 @RequestMapping("/cafe/*")
@@ -203,6 +204,13 @@ public class CafeMemberController {
 		List blocks = (List) map.get("blocks");
 		model.addAttribute("member", member);
 		model.addAttribute("blocks", blocks);
+
+		return "forward:/WEB-INF/views/cafe/getCafeMember.jsp";		
+	}
+	
+	@RequestMapping(value = "/{cafeURL}/manage/updateCafeMemberBlock", method = RequestMethod.POST)
+	public String updateCafeMemberBlock(@ModelAttribute CafeMemberBlock cafeMemberBlock, Model model, @PathVariable String cafeURL) throws Exception {
+		
 
 		return "forward:/WEB-INF/views/cafe/getCafeMember.jsp";		
 	}

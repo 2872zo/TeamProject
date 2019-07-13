@@ -31,6 +31,12 @@ $(function() {
 		//alert("11");
 		$("#memberBlockForm").attr("method" , "POST").attr("action" , "/cafe/randomCafe/manage/addMemberBlock").submit();
 	});
+	$(".blockNo").on("click" , function() {
+		alert($(this).text());
+		$("#"+$(this).text()).html(3333);
+		//$("#memberBlockForm").attr("method" , "POST").attr("action" , "/cafe/randomCafe/manage/addMemberBlock").submit();
+	});
+	
 });
 </script>
 
@@ -80,10 +86,12 @@ $(function() {
 	<tbody>
   <c:forEach var="block" items="${blocks}">
   <tr>
-  	<th scope="row">${block.blockNo}</th>
+  	<th scope="row" class='blockNo'>${block.blockNo}</th>
   	<td>${block.blockStartDate}</td>
 	<td>${block.blockEndDate}</td>
 	<td>${block.blockReason}</td>
+  </tr>
+  <tr id='${block.blockNo}'>
   </tr>
   </c:forEach>
 	</tbody>
@@ -112,6 +120,19 @@ $(function() {
 	 </div>
 	</div>
 </form>
+
+
+<form id='memberBlockupdateForm'>
+<input type='hidden' value='${member.memberNo}' name='memberNo'>
+<div class="input-group mb-3">
+  <input type="text" class="form-control" placeholder="해제 사유를 입력해주세요" aria-label="Recipient's username" aria-describedby="button-addon2">
+  <div class="input-group-append">
+    <button class="btn btn-outline-success" type="button" id="button-addon2">정지해제</button>
+  </div>
+</div>
+</form>
+
+
 </div>
 </body>
 </html>

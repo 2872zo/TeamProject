@@ -22,7 +22,7 @@
 	</resultMap>
 	
 	<resultMap id="cafeMemberBlcokMap" type="CafeMemberBlock">
-		<result property="blockNo" 			column="block_no" 	jdbcType="int"/>
+		<result property="blockNo" 			column="block_no" 	jdbcType="NUMERIC"/>
 		<result property="blockStartDate" 	column="start_date" jdbcType="VARCHAR"/>
 		<result property="blockEndDate"		column="end_date" 	jdbcType="VARCHAR"/>
 		<result property="blockReason" 		column="reason" 	jdbcType="VARCHAR"/>
@@ -35,13 +35,13 @@
 							'0' , #{memberNickname} , 'cs101', '0', SYSDATE,'0')
 	 </insert>
 	
-	  <update id="updateCafeMember"	parameterType="CafeMember" >
+	<update id="updateCafeMember"	parameterType="CafeMember" >
 	   	UPDATE cafe_member
 	   	<set>
 		member_status_code=#{memberStatusCode}	
 	   	</set>
-	   	WHERE member_no = #{memberNo}
-	 </update>
+		WHERE member_no = #{memberNo}
+	</update>
 	 
 	 <sql id="memberListing">
 		SELECT
@@ -159,5 +159,16 @@
 		AND
 		m.member_no = #{memberNo}
 	</select>
+	
+	<update id="updateCafeMemberBlock" parameterType="CafeMemberBlock">
+		UPDATE
+		cafe_member_block
+		<set>
+		end_date = SYSDATE
+		reason = #{blockReason}
+		</set>
+		WHERE 
+		block_no=10004
+	</update>
 	
 </mapper>

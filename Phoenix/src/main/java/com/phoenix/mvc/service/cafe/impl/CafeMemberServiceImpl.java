@@ -14,6 +14,7 @@ import com.phoenix.mvc.service.cafe.CafeMemberDao;
 import com.phoenix.mvc.service.cafe.CafeMemberService;
 import com.phoenix.mvc.service.domain.CafeApplication;
 import com.phoenix.mvc.service.domain.CafeMember;
+import com.phoenix.mvc.service.domain.CafeMemberBlock;
 
 @Service
 public class CafeMemberServiceImpl implements CafeMemberService {
@@ -95,6 +96,12 @@ public class CafeMemberServiceImpl implements CafeMemberService {
 		map.put("member", member);
 		map.put("blocks", blocks);
 		return map;
+	}
+
+	@Override
+	public int updateCafeMemberBlocks(CafeMemberBlock cafeMemberBlock) throws Exception {
+		// TODO Auto-generated method stub
+		return cafeMemberDao.updateCafeMemberBlocks(cafeMemberBlock);
 	}
 	
 //////////////////////////////////기황끝///////////////////////////////////////

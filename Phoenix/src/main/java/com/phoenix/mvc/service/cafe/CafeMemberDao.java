@@ -5,6 +5,7 @@ import java.util.List;
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.domain.CafeApplication;
 import com.phoenix.mvc.service.domain.CafeMember;
+import com.phoenix.mvc.service.domain.CafeMemberBlock;
 
 public interface CafeMemberDao {
 
@@ -30,6 +31,9 @@ public interface CafeMemberDao {
 	public int addCafeMemberBlock (CafeMember cafeMember) throws Exception;
 	
 	public List getCafeMemberBlocks (Search search) throws Exception;
+	
+	public int updateCafeMemberBlocks (CafeMemberBlock cafeMemberBlock) throws Exception;
+
 ////////////////////////////기황 끝////////////////////////////////////
 
 }

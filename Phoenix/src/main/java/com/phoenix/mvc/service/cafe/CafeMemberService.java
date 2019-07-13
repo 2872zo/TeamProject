@@ -5,6 +5,7 @@ import java.util.Map;
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.domain.CafeApplication;
 import com.phoenix.mvc.service.domain.CafeMember;
+import com.phoenix.mvc.service.domain.CafeMemberBlock;
 
 public interface CafeMemberService {
 	
@@ -27,7 +28,8 @@ public interface CafeMemberService {
 	public int addCafeMemberBlock (CafeMember cafeMember) throws Exception;
 	
 	public Map getCafeMemberBlocks (Search search) throws Exception;
+	
+	public int updateCafeMemberBlocks (CafeMemberBlock cafeMemberBlock) throws Exception;
 	////////////////////////////끝////////////////////////////////////
-
 
 }

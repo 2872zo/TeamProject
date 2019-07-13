@@ -97,8 +97,8 @@ $(function() {
  상태별 검색:
   <button type="button" class='status btn btn-${ (empty search.status||search.status==0) ? "" : "outline-" }primary'>전체</button>
   <button type="button" class='status btn btn-${ search.status==1 ? "" : "outline-" }success'>활동중</button>
-  <button type="button" class='status btn btn-${ search.status==2 ? "" : "outline-" }danger'>일시정지</button>
-  <button type="button" class='status btn btn-${ search.status==3 ? "" : "outline-" }dark'>영구정지</button>
+  <button type="button" class='status btn btn-${ search.status==2 ? "" : "outline-" }danger'>정지중</button>
+  <button type="button" class='status btn btn-${ search.status==3 ? "" : "outline-" }dark'>탈퇴한회원</button>
   <br/>
   
   등급별 검색:
