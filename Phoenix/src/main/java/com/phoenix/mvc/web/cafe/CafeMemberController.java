@@ -175,11 +175,11 @@ public class CafeMemberController {
 	//////////////////////////////// 지니끝//////////////////////////////////
 
 	///////////////////////////////// 기황시작//////////////////////////////////////
-	@RequestMapping(value = "/{cafeURL}/getCafeMemberList")
+	@RequestMapping(value = "/{cafeURL}/manage/getCafeMemberList")
 	public String getCafeMemberList(@PathVariable String cafeURL, @ModelAttribute("search") Search search, Model model)
 			throws Exception {
 
-		System.out.println("/cafe/{cafeURL}/getCafeMemberList");
+		System.out.println("/cafe/{cafeURL}/getCafeMemberList : URL == "+cafeURL);
 		pageSize = 2;
 		if (search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
@@ -202,10 +202,10 @@ public class CafeMemberController {
 		return "cafe/listCafeMember";
 	}
 
-	@RequestMapping(value = "/{cafeURL}/getCafeMember", method = RequestMethod.POST)
+	@RequestMapping(value = "/{cafeURL}/manage/getCafeMember", method = RequestMethod.POST)
 	public String getCafeMember(@ModelAttribute("search") Search search, Model model) throws Exception {
 
-		System.out.println("/cafe/{cafeURL}/getCafeMember : GET");
+		System.out.println("/cafe/{cafeURL}/manage/getCafeMember : GET");
 		CafeMember cafeMember = cafeMemberService.getCafeMember(search);
 
 		model.addAttribute("member", cafeMember);

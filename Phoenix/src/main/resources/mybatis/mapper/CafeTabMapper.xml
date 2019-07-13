@@ -12,7 +12,7 @@
 		<result property="cafeIcon" 				 column="cafe_icon" 					jdbcType="VARCHAR" />
 		<result property="manageUserNo" 			 column="manage_user_no" 				jdbcType="VARCHAR" />
 		<result property="regDate" 					 column="reg_date" 						jdbcType="DATE" />
-		<result property="url" 						 column="url" 							jdbcType="VARCHAR" />
+		<result property="URL" 						 column="url" 							jdbcType="VARCHAR" />
 		<result property="cafeDetail" 				 column="cafe_detail" 					jdbcType="VARCHAR" />
 		<result property="bannerImg" 				 column="banner_img" 					jdbcType="VARCHAR"  />
 		<result property="mainImg" 					 column="main_img" 						jdbcType="VARCHAR" />
@@ -57,7 +57,7 @@
 		FROM (<include refid="listCafe"></include>)
 	 </select>
 	 
-	 <sql id="categoryCafe">
+	<sql id="categoryCafe">
 	 	SELECT
 		cafe_no, cafe_icon, cafe_name, cafe_detail, cafe_type, url, reg_date, members
 		FROM
@@ -87,7 +87,8 @@
 		'cc106'
 		</if>
 		</where> 
-		</sql>
+	</sql>
+		
 	 <select id="categorizedCafeList" parameterType="Search" resultMap="cafeTabSelectMap">
 		<include refid="categoryCafe"/>
 	 </select>

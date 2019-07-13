@@ -45,13 +45,9 @@ $(function() {
 	});
 
 	$("#memberList").on("click" , function() {
-		//alert("멤버리스트조회");
-		$("#memberListingForm").attr("method" , "POST").attr("action" , "/cafe/randomCafe/getCafeMemberList").submit();
-		
+		$("#memberListingForm").attr("method" , "POST").attr("action" , "/cafe/randomCafe/manage/getCafeMemberList").submit();
 	});
-	$("#memberDetail").on("click" , function() {
-		$("#memberDetailForm").attr("method" , "POST").attr("action" , "/cafe/randomCafe/getCafeMember").submit();
-	});
+
 });
 </script>
 	<!-- ToolBar Start /////////////////////////////////////-->
@@ -142,7 +138,7 @@ $(function() {
 	<c:forEach var="categoryCafe" items="${categoryCafeList}">
 	<tr>
 	 <th scope="row">${categoryCafe.cafeNo}</th>
-	 <td>${categoryCafe.url}</td>
+	 <td>${categoryCafe.URL}</td>
 	 <td>${categoryCafe.cafeName}</td>
 	 <td>${categoryCafe.cafeIcon}</td>
 	 <td>${categoryCafe.cafeDetail}</td>
@@ -169,15 +165,7 @@ $(function() {
 	    </div>
 	    </div>
 	</form>
-	<form id='memberDetailForm'>
-		<div class="input-group">
-		<input type="text" class="form-control" placeholder="멤버번호" name = 'memberNo' aria-describedby="button-addon2">
-		<div class="input-group-append" id="button-addon2">
-    	<button class="btn btn-outline-success" type="button" id= 'memberDetail'>멤버디테일</button>
-  		</div>
-		</div>
-	</form>
-
+	
 </div>
 
 
