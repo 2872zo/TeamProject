@@ -9,8 +9,6 @@
 <head>
 <title>CafeTabMain</title>
 
-
-
 <!-- ////////////////////////////// jQuery CDN ////////////////////////////// -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"
  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
@@ -29,16 +27,14 @@
  
 <script type="text/javascript">
 $(function() {
-	
-	$("#addCafe").on("click" , function() {
-		$(self.location).attr("href","/cafe/addCafeView");
+	$("#blocking").on("click" , function() {
+		//alert("11");
+		$("#memberBlockForm").attr("method" , "POST").attr("action" , "/cafe/randomCafe/manage/addMemberBlock").submit();
 	});
-
 });
 </script>
 
 <title>카페 멤버 상세조회</title>
-
 
 </head>
 <body>
@@ -56,7 +52,7 @@ $(function() {
       <th scope="col">등급코드</th>
       <th scope="col">등급명</th>
       <th scope="col">방문횟수</th>
-      <th scope="col">정지여부</th>
+      <th scope="col">멤버상태</th>
     </tr>
 	</thead>
 	<tbody>
@@ -71,8 +67,51 @@ $(function() {
   </tr>
 	</tbody>
 </table>
-
-
+<c:if test="${!empty blocks}">
+<table class="table table-borderless">
+	<thead>
+    <tr>
+  	  <th scope="col">정지번호</th>
+  	  <th scope="col">정지시작일</th>
+      <th scope="col">정지종료일</th>
+      <th scope="col">정지사유</th>
+    </tr>
+	</thead>
+	<tbody>
+  <c:forEach var="block" items="${blocks}">
+  <tr>
+  	<th scope="row">${block.blockNo}</th>
+  	<td>${block.blockStartDate}</td>
+	<td>${block.blockEndDate}</td>
+	<td>${block.blockReason}</td>
+  </tr>
+  </c:forEach>
+	</tbody>
+</table>
+</c:if>
+<form id='memberBlockForm'>
+<input type='hidden' value='${member.memberNo}' name='memberNo'>
+<div class="input-group mb-3">
+	  <div class="input-group-prepend">   
+	  <button type="button" class="btn btn-outline-danger" id='memberBlock'>멤버정지</button>
+	  </div>
+	  <div class="input-group-append">
+	   <select class="custom-select custom-select-lg" aria-label="Example select with button addon" name='blockPeriod'>
+	    <option value="1" selected>01일</option>
+	    <option value="3" >03일</option>
+	    <option value="5" >05일</option>
+	    <option value="7" >07일</option>
+	    <option value="15" >15일</option>
+	    <option value="30" >30일</option>
+	    <option value="365000" >천년</option>	    
+	   </select>
+	    </div>
+	  <input type="text" class="form-control form-control-lg" placeholder="정지사유를 (500자 이하)입력해주세요" aria-label="Text input with dropdown button" aria-describedby="button-addon2" name='blockReason' id="blockReason">
+	 <div class="input-group-append">
+	    <button class="btn btn-outline-secondary" type="button" id="blocking">정지</button>
+	 </div>
+	</div>
+</form>
 </div>
 </body>
 </html>

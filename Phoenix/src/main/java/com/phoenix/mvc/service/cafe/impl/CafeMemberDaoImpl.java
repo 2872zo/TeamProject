@@ -65,21 +65,34 @@ public class CafeMemberDaoImpl implements CafeMemberDao {
 ////////////////////////////////////기황 시작///////////////////////////////////////
 	@Override
 	public List getCafeMemberList(Search search) throws Exception {
-// TODO Auto-generated method stub
+
 		return sqlSession.selectList("CafeMemberMapper.listCafeMemeber", search);
 	}
 
 	@Override
 	public int getCafeMemberCount(Search search) throws Exception {
-// TODO Auto-generated method stub
+
 		return sqlSession.selectOne("CafeMemberMapper.getMemberCount", search);
 	}
 
 	@Override
 	public CafeMember getCafeMember(Search search) throws Exception {
-// TODO Auto-generated method stub
+
 		return sqlSession.selectOne("CafeMemberMapper.getCafeMemeber", search);
 	}
+	
+	@Override
+	public int addCafeMemberBlock(CafeMember cafeMember) throws Exception {
+
+		return sqlSession.insert("CafeMemberMapper.addCafeMemberBlock", cafeMember);
+	}
+
+	@Override
+	public List getCafeMemberBlocks(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("CafeMemberMapper.getCafeMemeberBlock", search);
+	}
+
 //////////////////////////////기황 끝///////////////////////////////////////	
 
 

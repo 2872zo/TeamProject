@@ -176,15 +176,36 @@ public class CafeMemberController {
 
 	@RequestMapping(value = "/{cafeURL}/manage/getCafeMember", method = RequestMethod.POST)
 	public String getCafeMember(@ModelAttribute("search") Search search, Model model) throws Exception {
-
+		
 		System.out.println("/cafe/{cafeURL}/manage/getCafeMember : GET");
 		CafeMember cafeMember = cafeMemberService.getCafeMember(search);
-
 		model.addAttribute("member", cafeMember);
 
 		return "forward:/WEB-INF/views/cafe/getCafeMember.jsp";
 	}
+	
+	@RequestMapping(value = "/{cafeURL}/manage/addMemberBlock", method = RequestMethod.POST)
+	public String addMemberBlock(@ModelAttribute("member") CafeMember cafeMember, Model model, @PathVariable String cafeURL) throws Exception {
+		
+		System.out.println("/{cafeURL}/manage/addMemberBlock");
+		cafeMemberService.addCafeMemberBlock(cafeMember);
+		Search search = new Search();
+		search.setMemberNo(cafeMember.getMemberNo());
+		return "forward:/cafe/"+cafeURL+"/manage/getCafeMemberBlock";
+		
+	}
+	
+	@RequestMapping(value = "/{cafeURL}/manage/getCafeMemberBlock", method = RequestMethod.POST)
+	public String getCafeMemberBlock(@ModelAttribute Search search, Model model, @PathVariable String cafeURL) throws Exception {
+		
+		Map map = cafeMemberService.getCafeMemberBlocks(search);
+		CafeMember member = (CafeMember) map.get("member");
+		List blocks = (List) map.get("blocks");
+		model.addAttribute("member", member);
+		model.addAttribute("blocks", blocks);
 
+		return "forward:/WEB-INF/views/cafe/getCafeMember.jsp";		
+	}
 	///////////////////////////////// 기황끝//////////////////////////////////////
 
 }

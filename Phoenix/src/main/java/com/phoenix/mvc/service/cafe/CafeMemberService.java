@@ -23,6 +23,10 @@ public interface CafeMemberService {
 	public Map getCafeMemberList(Search search) throws Exception;
 	
 	public CafeMember getCafeMember(Search search) throws Exception;
+	
+	public int addCafeMemberBlock (CafeMember cafeMember) throws Exception;
+	
+	public Map getCafeMemberBlocks (Search search) throws Exception;
 	////////////////////////////끝////////////////////////////////////
 
 

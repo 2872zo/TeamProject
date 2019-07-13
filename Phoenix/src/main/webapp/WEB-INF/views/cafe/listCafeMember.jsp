@@ -50,7 +50,7 @@ $(function() {
 	$(".memberNo").on("click" , function() {
 		var count = $(".memberNo").index(this);
 		$("#memberNo").val($($(".memberNo")[count]).text());
-		$("#memberDetailForm").attr("method" , "POST").attr("action" , "/cafe/randomURL/manage/getCafeMember").submit();
+		$("#memberDetailForm").attr("method" , "POST").attr("action" , "/cafe/randomURL/manage/getCafeMemberBlock").submit();
 	});
 
 	$(".memberStatusCode").on("click" , function() {
