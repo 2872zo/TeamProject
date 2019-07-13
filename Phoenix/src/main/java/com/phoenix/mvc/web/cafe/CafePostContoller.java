@@ -245,4 +245,24 @@ public class CafePostContoller {
 		System.out.println("[addReply 결과] : " + cafePostService.addReply(reply));
 		return "redirect:/cafe/" + cafeURL + "/getBoard/" + reply.getPostNo();
 	}
+	
+	
+	@GetMapping("/cafe/{cafeURL}/getReplyList/{postNo}")
+	public String getReplyList(@PathVariable String cafeURL, @ModelAttribute Search search, Map<String, Object> map){
+		search.setPageSize(pageSize);
+		if(search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+		
+		System.out.println("[getReplyList] search : " +  search);
+		
+		Map<String, Object> queryResultMap = cafePostService.getReplyList(search);
+		Page page = new Page(search.getCurrentPage(), (int)queryResultMap.get("replyTotalCount"), pageUnit, pageSize);
+		
+		map.put("replyList", queryResultMap.get("replyList"));
+		map.put("replyTotalCount", queryResultMap.get("replyTotalCount"));
+		map.put("page", page);
+
+		return "/cafe/listCafeReply";
+	}
 }

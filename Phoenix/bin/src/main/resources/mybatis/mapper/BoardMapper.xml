@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+		
+<mapper namespace="BoardMapper">
+	
+	
+	<resultMap id="boardSelectMap" type="com.phoenix.mvc.service.domain.Board">
+		<result property="boardNo" 			column="board_no" 			jdbcType="NUMERIC"/>
+		<result property="cafeNo"			column="cafe_no" 			jdbcType="NUMERIC" />
+		<result property="boardName" 		column="board_name" 			jdbcType="VARCHAR" />
+		<result property="accessGrade" 		column="access_grade" 				jdbcType="VARCHAR" />
+		<result property="boardIndex" 		column="board_index" 				jdbcType="NUMERIC" />
+		<result property="privateFlag" 		column="private_flag" 		jdbcType="CHAR" />
+		<result property="boardType" 		column="board_type" 				jdbcType="VARCHAR" />
+		<result property="boardDetail" 		column="board_detail" 				jdbcType="NUMERIC"  />
+	</resultMap>
+	
+	<resultMap id="postSelectMap" type="com.phoenix.mvc.service.domain.Post">
+		<result property="postNo" 			column="post_no" 			jdbcType="NUMERIC"/>
+		<result property="boardNo"			column="board_no" 			jdbcType="NUMERIC" />
+		<result property="memberNo" 		column="member_no" 			jdbcType="NUMERIC" />
+		<result property="postTitle" 		column="post_title" 		jdbcType="VARCHAR" />
+		<result property="postContent" 		column="post_content" 		jdbcType="VARCHAR" />
+		<result property="regDate" 			column="reg_date" 			jdbcType="CHAR" />
+		<result property="viewCount" 		column="view_count" 		jdbcType="NUMERIC" />
+		<result property="likeCount" 		column="like_count" 		jdbcType="NUMERIC"  />
+		<result property="memberNickname" 	column="member_nickname" 	jdbcType="VARCHAR"  />
+		<result property="postStatusFlag" 	column="post_status_flag" 	jdbcType="CHAR"  />
+		<result property="postNoticeFlag" 	column="post_notice_flag" 	jdbcType="CHAR"  />
+		<result property="noticeIndex" 		column="notice_index" 		jdbcType="NUMERIC"  />
+	</resultMap>
+	
+	<resultMap id="cafeMemberSelectMap" type="com.phoenix.mvc.service.domain.CafeMember">
+		<result property="memberNo" 			column="member_no" 			jdbcType="NUMERIC"/>
+		<result property="cafeNo"			column="cafe_no" 			jdbcType="NUMERIC" />
+		<result property="userNo" 		column="user_no" 			jdbcType="NUMERIC" />
+		<result property="cafeMemberGradeNo" 			column="cafe_member_grade_no" 				jdbcType="NUMERIC" />
+		<result property="noticeFlag" 				column="notice_flag" 				jdbcType="CHAR" />
+		<result property="memberNickname" 			column="member_nickname" 		jdbcType="VARCHAR" />
+		<result property="memberStatusCode" 			column="member_status_code" 				jdbcType="VARCHAR" />
+		<result property="favoriteFlag" 			column="favorite_flag" 				jdbcType="CHAR"  />
+		<result property="regDate" 			column="reg_date" 			jdbcType="DATE" />
+		<result property="visitCount" 			column="visit_count" 				jdbcType="NUMERIC" />
+		<result property="gradeName"			column="grade_name"  jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<resultMap id="eventSelectMap" type="com.phoenix.mvc.common.Event">
+		<result property="eventNo" 			column="event_no" 			jdbcType="NUMERIC"/>
+		<result property="targetNo"			column="target_no" 			jdbcType="NUMERIC" />
+		<result property="eventType" 		column="event_type" 			jdbcType="VARCHAR" />
+		<result property="cafeNo" 			column="cafe_no" 				jdbcType="NUMERIC" />
+		<result property="eventUserNo" 		column="event_user_no" 				jdbcType="NUMERIC" />
+		<result property="regDate" 			column="reg_date" 		jdbcType="DATE" />
+	</resultMap>
+
+	<select  id="getBoardList"   parameterType="int"  resultMap="boardSelectMap">
+		SELECT *
+		FROM board
+		WHERE cafe_no = #{value}
+		ORDER BY board_index
+	</select>
+	
+	<select  id="getBoardListBySearch"   parameterType="search"  resultMap="boardSelectMap">
+		SELECT *
+		FROM board
+		WHERE cafe_url = #{cafeURL}
+		<if test="searchCondition==1">
+			AND board_type !='cb102'
+		</if>
+		ORDER BY board_index
+	</select>
+	
+	
+	<select id="getCafeNo" parameterType ="string" resultType="int">
+		SELECT cafe_no
+		FROM cafe
+		WHERE url = #{value}
+	</select>
+
+	<select id ="getBoardPostList" parameterType="int" resultMap="postSelectMap">
+		SELECT *
+		FROM post
+		WHERE board_no = #{value}
+	</select>
+	
+	<select id="getCafeMember" parameterType="hashmap" resultMap="cafeMemberSelectMap"> 
+		
+		SELECT me.member_no, me.cafe_no, me.user_no, me.notice_flag, me.member_nickname, me.cafe_member_grade_no, mg.grade_name, me.member_status_code, me.favorite_flag, me.visit_count, me.reg_date
+		FROM cafe_member me,cafe_member_grade mg
+		WHERE (me.cafe_member_grade_no = mg.cafe_member_grade_no ) AND me.user_no = #{userNo} AND me.cafe_no = #{cafeNo}
+		
+	</select>
+	
+	<insert id="addEventLog" parameterType="Event">
+		INSERT INTO event_log (event_no,event_type,cafe_no,reg_date,event_user_no,target_no)
+		VALUES(SEQ_EVENT_LOG_EVENT_NO.NEXTVAL,
+				#{eventType:VARCHAR},
+				#{cafeNo:NUMERIC},
+				SYSDATE,
+				#{eventUserNo:NUMERIC},
+				#{targetNo:NUMERIC});
+	</insert>
+	
+	<select id="checkCafeTodayVisitLog" parameterType="Event" resultMap="eventSelectMap">
+		SELECT * FROM event_log
+		WHERE event_user_no =#{eventUserNo:NUMERIC}
+			  AND event_type='et001' 
+			  AND cafe_no=#{cafeNo:NUMERIC}
+			  AND to_char(reg_date,'yyyy-mm-dd') = to_char(SYSDATE,'yyyy-mm-dd');
+	</select>
+	
+	<select id="getCafeStatistics" parameterType="Event" resultType="map">
+		SELECT event_type , count(*) counts
+		FROM event_log
+		WHERE reg_date BETWEEN TO_DATE(#{startDate},'yyyymmdd') AND TO_DATE(#{endDate},'yyyymmdd')+ 0.99999
+		AND cafe_no = #{cafeNo}
+		GROUP BY event_type
+		ORDER BY event_type
+	</select>
+
+
+</mapper>

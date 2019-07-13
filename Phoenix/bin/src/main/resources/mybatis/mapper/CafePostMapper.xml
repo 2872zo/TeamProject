@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+		
+<mapper namespace="CafePostMapper">
+	
+	
+	<resultMap id="postResultMap" type="Post">
+		<result property="postNo" 			column="post_no" 			jdbcType="NUMERIC"	/>
+		<result property="cafeName" 		column="cafe_name" 			jdbcType="VARCHAR"  />
+		<result property="cafeURL" 			column="cafe_url" 			jdbcType="VARCHAR"  />
+		<result property="cafeIcon" 		column="cafe_icon" 			jdbcType="VARCHAR"  />
+		<result property="boardNo"			column="board_no" 			jdbcType="NUMERIC" 	/>
+		<result property="boardName"		column="board_name"			jdbcType="VARCHAR" 	/>
+		<result property="memberNo" 		column="member_no" 			jdbcType="NUMERIC" 	/>
+		<result property="memberNickname" 	column="member_nickname" 	jdbcType="VARCHAR"  />
+		<result property="postTitle" 		column="post_title" 		jdbcType="VARCHAR" 	/>
+		<result property="postContent" 		column="post_content" 		jdbcType="VARCHAR" 	/>
+		<result property="regDate" 			column="reg_date" 			jdbcType="VARCHAR" 	/>
+		<result property="viewCount" 		column="view_count" 		jdbcType="NUMERIC" 	/>
+		<result property="likeCount" 		column="like_count" 		jdbcType="NUMERIC"  />
+		<result property="postStatusFlag" 	column="post_status_flag" 	jdbcType="CHAR"  	/>
+		<result property="postNoticeFlag" 	column="post_notice_flag" 	jdbcType="CHAR"  	/>
+		<result property="noticeIndex" 		column="notice_index" 		jdbcType="NUMERIC"  />
+<!-- 		<collection property="replyList"	column="post_no"			javaType="java.util.ArrayList"	ofType="Reply"	select="getReplyList" /> -->
+	</resultMap>
+	
+	<resultMap id="replyResultMap" type="Reply">
+		<result property="replyNo"        	column="reply_no"			jdbcType="NUMERIC"	/>
+		<result property="postNo"			column="post_no"			jdbcType="NUMERIC"	/>
+		<result property="memberNo"       	column="member_no"			jdbcType="NUMERIC"	/>
+		<result property="memberNickname" 	column="member_nickname"	jdbcType="VARCHAR"	/>
+		<result property="replyContent"  	column="reply_content"		jdbcType="VARCHAR"	/>
+		<result property="regDate"  		column="reg_date"			jdbcType="VARCHAR"	/>
+		<result property="likeCount"     	column="like_count"			jdbcType="NUMERIC"	/>
+		<result property="replyStatusFlag"	column="reply_status_flag"	jdbcType="CHAR"		/>
+	</resultMap>
+
+	<sql id="select-post-list">
+		SELECT 
+			post_no, 
+			cafe_url, 
+			board_no, 
+			board_name,
+			member_no, 
+			member_nickname,
+			post_title, 
+<!-- 			post_content,  -->
+			TO_CHAR(reg_date, 'YYYY-MM-DD HH24:MM:SS') AS reg_date, 
+			view_count, 
+			like_count, 
+			post_status_flag, 
+			post_notice_flag, 
+			notice_index
+		FROM post 
+		WHERE 
+			board_no = #{boardNo}
+			AND post.post_status_flag = '0'
+		ORDER BY reg_date DESC
+	</sql>
+	
+	<sql id="select-post-list-search">
+		SELECT 
+			p.post_no, 
+			p.cafe_url, 
+			c.cafe_name, 
+			c.cafe_icon, 
+			p.board_no, 
+			p.board_name,
+			p.member_no, 
+			p.member_nickname,
+			p.post_title, 
+			p.post_content, 
+			TO_CHAR(p.reg_date, 'YYYY-MM-DD HH24:MM:SS') AS reg_date, 
+			p.view_count, 
+			p.like_count, 
+			p.post_status_flag, 
+			p.post_notice_flag, 
+			p.notice_index
+		FROM post p, board b, cafe c
+		<where>
+			c.cafe_no = b.cafe_no
+			AND	p.board_no = b.board_no
+			AND p.post_status_flag = '0'
+			<if test="cafeURL != null and cafeURL != ''">
+				AND p.cafe_url = #{cafeURL}
+			</if>
+			<if test="termStart != null and termStart != ''">
+				AND p.reg_date &gt;= #{termStart}
+			</if>
+			<if test="termEnd != null and termEnd != ''">
+				AND p.reg_date &lt;= #{termEnd}
+			</if>
+			<if test="boardNo != 0">
+				AND p.board_no = #{boardNo}
+			</if>
+			<choose>
+				<when test="searchCondition  == 0">
+					AND (p.member_nickname like '%${searchKeyword}%'
+						 OR p.post_title like '%${searchKeyword}%'
+						 OR p.post_content like '%${searchKeyword}%')
+				</when>
+				<when test="searchCondition  == 1">
+					AND p.member_nickname like '%${searchKeyword}%'
+				</when>
+				<when test="searchCondition == 2">
+					AND p.post_title like '%${searchKeyword}%'
+				</when>
+				<when test="searchCondition  == 3">
+					AND p.post_content like '%${searchKeyword}%'
+				</when>
+			</choose>
+		</where>
+		ORDER BY p.reg_date DESC
+	</sql>
+
+	<sql id="select-reply-list">
+		SELECT
+			reply_no,			
+			post_no,			
+			member_no,			
+			member_nickname,
+			reply_content,		
+			TO_CHAR(reg_date,'YYYY-MM-DD HH24:MM:SS') AS reg_date,			
+			like_count,		
+			reply_status_flag
+		FROM 
+			reply
+		WHERE 
+			post_no = #{postNo}
+			AND reply_status_flag = '0'
+	</sql>
+
+	<select id="getPostListByBoard"   parameterType="Search"  resultMap="postResultMap">
+		SELECT
+			*
+		FROM
+		(SELECT
+		 inner_table.*, ROWNUM AS row_seq
+		 FROM 
+		 (<include refid="select-post-list"/>) inner_table
+		 <where>
+		 	ROWNUM &lt;= #{endRowNum}
+		 </where>)
+		<where>
+			row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+		</where>
+	</select>
+	
+	<select id="postTotalCount" parameterType="Search" resultType="int">
+		SELECT
+		COUNT(*)
+		FROM
+		(<include refid="select-post-list"/>)
+	</select>
+	
+	<select id="getPostListBySearch"   parameterType="Search"  resultMap="postResultMap">
+		SELECT
+			*
+		FROM
+		(SELECT
+		 inner_table.*, ROWNUM AS row_seq
+		 FROM 
+			 (<include refid="select-post-list-search"/>) inner_table
+		 <where>
+		 	AND ROWNUM &lt;= #{endRowNum}
+		 </where>)
+		<where>
+			row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+		</where>
+	</select>
+	
+	<select id="searchTotalCount" parameterType="Search" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+		(<include refid="select-post-list-search"/>)
+	</select>
+		
+	<select id="getPostListByNotice" parameterType="Search" resultMap="postResultMap">
+		SELECT 
+			post.post_no, 
+			post.board_no, 
+			post.member_no, 
+			post.post_title, 
+			post.post_content, 
+			TO_CHAR(post.reg_date, 'YYYY-MM-DD HH24:MM:SS') AS reg_date, 
+			post.view_count, 
+			post.like_count, 
+			post.member_nickname, 
+			post.post_status_flag, 
+			post.post_notice_flag, 
+			post.notice_index,
+			post.cafe_url
+		FROM post, board
+		<where>
+			post.board_no = board.board_no
+			AND post.cafe_url = #{cafeURL}
+			AND board.board_type = 'cb100'
+			AND post.post_status_flag = '0'
+		</where>
+		ORDER BY reg_date DESC
+	</select>
+	
+	<insert id="addPost" parameterType="Post">
+		<selectKey resultType="int" keyProperty="postNo" order="AFTER">
+			SELECT SEQ_POST_POST_NO.CURRVAL FROM dual
+		</selectKey>
+	
+		INSERT 
+		INTO post 
+			( post_no, 
+			  post_title, 
+			  board_no, 
+			  board_name, 
+			  member_no, 
+			  cafe_url, 
+			  post_content, 
+			  reg_date, 
+			  member_nickname,
+			  post_notice_flag) 
+		VALUES 
+			( SEQ_POST_POST_NO.NEXTVAL, 
+			  #{postTitle},  
+			  #{boardNo}, 
+			  #{boardName}, 
+			  #{memberNo}, 
+			  #{cafeURL}, 
+			  #{postContent}, 
+			  SYSDATE, 
+			  #{memberNickname},
+			  #{postNoticeFlag})
+	</insert>
+	
+	<select id="getPost" parameterType="int" resultMap="postResultMap">
+		SELECT
+			*
+		FROM 
+			post
+		WHERE 
+			post_no = #{postNo}
+	</select>
+	
+	<update id="updatePost" parameterType="Post">
+		UPDATE post
+		SET
+			  post_title = #{postTitle}, 
+			  board_no = #{boardNo}, 
+			  board_name = #{boardName}, 
+			  post_content = #{postContent}, 
+			  post_notice_flag = #{postNoticeFlag}
+		WHERE
+			post_no = #{postNo}			  
+	</update>
+	
+	<update id="deletePost" parameterType="int">
+		UPDATE post
+		SET
+			post_status_flag = '1'
+		WHERE
+			post_no = #{postNo}
+	</update>
+	
+	<insert id="addReply">
+		INSERT 
+		INTO reply 
+			( reply_no,			
+				post_no,			
+				member_no,			
+				member_nickname,
+				reply_content,		
+				reg_date,			
+				like_count,		
+				reply_status_flag)
+		VALUES 
+			( SEQ_REPLY_REPLY_NO.NEXTVAL,
+				#{postNo},			
+				#{memberNo },      
+				#{memberNickname}, 
+				#{replyContent},  	
+				#{regDate},  		
+				#{likeCount},     	
+				#{replyStatusFlag}) 
+	</insert>
+	
+	<select id="getReplyList" parameterType="Search" resultMap="replyResultMap">
+		SELECT
+			*
+		FROM
+			(SELECT
+			 inner_table.*, ROWNUM AS row_seq
+			 FROM 
+				 (<include refid="select-reply-list"/>) inner_table
+				  <where>
+		 				AND ROWNUM &lt;= #{endRowNum}
+				  </where>)
+		<where>
+			row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+		</where>
+		
+	</select>
+	
+	<select id="replyTotalCount" parameterType="Search" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			(<include refid="select-reply-list"/>)
+	</select>
+	
+	<update id="updateReply" parameterType="Reply">
+		UPDATE
+			post
+		SET
+			reply_content = #{replyContent}
+		WHERE
+			reply_no = #{replyNo}
+	</update>
+	
+	<update id="deleteReply">
+		UPDATE
+			post
+		SET
+			reply_status_flag = #{replyStatusFlag}
+		WHERE
+			reply_no = #{replyNo}
+	</update>
+</mapper>
