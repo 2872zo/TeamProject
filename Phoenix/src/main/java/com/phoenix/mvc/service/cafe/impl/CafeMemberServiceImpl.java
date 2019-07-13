@@ -37,13 +37,19 @@ public class CafeMemberServiceImpl implements CafeMemberService {
 	
 	
 	
-	/////////////////////////////////지니//////////////////////////////
+	///////////////////////////////// 지니//////////////////////////////
 	public int getCafeNo(String cafeURL) {
-		
+
 		return cafeManageDao.getCafeNo(cafeURL);
-		
+
 	}
 	
+	public CafeMember getCafeMember(int cafeNo, int userNo) {
+		
+		return cafeMemberDao.getCafeMember(cafeNo, userNo);
+	
+	}
+
 	@Override
 	public void addCafeApplication(CafeApplication cafeApplication) {
 
@@ -52,14 +58,20 @@ public class CafeMemberServiceImpl implements CafeMemberService {
 
 	@Override
 	public void updateCafeMember(CafeMember cafeMember) {
-		cafeMemberDao.updateCafeMember(cafeMember);	
+		cafeMemberDao.updateCafeMember(cafeMember);
 	}
-	
+
 	@Override
 	public void addCafeMember(CafeMember cafeMember) {
 		cafeMemberDao.addCafeMember(cafeMember);
 	}
-	
+
+	@Override
+	public void updateCafeMemberProfile(CafeMember cafeMember) {
+		cafeMemberDao.updateCafeMemberProfile(cafeMember);
+		
+	}
+////////////////////////////////////지니끝//////////////////////////////
 /////////////////////////////////////기황 시작/////////////////////////////////////
 	@Override
 	public Map getCafeMemberList(Search search) throws Exception {

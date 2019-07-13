@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="CafeGradeMapper"> 
+	
+	<resultMap id="cafeGradeSelectMap" type="CafeGrade">
+		<result property="cafeGradeNo" 						column="cafe_member_grade_no" 							jdbcType="NUMERIC"/>
+		<result property="cafeNo" 						column="cafe_no" 							jdbcType="NUMERIC"/>
+		<result property="memberGradeCode" 						column="member_grade_code" 							jdbcType="VARCHAR"/>
+		<result property="gradeName" 						column="grade_name" 							jdbcType="VARCHAR"/>
+		<result property="requiredVisitCount" 						column="required_visit_count" 							jdbcType="NUMERIC"/>
+		<result property="requiredReplyCount" 						column="required_reply_count" 							jdbcType="NUMERIC"/>
+		<result property="requiredPostCount" 						column="required_post_count" 							jdbcType="NUMERIC"/>
+	</resultMap>
+	
+	<insert 	id="addCafeGrade"		parameterType="CafeGrade" >
+	 	INSERT
+		INTO cafe_member_grade( cafe_member_grade_no , cafe_no , member_grade_code , grade_name , required_visit_count, required_reply_count, required_post_count ) 
+		VALUES(	seq_member_grade_no.NEXTVAL , #{cafeGradeNo} , #{cafeNo} , #{memberGradeCode} ,  #{gradeName} , #{requiredVisitCount} , #{requiredReplyCount} , #{requiredPostCount})
+	 </insert>
+	 
+	 <update	id="updateCafeGrade"	parameterType="CafeGrade" >
+	   	UPDATE cafe_member_grade
+	   	<set>
+		member_grade_code=#{memberGradeCode},
+		grade_name=#{gradeName},
+		required_visit_count=#{required_visit_count},
+		required_reply_count=#{required_reply_count},
+		required_post_count=#{required_post_count}
+	   	</set>
+	   	WHERE cafe_no = #{cafeNo}
+	 </update>
+	 
+	 <select id="getCafeGrade" parameterType="int" resultMap="cafeGradeSelectMap">
+  		SELECT 
+		*
+		FROM cafe_member_grade
+		WHERE cafe_no = #{cafeNo}
+  	</select>
+	 
+</mapper>
+
