@@ -73,6 +73,11 @@ public class CafePostDaoImpl implements CafePostDao{
 	}
 	
 	@Override
+	public boolean addReReply(Reply reply) {
+		return (sqlSession.insert("CafePostMapper.addReReply", reply) == 1? true: false);
+	}
+	
+	@Override
 	public List<Reply> getReplyList(Search search) {
 		return sqlSession.selectList("CafePostMapper.getReplyList", search);
 	}
@@ -90,5 +95,10 @@ public class CafePostDaoImpl implements CafePostDao{
 	@Override
 	public boolean deleteReply(int replyNo) {
 		return (sqlSession.insert("CafePostMapper.deleteReply", replyNo) == 1? true : false);
+	}
+
+	@Override
+	public Reply getReply(int replyNo) {
+		return sqlSession.selectOne("CafePostMapper.getReply", replyNo);
 	}
 }

@@ -28,14 +28,17 @@
 	</resultMap>
 	
 	<resultMap id="replyResultMap" type="Reply">
-		<result property="replyNo"        	column="reply_no"			jdbcType="NUMERIC"	/>
-		<result property="postNo"			column="post_no"			jdbcType="NUMERIC"	/>
-		<result property="memberNo"       	column="member_no"			jdbcType="NUMERIC"	/>
-		<result property="memberNickname" 	column="member_nickname"	jdbcType="VARCHAR"	/>
-		<result property="replyContent"  	column="reply_content"		jdbcType="VARCHAR"	/>
-		<result property="regDate"  		column="reg_date"			jdbcType="VARCHAR"	/>
-		<result property="likeCount"     	column="like_count"			jdbcType="NUMERIC"	/>
-		<result property="replyStatusFlag"	column="reply_status_flag"	jdbcType="CHAR"		/>
+		<result property="replyNo"        	  column="reply_no"				jdbcType="NUMERIC"	/>
+		<result property="postNo"			  column="post_no"				jdbcType="NUMERIC"	/>
+		<result property="targetReplyNo"	  column="target_reply_no"		jdbcType="NUMERIC"	/>
+		<result property="targetReplyMember"  column="target_reply_member" 	jdbcType="NUMERIC"	/>
+		<result property="memberNo"       	  column="member_no"			jdbcType="NUMERIC"	/>
+		<result property="memberNickname" 	  column="member_nickname"		jdbcType="VARCHAR"	/>
+		<result property="replyContent"  	  column="reply_content"		jdbcType="VARCHAR"	/>
+		<result property="regDate"  		  column="reg_date"				jdbcType="VARCHAR"	/>
+		<result property="likeCount"     	  column="like_count"			jdbcType="NUMERIC"	/>
+		<result property="replyStatusFlag"	  column="reply_status_flag"	jdbcType="CHAR"		/>
+		<collection property="reReplyList"	  column="reply_no"				javaType="java.util.ArrayList"	ofType="Reply"	select="getReReplyList" />
 	</resultMap>
 
 	<sql id="select-post-list">
@@ -130,7 +133,6 @@
 			reply
 		WHERE 
 			post_no = #{postNo}
-			AND reply_status_flag = '0'
 	</sql>
 
 	<select id="getPostListByBoard"   parameterType="Search"  resultMap="postResultMap">
@@ -263,7 +265,7 @@
 			post_no = #{postNo}
 	</update>
 	
-	<insert id="addReply">
+	<insert id="addReply" parameterType="Reply">
 		INSERT 
 		INTO reply 
 			( reply_no,			
@@ -271,18 +273,36 @@
 				member_no,			
 				member_nickname,
 				reply_content,		
-				reg_date,			
-				like_count,		
-				reply_status_flag)
+				reg_date)
 		VALUES 
 			( SEQ_REPLY_REPLY_NO.NEXTVAL,
 				#{postNo},			
 				#{memberNo },      
-				#{memberNickname}, 
+				#{memberNickname }, 
 				#{replyContent},  	
-				#{regDate},  		
-				#{likeCount},     	
-				#{replyStatusFlag}) 
+				SYSDATE) 
+	</insert>
+	
+	<insert id="addReReply" parameterType="Reply">
+		INSERT 
+		INTO reply 
+			( reply_no,			
+				post_no,			
+				member_no,			
+				member_nickname,
+				target_reply_no,
+				target_reply_member,
+				reply_content,		
+				reg_date)
+		VALUES 
+			( SEQ_REPLY_REPLY_NO.NEXTVAL,
+				#{postNo },			
+				#{memberNo },      
+				#{memberNickname }, 
+				#{targetReplyNo },
+				#{targetReplyMember },
+				#{replyContent},  	
+				SYSDATE) 
 	</insert>
 	
 	<select id="getReplyList" parameterType="Search" resultMap="replyResultMap">
@@ -292,14 +312,33 @@
 			(SELECT
 			 inner_table.*, ROWNUM AS row_seq
 			 FROM 
-				 (<include refid="select-reply-list"/>) inner_table
+				 (<include refid="select-reply-list"/>
+				 	AND target_reply_no IS NULL
+				 ) inner_table
 				  <where>
 		 				AND ROWNUM &lt;= #{endRowNum}
 				  </where>)
 		<where>
 			row_seq BETWEEN #{startRowNum} AND #{endRowNum}
 		</where>
-		
+	</select>
+	
+	<select id="getReReplyList" parameterType="int" resultMap="replyResultMap">
+		SELECT
+			reply_no,			
+			post_no,			
+			member_no,			
+			member_nickname,
+			target_reply_no,
+			target_reply_Member,
+			reply_content,		
+			TO_CHAR(reg_date,'YYYY-MM-DD HH24:MM:SS') AS reg_date,			
+			like_count,		
+			reply_status_flag
+		FROM 
+			reply
+		WHERE 
+			target_reply_no = #{replyNo}
 	</select>
 	
 	<select id="replyTotalCount" parameterType="Search" resultType="int">
@@ -309,9 +348,26 @@
 			(<include refid="select-reply-list"/>)
 	</select>
 	
+	
+	<select id="getReply" parameterType="int" resultMap="replyResultMap">
+		SELECT
+			reply_no,			
+			post_no,			
+			member_no,			
+			member_nickname,
+			reply_content,		
+			TO_CHAR(reg_date,'YYYY-MM-DD HH24:MM:SS') AS reg_date,			
+			like_count,		
+			reply_status_flag
+		FROM 
+			reply
+		WHERE 
+			reply_no = #{replyNo}
+	</select>
+	
 	<update id="updateReply" parameterType="Reply">
 		UPDATE
-			post
+			reply
 		SET
 			reply_content = #{replyContent}
 		WHERE
@@ -320,9 +376,9 @@
 	
 	<update id="deleteReply">
 		UPDATE
-			post
+			reply
 		SET
-			reply_status_flag = #{replyStatusFlag}
+			reply_status_flag = '1'
 		WHERE
 			reply_no = #{replyNo}
 	</update>

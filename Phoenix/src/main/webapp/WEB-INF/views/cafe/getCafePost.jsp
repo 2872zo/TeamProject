@@ -26,6 +26,8 @@
 				$("[name=boardName]").val( $("[name=boardNo] option:selected").text());
 			});
 
+			fncGetList(1);
+			
 			$("[name=update]").on("click",function(){
 // 				location.href = "/cafe/${post.cafeURL}/updatePost/${post.postNo}";
 				updatePost();
@@ -35,20 +37,41 @@
 				location.href = "/cafe/${post.cafeURL}/deletePost?postNo=${post.postNo}&boardNo=${post.boardNo}";
 			});
 
-			$("[name=reply]").on("click",function(){
-				getReplyList(1);
-			});
+			
 		});
 
-		function getReplyList(idx){
-			//리플가져와서 추가하는거 필요
-			$("div .replyItems").load("/cafe/${post.cafeURL}/getReplyList/${post.postNo}",idx);
+		function fncGetList(currentPage){
+			$("div .replyItems").load("/cafe/${post.cafeURL}/getReplyList/${post.postNo}", {currentPage:currentPage});
 		}
 
+
+		
+
 		function updatePost(){
-			alert("asd");
-			$("#test").load("/cafe/${post.cafeURL}/updatePost/${post.postNo}");
+			var getPost = $("#test").html();
+			
+
+			
+			$("#test").load("/cafe/${post.cafeURL}/updatePost/${post.postNo} #mainContent", function(response, status, xhr){
+				alert("response : " + response);
+
+				var obj = response.trim();
+				history.replaceState(getPost, "getPost", "/cafe/${post.cafeURL}/getPost/${post.postNo}");
+				history.pushState(obj,"updatePost","/cafe/${post.cafeURL}/updatePost/${post.postNo}");
+			});
+
+			window.CKEDITOR_BASEPATH = "/static/ckeditor/";
+			$.getScript("/static/ckeditor/ckeditor.js", function(data, status, xhr){
+				$.getScript("/static/js/form-validation.js");
+				$.getScript("/static/js/updatePost.js");
+			});
+			
 		}
+
+		$(window).on('popstate', function(event) {
+			console.log(event.originalEvent.state);
+			$("#test").html( event.originalEvent.state);
+		});
 	</script>
 
 
@@ -90,8 +113,7 @@
 				
 				<button name="update" class="btn btn-primary btn-lg btn-block">수정</button>
 				<button name="delete" class="btn btn-primary btn-lg btn-block">삭제</button>
-				<button name="reply" class="btn btn-primary btn-lg btn-block">댓글</button>
-				
+				<hr/>				
 				<div class="replyItems"></div>
 			</div>
 		</div><!-- row End -->

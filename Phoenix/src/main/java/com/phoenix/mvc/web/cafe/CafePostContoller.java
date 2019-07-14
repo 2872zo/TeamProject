@@ -242,27 +242,84 @@ public class CafePostContoller {
 
 	@PostMapping("/cafe/{cafeURL}/addReply")
 	public String addReply(@PathVariable String cafeURL, @ModelAttribute Reply reply) {
+		//임시 데이터
+		reply.setMemberNo(10000);
+		reply.setMemberNickname("매니저1");
+		System.out.println("[addReply] : " + reply);
+		
 		System.out.println("[addReply 결과] : " + cafePostService.addReply(reply));
-		return "redirect:/cafe/" + cafeURL + "/getBoard/" + reply.getPostNo();
+		return "redirect:/cafe/" + cafeURL + "/getPost/" + reply.getPostNo();
 	}
 	
+	@PostMapping("/cafe/{cafeURL}/addReReply")
+	public String addReReply(@PathVariable String cafeURL, @ModelAttribute Reply reply) {
+		//임시 데이터
+		reply.setMemberNo(10000);
+		reply.setMemberNickname("매니저1");
+		System.out.println("[addReply] : " + reply);
+		
+		System.out.println("[addReply 결과] : " + cafePostService.addReReply(reply));
+		return "redirect:/cafe/" + cafeURL + "/getPost/" + reply.getPostNo();
+	}
 	
-	@GetMapping("/cafe/{cafeURL}/getReplyList/{postNo}")
+	@RequestMapping("/cafe/{cafeURL}/getReply/{postNo}")
+	public String getReply(@PathVariable String cafeURL, @ModelAttribute Search search, Map<String, Object> map) {
+		Reply reply = cafePostService.getReply(search.getReplyNo());
+		
+		map.put("reply", reply);
+		
+		return "/cafe/getCafeReply";
+	}
+	
+	@RequestMapping("/cafe/{cafeURL}/getReplyList/{postNo}")
 	public String getReplyList(@PathVariable String cafeURL, @ModelAttribute Search search, Map<String, Object> map){
+		System.out.println("[getReplyList] search : " +  search);
+		
 		search.setPageSize(pageSize);
 		if(search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
 		}
 		
-		System.out.println("[getReplyList] search : " +  search);
 		
 		Map<String, Object> queryResultMap = cafePostService.getReplyList(search);
 		Page page = new Page(search.getCurrentPage(), (int)queryResultMap.get("replyTotalCount"), pageUnit, pageSize);
 		
-		map.put("replyList", queryResultMap.get("replyList"));
+		List<Reply> replyList = (List<Reply>) queryResultMap.get("replyList");
+		for (Reply reply : replyList) {
+			if(reply.isReplyStatusFlag()) {
+				reply.setReplyContent("삭제된 댓글입니다.");
+			}
+		}
+		
+		map.put("replyList", replyList);
 		map.put("replyTotalCount", queryResultMap.get("replyTotalCount"));
 		map.put("page", page);
-
+		map.put("postNo", search.getPostNo());
+		
 		return "/cafe/listCafeReply";
+	}
+	
+	@GetMapping("/cafe/{cafeURL}/updateReply/{replyNo}")
+	public String updateReplyView(@PathVariable String cafeURL, @ModelAttribute Search search, Map<String, Object> map) {
+		Reply reply = cafePostService.getReply(search.getReplyNo());
+		
+		map.put("reply", reply);
+		
+		return "/cafe/updateCafeReply";
+	}
+	
+	@PostMapping("/cafe/{cafeURL}/updateReply/{replyNo}")
+	public String updateReply(@PathVariable String cafeURL, @ModelAttribute Search search, @ModelAttribute Reply reply) {
+		System.out.println("[updateReply] 결과 : " + cafePostService.updateReply(reply));
+		
+		return "forward:/cafe/"+cafeURL+"/getReply/"+reply.getReplyNo();
+	}
+	
+	@PostMapping("/cafe/{cafeURL}/deleteReply/{replyNo}")
+	public String deleteReply(@PathVariable String cafeURL, @ModelAttribute Search search, Map<String, Object> map) {
+		System.out.println("[deleteReply] 결과 : " + cafePostService.deleteReply(search.getReplyNo()));
+		
+		map.put("currentPage", search.getCurrentPage());
+		return "forward:/cafe/{cafeURL}/getReplyList/{search.postNo}";
 	}
 }

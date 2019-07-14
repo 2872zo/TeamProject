@@ -92,4 +92,14 @@ public class CafePostServiceImpl implements CafePostService {
 	public boolean deleteReply(int replyNo) {
 		return cafePostDao.deleteReply(replyNo);
 	}
+
+	@Override
+	public Reply getReply(int replyNo) {
+		return cafePostDao.getReply(replyNo);
+	}
+
+	@Override
+	public boolean addReReply(Reply reply) {
+		return cafePostDao.addReReply(reply);
+	}
 }
