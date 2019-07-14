@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.phoenix.mvc.service.cafe.CafeTabService;
 import com.phoenix.mvc.service.domain.Cafe;
@@ -42,11 +43,6 @@ public class CafeTabContoller {
 		System.out.println(getClass().getName() + "default Constuctor");
 	}
 	
-	@RequestMapping("/cafe/main")
-	public String cafeMain() {
-		System.out.println("/cafe/main입니다.");
-		return "forward:/WEB-INF/views/cafe/cafeHomeMain.jsp";
-	}
 	///////////////////////////////준호시작///////////////////////////////////////	
 	@RequestMapping(value= "/addCafeView", method=RequestMethod.GET)
 	public String addCafeView(@ModelAttribute("cafe") Cafe cafe)throws Exception{
@@ -74,6 +70,43 @@ public class CafeTabContoller {
 	///////////////////////////////준호끝///////////////////////////////////////		
 	
 	/////////////////////////////////기황 시작//////////////////////////////////////
+	@RequestMapping(value = "/cafe/main", method=RequestMethod.GET)
+	public String cafeMain(Model model) throws Exception {
+		System.out.println("/cafe/main GET");
+		//session.getAttribute("user");
+		
+		Search search = new Search();
+		search.setUserNo(10000);//유저번호세팅
+		search.setStatus(0);//활동중 카페선택 세팅
+		search.setBoardNo(0);//카테고리0번 고르게 세팅
+		Map map = cafeTabService.getCafeHome(search);
+		List myCafelist = (List) map.get("myCafelist");
+		List categorizedCafeList = (List) map.get("categorizedCafeList");
+		
+		System.out.println("마이카페리스트마이카페리스트"+myCafelist);
+		model.addAttribute("search", search);
+		model.addAttribute("myCafelist", myCafelist);
+		model.addAttribute("categorizedCafeList", categorizedCafeList);
+		
+		return "forward:/WEB-INF/views/cafe/cafeHomeMain.jsp";
+	}
+	
+	@RequestMapping(value = "/cafe/main", method=RequestMethod.POST)
+	public String cafeMainPost(@ModelAttribute Search search, Model model) throws Exception {
+		//session.getAttribute("user");
+		System.out.println("/cafe/main POST");
+		
+		Map map = cafeTabService.getCafeHome(search);
+		List myCafelist = (List) map.get("myCafelist");
+		List categorizedCafeList = (List) map.get("categorizedCafeList");
+		
+		model.addAttribute("search", search);
+		model.addAttribute("myCafelist", myCafelist);
+		model.addAttribute("categorizedCafeList", categorizedCafeList);
+		
+		return "forward:/WEB-INF/views/cafe/cafeHomeMain.jsp";
+	}
+	
 	@RequestMapping("/cafe/search")
 	public String cafeSearch(@ModelAttribute("search") Search search, Model model) throws Exception {
 	

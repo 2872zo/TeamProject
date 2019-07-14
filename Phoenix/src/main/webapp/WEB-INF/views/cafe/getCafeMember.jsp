@@ -36,6 +36,11 @@ $(function() {
 		$("#"+$(this).text()).html(3333);
 		//$("#memberBlockForm").attr("method" , "POST").attr("action" , "/cafe/randomCafe/manage/addMemberBlock").submit();
 	});
+	$(".changeMemberGrade").on("click" , function() {
+		//alert($(this).val());
+		$("#cafeMemberGradeNo").val($(this).val());
+		$("#memberGradeForm").attr("method" , "POST").attr("action" , "/cafe/randomCafe/manage/updateCafeMemberGrade").submit();	
+	});
 	
 });
 </script>
@@ -73,6 +78,32 @@ $(function() {
   </tr>
 	</tbody>
 </table>
+<c:if test='${member.memberGrade != "cg100"}'>
+<div class='d-flex justify-content-center'>
+등급 변경하기&nbsp;:&nbsp; 
+<c:forEach var='cafeGrade' items='${cafeGrades}'>
+<c:if test='${cafeGrade.memberGradeCode != "cg100"}'>
+<button type="button" class='changeMemberGrade btn btn-${ cafeGrade.memberGradeCode==member.memberGrade ? "" : "outline-" }${ cafeGrade.memberGradeCode=="cg101" ? "info" : "primary" }' value='${cafeGrade.cafeGradeNo}'>
+${cafeGrade.memberGradeCode}/${cafeGrade.gradeName}
+</button>&nbsp;
+</c:if>
+</c:forEach>
+</div>
+
+<form id='memberGradeForm'>
+<input type='hidden' name='cafeNo' value='${member.cafeNo}'>
+<input type='hidden' name='memberNo' value='${member.memberNo}'>
+<input type='hidden' name='cafeMemberGradeNo' id='cafeMemberGradeNo' value='0'>
+</form>
+
+</c:if>
+
+<br/>
+<c:if test="${empty blocks}" >
+<br/>
+정지당한 내역이 없습니다.
+<br/>
+</c:if>
 <c:if test="${!empty blocks}">
 <table class="table table-borderless">
 	<thead>
@@ -97,6 +128,9 @@ $(function() {
 	</tbody>
 </table>
 </c:if>
+		
+<br/>
+
 <form id='memberBlockForm'>
 <input type='hidden' value='${member.memberNo}' name='memberNo'>
 <div class="input-group mb-3">
@@ -114,6 +148,7 @@ $(function() {
 	    <option value="365000" >천년</option>	    
 	   </select>
 	    </div>
+	    	    
 	  <input type="text" class="form-control form-control-lg" placeholder="정지사유를 (500자 이하)입력해주세요" aria-label="Text input with dropdown button" aria-describedby="button-addon2" name='blockReason' id="blockReason">
 	 <div class="input-group-append">
 	    <button class="btn btn-outline-secondary" type="button" id="blocking">정지</button>

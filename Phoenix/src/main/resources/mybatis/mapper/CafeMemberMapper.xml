@@ -15,7 +15,7 @@
 		<result property="memberNickname" 		column="member_nickname" 		jdbcType="VARCHAR" />
 		<result property="memberStatusCode" 	column="member_status_code" 	jdbcType="VARCHAR" />
 		<result property="favoriteFlag" 		column="favorite_flag" 			jdbcType="CHAR"  />
-		<result property="regDate" 				column="reg_date" 				jdbcType="DATE" />
+		<result property="regDate" 				column="reg_date" 				jdbcType="VARCHAR" />
 		<result property="visitCount" 			column="visit_count" 			jdbcType="NUMERIC" />
 		<result property="gradeName"  			column="grade_name" 			jdbcType="VARCHAR"/>
 		<result property="memberGrade" 			column="member_grade_code" 		jdbcType="VARCHAR"/>
@@ -47,12 +47,15 @@
 		SELECT
 		m.cafe_no, m.member_no, m.member_nickname, 
 		g.member_grade_code, g.grade_name, 
-		m.reg_date, m.visit_count, m.member_status_code
+		TO_CHAR(m.reg_date, 'YYYY-MM-DD HH24:MM:SS') reg_date, m.visit_count, m.member_status_code
 		FROM
 		cafe_member m, cafe_member_grade g
 		WHERE
 		m.cafe_member_grade_no=g.cafe_member_grade_no
 		AND	m.cafe_no = #{cafeNo}
+		<if test="searchKeyword != null">
+		AND m.member_nickname like '%' ||#{searchKeyword}|| '%'
+		</if>
 		<if test="memberGrade!=0">
 		AND g.member_grade_code=
 		</if>
@@ -114,7 +117,7 @@
 	 	SELECT
 		m.cafe_no, m.member_no, m.member_nickname, 
 		g.member_grade_code, g.grade_name, 
-		m.reg_date, m.visit_count,m.member_status_code
+		TO_CHAR(m.reg_date, 'YYYY-MM-DD HH24:MM:SS') reg_date, m.visit_count,m.member_status_code
 		FROM
 		cafe_member m, cafe_member_grade g
 		WHERE
@@ -179,6 +182,15 @@
 		</set>
 		WHERE 
 		block_no=10004
+	</update>
+	
+	<update id="updateMemberGrade" parameterType="CafeMember">
+		UPDATE
+		cafe_member
+		<set>
+		cafe_member_grade_no = #{cafeMemberGradeNo}
+		</set>
+		WHERE member_no=#{memberNo}
 	</update>
 	
 </mapper>

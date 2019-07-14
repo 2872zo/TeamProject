@@ -175,10 +175,9 @@ public class CafeMemberController {
 	}
 	//////////////////////////////// 지니끝//////////////////////////////////
 
-	///////////////////////////////// 기황시작//////////////////////////////////////
+	///////////////////////////////기황시작//////////////////////////////////
 	@RequestMapping(value = "/{cafeURL}/manage/getCafeMemberList")
-	public String getCafeMemberList(@PathVariable String cafeURL, @ModelAttribute("search") Search search, Model model)
-			throws Exception {
+	public String getCafeMemberList(@PathVariable String cafeURL, @ModelAttribute("search") Search search, Model model) throws Exception {
 
 		System.out.println("/cafe/{cafeURL}/getCafeMemberList : URL == "+cafeURL);
 		pageSize = 2;
@@ -206,9 +205,15 @@ public class CafeMemberController {
 	@RequestMapping(value = "/{cafeURL}/manage/getCafeMember", method = RequestMethod.POST)
 	public String getCafeMember(@ModelAttribute("search") Search search, Model model) throws Exception {
 		
-		System.out.println("/cafe/{cafeURL}/manage/getCafeMember : GET");
-		CafeMember cafeMember = cafeMemberService.getCafeMember(search);
-		model.addAttribute("member", cafeMember);
+		Map map = cafeMemberService.getCafeMemberBlocks(search);
+		
+		CafeMember member = (CafeMember) map.get("member");
+		List blocks = (List) map.get("blocks");
+		List cafeGrades = (List) map.get("cafeGrades");
+		
+		model.addAttribute("member", member);
+		model.addAttribute("blocks", blocks);
+		model.addAttribute("cafeGrades", cafeGrades);
 
 		return "forward:/WEB-INF/views/cafe/getCafeMember.jsp";
 	}
@@ -223,24 +228,25 @@ public class CafeMemberController {
 		return "forward:/cafe/"+cafeURL+"/manage/getCafeMemberBlock";
 		
 	}
-	
-	@RequestMapping(value = "/{cafeURL}/manage/getCafeMemberBlock", method = RequestMethod.POST)
-	public String getCafeMemberBlock(@ModelAttribute Search search, Model model, @PathVariable String cafeURL) throws Exception {
+
+	@RequestMapping(value = "/{cafeURL}/manage/updateCafeMemberBlock", method = RequestMethod.POST)
+	public String updateCafeMemberBlock(@ModelAttribute CafeMemberBlock cafeMemberBlock, Model model, @PathVariable String cafeURL) throws Exception {
 		
-		Map map = cafeMemberService.getCafeMemberBlocks(search);
-		CafeMember member = (CafeMember) map.get("member");
-		List blocks = (List) map.get("blocks");
-		model.addAttribute("member", member);
-		model.addAttribute("blocks", blocks);
+		//////////////////작업해야됨
 
 		return "forward:/WEB-INF/views/cafe/getCafeMember.jsp";		
 	}
 	
-	@RequestMapping(value = "/{cafeURL}/manage/updateCafeMemberBlock", method = RequestMethod.POST)
-	public String updateCafeMemberBlock(@ModelAttribute CafeMemberBlock cafeMemberBlock, Model model, @PathVariable String cafeURL) throws Exception {
+	@RequestMapping(value = "/{cafeURL}/manage/updateCafeMemberGrade", method = RequestMethod.POST)
+	public String updateCafeMemberGrade(@ModelAttribute CafeMember cafeMember, Model model, @PathVariable String cafeURL) throws Exception {
 		
-
-		return "forward:/WEB-INF/views/cafe/getCafeMember.jsp";		
+		cafeMemberService.updateCafeMemeberGrade(cafeMember);
+		Search search = new Search();
+		search.setMemberNo(cafeMember.getMemberNo());
+		search.setCafeNo(cafeMember.getCafeNo());
+		model.addAttribute("search", search);
+		return "forward:/cafe/"+cafeURL+"/manage/getCafeMember";
+		
 	}
 	///////////////////////////////// 기황끝//////////////////////////////////////
 

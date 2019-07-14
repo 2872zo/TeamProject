@@ -14,6 +14,8 @@ public interface CafeTabService {
 	public boolean checkCafeNameDuplication(String cafeName) throws Exception;
 	///////////////////////////////준호끝///////////////////////////////////////
 	//////////////////////////////기황시작//////////////////////////////
+	public Map getCafeHome(Search search)throws Exception;
+	
 	public Map searchCafe(Search search)throws Exception;
 	
 	public Map getCategorizedCafeList(Search search)throws Exception;

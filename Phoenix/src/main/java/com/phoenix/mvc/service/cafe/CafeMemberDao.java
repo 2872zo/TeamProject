@@ -39,6 +39,7 @@ public interface CafeMemberDao {
 	
 	public int updateCafeMemberBlocks (CafeMemberBlock cafeMemberBlock) throws Exception;
 
+	public int updateCafeMemeberGrade (CafeMember cafeMember) throws Exception;
 ////////////////////////////기황 끝////////////////////////////////////
 
 }

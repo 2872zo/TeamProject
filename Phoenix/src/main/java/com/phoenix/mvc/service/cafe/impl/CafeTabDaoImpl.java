@@ -33,10 +33,42 @@ public class CafeTabDaoImpl implements CafeTabDao {
 	
 
 	/////////////////////////////// 준호끝///////////////////////////////////////
-//////////////////////////////기황시작///////////////////////////////
+
+	//////////////////////////////기황시작//////////////////////////////
+
+	@Override
+	public List getMyCafeList(Search search) throws Exception {
+		return sqlSession.selectList("CafeTabMapper.cafeSortingByStatus", search);
+	}
+	
+	@Override
+	public List getMyOwnCafeList(Search search) throws Exception {
+		return sqlSession.selectList("CafeTabMapper.ownCafe", search);
+	}
+		
+	@Override
+	public int myCafeListTotalCount(Search search) throws Exception {
+		return sqlSession.selectOne("CafeTabMapper.myCafeListTotalCount", search);
+	}
+
+	@Override
+	public int ownCafeTotalCount(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("CafeTabMapper.ownCafeTotalCount", search);
+	}
+
+	@Override
+	public List getCategorizedCafeList(Search search) throws Exception {
+		return sqlSession.selectList("CafeTabMapper.categorizedCafeList", search);
+	}
+
+	@Override
+	public int countCategorizedCafe(Search search) throws Exception {
+		return sqlSession.selectOne("CafeTabMapper.countCategorizedCafe", search);
+	}
+	
 	@Override
 	public List searchCafe(Search search) throws Exception {
-// TODO Auto-generated method stub			
 		return sqlSession.selectList("CafeTabMapper.searchCafe", search);
 	}
 
@@ -44,21 +76,7 @@ public class CafeTabDaoImpl implements CafeTabDao {
 		return sqlSession.selectOne("CafeTabMapper.searchCafeTotalCount", search);
 	}
 
-	public int postTotalCount(Search search) throws Exception {
-		return sqlSession.selectOne("PostMapper.searchPostTotalCount", search);
-	}
 
-	@Override
-	public List getCategorizedCafeList(Search search) throws Exception {
-// TODO Auto-generated method stub
-		return sqlSession.selectList("CafeTabMapper.categorizedCafeList", search);
-	}
-
-	@Override
-	public int countCategorizedCafe(Search search) throws Exception {
-// TODO Auto-generated method stub
-		return sqlSession.selectOne("CafeTabMapper.countCategorizedCafe", search);
-	}
-//////////////////////////////////////기황끝//////////////////////////////////
+	//////////////////////////////기황끝//////////////////////////////
 
 }

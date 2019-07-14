@@ -34,6 +34,9 @@ public interface CafeMemberService {
 	public Map getCafeMemberBlocks (Search search) throws Exception;
 	
 	public int updateCafeMemberBlocks (CafeMemberBlock cafeMemberBlock) throws Exception;
+
+	public int updateCafeMemeberGrade (CafeMember cafeMember) throws Exception;
+	
 	////////////////////////////끝////////////////////////////////////
 
 }

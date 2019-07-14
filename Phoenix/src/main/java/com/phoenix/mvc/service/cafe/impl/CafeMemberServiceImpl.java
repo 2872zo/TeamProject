@@ -72,15 +72,18 @@ public class CafeMemberServiceImpl implements CafeMemberService {
 		
 	}
 ////////////////////////////////////지니끝//////////////////////////////
-/////////////////////////////////////기황 시작/////////////////////////////////////
+////////////////////////////////////기황시작////////////////////////////
 	@Override
 	public Map getCafeMemberList(Search search) throws Exception {
 		// TODO Auto-generated method stub
 		Map map = new HashMap();
+		
 		int totalCount = cafeMemberDao.getCafeMemberCount(search);
 		List memberList = cafeMemberDao.getCafeMemberList(search);
+		
 		map.put("memberList", memberList);
 		map.put("totalCount", new Integer(totalCount));
+		
 		return map;
 	}
 	
@@ -103,10 +106,15 @@ public class CafeMemberServiceImpl implements CafeMemberService {
 	public Map getCafeMemberBlocks(Search search) throws Exception {
 		// TODO Auto-generated method stub
 		Map map = new HashMap();
+		
 		CafeMember member = cafeMemberDao.getCafeMember(search);
 		List blocks = cafeMemberDao.getCafeMemberBlocks(search);
+		List cafeGrades = cafeManageDao.getCafeGrade(search.getCafeNo());
+
 		map.put("member", member);
 		map.put("blocks", blocks);
+		map.put("cafeGrades",cafeGrades);
+
 		return map;
 	}
 
@@ -115,10 +123,13 @@ public class CafeMemberServiceImpl implements CafeMemberService {
 		// TODO Auto-generated method stub
 		return cafeMemberDao.updateCafeMemberBlocks(cafeMemberBlock);
 	}
+
+	@Override
+	public int updateCafeMemeberGrade(CafeMember cafeMember) throws Exception {
+		// TODO Auto-generated method stub
+		return cafeMemberDao.updateCafeMemeberGrade(cafeMember);
+	}
 	
 //////////////////////////////////기황끝///////////////////////////////////////
-
-
-
 
 }

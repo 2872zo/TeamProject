@@ -29,6 +29,10 @@
 	
 $(function() {
 
+	$("#search").on("click" , function() {
+		$("#memberListingForm").attr("method" , "POST").attr("action" , "/cafe/randomURL/manage/getCafeMemberList").submit();
+	});
+
 	$(".status").on("click" , function() {
 		var count = $(".status").index(this);
 		 $("#status").val(count);
@@ -50,7 +54,7 @@ $(function() {
 	$(".memberNo").on("click" , function() {
 		var count = $(".memberNo").index(this);
 		$("#memberNo").val($($(".memberNo")[count]).text());
-		$("#memberDetailForm").attr("method" , "POST").attr("action" , "/cafe/randomURL/manage/getCafeMemberBlock").submit();
+		$("#memberDetailForm").attr("method" , "POST").attr("action" , "/cafe/randomURL/manage/getCafeMember").submit();
 	});
 
 	$(".memberStatusCode").on("click" , function() {
@@ -62,7 +66,7 @@ $(function() {
 
 });
 </script>
-<jsp:include page="../common/cafeToolbar.jsp" />
+
 </head>
 
 <body>
@@ -72,7 +76,7 @@ $(function() {
 
 <form id='memberListingForm'>
 <input type="hidden" name='currentPage' id='memberCurrentPage' value='0'>
-<input type="hidden" name = 'cafeNo' value='${search.cafeNo}'>
+<input type="hidden" name = 'cafeNo' value="${search.cafeNo}">
 <input type="hidden" name = 'memberGrade' value='${search.memberGrade}' id='memberGrade'>		
 <input type="hidden" name = 'status' value='${search.status}' id='status'>
 <input type="hidden" name = 'sortCode' value='${search.sortCode}' id='sortCode'>
@@ -82,14 +86,15 @@ $(function() {
 	    <option class='searchCondition' selected value="0" ${ !empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>닉네임</option>
 	   </select>
 	    </div>
-	  <input type="text" class="form-control form-control" placeholder="검색어 입력해주세요" aria-label="Text input with dropdown button" aria-describedby="button-addon2" value='${ !empty search.searchKeyword ? search.searchKeyword : '' }' name="searchKeyword" id="searchKeyword">
+	  <input type="text" class="form-control form-control" placeholder="검색어 입력해주세요" aria-label="Text input with dropdown button" aria-describedby="button-addon2" value='${ !empty search.searchKeyword ? search.searchKeyword : "" }' name="searchKeyword" id="searchKeyword">
 	 <div class="input-group-append">
 	    <button class="btn btn-outline-dark" type="button" id="search">검색</button>
 	 </div>
 	</div>
 </form>	
 <form id='memberDetailForm'>
-<input type="hidden" name='memberNo' id='memberNo' value='0'>
+<input type="hidden" name='memberNo' value='0' id='memberNo'>
+<input typr="hidden" name ='cafeNo'  value='${search.cafeNo}'>
 </form>
 	    
 <br/>

@@ -68,11 +68,11 @@ $(function() {
 </div>
 	
 	<br/>
-	<div class="center-block">
-	<button type="button" class="btn btn-success" id="cafe">CAFE</button>
-	<button type="button" class="btn btn-primary" id="mail">MAIL</button>
-	<button type="button" class="btn btn-info" id="sns">SNS</button>
-	<button type="button" class="btn btn-dark" id="shop">SHOP</button>
+	<div class="d-flex justify-content-around">
+	<button type="button" class="btn btn-lg btn-success" id="cafe">CAFE</button>
+	<button type="button" class="btn btn-lg btn-primary" id="mail">MAIL</button>
+	<button type="button" class="btn btn-lg btn-info" id="sns">SNS</button>
+	<button type="button" class="btn btn-lg btn-dark" id="shop">SHOP</button>
 	</div>
 </div>
 	<!--  화면구성 div Start /////////////////////////////////////-->
