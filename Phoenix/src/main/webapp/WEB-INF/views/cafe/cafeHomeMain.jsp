@@ -97,16 +97,18 @@ $(function() {
     </tr>
 	</thead>
 	<tbody>
-  <tr>
+  
 	<c:forEach var="myCafe" items="${myCafelist}">
+	 <tr>
 	 <th scope="row">${myCafe.cafeNo}</th>
 	 <td>${myCafe.URL}</td>
 	 <td>${myCafe.cafeName}</td>
 	 <td>${myCafe.cafeIcon}</td>
 	 <td>${myCafe.cafeDetail}</td>
 	 <td>${myCafe.regDate}</td>
+	 </tr>
 	</c:forEach>
-  </tr>
+  
 	</tbody>
 </table>
 

@@ -4,12 +4,20 @@ import java.util.Date;
 
 public class CafeMemberBlock {
 	
+	private int cafeNo;
 	private int memberNo;
 	private int blockNo;
 	private Date blockStartDate;
 	private Date blockEndDate;
+	private int period;
 	private String blockReason;
 	
+	public int getCafeNo() {
+		return cafeNo;
+	}
+	public void setCafeNo(int cafeNo) {
+		this.cafeNo = cafeNo;
+	}
 	public int getMemberNo() {
 		return memberNo;
 	}
@@ -34,6 +42,12 @@ public class CafeMemberBlock {
 	public void setBlockEndDate(Date blockEndDate) {
 		this.blockEndDate = blockEndDate;
 	}
+	public int getPeriod() {
+		return period;
+	}
+	public void setPeriod(int period) {
+		this.period = period;
+	}
 	public String getBlockReason() {
 		return blockReason;
 	}
@@ -43,8 +57,9 @@ public class CafeMemberBlock {
 	
 	@Override
 	public String toString() {
-		return "CafeMemberBlock [memberNo=" + memberNo + ", blockNo=" + blockNo + ", blockStartDate=" + blockStartDate
-				+ ", blockEndDate=" + blockEndDate + ", blockReason=" + blockReason + "]";
+		return "CafeMemberBlock [cafeNo=" + cafeNo + ", memberNo=" + memberNo + ", blockNo=" + blockNo
+				+ ", blockStartDate=" + blockStartDate + ", blockEndDate=" + blockEndDate + ", period=" + period
+				+ ", blockReason=" + blockReason + "]";
 	}
-	
+		
 }

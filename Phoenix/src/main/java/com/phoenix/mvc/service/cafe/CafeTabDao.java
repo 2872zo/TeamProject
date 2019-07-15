@@ -23,6 +23,10 @@ public interface CafeTabDao {
 	
 	public int myCafeListTotalCount(Search search) throws Exception;
 	
+	public List getCafeApplicationListForUser(int userNo);
+
+	public int countCafeApplicationListForUser(int userNo);
+	
 	public List getMyOwnCafeList(Search search) throws Exception;
 	
 	public int ownCafeTotalCount(Search search) throws Exception;

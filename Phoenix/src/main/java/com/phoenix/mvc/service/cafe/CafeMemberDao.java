@@ -37,7 +37,7 @@ public interface CafeMemberDao {
 	
 	public List getCafeMemberBlocks (Search search) throws Exception;
 	
-	public int updateCafeMemberBlocks (CafeMemberBlock cafeMemberBlock) throws Exception;
+	public int updateCafeMemberBlock (CafeMemberBlock cafeMemberBlock) throws Exception;
 
 	public int updateCafeMemeberGrade (CafeMember cafeMember) throws Exception;
 ////////////////////////////기황 끝////////////////////////////////////

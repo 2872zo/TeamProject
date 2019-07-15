@@ -43,6 +43,10 @@ $(function() {
 	$("#cafe").on("click" , function() {
 		$(self.location).attr("href","/cafe/main");
 	});
+	
+	$("#applications").on("click" , function() {
+		$(self.location).attr("href","/cafe/main/cafeApplicationList");
+	});
 
 	$("#explore").on("click" , function() {
 		$("#cafeSearch").attr("method" , "POST").attr("action" , "/cafe/search").submit();
@@ -74,7 +78,7 @@ $(function() {
         <a class="nav-link" href='#' id='cafe'>CafeHome<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
+        <a class="nav-link" href="#" id='applications'>어플리케이션 내놔</a>
       </li>   
     </ul>
     

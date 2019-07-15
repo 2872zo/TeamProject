@@ -101,7 +101,7 @@ public class CafeMemberDaoImpl implements CafeMemberDao {
 	}
 
 	@Override
-	public int updateCafeMemberBlocks(CafeMemberBlock cafeMemberBlock) throws Exception {
+	public int updateCafeMemberBlock(CafeMemberBlock cafeMemberBlock) throws Exception {
 		// TODO Auto-generated method stub
 		return sqlSession.update("CafeMemberMapper.updateCafeMemberBlock", cafeMemberBlock);
 	}

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -189,13 +190,12 @@ public class CafeMemberController {
 
 		Map<String, Object> map = cafeMemberService.getCafeMemberList(search);
 		List memberList = (List) map.get("memberList");
-
-		System.out.println(memberList);
-
+		List gradeList = (List) map.get("gradeList");
 		int totalCount = (int) map.get("totalCount");
 		Page page = new Page(search.getCurrentPage(), totalCount, pageUnit, pageSize);
 
 		model.addAttribute("memberList", memberList);
+		model.addAttribute("gradeList", gradeList);
 		model.addAttribute("search", search);
 		model.addAttribute("page", page);
 
@@ -218,23 +218,33 @@ public class CafeMemberController {
 		return "forward:/WEB-INF/views/cafe/getCafeMember.jsp";
 	}
 	
-	@RequestMapping(value = "/{cafeURL}/manage/addMemberBlock", method = RequestMethod.POST)
+	@PostMapping(value = "/{cafeURL}/manage/addMemberBlock")
 	public String addMemberBlock(@ModelAttribute("member") CafeMember cafeMember, Model model, @PathVariable String cafeURL) throws Exception {
 		
 		System.out.println("/{cafeURL}/manage/addMemberBlock");
+		
 		cafeMemberService.addCafeMemberBlock(cafeMember);
 		Search search = new Search();
+		
 		search.setMemberNo(cafeMember.getMemberNo());
-		return "forward:/cafe/"+cafeURL+"/manage/getCafeMemberBlock";
+		search.setCafeNo(cafeMember.getCafeNo());
+		
+		model.addAttribute("search", search);
+		
+		return "forward:/cafe/"+cafeURL+"/manage/getCafeMember";	
 		
 	}
 
 	@RequestMapping(value = "/{cafeURL}/manage/updateCafeMemberBlock", method = RequestMethod.POST)
 	public String updateCafeMemberBlock(@ModelAttribute CafeMemberBlock cafeMemberBlock, Model model, @PathVariable String cafeURL) throws Exception {
 		
-		//////////////////작업해야됨
-
-		return "forward:/WEB-INF/views/cafe/getCafeMember.jsp";		
+		cafeMemberService.updateCafeMemberBlock(cafeMemberBlock);
+		Search search = new Search();
+		search.setCafeNo(cafeMemberBlock.getCafeNo());
+		search.setMemberNo(cafeMemberBlock.getMemberNo());
+		model.addAttribute("search", search);
+		
+		return "forward:/cafe/"+cafeURL+"/manage/getCafeMember";	
 	}
 	
 	@RequestMapping(value = "/{cafeURL}/manage/updateCafeMemberGrade", method = RequestMethod.POST)

@@ -68,6 +68,16 @@ public class CafeTabDaoImpl implements CafeTabDao {
 	}
 	
 	@Override
+	public List getCafeApplicationListForUser(int userNo) {
+		return sqlSession.selectList("CafeApplicationMapper.getCafeApplication",userNo);
+	}
+
+	@Override
+	public int countCafeApplicationListForUser(int userNo) {
+		return sqlSession.selectOne("CafeApplicationMapper.countCafeApplicationForUser",userNo);
+	}
+	
+	@Override
 	public List searchCafe(Search search) throws Exception {
 		return sqlSession.selectList("CafeTabMapper.searchCafe", search);
 	}
@@ -75,7 +85,6 @@ public class CafeTabDaoImpl implements CafeTabDao {
 	public int cafeTotalCount(Search search) throws Exception {
 		return sqlSession.selectOne("CafeTabMapper.searchCafeTotalCount", search);
 	}
-
 
 	//////////////////////////////기황끝//////////////////////////////
 

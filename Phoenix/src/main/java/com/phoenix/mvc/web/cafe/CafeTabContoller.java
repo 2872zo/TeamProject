@@ -70,20 +70,20 @@ public class CafeTabContoller {
 	///////////////////////////////준호끝///////////////////////////////////////		
 	
 	/////////////////////////////////기황 시작//////////////////////////////////////
-	@RequestMapping(value = "/cafe/main", method=RequestMethod.GET)
+	@RequestMapping(value = "main", method=RequestMethod.GET)
 	public String cafeMain(Model model) throws Exception {
+		
 		System.out.println("/cafe/main GET");
-		//session.getAttribute("user");
 		
 		Search search = new Search();
 		search.setUserNo(10000);//유저번호세팅
 		search.setStatus(0);//활동중 카페선택 세팅
 		search.setBoardNo(0);//카테고리0번 고르게 세팅
+		
 		Map map = cafeTabService.getCafeHome(search);
 		List myCafelist = (List) map.get("myCafelist");
 		List categorizedCafeList = (List) map.get("categorizedCafeList");
 		
-		System.out.println("마이카페리스트마이카페리스트"+myCafelist);
 		model.addAttribute("search", search);
 		model.addAttribute("myCafelist", myCafelist);
 		model.addAttribute("categorizedCafeList", categorizedCafeList);
@@ -91,9 +91,9 @@ public class CafeTabContoller {
 		return "forward:/WEB-INF/views/cafe/cafeHomeMain.jsp";
 	}
 	
-	@RequestMapping(value = "/cafe/main", method=RequestMethod.POST)
+	@RequestMapping(value = "main", method=RequestMethod.POST)
 	public String cafeMainPost(@ModelAttribute Search search, Model model) throws Exception {
-		//session.getAttribute("user");
+
 		System.out.println("/cafe/main POST");
 		
 		Map map = cafeTabService.getCafeHome(search);
@@ -107,7 +107,7 @@ public class CafeTabContoller {
 		return "forward:/WEB-INF/views/cafe/cafeHomeMain.jsp";
 	}
 	
-	@RequestMapping("/cafe/search")
+	@RequestMapping("/search")
 	public String cafeSearch(@ModelAttribute("search") Search search, Model model) throws Exception {
 	
 		System.out.println("/cafe/search입니다.");
@@ -132,30 +132,24 @@ public class CafeTabContoller {
 		return "forward:/WEB-INF/views/cafe/listCafeSearch.jsp";
 	}
 	
-	@RequestMapping("/cafe/category")
-	public String getCategorizedCafe(@ModelAttribute("search") Search search, Model model) throws Exception {
+	@RequestMapping("main/cafeApplicationList")
+	public String getCafeApplicationList(Model model) throws Exception {
 		
-		System.out.println("/cafe/category입니다.");
-		pageSize=2;
-
-		if(search.getCurrentPage() == 0 ){
-			search.setCurrentPage(1);
-		}
-		search.setPageSize(pageSize);
+		pageSize = 2;
+		Search search = new Search();
+		search.setUserNo(10009);
+		Map map = cafeTabService.getCafeApplicationListForUser(search);
 		
-		Map<String, Object> map = cafeTabService.getCategorizedCafeList(search);
-		
-		List cafeList = (List) map.get("cafeList");
+		List applicationList = (List) map.get("applicationList");
 		int totalCount = (int) map.get("totalCount");
-		Page page = new Page( search.getCurrentPage(), totalCount, pageUnit, pageSize);
-
-		model.addAttribute("categoryCafeList", cafeList);
-		model.addAttribute("search", search);
-		model.addAttribute("page", page);
-			
-		return "forward:/WEB-INF/views/cafe/cafeHomeMain.jsp";
+		
+		model.addAttribute("applicationList", applicationList);
+		model.addAttribute("totalCount", totalCount);
+		
+		return "forward:/WEB-INF/views/cafe/listUserCafeApplication.jsp";
+		
 	}
-	
+		
 	/////////////////////////////////기황 끝//////////////////////////////////////
 
 	//////////////////////////////////////////////예림시작 ////////////////////////////////////////////////

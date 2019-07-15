@@ -144,6 +144,21 @@ public class CafeTabServiceImpl implements CafeTabService {
 		map.put("categorizedCafeList",categorizedCafeList);
 		return map;
 	}
+	
+
+	@Override
+	public Map getCafeApplicationListForUser(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		Map map = new HashMap();
+		
+		List applicationList = cafeTabDao.getCafeApplicationListForUser(search.getUserNo());
+		int totalCount = cafeTabDao.countCafeApplicationListForUser(search.getUserNo());
+		
+		map.put("applicationList", applicationList);
+		map.put("totalCount", new Integer(totalCount));
+	
+		return map;
+	}
 
 	@Override
 	public Map searchCafe(Search search) throws Exception {
@@ -187,6 +202,7 @@ public class CafeTabServiceImpl implements CafeTabService {
 		map.put("totalCount", new Integer(totalCount));
 		return map;
 	}
+	
 	////////////////////////////// 기황끝//////////////////////////////
 
 }

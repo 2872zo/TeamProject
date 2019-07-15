@@ -25,6 +25,7 @@
 		<result property="blockNo" 			column="block_no" 	jdbcType="NUMERIC"/>
 		<result property="blockStartDate" 	column="start_date" jdbcType="VARCHAR"/>
 		<result property="blockEndDate"		column="end_date" 	jdbcType="VARCHAR"/>
+		<result property="period" 			column="period" 	jdbcType="NUMERIC"/>
 		<result property="blockReason" 		column="reason" 	jdbcType="VARCHAR"/>
 	</resultMap>
 	
@@ -117,7 +118,8 @@
 	 	SELECT
 		m.cafe_no, m.member_no, m.member_nickname, 
 		g.member_grade_code, g.grade_name, 
-		TO_CHAR(m.reg_date, 'YYYY-MM-DD HH24:MM:SS') reg_date, m.visit_count,m.member_status_code
+		TO_CHAR(m.reg_date, 'YYYY-MM-DD HH24:MM:SS') reg_date, 
+		m.visit_count,m.member_status_code
 		FROM
 		cafe_member m, cafe_member_grade g
 		WHERE
@@ -125,9 +127,7 @@
 		AND
 		m.member_no = #{memberNo}
 	</select>
-	
-	
-	
+		
 	<select id="getMemberCount" parameterType="Search" resultType="int">
 	SELECT
 	COUNT(*)
@@ -158,30 +158,36 @@
 	<insert id="addCafeMemberBlock"		parameterType="CafeMember" >
 		INSERT INTO
 		cafe_member_block
-		( block_no, member_no, start_date, end_date, reason)
- 		VALUES ( SEQ_block_no.NEXTVAL, #{memberNo}, SYSDATE, SYSDATE+#{blockPeriod}, #{blockReason})
+		( block_no, member_no, start_date, end_date, period, reason)
+ 		VALUES 
+ 		( SEQ_block_no.NEXTVAL, #{memberNo}, 
+ 		SYSDATE, SYSDATE+#{blockPeriod}, #{blockPeriod}, #{blockReason})
 	</insert>
 	
 	<select id="getCafeMemeberBlock" parameterType="Search" resultMap="cafeMemberBlcokMap">
 	 	SELECT
-		b.block_no, b.reason, TO_CHAR(b.start_date, 'YYYY-MM-DD HH24:MM:SS') start_date, TO_CHAR(b.end_date, 'YYYY-MM-DD HH24:MM:SS') end_date
+		b.block_no, b.reason, 
+		TO_CHAR(b.start_date, 'YYYY-MM-DD HH24:MM:SS') start_date, 
+		TO_CHAR(b.end_date, 'YYYY-MM-DD HH24:MM:SS') end_date, 
+		period
 		FROM
 		cafe_member m, cafe_member_block b
 		WHERE
 		m.member_no = b.member_no
 		AND
 		m.member_no = #{memberNo}
+		ORDER BY b.block_no DESC
 	</select>
 	
 	<update id="updateCafeMemberBlock" parameterType="CafeMemberBlock">
 		UPDATE
 		cafe_member_block
 		<set>
-		end_date = SYSDATE
+		end_date = SYSDATE,
 		reason = #{blockReason}
 		</set>
 		WHERE 
-		block_no=10004
+		block_no=#{blockNo}
 	</update>
 	
 	<update id="updateMemberGrade" parameterType="CafeMember">

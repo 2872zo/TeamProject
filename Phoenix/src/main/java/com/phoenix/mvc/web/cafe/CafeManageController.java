@@ -183,9 +183,13 @@ public class CafeManageController {
 				}
 
 // 가입승인으로 cafeApplication 코드 업데이트, 카페멤버에 멤버추가
+				/*
+				////기황 수정userNo로 cafeApplication가져오는 부분이 
+				//리스트로 바뀌면서 에러발생했습니다 지니님 추후 수정해주세요~
 				for (int i = 0; i < count; i++) {
 					System.out.println(userNo.get(i));
 					CafeApplication cafe = cafeManageService.getCafeApplication(userNo.get(i));
+					
 					System.out.println(cafe);
 					cafe.setAcceptStatusCode("ca102");
 					cafeManageService.updateAcceptStatusCode(cafe);
@@ -198,6 +202,7 @@ public class CafeManageController {
 					cafeMemberService.addCafeMember(member);
 
 				}
+				*/
 
 			} else {
 // 가입거절로 cafeApplication 코드 업데이트
