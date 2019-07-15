@@ -25,7 +25,7 @@ public class UserRestController {
 		System.out.println(getClass().getName() + "default Constuctor");
 	}
 	
-	@GetMapping("/user/{userId}")
+	/*@GetMapping("/user/{userId}")
 	public User getUserById(@PathVariable String userId) throws Exception {
 
 		Search search = new Search();
@@ -33,5 +33,5 @@ public class UserRestController {
 		search.setPageSize(5);
 		
 		return userService.getUser(userId);
-	}
+	}*/
 }

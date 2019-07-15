@@ -32,7 +32,7 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	public User getUser(String userId) throws Exception {
-		return sqlSession.selectOne("getUser", userId);
+		return sqlSession.selectOne("UserMapper.getUser", userId);
 	}
 	
 	public User getUserByKakao(String kakao) throws Exception {

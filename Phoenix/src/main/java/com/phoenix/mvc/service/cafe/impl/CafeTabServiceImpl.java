@@ -74,14 +74,30 @@ public class CafeTabServiceImpl implements CafeTabService{
 	
 	public boolean checkCafeNameDuplication(String cafeName) throws Exception {
 		
-		boolean JSONData=true;
+		boolean result=true;
+		System.out.println("cafeName!!!!!!!!!!!!!!!!!!!!!!!"+cafeName);
+		Cafe cafe = cafeManageDao.getCafeName(cafeName);
 		
-		Cafe cafe = cafeManageDao.getCafeName(cafeName);			
+		System.out.println("cafe!!!!!!!!!!!!!!!!!!!!!!!"+cafe);
 		
 		if(cafe != null) {
-			JSONData=false;
+			result=false;
 		}
-		return JSONData;
+		return result;
+	}
+	
+	public boolean checkCafeURLDuplication(String URL) throws Exception {
+		
+		boolean result=true;
+		System.out.println("cafeName!!!!!!!!!!!!!!!!!!!!!!!"+URL);
+		Cafe cafe = cafeManageDao.getCafeURL(URL);
+		
+		System.out.println("cafe!!!!!!!!!!!!!!!!!!!!!!!"+cafe);
+		
+		if(cafe != null) {
+			result=false;
+		}
+		return result;
 	}
 	
 	///////////////////////////////준호끝///////////////////////////////////////	

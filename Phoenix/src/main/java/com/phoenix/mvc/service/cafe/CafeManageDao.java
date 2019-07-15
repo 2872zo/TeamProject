@@ -50,5 +50,7 @@ public Map<String,String> getCafeStatistics(Event event);
 	
 	public Cafe getCafeName(String cafeName)throws Exception;
 	
+	public Cafe getCafeURL(String URL)throws Exception;
+	
 	///////////////////////////////준호끝///////////////////////////////////////	
 }

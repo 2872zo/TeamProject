@@ -35,11 +35,11 @@ public class UserServiceImpl implements UserService{
 	public void addUser(User user) throws Exception {
 		userDao.addUser(user);
 	}
-
+/////////////////////////////준호시작///////////////////////////////////
 	public User getUser(String userId) throws Exception {
 		return userDao.getUser(userId);
 	}
-
+/////////////////////////////준호끝///////////////////////////////////
 	public Map<String , Object > getUserList(Search search) throws Exception {
 		List<User> list= userDao.getUserList(search);
 		int totalCount = userDao.getTotalCount(search);
@@ -68,4 +68,7 @@ public class UserServiceImpl implements UserService{
 	public User getUserByKakao(String kakao) throws Exception {
 		return userDao.getUserByKakao(kakao);
 	}
+
+
+
 }

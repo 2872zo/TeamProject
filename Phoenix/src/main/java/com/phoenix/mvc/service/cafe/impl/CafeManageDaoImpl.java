@@ -169,8 +169,12 @@ public class CafeManageDaoImpl implements CafeManageDao {
 	}
 	
 	public Cafe getCafeName(String cafeName) throws Exception {
-		return sqlSession.selectOne("CaferMapper.getCafeName", cafeName);
+		return sqlSession.selectOne("CafeMapper.getCafeName", cafeName);
 	}
+	public Cafe getCafeURL(String URL) throws Exception {
+		return sqlSession.selectOne("CafeMapper.getCafeURL", URL);
+	}	
+	
 	///////////////////////////////준호끝///////////////////////////////////////	
 
 }
