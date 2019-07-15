@@ -10,11 +10,11 @@ import com.phoenix.mvc.service.domain.CafeGrade;
 import com.phoenix.mvc.service.domain.Cafe;
 
 public interface CafeManageDao {
+	
 
+	
 ///////////////////////////////// 지니//////////////////////////////
 	public List<CafeApplication> getCafeApplicationList(Search search);
-
-	public CafeApplication getCafeApplication(int userNo);
 
 	public int getTotalCount(Search search);
 

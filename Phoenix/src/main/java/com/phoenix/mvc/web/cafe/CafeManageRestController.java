@@ -144,6 +144,10 @@ public class CafeManageRestController {
 			}
 			
 		System.out.println(userNo);
+		//기황수정
+		//cafeApplication userNo로 받아오는 부분 List로 가져오게 수정하면서 에러 발생했습니다.
+		//추후 수정부탁드립니다 지니님
+		/*
 		for(int i = 0; i<count; i++) {
 			System.out.println(userNo.get(i));
 			CafeApplication cafe =cafeManageService.getCafeApplication(userNo.get(i));	
@@ -159,6 +163,7 @@ public class CafeManageRestController {
 			//member.setCafeMemberGradeNo(cafeMemberGradeNo);//이거 나중에 조인해서 추가해2
 
 		}
+		*/
 		
 //		System.out.println(nickName);
 //		System.out.println(userNo);

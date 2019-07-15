@@ -76,9 +76,8 @@ public class CafeManageServiceImpl implements CafeManageService {
 		return statisticsList;
 	}
 
-/////////////////////////////////////////////////// 예림
-/////////////////////////////////////////////////// 끝//////////////////////////////////////////////
-
+/////////////////////////////////////////////////// 예림 끝//////////////////////////////////////////////
+	
 /////////////////////////////////지니//////////////////////////////
 	@Override
 	public Map<String, Object> getCafeApplicationList(Search search) {
@@ -98,12 +97,6 @@ public class CafeManageServiceImpl implements CafeManageService {
 
 		cafeManageDao.updateAcceptStatusCode(cafeApplication);
 
-	}
-
-	@Override
-	public CafeApplication getCafeApplication(int userNo) {
-
-		return cafeManageDao.getCafeApplication(userNo);
 	}
 
 	@Override

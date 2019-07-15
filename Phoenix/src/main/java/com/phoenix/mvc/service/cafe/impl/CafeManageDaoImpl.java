@@ -34,7 +34,7 @@ public class CafeManageDaoImpl implements CafeManageDao {
 
 		System.out.println(this.getClass().getName());
 	}
-
+	
 	///////////////////////////////// 지니//////////////////////////////
 	@Override
 	public List<CafeApplication> getCafeApplicationList(Search search) {
@@ -52,12 +52,6 @@ public class CafeManageDaoImpl implements CafeManageDao {
 	public void updateAcceptStatusCode(CafeApplication cafeApplication) {
 		sqlSession.update("CafeApplicationMapper.updateAcceptStatusCode", cafeApplication);
 
-	}
-
-	@Override
-	public CafeApplication getCafeApplication(int userNo) {
-
-		return sqlSession.selectOne("CafeApplicationMapper.getCafeApplication", userNo);
 	}
 
 	@Override
@@ -196,5 +190,7 @@ public class CafeManageDaoImpl implements CafeManageDao {
 		return sqlSession.selectOne("CaferMapper.getCafeName", cafeName);
 	}
 	/////////////////////////////// 준호끝///////////////////////////////////////
+
+	
 
 }

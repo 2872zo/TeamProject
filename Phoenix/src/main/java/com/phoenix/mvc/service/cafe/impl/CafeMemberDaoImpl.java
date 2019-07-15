@@ -69,7 +69,7 @@ public class CafeMemberDaoImpl implements CafeMemberDao {
 	}
 	/////////////////////////////////////////예림 끝///////////////////////////////////////////////
 
-////////////////////////////////////기황 시작///////////////////////////////////////
+	////////////////////////////////////기황 시작///////////////////////////////////////
 	@Override
 	public List getCafeMemberList(Search search) throws Exception {
 
@@ -101,15 +101,17 @@ public class CafeMemberDaoImpl implements CafeMemberDao {
 	}
 
 	@Override
-	public int updateCafeMemberBlocks(CafeMemberBlock cafeMemberBlock) throws Exception {
+	public int updateCafeMemberBlock(CafeMemberBlock cafeMemberBlock) throws Exception {
 		// TODO Auto-generated method stub
 		return sqlSession.update("CafeMemberMapper.updateCafeMemberBlock", cafeMemberBlock);
 	}
 
-//////////////////////////////기황 끝///////////////////////////////////////	
+	@Override
+	public int updateCafeMemeberGrade(CafeMember cafeMember) throws Exception {
+		// TODO Auto-generated method stub  updateMemberGrade
+		return sqlSession.update("CafeMemberMapper.updateMemberGrade", cafeMember);
+	}
 
-
-
-
+	//////////////////////////////기황 끝///////////////////////////////////////	
 
 }

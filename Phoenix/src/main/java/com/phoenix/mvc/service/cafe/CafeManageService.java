@@ -16,8 +16,6 @@ public interface CafeManageService {
 
 	public void updateAcceptStatusCode(CafeApplication cafeApplication);
 
-	public CafeApplication getCafeApplication(int userNo);
-
 	public CafeApplication getCafeApplication2(int applicationNo);
 
 	public List getCafeGrade(int cafeNo);
