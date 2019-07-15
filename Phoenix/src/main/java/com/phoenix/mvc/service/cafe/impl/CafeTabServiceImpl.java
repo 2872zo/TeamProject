@@ -21,18 +21,17 @@ import com.phoenix.mvc.service.domain.CafeMember;
 import com.phoenix.mvc.service.domain.Post;
 import com.phoenix.mvc.service.domain.User;
 
-
 @Service("cafeTabServiceImpl")
-public class CafeTabServiceImpl implements CafeTabService{
-	
+public class CafeTabServiceImpl implements CafeTabService {
+
 	@Autowired
 	@Qualifier("cafeTabDaoImpl")	
 	private CafeTabDao cafeTabDao;
-	
+
 	@Autowired
 	@Qualifier("cafeManageDaoImpl")
 	private CafeManageDao cafeManageDao;
-	
+
 	@Autowired
 	@Qualifier("cafeMemberDaoImpl")
 	private CafeMemberDao cafeMemberDao;
@@ -74,19 +73,35 @@ public class CafeTabServiceImpl implements CafeTabService{
 	
 	public boolean checkCafeNameDuplication(String cafeName) throws Exception {
 		
-		boolean JSONData=true;
+		boolean result=true;
+		System.out.println("cafeName!!!!!!!!!!!!!!!!!!!!!!!"+cafeName);
+		Cafe cafe = cafeManageDao.getCafeName(cafeName);
 		
-		Cafe cafe = cafeManageDao.getCafeName(cafeName);			
+		System.out.println("cafe!!!!!!!!!!!!!!!!!!!!!!!"+cafe);
 		
 		if(cafe != null) {
-			JSONData=false;
+			result=false;
 		}
-		return JSONData;
+		return result;
+	}
+	
+	public boolean checkCafeURLDuplication(String URL) throws Exception {
+		
+		boolean result=true;
+		System.out.println("cafeName!!!!!!!!!!!!!!!!!!!!!!!"+URL);
+		Cafe cafe = cafeManageDao.getCafeURL(URL);
+		
+		System.out.println("cafe!!!!!!!!!!!!!!!!!!!!!!!"+cafe);
+		
+		if(cafe != null) {
+			result=false;
+		}
+		return result;
 	}
 	
 	///////////////////////////////준호끝///////////////////////////////////////	
 
-
+//////////////////////////////////////예림시작/////////////////////////////////////
 	@Override
 	public Map getCafeMain(User user, String cafeURL) { // 예림예림
 
@@ -130,52 +145,82 @@ public class CafeTabServiceImpl implements CafeTabService{
 /////////////////////////////////////////////// 예림
 /////////////////////////////////////////////// 끝/////////////////////////////////////
 
-//////////////////////////////기황시작//////////////////////////////////////
+	////////////////////////////// 기황시작//////////////////////////////
 
-@Override
-public Map searchCafe(Search search) throws Exception {
-//TODO Auto-generated method stub
-	int totalCount;
-	Map map = new HashMap();
-	List cafeList = new ArrayList();
-	List postList = new ArrayList();
-	if (search.getSearchCondition().equals("0")) {
-		cafeList = cafeTabDao.searchCafe(search);
-		Map postMap = cafePostServiceImpl.getPostListBySearch(search);
-		postList = (List) postMap.get("postList");
-//totalCount = (int) postMap.get("postTotalCount");
-//postList = cafeTabDao.seachPost(search);
-		map.put("cafeList", cafeList);
-		map.put("postList", postList);
-		map.put("totalCount", new Integer(10));
+	@Override
+	public Map getCafeHome(Search search) throws Exception {
+		Map map = new HashMap();
+		List myCafelist = new ArrayList();
+		if (search.getStatus()==2) {
+			myCafelist = cafeTabDao.getMyOwnCafeList(search);
+		}
+		else {
+			myCafelist = cafeTabDao.getMyCafeList(search);
+		}
+		List categorizedCafeList = cafeTabDao.getCategorizedCafeList(search);
+		map.put("myCafelist",myCafelist);
+		map.put("categorizedCafeList",categorizedCafeList);
+		return map;
 	}
-	if (search.getSearchCondition().equals("1")) {
-		cafeList = cafeTabDao.searchCafe(search);
-		totalCount = cafeTabDao.cafeTotalCount(search);
+	
+
+	@Override
+	public Map getCafeApplicationListForUser(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		Map map = new HashMap();
+		
+		List applicationList = cafeTabDao.getCafeApplicationListForUser(search.getUserNo());
+		int totalCount = cafeTabDao.countCafeApplicationListForUser(search.getUserNo());
+		
+		map.put("applicationList", applicationList);
+		map.put("totalCount", new Integer(totalCount));
+	
+		return map;
+	}
+
+	@Override
+	public Map searchCafe(Search search) throws Exception {
+		int totalCount;
+		Map map = new HashMap();
+		List cafeList = new ArrayList();
+		List postList = new ArrayList();
+		if (search.getSearchCondition().equals("0")) {
+			cafeList = cafeTabDao.searchCafe(search);
+			Map postMap = cafePostServiceImpl.getPostListBySearch(search);
+			postList = (List) postMap.get("postList");
+			//totalCount = (int) postMap.get("postTotalCount");
+			//postList = cafeTabDao.seachPost(search);
+			map.put("cafeList", cafeList);
+			map.put("postList", postList);
+			map.put("totalCount", new Integer(10));
+		}
+		if (search.getSearchCondition().equals("1")) {
+			cafeList = cafeTabDao.searchCafe(search);
+			totalCount = cafeTabDao.cafeTotalCount(search);
+			map.put("cafeList", cafeList);
+			map.put("totalCount", new Integer(totalCount));
+		}
+		if (search.getSearchCondition().equals("2")) {
+			Map postMap = cafePostServiceImpl.getPostListBySearch(search);
+			postList = (List) postMap.get("postList");
+			totalCount = (int) postMap.get("postTotalCount");
+			map.put("postList", postList);
+			map.put("totalCount", new Integer(totalCount));
+		}
+
+		return map;
+	}
+
+	@Override
+	public Map getCategorizedCafeList(Search search) throws Exception {
+		Map map = new HashMap();
+		int totalCount = cafeTabDao.countCategorizedCafe(search);
+		List cafeList = cafeTabDao.getCategorizedCafeList(search);
 		map.put("cafeList", cafeList);
 		map.put("totalCount", new Integer(totalCount));
+		return map;
 	}
-	if (search.getSearchCondition().equals("2")) {
-		Map postMap = cafePostServiceImpl.getPostListBySearch(search);
-		postList = (List) postMap.get("postList");
-		totalCount = (int) postMap.get("postTotalCount");
-		map.put("postList", postList);
-		map.put("totalCount", new Integer(totalCount));
-	}
-
-	return map;
-}
-
-@Override
-public Map getCategorizedCafeList(Search search) throws Exception {
-//TODO Auto-generated method stub
-	Map map = new HashMap();
-	int totalCount = cafeTabDao.countCategorizedCafe(search);
-	List cafeList = cafeTabDao.getCategorizedCafeList(search);
-	map.put("cafeList", cafeList);
-	map.put("totalCount", new Integer(totalCount));
-	return map;
-}
-//////////////////////////////기황끝/////////////////////////////////////
+	
+	////////////////////////////// 기황끝//////////////////////////////
 
 }

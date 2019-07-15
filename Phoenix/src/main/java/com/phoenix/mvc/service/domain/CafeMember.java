@@ -1,5 +1,6 @@
 package com.phoenix.mvc.service.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class CafeMember {
@@ -18,6 +19,12 @@ public class CafeMember {
 	private int visitCount;
 	private int postCount;
 	private int replyCount;
+	private int blockPeriod;
+	private Date blockStartDate;
+	private Date blockEndDate;
+	private String blockReason;
+	private ArrayList<CafeMemberBlock> blocks;
+	
 	public int getMemberNo() {
 		return memberNo;
 	}
@@ -102,6 +109,30 @@ public class CafeMember {
 	public void setReplyCount(int replyCount) {
 		this.replyCount = replyCount;
 	}
+	public int getBlockPeriod() {
+		return blockPeriod;
+	}
+	public void setBlockPeriod(int blockPeriod) {
+		this.blockPeriod = blockPeriod;
+	}
+	public Date getBlockStartDate() {
+		return blockStartDate;
+	}
+	public void setBlockStartDate(Date blockStartDate) {
+		this.blockStartDate = blockStartDate;
+	}
+	public Date getBlockEndDate() {
+		return blockEndDate;
+	}
+	public void setBlockEndDate(Date blockEndDate) {
+		this.blockEndDate = blockEndDate;
+	}
+	public String getBlockReason() {
+		return blockReason;
+	}
+	public void setBlockReason(String blockReason) {
+		this.blockReason = blockReason;
+	}
 	
 	@Override
 	public String toString() {
@@ -109,7 +140,9 @@ public class CafeMember {
 				+ memberNickname + ", memberStatusCode=" + memberStatusCode + ", noticeFlag=" + noticeFlag
 				+ ", favoriteFlag=" + favoriteFlag + ", cafeMemberGradeNo=" + cafeMemberGradeNo + ", memberGrade="
 				+ memberGrade + ", gradeName=" + gradeName + ", regDate=" + regDate + ", visitCount=" + visitCount
-				+ ", postCount=" + postCount + ", replyCount=" + replyCount + "]";
+				+ ", postCount=" + postCount + ", replyCount=" + replyCount + ", blockPeriod=" + blockPeriod
+				+ ", blockStartDate=" + blockStartDate + ", blockEndDate=" + blockEndDate + ", blockReason="
+				+ blockReason + "]";
 	}
-
+	
 }

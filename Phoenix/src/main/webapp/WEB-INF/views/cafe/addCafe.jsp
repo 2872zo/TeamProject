@@ -62,7 +62,7 @@
     </tr>
     <tr>
       <th scope="row">카페URL</th>
-      <td>${cafe.url}</td>
+      <td>${cafe.URL}</td>
     </tr>
     <tr>
       <th scope="row">카페설명</th>

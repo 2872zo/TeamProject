@@ -6,6 +6,8 @@ import java.util.Map;
 import com.phoenix.mvc.common.Event;
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.domain.CafeApplication;
+import com.phoenix.mvc.service.domain.Board;
+import com.phoenix.mvc.service.domain.CafeGrade;
 import com.phoenix.mvc.service.domain.Cafe;
 
 public interface CafeManageDao {
@@ -13,13 +15,19 @@ public interface CafeManageDao {
 ///////////////////////////////// 지니//////////////////////////////
 public List<CafeApplication> getCafeApplicationList(Search search);
 
-public CafeApplication getCafeApplication(int userNo);
-
 public int getTotalCount(Search search);
 
 public void updateAcceptStatusCode(CafeApplication cafeApplication);
 
 public CafeApplication getCafeApplication2(int applicationNo);
+
+public List getCafeGrade(int cafeNo);
+
+public void addCafeGrade (CafeGrade cafeGrade);
+
+public void updateCafeGrade (CafeGrade cafeGrade);
+
+public List checkCafeGrade(int cafeNo);
 ////////////////////////////////지니끝//////////////////////////////////
 
 
@@ -37,7 +45,9 @@ public boolean addEventLog(Event event);// 예림예림 add되면 true return
 
 public boolean checkCafeTodayVisitLog(Event event); // 예림예림 return true- 오늘방문함 false -오늘첫방문
 
-public Map<String,String> getCafeStatistics(Event event);
+public Map<String, String> getCafeStatistics(Event event);
+
+public boolean addCafeBoard(List<Board> newBoard);
 
 ///////////////////////////////////////// 예림 끝////////////////////////////////////////////////
 
@@ -49,6 +59,8 @@ public Map<String,String> getCafeStatistics(Event event);
 	public void updateCafeApplicationForm(Cafe cafe) throws Exception ;
 	
 	public Cafe getCafeName(String cafeName)throws Exception;
+	
+	public Cafe getCafeURL(String URL)throws Exception;
 	
 	///////////////////////////////준호끝///////////////////////////////////////	
 }

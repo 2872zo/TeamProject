@@ -49,9 +49,15 @@
 	 </select>
 	 
 	 <select 	id="getCafeName"	parameterType= "String"	resultMap="cafeSelectMap">
-		SELECT	 cafe_Name		
+		SELECT	 cafe_Name	
 		FROM cafe 
 		WHERE cafe_Name = #{value}
+	 </select>
+	 
+	 <select 	id="getCafeURL"	parameterType= "String"	resultMap="cafeSelectMap">
+		SELECT	 url	
+		FROM cafe 
+		WHERE url = #{value}
 	 </select>
 	 
 	 

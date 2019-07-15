@@ -13,6 +13,8 @@ import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.cafe.CafeManageDao;
 import com.phoenix.mvc.service.cafe.CafeManageService;
 import com.phoenix.mvc.service.domain.CafeApplication;
+import com.phoenix.mvc.service.domain.Board;
+import com.phoenix.mvc.service.domain.CafeGrade;
 import com.phoenix.mvc.service.domain.Cafe;
 
 @Service("cafeManageServiceImpl")
@@ -65,14 +67,51 @@ public class CafeManageServiceImpl implements CafeManageService {
 	}
 
 	@Override
-	public Map<String,String> getCafeStatistics(Event event, String cafeURL) { // 예림예림 작업중
+	public Map<String, String> getCafeStatistics(Event event, String cafeURL) { // 예림예림 작업중
 
 		int cafeNo = cafeManageDao.getCafeNo(cafeURL);
 
 		event.setCafeNo(cafeNo); // cafeNo를 set
-		Map<String,String> statisticsList = cafeManageDao.getCafeStatistics(event); // 모든 카페는 통계가 있다. count라서 0이더라도
+		Map<String, String> statisticsList = cafeManageDao.getCafeStatistics(event); // 모든 카페는 통계가 있다. count라서 0이더라도
 
 		return statisticsList;
+	}
+
+	@Override
+	public boolean addCafeBoard(List<Board> newBoard) { // 구분선이랑 자유게시판밖에 없음
+		// TODO Auto-generated method stub
+
+		int cafeNo = cafeManageDao.getCafeNo(newBoard.get(0).getCafeURL());
+		for (int i = 0; i < newBoard.size(); i++) {
+			newBoard.get(i).setCafeNo(cafeNo);
+			// 가짜데이터
+			newBoard.get(i).setAccessGrade("10002");
+			newBoard.get(i).setPrivateFlag('0');
+			// -------------------------------------------
+			if (newBoard.get(i).getBoardName() == null) // 구분선이면
+			{
+				newBoard.get(i).setBoardType("cb102");
+				newBoard.get(i).setBoardName("------------");
+			} else // 자유게시판이면
+			{
+				newBoard.get(i).setBoardType("cb103"); // 자유게시판
+			}
+		}
+
+		boolean addCafeResult = cafeManageDao.addCafeBoard(newBoard);
+
+		return addCafeResult;
+	}
+
+	@Override
+	public boolean updateCafeBoard(List<Board> existBoard) {
+		int cafeNo = cafeManageDao.getCafeNo(existBoard.get(0).getCafeURL());
+		for (int i = 0; i < existBoard.size(); i++) {
+			// 가짜데이터
+
+		}
+
+		return false;
 	}
 
 /////////////////////////////////////////////////// 예림
@@ -100,15 +139,35 @@ public class CafeManageServiceImpl implements CafeManageService {
 	}
 
 	@Override
-	public CafeApplication getCafeApplication(int userNo) {
-
-		return cafeManageDao.getCafeApplication(userNo);
-	}
-
-	@Override
 	public CafeApplication getCafeApplication2(int applicationNo) {
 
 		return cafeManageDao.getCafeApplication2(applicationNo);
+	}
+
+	@Override
+	public List getCafeGrade(int cafeNo) {
+
+		return cafeManageDao.getCafeGrade(cafeNo);
+	}
+
+	@Override
+	public void addCafeGrade(CafeGrade cafeGrade) {
+
+		cafeManageDao.addCafeGrade(cafeGrade);
+
+	}
+
+	@Override
+	public void updateCafeGrade(CafeGrade cafeGrade) {
+
+		cafeManageDao.updateCafeGrade(cafeGrade);
+
+	}
+
+	@Override
+	public List checkCafeGrade(int cafeNo) {
+
+		return cafeManageDao.checkCafeGrade(cafeNo);
 	}
 
 ////////////////////////////////지니끝//////////////////////////////////
@@ -128,12 +187,12 @@ public class CafeManageServiceImpl implements CafeManageService {
 	public Cafe getCafeInfo(int cafeNo) throws Exception {
 		return cafeManageDao.getCafeInfo(cafeNo);
 	}
-	
+
 	@Override // 준호
 	public Cafe getCafeName(String cafeName) throws Exception {
 		return cafeManageDao.getCafeName(cafeName);
 	}
-	
+
 	/////////////////////////////// 준호끝///////////////////////////////////////
 
 }

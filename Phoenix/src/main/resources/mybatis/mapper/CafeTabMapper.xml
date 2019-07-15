@@ -11,7 +11,7 @@
 		<result property="cafeName"					 column="cafe_name" 					jdbcType="VARCHAR" />
 		<result property="cafeIcon" 				 column="cafe_icon" 					jdbcType="VARCHAR" />
 		<result property="manageUserNo" 			 column="manage_user_no" 				jdbcType="VARCHAR" />
-		<result property="regDate" 					 column="reg_date" 						jdbcType="DATE" />
+		<result property="regDate" 					 column="reg_date" 						jdbcType="VARCHAR" />
 		<result property="URL" 						 column="url" 							jdbcType="VARCHAR" />
 		<result property="cafeDetail" 				 column="cafe_detail" 					jdbcType="VARCHAR" />
 		<result property="bannerImg" 				 column="banner_img" 					jdbcType="VARCHAR"  />
@@ -98,6 +98,68 @@
 		count(*)
 		FROM (
 		<include refid="categoryCafe"/>
+		)
+	 </select>
+	
+	 <sql id="cafeListByStatus">
+	 	SELECT
+		c.cafe_no, c.cafe_name, c.cafe_icon, c.url, c.cafe_detail,TO_CHAR(c.reg_date, 'YYYY-MM-DD HH24:MM:SS') reg_date
+	 	FROM
+		cafe c, cafe_member m
+		WHERE
+		c.cafe_no = m.cafe_no
+		<!-- 0이면 활동중1이면 즐찾 3이면 정지 2면 아래에 있는 자기가 운영중인 카페 출력 -->
+		<if test="status==0">
+		AND
+		m.member_status_code ='cs100'
+		</if>
+		<if test="status==3">
+		AND
+		m.member_status_code ='cs101'
+		</if>
+		<if test="status==1">
+		AND
+		m.favorite_flag = '1'
+		</if>
+		AND
+		m.user_no = #{userNo}
+	 </sql>
+	 
+	 <select id="cafeSortingByStatus" parameterType="Search" resultMap="cafeTabSelectMap">
+	 	<include refid="cafeListByStatus"></include>
+	 </select>
+	 
+	 <select id="myCafeListTotalCount" parameterType="Search" resultMap="cafeTabSelectMap">
+	 	SELECT
+		count(*)
+		FROM (
+		<include refid="cafeListByStatus"/>
+		)
+	 </select>
+	 
+	 <sql id="getOwnCafe">
+	 	SELECT 
+		c.cafe_no, c.cafe_name, c.cafe_icon, c.url, c.cafe_detail,TO_CHAR(c.reg_date, 'YYYY-MM-DD HH24:MM:SS') reg_date
+		FROM
+		cafe c, cafe_member m, cafe_member_grade g
+		WHERE
+		c.cafe_no = m.cafe_no
+		AND
+		m.cafe_member_grade_no = g.cafe_member_grade_no
+		AND
+		g.member_grade_code='cg100' 
+		AND m.user_no = #{userNo}
+	 </sql>
+	 
+	 <select id="ownCafe" parameterType="Search" resultMap="cafeTabSelectMap">
+		<include refid="getOwnCafe"></include>
+	 </select>
+	 
+	 <select id="ownCafeTotalCount" parameterType="Search" resultMap="cafeTabSelectMap">
+		 SELECT
+		count(*)
+		FROM (
+		<include refid="getOwnCafe"></include>
 		)
 	 </select>
 	 

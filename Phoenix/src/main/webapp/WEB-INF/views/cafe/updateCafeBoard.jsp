@@ -16,10 +16,28 @@
 
 	<script type="text/javascript">
 
-		var totalBoardSize ;
-	
+		var totalBoardSize ="";
+		var appendBoardDetail="";
+		var count =0;
+		
+		function AllSelect(){
+
+			var obj = document.form.board;
+			alert(obj.length);
+
+			for(var i=0; i<obj.length; i++)
+			{
+				//alert("a");
+				obj.options[i].selected = "selected";	
+			}	
+
+		}
+
+		//----------------------------------------------------------------메서드
+		
 		$(function() {
 
+			/*
 			for(var i=0; i<$("input[id=totalBoardsize]").val(); i++) 
 			{
 
@@ -32,7 +50,7 @@
 					$(".boardDetail"+i).show();
 				}
 				
-			}
+			}*/
 
 
 			$("select[name=board]").change(function(){ // listbox선택하면
@@ -40,34 +58,42 @@
 					alert($("input[id=totalBoardsize]").val());
 				 //여기서 display none등 설정
 
-					
 					 
 			});
+
+			
 
 			$("#plusBoard").on("click", function(){ //게시판추가
 				
 				alert($("select[name=addableBoard]").val());
-				var appendBoard = "<option value='"+$("select[name=addableBoard]").val()+"' id=''>"+$("select[name=addableBoard]").val()+"</option>"
+				//기존 게시판리스트에 추가
+				var appendBoard = "<option value='newBoard"+count+"' id=''>"+$("select[name=addableBoard]").val()+"</option>"
 				$("select[name=board]").append(appendBoard);
+				//보드사이즈증가
 				$("input[id=totalBoardsize]").val($("input[id=totalBoardsize]").val()-0+1);
-				//게시판 추가하면  밑에 input type text추가하고 
-				var appendBoardDetail = <div class ="boardDetail${j}">
+				totalBoardSize	= $("input[id=totalBoardsize]").val();
+				alert(totalBoardSize);
+
 				
-				<br/>
-				<br/>
-				메뉴명  <input type="text" name="boardName" value="${board.boardName}" />
-				<br />
-				메뉴설명 <input type="text"  name="boardDetail" width="50" value="${board.boardDetail}">
-				<br/>
-				<br/>
-		
-				게시판 공개여부를 설정합니다. 멤버공개를 선택시, 게시판은 멤버에게만 보여집니다.
-				<br/>
-				<br/>
-		
-			</div>
+				
+				if($("select[name=addableBoard]").val()=="자유게시판"){
+					//게시판 추가하면  밑에 input type text추가하고 
+					 	appendBoardDetail = "<div class ='boardDetail"+totalBoardSize+"'> <br/><br/>"
+						+"메뉴명  <input type='text' name='newBoardName"+count+"' /><br />"
+						+"메뉴설명 <input type='text'  name='newBoardDetail"+count+"' width='50'>"
+						+"<br/><br/>게시판 공개여부를 설정합니다. 멤버공개를 선택시, 게시판은 멤버에게만 보여집니다."
+						+"<br/><br/></div>"
+						//$(".boardDetail").hide();
+				}
+				else{
+					 appendBoardDetail = "메뉴들을 구분선을 통해 쉽게 구분할 수 있습니다."
+				}
+
+				//alert("dkd")			
 				$(".boardDetail").append(appendBoardDetail);
+				//appendBoardDetail="";
 				
+				count++;
 			});
 
 			//밑에 게시글 수정하면 list box 값 바뀌어야하는데 
@@ -132,7 +158,26 @@
 				
 			});//삭제버튼 onClick
 
+
+
+			$("#save").on("click",function(){
+
+
+				AllSelect();
+				$("form").attr("method","POST").attr("action","/cafe/no1cafe/manage/updateCafeBoard").submit();
+				
+			});
+
+			$("#cancel").on("click",function(){
+				
+					alert("지금까지 편집한 내용을 취소합니다.");
+					self.location = "/cafe/no1cafe/manage/updateCafeBoardView";
+			});
+
 		});
+
+		
+		
 	
 	</script>
 
@@ -140,7 +185,7 @@
 
 
 <body>
-	
+	<form name="form">
 	메뉴관리
 	<button type="button" id ="cancel"> 취소 </button>
 	<button type="button" id ="save"> 저장하기</button>
@@ -152,7 +197,7 @@
 
 	<select name="addableBoard" size="2">
 		<option value="자유게시판" selected="selected">자유게시판</option>
-		<option value="구분선">구분선</option>
+		<option value="------------" >------------</option>
 	</select>
 	
 	<button type="button" id ="plusBoard"> +게시판추가 </button>
@@ -171,7 +216,7 @@
 		<br/>
 		<br/>
 		
-		<select name="board" size=10>
+		<select name="board" size=10 multiple>
     		
     		<c:set var="i" value="0" />  
 			
@@ -180,11 +225,11 @@
 			
 			
 			<c:if test="${i eq 1}">
-				<option  value="${board.boardName}" id="${board.boardNo}" selected="selected">${board.boardName}</option>
+				<option  value="${board.boardName}/${board.boardNo}" id="${board.boardNo}" selected="selected">${board.boardName}</option>
 			</c:if>
 			
 			<c:if test="${i ne 1}">
-				<option value="${board.boardName}" id="${board.boardNo}">${board.boardName}</option>
+				<option value="${board.boardName}/${board.boardNo}" id="${board.boardNo}">${board.boardName}</option>
 			</c:if>
 			
 			</c:forEach>
@@ -201,23 +246,27 @@
 		
 			<div class ="boardDetail${j}">
 				
-				<br/>
-				<br/>
-				메뉴명  <input type="text" name="boardName" value="${board.boardName}" />
-				<br />
-				메뉴설명 <input type="text"  name="boardDetail" width="50" value="${board.boardDetail}">
-				<br/>
-				<br/>
-		
-				게시판 공개여부를 설정합니다. 멤버공개를 선택시, 게시판은 멤버에게만 보여집니다.
-				<br/>
-				<br/>
+				<c:if test="${fn:contains(board.boardName,'게시판')}">
+					<br/><br/>
+					메뉴명  <input type="text" name="boardName/${board.boardNo}" value="${board.boardName}" />
+					<br />
+					메뉴설명 <input type="text"  name="boardDetail/${board.boardNo}" width="50" value="${board.boardDetail}">
+					<br/><br/>
+			
+					게시판 공개여부를 설정합니다. 멤버공개를 선택시, 게시판은 멤버에게만 보여집니다.
+					<br/><br/>
+				</c:if>
+				
+				<c:if test="${fn:contains(board.boardName,'------')}">
+					메뉴들을 구분선을 통해 쉽게 구분할 수 있습니다.
+				</c:if>
+				
 		
 			</div>
 		</c:forEach>
 		
 		</div>
 		
-
+	</form>
 </body>
 </html>

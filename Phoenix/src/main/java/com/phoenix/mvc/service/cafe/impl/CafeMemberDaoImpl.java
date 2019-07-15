@@ -10,6 +10,7 @@ import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.cafe.CafeMemberDao;
 import com.phoenix.mvc.service.domain.CafeApplication;
 import com.phoenix.mvc.service.domain.CafeMember;
+import com.phoenix.mvc.service.domain.CafeMemberBlock;
 
 @Repository("cafeMemberDaoImpl")
 public class CafeMemberDaoImpl implements CafeMemberDao {
@@ -39,6 +40,12 @@ public class CafeMemberDaoImpl implements CafeMemberDao {
 		sqlSession.insert("CafeMemberMapper.addCafeMember", cafeMember);
 		
 	}
+	
+	@Override
+	public void updateCafeMemberProfile(CafeMember cafeMember) {
+		sqlSession.update("CafeMemberMapper.updateCafeMemberProfile", cafeMember);
+		
+	}
 ////////////////////////////////지니끝//////////////////////////////////
 
 	////////////////////////////////////////////////// 예림 시작///////////////////////////////////
@@ -62,26 +69,49 @@ public class CafeMemberDaoImpl implements CafeMemberDao {
 	}
 	/////////////////////////////////////////예림 끝///////////////////////////////////////////////
 
-////////////////////////////////////기황 시작///////////////////////////////////////
+	////////////////////////////////////기황 시작///////////////////////////////////////
 	@Override
 	public List getCafeMemberList(Search search) throws Exception {
-// TODO Auto-generated method stub
+
 		return sqlSession.selectList("CafeMemberMapper.listCafeMemeber", search);
 	}
 
 	@Override
 	public int getCafeMemberCount(Search search) throws Exception {
-// TODO Auto-generated method stub
+
 		return sqlSession.selectOne("CafeMemberMapper.getMemberCount", search);
 	}
 
 	@Override
 	public CafeMember getCafeMember(Search search) throws Exception {
-// TODO Auto-generated method stub
+
 		return sqlSession.selectOne("CafeMemberMapper.getCafeMemeber", search);
 	}
-//////////////////////////////기황 끝///////////////////////////////////////	
+	
+	@Override
+	public int addCafeMemberBlock(CafeMember cafeMember) throws Exception {
 
+		return sqlSession.insert("CafeMemberMapper.addCafeMemberBlock", cafeMember);
+	}
 
+	@Override
+	public List getCafeMemberBlocks(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("CafeMemberMapper.getCafeMemeberBlock", search);
+	}
+
+	@Override
+	public int updateCafeMemberBlock(CafeMemberBlock cafeMemberBlock) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.update("CafeMemberMapper.updateCafeMemberBlock", cafeMemberBlock);
+	}
+
+	@Override
+	public int updateCafeMemeberGrade(CafeMember cafeMember) throws Exception {
+		// TODO Auto-generated method stub  updateMemberGrade
+		return sqlSession.update("CafeMemberMapper.updateMemberGrade", cafeMember);
+	}
+
+	//////////////////////////////기황 끝///////////////////////////////////////	
 
 }

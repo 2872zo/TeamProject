@@ -21,10 +21,11 @@
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
  $(function(){
+	 alert(${cafe.cafeNo});
 	 var cafeURL = "1234";
 	 $( "button.btn.btn-success" ).on("click" , function() {
 		 alert("확인")
-		 self.location = "/cafe/"+cafeURL+"/updateCafeMember?memberStatusCode=cs103" 
+		 self.location = "/cafe/"+cafeURL+"/updateCafeMember?cafeNo="+${cafe.cafeNo}; 
 	 });
 	
 	 $("a[href='#' ]").on("click" , function() {

@@ -4,6 +4,7 @@ public class Board {
 
 	private int boardNo;
 	private int cafeNo;
+	private String cafeURL;
 	private String boardName;
 	private String accessGrade;
 	private int boardIndex;
@@ -97,11 +98,20 @@ public class Board {
 	}
 
 
-	@Override
-	public String toString() {
-		return "Board [boardNo=" + boardNo + ", cafeNo=" + cafeNo + ", boardName=" + boardName + ", accessGrade="
-				+ accessGrade + ", boardIndex=" + boardIndex + ", privateFlag=" + privateFlag + ", boardType="
-				+ boardType + ", boardDetail=" + boardDetail + "]";
+	public String getCafeURL() {
+		return cafeURL;
 	}
 
+
+	public void setCafeURL(String cafeURL) {
+		this.cafeURL = cafeURL;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Board [boardNo=" + boardNo + ", cafeNo=" + cafeNo + ", cafeURL=" + cafeURL + ", boardName=" + boardName
+				+ ", accessGrade=" + accessGrade + ", boardIndex=" + boardIndex + ", privateFlag=" + privateFlag
+				+ ", boardType=" + boardType + ", boardDetail=" + boardDetail + "]";
+	}
 }
