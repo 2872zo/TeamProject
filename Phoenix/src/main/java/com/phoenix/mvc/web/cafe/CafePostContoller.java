@@ -1,12 +1,10 @@
 package com.phoenix.mvc.web.cafe;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
-import org.eclipse.jdt.internal.compiler.ast.ArrayAllocationExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -99,8 +97,9 @@ public class CafePostContoller {
 	}
 
 	@RequestMapping("/cafe/{cafeURL}/getBoard/{boardNo}")
-	public String getPostList(Map<String, String> result, @ModelAttribute Search search, Map<String, Object> map)
-			throws Exception {
+	public String getPostList(Map<String, String> result, @ModelAttribute Search search, Map<String, Object> map) throws Exception {
+		System.out.println("[getBoard] Search : " + search);
+		
 		// paging 설정
 		search.setPageSize(pageSize);
 		if (search.getCurrentPage() == 0) {
@@ -234,12 +233,6 @@ public class CafePostContoller {
 		return "redirect:/cafe/" + cafeURL + "/getBoard/" + boardNo;
 	}
 
-	@GetMapping("/cafe/{cafeURL}/addReply")
-	public String addReplyView() {
-
-		return "/cafe/addReply";
-	}
-
 	@PostMapping("/cafe/{cafeURL}/addReply")
 	public String addReply(@PathVariable String cafeURL, @ModelAttribute Reply reply) {
 		//임시 데이터
@@ -248,7 +241,7 @@ public class CafePostContoller {
 		System.out.println("[addReply] : " + reply);
 		
 		System.out.println("[addReply 결과] : " + cafePostService.addReply(reply));
-		return "redirect:/cafe/" + cafeURL + "/getPost/" + reply.getPostNo();
+		return "forward:/cafe/" + cafeURL + "/getReplyList/" + reply.getPostNo();
 	}
 	
 	@PostMapping("/cafe/{cafeURL}/addReReply")
@@ -259,7 +252,7 @@ public class CafePostContoller {
 		System.out.println("[addReply] : " + reply);
 		
 		System.out.println("[addReply 결과] : " + cafePostService.addReReply(reply));
-		return "redirect:/cafe/" + cafeURL + "/getPost/" + reply.getPostNo();
+		return "redirect:/cafe/" + cafeURL + "/getReplyList/"+ reply.getPostNo();
 	}
 	
 	@RequestMapping("/cafe/{cafeURL}/getReply/{postNo}")

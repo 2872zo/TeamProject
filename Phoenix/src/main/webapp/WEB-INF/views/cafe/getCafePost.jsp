@@ -41,6 +41,7 @@
 		});
 
 		function fncGetList(currentPage){
+			$("div .replyItems").unbind();
 			$("div .replyItems").load("/cafe/${post.cafeURL}/getReplyList/${post.postNo}", {currentPage:currentPage});
 		}
 
@@ -48,12 +49,10 @@
 		
 
 		function updatePost(){
-			var getPost = $("#test").html();
+			var getPost = $("#mainContent").html();
 			
-
-			
-			$("#test").load("/cafe/${post.cafeURL}/updatePost/${post.postNo} #mainContent", function(response, status, xhr){
-				alert("response : " + response);
+			$("#mainContent").load("/cafe/${post.cafeURL}/updatePost/${post.postNo} #mainContent", function(response, status, xhr){
+// 				alert("response : " + response);
 
 				var obj = response.trim();
 				history.replaceState(getPost, "getPost", "/cafe/${post.cafeURL}/getPost/${post.postNo}");
@@ -70,7 +69,7 @@
 
 		$(window).on('popstate', function(event) {
 			console.log(event.originalEvent.state);
-			$("#test").html( event.originalEvent.state);
+			$("#mainContent").html( event.originalEvent.state);
 		});
 	</script>
 
@@ -85,36 +84,40 @@
 				<c:import url="/WEB-INF/views/cafe/menubarCafe.jsp"></c:import>
 			</div>
 			
-			<div class="col-10" id="test">
-				<div class="py-5 text-center">
-					<!-- <img class="d-block mx-auto mb-4" src="/docs/4.3/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72"> -->
-					카페 아이콘 넣을것
-					<h1>게시글 조회</h1>
-				</div>
+			<div class="col-10">
+				<div id="mainContent">
 				
-				<input type="hidden" name="cafeURL"> <input type="hidden"name="memberNo"> 
-				<input type="hidden" name="memberNickname">
-				<input type="hidden" name="boardName">
-						
-				<div class="row">
-					<div class="col-md-8 mb-3">
-						게시판 번호 : ${post.boardNo }<br />
-						게시판 : ${post.boardName }<br /> 
-						작성자 멤버 번호 : ${post.memberNo }<br /> 
-						작성자 : ${post.memberNickname }<br />
-						추천수 : ${post.likeCount }<br /> 
-						조회수 : ${post.viewCount }<br /> 
-						작성일 : ${post.regDate }<br />
+					<div class="py-5 text-center">
+						<!-- <img class="d-block mx-auto mb-4" src="/docs/4.3/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72"> -->
+						카페 아이콘 넣을것
+						<h1>게시글 조회</h1>
 					</div>
+					
+					<input type="hidden" name="cafeURL"> <input type="hidden"name="memberNo"> 
+					<input type="hidden" name="memberNickname">
+					<input type="hidden" name="boardName">
+							
+					<div class="row">
+						<div class="col-md-8 mb-3">
+							게시판 번호 : ${post.boardNo }<br />
+							게시판 : ${post.boardName }<br /> 
+							작성자 멤버 번호 : ${post.memberNo }<br /> 
+							작성자 : ${post.memberNickname }<br />
+							추천수 : ${post.likeCount }<br /> 
+							조회수 : ${post.viewCount }<br /> 
+							작성일 : ${post.regDate }<br />
+						</div>
+					</div>
+			
+					제목 : ${post.postTitle } <br /> 
+					내용 : ${post.postContent } <br />
+					
+					<button name="update" class="btn btn-primary btn-lg btn-block">수정</button>
+					<button name="delete" class="btn btn-primary btn-lg btn-block">삭제</button>
+					<hr/>				
+					<div class="replyItems"></div>
+					
 				</div>
-		
-				제목 : ${post.postTitle } <br /> 
-				내용 : ${post.postContent } <br />
-				
-				<button name="update" class="btn btn-primary btn-lg btn-block">수정</button>
-				<button name="delete" class="btn btn-primary btn-lg btn-block">삭제</button>
-				<hr/>				
-				<div class="replyItems"></div>
 			</div>
 		</div><!-- row End -->
 	</div><!-- container End -->

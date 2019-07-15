@@ -57,50 +57,65 @@
 				</div>
 				
 				<div class="col-10">
+					<div id="mainContent">
+					
+					<style>
+						.postTitle{
+							text-decoration: underline;
+						}
+						.postTitle:hover{
+							color: blue;
+						}
+					</style>
+					
 					<p>총 ${postTotalCount }개</p>
-					<table class="table table-striped table-bordered">
-						<tr>
-			<!-- 				<td>게시글 번호</td> -->
-			<!-- 				<td>게시판 번호</td> -->
-			<!-- 				<td>memberNo</td> -->
-							<td>게시판</td>
-							<td>제목</td>
-							<td>작성자</td>
-							<td>작성일</td>
-							<td>조회수</td>
-							<td>추천수</td>
-			<!-- 				<td>postStatusFlag</td> -->
-			<!-- 				<td>postNoticeFlag;</td> -->
-			<!-- 				<td>noticeIndex</td> -->
-						</tr>
-						
-						<c:forEach items="${postList }" var="post">
+						<table class="table table-striped table-bordered">
 							<tr>
-								<input type="hidden" class="postNo" value="${post.postNo }"/>
-								<input type="hidden" class="boardNo" value="${post.boardNo }"/>
-								<input type="hidden" class="memberNo" value="${post.memberNo }"/>
-								<td class="boardName">${post.boardName }</td>
-								<td class="postTitle">${post.postTitle }</td>
-								<td>${post.memberNickname }</td>
-								<td>${post.regDate }</td>
-								<td>${post.viewCount }</td>
-								<td>${post.likeCount }</td>
-			<%-- 					<td>${post.postStatusFlag }</td> --%>
-			<%-- 					<td>${post.postNoticeFlag }</td> --%>
-			<%-- 					<td>${post.noticeIndex }</td> --%>
+				<!-- 				<td>게시글 번호</td> -->
+				<!-- 				<td>게시판 번호</td> -->
+				<!-- 				<td>memberNo</td> -->
+								<td>게시판</td>
+								<td>제목</td>
+								<td>작성자</td>
+								<td>작성일</td>
+								<td>조회수</td>
+								<td>추천수</td>
+				<!-- 				<td>postStatusFlag</td> -->
+				<!-- 				<td>postNoticeFlag;</td> -->
+				<!-- 				<td>noticeIndex</td> -->
 							</tr>
-						</c:forEach>
-					</table>
-					
-					<table>
-						<tr>
-							<td align="center">
-								<c:import url="/WEB-INF/views/common/pageNavigator.jsp"/>
-							</td>
-						</tr>
-					</table>
-					
-				</div><!-- Main Content End -->
+							
+							<c:forEach items="${postList }" var="post">
+								<tr>
+									<input type="hidden" class="postNo" value="${post.postNo }"/>
+									<input type="hidden" class="boardNo" value="${post.boardNo }"/>
+									<input type="hidden" class="memberNo" value="${post.memberNo }"/>
+									<td class="boardName">${post.boardName }</td>
+									<td class="postTitle">${post.postTitle }</td>
+									<td>${post.memberNickname }</td>
+									<td>${post.regDate }</td>
+									<td>${post.viewCount }</td>
+									<td>${post.likeCount }</td>
+				<%-- 					<td>${post.postStatusFlag }</td> --%>
+				<%-- 					<td>${post.postNoticeFlag }</td> --%>
+				<%-- 					<td>${post.noticeIndex }</td> --%>
+								</tr>
+							</c:forEach>
+						</table>
+						
+						<table>
+							<tr>
+								<td align="center">
+									<c:import url="/WEB-INF/views/common/pageNavigator.jsp"/>
+								</td>
+								<td>
+									<button id="addPost">글쓰기</button>
+								</td>
+							</tr>
+						</table>
+						
+					</div><!-- Main Content End -->
+				</div><!-- col-10 End -->
 				
 			</div><!-- row End -->
 			

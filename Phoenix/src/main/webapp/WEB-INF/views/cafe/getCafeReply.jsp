@@ -14,5 +14,12 @@
 		<p>리플 삭제상태 : ${reply.replyStatusFlag }</p>
 		<input type="button" name="updateReplyButton" value="수정"/>
 		<input type="button" name="deleteReplyButton" value="삭제"/>
-		<input type="hidden" name="replyNo" value="${reply.replyNo }">
+		<input type="button" name="addReReplyForm" value="대댓글"/>
+		<form name="replyItem">
+			<input type="hidden" name="replyNo" value="${reply.replyNo }">
+			<input type="hidden" name="postNo" value="${reply.postNo }">
+			<input type="hidden" name="targetReplyNo" value="${reply.replyNo }">
+			<input type="hidden" name="targetReplyMember" value="${reply.memberNickname }">
+			<input type="hidden" name="postNo" value="${reply.postNo }">
+		</form>
 </div>

@@ -4,12 +4,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-	<script>
-		var cafeURL = "${cafeURL}";
-		function fncGetBoardPostList(boardNo, cafeURL){
-			location.href = "/cafe/" + cafeURL + "/getBoard/" + boardNo;  
-		}
-	</script>
 	
 	<script type="text/javascript">
 		$(function(){

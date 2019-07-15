@@ -3,6 +3,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
+<style>
+	.replyItem {
+		background-color: #BBDEFB;
+	}
+	
+	.reReplyItem{
+		background-color: #F4FA58;
+	}
+</style>
+
 	<div class="container">
 		<c:forEach	items="${replyList }" var="reply">
 			<div class="replyItem">
@@ -26,7 +36,7 @@
 					</form>
 			</div>
 			<c:forEach	items="${reply.reReplyList }" var="reReply">
-				<div class="replyItem">
+				<div class="replyItem reReplyItem">
 					<h2>대댓글 - ${reReply.targetReplyMember }</h2>
 					<p>	&nbsp;&nbsp;&nbsp;&nbsp;대댓글 번호 : ${reReply.replyNo }</p>
 					<p>	&nbsp;&nbsp;&nbsp;&nbsp;글 번호 : ${reReply.postNo }</p>
@@ -56,48 +66,49 @@
 		<input type="button" name="addReplyButton" value="등록"/>
 		
 		<script>
-			$(document).on("click", "[name=updateReplyButton]", function(){
+			$(".replyItems ").on("click", "[name=updateReplyButton]", function(){
 				$(this).parent().load("/cafe/${cafeURL}/updateReply/"+$(this).parent().find("[name=replyNo]").val());
 			});
 
-			$(document).on("click", "[name=deleteReplyButton]", function(){
+			$(".replyItems").on("click", "[name=deleteReplyButton]", function(){
 				var obj = {currentPage : ${page.currentPage}, postNo : ${postNo} };
 				$(this).parent().load("/cafe/${cafeURL}/deleteReply/"+$(this).parent().find("[name=replyNo]").val(), obj);			
 			});
 
-			$(document).on("click", "[name=addReplyButton]", function(){
+			$(".replyItems").on("click", "[name=addReplyButton]", function(){
+				alert("add 실행됨!");
+				
 				var formObj = $("form[name=replyItem]").serializeArray();
 
 				console.log(formObj);
 				console.log(typeof(formObj));
 				var obj = { replyContent : $("[name=addReplyContent]").val(), postNo : ${search.postNo} };
-				
-				$(this).parent().load("/cafe/${cafeURL}/addReply", obj);
+
+				$(".replyItems").unbind();
+				$(this).parent().parent(".replyItems").load("/cafe/${cafeURL}/addReply", obj);
 			});
 
-			$(document).on("click", "[name=addReReplyForm]", function(){
+			$(".replyItems").on("click", "[name=addReReplyForm]", function(){
+				alert("form 요청 실행됨!")
+
 				$(this).replaceWith("<br/><textarea name='reReplyContnet'></textarea> <input type='button' name='addReReplyButton' value='등록'>");
 			});
 			
-			$(document).on("click", "[name=addReReplyButton]", function(){
+			$(".replyItems").on("click", "[name=addReReplyButton]", function(){
 				console.log($(this).parent().find("form").serializeArray());
 				var formObj = new Array();
 				formObj = $(this).parent().find("form").serializeArray();
 
-				alert($(this).parent().find("[name=reReplyContnet]").val());
+// 				alert($(this).parent().find("[name=reReplyContnet]").val());
 				formObj.push({ name : "replyContent", value : $(this).parent().find("[name=reReplyContnet]").val()});
-// 				formObj.replyContent = { replyContent : $(this).parent().find("[name=reReplyContnet]").val() };
-				console.log(typeof(formObj));
-				for(i in formObj) {
-// 				    console.log("no is " + [i] + ", value is " + formObj[i]);
 
-				    for(z in formObj[i]){
-				    	console.log("no is " + [z] + ", value is " + formObj[i][z]);
-					}
-				}
+// 				for(i in formObj) {
+// 				    for(z in formObj[i]){
+// 				    	console.log("no is " + [z] + ", value is " + formObj[i][z]);
+// 					}
+// 				}
 
-				
-				$(this).parent().load("/cafe/${cafeURL}/addReReply", formObj);
+				$(this).parent().parent().parent(".replyItems").load("/cafe/${cafeURL}/addReReply", formObj);
 			});
 		</script>
 	</div><!-- container End -->

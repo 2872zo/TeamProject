@@ -51,7 +51,7 @@
 			member_nickname,
 			post_title, 
 <!-- 			post_content,  -->
-			TO_CHAR(reg_date, 'YYYY-MM-DD HH24:MM:SS') AS reg_date, 
+			TO_CHAR(reg_date, 'YYYY-MM-DD HH24:MI:SS') AS reg_date, 
 			view_count, 
 			like_count, 
 			post_status_flag, 
@@ -76,7 +76,7 @@
 			p.member_nickname,
 			p.post_title, 
 			p.post_content, 
-			TO_CHAR(p.reg_date, 'YYYY-MM-DD HH24:MM:SS') AS reg_date, 
+			TO_CHAR(p.reg_date, 'YYYY-MM-DD HH24:MI:SS') AS reg_date, 
 			p.view_count, 
 			p.like_count, 
 			p.post_status_flag, 
@@ -126,13 +126,15 @@
 			member_no,			
 			member_nickname,
 			reply_content,		
-			TO_CHAR(reg_date,'YYYY-MM-DD HH24:MM:SS') AS reg_date,			
+			TO_CHAR(reg_date,'YYYY-MM-DD HH24:MI:SS') AS reg_date,			
 			like_count,		
 			reply_status_flag
 		FROM 
 			reply
 		WHERE 
 			post_no = #{postNo}
+			AND target_reply_no IS NULL
+		ORDER BY reply_no
 	</sql>
 
 	<select id="getPostListByBoard"   parameterType="Search"  resultMap="postResultMap">
@@ -188,7 +190,7 @@
 			post.member_no, 
 			post.post_title, 
 			post.post_content, 
-			TO_CHAR(post.reg_date, 'YYYY-MM-DD HH24:MM:SS') AS reg_date, 
+			TO_CHAR(post.reg_date, 'YYYY-MM-DD HH24:MI:SS') AS reg_date, 
 			post.view_count, 
 			post.like_count, 
 			post.member_nickname, 
@@ -313,7 +315,6 @@
 			 inner_table.*, ROWNUM AS row_seq
 			 FROM 
 				 (<include refid="select-reply-list"/>
-				 	AND target_reply_no IS NULL
 				 ) inner_table
 				  <where>
 		 				AND ROWNUM &lt;= #{endRowNum}
@@ -332,13 +333,14 @@
 			target_reply_no,
 			target_reply_Member,
 			reply_content,		
-			TO_CHAR(reg_date,'YYYY-MM-DD HH24:MM:SS') AS reg_date,			
+			TO_CHAR(reg_date,'YYYY-MM-DD HH24:MI:SS') AS reg_date,			
 			like_count,		
 			reply_status_flag
 		FROM 
 			reply
 		WHERE 
 			target_reply_no = #{replyNo}
+		ORDER BY reply_no
 	</select>
 	
 	<select id="replyTotalCount" parameterType="Search" resultType="int">
@@ -356,7 +358,7 @@
 			member_no,			
 			member_nickname,
 			reply_content,		
-			TO_CHAR(reg_date,'YYYY-MM-DD HH24:MM:SS') AS reg_date,			
+			TO_CHAR(reg_date,'YYYY-MM-DD HH24:MI:SS') AS reg_date,			
 			like_count,		
 			reply_status_flag
 		FROM 
