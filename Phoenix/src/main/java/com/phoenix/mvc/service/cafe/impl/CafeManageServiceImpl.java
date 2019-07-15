@@ -13,6 +13,7 @@ import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.cafe.CafeManageDao;
 import com.phoenix.mvc.service.cafe.CafeManageService;
 import com.phoenix.mvc.service.domain.CafeApplication;
+import com.phoenix.mvc.service.domain.Board;
 import com.phoenix.mvc.service.domain.Cafe;
 
 @Service("cafeManageServiceImpl")
@@ -74,6 +75,46 @@ public class CafeManageServiceImpl implements CafeManageService {
 
 		return statisticsList;
 	}
+	
+	@Override
+	public boolean addCafeBoard(List<Board> newBoard) { //구분선이랑 자유게시판밖에 없음
+		// TODO Auto-generated method stub
+		
+		int cafeNo = cafeManageDao.getCafeNo(newBoard.get(0).getCafeURL());
+		for(int i=0; i<newBoard.size(); i++)
+		{
+			newBoard.get(i).setCafeNo(cafeNo);
+			//가짜데이터
+			newBoard.get(i).setAccessGrade("10002");
+			newBoard.get(i).setPrivateFlag('0');
+			//-------------------------------------------
+			if(newBoard.get(i).getBoardName()== null) //구분선이면
+			{
+				newBoard.get(i).setBoardType("cb102");
+				newBoard.get(i).setBoardName("------------");
+			}
+			else //자유게시판이면
+			{
+				newBoard.get(i).setBoardType("cb103"); //자유게시판
+			}
+		}
+		
+		boolean addCafeResult = cafeManageDao.addCafeBoard(newBoard);
+		
+		return addCafeResult;
+	}
+
+	@Override
+	public boolean updateCafeBoard(List<Board> existBoard) {
+		int cafeNo = cafeManageDao.getCafeNo(existBoard.get(0).getCafeURL());
+		for(int i=0; i<existBoard.size(); i++)
+		{
+			//가짜데이터
+			
+		}
+		
+		return false;
+	}
 
 /////////////////////////////////////////////////// 예림
 /////////////////////////////////////////////////// 끝//////////////////////////////////////////////
@@ -133,6 +174,8 @@ public class CafeManageServiceImpl implements CafeManageService {
 	public Cafe getCafeName(String cafeName) throws Exception {
 		return cafeManageDao.getCafeName(cafeName);
 	}
+
+	
 	
 	/////////////////////////////// 준호끝///////////////////////////////////////
 

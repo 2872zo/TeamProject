@@ -16,6 +16,7 @@ import com.phoenix.mvc.service.domain.CafeApplication;
 
 import oracle.net.aso.e;
 
+import com.phoenix.mvc.service.domain.Board;
 import com.phoenix.mvc.service.domain.Cafe;
 
 @Repository("cafeManageDaoImpl")
@@ -137,7 +138,7 @@ public class CafeManageDaoImpl implements CafeManageDao {
 	}
 
 	@Override
-	public Map<String,String> getCafeStatistics(Event event) { //예림예림 작업중
+	public Map<String,String> getCafeStatistics(Event event) { //예림예림
 		
 		List<Map<String,String>> result = sqlSession.selectList("getCafeStatistics", event);
 		//System.out.println(statisticResult);
@@ -148,6 +149,22 @@ public class CafeManageDaoImpl implements CafeManageDao {
 			statisticResultMap.put(result.get(i).get("EVENT_TYPE"),String.valueOf(result.get(i).get("COUNTS")) );
 		}
 		return statisticResultMap;
+	}
+	
+	@Override
+	public boolean addCafeBoard(List<Board> newBoard) {
+		
+		int result = sqlSession.insert("insertCafeBoard",newBoard);
+		
+		if(result>=1)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+		
 	}
 	
 	//////////////////////////////////////////////////////////예림끝////////////////////////////////////
@@ -172,5 +189,7 @@ public class CafeManageDaoImpl implements CafeManageDao {
 		return sqlSession.selectOne("CaferMapper.getCafeName", cafeName);
 	}
 	///////////////////////////////준호끝///////////////////////////////////////	
+
+	
 
 }
