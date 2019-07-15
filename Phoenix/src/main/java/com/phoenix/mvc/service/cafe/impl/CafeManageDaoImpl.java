@@ -13,6 +13,7 @@ import com.phoenix.mvc.common.Event;
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.cafe.CafeManageDao;
 import com.phoenix.mvc.service.domain.CafeApplication;
+import com.phoenix.mvc.service.domain.CafeGrade;
 
 import oracle.net.aso.e;
 
@@ -36,39 +37,63 @@ public class CafeManageDaoImpl implements CafeManageDao {
 	}
 
 
-	/////////////////////////////////지니//////////////////////////////
+	///////////////////////////////// 지니//////////////////////////////
 	@Override
 	public List<CafeApplication> getCafeApplicationList(Search search) {
-		
+
 		return sqlSession.selectList("CafeApplicationMapper.getCafeApplicationList", search);
 	}
 
 	@Override
 	public int getTotalCount(Search search) {
-		
+
 		return sqlSession.selectOne("CafeApplicationMapper.getTotalCount", search);
 	}
-	
+
 	@Override
 	public void updateAcceptStatusCode(CafeApplication cafeApplication) {
 		sqlSession.update("CafeApplicationMapper.updateAcceptStatusCode", cafeApplication);
-		
+
 	}
 
-	@Override
-	public CafeApplication getCafeApplication(int userNo) {
-	
-		return sqlSession.selectOne("CafeApplicationMapper.getCafeApplication",userNo);
-	}
-	
 	@Override
 	public CafeApplication getCafeApplication2(int applicationNo) {
-		
-		return sqlSession.selectOne("CafeApplicationMapper.getCafeApplication2",applicationNo);
-	}
-	
-	////////////////////////////////지니끝//////////////////////////////////
 
+		return sqlSession.selectOne("CafeApplicationMapper.getCafeApplication2", applicationNo);
+	}
+
+	@Override
+	public List getCafeGrade(int cafeNo) {
+
+		List GradeList = sqlSession.selectList("CafeGradeMapper.getCafeGrade", cafeNo);
+
+		return GradeList;
+
+	}
+
+	@Override
+	public void addCafeGrade(CafeGrade cafeGrade) {
+
+		sqlSession.insert("CafeGradeMapper.addCafeGrade", cafeGrade);
+
+	}
+
+	@Override
+	public void updateCafeGrade(CafeGrade cafeGrade) {
+
+		sqlSession.update("CafeGradeMapper.updateCafeGrade", cafeGrade);
+
+	}
+
+	@Override
+	public List checkCafeGrade(int cafeNo) {
+
+		List checkList = sqlSession.selectList("CafeGradeMapper.checkCafeGrade", cafeNo);
+
+		return checkList;
+	}
+
+	//////////////////////////////// 지니끝//////////////////////////////////
 	
 	
 	/////////////////////////////////////예림/////////////////////////////////////
@@ -169,26 +194,26 @@ public class CafeManageDaoImpl implements CafeManageDao {
 	
 	//////////////////////////////////////////////////////////예림끝////////////////////////////////////
 	
-	///////////////////////////////준호시작///////////////////////////////////////	
-	@Override//준호
-	public void updateCafeInfo(Cafe cafe)throws Exception{
-		sqlSession.update("CafeMapper.updateCafeInfo", cafe);
-	}
-	
-	@Override//준호
-	public Cafe getCafeInfo(int cafeNo) throws Exception {
-		return sqlSession.selectOne("CafeMapper.getCafeInfo", cafeNo);
-	}
-	
-	@Override//준호
-	public void updateCafeApplicationForm(Cafe cafe)throws Exception{
-		sqlSession.update("CafeMapper.updateCafeApplicationForm", cafe);
-	}
-	
-	public Cafe getCafeName(String cafeName) throws Exception {
-		return sqlSession.selectOne("CaferMapper.getCafeName", cafeName);
-	}
-	///////////////////////////////준호끝///////////////////////////////////////	
+/////////////////////////////// 준호시작///////////////////////////////////////
+@Override // 준호
+public void updateCafeInfo(Cafe cafe) throws Exception {
+sqlSession.update("CafeMapper.updateCafeInfo", cafe);
+}
+
+@Override // 준호
+public Cafe getCafeInfo(int cafeNo) throws Exception {
+return sqlSession.selectOne("CafeMapper.getCafeInfo", cafeNo);
+}
+
+@Override // 준호
+public void updateCafeApplicationForm(Cafe cafe) throws Exception {
+sqlSession.update("CafeMapper.updateCafeApplicationForm", cafe);
+}
+
+public Cafe getCafeName(String cafeName) throws Exception {
+return sqlSession.selectOne("CaferMapper.getCafeName", cafeName);
+}
+/////////////////////////////// 준호끝///////////////////////////////////////
 
 	
 

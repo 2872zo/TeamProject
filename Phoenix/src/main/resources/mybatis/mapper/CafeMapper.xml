@@ -13,7 +13,7 @@
 		<result property="cafeName" 					column="cafe_name" 							jdbcType="VARCHAR"/>
 		<result property="cafeIcon"						column="cafe_icon" 							jdbcType="VARCHAR" />
 		<result property="manageUserNo" 				column="manage_user_no" 					jdbcType="NUMERIC" />
-		<result property="url" 							column="url" 								jdbcType="VARCHAR" />
+		<result property="URL" 							column="url" 								jdbcType="VARCHAR" />
 		<result property="cafeDetail" 					column="cafe_detail" 						jdbcType="VARCHAR" />
 		<result property="regDate" 						column="reg_date" 							jdbcType="DATE" />
 		<result property="bannerImg" 					column="banner_img" 						jdbcType="VARCHAR"/>
@@ -35,7 +35,7 @@
 	 		SELECT SEQ_CAFE_CAFE_NO.NEXTVAL FROM DUAL
 	 	</selectKey>
 		INSERT INTO CAFE (cafe_no, cafe_name, manage_user_no, reg_date, url, cafe_detail, banner_img, main_img, cafe_type, application_detail) 
-		VALUES ( #{cafeNo}, #{cafeName:VARCHAR}, 10001, SYSDATE, #{url:VARCHAR}, #{cafeDetail:VARCHAR}, #{bannerImg:VARCHAR}, #{mainImg:VARCHAR}, #{cafeType:VARCHAR}, #{applicationDetail:VARCHAR})
+		VALUES ( #{cafeNo}, #{cafeName:VARCHAR}, 10001, SYSDATE, #{URL:VARCHAR}, #{cafeDetail:VARCHAR}, #{bannerImg:VARCHAR}, #{mainImg:VARCHAR}, #{cafeType:VARCHAR}, #{applicationDetail:VARCHAR})
 
 	 </insert>
 	 
