@@ -32,7 +32,7 @@
 			});
 
 			//페이지 이동
-			function fncGetList(idx){
+			function fncGetInnerSearchList(idx){
 				$("[name=currentPage]").val(idx);
 				$("form").attr("method","GET").attr("action","/cafe/" + cafeURL + "/search").submit();	
 			};
@@ -173,7 +173,9 @@
 				<table>
 					<tr>
 						<td align="center">
-							<c:import url="/WEB-INF/views/common/pageNavigator.jsp"/>
+							<c:import url="/WEB-INF/views/common/pageNavigator.jsp">
+								<c:param name="subject" value="InnerSearch"/>
+							</c:import>
 						</td>
 					</tr>
 				</table>

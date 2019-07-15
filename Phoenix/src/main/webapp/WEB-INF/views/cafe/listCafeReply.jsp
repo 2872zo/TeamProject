@@ -60,7 +60,9 @@
 			</c:forEach>
 			<hr/>
 		</c:forEach>
-		<c:import url="/WEB-INF/views/common/pageNavigator.jsp"/>
+		<c:import url="/WEB-INF/views/common/pageNavigator.jsp">
+			<c:param name="subject" value="Reply"/>
+		</c:import>
 		<hr/>
 		<textarea name="addReplyContent"></textarea>
 		<input type="button" name="addReplyButton" value="등록"/>

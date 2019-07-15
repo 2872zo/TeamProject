@@ -17,7 +17,7 @@
 			</c:if>
 			<c:if test="${ page.currentPage > page.pageUnit }">
 				<li class="page-item">
-					<a class="page-link" href="javascript:fncGetList('${ page.currentPage-1}')">
+					<a class="page-link" href="javascript:fncGet${param.subject }List('${ page.beginUnitPage-1}')">
 						<span>&laquo;</span>
 					</a>
 				</li>
@@ -39,7 +39,7 @@
 				<!-- 현재 page가 아닐 경우 -->				
 				<c:if test="${ page.currentPage != i}">	
 					<li class="page-item">
-						<a class="page-link" href="javascript:fncGetList('${ i }');">${ i }</a>
+						<a class="page-link" href="javascript:fncGet${param.subject }List('${ i }');">${ i }</a>
 					</li>
 				</c:if>
 			</c:forEach>
@@ -54,7 +54,7 @@
 			</c:if>
 			<c:if test="${ page.endUnitPage < page.maxPage }">
 				<li class="page-item">
-					<a class="page-link" href="javascript:fncGetList('${page.endUnitPage+1}')">
+					<a class="page-link"  href="javascript:fncGet${param.subject }List('${page.endUnitPage+1}')">
 			        	<span>&raquo;</span>
 			      	</a>
 			    </li>

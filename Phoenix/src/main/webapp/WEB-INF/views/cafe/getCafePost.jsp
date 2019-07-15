@@ -29,7 +29,6 @@
 			fncGetList(1);
 			
 			$("[name=update]").on("click",function(){
-// 				location.href = "/cafe/${post.cafeURL}/updatePost/${post.postNo}";
 				updatePost();
 			});
 

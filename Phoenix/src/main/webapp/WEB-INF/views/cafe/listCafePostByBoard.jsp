@@ -25,7 +25,7 @@
 			var cafeURL = '${search.cafeURL}';
 			var boardNo = ${search.boardNo};
 			
-			function fncGetList(idx){
+			function fncGetPostList(idx){
 				$("[name=currentPage]").val(idx);
 				$("form").attr("method","POST").attr("action", "/cafe/" + cafeURL + "/getBoard/" + boardNo).submit();
 			};
@@ -106,7 +106,9 @@
 						<table>
 							<tr>
 								<td align="center">
-									<c:import url="/WEB-INF/views/common/pageNavigator.jsp"/>
+									<c:import url="/WEB-INF/views/common/pageNavigator.jsp">
+										<c:param name="subject" value="Post"/>
+									</c:import>
 								</td>
 								<td>
 									<button id="addPost">글쓰기</button>

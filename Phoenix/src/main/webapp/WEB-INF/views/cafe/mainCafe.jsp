@@ -59,7 +59,10 @@
 // 			console.log("popState : " + event.originalEvent.state);
 			alert("popstate 실행")
 			state = event.originalEvent.state;
-			$("#mainContent").html( event.originalEvent.state.mainContent );
+			$(".cke_screen_reader_only").remove();
+			$("#mainContent").remove();
+			$(".col-10").html( event.originalEvent.state.mainContent );
+			
 		});
 	</script>
 

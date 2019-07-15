@@ -1,6 +1,6 @@
 
 
-function fncGetList(currentPage){
+function fncGetPostList(currentPage){
 	var boardNo = $(".main .boardNo").val();
 	var obj = {currentPage : currentPage};
 	$("div.col-10").load("/cafe/" + state.cafeURL + "/getBoard/" + state.boardNo + " #mainContent", obj); 

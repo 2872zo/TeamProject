@@ -7,13 +7,13 @@
 <html>
 <header>
 	
-<!-- 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> -->
-<!-- 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link href="/static/css/form-validation.css" rel="stylesheet">
-<!-- 	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
-<!-- 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
-<!-- 	<script	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"	crossorigin="anonymous"></script> -->
-<!-- 	<script	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"	crossorigin="anonymous"></script> -->
+	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"	crossorigin="anonymous"></script>
+	<script	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"	crossorigin="anonymous"></script>
 	<script src="/static/ckeditor/ckeditor.js"></script>
 	<script src="/static/js/form-validation.js"></script>
 	
@@ -37,9 +37,6 @@
 		});
 
 		$(function() {
-			$("[name=cafeURL]").val('${post.cafeURL}');
-			$("[name=memberNo]").val('${post.memberNo}');
-			$("[name=memberNickname]").val('${post.memberNickname}');
 			$("form").attr("method", "POST").attr("action",	"/cafe/${post.cafeURL}/updatePost/${post.postNo}");
 
 			$(".boardOption").each(function(){
@@ -52,11 +49,12 @@
 				$("[name=postNoticeFlag]").attr("checked","checked");
 			}
 			
-			$("[name=postTitle]").val('${post.postTitle}');
-			$("[name=postContent]").val("${post.postContent}");
+			$("[type='text'][name='postTitle']").val('${post.postTitle}');
+			$("textarea[name='postContent']").val("${post.postContent}");
 			
 			$("#submitButton").on("click",function(e){
 				$("[name=boardName]").val( $("[name=boardNo] option:selected").text());
+				$("form").submit();
 			});
 		});
 
@@ -82,11 +80,15 @@
 						카페 아이콘 넣을것
 						<h1>게시글 수정</h1>
 					</div>
-		
+					
+					<input type="hidden" name="postTitle" value="${post.postTitle }">
+					<input type="hidden" name="postContent" value="${post.postContent }">
 					<form class="needs-validation" novalidate>
-						<input type="hidden" name="cafeURL"> <input type="hidden"name="memberNo"> 
-						<input type="hidden" name="memberNickname">
-						<input type="hidden" name="boardName">
+						<input type="hidden" name="cafeURL" value="${post.cafeURL }"> 
+						<input type="hidden" name="memberNo" value="${post.memberNo }"> 
+						<input type="hidden" name="memberNickname" value="${post.memberNickname }">
+						<input type="hidden" name="boardName" value="${post.boardName }">
+						
 			
 						<div class="row">
 							<div class="col-md-8 mb-3">
@@ -104,18 +106,18 @@
 						</div>
 			
 							<label for="postTitle">제목</label> 
-							<input type="text" class="form-control" id="postTitle" name="postTitle" required="" value="${post.postTitle }">
+							<input type="text" class="form-control" id="postTitle" name="postTitle" required="">
 							<div class="invalid-feedback">제목은 생략할 수 없습니다.</div>
 							
 							<br/>
 							
 							<label for="editor">내용</label>
-							<textarea class="form-control" name="postContent" id="editor" required="" >${post.postContent }</textarea>
+							<textarea class="form-control" name="postContent" id="editor" required="" ></textarea>
 							<div class="invalid-feedback">내용은 생략할 수 없습니다.</div>
 				
 							<br/>
 							
-							<input type="submit" class="btn btn-primary btn-lg btn-block" id="submitButton" value="저장">
+							<input type="button" class="btn btn-primary btn-lg btn-block" id="submitButton" value="저장">
 					</form>
 					
 				</div><!-- mainContent end -->
