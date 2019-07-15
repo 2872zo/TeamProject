@@ -17,16 +17,19 @@ import org.springframework.boot.autoconfigure.cache.CacheProperties.Caffeine;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.phoenix.mvc.common.Event;
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.cafe.CafeManageService;
 import com.phoenix.mvc.service.domain.CafeApplication;
+import com.phoenix.mvc.service.domain.CafeGrade;
 import com.phoenix.mvc.service.domain.CafeMember;
 
 @RestController
@@ -141,6 +144,10 @@ public class CafeManageRestController {
 			}
 			
 		System.out.println(userNo);
+		//기황수정
+		//cafeApplication userNo로 받아오는 부분 List로 가져오게 수정하면서 에러 발생했습니다.
+		//추후 수정부탁드립니다 지니님
+		/*
 		for(int i = 0; i<count; i++) {
 			System.out.println(userNo.get(i));
 			CafeApplication cafe =cafeManageService.getCafeApplication(userNo.get(i));	
@@ -156,6 +163,7 @@ public class CafeManageRestController {
 			//member.setCafeMemberGradeNo(cafeMemberGradeNo);//이거 나중에 조인해서 추가해2
 
 		}
+		*/
 		
 //		System.out.println(nickName);
 //		System.out.println(userNo);
@@ -164,6 +172,18 @@ public class CafeManageRestController {
 		return "/cafe/listCafeApplication";
 		
 	}
+
+	@PostMapping(value="json/{cafeURL}/manage/updateCafeGrade")
+	public String updateCafeGrade(Model model , @RequestBody CafeGrade cafeGrade) {
+		
+		System.out.println("json/cafe/{CafeURL}/manage/updateCafeGrade : POST");
+		System.out.println(model);
+		System.out.println(cafeGrade);
+		
+		return null;
+		
+	}
+
 
 ////////////////////////////////지니끝//////////////////////////////////
 

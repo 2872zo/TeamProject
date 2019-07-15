@@ -30,28 +30,27 @@
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
 $(function() {
+	
 	$("#addCafe").on("click" , function() {
 		$(self.location).attr("href","/cafe/addCafeView");
 	});
-	
+		
 	$(".cafeListing").on("click" , function() {
-		alert($(".cafeListing").index(this));
+		var count = $(".cafeListing").index(this);
+		$("#status").val(count);
+		$("#cafeHomeForm").attr("method" , "POST").attr("action" , "/cafe/main").submit();	
 	});
-
+	
 	$(".cafeCategory").on("click" , function() {
 		var count = $(".cafeCategory").index(this);
 		$("#boardNo").val(count);
-		$("#cafeCategorizing").attr("method" , "POST").attr("action" , "/cafe/category").submit();	
+		$("#cafeHomeForm").attr("method" , "POST").attr("action" , "/cafe/main").submit();	
 	});
 
 	$("#memberList").on("click" , function() {
-		//alert("멤버리스트조회");
-		$("#memberListingForm").attr("method" , "POST").attr("action" , "/cafe/randomCafe/getCafeMemberList").submit();
-		
+		$("#memberListingForm").attr("method" , "POST").attr("action" , "/cafe/randomCafe/manage/getCafeMemberList").submit();
 	});
-	$("#memberDetail").on("click" , function() {
-		$("#memberDetailForm").attr("method" , "POST").attr("action" , "/cafe/randomCafe/getCafeMember").submit();
-	});
+
 });
 </script>
 	<!-- ToolBar Start /////////////////////////////////////-->
@@ -60,8 +59,10 @@ $(function() {
 </head>
 
 <body>
-<form id="cafeCategorizing">
-<input type="hidden" id="boardNo" name="boardNo" value="0"/>
+<form id="cafeHomeForm">
+<input type="hidden" id="userNo" name="userNo" value="${search.userNo}"/>
+<input type="hidden" id="status" name="status" value="${search.status}"/>
+<input type="hidden" id="boardNo" name="boardNo" value="${search.boardNo}"/>
 </form>
 
 
@@ -73,17 +74,18 @@ $(function() {
 	<br/>
 	
 	
-	<div class="btn-group" role="group" aria-label="Basic example">
-  <button type="button" class="btn btn-outline-primary cafeListing">운영중인 카페</button>
-  <button type="button" class="btn btn-outline-primary cafeListing">활동중인 카페</button>
-  <button type="button" class="btn btn-outline-primary cafeListing">즐겨찾기 카페</button>
-  <button type="button" class="btn btn-outline-primary cafeListing">가입신청 내역</button>
-  <button type="button" class="btn btn-outline-primary cafeListing">정지당한 카페</button>
-  <button type="button" class="btn btn-outline-primary cafeListing">카페 새게시글</button>
+	<div class="btn-group d-flex justify-content-center" role="group">
+  <button type="button" class='btn btn-${ search.status==0 ? "" : "outline-" }primary cafeListing'>활동중인 카페</button>
+  <button type="button" class='btn btn-${ search.status==1 ? "" : "outline-" }primary cafeListing'>즐겨찾기 카페</button>
+  <button type="button" class='btn btn-${ search.status==2 ? "" : "outline-" }primary cafeListing'>운영중인 카페</button>
+  <button type="button" class='btn btn-${ search.status==3 ? "" : "outline-" }primary cafeListing'>정지당한 카페</button>
+  <button type="button" class='btn btn-${ search.status==4 ? "" : "outline-" }primary cafeListing'>가입신청 내역</button>
+  <button type="button" class='btn btn-${ search.status==5 ? "" : "outline-" }primary cafeListing'>카페 새게시글</button>
 </div>
 	
-	<c:if test="${!empty myCafeList}">
-<table class="table table-borderless">
+	<c:if test="${!empty myCafelist}">
+
+<table class="table table-borderless ">
 	<thead>
     <tr>
   	  <th scope="col">카페번호</th>
@@ -95,18 +97,21 @@ $(function() {
     </tr>
 	</thead>
 	<tbody>
-  <tr>
-	<c:forEach var="myCafe" items="${myCafeList}">
+  
+	<c:forEach var="myCafe" items="${myCafelist}">
+	 <tr>
 	 <th scope="row">${myCafe.cafeNo}</th>
-	 <td>${myCafe.url}</td>
+	 <td>${myCafe.URL}</td>
 	 <td>${myCafe.cafeName}</td>
 	 <td>${myCafe.cafeIcon}</td>
 	 <td>${myCafe.cafeDetail}</td>
 	 <td>${myCafe.regDate}</td>
+	 </tr>
 	</c:forEach>
-  </tr>
+  
 	</tbody>
 </table>
+
 </c:if>
 	
 
@@ -115,16 +120,16 @@ $(function() {
 	<br/>
 	
 	
-<div class="btn-group" role="group" aria-label="Basic example">
-  <button type="button" class="btn btn-outline-success cafeCategory">친목/모임</button>
-  <button type="button" class="btn btn-outline-success cafeCategory">스포츠/레저</button>
-  <button type="button" class="btn btn-outline-success cafeCategory">영화</button>
-  <button type="button" class="btn btn-outline-success cafeCategory">게임</button>
-  <button type="button" class="btn btn-outline-success cafeCategory">음악</button>
-  <button type="button" class="btn btn-outline-success cafeCategory">여행</button>
+<div class="btn-group d-flex justify-content-center" role="group">
+  <button type="button" class='btn btn-${ search.boardNo==0 ? "" : "outline-" }success cafeCategory'>친목/모임</button>
+  <button type="button" class='btn btn-${ search.boardNo==1 ? "" : "outline-" }success cafeCategory'>스포츠/레저</button>
+  <button type="button" class='btn btn-${ search.boardNo==2 ? "" : "outline-" }success cafeCategory'>영화</button>
+  <button type="button" class='btn btn-${ search.boardNo==3 ? "" : "outline-" }success cafeCategory'>게임</button>
+  <button type="button" class='btn btn-${ search.boardNo==4 ? "" : "outline-" }success cafeCategory'>음악</button>
+  <button type="button" class='btn btn-${ search.boardNo==5 ? "" : "outline-" }success cafeCategory'>여행</button>
 </div>
 <br/>
-<c:if test="${!empty categoryCafeList}">
+<c:if test="${!empty categorizedCafeList}">
 <table class="table table-borderless">
 	<thead>
     <tr>
@@ -139,10 +144,10 @@ $(function() {
 	</thead>
 	<tbody>
   
-	<c:forEach var="categoryCafe" items="${categoryCafeList}">
+	<c:forEach var="categoryCafe" items="${categorizedCafeList}">
 	<tr>
 	 <th scope="row">${categoryCafe.cafeNo}</th>
-	 <td>${categoryCafe.url}</td>
+	 <td>${categoryCafe.URL}</td>
 	 <td>${categoryCafe.cafeName}</td>
 	 <td>${categoryCafe.cafeIcon}</td>
 	 <td>${categoryCafe.cafeDetail}</td>
@@ -169,15 +174,7 @@ $(function() {
 	    </div>
 	    </div>
 	</form>
-	<form id='memberDetailForm'>
-		<div class="input-group">
-		<input type="text" class="form-control" placeholder="멤버번호" name = 'memberNo' aria-describedby="button-addon2">
-		<div class="input-group-append" id="button-addon2">
-    	<button class="btn btn-outline-success" type="button" id= 'memberDetail'>멤버디테일</button>
-  		</div>
-		</div>
-	</form>
-
+	
 </div>
 
 

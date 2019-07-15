@@ -14,6 +14,7 @@ import com.phoenix.mvc.service.cafe.CafeMemberDao;
 import com.phoenix.mvc.service.cafe.CafeMemberService;
 import com.phoenix.mvc.service.domain.CafeApplication;
 import com.phoenix.mvc.service.domain.CafeMember;
+import com.phoenix.mvc.service.domain.CafeMemberBlock;
 
 @Service
 public class CafeMemberServiceImpl implements CafeMemberService {
@@ -36,13 +37,19 @@ public class CafeMemberServiceImpl implements CafeMemberService {
 	
 	
 	
-	/////////////////////////////////지니//////////////////////////////
+	///////////////////////////////// 지니//////////////////////////////
 	public int getCafeNo(String cafeURL) {
-		
+
 		return cafeManageDao.getCafeNo(cafeURL);
-		
+
 	}
 	
+	public CafeMember getCafeMember(int cafeNo, int userNo) {
+		
+		return cafeMemberDao.getCafeMember(cafeNo, userNo);
+	
+	}
+
 	@Override
 	public void addCafeApplication(CafeApplication cafeApplication) {
 
@@ -51,23 +58,34 @@ public class CafeMemberServiceImpl implements CafeMemberService {
 
 	@Override
 	public void updateCafeMember(CafeMember cafeMember) {
-		cafeMemberDao.updateCafeMember(cafeMember);	
+		cafeMemberDao.updateCafeMember(cafeMember);
 	}
-	
+
 	@Override
 	public void addCafeMember(CafeMember cafeMember) {
 		cafeMemberDao.addCafeMember(cafeMember);
 	}
-	
-/////////////////////////////////////기황 /////////////////////////////////////
+
+	@Override
+	public void updateCafeMemberProfile(CafeMember cafeMember) {
+		cafeMemberDao.updateCafeMemberProfile(cafeMember);
+		
+	}
+////////////////////////////////////지니끝//////////////////////////////
+////////////////////////////////////기황시작////////////////////////////
 	@Override
 	public Map getCafeMemberList(Search search) throws Exception {
 		// TODO Auto-generated method stub
 		Map map = new HashMap();
+		
 		int totalCount = cafeMemberDao.getCafeMemberCount(search);
 		List memberList = cafeMemberDao.getCafeMemberList(search);
+		List gradeList = cafeManageDao.getCafeGrade(search.getCafeNo());
+		
 		map.put("memberList", memberList);
 		map.put("totalCount", new Integer(totalCount));
+		map.put("gradeList", gradeList);
+		
 		return map;
 	}
 	
@@ -76,7 +94,50 @@ public class CafeMemberServiceImpl implements CafeMemberService {
 		// TODO Auto-generated method stub
 		return cafeMemberDao.getCafeMember(search);
 	}
-//////////////////////////////////기황끝///////////////////////////////////////
+	
+	@Override
+	public int addCafeMemberBlock(CafeMember cafeMember) throws Exception {
+		// TODO Auto-generated method stub
+		int blocked = cafeMemberDao.addCafeMemberBlock(cafeMember);
+		cafeMember.setMemberStatusCode("cs101");
+		cafeMemberDao.updateCafeMember(cafeMember);
+		return blocked;
+	}
 
+	@Override
+	public Map getCafeMemberBlocks(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		Map map = new HashMap();
+		
+		CafeMember member = cafeMemberDao.getCafeMember(search);
+		List blocks = cafeMemberDao.getCafeMemberBlocks(search);
+		List cafeGrades = cafeManageDao.getCafeGrade(search.getCafeNo());
+
+		map.put("member", member);
+		map.put("blocks", blocks);
+		map.put("cafeGrades",cafeGrades);
+
+		return map;
+	}
+
+	@Override
+	public int updateCafeMemberBlock(CafeMemberBlock cafeMemberBlock) throws Exception {
+
+		int updateCheck = cafeMemberDao.updateCafeMemberBlock(cafeMemberBlock);
+
+		CafeMember cafeMember = new CafeMember();
+		cafeMember.setMemberNo(cafeMemberBlock.getMemberNo());
+		cafeMember.setMemberStatusCode("cs100");
+		cafeMemberDao.updateCafeMember(cafeMember);
+
+		return updateCheck;
+	}
+
+	@Override
+	public int updateCafeMemeberGrade(CafeMember cafeMember) throws Exception {
+		return cafeMemberDao.updateCafeMemeberGrade(cafeMember);
+	}
+	
+	//////////////////////////////////기황끝///////////////////////////////////////
 
 }

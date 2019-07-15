@@ -6,7 +6,6 @@
 
 <mapper namespace="CafeMemberMapper">
 
-	
 	<resultMap id="cafeMemberSelectMap" type="CafeMember">
 		<result property="memberNo" 			column="member_no" 				jdbcType="NUMERIC"/>
 		<result property="cafeNo" 				column="cafe_no" 				jdbcType="NUMERIC" />
@@ -16,66 +15,111 @@
 		<result property="memberNickname" 		column="member_nickname" 		jdbcType="VARCHAR" />
 		<result property="memberStatusCode" 	column="member_status_code" 	jdbcType="VARCHAR" />
 		<result property="favoriteFlag" 		column="favorite_flag" 			jdbcType="CHAR"  />
-		<result property="regDate" 				column="reg_date" 				jdbcType="DATE" />
+		<result property="regDate" 				column="reg_date" 				jdbcType="VARCHAR" />
 		<result property="visitCount" 			column="visit_count" 			jdbcType="NUMERIC" />
 		<result property="gradeName"  			column="grade_name" 			jdbcType="VARCHAR"/>
 		<result property="memberGrade" 			column="member_grade_code" 		jdbcType="VARCHAR"/>
 	</resultMap>
 	
-	<insert 	id="addCafeMember"		parameterType="CafeMember" >
+	<resultMap id="cafeMemberBlcokMap" type="CafeMemberBlock">
+		<result property="blockNo" 			column="block_no" 	jdbcType="NUMERIC"/>
+		<result property="blockStartDate" 	column="start_date" jdbcType="VARCHAR"/>
+		<result property="blockEndDate"		column="end_date" 	jdbcType="VARCHAR"/>
+		<result property="period" 			column="period" 	jdbcType="NUMERIC"/>
+		<result property="blockReason" 		column="reason" 	jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<insert id="addCafeMember"		parameterType="CafeMember" >
 	 	INSERT
 		INTO cafe_member( member_no , cafe_no , user_no , cafe_member_grade_no , notice_flag, member_nickname, member_status_code , favorite_flag, reg_date, visit_count ) 
 		VALUES	 (	seq_member_no.NEXTVAL , #{cafeNo} , #{userNo} , #{cafeMemberGradeNo} , 
 							'0' , #{memberNickname} , 'cs101', '0', SYSDATE,'0')
 	 </insert>
 	
-	  <update	id="updateCafeMember"	parameterType="CafeMember" >
+	<update id="updateCafeMember"	parameterType="CafeMember" >
 	   	UPDATE cafe_member
 	   	<set>
 		member_status_code=#{memberStatusCode}	
 	   	</set>
-	   	WHERE member_no = #{memberNo}
-	 </update>
+		WHERE member_no = #{memberNo}
+	</update>
 	 
 	 <sql id="memberListing">
 		SELECT
 		m.cafe_no, m.member_no, m.member_nickname, 
 		g.member_grade_code, g.grade_name, 
-		m.reg_date, m.visit_count,m.member_status_code
+		TO_CHAR(m.reg_date, 'YYYY-MM-DD HH24:MM:SS') reg_date, m.visit_count, m.member_status_code
 		FROM
 		cafe_member m, cafe_member_grade g
 		WHERE
 		m.cafe_member_grade_no=g.cafe_member_grade_no
 		AND	m.cafe_no = #{cafeNo}
-		<if test="boardNo==0">
-		AND g.member_grade_code= 'cg100'
+		<if test="searchKeyword != null">
+		AND m.member_nickname like '%' ||#{searchKeyword}|| '%'
 		</if>
-		<if test="boardNo==0">
-		AND g.member_grade_code= 'cg101'		
+		<if test="memberGrade!=0">
+		AND g.member_grade_code=
 		</if>
-		<if test="boardNo==0">
-		AND g.member_grade_code= 'cg102'
+		<if test="memberGrade==1">
+		'cg100'
 		</if>
-		<if test="boardNo==0">
-		AND g.member_grade_code= 'cg103'
+		<if test="memberGrade==2">
+		'cg101'
 		</if>
-		<if test="boardNo==0">
-		AND g.member_grade_code= 'cg104'
+		<if test="memberGrade==3">
+		'cg102'
 		</if>
-		<if test="boardNo==0">
-		AND g.member_grade_code= 'cg105'
+		<if test="memberGrade==4">
+		'cg103'
 		</if>
-		<if test="boardNo==0">
-		AND g.member_grade_code= 'cg106'
+		<if test="memberGrade==5">
+		'cg104'
 		</if>
-		
+		<if test="memberGrade==6">
+		'cg105'
+		</if>
+		<if test="memberGrade==7">
+		'cg106'
+		</if>
+		<if test="status!=0">
+		AND m.member_status_code =
+		</if>
+		<if test="status==1">
+		'cs100'
+		</if>
+		<if test="status==2">
+		'cs101'
+		</if>
+		<if test="status==3">
+		'cs102'
+		</if>		
+		ORDER BY
+		<if test="sortCode==0">
+		m.reg_date DESC
+		</if>
+		<if test="sortCode==1">
+		m.reg_date ASC
+		</if>
+		<if test="sortCode==2">
+		m.member_nickname ASC
+		</if>
+		<if test="sortCode==3">
+		m.member_nickname DESC
+		</if>
+		<if test="sortCode==4">
+		m.visit_count DESC
+		</if>
+		<if test="sortCode==5">
+		m.visit_count ASC
+		</if>
 	</sql>
 	 
 	<select id="getCafeMemeber" parameterType="Search" resultMap="cafeMemberSelectMap">
 	 	SELECT
 		m.cafe_no, m.member_no, m.member_nickname, 
 		g.member_grade_code, g.grade_name, 
-		m.reg_date, m.visit_count,m.member_status_code
+		TO_CHAR(m.reg_date, 'YYYY-MM-DD HH24:MM:SS') reg_date, 
+		m.visit_count,m.member_status_code
 		FROM
 		cafe_member m, cafe_member_grade g
 		WHERE
@@ -83,7 +127,7 @@
 		AND
 		m.member_no = #{memberNo}
 	</select>
-	
+		
 	<select id="getMemberCount" parameterType="Search" resultType="int">
 	SELECT
 	COUNT(*)
@@ -100,5 +144,59 @@
 		WHERE ROWNUM &lt;= #{endRowNum} )
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}	
 	</select>
+	
+	<update	id="updateCafeMemberProfile"	parameterType="CafeMember" >
+	   	UPDATE cafe_member
+	   	<set>
+		notice_flag=#{noticeFlag},
+		member_nickname=#{memberNickname},
+		favorite_flag=#{favoriteFlag},
+	   	</set>
+	   	WHERE member_no = #{memberNo}
+	 </update>
 	 
+	<insert id="addCafeMemberBlock"		parameterType="CafeMember" >
+		INSERT INTO
+		cafe_member_block
+		( block_no, member_no, start_date, end_date, period, reason)
+ 		VALUES 
+ 		( SEQ_block_no.NEXTVAL, #{memberNo}, 
+ 		SYSDATE, SYSDATE+#{blockPeriod}, #{blockPeriod}, #{blockReason})
+	</insert>
+	
+	<select id="getCafeMemeberBlock" parameterType="Search" resultMap="cafeMemberBlcokMap">
+	 	SELECT
+		b.block_no, b.reason, 
+		TO_CHAR(b.start_date, 'YYYY-MM-DD HH24:MM:SS') start_date, 
+		TO_CHAR(b.end_date, 'YYYY-MM-DD HH24:MM:SS') end_date, 
+		period
+		FROM
+		cafe_member m, cafe_member_block b
+		WHERE
+		m.member_no = b.member_no
+		AND
+		m.member_no = #{memberNo}
+		ORDER BY b.block_no DESC
+	</select>
+	
+	<update id="updateCafeMemberBlock" parameterType="CafeMemberBlock">
+		UPDATE
+		cafe_member_block
+		<set>
+		end_date = SYSDATE,
+		reason = #{blockReason}
+		</set>
+		WHERE 
+		block_no=#{blockNo}
+	</update>
+	
+	<update id="updateMemberGrade" parameterType="CafeMember">
+		UPDATE
+		cafe_member
+		<set>
+		cafe_member_grade_no = #{cafeMemberGradeNo}
+		</set>
+		WHERE member_no=#{memberNo}
+	</update>
+	
 </mapper>

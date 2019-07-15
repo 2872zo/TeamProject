@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
@@ -8,6 +7,7 @@
 <html lang="ko">
 
 <head>
+<title>CafeTabMain</title>
 
 <!-- ////////////////////////////// jQuery CDN ////////////////////////////// -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"
@@ -24,50 +24,68 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
  integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
  crossorigin="anonymous"></script>
-<!--  ///////////////////////// CSS ////////////////////////// -->
-<style>
 
-    </style>
+<!--  ///////////////////////// CSS ////////////////////////// -->
+
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
 $(function() {
-	$("#login").on("click" , function() {
-		$(self.location).attr("href","/loginView");
-	});
 
-	$("#phoenix").on("click" , function() {
-		$(self.location).attr("href","/");
-	});
 });
 </script>
+	<!-- ToolBar Start /////////////////////////////////////-->
+	<jsp:include page="../common/cafeToolbar.jsp" />
+	<!-- ToolBar End /////////////////////////////////////-->
 </head>
 
 <body>
-
+<form id="cafeHomeForm">
+<input type="hidden" id="userNo" name="userNo" value="${search.userNo}"/>
+<input type="hidden" id="status" name="status" value="${search.status}"/>
+<input type="hidden" id="boardNo" name="boardNo" value="${search.boardNo}"/>
+</form>
 
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
-	<!-- ffb347 FFAA28 FFA01E FFAA28 FFAF00-->
-		<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #FFAF00;">
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <a class="navbar-brand" href="#" id="phoenix">Phoenix</a>
+	<div class="container">
+	총 ${totalCount} 건 
 
-  <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#">Link</a>
-      </li>   
-    </ul>
-    
+	
+
+	
+	<c:if test="${!empty applicationList}">
+
+<table class="table table-borderless ">
+	<thead>
+    <tr>
+  	  <th scope="col">신청번호</th>
+      <th scope="col">유저번호</th>
+      <th scope="col">카페번호</th>
+      <th scope="col">신청일</th>
+      <th scope="col">신청닉네임</th>
+    </tr>
+	</thead>
+	<tbody>
   
-        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Chat</a>
-     
-      <button class="btn btn-outline-light my-2 my-sm-0" type="submit" id = "login">Login</button>
-   
-  </div>
-</nav>
+	<c:forEach var="cafeApplication" items="${applicationList}">
+	<tr>
+	 <th scope="row">${cafeApplication.applicationNo}</th>
+	 <td>${cafeApplication.userNo}</td>
+	 <td>${cafeApplication.cafeNo}</td>
+	 <td>${cafeApplication.regDate}</td>
+	 <td>${cafeApplication.memberNickname}</td>
+	 </tr>
+	</c:forEach>
+  
+	</tbody>
+</table>
+
+</c:if>
+	
+
+	
+</div>
+	<!--  화면구성 div Start /////////////////////////////////////-->
 
 </body>
 </html>
