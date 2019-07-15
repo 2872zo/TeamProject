@@ -120,16 +120,22 @@ public class CafeManageServiceImpl implements CafeManageService {
 
 	@Override
 	public void addCafeGrade(CafeGrade cafeGrade) {
-		
+
 		cafeManageDao.addCafeGrade(cafeGrade);
 
 	}
 
 	@Override
 	public void updateCafeGrade(CafeGrade cafeGrade) {
-		
+
 		cafeManageDao.updateCafeGrade(cafeGrade);
 
+	}
+	
+	@Override
+	public List checkCafeGrade(int cafeNo) {
+		
+		return cafeManageDao.checkCafeGrade(cafeNo);
 	}
 
 ////////////////////////////////지니끝//////////////////////////////////

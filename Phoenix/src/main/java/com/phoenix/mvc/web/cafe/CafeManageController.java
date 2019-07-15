@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,7 +31,9 @@ import com.phoenix.mvc.service.cafe.CafeManageService;
 import com.phoenix.mvc.service.cafe.CafeMemberService;
 import com.phoenix.mvc.service.domain.Cafe;
 import com.phoenix.mvc.service.domain.CafeApplication;
+import com.phoenix.mvc.service.domain.CafeGrade;
 import com.phoenix.mvc.service.domain.CafeMember;
+import com.phoenix.mvc.service.domain.Grades;
 
 @Controller
 @RequestMapping("/cafe/*")
@@ -230,24 +233,32 @@ public class CafeManageController {
 		return "cafe/getCafeApplication";
 
 	}
-	
+
 	public String dropCafe() {
 		return null;
-		
+
 	}
-	
+
 	@RequestMapping(value = "/{cafeURL}/manage/updateCafeGradeView", method = RequestMethod.GET)
 	public String updateCafeGradeView(@PathVariable String cafeURL, Model model) {
-		
+
 		System.out.println("/{cafeURL}/manage/updateCafeGradeView : GET");
-		
+
 		int cafeNo = cafeMemberService.getCafeNo(cafeURL);
+
+		List cafeGrade = cafeManageService.checkCafeGrade(cafeNo);
 		
-		
-		
-		
+		model.addAttribute("cafeGradeList", cafeGrade);
+
 		return "cafe/updateCafeGrade";
+
+	}
+	@PostMapping(value="/{cafeURL}/manage/updateCafeGrade")
+	public String updateCafeGrade(@ModelAttribute("Grades") Grades grades){
 		
+		System.out.println(grades);
+		
+		return null;
 	}
 
 //////////////////////////////// 지니끝//////////////////////////////////

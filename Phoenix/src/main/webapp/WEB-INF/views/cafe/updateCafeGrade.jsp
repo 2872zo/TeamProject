@@ -16,7 +16,18 @@
 
 	<script type="text/javascript">
 
+	$(function(){
+			$("#save").on("click", function(){//update
+				alert("겨이굥~")
+				$("form").attr("method" , "POST").attr("action" , "/cafe/no1cafe/manage/updateCafeGrade").submit();
+			});
+		
+
+	});
 	
+	
+
+		
 	</script>
 
 </head>
@@ -24,82 +35,77 @@
 
 <body>
 	
-	메뉴관리
-	<button type="button" id ="cancel"> 취소 </button>
-	<button type="button" id ="save"> 저장하기</button>
-	<br/>
-	<br/>
-	<br/>
-	
-	추가메뉴
 
-	<select name="addableBoard" size="2">
-		<option value="자유게시판" selected="selected">자유게시판</option>
-		<option value="구분선">구분선</option>
-	</select>
 	
-	<button type="button" id ="plusBoard"> +게시판추가 </button>
 	<br/>
 	<br/>
-	<button type="button" id ="goDown"> 아래로</button>
-	<button type="button" id ="goUp"> 위로</button>
-	<button type="button" id ="goStart"> 맨위로 </button>
-	<button type="button" id ="goEnd"> 맨아래로 </button>
-	<button type="button" id ="delete"> 삭제 </button>
-	
-	
-	<!--  게시판 리스트 불러오기 -->
+	<br/>
+		<input type="hidden" class="gradeCount" value="${cafeGradeList.size()}"/>
 		
 		
-		<br/>
-		<br/>
-		
-		<select name="board" size=10>
-    		
-    		<c:set var="i" value="0" />  
+		<c:set var="i" value="0" />  
+			<div class="grade">
+			<form id = "submit">
+			<c:forEach var="cafeGrade" items="${cafeGradeList}">
 			
-			<c:forEach var="board" items="${boardList}">
-				<c:set var="i" value="${ i+1 }" />
-			
-			
-			<c:if test="${i eq 1}">
-				<option  value="${board.boardName}" id="${board.boardNo}" selected="selected">${board.boardName}</option>
-			</c:if>
-			
-			<c:if test="${i ne 1}">
-				<option value="${board.boardName}" id="${board.boardNo}">${board.boardName}</option>
-			</c:if>
-			
-			</c:forEach>
-			
-   			
-		</select>
-		<input type="hidden" id="totalBoardsize" value="${i}">
-		
-		
-		<div class="boardDetail">
-		<c:set var="j" value="0" />  
-		<c:forEach var="board" items="${boardList}">
-				<c:set var="j" value="${ j+1 }" />
-		
-			<div class ="boardDetail${j}">
+				<c:set var="i" value="${ i+1 }"/>
 				
-				<br/>
-				<br/>
-				메뉴명  <input type="text" name="boardName" value="${board.boardName}" />
-				<br />
-				메뉴설명 <input type="text"  name="boardDetail" width="50" value="${board.boardDetail}">
-				<br/>
-				<br/>
-		
-				게시판 공개여부를 설정합니다. 멤버공개를 선택시, 게시판은 멤버에게만 보여집니다.
-				<br/>
-				<br/>
-		
+				<c:if test="${i eq 1}">
+					${i} 번째 등급명
+					<input type ="text" class="gradeName" name="gradeName${i}" value="${cafeGrade.gradeName}" /> 
+					<input type ="hidden" class = "cafeGradeNo" name="gradeNo${i}" value="${cafeGrade.cafeGradeNo }"/>
+					<input type ="hidden" class="flag"name="gradeFlag${i}"value="${cafeGrade.gradeFlag }"/>
+					<input type ="hidden"class="visit" name ="gradeVisit${i}"value="${cafeGrade.requiredVisitCount }"/>
+					<input type ="hidden" class="post" name="gradePost${i}"value="${cafeGrade.requiredPostCount }"/>
+					<input type ="hidden" class="reply"name="gradeReply${i}"value="${cafeGrade.requiredReplyCount }"/>
+					<input type="hidden" class="auto" name="autoFlag${i}" value="${cafeGrade.autoUpgradeFlag }"/>
+					<br/>
+					<br/>
+					<br/>
+
+				</c:if>
+				
+				<c:if test="${i ne 1}">
+					${i} 번째 등급명
+					<input type ="text" class="gradeName" name="gradeName${i}" value="${cafeGrade.gradeName}" /> 
+					<br/>
+					<br/>
+					출석 <input type ="text"class="visit" name ="gradeVisit${i}"value="${cafeGrade.requiredVisitCount }"/>이상
+					게시글 <input type ="text" class="post" name="gradePost${i}"value="${cafeGrade.requiredPostCount }"/>이상
+					댓글 <input type ="text" class="reply"name="gradeReply${i}"value="${cafeGrade.requiredReplyCount }"/>이상&nbsp;
+					<input type ="hidden" class = "cafeGradeNo" name="gradeNo${i}" value="${cafeGrade.cafeGradeNo }"/>
+					<input type ="hidden" class="flag"name="gradeFlag${i}"value="${cafeGrade.gradeFlag }"/>
+					
+					<select class ="auto"  name="autoFlag${i}">
+						<option value="true">자동가입거부</option>
+						<option value="false">자동가입승인</option>
+					</select>
+					
+					
+					<c:if test ="${cafeGrade.gradeFlag eq true}">
+					 <button type="button" class = "delete">삭제</button>
+					 </c:if>
+					 <c:if test ="${cafeGrade.gradeFlag eq false}">
+					 <button type="button" class = "insert">추가</button>
+					 </c:if>
+					 
+					<br/>
+					<br/>
+					<br/>
+				</c:if>
+			</c:forEach>
+			</form>
 			</div>
-		</c:forEach>
+			
+			<br/>
+			<br/>
+			<br/>
+			<button type="button" id ="save">저장</button>
+				
+
 		
-		</div>
+		
+
 		
 
 </body>

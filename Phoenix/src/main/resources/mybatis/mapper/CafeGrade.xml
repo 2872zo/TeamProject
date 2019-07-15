@@ -15,18 +15,20 @@
 		<result property="requiredVisitCount" 						column="required_visit_count" 							jdbcType="NUMERIC"/>
 		<result property="requiredReplyCount" 						column="required_reply_count" 							jdbcType="NUMERIC"/>
 		<result property="requiredPostCount" 						column="required_post_count" 							jdbcType="NUMERIC"/>
+		<result property="gradeFlag" 						column="cafe_grade_active_flag" 							jdbcType="CHAR"/>
+		<result property="autoUpgradeFlag" 						column="auto_upgrade_flag" 							jdbcType="CHAR"/>
 	</resultMap>
 	
 	<insert 	id="addCafeGrade"		parameterType="CafeGrade" >
 	 	INSERT
-		INTO cafe_member_grade( cafe_member_grade_no , cafe_no , member_grade_code , grade_name , required_visit_count, required_reply_count, required_post_count ) 
-		VALUES(	seq_member_grade_no.NEXTVAL , #{cafeGradeNo} , #{cafeNo} , #{memberGradeCode} ,  #{gradeName} , #{requiredVisitCount} , #{requiredReplyCount} , #{requiredPostCount})
+		INTO cafe_member_grade( cafe_member_grade_no , cafe_no , member_grade_code , grade_name , required_visit_count, required_reply_count, required_post_count, cafe_grade_active_flag ) 
+		VALUES(	seq_member_grade_no.NEXTVAL , #{cafeGradeNo} , #{cafeNo} , #{memberGradeCode} ,  #{gradeName} , #{requiredVisitCount} , #{requiredReplyCount} , #{requiredPostCount}, '1')
 	 </insert>
 	 
 	 <update	id="updateCafeGrade"	parameterType="CafeGrade" >
 	   	UPDATE cafe_member_grade
 	   	<set>
-		member_grade_code=#{memberGradeCode},
+		cafe_grade_active_flag=#{gradeFlag},
 		grade_name=#{gradeName},
 		required_visit_count=#{required_visit_count},
 		required_reply_count=#{required_reply_count},
@@ -39,7 +41,14 @@
   		SELECT 
 		*
 		FROM cafe_member_grade
-		WHERE cafe_no = #{cafeNo}
+		WHERE cafe_no = #{cafeNo} and cafe_grade_active_flag = 1
+  	</select>
+
+  	
+	 <select id="checkCafeGrade" parameterType="int" resultMap="cafeGradeSelectMap">
+  		SELECT member_grade_code,cafe_member_grade_no, cafe_no, grade_name ,required_visit_count, required_reply_count, required_post_count, cafe_grade_active_flag, auto_upgrade_flag
+		FROM cafe_member_grade
+		WHERE cafe_no = #{cafeNo} and member_grade_code NOT IN ('cg100','cg101') AND ROWID IN (SELECT MIN(ROWID) FROM cafe_member_grade GROUP BY member_grade_code)
   	</select>
 	 
 </mapper>

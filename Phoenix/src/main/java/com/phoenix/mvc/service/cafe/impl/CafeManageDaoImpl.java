@@ -77,16 +77,24 @@ public class CafeManageDaoImpl implements CafeManageDao {
 
 	@Override
 	public void addCafeGrade(CafeGrade cafeGrade) {
-		
+
 		sqlSession.insert("CafeGradeMapper.addCafeGrade", cafeGrade);
 
 	}
 
 	@Override
 	public void updateCafeGrade(CafeGrade cafeGrade) {
-		
+
 		sqlSession.update("CafeGradeMapper.updateCafeGrade", cafeGrade);
 
+	}
+
+	@Override
+	public List checkCafeGrade(int cafeNo) {
+
+		List checkList = sqlSession.selectList("CafeGradeMapper.checkCafeGrade", cafeNo);
+
+		return checkList;
 	}
 
 	//////////////////////////////// 지니끝//////////////////////////////////

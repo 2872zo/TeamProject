@@ -25,6 +25,8 @@ public interface CafeManageService {
 	public void addCafeGrade(CafeGrade cafeGrade);
 
 	public void updateCafeGrade(CafeGrade cafeGrade);
+	
+	public List checkCafeGrade(int cafeNo);
 ////////////////////////////////지니끝//////////////////////////////////
 
 /////////////////////////////////////예림시작/////////////////////////////////////////
