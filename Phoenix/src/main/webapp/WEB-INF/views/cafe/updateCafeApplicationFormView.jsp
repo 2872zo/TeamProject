@@ -30,7 +30,7 @@
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			var cafeURL = "22";
 			$( "button.btn.btn-success" ).on("click" , function() {
-				alert("수정");
+				alert("저장");
 				$("form").attr("method" , "POST").attr("action" , "/cafe/"+cafeURL+"/manage/updateCafeApplicationForm").submit();
 			});
 		});	
@@ -38,51 +38,82 @@
 			
 		</script>
 <body>
-	
+		<div class="container">
+		
+			<h4 class="bg-primary text-center">가입양식관리수정</h4>
 <form class="form-horizontal">
 
 
-		<div class="row" align="center">
-	  		<div class="col-sm-4"><strong>가입양식관리수정</strong></div>
-		</div>
+		
 		
 		<input type="hidden" name="cafeNo" value="${cafe.cafeNo }"/>
 				
-					<div>
-						자동가입승인<input type="text" name="autoApplicationAcceptFlag" class="ct_input_g" 
-									style="width: 100px; height: 19px" maxLength="20" value="${cafe.autoApplicationAcceptFlag}"  >
-					</div>					
-		
-					<div>
-						카페전용 별명사용여부<input type="text" name="memberNicknameFlag" class="ct_input_g" 
-									style="width: 100px; height: 19px" maxLength="20" value="${cafe.memberNicknameFlag}">
+					<div class="form-group">
+						<label for="exampleFormControlSelect1"
+							class="col-sm-offset-1 col-sm-3 control-label">자동가입승인</label>
+						<div class="col-sm-4">
+							<select class="form-control" id="exampleFormControlSelect1"
+								name="autoApplicationAcceptFlag">								
+								<option value="true">사용</option>
+								<option value="false">미사용</option>
+							</select>
+						</div>
+					</div>		
+		<div class="form-group">
+						<label for="exampleFormControlSelect1"
+							class="col-sm-offset-1 col-sm-3 control-label">별명사용여부</label>
+						<div class="col-sm-4">
+							<select class="form-control" id="exampleFormControlSelect1"
+								name="memberNicknameFlag">								
+								<option value="true">사용</option>
+								<option value="false">미사용</option>
+							</select>
+						</div>
 					</div>
 		
-					<div>
-						질문1<input type="text" name="applicationQuestion1" class="ct_input_g" 
-									style="width: 100px; height: 19px" maxLength="20" value="${cafe.applicationQuestion1}">
-					</div>
-					
-					<div>
-						질문2<input type="text" name="applicationQuestion2" class="ct_input_g" 
-									style="width: 100px; height: 19px" maxLength="20" value="${cafe.applicationQuestion2}">
-					</div>
+					<div class="form-group">
+	
+					<label for="exampleFormControlInput1" class="col-sm-offset-1 col-sm-3 control-label">질문 1</label>
+						<div class="col-sm-4">				
+							<input type="text" class="form-control"
+								id="exampleFormControlInput1" placeholder="" name="applicationQuestion1">							
+						</div>
+				
+				</div>
 			
-					<div>
-						질문3<input type="text" name="applicationQuestion3" class="ct_input_g" 
-									style="width: 100px; height: 19px" maxLength="20" value="${cafe.applicationQuestion3}">
-					</div>
-		
+					<div class="form-group">
+	
+					<label for="exampleFormControlInput1" class="col-sm-offset-1 col-sm-3 control-label">질문 2</label>
+						<div class="col-sm-4">				
+							<input type="text" class="form-control"
+								id="exampleFormControlInput1" placeholder="" name="applicationQuestion2">							
+						</div>
+				
+				</div>
+
+					
+				<div class="form-group">
+	
+					<label for="exampleFormControlInput1" class="col-sm-offset-1 col-sm-3 control-label">질문 3</label>
+						<div class="col-sm-4">				
+							<input type="text" class="form-control"
+								id="exampleFormControlInput1" placeholder="" name="applicationQuestion3">							
+						</div>
+				
+				</div>
+					
+			
 		  
 				  
 		
 		  
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-success"  >수정</button>
+		      <button type="button" class="btn btn-success"  >저장</button>
 		    </div>
 		  </div>
 		</form>
+		
 		<!-- form Start /////////////////////////////////////-->
 		
  	</div>

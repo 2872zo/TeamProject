@@ -10,16 +10,20 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import com.phoenix.mvc.service.cafe.CafeManageService;
 import com.phoenix.mvc.service.cafe.CafeTabService;
 import com.phoenix.mvc.service.domain.Cafe;
+import com.phoenix.mvc.service.domain.CafeGrade;
 import com.phoenix.mvc.common.Page;
 import com.phoenix.mvc.service.domain.User;
 import com.phoenix.mvc.common.Search;
@@ -33,6 +37,11 @@ public class CafeTabContoller {
 	@Qualifier("cafeTabServiceImpl")
 	private CafeTabService cafeTabService;
 	
+	@Autowired
+	@Qualifier("cafeManageServiceImpl")
+	private CafeManageService cafeManageService;
+
+	
 	@Value("${pageSize}")
 	private int pageSize;
 	
@@ -44,7 +53,7 @@ public class CafeTabContoller {
 	}
 	
 	///////////////////////////////준호시작///////////////////////////////////////	
-	@RequestMapping(value= "/addCafeView", method=RequestMethod.GET)
+	@GetMapping("/addCafeView")
 	public String addCafeView(@ModelAttribute("cafe") Cafe cafe)throws Exception{
 		
 		System.out.println("/addCafe : GET");
@@ -54,18 +63,25 @@ public class CafeTabContoller {
 		return "cafe/addCafeView";
 	}
 	
-	@RequestMapping(value= "/{cafeURL}/addCafe", method=RequestMethod.POST)
-	public String addCafe(@ModelAttribute("cafe") Cafe cafe)throws Exception{
+	@PostMapping("/{cafeURL}/addCafe")
+	public String addCafe(@ModelAttribute Cafe cafe, Model model)throws Exception{
 		
 		System.out.println("/addCafe : POST");
-		
-		
-		//cafe.setManageUserNo("10012");		
 
 		cafeTabService.addCafe(cafe);
 		
-		return "cafe/addCafe";
+		Cafe cafe2 = cafeManageService.getCafeInfo(cafe.getCafeNo());
+		
+		cafe = cafe2;
+					
+		System.out.println("카페인서트다다아아아앙@@@"+cafe);
+		
+		model.addAttribute("cafe", cafe);
+		
+		return "cafe/getCafeInfo";
 	}
+	
+	
 	
 	///////////////////////////////준호끝///////////////////////////////////////		
 	

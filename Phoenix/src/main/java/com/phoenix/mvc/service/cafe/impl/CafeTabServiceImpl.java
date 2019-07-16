@@ -17,6 +17,7 @@ import com.phoenix.mvc.service.cafe.CafePostService;
 import com.phoenix.mvc.service.cafe.CafeTabDao;
 import com.phoenix.mvc.service.cafe.CafeTabService;
 import com.phoenix.mvc.service.domain.Cafe;
+import com.phoenix.mvc.service.domain.CafeGrade;
 import com.phoenix.mvc.service.domain.CafeMember;
 import com.phoenix.mvc.service.domain.Post;
 import com.phoenix.mvc.service.domain.User;
@@ -69,12 +70,25 @@ public class CafeTabServiceImpl implements CafeTabService {
 	@Override
 	public void addCafe(Cafe cafe) throws Exception {
 		cafeTabDao.addCafe(cafe);
+		
+		CafeGrade cafeGrade= new CafeGrade();
+		
+		cafeGrade.setCafeNo(cafe.getCafeNo());
+		
+		cafeTabDao.addMemberGrade(cafeGrade);
+		
+		System.out.println("gkgkgkgk");
+		
+		System.out.println("여긴 서비스임플 카페다아아아"+cafe);
+		
+		
 	}
 	
 	public boolean checkCafeNameDuplication(String cafeName) throws Exception {
 		
 		boolean result=true;
 		System.out.println("cafeName!!!!!!!!!!!!!!!!!!!!!!!"+cafeName);
+		
 		Cafe cafe = cafeManageDao.getCafeName(cafeName);
 		
 		System.out.println("cafe!!!!!!!!!!!!!!!!!!!!!!!"+cafe);

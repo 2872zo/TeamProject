@@ -91,11 +91,11 @@ public class CafeManageDaoImpl implements CafeManageDao {
 
 		return checkList;
 	}
-	
+
 	@Override
 	public int flagUpdate(CafeGrade cafeGrade) {
-		
-		return sqlSession.update("CafeGradeMapper.flagUpdate",cafeGrade);
+
+		return sqlSession.update("CafeGradeMapper.flagUpdate", cafeGrade);
 	}
 
 //////////////////////////////// 지니끝//////////////////////////////////
@@ -176,9 +176,9 @@ public class CafeManageDaoImpl implements CafeManageDao {
 	}
 
 	@Override
-	public boolean addCafeBoard(List<Board> newBoard) {
+	public boolean addCafeBoard(List<Board> newBoardList) {
 
-		int result = sqlSession.insert("insertCafeBoard", newBoard);
+		int result = sqlSession.insert("insertCafeBoard", newBoardList);
 
 		if (result >= 1) {
 			return true;
@@ -188,9 +188,31 @@ public class CafeManageDaoImpl implements CafeManageDao {
 
 	}
 
+	@Override
+	public boolean updateCafeBoard(List<Board> existBoardList) {
+
+		int result = sqlSession.update("updateCafeBoard", existBoardList);
+		System.out.println("updateCafeBoard Result : " + result);
+		if (result >= 1)
+			return true;
+		else
+			return false;
+	}
+
+	@Override
+	public boolean deleteCafeBoard(List<Board> deleteBoardList) {
+
+		int result = sqlSession.delete("deleteCafeBoard", deleteBoardList);
+
+		if (result >= 0)
+			return true;
+		else
+			return false;
+	}
+
 //////////////////////////////////////////////////////////예림끝////////////////////////////////////
 
-	/////////////////////////////// 준호시작///////////////////////////////////////
+/////////////////////////////// 준호시작///////////////////////////////////////
 	@Override // 준호
 	public void updateCafeInfo(Cafe cafe) throws Exception {
 		sqlSession.update("CafeMapper.updateCafeInfo", cafe);
@@ -214,8 +236,6 @@ public class CafeManageDaoImpl implements CafeManageDao {
 		return sqlSession.selectOne("CafeMapper.getCafeURL", URL);
 	}
 
-
-
-	/////////////////////////////// 준호끝///////////////////////////////////////
+/////////////////////////////// 준호끝///////////////////////////////////////
 
 }

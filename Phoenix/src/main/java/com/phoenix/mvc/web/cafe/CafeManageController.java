@@ -1,5 +1,7 @@
 package com.phoenix.mvc.web.cafe;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Enumeration;
@@ -16,6 +18,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -25,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.phoenix.mvc.common.Event;
 import com.phoenix.mvc.common.Page;
@@ -40,6 +45,7 @@ import com.phoenix.mvc.service.domain.Grades;
 
 @Controller
 @RequestMapping("/cafe/*")
+@PropertySource("common.properties")
 public class CafeManageController {
 
 	@Autowired
@@ -54,12 +60,13 @@ public class CafeManageController {
 		System.out.println(this.getClass().getName() + "생성자 start");
 	}
 
+
 ////////////////////////////////////////////예림//////////////////////////////////////////////
-	@RequestMapping(value = "/{cafeURL}/manage/updateCafeBoardView", method = RequestMethod.GET) // 예림예림
+	@RequestMapping(value = "/{cafeURL}/manage/updateCafeBoardView") // 예림예림
 	public String updateCafeBoardView(@PathVariable String cafeURL, HttpSession session, Model model)// session user정보,
 	// 카페번호
 	{
-		System.out.println("/{cafeURL}/manage/updateCafeBoardView : GET");
+		System.out.println("/{cafeURL}/manage/updateCafeBoardView");
 		// session 으로 1.로그인되어있는지 2.카페에 가입되어있는지 3.cafeURL의 카페매니저인지 확인
 		System.out.println("cafeURL : " + cafeURL);
 
@@ -93,7 +100,7 @@ public class CafeManageController {
 			board.setCafeURL(cafeURL);
 			board.setBoardIndex(boardIndex); // 순서이동해도 option순서대로 오나
 			boardIndex++;
-
+			
 			if (boards[i].contains("/")) // "/"이 들어있는애==즉 기존 있던애들 (newBoard가 아님)
 			{
 				board.setBoardNo(Integer.parseInt(boards[i].split("/")[1]));
@@ -125,7 +132,8 @@ public class CafeManageController {
 					}
 				}
 
-			} else if (element.contains("boardDetail/")) // 원래있던애들
+			} 
+			else if (element.contains("boardDetail/")) // 원래있던애들
 			{
 				for (int i = 0; i < existBoard.size(); i++) {
 					if (existBoard.get(i).getBoardNo() == Integer.parseInt(element.split("/")[1]))// 기존애 boardNo랑같으면
@@ -133,16 +141,19 @@ public class CafeManageController {
 						existBoard.get(i).setBoardDetail(request.getParameter(element)); // Board이름 set
 					}
 				}
-			} else if (element.contains("newBoardName")) // 새로생긴애
+			} 
+			else if(element.contains("boardPrivate/"))
 			{
-				// element.split("e")[2]
-				for (int i = 0; i < newBoard.size(); i++) {
-					if (newBoard.get(i).getBoardNo() == Integer.parseInt(element.split("e")[2])) {
-						newBoard.get(i).setBoardName(request.getParameter(element));
+				for(int i=0; i<existBoard.size(); i++)
+				{
+					if(existBoard.get(i).getBoardNo() == Integer.parseInt(element.split("/")[1] ))
+					{
+						existBoard.get(i).setPrivateFlag(request.getParameter(element).charAt(0));
 					}
 				}
-
-			} else if (element.contains("newBoardDetail")) // 새로 생긴애
+				
+			}
+			else if (element.contains("newBoardDetail")) // 새로 생긴애
 			{
 				for (int i = 0; i < newBoard.size(); i++) {
 					if (newBoard.get(i).getBoardNo() == Integer.parseInt(element.split("l")[1])) {
@@ -150,27 +161,51 @@ public class CafeManageController {
 					}
 				}
 			}
+			else if(element.contains("newBoardPrivate"))
+			{
+				for(int i=0; i<newBoard.size(); i++)
+				{
+					if(newBoard.get(i).getBoardNo() == Integer.parseInt(element.split("e")[2] ))
+					{
+						newBoard.get(i).setPrivateFlag(request.getParameter(element).charAt(0));
+					}
+				}
+				
+			}
+			else if (element.contains("newBoard")) // 새로생긴애 newBoardName
+			{
+				// element.split("e")[2]
+				for (int i = 0; i < newBoard.size(); i++) {
+					if (newBoard.get(i).getBoardNo() == Integer.parseInt(element.split("d")[1])) {
+						newBoard.get(i).setBoardName(request.getParameter(element));
+					}
+				}
+
+			} 
+			
+			
+			
 		}
+		
 		System.out.println("newBoard : " + newBoard);
 		System.out.println("existBoard : " + existBoard); // 다 잘담겼는데 구분선은 boardDetail,boardName이 null이다.
 
+	
+
+		if (existBoard.size() > 0) { //뭐 항상 0보다 크겠지
+			boolean updateCafeResult = cafeManageService.updateCafeBoard(existBoard);
+		}
+		
 		if (newBoard.size() > 0) // newBoard가 있다면
 		{
 			boolean addCafeResult = cafeManageService.addCafeBoard(newBoard);
 		}
 
-		if (existBoard.size() > 0) {
-			boolean updateCafeResult = cafeManageService.updateCafeBoard(existBoard);
-		}
-
 		// newBoard는 addCafeBoard로 넘겨주고
 		// existBoard는 updateCafeBoard로 넘겨준다.
 
-		// request.getpara
-
-		// System.out.println(a);
-
-		return "";// 다시 updateCafeBoardView 호출하고 싶은데.
+		//return "";// 다시 updateCafeBoardView 호출하고 싶은데.
+		return "forward:/cafe/"+cafeURL+"/manage/updateCafeBoardView";
 	}
 
 	@RequestMapping(value = "/{cafeURL}/manage/getCafeStatistics") // 예림예림 여기는 처음에만 들어온다.
@@ -459,7 +494,7 @@ public class CafeManageController {
 	public String updateCafeInfo(@ModelAttribute("cafe") Cafe cafe) throws Exception {
 
 		System.out.println("/updateCafeInfoView : POST");
-
+		
 		cafeManageService.updateCafeInfo(cafe);
 
 		Cafe cafe2 = cafeManageService.getCafeInfo(cafe.getCafeNo());
@@ -472,9 +507,11 @@ public class CafeManageController {
 // 준호
 	@RequestMapping(value = "/{cafeURL}/manage/getCafeInfo", method = RequestMethod.POST)
 	public String getCafeInfo(@RequestParam("cafeNo") int cafeNo, Model model) throws Exception {
-
+		
 		Cafe cafe = cafeManageService.getCafeInfo(cafeNo);
-
+		
+		System.out.println("카페정보들오니"+cafe);
+		
 		model.addAttribute("cafe", cafe);
 
 		return "cafe/getCafeInfo";
