@@ -30,9 +30,11 @@
     </style>
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
+
 $(function() {
+	
 	$("#login").on("click" , function() {
-		$(self.location).attr("href","/loginView");
+		$(self.location).attr("href","/user/loginView");
 	});
 
 	$("#phoenix").on("click" , function() {
@@ -55,8 +57,8 @@ $(function() {
 		$(self.location).attr("href","/chat/config");
 	});
 	
-	
 });
+
 </script>
 </head>
 
