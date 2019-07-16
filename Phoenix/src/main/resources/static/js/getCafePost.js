@@ -30,7 +30,10 @@ $(function() {
 
 	//게시글 삭제
 	$("[name=delete]").on("click",function(){
-		location.href = "/cafe/${post.cafeURL}/deletePost?postNo=${post.postNo}&boardNo=${post.boardNo}";
+		$("div.col-10").load("/cafe/" + state.cafeURL + "/deletePost/?postNo=" + state.postNo + "&boardNo=" +state.boardNo + " #mainContent");
+		
+		
+		history.pushState(state, state.cafeURL, "/cafe/" + state.cafeURL + "/getBoard/" +state.boardNo);
 	});
 });
 

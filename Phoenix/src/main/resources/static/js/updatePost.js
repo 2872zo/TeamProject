@@ -30,20 +30,15 @@
 								$("[name=boardName]").val( $("[name=boardNo] option:selected").text());
 								
 								var formData = $("form").serializeArray();
-								console.log($("[type=text][name=postTitle]").val());
-								console.log($("textarea[name=postContent]").val());
-								console.log(CKEDITOR.instances.editor.getData());
 		
-								console.log(formData);
 								formData.splice(6,1);
-								console.log(formData);
 								formData.push({name : "postContent" , value : CKEDITOR.instances.editor.getData()});
-								console.log(formData);
 								
 								$("#mainContent").remove();
 								$("div.col-10").load("/cafe/" + state.cafeURL + "/updatePost/" + state.postNo + " #mainContent", formData, function(response, status, xhr){
-									state.mainContent = response;
+									$.getScript("/static/js/getCafePost.js");
 									
+									state.mainContent = response;
 									history.pushState(state, state.cafeURL,"/cafe/" + state.cafeURL + "/updatePost/" + state.postNo);
 								});
 							});

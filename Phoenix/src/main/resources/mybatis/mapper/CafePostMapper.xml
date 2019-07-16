@@ -384,4 +384,25 @@
 		WHERE
 			reply_no = #{replyNo}
 	</update>
+	
+	<select id="getMyPostList" parameterType="int" resultMap="postResultMap">
+		SELECT
+		rownum, p.* 
+		FROM
+			(SELECT
+		 	* 
+			FROM post
+			WHERE cafe_url in(
+					SELECT
+					c.url
+					FROM 
+					cafe c, cafe_member m
+					WHERE
+					c.cafe_no=m.cafe_no
+					AND m.user_no = #{userNo}
+					AND m.member_status_code in ('cs100')
+					)
+			ORDER BY reg_date DESC) p
+		WHERE rownum &lt; 11;
+	</select>
 </mapper>

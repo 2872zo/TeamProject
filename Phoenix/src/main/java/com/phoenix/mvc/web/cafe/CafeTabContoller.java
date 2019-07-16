@@ -153,7 +153,7 @@ public class CafeTabContoller {
 	/////////////////////////////////기황 끝//////////////////////////////////////
 
 	//////////////////////////////////////////////예림시작 ////////////////////////////////////////////////
-	@RequestMapping("/{cafeURL}")
+//	@RequestMapping("/{cafeURL}")
 		public String getCafeMain(@PathVariable String cafeURL,HttpSession session,Model model)
 		{
 			System.out.println("/cafe/{cafeURL}");

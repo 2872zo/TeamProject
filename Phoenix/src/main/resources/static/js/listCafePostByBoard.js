@@ -1,16 +1,16 @@
-
-
 function fncGetPostList(currentPage){
-	var boardNo = $(".main .boardNo").val();
+	state.boardPage = currentPage;
 	var obj = {currentPage : currentPage};
-	$("div.col-10").load("/cafe/" + state.cafeURL + "/getBoard/" + state.boardNo + " #mainContent", obj); 
+	$("div.col-10").load("/cafe/" + state.cafeURL + "/getBoard/" + state.boardNo + " #mainContent", obj, function(){
+		history.pushState(state, state.cafeURL, "/cafe/" + state.cafeURL + "/getBoard/" + state.boardNo + "?page=" + state.boardPage );
+	}); 
 };
 
 //게시글 조회
 $(function(){
 	state.mainContent = $("div.col-10").html().trim();
 	history.replaceState(state, state.cafeURL, "/cafe/" + state.cafeURL + "/getBoard/" + state.boardNo);
-
+	
 	$("div.col-10").on("click", ".postTitle", function(){
 		state.postNo = $(this).parent().find(".postNo").val();
 		

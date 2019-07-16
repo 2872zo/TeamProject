@@ -31,7 +31,6 @@ import com.phoenix.mvc.service.domain.Post;
 import com.phoenix.mvc.service.domain.Reply;
 
 @RestController
-@PropertySource("common.properties")
 public class CafePostRestContoller {
 	@Value("${pageSize}")
 	private int pageSize;

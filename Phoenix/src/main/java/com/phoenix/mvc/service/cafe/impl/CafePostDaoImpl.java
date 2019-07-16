@@ -101,4 +101,9 @@ public class CafePostDaoImpl implements CafePostDao{
 	public Reply getReply(int replyNo) {
 		return sqlSession.selectOne("CafePostMapper.getReply", replyNo);
 	}
+
+	@Override
+	public List<Post> getMyPostList(int userNo) {
+		return sqlSession.selectList("CafePostMapper.getMyPostList", userNo);
+	}
 }

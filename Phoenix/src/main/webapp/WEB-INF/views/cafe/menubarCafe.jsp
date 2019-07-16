@@ -22,7 +22,16 @@
 					$(".myDetail").show(); 
 				}
 			});
+
+			$("[name=InnerSearch]").attr("method", "GET").attr("action", "/cafe/${cafeURL}/search");
+			
+			$("[name=menubarSubmit]").on("click", function(){
+				location.href = "/cafe/" + "${cafeURL}" + "/search?searchKeyword=" + $("#menubarSearch").val(); 
+			});
+			
 		});
+
+		
 	</script>
 
 	<div id="cafeMenubar">
@@ -43,7 +52,11 @@
 		</div>
 		
 	
-	
+		<div>
+			<form name="InnerSearch">
+				<input type="text" id="menubarSearch" name="searchKeyword"><input type="button" name="menubarSubmit" value="검색">
+			</form>
+		</div>
 	
 		
 		<c:forEach var="board" items="${boardList}">

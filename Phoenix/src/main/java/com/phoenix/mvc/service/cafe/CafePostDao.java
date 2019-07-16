@@ -38,4 +38,6 @@ public interface CafePostDao {
 	public Reply getReply(int replyNo);
 
 	public boolean addReReply(Reply reply);
+	
+	public List<Post> getMyPostList(int userNo);
 }

@@ -52,7 +52,7 @@
 					<form name="replyItem">
 						<input type="hidden" name="replyNo" value="${reReply.replyNo }">
 						<input type="hidden" name="postNo" value="${reReply.postNo }">
-						<input type="hidden" name="targetReplyNo" value="${reReply.replyNo }">
+						<input type="hidden" name="targetReplyNo" value="${reReply.targetReplyNo }">
 						<input type="hidden" name="targetReplyMember" value="${reReply.memberNickname }">
 						<input type="hidden" name="postNo" value="${reReply.postNo }">
 					</form>
@@ -77,8 +77,8 @@
 				$(this).parent().load("/cafe/${cafeURL}/deleteReply/"+$(this).parent().find("[name=replyNo]").val(), obj);			
 			});
 
-			$(".replyItems").on("click", "[name=addReplyButton]", function(){
-				alert("add 실행됨!");
+			$("[name=addReplyButton]").on("click", function(){
+// 				alert("add 실행됨!");
 				
 				var formObj = $("form[name=replyItem]").serializeArray();
 
@@ -90,27 +90,25 @@
 				$(this).parent().parent(".replyItems").load("/cafe/${cafeURL}/addReply", obj);
 			});
 
-			$(".replyItems").on("click", "[name=addReReplyForm]", function(){
-				alert("form 요청 실행됨!")
-
+			$("[name=addReReplyForm]").on("click", function(){
+// 				alert("form 요청 실행됨!")
 				$(this).replaceWith("<br/><textarea name='reReplyContnet'></textarea> <input type='button' name='addReReplyButton' value='등록'>");
 			});
 			
 			$(".replyItems").on("click", "[name=addReReplyButton]", function(){
-				console.log($(this).parent().find("form").serializeArray());
-				var formObj = new Array();
+// 				alert("reReply add!")
 				formObj = $(this).parent().find("form").serializeArray();
 
-// 				alert($(this).parent().find("[name=reReplyContnet]").val());
+				alert($(this).parent().find("[name=reReplyContnet]").val());
 				formObj.push({ name : "replyContent", value : $(this).parent().find("[name=reReplyContnet]").val()});
 
-// 				for(i in formObj) {
-// 				    for(z in formObj[i]){
-// 				    	console.log("no is " + [z] + ", value is " + formObj[i][z]);
-// 					}
-// 				}
-
-				$(this).parent().parent().parent(".replyItems").load("/cafe/${cafeURL}/addReReply", formObj);
+				$("[name=addReReplyButton]").unbind("click");
+				$("[name=addReReplyButton]").click(function(){
+					$(".replyItems").wrapInner("<div id='removeItem'><div>");
+					$("#removeItem").remove();
+					$(".replyItems").load("/cafe/${cafeURL}/addReReply", formObj);
+				});
+				$("[name=addReReplyButton]").trigger("click");
 			});
 		</script>
 	</div><!-- container End -->

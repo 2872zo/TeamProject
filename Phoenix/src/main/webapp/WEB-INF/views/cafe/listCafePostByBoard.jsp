@@ -11,6 +11,7 @@
 		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+		<script src="/js/cafeCommon.js"></script>
 		
 		<style>
 			.postTitle{
@@ -27,7 +28,7 @@
 			
 			function fncGetPostList(idx){
 				$("[name=currentPage]").val(idx);
-				$("form").attr("method","POST").attr("action", "/cafe/" + cafeURL + "/getBoard/" + boardNo).submit();
+				$("#boardPage").attr("method","POST").attr("action", "/cafe/" + cafeURL + "/getBoard/" + boardNo).submit();
 			};
 
 			$(function(){
@@ -40,13 +41,20 @@
 					location.href = "/cafe/" + cafeURL + "/getPost/" + 	$(this).parent().find(".postNo").val();				
 				});			
 			});
+
+			//게시글 작성
+			$(function(){
+				$("[name=addPostButton]").on("click", function(){
+					location.href = "/cafe/" + cafeURL + "/addPost?boardNo=" + "${search.boardNo}";
+				});
+			});
 		</script>
 		<title>${search.cafeURL}</title>
 	</header>
 	
 	<body>
 		<div class="container">
-			<form>
+			<form id="boardPage">
 				<input type="hidden" name="currentPage">
 			</form>
 			<h1>listCafePostByBoard</h1>
@@ -111,7 +119,7 @@
 									</c:import>
 								</td>
 								<td>
-									<button id="addPost">글쓰기</button>
+									<input type="button" name="addPostButton" value="글쓰기">
 								</td>
 							</tr>
 						</table>

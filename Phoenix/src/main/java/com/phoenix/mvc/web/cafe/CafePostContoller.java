@@ -8,7 +8,6 @@ import java.util.function.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -30,7 +29,6 @@ import com.phoenix.mvc.service.domain.Reply;
 import oracle.net.aso.n;
 
 @Controller
-@PropertySource("common.properties")
 public class CafePostContoller {
 	@Value("${pageSize}")
 	private int pageSize;
