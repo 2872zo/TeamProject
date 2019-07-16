@@ -129,10 +129,10 @@
 	</select>
 		
 	<select id="getMemberCount" parameterType="Search" resultType="int">
-	SELECT
-	COUNT(*)
-	FROM
-	(<include refid="memberListing"/>)
+		SELECT
+		COUNT(*)
+		FROM
+		(<include refid="memberListing"/>)
 	</select>
 	 
 	<select id="listCafeMemeber" parameterType="com.phoenix.mvc.common.Search" resultMap="cafeMemberSelectMap">
@@ -184,10 +184,10 @@
 		cafe_member_block
 		<set>
 		end_date = SYSDATE,
-		reason = #{blockReason}
+		reason = #{blockReason:VARCHAR}
 		</set>
 		WHERE 
-		block_no=#{blockNo}
+		block_no = #{blockNo}
 	</update>
 	
 	<update id="updateMemberGrade" parameterType="CafeMember">
@@ -196,7 +196,47 @@
 		<set>
 		cafe_member_grade_no = #{cafeMemberGradeNo}
 		</set>
-		WHERE member_no=#{memberNo}
+		WHERE member_no = #{memberNo}
+	</update>
+	
+	<update id="increasePostCount" parameterType="int">
+		UPDATE
+		cafe_member
+		SET
+		post_count = post_count+1
+		WHERE member_no = #{memberNo};
+	</update>
+	
+	<update id="decreasePostCount" parameterType="int">
+		UPDATE
+		cafe_member
+		SET
+		post_count = post_count-1
+		WHERE member_no = #{memberNo};
+	</update>
+	
+	<update id="increaseReplyCount" parameterType="int">
+		UPDATE
+		cafe_member
+		SET
+		reply_count = reply_count+1
+		WHERE member_no = #{memberNo};	
+	</update>
+	
+	<update id="decreaseReplyCount" parameterType="int">
+		UPDATE
+		cafe_member
+		SET
+		reply_count = reply_count-1
+		WHERE member_no = #{memberNo};	
+	</update>
+	
+	<update id="increaseVisitCount" parameterType="int">
+		UPDATE
+		cafe_member
+		SET
+		visit_count = visit_count+1
+		WHERE member_no = #{memberNo};	
 	</update>
 	
 </mapper>

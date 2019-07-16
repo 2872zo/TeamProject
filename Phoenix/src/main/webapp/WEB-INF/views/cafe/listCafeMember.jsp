@@ -101,7 +101,7 @@ $(function() {
 </form>	
 <form id='memberDetailForm'>
 <input type="hidden" name='memberNo' value='0' id='memberNo'>
-<input typr="hidden" name ='cafeNo'  value='${search.cafeNo}'>
+<input type="hidden" name ='cafeNo'  value='${search.cafeNo}'>
 </form>
 	    
 <br/>
@@ -132,6 +132,7 @@ $(function() {
   <a href="#" class='sortCode badge badge-${ search.sortCode==4 ? "dark" : "light" }'>출석많은순</a>
   <a href="#" class='sortCode badge badge-${ search.sortCode==5 ? "dark" : "light" }'>출석적은순</a>
   
+
   <table class="table table-borderless">
   <thead>
     <tr>
@@ -147,7 +148,12 @@ $(function() {
     </tr>
   </thead>
   <tbody>
+  
+  
+  <c:set var="i" value="0" />
+  
   <c:forEach var="cafeMember" items="${memberList}">
+ <c:set var="i" value="${i+1}" />
   <tr>
       <th scope="row" class='memberNo'>${cafeMember.memberNo}</th>
       <td>${cafeMember.memberNickname}</td>
@@ -159,16 +165,19 @@ $(function() {
       <td class='memberStatusCode'>${cafeMember.memberStatusCode}</td>
   </tr>
   </c:forEach>
+
     </tbody>
 </table>
+	
+<br/>
+<br/>
+
 
 <br/>
-<br/>
-<br/>
+
 
 <div class = 'container'>
 
-	
 
 </div>
   

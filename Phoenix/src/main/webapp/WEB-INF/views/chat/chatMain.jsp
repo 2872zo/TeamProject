@@ -7,7 +7,7 @@
 <html lang="ko">
 
 <head>
-<title>CafeTabMain</title>
+<title>채팅메인</title>
 
 <!-- ////////////////////////////// jQuery CDN ////////////////////////////// -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"
@@ -30,69 +30,46 @@
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
 $(function() {
+	
+	$("#addCafe").on("click" , function() {
+		$(self.location).attr("href","/cafe/addCafeView");
+	});
 
 });
 </script>
 	<!-- ToolBar Start /////////////////////////////////////-->
-	<jsp:include page="../common/cafeToolbar.jsp" />
+	<jsp:include page="../common/toolbar.jsp" />
 	<!-- ToolBar End /////////////////////////////////////-->
 </head>
 
 <body>
-<form id="cafeHomeForm">
-<input type="hidden" id="userNo" name="userNo" value="${search.userNo}"/>
-<input type="hidden" id="status" name="status" value="${search.status}"/>
-<input type="hidden" id="boardNo" name="boardNo" value="${search.boardNo}"/>
-</form>
-
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
-	총 ${totalCount} 건 
-
 	
-
 	
-	<c:if test="${!empty applicationList}">
+채팅메인입니다.
 
-<table class="table table-borderless ">
-	<thead>
-    <tr>
-  	  <th scope="col">신청번호</th>
-      <th scope="col">유저번호</th>
-      <th scope="col">카페번호</th>
-      <th scope="col">카페주소</th>
-      <th scope="col">카페이름</th>
-      <th scope="col">카페아이콘</th>
-      <th scope="col">카페종류</th>
-      <th scope="col">신청일</th>
-      <th scope="col">신청닉네임</th>
-    </tr>
-	</thead>
-	<tbody>
-  
-	<c:forEach var="cafeApplication" items="${applicationList}">
-	<tr>
-	 <th scope="row">${cafeApplication.applicationNo}</th>
-	 <td>${cafeApplication.userNo}</td>
-	 <td>${cafeApplication.cafeNo}</td>
-	 <td>${cafeApplication.cafeURL}</td>
-	 <td>${cafeApplication.cafeName}</td>
-	 <td>${cafeApplication.cafeIcon}</td>
-	 <td>${cafeApplication.cafeType}</td>
-	 <td>${cafeApplication.regDate}</td>
-	 <td>${cafeApplication.memberNickname}</td>
-	 </tr>
-	</c:forEach>
-  
-	</tbody>
-</table>
-
-</c:if>
-	
-
-	
+<div class="alert alert-primary d-flex justify-content-start" style='width: 50%;' role="alert">
+  A simple primary alert—check it out!
 </div>
+<div class='d-flex justify-content-end'>
+<div class="alert alert-success d-flex justify-content-end" style='width: 50%;' role="alert">
+  A simple primary alert—check it out!
+</div>
+</div>
+<div class="alert alert-primary d-flex justify-content-start" style='width: 50%;' role="alert">
+  A simple primary alert—check it out!<br/>
+  A simple primary alert—check it out!<br/>
+  A simple primary alert—check it out!<br/>
+  A simple primary alert—check it out!
+</div>
+<div class="alert alert-primary d-flex justify-content-start" style='width: 50%;' role="alert">
+  A simple primary alert—check it out!
+</div>
+
+
+	</div>
 	<!--  화면구성 div Start /////////////////////////////////////-->
 
 </body>

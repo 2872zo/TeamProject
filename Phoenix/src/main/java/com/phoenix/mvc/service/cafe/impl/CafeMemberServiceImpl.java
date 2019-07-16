@@ -137,6 +137,31 @@ public class CafeMemberServiceImpl implements CafeMemberService {
 	public int updateCafeMemeberGrade(CafeMember cafeMember) throws Exception {
 		return cafeMemberDao.updateCafeMemeberGrade(cafeMember);
 	}
+
+	@Override
+	public int updatePostCountIncrease(int memberNo) throws Exception {
+		return cafeMemberDao.updatePostCountIncrease(memberNo);
+	}
+
+	@Override
+	public int updatePostCountDecrease(int memberNo) throws Exception {
+		return cafeMemberDao.updatePostCountDecrease(memberNo);
+	}
+
+	@Override
+	public int updateReplyCountIncrease(int memberNo) throws Exception {
+		return cafeMemberDao.updateReplyCountIncrease(memberNo);
+	}
+
+	@Override
+	public int updateReplyCountDecrease(int memberNo) throws Exception {
+		return cafeMemberDao.updateReplyCountDecrease(memberNo);
+	}
+
+	@Override
+	public int updateVisitCountIncrease(int memberNo) throws Exception {
+		return cafeMemberDao.updateVisitCountIncrease(memberNo);
+	}
 	
 	//////////////////////////////////기황끝///////////////////////////////////////
 

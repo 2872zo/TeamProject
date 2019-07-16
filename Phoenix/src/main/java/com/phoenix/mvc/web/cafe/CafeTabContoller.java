@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.phoenix.mvc.service.cafe.CafeTabService;
 import com.phoenix.mvc.service.domain.Cafe;
+import com.phoenix.mvc.service.domain.CafeMember;
 import com.phoenix.mvc.common.Page;
 import com.phoenix.mvc.service.domain.User;
 import com.phoenix.mvc.common.Search;
@@ -78,7 +79,7 @@ public class CafeTabContoller {
 		Search search = new Search();
 		search.setUserNo(10000);//유저번호세팅
 		search.setStatus(0);//활동중 카페선택 세팅
-		search.setBoardNo(0);//카테고리0번 고르게 세팅
+		search.setCafeType(0);//카테고리0번 고르게 세팅
 		
 		Map map = cafeTabService.getCafeHome(search);
 		List myCafelist = (List) map.get("myCafelist");
@@ -107,7 +108,7 @@ public class CafeTabContoller {
 		return "forward:/WEB-INF/views/cafe/cafeHomeMain.jsp";
 	}
 	
-	@RequestMapping("/search")
+	@RequestMapping("search")
 	public String cafeSearch(@ModelAttribute("search") Search search, Model model) throws Exception {
 	
 		System.out.println("/cafe/search입니다.");
@@ -149,6 +150,25 @@ public class CafeTabContoller {
 		return "forward:/WEB-INF/views/cafe/listUserCafeApplication.jsp";
 		
 	}
+	
+	@RequestMapping("main/cafeNewsFeed")
+	public String getCafeNewsFeed(Model model) throws Exception {
+		return "cafe/listCafeNewsFeed";
+	}
+	
+	/*테스트용 메서드입니다.
+	@RequestMapping("main/testing")
+	public String onlyForTest(@ModelAttribute CafeMember cafeMember) throws Exception {
+		
+		System.out.println("들어왔니?????");
+		
+		List<CafeMember> list = cafeMember.getCafeMemberList();
+		for(int i=0;i<6;i++) {
+		System.out.println(list.get(i));
+		}
+		return "cafe/listCafeNewsFeed";
+	}
+	*/
 		
 	/////////////////////////////////기황 끝//////////////////////////////////////
 

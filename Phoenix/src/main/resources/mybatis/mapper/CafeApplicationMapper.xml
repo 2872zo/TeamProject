@@ -10,7 +10,7 @@
 		<result property="applicationNo" 	column="application_no" 	jdbcType="NUMERIC"/>
 		<result property="userNo" 			column="user_no" 			jdbcType="NUMERIC" />
 		<result property="cafeNo" 			column="cafe_no" 			jdbcType="NUMERIC" />
-		<result property="regDate" 			column="reg_date" 			jdbcType="DATE" />
+		<result property="regDate" 			column="reg_date" 			jdbcType="VARCHAR" />
 		<result property="question1" 		column="question1" 			jdbcType="VARCHAR" />
 		<result property="question2" 		column="question2" 			jdbcType="VARCHAR" />
 		<result property="question3" 		column="question3" 			jdbcType="VARCHAR" />
@@ -86,7 +86,9 @@
 	 
 	 <sql id="selectAllFromCafeApplication">
 	 	SELECT 
-		a.application_no, a.user_no, a.member_nickname, a.reg_date, a.accept_status_code, c.cafe_no, c.cafe_icon, c.url, c.cafe_type, c.cafe_name,
+		a.application_no, a.user_no, a.member_nickname, 
+		TO_CHAR(a.reg_date, 'YYYY-MM-DD HH24:MM:SS') reg_date, 
+		a.accept_status_code, c.cafe_no, c.cafe_icon, c.url, c.cafe_type, c.cafe_name,
 		a.question1, a.answer1, 
 		a.question2, a.answer2, 
 		a.question3, a.answer3 

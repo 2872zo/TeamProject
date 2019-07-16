@@ -65,25 +65,25 @@
 		<where>
 		CLOSED_FLAG = '0'
 		AND cafe_type = 
-		<if test="boardNo==0">
+		<if test="cafeType==0">
 		'cc100'
 		</if>
-		<if test="boardNo==1">
+		<if test="cafeType==1">
 		'cc101'
 		</if>
-		<if test="boardNo==2">
+		<if test="cafeType==2">
 		'cc102'
 		</if>
-		<if test="boardNo==3">
+		<if test="cafeType==3">
 		'cc103'
 		</if>
-		<if test="boardNo==4">
+		<if test="cafeType==4">
 		'cc104'
 		</if>
-		<if test="boardNo==5">
+		<if test="cafeType==5">
 		'cc105'
 		</if>
-		<if test="boardNo==6">
+		<if test="cafeType==6">
 		'cc106'
 		</if>
 		</where> 
@@ -103,7 +103,8 @@
 	
 	 <sql id="cafeListByStatus">
 	 	SELECT
-		c.cafe_no, c.cafe_name, c.cafe_icon, c.url, c.cafe_detail,TO_CHAR(c.reg_date, 'YYYY-MM-DD HH24:MM:SS') reg_date
+		c.cafe_no, c.cafe_name, c.cafe_icon, c.url, c.cafe_detail,
+		TO_CHAR(c.reg_date, 'YYYY-MM-DD HH24:MM:SS') reg_date
 	 	FROM
 		cafe c, cafe_member m
 		WHERE
@@ -126,7 +127,7 @@
 	 </sql>
 	 
 	 <select id="cafeSortingByStatus" parameterType="Search" resultMap="cafeTabSelectMap">
-	 	<include refid="cafeListByStatus"></include>
+	 	<include refid="cafeListByStatus"/>
 	 </select>
 	 
 	 <select id="myCafeListTotalCount" parameterType="Search" resultMap="cafeTabSelectMap">
@@ -139,7 +140,8 @@
 	 
 	 <sql id="getOwnCafe">
 	 	SELECT 
-		c.cafe_no, c.cafe_name, c.cafe_icon, c.url, c.cafe_detail,TO_CHAR(c.reg_date, 'YYYY-MM-DD HH24:MM:SS') reg_date
+		c.cafe_no, c.cafe_name, c.cafe_icon, c.url, c.cafe_detail, 
+		TO_CHAR(c.reg_date, 'YYYY-MM-DD HH24:MM:SS') reg_date
 		FROM
 		cafe c, cafe_member m, cafe_member_grade g
 		WHERE

@@ -1,7 +1,7 @@
 package com.phoenix.mvc.service.domain;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class CafeMember {
 
@@ -23,7 +23,7 @@ public class CafeMember {
 	private Date blockStartDate;
 	private Date blockEndDate;
 	private String blockReason;
-	private ArrayList<CafeMemberBlock> blocks;
+	private List<CafeMember> cafeMemberList;
 	
 	public int getMemberNo() {
 		return memberNo;
@@ -132,6 +132,12 @@ public class CafeMember {
 	}
 	public void setBlockReason(String blockReason) {
 		this.blockReason = blockReason;
+	}
+	public List<CafeMember> getCafeMemberList() {
+		return cafeMemberList;
+	}
+	public void setCafeMemberList(List<CafeMember> cafeMemberList) {
+		this.cafeMemberList = cafeMemberList;
 	}
 	
 	@Override
