@@ -23,6 +23,8 @@ public interface CafeMemberDao {
 	public void addCafeMember(CafeMember cafeMember);// 가입승인
 	
 	public void updateCafeMemberProfile(CafeMember cafeMember);
+	
+	public int changeGradeNo(CafeMember cafeMember);
 
 ////////////////////////////////지니끝//////////////////////////////////
 

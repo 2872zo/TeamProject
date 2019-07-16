@@ -91,6 +91,12 @@ public class CafeManageDaoImpl implements CafeManageDao {
 
 		return checkList;
 	}
+	
+	@Override
+	public int flagUpdate(CafeGrade cafeGrade) {
+		
+		return sqlSession.update("CafeGradeMapper.flagUpdate",cafeGrade);
+	}
 
 //////////////////////////////// 지니끝//////////////////////////////////
 
@@ -207,6 +213,8 @@ public class CafeManageDaoImpl implements CafeManageDao {
 	public Cafe getCafeURL(String URL) throws Exception {
 		return sqlSession.selectOne("CafeMapper.getCafeURL", URL);
 	}
+
+
 
 	/////////////////////////////// 준호끝///////////////////////////////////////
 

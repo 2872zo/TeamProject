@@ -338,6 +338,10 @@ public class CafeManageController {
 	@RequestMapping(value = "/{cafeURL}/manage/updateCafeGradeView", method = RequestMethod.GET)
 	public String updateCafeGradeView(@PathVariable String cafeURL, Model model) {
 
+		for (int i = 2; i <= 5; i++) {
+
+		}
+
 		System.out.println("/{cafeURL}/manage/updateCafeGradeView : GET");
 
 		int cafeNo = cafeMemberService.getCafeNo(cafeURL);
@@ -351,11 +355,88 @@ public class CafeManageController {
 	}
 
 	@PostMapping(value = "/{cafeURL}/manage/updateCafeGrade")
-	public String updateCafeGrade(@ModelAttribute("Grades") Grades grades) {
+	public String updateCafeGrade(@ModelAttribute("CafeGrade") CafeGrade grades, @RequestParam("CafeNo") int cafeNo) {
 
+		System.out.println("/{cafeURL}/manage/updateCafeGrade : POST");
+		System.out.println(cafeNo);
 		System.out.println(grades);
+		
+		System.out.println("=======================================");
+		System.out.println(grades.getGradeList().get(4));
+		System.out.println("=======================================");
+		System.out.println(grades.getGradeList().get(3));
+		System.out.println("=======================================");
+		System.out.println(grades.getGradeList().get(2));
+		System.out.println("=======================================");
+		System.out.println(grades.getGradeList().get(1));
+		System.out.println("=======================================");
+		System.out.println(grades.getGradeList().get(0));
+		System.out.println("=======================================");
 
-		return null;
+		
+
+		CafeGrade cafeGrade = new CafeGrade();
+		CafeMember cafeMember = new CafeMember();
+		
+		int size = grades.getGradeList().size();
+		System.out.println(size);
+
+		for (int i=size-1; i>=0; i--) {
+			//System.out.println("여기");
+			CafeGrade info = grades.getGradeList().get(i);
+			//System.out.println(info);
+			
+			//System.out.println(info.isGradeFlag());
+
+			if (!info.isGradeFlag()&& i!=0) {// 등급삭제로인한 멤버 등급변경+업데이트
+				System.out.println("i값?" + i);
+				int gradeNo = info.getCafeGradeNo();
+				System.out.println("지금" + gradeNo);
+				int changeNo = (gradeNo - 1);
+				System.out.println("변할" + changeNo);
+
+				cafeMember.setCafeMemberGradeNo(gradeNo);
+				cafeMember.setChangeGradeNo(changeNo);
+
+				System.out.println("변하기전" + cafeMember);
+				cafeMemberService.changeGradeNo(cafeMember);
+				System.out.println("변하기후" + cafeMember);
+
+				//// 해당등급 기본값 세팅
+				System.out.println("전 cafeGrade값! " + cafeGrade);
+
+				cafeGrade.setCafeGradeNo(gradeNo);
+				cafeGrade.setAutoUpgradeFlag(false);
+				cafeGrade.setGradeFlag(false);
+				cafeManageService.flagUpdate(cafeGrade);
+				System.out.println("후 cafeGrade값! " + cafeGrade);
+
+			} else if (i == 0) {// 제일 기본등급은 이름만 바꿔주는 걸로
+
+				System.out.println("i값이 0일때만 여기 들어와줘" + i);
+
+				cafeGrade.setCafeGradeNo(info.getCafeGradeNo());
+				cafeGrade.setGradeName(info.getGradeName());
+				cafeGrade.setGradeFlag(true);
+				cafeManageService.updateCafeGrade(cafeGrade);
+
+			} /*else {// 등급에 관한 정보 업데이트
+
+				cafeGrade.setCafeGradeNo(info.getCafeGradeNo());
+				cafeGrade.setAutoUpgradeFlag(info.isAutoUpgradeFlag());
+				cafeGrade.setGradeName(info.getGradeName());
+				cafeGrade.setRequiredPostCount(info.getRequiredPostCount());
+				cafeGrade.setRequiredReplyCount(info.getRequiredReplyCount());
+				cafeGrade.setRequiredVisitCount(info.getRequiredVisitCount());
+				cafeGrade.setGradeFlag(info.isGradeFlag());
+				cafeManageService.updateCafeGrade(cafeGrade);
+
+			}*/
+
+		}
+
+		return "";
+		// "redirect:/cafe/no1cafe/manage/updateCafeGradeView"; // cafeURL 수정
 	}
 
 ////////////////////////////////지니끝//////////////////////////////////

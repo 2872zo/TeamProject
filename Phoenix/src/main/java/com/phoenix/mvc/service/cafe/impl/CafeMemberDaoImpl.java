@@ -34,21 +34,29 @@ public class CafeMemberDaoImpl implements CafeMemberDao {
 		sqlSession.update("CafeMemberMapper.updateCafeMember", cafeMember);
 
 	}
-	
+
 	@Override
 	public void addCafeMember(CafeMember cafeMember) {
 		sqlSession.insert("CafeMemberMapper.addCafeMember", cafeMember);
-		
+
 	}
-	
+
 	@Override
 	public void updateCafeMemberProfile(CafeMember cafeMember) {
 		sqlSession.update("CafeMemberMapper.updateCafeMemberProfile", cafeMember);
-		
+
 	}
+
+	@Override
+	public int changeGradeNo(CafeMember cafeMember) {
+		
+		return sqlSession.update("CafeMemberMapper.changeGradeNo", cafeMember);
+	}
+
 ////////////////////////////////지니끝//////////////////////////////////
 
-	////////////////////////////////////////////////// 예림 시작///////////////////////////////////
+	////////////////////////////////////////////////// 예림
+	////////////////////////////////////////////////// 시작///////////////////////////////////
 	@Override // 예림예림
 	public CafeMember getCafeMember(int cafeNo, int userNo) {
 
@@ -67,9 +75,11 @@ public class CafeMemberDaoImpl implements CafeMemberDao {
 
 		return cafeMember;
 	}
-	/////////////////////////////////////////예림 끝///////////////////////////////////////////////
+	///////////////////////////////////////// 예림
+	///////////////////////////////////////// 끝///////////////////////////////////////////////
 
-	////////////////////////////////////기황 시작///////////////////////////////////////
+	//////////////////////////////////// 기황
+	//////////////////////////////////// 시작///////////////////////////////////////
 	@Override
 	public List getCafeMemberList(Search search) throws Exception {
 
@@ -87,7 +97,7 @@ public class CafeMemberDaoImpl implements CafeMemberDao {
 
 		return sqlSession.selectOne("CafeMemberMapper.getCafeMemeber", search);
 	}
-	
+
 	@Override
 	public int addCafeMemberBlock(CafeMember cafeMember) throws Exception {
 
@@ -108,10 +118,10 @@ public class CafeMemberDaoImpl implements CafeMemberDao {
 
 	@Override
 	public int updateCafeMemeberGrade(CafeMember cafeMember) throws Exception {
-		// TODO Auto-generated method stub  updateMemberGrade
+		// TODO Auto-generated method stub updateMemberGrade
 		return sqlSession.update("CafeMemberMapper.updateMemberGrade", cafeMember);
 	}
 
-	//////////////////////////////기황 끝///////////////////////////////////////	
+	////////////////////////////// 기황 끝///////////////////////////////////////
 
 }

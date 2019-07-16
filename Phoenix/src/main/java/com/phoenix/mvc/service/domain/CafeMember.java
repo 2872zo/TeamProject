@@ -13,6 +13,7 @@ public class CafeMember {
 	private boolean noticeFlag;
 	private boolean favoriteFlag;
 	private int cafeMemberGradeNo;
+	private int changeGradeNo;
 	private String memberGrade;
 	private String gradeName;
 	private Date regDate;
@@ -72,6 +73,12 @@ public class CafeMember {
 	}
 	public void setCafeMemberGradeNo(int cafeMemberGradeNo) {
 		this.cafeMemberGradeNo = cafeMemberGradeNo;
+	}
+	public int getChangeGradeNo() {
+		return changeGradeNo;
+	}
+	public void setChangeGradeNo(int changeGradeNo) {
+		this.changeGradeNo = changeGradeNo;
 	}
 	public String getMemberGrade() {
 		return memberGrade;
@@ -133,16 +140,32 @@ public class CafeMember {
 	public void setBlockReason(String blockReason) {
 		this.blockReason = blockReason;
 	}
-	
+	public ArrayList<CafeMemberBlock> getBlocks() {
+		return blocks;
+	}
+	public void setBlocks(ArrayList<CafeMemberBlock> blocks) {
+		this.blocks = blocks;
+	}
 	@Override
 	public String toString() {
 		return "CafeMember [memberNo=" + memberNo + ", cafeNo=" + cafeNo + ", userNo=" + userNo + ", memberNickname="
 				+ memberNickname + ", memberStatusCode=" + memberStatusCode + ", noticeFlag=" + noticeFlag
-				+ ", favoriteFlag=" + favoriteFlag + ", cafeMemberGradeNo=" + cafeMemberGradeNo + ", memberGrade="
-				+ memberGrade + ", gradeName=" + gradeName + ", regDate=" + regDate + ", visitCount=" + visitCount
-				+ ", postCount=" + postCount + ", replyCount=" + replyCount + ", blockPeriod=" + blockPeriod
-				+ ", blockStartDate=" + blockStartDate + ", blockEndDate=" + blockEndDate + ", blockReason="
-				+ blockReason + "]";
+				+ ", favoriteFlag=" + favoriteFlag + ", cafeMemberGradeNo=" + cafeMemberGradeNo + ", changeGradeNo="
+				+ changeGradeNo + ", memberGrade=" + memberGrade + ", gradeName=" + gradeName + ", regDate=" + regDate
+				+ ", visitCount=" + visitCount + ", postCount=" + postCount + ", replyCount=" + replyCount
+				+ ", blockPeriod=" + blockPeriod + ", blockStartDate=" + blockStartDate + ", blockEndDate="
+				+ blockEndDate + ", blockReason=" + blockReason + ", blocks=" + blocks + ", getMemberNo()="
+				+ getMemberNo() + ", getCafeNo()=" + getCafeNo() + ", getUserNo()=" + getUserNo()
+				+ ", getMemberNickname()=" + getMemberNickname() + ", getMemberStatusCode()=" + getMemberStatusCode()
+				+ ", isNoticeFlag()=" + isNoticeFlag() + ", isFavoriteFlag()=" + isFavoriteFlag()
+				+ ", getCafeMemberGradeNo()=" + getCafeMemberGradeNo() + ", getChangeGradeNo()=" + getChangeGradeNo()
+				+ ", getMemberGrade()=" + getMemberGrade() + ", getGradeName()=" + getGradeName() + ", getRegDate()="
+				+ getRegDate() + ", getVisitCount()=" + getVisitCount() + ", getPostCount()=" + getPostCount()
+				+ ", getReplyCount()=" + getReplyCount() + ", getBlockPeriod()=" + getBlockPeriod()
+				+ ", getBlockStartDate()=" + getBlockStartDate() + ", getBlockEndDate()=" + getBlockEndDate()
+				+ ", getBlockReason()=" + getBlockReason() + ", getBlocks()=" + getBlocks() + ", getClass()="
+				+ getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
 	}
+	
 	
 }

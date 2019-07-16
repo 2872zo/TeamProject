@@ -169,6 +169,12 @@ public class CafeManageServiceImpl implements CafeManageService {
 
 		return cafeManageDao.checkCafeGrade(cafeNo);
 	}
+	
+	@Override
+	public int flagUpdate(CafeGrade cafeGrade) {
+		
+		return cafeManageDao.flagUpdate(cafeGrade);
+	}
 
 ////////////////////////////////지니끝//////////////////////////////////
 
@@ -192,6 +198,8 @@ public class CafeManageServiceImpl implements CafeManageService {
 	public Cafe getCafeName(String cafeName) throws Exception {
 		return cafeManageDao.getCafeName(cafeName);
 	}
+
+
 
 	/////////////////////////////// 준호끝///////////////////////////////////////
 

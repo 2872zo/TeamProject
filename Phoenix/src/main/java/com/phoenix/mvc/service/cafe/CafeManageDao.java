@@ -28,6 +28,8 @@ public void addCafeGrade (CafeGrade cafeGrade);
 public void updateCafeGrade (CafeGrade cafeGrade);
 
 public List checkCafeGrade(int cafeNo);
+
+public int flagUpdate(CafeGrade cafeGrade);
 ////////////////////////////////지니끝//////////////////////////////////
 
 
