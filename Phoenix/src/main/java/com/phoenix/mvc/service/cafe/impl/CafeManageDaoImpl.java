@@ -170,9 +170,9 @@ public class CafeManageDaoImpl implements CafeManageDao {
 	}
 
 	@Override
-	public boolean addCafeBoard(List<Board> newBoard) {
+	public boolean addCafeBoard(List<Board> newBoardList) {
 
-		int result = sqlSession.insert("insertCafeBoard", newBoard);
+		int result = sqlSession.insert("insertCafeBoard", newBoardList);
 
 		if (result >= 1) {
 			return true;
@@ -180,6 +180,28 @@ public class CafeManageDaoImpl implements CafeManageDao {
 			return false;
 		}
 
+	}
+	
+	@Override
+	public boolean updateCafeBoard(List<Board> existBoardList) {
+		
+		int result = sqlSession.update("updateCafeBoard",existBoardList);
+		System.out.println("updateCafeBoard Result : "+result);
+		if(result >=1)
+			return true;
+		else
+			return false;
+	}
+
+	@Override
+	public boolean deleteCafeBoard(List<Board> deleteBoardList) {
+
+		int result = sqlSession.delete("deleteCafeBoard", deleteBoardList);
+		
+		if(result>=0)
+			return true;
+		else
+			return false;
 	}
 
 //////////////////////////////////////////////////////////예림끝////////////////////////////////////
@@ -207,6 +229,7 @@ public class CafeManageDaoImpl implements CafeManageDao {
 	public Cafe getCafeURL(String URL) throws Exception {
 		return sqlSession.selectOne("CafeMapper.getCafeURL", URL);
 	}
+
 
 	/////////////////////////////// 준호끝///////////////////////////////////////
 
