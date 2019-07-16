@@ -82,6 +82,12 @@ public class CafeMember {
 	public void setMemberGrade(String memberGrade) {
 		this.memberGrade = memberGrade;
 	}
+	public int getChangeGradeNo() {
+		return changeGradeNo;
+	}
+	public void setChangeGradeNo(int changeGradeNo) {
+		this.changeGradeNo = changeGradeNo;
+	}
 	public String getGradeName() {
 		return gradeName;
 	}
@@ -141,6 +147,12 @@ public class CafeMember {
 	}
 	public void setBlocks(ArrayList<CafeMemberBlock> blocks) {
 		this.blocks = blocks;
+	}
+	public List<CafeMember> getCafeMemberList() {
+		return cafeMemberList;
+	}
+	public void setCafeMemberList(List<CafeMember> cafeMemberList) {
+		this.cafeMemberList = cafeMemberList;
 	}
 	@Override
 	public String toString() {

@@ -37,6 +37,10 @@ public class CafeTabContoller {
 	@Qualifier("cafeTabServiceImpl")
 	private CafeTabService cafeTabService;
 	
+	@Autowired
+	@Qualifier("cafeManageServiceImpl")
+	private CafeManageService cafeManageService;
+	
 	@Value("${pageSize}")
 	private int pageSize;
 	
