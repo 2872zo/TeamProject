@@ -1,5 +1,7 @@
 package com.phoenix.mvc.web.cafe;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Enumeration;
@@ -16,6 +18,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -25,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.phoenix.mvc.common.Event;
 import com.phoenix.mvc.common.Page;
@@ -40,6 +45,7 @@ import com.phoenix.mvc.service.domain.Grades;
 
 @Controller
 @RequestMapping("/cafe/*")
+@PropertySource("common.properties")
 public class CafeManageController {
 
 	@Autowired
@@ -53,6 +59,7 @@ public class CafeManageController {
 	public CafeManageController() {
 		System.out.println(this.getClass().getName() + "생성자 start");
 	}
+
 
 ////////////////////////////////////////////예림//////////////////////////////////////////////
 	@RequestMapping(value = "/{cafeURL}/manage/updateCafeBoardView", method = RequestMethod.GET) // 예림예림
@@ -378,7 +385,7 @@ public class CafeManageController {
 	public String updateCafeInfo(@ModelAttribute("cafe") Cafe cafe) throws Exception {
 
 		System.out.println("/updateCafeInfoView : POST");
-
+		
 		cafeManageService.updateCafeInfo(cafe);
 
 		Cafe cafe2 = cafeManageService.getCafeInfo(cafe.getCafeNo());
@@ -391,9 +398,11 @@ public class CafeManageController {
 // 준호
 	@RequestMapping(value = "/{cafeURL}/manage/getCafeInfo", method = RequestMethod.POST)
 	public String getCafeInfo(@RequestParam("cafeNo") int cafeNo, Model model) throws Exception {
-
+		
 		Cafe cafe = cafeManageService.getCafeInfo(cafeNo);
-
+		
+		System.out.println("카페정보들오니"+cafe);
+		
 		model.addAttribute("cafe", cafe);
 
 		return "cafe/getCafeInfo";
