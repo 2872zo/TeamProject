@@ -5,13 +5,14 @@ import java.util.Map;
 
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.domain.Cafe;
+import com.phoenix.mvc.service.domain.CafeGrade;
 
 
 public interface CafeTabDao {
 	///////////////////////////////준호시작///////////////////////////////////////
 	public void addCafe(Cafe cafe)throws Exception;
 	
-	
+	public void addMemberGrade(CafeGrade cafeGrade)throws Exception;
 	///////////////////////////////준호끝///////////////////////////////////////	
 	
 	///////////////////////////////////기황시작//////////////////////////////////

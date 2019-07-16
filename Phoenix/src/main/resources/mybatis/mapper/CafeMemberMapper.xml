@@ -239,4 +239,13 @@
 		WHERE member_no = #{memberNo};	
 	</update>
 	
+
+	<update id="changeGradeNo" parameterType="CafeMember">
+		UPDATE cafe_member
+		<set>
+		cafe_member_grade_no=#{changeGradeNo}
+		</set>
+		WHERE cafe_member_grade_no=#{cafeMemberGradeNo}
+	</update> 
+	
 </mapper>

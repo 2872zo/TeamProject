@@ -62,16 +62,14 @@ body>div.container {
 			return;
 		}
 
+
 		$("form").attr("method", "POST").attr("action",
 				"/cafe/" + cafeURL + "/addCafe").submit();
 	}
 	//카페이름 중복확인 
 	$(function() {
 
-		$("input[name='cafeName']")
-				.on(
-						'keyup',
-						function() {
+		$("input[name='cafeName']").on('keyup',function() {
 
 							var inputed = $("input[name='cafeName']").val();
 							// alert("입력  : "+inputed);
@@ -218,7 +216,7 @@ body>div.container {
 							<input type="text" class="form-control"
 								id="exampleFormControlInput1" placeholder="" name="URL">
 							<span id="check1"> <strong>카페URL을 입력해주세요</strong>
-							</span>
+							</span>		
 						</div>
 					</div>
 				</center>
@@ -238,13 +236,13 @@ body>div.container {
 							class="col-sm-offset-1 col-sm-3 control-label">카페 카 테 고 리</label>
 						<div class="col-sm-4">
 							<select class="form-control" id="exampleFormControlSelect1"
-								name="cafeType">
-								<option>0</option>
-								<option>1</option>
-								<option>2</option>
-								<option>3</option>
-								<option>4</option>
-								<option>5</option>
+								name="cafeType">								
+								<option value="cc100">친목/모임</option>
+								<option value="cc101">스포츠/레저</option>
+								<option value="cc102">영화</option>
+								<option value="cc103">게임</option>
+								<option value="cc104">음악</option>
+								<option value="cc105">여행</option>
 							</select>
 						</div>
 					</div>
@@ -258,22 +256,19 @@ body>div.container {
 								rows="3" name="applicationDetail"></textarea>
 						</div>
 					</div>
-				</center>
-
-				<center>
-					<div class="form-group">
+			<center>
+			<div class="form-group">
 						<label for="exampleFormControlSelect1"
-							class="col-sm-offset-3 col-sm-12 control-label">가입 질문</label>
+							class="col-sm-offset-1 col-sm-3 control-label">별명사용여부</label>
 						<div class="col-sm-4">
 							<select class="form-control" id="exampleFormControlSelect1"
-								name="applicationQuestion1">
-								<option>0</option>
-								<option>1</option>
+								name="memberNicknameFlag">								
+								<option value="0">사용</option>
+								<option value="1">미사용</option>
 							</select>
 						</div>
 					</div>
 				</center>
-
 				<center>
 					<div class="form-group">
 						<div class="col-sm-offset-4  col-sm-4 text-center">
@@ -282,7 +277,6 @@ body>div.container {
 						</div>
 					</div>
 				</center>
-			
 
 		</form>
 		<!-- form Start /////////////////////////////////////-->

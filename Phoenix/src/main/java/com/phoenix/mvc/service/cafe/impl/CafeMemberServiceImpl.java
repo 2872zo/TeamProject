@@ -43,11 +43,11 @@ public class CafeMemberServiceImpl implements CafeMemberService {
 		return cafeManageDao.getCafeNo(cafeURL);
 
 	}
-	
+
 	public CafeMember getCafeMember(int cafeNo, int userNo) {
-		
+
 		return cafeMemberDao.getCafeMember(cafeNo, userNo);
-	
+
 	}
 
 	@Override
@@ -69,8 +69,15 @@ public class CafeMemberServiceImpl implements CafeMemberService {
 	@Override
 	public void updateCafeMemberProfile(CafeMember cafeMember) {
 		cafeMemberDao.updateCafeMemberProfile(cafeMember);
-		
+
 	}
+
+	@Override
+	public int changeGradeNo(CafeMember cafeMember) {
+		
+		return cafeMemberDao.changeGradeNo(cafeMember);
+	}
+
 ////////////////////////////////////지니끝//////////////////////////////
 ////////////////////////////////////기황시작////////////////////////////
 	@Override

@@ -173,10 +173,10 @@ public class CafeManageRestController {
 		
 	}
 
-	@PostMapping(value="json/{cafeURL}/manage/updateCafeGrade")
-	public String updateCafeGrade(Model model , @RequestBody CafeGrade cafeGrade) {
+	@PostMapping(value="json/{cafeURL}/manage/checkCafeGrade")
+	public Map checkGrade(Model model , @RequestBody CafeGrade cafeGrade) {
 		
-		System.out.println("json/cafe/{CafeURL}/manage/updateCafeGrade : POST");
+		System.out.println("json/cafe/{CafeURL}/manage/checkCafeGrade : POST");
 		System.out.println(model);
 		System.out.println(cafeGrade);
 		

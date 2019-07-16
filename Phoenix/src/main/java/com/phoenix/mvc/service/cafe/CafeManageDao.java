@@ -28,6 +28,8 @@ public void addCafeGrade (CafeGrade cafeGrade);
 public void updateCafeGrade (CafeGrade cafeGrade);
 
 public List checkCafeGrade(int cafeNo);
+
+public int flagUpdate(CafeGrade cafeGrade);
 ////////////////////////////////지니끝//////////////////////////////////
 
 
@@ -47,20 +49,24 @@ public boolean checkCafeTodayVisitLog(Event event); // 예림예림 return true-
 
 public Map<String, String> getCafeStatistics(Event event);
 
-public boolean addCafeBoard(List<Board> newBoard);
+public boolean addCafeBoard(List<Board> newBoardList);
+
+public boolean updateCafeBoard(List<Board> existBoardList);
+
+public boolean deleteCafeBoard(List<Board> deleteBoardList);
 
 ///////////////////////////////////////// 예림 끝////////////////////////////////////////////////
 
-	///////////////////////////////준호시작///////////////////////////////////////
-	public void updateCafeInfo(Cafe cafe) throws Exception ;
-	
-	public Cafe getCafeInfo(int cafeNo)throws Exception;
-	
-	public void updateCafeApplicationForm(Cafe cafe) throws Exception ;
-	
-	public Cafe getCafeName(String cafeName)throws Exception;
-	
-	public Cafe getCafeURL(String URL)throws Exception;
-	
-	///////////////////////////////준호끝///////////////////////////////////////	
+/////////////////////////////// 준호시작///////////////////////////////////////
+public void updateCafeInfo(Cafe cafe) throws Exception;
+
+public Cafe getCafeInfo(int cafeNo) throws Exception;
+
+public void updateCafeApplicationForm(Cafe cafe) throws Exception;
+
+public Cafe getCafeName(String cafeName) throws Exception;
+
+public Cafe getCafeURL(String URL) throws Exception;
+
+/////////////////////////////// 준호끝///////////////////////////////////////
 }
