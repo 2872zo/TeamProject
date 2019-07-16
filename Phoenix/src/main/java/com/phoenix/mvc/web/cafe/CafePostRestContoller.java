@@ -55,15 +55,5 @@ public class CafePostRestContoller {
 		System.out.println(getClass().getName() + "default Constuctor");
 	}
 
-	@GetMapping("/cafe/{cafeURL}/json/getReplyList")
-	public Map<String, Object> getReplyList(@PathVariable String cafeURL, @ModelAttribute Search search){
-		search.setPostNo(10000);
-		search.setPageSize(pageSize);
-		search.setCurrentPage(1);
-		
-		Map<String, Object> queryResultMap = cafePostService.getReplyList(search);
-		queryResultMap.put("page", new Page(search.getCurrentPage(), (int)queryResultMap.get("replyTotalCount"), pageUnit, pageSize));
-				
-		return queryResultMap;
-	}
+	
 }

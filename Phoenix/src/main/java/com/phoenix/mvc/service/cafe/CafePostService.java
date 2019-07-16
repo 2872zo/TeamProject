@@ -26,4 +26,8 @@ public interface CafePostService {
 	public boolean updateReply(Reply reply);
 	
 	public boolean deleteReply(int replyNo);
+
+	public Reply getReply(int replyNo);
+
+	public boolean addReReply(Reply reply);
 }

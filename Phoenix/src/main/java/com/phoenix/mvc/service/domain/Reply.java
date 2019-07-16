@@ -2,16 +2,20 @@ package com.phoenix.mvc.service.domain;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class Reply {
 	private int replyNo;
 	private int postNo;
 	private int memberNo;
 	private String memberNickname;
+	private int targetReplyNo;
+	private String targetReplyMember;
 	private String replyContent;
 	private Date regDate;
 	private int likeCount;
 	private boolean replyStatusFlag;
+	private List<Reply> reReplyList;
 	
 	public int getReplyNo() {
 		return replyNo;
@@ -36,6 +40,18 @@ public class Reply {
 	}
 	public void setMemberNickname(String memberNickname) {
 		this.memberNickname = memberNickname;
+	}
+	public int getTargetReplyNo() {
+		return targetReplyNo;
+	}
+	public void setTargetReplyNo(int targetReplyNo) {
+		this.targetReplyNo = targetReplyNo;
+	}
+	public String getTargetReplyMember() {
+		return targetReplyMember;
+	}
+	public void setTargetReplyMember(String targetReplyMember) {
+		this.targetReplyMember = targetReplyMember;
 	}
 	public String getReplyContent() {
 		return replyContent;
@@ -62,11 +78,18 @@ public class Reply {
 	public void setReplyStatusFlag(boolean replyStatusFlag) {
 		this.replyStatusFlag = replyStatusFlag;
 	}
+	public List<Reply> getReReplyList() {
+		return reReplyList;
+	}
+	public void setReReplyList(List<Reply> reReplyList) {
+		this.reReplyList = reReplyList;
+	}
 	
 	@Override
 	public String toString() {
 		return "Reply [replyNo=" + replyNo + ", postNo=" + postNo + ", memberNo=" + memberNo + ", memberNickname="
-				+ memberNickname + ", reply_content=" + replyContent + ", regDate=" + regDate + ", likeCount="
-				+ likeCount + ", replyStatusFlag=" + replyStatusFlag + "]";
+				+ memberNickname + ", targetReplyNo=" + targetReplyNo + ", targetReplyMember=" + targetReplyMember
+				+ ", replyContent=" + replyContent + ", regDate=" + regDate + ", likeCount=" + likeCount
+				+ ", replyStatusFlag=" + replyStatusFlag + ", reReplyList=" + reReplyList + "]";
 	}
 }

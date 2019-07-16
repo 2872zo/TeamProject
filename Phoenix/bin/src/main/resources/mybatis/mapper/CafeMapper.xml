@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="CafeMapper">
+ 	
+ 	
+	<resultMap id="cafeSelectMap" type="com.phoenix.mvc.service.domain.Cafe">
+		<result property="cafeNo" 						column="cafe_no" 							jdbcType="NUMERIC"/>
+		<result property="cafeName" 					column="cafe_name" 							jdbcType="VARCHAR"/>
+		<result property="cafeIcon"						column="cafe_icon" 							jdbcType="VARCHAR" />
+		<result property="manageUserNo" 				column="manage_user_no" 					jdbcType="NUMERIC" />
+		<result property="URL" 							column="url" 								jdbcType="VARCHAR" />
+		<result property="cafeDetail" 					column="cafe_detail" 						jdbcType="VARCHAR" />
+		<result property="regDate" 						column="reg_date" 							jdbcType="DATE" />
+		<result property="bannerImg" 					column="banner_img" 						jdbcType="VARCHAR"/>
+		<result property="mainImg" 						column="main_img" 							jdbcType="VARCHAR"/>
+		<result property="cafeType"						column="cafe_type" 							jdbcType="VARCHAR" />
+		<result property="applicationDetail" 			column="application_detail" 				jdbcType="VARCHAR" />
+		<result property="closeReason" 					column="close_reason" 						jdbcType="VARCHAR" />
+		<result property="applicationQuestion1" 		column="application_question1" 				jdbcType="VARCHAR" />
+		<result property="applicationQuestion2"			column="application_question2" 				jdbcType="VARCHAR" />
+		<result property="applicationQuestion3" 		column="application_question3"				jdbcType="VARCHAR" />
+		<result property="memberNicknameFlag" 			column="member_nickname_flag" 				jdbcType="CHAR" />
+		<result property="autoApplicationAcceptFlag" 	column="auto_application_accept_flag" 		jdbcType="CHAR" />
+		<result property="closedFlag" 					column="closed_flag" 						jdbcType="CHAR" />
+		<result property="members" 						column="members" 							jdbcType="NUMERIC" />
+	</resultMap>
+	
+	<insert 	id="addCafe"		parameterType="com.phoenix.mvc.service.domain.Cafe" >
+	 	<selectKey keyProperty="cafeNo" resultType="int" order="BEFORE">
+	 		SELECT SEQ_CAFE_CAFE_NO.NEXTVAL FROM DUAL
+	 	</selectKey>
+		INSERT INTO CAFE (cafe_no, cafe_name, manage_user_no, reg_date, url, cafe_detail, banner_img, main_img, cafe_type, application_detail) 
+		VALUES ( #{cafeNo}, #{cafeName:VARCHAR}, 10001, SYSDATE, #{URL:VARCHAR}, #{cafeDetail:VARCHAR}, #{bannerImg:VARCHAR}, #{mainImg:VARCHAR}, #{cafeType:VARCHAR}, #{applicationDetail:VARCHAR})
+
+	 </insert>
+	 
+	 <select 	id="getCafeInfo"	parameterType= "int"	resultMap="cafeSelectMap">
+		SELECT
+		cafe_no , cafe_Name ,cafe_icon, manage_user_no , url , cafe_detail, banner_img, main_img, cafe_type, application_detail, reg_date,
+		close_reason, application_question1, application_question2, application_question3, member_nickname_flag, auto_application_accept_flag,
+		closed_flag, members 		
+		FROM cafe 
+		WHERE cafe_No = #{value}
+	 </select>
+	 
+	 <select 	id="getCafeName"	parameterType= "String"	resultMap="cafeSelectMap">
+		SELECT	 cafe_Name		
+		FROM cafe 
+		WHERE cafe_Name = #{value}
+	 </select>
+	 
+	 
+	 
+	 <update	id="updateCafeInfo"	parameterType="com.phoenix.mvc.service.domain.Cafe" >
+	   	UPDATE cafe
+	   	<set>
+	   		cafe_name 	= #{cafeName:VARCHAR} ,
+			cafe_Detail	= #{cafeDetail:VARCHAR},
+			banner_img = #{bannerImg:VARCHAR},
+			main_img = #{mainImg:VARCHAR},
+			cafe_type = #{cafeType:VARCHAR},
+			auto_application_accept_flag = #{autoApplicationAcceptFlag:CHAR},
+			cafe_icon = #{cafeIcon:VARCHAR}
+							
+	   	</set>
+	  WHERE cafe_no = #{cafeNo:NUMERIC}
+	 </update>
+	 
+	 <update	id="updateCafeApplicationForm"	parameterType="com.phoenix.mvc.service.domain.Cafe" >
+	   	UPDATE cafe
+	   	<set>
+	   		auto_application_accept_flag = #{autoApplicationAcceptFlag:CHAR} ,
+			member_nickname_flag	= #{memberNicknameFlag:CHAR},
+			application_question1 = #{applicationQuestion1:VARCHAR},
+			application_question2 = #{applicationQuestion2:VARCHAR},
+			application_question3 = #{applicationQuestion3:VARCHAR}				
+	   	</set>
+	  WHERE cafe_no = #{cafeNo:NUMERIC}
+	 </update>
+
+</mapper>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CafeTabMapper">
+ 	
+	<resultMap id="cafeTabSelectMap" type="Cafe">
+		<result property="cafeNo" 					 column="cafe_no" 						jdbcType="VARCHAR"/>
+		<result property="cafeName"					 column="cafe_name" 					jdbcType="VARCHAR" />
+		<result property="cafeIcon" 				 column="cafe_icon" 					jdbcType="VARCHAR" />
+		<result property="manageUserNo" 			 column="manage_user_no" 				jdbcType="VARCHAR" />
+		<result property="regDate" 					 column="reg_date" 						jdbcType="DATE" />
+		<result property="URL" 						 column="url" 							jdbcType="VARCHAR" />
+		<result property="cafeDetail" 				 column="cafe_detail" 					jdbcType="VARCHAR" />
+		<result property="bannerImg" 				 column="banner_img" 					jdbcType="VARCHAR"  />
+		<result property="mainImg" 					 column="main_img" 						jdbcType="VARCHAR" />
+		<result property="cafeType" 				 column="cafe_type" 					jdbcType="VARCHAR" />
+		<result property="applicationDetail" 		 column="application_detail" 			jdbcType="VARCHAR" />
+		<result property="closeReason" 				 column="close_reason" 					jdbcType="VARCHAR"  />
+		<result property="applicationQuestion1" 	 column="APPLICATION_QUESTION1" 		jdbcType="VARCHAR" />
+		<result property="applicationQuestion2"  	 column="APPLICATION_QUESTION2" 		jdbcType="VARCHAR" />
+		<result property="applicationQuestion3" 	 column="APPLICATION_QUESTION3" 		jdbcType="VARCHAR" />
+		<result property="cafeNickNameFlag" 		 column="MEMBER_NICKNAME_FLAG" 			jdbcType="VARCHAR" />
+		<result property="autoApplicationAcceptFlag" column="AUTO_APPLICATION_ACCEPT_FLAG" 	jdbcType="VARCHAR" />
+		<result property="closedFlag" 				 column="closed_flag" 					jdbcType="VARCHAR" />
+		<result property="members" 					 column="members" 						jdbcType="NUMERIC" />
+		<result property="managerNickname"			 column="user_nickname" 				jdbcType="VARCHAR" />
+		
+	</resultMap>
+	<sql id="listCafe">
+		SELECT
+		c.cafe_no, c.url, c.cafe_name, c.members, u.user_nickname
+		FROM cafe c, users u
+		WHERE c.manage_user_no=u.user_no
+		AND
+		(c.cafe_name like '%' ||#{searchKeyword}|| '%'	
+		OR c.cafe_detail like '%' ||#{searchKeyword}|| '%')
+		ORDER BY c.reg_date DESC
+	</sql>
+	
+	<!-- SQL : SELECT -->
+	<select id="searchCafe" parameterType="Search" resultMap="cafeTabSelectMap">
+		SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(
+	 	<include refid="listCafe"></include>
+	 	 ) inner_table
+		WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+	 </select>
+	 
+	 <select id="searchCafeTotalCount" parameterType="Search" resultType="int">
+		SELECT
+		count(*)
+		FROM (<include refid="listCafe"></include>)
+	 </select>
+	 
+	<sql id="categoryCafe">
+	 	SELECT
+		cafe_no, cafe_icon, cafe_name, cafe_detail, cafe_type, url, reg_date, members
+		FROM
+		cafe
+		<where>
+		CLOSED_FLAG = '0'
+		AND cafe_type = 
+		<if test="boardNo==0">
+		'cc100'
+		</if>
+		<if test="boardNo==1">
+		'cc101'
+		</if>
+		<if test="boardNo==2">
+		'cc102'
+		</if>
+		<if test="boardNo==3">
+		'cc103'
+		</if>
+		<if test="boardNo==4">
+		'cc104'
+		</if>
+		<if test="boardNo==5">
+		'cc105'
+		</if>
+		<if test="boardNo==6">
+		'cc106'
+		</if>
+		</where> 
+	</sql>
+		
+	 <select id="categorizedCafeList" parameterType="Search" resultMap="cafeTabSelectMap">
+		<include refid="categoryCafe"/>
+	 </select>
+	 
+	 <select id="countCategorizedCafe" parameterType="Search" resultType="int">
+		SELECT
+		count(*)
+		FROM (
+		<include refid="categoryCafe"/>
+		)
+	 </select>
+	 
+</mapper>

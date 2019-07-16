@@ -100,7 +100,7 @@
 					<div class="col-3">
 						<select class="form-control hideOption" name="boardNo">
 							<option value="0" class="boardOption">전체</option>
-							<c:forEach var="board" items="${boardList }">
+							<c:forEach var="board" items="${boardOption }">
 								<option value="${board.boardNo }" class="boardOption">${board.boardName }</option>
 							</c:forEach>
 						</select> 

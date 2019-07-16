@@ -1,5 +1,6 @@
 package com.phoenix.mvc.service.cafe.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -86,13 +87,15 @@ public class CafeManageServiceImpl implements CafeManageService {
 			newBoard.get(i).setCafeNo(cafeNo);
 			// 가짜데이터
 			newBoard.get(i).setAccessGrade("10002");
-			newBoard.get(i).setPrivateFlag('0');
+			//newBoard.get(i).setPrivateFlag('0');
 			// -------------------------------------------
-			if (newBoard.get(i).getBoardName() == null) // 구분선이면
+			if (newBoard.get(i).getBoardDetail() == null) // 구분선이면 디테일로 수정
 			{
 				newBoard.get(i).setBoardType("cb102");
-				newBoard.get(i).setBoardName("------------");
-			} else // 자유게시판이면
+				newBoard.get(i).setPrivateFlag('0');
+				//newBoard.get(i).setBoardName("------------");
+			} 
+			else // 자유게시판이면
 			{
 				newBoard.get(i).setBoardType("cb103"); // 자유게시판
 			}
@@ -104,14 +107,72 @@ public class CafeManageServiceImpl implements CafeManageService {
 	}
 
 	@Override
-	public boolean updateCafeBoard(List<Board> existBoard) {
-		int cafeNo = cafeManageDao.getCafeNo(existBoard.get(0).getCafeURL());
-		for (int i = 0; i < existBoard.size(); i++) {
+	public boolean updateCafeBoard(List<Board> existBoardList) {
+		int cafeNo = cafeManageDao.getCafeNo(existBoardList.get(0).getCafeURL());
+		
+		List<Board> dbBoardList = cafeManageDao.getCafeBoard(cafeNo);
+		List<Board> deleteBoardList = new ArrayList<Board>();
+		
+		for (int i = 0; i < existBoardList.size(); i++) 
+		{
 			// 가짜데이터
+			existBoardList.get(i).setAccessGrade("10002");
+			//existBoardList.get(i).setPrivateFlag('0');
+			//----------------------------------------------------------
+			if(existBoardList.get(i).getBoardDetail()==null) // 구분선
+			{
+				//existBoardList.get(i).setBoardName("-------------"); //디테일로 수정
+				existBoardList.get(i).setPrivateFlag('0');
+				existBoardList.get(i).setBoardType("cb102");
+			}
+			else if(existBoardList.get(i).getBoardName().contains("신고")) //근데 신고는 아예 고칠수 없게할거임
+			{
+				existBoardList.get(i).setBoardType("cb101");
+			}
+			else if(existBoardList.get(i).getBoardName().contains("공지"))
+			{
+				existBoardList.get(i).setBoardType("cb100");
+			}
+			else//자유게시판
+			{
+				existBoardList.get(i).setBoardType("cb104");
+			}
 
 		}
+		
+		System.out.println(existBoardList.size());
+		System.out.println(dbBoardList.size());
+		
+		if(dbBoardList.size()!=existBoardList.size()) //삭제된게있으면
+		{
+			for(int i=0; i<dbBoardList.size(); i++) //이중포문 최선인가 ㅠ 디비 더큼
+			{
+				for(int j=0; j<existBoardList.size(); j++) // 받아온 게시판
+				{
+					if(dbBoardList.get(i).getBoardNo() == existBoardList.get(j).getBoardNo())//같으면
+					{
+						
+						dbBoardList.remove(i);//삭제하고
+						i--;
+						break;
+					}
+				}
+			}
+			
+			
+			System.out.println(dbBoardList.size());
+			deleteBoardList = dbBoardList; // 삭제할 deleteBoardList
+			boolean deleteBoardResult = cafeManageDao.deleteCafeBoard(deleteBoardList);
+			System.out.println(deleteBoardResult);
+		}
+		//deleteBoardList 삭제할애
+		//existBoard  업데이트할애
+		
+		boolean updateBoardResult = cafeManageDao.updateCafeBoard(existBoardList);
+		
+		
 
-		return false;
+		return updateBoardResult;
 	}
 
 /////////////////////////////////////////////////// 예림
