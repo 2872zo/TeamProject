@@ -137,5 +137,25 @@
 			FROM dual
 		</foreach>)A
 		</insert>
+		
+		<update id="updateCafeBoard" parameterType="list">
+			<foreach collection="list" item="item" separator =";" open="DECLARE BEGIN" close="; END;">
+				UPDATE board
+				SET board_name = #{item.boardName:VARCHAR},
+					access_grade = #{item.accessGrade:VARCHAR},
+					board_index = #{item.boardIndex:NUMERIC},
+					private_flag = #{item.privateFlag:CHAR},
+					board_detail = #{item.boardDetail:VARCHAR}
+				WHERE board_no = #{item.boardNo}	
+			</foreach>
+		</update>
+		
+		<delete id="deleteCafeBoard" parameterType="list" >
+			DELETE FROM board
+			WHERE
+			<foreach collection="list" item="item" separator ="or">
+				board_no = #{item.boardNo}
+			</foreach>
+		</delete>
 
 </mapper>

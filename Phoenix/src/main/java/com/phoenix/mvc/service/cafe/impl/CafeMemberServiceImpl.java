@@ -43,11 +43,11 @@ public class CafeMemberServiceImpl implements CafeMemberService {
 		return cafeManageDao.getCafeNo(cafeURL);
 
 	}
-	
+
 	public CafeMember getCafeMember(int cafeNo, int userNo) {
-		
+
 		return cafeMemberDao.getCafeMember(cafeNo, userNo);
-	
+
 	}
 
 	@Override
@@ -69,8 +69,15 @@ public class CafeMemberServiceImpl implements CafeMemberService {
 	@Override
 	public void updateCafeMemberProfile(CafeMember cafeMember) {
 		cafeMemberDao.updateCafeMemberProfile(cafeMember);
-		
+
 	}
+
+	@Override
+	public int changeGradeNo(CafeMember cafeMember) {
+		
+		return cafeMemberDao.changeGradeNo(cafeMember);
+	}
+
 ////////////////////////////////////지니끝//////////////////////////////
 ////////////////////////////////////기황시작////////////////////////////
 	@Override
@@ -136,6 +143,31 @@ public class CafeMemberServiceImpl implements CafeMemberService {
 	@Override
 	public int updateCafeMemeberGrade(CafeMember cafeMember) throws Exception {
 		return cafeMemberDao.updateCafeMemeberGrade(cafeMember);
+	}
+
+	@Override
+	public int updatePostCountIncrease(int memberNo) throws Exception {
+		return cafeMemberDao.updatePostCountIncrease(memberNo);
+	}
+
+	@Override
+	public int updatePostCountDecrease(int memberNo) throws Exception {
+		return cafeMemberDao.updatePostCountDecrease(memberNo);
+	}
+
+	@Override
+	public int updateReplyCountIncrease(int memberNo) throws Exception {
+		return cafeMemberDao.updateReplyCountIncrease(memberNo);
+	}
+
+	@Override
+	public int updateReplyCountDecrease(int memberNo) throws Exception {
+		return cafeMemberDao.updateReplyCountDecrease(memberNo);
+	}
+
+	@Override
+	public int updateVisitCountIncrease(int memberNo) throws Exception {
+		return cafeMemberDao.updateVisitCountIncrease(memberNo);
 	}
 	
 	//////////////////////////////////기황끝///////////////////////////////////////

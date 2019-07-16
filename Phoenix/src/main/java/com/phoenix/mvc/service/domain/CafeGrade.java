@@ -1,5 +1,8 @@
 package com.phoenix.mvc.service.domain;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class CafeGrade {
 
 	private int cafeGradeNo;
@@ -11,6 +14,7 @@ public class CafeGrade {
 	private int requiredPostCount;
 	private boolean gradeFlag;
 	private boolean autoUpgradeFlag;
+	private List<CafeGrade> gradeList;
 	
 	public int getCafeGradeNo() {
 		return cafeGradeNo;
@@ -66,16 +70,20 @@ public class CafeGrade {
 	public void setAutoUpgradeFlag(boolean autoUpgradeFlag) {
 		this.autoUpgradeFlag = autoUpgradeFlag;
 	}
-	
+	public List<CafeGrade> getGradeList() {
+		return gradeList;
+	}
+	public void setGradeList(List<CafeGrade> gradeList) {
+		this.gradeList = gradeList;
+	}
 	@Override
 	public String toString() {
 		return "CafeGrade [cafeGradeNo=" + cafeGradeNo + ", cafeNo=" + cafeNo + ", memberGradeCode=" + memberGradeCode
 				+ ", gradeName=" + gradeName + ", requiredVisitCount=" + requiredVisitCount + ", requiredReplyCount="
 				+ requiredReplyCount + ", requiredPostCount=" + requiredPostCount + ", gradeFlag=" + gradeFlag
-				+ ", autoUpgradeFlag=" + autoUpgradeFlag + "]";
+				+ ", autoUpgradeFlag=" + autoUpgradeFlag + ", gradeList=" + gradeList + "]";
 	}
 	
 	
-
 	
 }

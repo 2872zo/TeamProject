@@ -30,68 +30,24 @@
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
 $(function() {
+	
+	$("#addCafe").on("click" , function() {
+		$(self.location).attr("href","/cafe/addCafeView");
+	});
 
 });
 </script>
 	<!-- ToolBar Start /////////////////////////////////////-->
-	<jsp:include page="../common/cafeToolbar.jsp" />
+	<!--<jsp:include page="../common/cafeToolbar.jsp" />-->
 	<!-- ToolBar End /////////////////////////////////////-->
 </head>
 
 <body>
-<form id="cafeHomeForm">
-<input type="hidden" id="userNo" name="userNo" value="${search.userNo}"/>
-<input type="hidden" id="status" name="status" value="${search.status}"/>
-<input type="hidden" id="boardNo" name="boardNo" value="${search.boardNo}"/>
-</form>
-
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
-	총 ${totalCount} 건 
 
-	
-
-	
-	<c:if test="${!empty applicationList}">
-
-<table class="table table-borderless ">
-	<thead>
-    <tr>
-  	  <th scope="col">신청번호</th>
-      <th scope="col">유저번호</th>
-      <th scope="col">카페번호</th>
-      <th scope="col">카페주소</th>
-      <th scope="col">카페이름</th>
-      <th scope="col">카페아이콘</th>
-      <th scope="col">카페종류</th>
-      <th scope="col">신청일</th>
-      <th scope="col">신청닉네임</th>
-    </tr>
-	</thead>
-	<tbody>
-  
-	<c:forEach var="cafeApplication" items="${applicationList}">
-	<tr>
-	 <th scope="row">${cafeApplication.applicationNo}</th>
-	 <td>${cafeApplication.userNo}</td>
-	 <td>${cafeApplication.cafeNo}</td>
-	 <td>${cafeApplication.cafeURL}</td>
-	 <td>${cafeApplication.cafeName}</td>
-	 <td>${cafeApplication.cafeIcon}</td>
-	 <td>${cafeApplication.cafeType}</td>
-	 <td>${cafeApplication.regDate}</td>
-	 <td>${cafeApplication.memberNickname}</td>
-	 </tr>
-	</c:forEach>
-  
-	</tbody>
-</table>
-
-</c:if>
-	
-
-	
+	채팅방 목록 화면인가 본대
 </div>
 	<!--  화면구성 div Start /////////////////////////////////////-->
 

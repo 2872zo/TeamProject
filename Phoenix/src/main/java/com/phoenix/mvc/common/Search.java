@@ -9,6 +9,8 @@ public class Search{
 
 	private int cafeNo;
 	private String cafeURL;
+	private int cafeType;
+	
 	private int boardNo;
 	private String boardName;
 	private int postNo;
@@ -71,6 +73,14 @@ public class Search{
 		this.cafeURL = cafeURL;
 	}
 
+	public int getCafeType() {
+		return cafeType;
+	}
+
+	public void setCafeType(int cafeType) {
+		this.cafeType = cafeType;
+	}
+
 	public int getBoardNo() {
 		return boardNo;
 	}
@@ -102,7 +112,6 @@ public class Search{
 	public void setReplyNo(int replyNo) {
 		this.replyNo = replyNo;
 	}
-
 
 	public int getStatus() {
 		return status;

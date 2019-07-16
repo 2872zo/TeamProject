@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.cafe.CafeTabDao;
 import com.phoenix.mvc.service.domain.Cafe;
+import com.phoenix.mvc.service.domain.CafeGrade;
 
 @Repository("cafeTabDaoImpl")
 public class CafeTabDaoImpl implements CafeTabDao {
@@ -28,8 +29,15 @@ public class CafeTabDaoImpl implements CafeTabDao {
 	/////////////////////////////// 준호시작///////////////////////////////////////
 	public void addCafe(Cafe cafe) throws Exception {
 		sqlSession.insert("CafeMapper.addCafe", cafe);
+		
+		System.out.println("여긴 디에이오임플 카페다아아아앙"+cafe);
 	}
-
+	
+	public void addMemberGrade(CafeGrade cafeGrade) throws Exception{
+		sqlSession.insert("CafeMapper.addMemberGrade", cafeGrade);
+		
+		System.out.println("카페등급들어갔니 ??"+cafeGrade);
+	}
 	
 
 	/////////////////////////////// 준호끝///////////////////////////////////////

@@ -21,9 +21,13 @@ public interface CafeMemberService {
 	public void addCafeMember(CafeMember cafeMember);//가입승인
 	
 	public void updateCafeMemberProfile(CafeMember cafeMember);
+	
+	public int changeGradeNo(CafeMember cafeMember);
+	
+	
 	////////////////////////////////지니끝//////////////////////////////////
 	
-	////////////////////////////기황////////////////////////////////////
+	//////////////////////////////기황시작//////////////////////////////////
 
 	public Map getCafeMemberList(Search search) throws Exception;
 	
@@ -37,6 +41,16 @@ public interface CafeMemberService {
 
 	public int updateCafeMemeberGrade (CafeMember cafeMember) throws Exception;
 	
-	////////////////////////////끝////////////////////////////////////
+	public int updatePostCountIncrease (int memberNo) throws Exception;
+	
+	public int updatePostCountDecrease (int memberNo) throws Exception;
+	
+	public int updateReplyCountIncrease (int memberNo) throws Exception;
+	
+	public int updateReplyCountDecrease (int memberNo) throws Exception;
+	
+	public int updateVisitCountIncrease (int memberNo) throws Exception;
+	
+	////////////////////////////기황끝///////////////////////////////
 
 }

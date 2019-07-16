@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
@@ -7,7 +6,7 @@
 <html lang="ko">
 	
 <head>
-	
+
 	
 	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -20,57 +19,122 @@
 
 	
 	<header>
-		<title>카페정보수정완료창</title>
+		<title>카페가입양식관리화면</title>
 	</header>
 	
 		<script type="text/javascript">
 
 		//============= "가입"  Event 연결 =============
 		 $(function() {
+
+				//트루 펄스 값 한글로 나오게 하기
+			 $(".autoAcceptOption").each(function(){
+				    if($(this).val()=="${cafe.autoApplicationAcceptFlag}"){
+				      $(this).attr("selected","selected");
+				    }
+			 });
+			
+			 $(".check").each(function(){
+				    if($(this).val()=="${cafe.memberNicknameFlag}"){
+				      $(this).attr("selected","selected");
+				    }
+			 });
+				    
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			var cafeURL = "22";
 			$( "button.btn.btn-success" ).on("click" , function() {
-				alert("만들기");
-				$("form").attr("method" , "POST").attr("action" , "/cafe/1234/addCafe").submit();
+				alert("수정");
+				$("form").attr("method" , "POST").attr("action" , "/cafe/"+cafeURL+"/manage/updateCafeApplicationForm").submit();
 			});
 		});	
 
 			
+			
 		</script>
 <body>
-	
+		<div class="container">
+		
+			<h4 class="bg-primary text-center">가입양식관리수정</h4>
 <form class="form-horizontal">
 
 
-		<div class="row" align="center">
-	  		<div class="col-sm-4"><strong>수정완료</strong></div>
-		</div>
 		
+		
+		<input type="hidden" name="cafeNo" value="${cafe.cafeNo }"/>
+				
+					<div class="form-group">
+						<label for="exampleFormControlSelect1"
+							class="col-sm-offset-1 col-sm-3 control-label">자동가입승인</label>
+						<div class="col-sm-4">
+							<select class="form-control" id="exampleFormControlSelect1"
+								name="autoApplicationAcceptFlag" >								
+								<option class="autoAcceptOption" value="true">사용</option>
+								<option class="autoAcceptOption" value="false">미사용</option>
+							</select>
+						</div>
+					</div>		
+					
+		<div class="form-group">
+						<label for="exampleFormControlSelect1"
+							class="col-sm-offset-1 col-sm-3 control-label">별명사용여부</label>
+						<div class="col-sm-4">
+							<select class="form-control" id="exampleFormControlSelect1"
+								name="memberNicknameFlag" >								
+								<option class="check" value="true">사용</option>
+								<option class="check" value="false">미사용</option>
+							</select>
+						</div>
+					</div>
+		
+					<div class="form-group">
 	
-		  자동가입승인:&nbsp;&nbsp;[${cafe.autoApplicationAcceptFlag}]</br>
-		  카페전용 별명사용여부:&nbsp;&nbsp;[${cafe.memberNicknameFlag}]</br>
-		  질문1:&nbsp;&nbsp;[${cafe.applicationQuestion1 }]</br>
-		  질문2:&nbsp;&nbsp;[${cafe.applicationQuestion2 }]</br>
-		  질문3:&nbsp;&nbsp;[${cafe.applicationQuestion3 }]</br>
+					<label for="exampleFormControlInput1" class="col-sm-offset-1 col-sm-3 control-label">질문 1</label>
+						<div class="col-sm-4">				
+							<input type="text" class="form-control"
+								id="exampleFormControlInput1" placeholder="" name="applicationQuestion1"  value="${cafe.applicationQuestion1}">							
+						</div>
+				
+				</div>
+			
+					<div class="form-group">
+	
+					<label for="exampleFormControlInput1" class="col-sm-offset-1 col-sm-3 control-label">질문 2</label>
+						<div class="col-sm-4">				
+							<input type="text" class="form-control"
+								id="exampleFormControlInput1" placeholder="" name="applicationQuestion2" value="${cafe.applicationQuestion2}">							
+						</div>
+				
+				</div>
+
+					
+				<div class="form-group">
+	
+					<label for="exampleFormControlInput1" class="col-sm-offset-1 col-sm-3 control-label">질문 3</label>
+						<div class="col-sm-4">				
+							<input type="text" class="form-control"
+								id="exampleFormControlInput1" placeholder="" name="applicationQuestion3" value="${cafe.applicationQuestion3}">							
+						</div>
+				
+				</div>
+					
+			
 		  
-		  		 
-		  
-		  
-		  
+				  
 		
 		  
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-success"  >만들기</button>
+		      <button type="button" class="btn btn-success"  >수정</button>
 		    </div>
 		  </div>
-		  
 		</form>
+		
 		<!-- form Start /////////////////////////////////////-->
-	
+		
+ 	</div>
 	<!--  화면구성 div end /////////////////////////////////////-->
 	
 </body>
 
 </html>
-
 					

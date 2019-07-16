@@ -2,6 +2,7 @@ package com.phoenix.mvc.service.domain;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class CafeMember {
 
@@ -13,6 +14,7 @@ public class CafeMember {
 	private boolean noticeFlag;
 	private boolean favoriteFlag;
 	private int cafeMemberGradeNo;
+	private int changeGradeNo;
 	private String memberGrade;
 	private String gradeName;
 	private Date regDate;
@@ -24,6 +26,7 @@ public class CafeMember {
 	private Date blockEndDate;
 	private String blockReason;
 	private ArrayList<CafeMemberBlock> blocks;
+	private List<CafeMember> cafeMemberList;
 	
 	public int getMemberNo() {
 		return memberNo;
@@ -133,7 +136,12 @@ public class CafeMember {
 	public void setBlockReason(String blockReason) {
 		this.blockReason = blockReason;
 	}
-	
+	public ArrayList<CafeMemberBlock> getBlocks() {
+		return blocks;
+	}
+	public void setBlocks(ArrayList<CafeMemberBlock> blocks) {
+		this.blocks = blocks;
+	}
 	@Override
 	public String toString() {
 		return "CafeMember [memberNo=" + memberNo + ", cafeNo=" + cafeNo + ", userNo=" + userNo + ", memberNickname="

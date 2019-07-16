@@ -43,7 +43,7 @@ $(function() {
 	
 	$(".cafeCategory").on("click" , function() {
 		var count = $(".cafeCategory").index(this);
-		$("#boardNo").val(count);
+		$("#cafeType").val(count);
 		$("#cafeHomeForm").attr("method" , "POST").attr("action" , "/cafe/main").submit();	
 	});
 
@@ -62,7 +62,7 @@ $(function() {
 <form id="cafeHomeForm">
 <input type="hidden" id="userNo" name="userNo" value="${search.userNo}"/>
 <input type="hidden" id="status" name="status" value="${search.status}"/>
-<input type="hidden" id="boardNo" name="boardNo" value="${search.boardNo}"/>
+<input type="hidden" id="cafeType" name="cafeType" value="${search.cafeType}"/>
 </form>
 
 
@@ -75,13 +75,11 @@ $(function() {
 	
 	
 	<div class="btn-group d-flex justify-content-center" role="group">
-  <button type="button" class='btn btn-${ search.status==0 ? "" : "outline-" }primary cafeListing'>활동중인 카페</button>
-  <button type="button" class='btn btn-${ search.status==1 ? "" : "outline-" }primary cafeListing'>즐겨찾기 카페</button>
-  <button type="button" class='btn btn-${ search.status==2 ? "" : "outline-" }primary cafeListing'>운영중인 카페</button>
-  <button type="button" class='btn btn-${ search.status==3 ? "" : "outline-" }primary cafeListing'>정지당한 카페</button>
-  <button type="button" class='btn btn-${ search.status==4 ? "" : "outline-" }primary cafeListing'>가입신청 내역</button>
-  <button type="button" class='btn btn-${ search.status==5 ? "" : "outline-" }primary cafeListing'>카페 새게시글</button>
-</div>
+	  <button type="button" class='btn btn-${ search.status==0 ? "" : "outline-" }primary cafeListing'>활동중인 카페</button>
+	  <button type="button" class='btn btn-${ search.status==1 ? "" : "outline-" }primary cafeListing'>즐겨찾기 카페</button>
+	  <button type="button" class='btn btn-${ search.status==2 ? "" : "outline-" }primary cafeListing'>운영중인 카페</button>
+	  <button type="button" class='btn btn-${ search.status==3 ? "" : "outline-" }primary cafeListing'>정지당한 카페</button>
+	</div>
 	
 	<c:if test="${!empty myCafelist}">
 
@@ -121,12 +119,12 @@ $(function() {
 	
 	
 <div class="btn-group d-flex justify-content-center" role="group">
-  <button type="button" class='btn btn-${ search.boardNo==0 ? "" : "outline-" }success cafeCategory'>친목/모임</button>
-  <button type="button" class='btn btn-${ search.boardNo==1 ? "" : "outline-" }success cafeCategory'>스포츠/레저</button>
-  <button type="button" class='btn btn-${ search.boardNo==2 ? "" : "outline-" }success cafeCategory'>영화</button>
-  <button type="button" class='btn btn-${ search.boardNo==3 ? "" : "outline-" }success cafeCategory'>게임</button>
-  <button type="button" class='btn btn-${ search.boardNo==4 ? "" : "outline-" }success cafeCategory'>음악</button>
-  <button type="button" class='btn btn-${ search.boardNo==5 ? "" : "outline-" }success cafeCategory'>여행</button>
+  <button type="button" class='btn btn-${ search.cafeType==0 ? "" : "outline-" }success cafeCategory'>친목/모임</button>
+  <button type="button" class='btn btn-${ search.cafeType==1 ? "" : "outline-" }success cafeCategory'>스포츠/레저</button>
+  <button type="button" class='btn btn-${ search.cafeType==2 ? "" : "outline-" }success cafeCategory'>영화</button>
+  <button type="button" class='btn btn-${ search.cafeType==3 ? "" : "outline-" }success cafeCategory'>게임</button>
+  <button type="button" class='btn btn-${ search.cafeType==4 ? "" : "outline-" }success cafeCategory'>음악</button>
+  <button type="button" class='btn btn-${ search.cafeType==5 ? "" : "outline-" }success cafeCategory'>여행</button>
 </div>
 <br/>
 <c:if test="${!empty categorizedCafeList}">

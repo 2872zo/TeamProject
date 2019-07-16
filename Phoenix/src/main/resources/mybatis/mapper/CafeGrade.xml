@@ -28,13 +28,23 @@
 	 <update	id="updateCafeGrade"	parameterType="CafeGrade" >
 	   	UPDATE cafe_member_grade
 	   	<set>
-		cafe_grade_active_flag=#{gradeFlag},
-		grade_name=#{gradeName},
-		required_visit_count=#{required_visit_count},
-		required_reply_count=#{required_reply_count},
-		required_post_count=#{required_post_count}
+	   	cafe_grade_active_flag=#{gradeFlag:CHAR},
+		auto_upgrade_flag=#{autoUpgradeFlag:CHAR},
+		grade_name=#{gradeName:VARCHAR},
+		required_visit_count=#{requiredVisitCount:NUMERIC},
+		required_reply_count=#{requiredReplyCount:NUMERIC},
+		required_post_count=#{requiredPostCount:NUMERIC}
 	   	</set>
-	   	WHERE cafe_no = #{cafeNo}
+	   	WHERE cafe_member_grade_no = #{cafeGradeNo}
+	 </update>
+	 
+	 <update	id="flagUpdate"	parameterType="CafeGrade" >
+	   	UPDATE cafe_member_grade
+	   	<set>
+	   	cafe_grade_active_flag=#{gradeFlag:CHAR},
+		auto_upgrade_flag=#{autoUpgradeFlag:CHAR}
+	   	</set>
+	   	WHERE cafe_member_grade_no = #{cafeGradeNo}
 	 </update>
 	 
 	 <select id="getCafeGrade" parameterType="int" resultMap="cafeGradeSelectMap">

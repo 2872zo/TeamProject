@@ -30,15 +30,35 @@
     </style>
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
+
 $(function() {
+	
 	$("#login").on("click" , function() {
-		$(self.location).attr("href","/loginView");
+		$(self.location).attr("href","/user/loginView");
 	});
 
 	$("#phoenix").on("click" , function() {
 		$(self.location).attr("href","/");
 	});
+
+	$("#goChat").on("click" , function() {
+		$(self.location).attr("href","/chat/main");
+	});
+
+	$("#viewFriendsList").on("click" , function() {
+		$(self.location).attr("href","/chat/chatFriendsList");
+	});
+
+	$("#viewChatRoomList").on("click" , function() {
+		$(self.location).attr("href","/chat/chatRoomList");
+	});
+	
+	$("#viewConfig").on("click" , function() {
+		$(self.location).attr("href","/chat/config");
+	});
+	
 });
+
 </script>
 </head>
 
@@ -59,9 +79,19 @@ $(function() {
       <li class="nav-item">
         <a class="nav-link disabled" href="#">Link</a>
       </li>   
+      <c:set var="uriCheck" value="${pageContext.request.requestURI}" />
+      <c:if test='${uriCheck.startsWith("/WEB-INF/views/chat/")}'>
+     <li class="nav-item">
+
+    <button class="btn btn-outline-light" type="button" id='viewFriendsList'>친구목록보기</button>
+    <button class="btn btn-outline-light" type="button" id='viewChatRoomList'>채팅방목록보기</button>
+    <button class="btn btn-outline-light" type="button" id='viewConfig'>환경설정</button>
+ </li> 
+     </c:if>
+  
     </ul>
     
-  
+ 		 <a class="nav-link" href="#" id='goChat'>채팅으로 떠날게</a>
         <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Chat</a>
      
       <button class="btn btn-outline-light my-2 my-sm-0" type="submit" id = "login">Login</button>

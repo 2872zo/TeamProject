@@ -48,6 +48,10 @@ $(function() {
 		$(self.location).attr("href","/cafe/main/cafeApplicationList");
 	});
 
+	$("#newsFeed").on("click" , function() {
+		$(self.location).attr("href","/cafe/main/cafeNewsFeed");
+	});	
+
 	$("#explore").on("click" , function() {
 		$("#cafeSearch").attr("method" , "POST").attr("action" , "/cafe/search").submit();
 	});
@@ -67,7 +71,7 @@ $(function() {
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<!-- ffb347 FFAA28 FFA01E FFAA28 FFAF00-->
 		<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #FFAF00;">
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false">
     <span class="navbar-toggler-icon"></span>
   </button>
   <a class="navbar-brand" href="#" id="phoenix">Phoenix</a>
@@ -78,7 +82,10 @@ $(function() {
         <a class="nav-link" href='#' id='cafe'>CafeHome<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#" id='applications'>어플리케이션 내놔</a>
+        <a class="nav-link" href="#" id='applications'>카페 가입신청내역</a>
+      </li>   
+       <li class="nav-item">
+        <a class="nav-link" href="#" id='newsFeed'>새글 피드</a>
       </li>   
     </ul>
     

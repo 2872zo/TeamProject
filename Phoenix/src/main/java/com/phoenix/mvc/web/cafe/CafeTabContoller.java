@@ -10,16 +10,20 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import com.phoenix.mvc.service.cafe.CafeManageService;
 import com.phoenix.mvc.service.cafe.CafeTabService;
 import com.phoenix.mvc.service.domain.Cafe;
+import com.phoenix.mvc.service.domain.CafeMember;
 import com.phoenix.mvc.common.Page;
 import com.phoenix.mvc.service.domain.User;
 import com.phoenix.mvc.common.Search;
@@ -43,31 +47,38 @@ public class CafeTabContoller {
 		System.out.println(getClass().getName() + "default Constuctor");
 	}
 	
-	///////////////////////////////준호시작///////////////////////////////////////	
-	@RequestMapping(value= "/addCafeView", method=RequestMethod.GET)
-	public String addCafeView(@ModelAttribute("cafe") Cafe cafe)throws Exception{
-		
-		System.out.println("/addCafe : GET");
-		
-		
-		
-		return "cafe/addCafeView";
-	}
-	
-	@RequestMapping(value= "/{cafeURL}/addCafe", method=RequestMethod.POST)
-	public String addCafe(@ModelAttribute("cafe") Cafe cafe)throws Exception{
-		
-		System.out.println("/addCafe : POST");
-		
-		
-		//cafe.setManageUserNo("10012");		
+///////////////////////////////준호시작///////////////////////////////////////	
+@GetMapping("/addCafeView")
+public String addCafeView(@ModelAttribute("cafe") Cafe cafe)throws Exception{
 
-		cafeTabService.addCafe(cafe);
-		
-		return "cafe/addCafe";
-	}
-	
-	///////////////////////////////준호끝///////////////////////////////////////		
+System.out.println("/addCafe : GET");
+
+
+
+return "cafe/addCafeView";
+}
+
+@PostMapping("/{cafeURL}/addCafe")
+public String addCafe(@ModelAttribute Cafe cafe, Model model)throws Exception{
+
+System.out.println("/addCafe : POST");
+
+cafeTabService.addCafe(cafe);
+
+Cafe cafe2 = cafeManageService.getCafeInfo(cafe.getCafeNo());
+
+cafe = cafe2;
+
+System.out.println("카페인서트다다아아아앙@@@"+cafe);
+
+model.addAttribute("cafe", cafe);
+
+return "cafe/getCafeInfo";
+}
+
+
+
+///////////////////////////////준호끝///////////////////////////////////////		
 	
 	/////////////////////////////////기황 시작//////////////////////////////////////
 	@RequestMapping(value = "main", method=RequestMethod.GET)
@@ -78,7 +89,7 @@ public class CafeTabContoller {
 		Search search = new Search();
 		search.setUserNo(10000);//유저번호세팅
 		search.setStatus(0);//활동중 카페선택 세팅
-		search.setBoardNo(0);//카테고리0번 고르게 세팅
+		search.setCafeType(0);//카테고리0번 고르게 세팅
 		
 		Map map = cafeTabService.getCafeHome(search);
 		List myCafelist = (List) map.get("myCafelist");
@@ -107,7 +118,7 @@ public class CafeTabContoller {
 		return "forward:/WEB-INF/views/cafe/cafeHomeMain.jsp";
 	}
 	
-	@RequestMapping("/search")
+	@RequestMapping("search")
 	public String cafeSearch(@ModelAttribute("search") Search search, Model model) throws Exception {
 	
 		System.out.println("/cafe/search입니다.");
@@ -149,6 +160,25 @@ public class CafeTabContoller {
 		return "forward:/WEB-INF/views/cafe/listUserCafeApplication.jsp";
 		
 	}
+	
+	@RequestMapping("main/cafeNewsFeed")
+	public String getCafeNewsFeed(Model model) throws Exception {
+		return "cafe/listCafeNewsFeed";
+	}
+	
+	/*테스트용 메서드입니다.
+	@RequestMapping("main/testing")
+	public String onlyForTest(@ModelAttribute CafeMember cafeMember) throws Exception {
+		
+		System.out.println("들어왔니?????");
+		
+		List<CafeMember> list = cafeMember.getCafeMemberList();
+		for(int i=0;i<6;i++) {
+		System.out.println(list.get(i));
+		}
+		return "cafe/listCafeNewsFeed";
+	}
+	*/
 		
 	/////////////////////////////////기황 끝//////////////////////////////////////
 

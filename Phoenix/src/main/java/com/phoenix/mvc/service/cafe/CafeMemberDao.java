@@ -23,6 +23,8 @@ public interface CafeMemberDao {
 	public void addCafeMember(CafeMember cafeMember);// 가입승인
 	
 	public void updateCafeMemberProfile(CafeMember cafeMember);
+	
+	public int changeGradeNo(CafeMember cafeMember);
 
 ////////////////////////////////지니끝//////////////////////////////////
 
@@ -40,6 +42,17 @@ public interface CafeMemberDao {
 	public int updateCafeMemberBlock (CafeMemberBlock cafeMemberBlock) throws Exception;
 
 	public int updateCafeMemeberGrade (CafeMember cafeMember) throws Exception;
+	
+	public int updatePostCountIncrease (int memberNo) throws Exception;
+	
+	public int updatePostCountDecrease (int memberNo) throws Exception;
+	
+	public int updateReplyCountIncrease (int memberNo) throws Exception;
+	
+	public int updateReplyCountDecrease (int memberNo) throws Exception;
+	
+	public int updateVisitCountIncrease (int memberNo) throws Exception;
+
 ////////////////////////////기황 끝////////////////////////////////////
 
 }

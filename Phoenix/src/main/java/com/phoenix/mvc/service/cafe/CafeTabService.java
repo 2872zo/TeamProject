@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.domain.Cafe;
+import com.phoenix.mvc.service.domain.CafeGrade;
 import com.phoenix.mvc.service.domain.User;
 
 
@@ -14,6 +15,8 @@ public interface CafeTabService {
 	public boolean checkCafeNameDuplication(String cafeName) throws Exception;
 	
 	public boolean checkCafeURLDuplication(String URL) throws Exception;
+	
+
 	///////////////////////////////준호끝///////////////////////////////////////
 	
 	//////////////////////////////기황시작//////////////////////////////

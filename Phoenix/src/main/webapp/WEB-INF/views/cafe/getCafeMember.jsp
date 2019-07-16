@@ -63,7 +63,7 @@ $(function() {
   	  <th scope="col">멤버번호</th>
       <th scope="col">카페번호</th>
       <th scope="col">닉네임</th>
-      <th scope="col">등급코드</th>
+      <th scope="col">등급명</th>
       <th scope="col">등급명</th>
       <th scope="col">방문횟수</th>
       <th scope="col">멤버상태</th>
@@ -74,7 +74,7 @@ $(function() {
   	<th scope="row">${member.memberNo}</th>
 	<td>${member.cafeNo}</td>
 	<td>${member.memberNickname}</td>
-	<td>${member.memberGrade}</td>
+	<td>${member.gradeName}</td>
 	<td>${member.gradeName}</td>
 	<td>${member.visitCount}</td>
 	<td>${member.memberStatusCode}</td>
@@ -93,7 +93,7 @@ $(function() {
 <c:forEach var='cafeGrade' items='${cafeGrades}'>
 <c:if test='${cafeGrade.memberGradeCode != "cg100"}'>
 <button type="button" class='changeMemberGrade btn btn-${ cafeGrade.memberGradeCode==member.memberGrade ? "" : "outline-" }${ cafeGrade.memberGradeCode=="cg101" ? "info" : "primary" }' value='${cafeGrade.cafeGradeNo}'>
-${cafeGrade.memberGradeCode}/${cafeGrade.gradeName}
+${cafeGrade.gradeName}
 </button>&nbsp;
 </c:if>
 </c:forEach>
@@ -148,7 +148,7 @@ ${cafeGrade.memberGradeCode}/${cafeGrade.gradeName}
 <div class="alert alert-danger">
   <h4 class="alert-heading">멤버정지메뉴</h4>
   <p>
-  정지시킬 기간을 선택한 뒤 정지사유(500자 이하)를 입력한 뒤 정지버튼을 클릭할 경우 멤버가 기간만큼 정지됩니다.
+  정지시킬 기간을 선택한 뒤 정지사유(500자 이하)를 입력, 정지버튼을 클릭할 경우 멤버가 기간만큼 정지됩니다.
  </p>
   <hr>
   <p class="mb-0">필요한 경우 기간이 되기 전에 정지상태를 해제할 수 있습니다.</p>
