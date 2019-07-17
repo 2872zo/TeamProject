@@ -4,6 +4,7 @@ public class ChatRoom {
 	
 	private int userNo;
 	private int chatRoomNo;
+	private int myChatRoomNo;
 	private String chatRoomName;
 	private String recentMsg;
 	
@@ -18,6 +19,12 @@ public class ChatRoom {
 	}
 	public void setChatRoomNo(int chatRoomNo) {
 		this.chatRoomNo = chatRoomNo;
+	}
+	public int getMyChatRoomNo() {
+		return myChatRoomNo;
+	}
+	public void setMyChatRoomNo(int myChatRoomNo) {
+		this.myChatRoomNo = myChatRoomNo;
 	}
 	public String getChatRoomName() {
 		return chatRoomName;

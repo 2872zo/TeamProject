@@ -51,6 +51,41 @@ $(function() {
 		$("#memberListingForm").attr("method" , "POST").attr("action" , "/cafe/randomCafe/manage/getCafeMemberList").submit();
 	});
 
+	$(".favorited").on("click" , function() {
+		var targetTag = $(this);
+		var checker = $(this).text();
+
+		if(checker == "true"){
+			checker = "false";
+		}
+		else if(checker == "false"){
+			checker = "true";
+		}
+		
+		var memberJson = $($(".memberNo")[$(".favorited").index(this)]).text();
+		
+		var jsoned = {memberNo : memberJson, favoriteFlag : checker};
+		jsoned = JSON.stringify(jsoned);
+			$.ajax(
+				{
+				type : "POST",
+				url : "/cafe/json/updateFavorite",
+				data : jsoned,
+				contentType: "application/json", //보내는 컨텐츠의 타입
+				//dataType : "json",      //받아올 데이터의 타입 필요없음
+				success : function(serverData, status) {
+									alert(status);
+									alert("server에서 온 Data : \n" + serverData);
+									targetTag.text(checker);
+									
+								},
+				error : function(request,status,error){
+							        alert("에러남 : "+error);
+							       }
+				}
+			);
+	});
+
 });
 </script>
 	<!-- ToolBar Start /////////////////////////////////////-->
@@ -92,6 +127,10 @@ $(function() {
       <th scope="col">카페아이콘</th>
       <th scope="col">카페설명</th>
       <th scope="col">개설일</th>
+      <c:if test="${search.status==0||search.status==1}">
+      <th scope="col">즐찾여부</th>
+      </c:if>
+      <th scope="col">멤버번호</th>
     </tr>
 	</thead>
 	<tbody>
@@ -104,6 +143,10 @@ $(function() {
 	 <td>${myCafe.cafeIcon}</td>
 	 <td>${myCafe.cafeDetail}</td>
 	 <td>${myCafe.regDate}</td>
+	 <c:if test="${search.status==0||search.status==1}">
+	 <td class='favorited'>${myCafe.favorited}</td>
+	 </c:if>
+	 <td class='memberNo'>${myCafe.memberNo}</td>
 	 </tr>
 	</c:forEach>
   

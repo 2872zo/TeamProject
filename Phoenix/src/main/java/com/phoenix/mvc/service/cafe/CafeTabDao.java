@@ -32,8 +32,9 @@ public interface CafeTabDao {
 	
 	public int ownCafeTotalCount(Search search) throws Exception;
 	
-	public List getCategorizedCafeList(Search search)throws Exception;
+	public List getCategorizedCafeList(Search search) throws Exception;
 	
 	public int countCategorizedCafe(Search search) throws Exception;
 	/////////////////////////////////기황끝/////////////////////////////////////
+	
 }

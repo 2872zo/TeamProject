@@ -150,6 +150,12 @@ return cafeMember;
 		return sqlSession.update("CafeMemberMapper.increaseVisitCount", memberNo);
 	}
 
+	@Override
+	public int updateFavorite(CafeMember cafeMember) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.update("CafeMemberMapper.updateFavorite",cafeMember);
+	}
+
 	//////////////////////////////기황 끝///////////////////////////////////////	
 
 }

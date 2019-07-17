@@ -52,6 +52,8 @@ public interface CafeMemberDao {
 	public int updateReplyCountDecrease (int memberNo) throws Exception;
 	
 	public int updateVisitCountIncrease (int memberNo) throws Exception;
+	
+	public int updateFavorite (CafeMember cafeMember) throws Exception;
 
 ////////////////////////////기황 끝////////////////////////////////////
 

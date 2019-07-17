@@ -234,6 +234,23 @@ public class CafeTabServiceImpl implements CafeTabService {
 		map.put("totalCount", new Integer(totalCount));
 		return map;
 	}
+
+	@Override
+	public Map getNewsFeed(int userNo) throws Exception {
+		// TODO Auto-generated method stub
+		Map map = new HashMap();
+		
+		List newsFeed = cafePostDao.getMyPostList(userNo);
+		map.put("newsFeed", newsFeed);
+		
+		return map;
+	}
+
+	@Override
+	public int updateFavorite(CafeMember cafeMember) throws Exception {
+		// TODO Auto-generated method stub
+		return cafeMemberDao.updateFavorite(cafeMember);
+	}
 	
 	////////////////////////////// 기황끝//////////////////////////////
 

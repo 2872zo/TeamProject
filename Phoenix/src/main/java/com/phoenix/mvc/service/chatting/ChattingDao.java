@@ -1,9 +1,10 @@
 package com.phoenix.mvc.service.chatting;
 
-import com.phoenix.mvc.common.Search;
+import java.util.List;
+
 
 public interface ChattingDao {
 	
-//	public int (Search search) throws Exception;
+	public List getMyChatRoomList (int userNo) throws Exception;
 
 }

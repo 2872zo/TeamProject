@@ -29,6 +29,7 @@
 
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
+
 $(function() {
 	
 	$("#addCafe").on("click" , function() {
@@ -38,17 +39,37 @@ $(function() {
 });
 </script>
 	<!-- ToolBar Start /////////////////////////////////////-->
-	<!--<jsp:include page="../common/cafeToolbar.jsp" />-->
+	<jsp:include page="../common/toolbar.jsp" />
 	<!-- ToolBar End /////////////////////////////////////-->
 </head>
 
 <body>
-
+<br/>
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 
-	채팅방 목록 화면인가 본대
+	채팅방 목록 화면인가봐
+	<c:forEach items="${chatRoomList}" var ='chatRoom'>
+	
+	<div class="card mb-3" style="max-width: 540px;" id='${chatRoom.chatRoomNo}'>
+  <div class="row no-gutters">
+    <div class="col-md-4">
+      <img src="..." class="card-img" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">${chatRoom.chatRoomName}</h5>
+        <p class="card-text">여기에 채팅내용 찍혀야 되는데 </p>
+        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+      </div>
+    </div>
+  </div>
 </div>
+	
+	</c:forEach>
+	
+	
+	</div>
 	<!--  화면구성 div Start /////////////////////////////////////-->
 
 </body>
