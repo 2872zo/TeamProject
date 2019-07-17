@@ -24,6 +24,8 @@ public interface CafePostDao {
 	public boolean updatePost(Post post);
 
 	public boolean deletePost(int postNo);
+	
+	public boolean deletePostList(String postNoList);
 
 	public boolean addReply(Reply reply);
 	

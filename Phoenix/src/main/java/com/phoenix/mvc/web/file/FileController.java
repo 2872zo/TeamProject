@@ -56,15 +56,17 @@ public class FileController {
             String fileUrl = "/images/uploadfiles/"+uid+"_"+originFileName;
             System.out.println("fileUrl = "+fileUrl);
             
-            
-            while(!isExists("http://localhost:8080"+fileUrl)) {
+            int timeCount = 0;
+            while(!isExists("http://localhost:8080"+fileUrl) && timeCount < 20) {
             	System.out.println(">>>>>>>>>>>>>>>>>> " + fileUrl + " 파일 로딩중");
             	Thread.sleep(500);
+            	timeCount++;
             }
             
             json.put("uploaded", 1);
-            json.put("fileName", originFileName);
+            json.put("fileName", uid+"_"+originFileName);
             json.put("url", fileUrl);
+//            json.put("message", "입력");
             printWriter.println(json);
         }catch(IOException e){
             e.printStackTrace();

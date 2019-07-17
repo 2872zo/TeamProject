@@ -48,6 +48,84 @@
 					location.href = "/cafe/" + cafeURL + "/addPost?boardNo=" + "${search.boardNo}";
 				});
 			});
+
+			//체크박스 이벤트
+			$(function(){
+				$("[name=deletePostButton]").on("click", function(){
+					countCheck = $(":checkbox").not(":checkbox:first").filter(":checkbox:checked");
+					
+					var postNoList = "";
+					if(countCheck.length < 1){
+						alert("삭제할 게시글을 선택하십시오.");
+						return;
+					}else{
+						for(var i = 0; i < countCheck.length; i++){
+							if(postNoList == ""){
+								postNoList = countCheck.eq(i).parent().parent().find(".postNo").val();
+							}else{
+								postNoList = postNoList + "," + countCheck.eq(i).parent().parent().find(".postNo").val();
+							}
+						}
+
+						var tmpForm = document.createElement("form");
+						tmpForm.setAttribute("charset", "UTF-8");
+						tmpForm.setAttribute("method", "Post");
+						tmpForm.setAttribute("action", "/cafe/" + cafeURL + "/deletePostList");
+
+						var tmpInputBoardNo = document.createElement("input");
+						tmpInputBoardNo.setAttribute("type", "hidden");
+						tmpInputBoardNo.setAttribute("name", "boardNo");
+						tmpInputBoardNo.setAttribute("value", boardNo);
+						tmpForm.appendChild(tmpInputBoardNo);
+
+						tmpInputPostNoList = document.createElement("input");
+						tmpInputPostNoList.setAttribute("type", "hidden");
+						tmpInputPostNoList.setAttribute("name", "postNoList");
+						tmpInputPostNoList.setAttribute("value", postNoList);
+						tmpForm.appendChild(tmpInputPostNoList);
+
+						document.body.appendChild(tmpForm);
+						
+						tmpForm.submit();
+					}
+				});	
+			});
+			
+
+			function countCheckBox(){
+				countCheck = $(":checkbox").not(":checkbox:first").filter(":checkbox:checked").length;
+				
+				if(countCheck == $(":checkbox").not(":checkbox:first").length){
+					$(":checkbox:first").prop("checked",true);
+				}else{
+					$(":checkbox:first").prop("checked",false);
+				}
+			}
+			
+			function checkAll(obj){
+				$(":checkbox").prop("checked",true);
+			}
+			
+			function unCheckAll(obj){
+				$(":checkbox").prop("checked",false);
+			}
+
+			$(function(){
+				var countCheck;
+				
+				$(":checkbox:first").on("click",function(){
+					if($(":checkbox:first").is(":checked")){
+						checkAll($(this));
+					}else{
+						unCheckAll($(this));
+					}
+				})
+				
+				$(":checkbox").on("click",function(){
+					countCheckBox();
+				});
+			});
+			
 		</script>
 		<title>${search.cafeURL}</title>
 	</header>
@@ -79,6 +157,7 @@
 					<p>총 ${postTotalCount }개</p>
 						<table class="table table-striped table-bordered">
 							<tr>
+								<td><input type="checkbox"></td>
 				<!-- 				<td>게시글 번호</td> -->
 				<!-- 				<td>게시판 번호</td> -->
 				<!-- 				<td>memberNo</td> -->
@@ -98,6 +177,7 @@
 									<input type="hidden" class="postNo" value="${post.postNo }"/>
 									<input type="hidden" class="boardNo" value="${post.boardNo }"/>
 									<input type="hidden" class="memberNo" value="${post.memberNo }"/>
+									<td><input type="checkbox"></td>
 									<td class="boardName">${post.boardName }</td>
 									<td class="postTitle">${post.postTitle }</td>
 									<td>${post.memberNickname }</td>
@@ -120,6 +200,12 @@
 								</td>
 								<td>
 									<input type="button" name="addPostButton" value="글쓰기">
+								</td>
+								<td>
+									<input type="button" name="movePostButton" value="이동">
+								</td>
+								<td>
+									<input type="button" name="deletePostButton" value="삭제">
 								</td>
 							</tr>
 						</table>

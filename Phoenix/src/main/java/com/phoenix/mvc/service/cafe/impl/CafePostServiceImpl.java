@@ -6,14 +6,17 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.phoenix.mvc.common.Search;
+import com.phoenix.mvc.service.cafe.CafeMemberDao;
 import com.phoenix.mvc.service.cafe.CafePostDao;
 import com.phoenix.mvc.service.cafe.CafePostService;
 import com.phoenix.mvc.service.domain.Post;
 import com.phoenix.mvc.service.domain.Reply;
 
 @Service
+@Transactional
 public class CafePostServiceImpl implements CafePostService {
 	@Autowired
 	@Qualifier("cafePostDaoImpl")
@@ -22,6 +25,10 @@ public class CafePostServiceImpl implements CafePostService {
 	@Autowired
 	@Qualifier("cafeManageDaoImpl")
 	private CafeManageDaoImpl cafeManageDaoImpl;
+	
+	@Autowired
+	@Qualifier("cafeMemberDaoImpl")
+	private CafeMemberDao cafeMemberDao;
 
 	public CafePostServiceImpl() {
 		System.out.println(getClass().getName() + "default Constuctor");
@@ -49,7 +56,8 @@ public class CafePostServiceImpl implements CafePostService {
 	}
 
 	@Override
-	public boolean addPost(Post post) {
+	public boolean addPost(Post post) throws Exception {
+		cafeMemberDao.updatePostCountIncrease(post.getMemberNo());
 		return cafePostDao.addPost(post);
 	}
 
@@ -64,12 +72,20 @@ public class CafePostServiceImpl implements CafePostService {
 	}
 
 	@Override
-	public boolean deletePost(int postNo) {
-		return cafePostDao.deletePost(postNo);
+	public boolean deletePost(int postNo) throws Exception {
+		cafePostDao.deletePost(postNo);
+		cafeMemberDao.updatePostCountDecrease(postNo);
+		return true;
+	}
+	
+	@Override
+	public boolean deletePostList(String postNoList) throws Exception {
+		return cafePostDao.deletePostList(postNoList);
 	}
 
 	@Override
-	public boolean addReply(Reply reply) {
+	public boolean addReply(Reply reply) throws Exception {
+		cafeMemberDao.updateReplyCountIncrease(reply.getMemberNo());
 		return cafePostDao.addReply(reply);
 	}
 	
@@ -89,7 +105,8 @@ public class CafePostServiceImpl implements CafePostService {
 	}
 
 	@Override
-	public boolean deleteReply(int replyNo) {
+	public boolean deleteReply(int replyNo) throws Exception {
+//		cafeMemberDao.updateReplyCountDecrease(replyNo);
 		return cafePostDao.deleteReply(replyNo);
 	}
 

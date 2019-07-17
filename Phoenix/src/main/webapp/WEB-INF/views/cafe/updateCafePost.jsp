@@ -20,20 +20,30 @@
 		
 	<script>
 		$(function() {
-			CKEDITOR.replace('editor');
+			var editor = CKEDITOR.replace('editor');
+			editor.on( 'fileUploadResponse', function( evt ) {
+			    // Prevent the default response handler.
+// 			    evt.stop();
 
-			CKEDITOR.on('dialogDefinition', function(ev) {
-				var dialogName = ev.data.name;
-				var dialogDefinition = ev.data.definition;
+// 			    // Get XHR and response.
+			    var data = evt.data,
+			        xhr = data.fileLoader.xhr,
+			        response = JSON.parse(xhr.responseText.split( '|' ));
 
-				switch (dialogName) {
-				case 'image': //Image Properties dialog
-					//dialogDefinition.removeContents('info');
-					dialogDefinition.removeContents('Link');
-					dialogDefinition.removeContents('advanced');
-					break;
+// 				console.log(response.fileName);
+				
+// 		        debugger;
+		        
+		        var fileList;
+				if(CKEDITOR.document.$.getElementById("fileList").value == ""){
+					fileList = response.fileName;
+				}else{
+					fileList = CKEDITOR.document.$.getElementById("fileList").value + ","  + response.fileName;
 				}
+		        
+		        CKEDITOR.document.$.getElementById("fileList").value = fileList;
 			});
+
 		});
 
 		$(function() {
@@ -51,10 +61,27 @@
 			
 			$("[name=postTitle]").val('${post.postTitle}');
 			$("[name=postContent]").val('${post.postContent}');
+
 			
 			$("#submitButton").on("click",function(e){
 				$("[name=boardName]").val( $("[name=boardNo] option:selected").text());
 				$("form").submit();
+			});
+
+			//이미지 삭제를 위한 초기화
+			$(function(){
+				var el = document.createElement( 'html' );
+				el.innerHTML = '${post.postContent}';
+				for(var i = 0; i < $(el).find("img").length; i++){
+					console.log($($(el).find("img")[i]).attr("src").substring(20));
+
+	 				if($("#fileList").val() == ""){
+	 					$("#fileList").val($($(el).find("img")[i]).attr("src").substring(20));
+	 				}else{
+	 					$("#fileList").val($("#fileList").val() + "," + $($(el).find("img")[i]).attr("src").substring(20));
+	 				}
+					
+				}
 			});
 		});
 
@@ -81,9 +108,10 @@
 						<h1>게시글 수정</h1>
 					</div>
 					
-					<input type="hidden" name="postTitle" value="${post.postTitle }">
-					<input type="hidden" name="postContent" value='${post.postContent }'>
+<%-- 					<input type="hidden" name="postTitle" value="${post.postTitle }"> --%>
+<%-- 					<input type="hidden" name="postContent" value='${post.postContent }'> --%>
 					<form class="needs-validation" novalidate>
+						<input type="hidden" name="fileList" id="fileList">
 						<input type="hidden" name="cafeURL" value="${post.cafeURL }"> 
 						<input type="hidden" name="memberNo" value="${post.memberNo }"> 
 						<input type="hidden" name="memberNickname" value="${post.memberNickname }">
@@ -112,7 +140,7 @@
 							<br/>
 							
 							<label for="editor">내용</label>
-							<textarea class="form-control" name="postContent" id="editor" required="" > ${post.postContent} </textarea>
+							<textarea class="form-control" name="postContent" id="editor" required="" ></textarea>
 							<div class="invalid-feedback">내용은 생략할 수 없습니다.</div>
 				
 							<br/>

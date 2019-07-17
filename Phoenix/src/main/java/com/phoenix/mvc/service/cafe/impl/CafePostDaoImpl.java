@@ -66,6 +66,11 @@ public class CafePostDaoImpl implements CafePostDao{
 	public boolean deletePost(int postNo) {
 		return (sqlSession.insert("CafePostMapper.deletePost", postNo) == 1? true : false);
 	}
+	
+	@Override
+	public boolean deletePostList(String postNoList) {
+		return (sqlSession.insert("CafePostMapper.deletePostList", postNoList) != 0? true : false);
+	}
 
 	@Override
 	public boolean addReply(Reply reply) {

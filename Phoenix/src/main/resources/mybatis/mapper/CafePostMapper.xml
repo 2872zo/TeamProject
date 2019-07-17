@@ -267,6 +267,14 @@
 			post_no = #{postNo}
 	</update>
 	
+	<update id="deletePostList" parameterType="string">
+		UPDATE post
+		SET
+			post_status_flag = '1'
+		WHERE
+			post_no IN (${value})
+	</update>
+	
 	<insert id="addReply" parameterType="Reply">
 		INSERT 
 		INTO reply 
@@ -387,22 +395,27 @@
 	
 	<select id="getMyPostList" parameterType="int" resultMap="postResultMap">
 		SELECT
-		rownum, p.* 
+		news.cafe_name, news.cafe_url, news.cafe_icon, news.post_no, news.board_name, news.post_title, news.post_content, news.member_nickname, news.reg_date 
 		FROM
 			(SELECT
-		 	* 
-			FROM post
-			WHERE cafe_url in(
+			c.cafe_name, c.cafe_icon, p.cafe_url, 
+			p.post_no, p.board_name, p.post_title, p.post_content, p.member_nickname, 
+			TO_CHAR(p.reg_date,'YYYY-MM-DD HH24:MI:SS') AS reg_date 
+			FROM cafe c, post p
+			WHERE c.url=p.cafe_url
+			AND p.post_status_flag='0'
+			AND cafe_url in(
 					SELECT
 					c.url
 					FROM 
 					cafe c, cafe_member m
 					WHERE
 					c.cafe_no=m.cafe_no
+					AND c.closed_flag='0'
 					AND m.user_no = #{userNo}
 					AND m.member_status_code in ('cs100')
 					)
-			ORDER BY reg_date DESC) p
-		WHERE rownum &lt; 11;
+			ORDER BY p.reg_date DESC) news
+		WHERE rownum &lt; 11
 	</select>
 </mapper>
