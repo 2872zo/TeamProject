@@ -73,9 +73,11 @@ public class CafeManageController {
 		Search search = new Search();
 		search.setCafeURL(cafeURL);
 		List boardList = cafeManageService.getCafeBoard(search);
-
+		List<CafeGrade>	useGradeList = cafeManageService.getCafeGrade(cafeURL);
+		
+		//일단은 담는데,
 		model.addAttribute("boardList", boardList);
-
+		model.addAttribute("useGradeList", useGradeList);
 		// 모델에 cafeURL의 cafe 객체도 같이 넘겨줌
 
 		return "/cafe/updateCafeBoard";
@@ -89,10 +91,14 @@ public class CafeManageController {
 		List<Board> newBoard = new ArrayList<Board>();
 
 		String[] boards = request.getParameterValues("board");
-		int a = request.getParameterValues("board").length;
+		//int a = request.getParameterValues("board").length;
 		int boardIndex = 1;
-
-		for (int i = 0; i < a; i++) // board selectbox
+		
+		String [] grades = request.getParameterValues("grade");
+		//System.out.println("grades!!"+grades.length);//구분선빼고 다나옴
+		
+		
+		for (int i = 0; i < boards.length; i++) // board selectbox
 		{
 			System.out.println(boards[i]); // 파싱해서 / 있는애들은 board넘버.. update여러개, newBoard인애들은 add
 			// 가져와서 앞에가 ----인애들은 update 안해줌
@@ -105,12 +111,40 @@ public class CafeManageController {
 			{
 				board.setBoardNo(Integer.parseInt(boards[i].split("/")[1]));
 				existBoard.add(board); // existBoardList에 넣어준다.
-			} else // 새로운애들 (newBoard)
+			}
+			else // 새로운애들 (newBoard)
 			{
 				// newBoard123에서 d로 split 해서 뒤에 number를 set해준다.
 				board.setBoardNo(Integer.parseInt(boards[i].split("d")[1]));// 최선의 방법일까?
 				newBoard.add(board); // 얘는 newBoardList에 넣어준다.
 
+			}
+		}
+		
+		for(int i=0; i< grades.length; i++) //접근권한설정
+		{
+			System.out.println("grade"+grades[i]);
+			String [] gradeValue= grades[i].split("/");
+			
+			if(gradeValue[1].contains("new"))//새로만들어진애일때
+			{
+				for(int j=0;j<newBoard.size(); j++)
+				{
+					if(newBoard.get(j).getBoardNo()==Integer.parseInt(gradeValue[1].split("w")[1]))
+					{
+						newBoard.get(j).setAccessGrade(gradeValue[0]);
+					}
+				}
+			}
+			else//원래있던애일때
+			{
+				for(int j=0; j<existBoard.size(); j++)
+				{
+					if(existBoard.get(j).getBoardNo()==Integer.parseInt(gradeValue[1]))
+					{
+						existBoard.get(j).setAccessGrade(gradeValue[0]);
+					}
+				}
 			}
 		}
 
@@ -180,7 +214,6 @@ public class CafeManageController {
 						newBoard.get(i).setBoardName(request.getParameter(element));
 					}
 				}
-
 			} 
 			
 			
@@ -189,8 +222,6 @@ public class CafeManageController {
 		
 		System.out.println("newBoard : " + newBoard);
 		System.out.println("existBoard : " + existBoard); // 다 잘담겼는데 구분선은 boardDetail,boardName이 null이다.
-
-	
 
 		if (existBoard.size() > 0) { //뭐 항상 0보다 크겠지
 			boolean updateCafeResult = cafeManageService.updateCafeBoard(existBoard);
@@ -201,10 +232,6 @@ public class CafeManageController {
 			boolean addCafeResult = cafeManageService.addCafeBoard(newBoard);
 		}
 
-		// newBoard는 addCafeBoard로 넘겨주고
-		// existBoard는 updateCafeBoard로 넘겨준다.
-
-		//return "";// 다시 updateCafeBoardView 호출하고 싶은데.
 		return "forward:/cafe/"+cafeURL+"/manage/updateCafeBoardView";
 	}
 
@@ -233,8 +260,15 @@ public class CafeManageController {
 		return "cafe/statisticsCafe";
 	}
 
-//////////////////////////////////////예림
-//////////////////////////////////////끝////////////////////////////////////////////
+	@RequestMapping(value="/{cafeURL}/addCafeReportView")
+	public String addCafeReportView(@ModelAttribute Search search,Model model) throws Exception
+	{
+		System.out.println("/addCafeReportView");
+		
+		return "cafe/addCafeReport";
+	}
+//////////////////////////////////////예림끝////////////////////////////////////////////
+	
 ///////////////////////////////// 지니//////////////////////////////
 
 	@RequestMapping(value = "/{cafeURL}/manage/getCafeApplicationList")

@@ -13,9 +13,11 @@ import com.phoenix.mvc.common.Event;
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.cafe.CafeManageDao;
 import com.phoenix.mvc.service.cafe.CafeManageService;
+import com.phoenix.mvc.service.cafe.CafeMemberDao;
 import com.phoenix.mvc.service.domain.CafeApplication;
 import com.phoenix.mvc.service.domain.Board;
 import com.phoenix.mvc.service.domain.CafeGrade;
+import com.phoenix.mvc.service.domain.CafeMember;
 import com.phoenix.mvc.service.domain.Cafe;
 
 @Service("cafeManageServiceImpl")
@@ -24,6 +26,10 @@ public class CafeManageServiceImpl implements CafeManageService {
 	@Autowired
 	@Qualifier("cafeManageDaoImpl")
 	private CafeManageDao cafeManageDao;
+	
+	@Autowired
+	@Qualifier("cafeMemberDaoImpl")
+	private CafeMemberDao cafeMemberDao;
 
 	public void setCafeManageDao(CafeManageDao cafeManageDao) {
 		this.cafeManageDao = cafeManageDao;
@@ -84,15 +90,14 @@ public class CafeManageServiceImpl implements CafeManageService {
 
 		int cafeNo = cafeManageDao.getCafeNo(newBoard.get(0).getCafeURL());
 		for (int i = 0; i < newBoard.size(); i++) {
+			
 			newBoard.get(i).setCafeNo(cafeNo);
-			// 가짜데이터
-			newBoard.get(i).setAccessGrade("10002");
-			//newBoard.get(i).setPrivateFlag('0');
-			// -------------------------------------------
+			
 			if (newBoard.get(i).getBoardDetail() == null) // 구분선이면 디테일로 수정
 			{
 				newBoard.get(i).setBoardType("cb102");
 				newBoard.get(i).setPrivateFlag('0');
+				newBoard.get(i).setAccessGrade("10002");
 				//newBoard.get(i).setBoardName("------------");
 			} 
 			else // 자유게시판이면
@@ -115,13 +120,11 @@ public class CafeManageServiceImpl implements CafeManageService {
 		
 		for (int i = 0; i < existBoardList.size(); i++) 
 		{
-			// 가짜데이터
-			existBoardList.get(i).setAccessGrade("10002");
-			//existBoardList.get(i).setPrivateFlag('0');
-			//----------------------------------------------------------
+	
 			if(existBoardList.get(i).getBoardDetail()==null) // 구분선
 			{
 				//existBoardList.get(i).setBoardName("-------------"); //디테일로 수정
+				existBoardList.get(i).setAccessGrade("10002");
 				existBoardList.get(i).setPrivateFlag('0');
 				existBoardList.get(i).setBoardType("cb102");
 			}
@@ -174,9 +177,46 @@ public class CafeManageServiceImpl implements CafeManageService {
 
 		return updateBoardResult;
 	}
+	
+	@Override
+	public List getCafeGrade(String cafeURL) {
+			
+		int cafeNo = cafeManageDao.getCafeNo(cafeURL);
+		List<CafeGrade> cafeUseGrade = cafeManageDao.getCafeGrade(cafeNo);
+		
+		return cafeUseGrade;
+	}
+	
+	@Override
+	public Cafe getCafeInfo(String cafeURL) throws Exception { //return map 해야할듯?? 없없
+	
+		int cafeNo = cafeManageDao.getCafeNo(cafeURL);
+		
+		return cafeManageDao.getCafeInfo(cafeNo);
+	}
+	
+	@Override
+	public List getCafeMemberAutocomplete(String cafeURL) throws Exception {
+	
+		int cafeNo = cafeManageDao.getCafeNo(cafeURL);
 
-/////////////////////////////////////////////////// 예림
-/////////////////////////////////////////////////// 끝//////////////////////////////////////////////
+		Search search = new Search();
+		search.setCafeNo(cafeNo);
+		search.setPageSize(10);
+		search.setCurrentPage(1);
+		List<CafeMember> list = cafeMemberDao.getCafeMemberList(search);
+		List<String> memberList = new ArrayList<String>(); 
+		
+		for(CafeMember member : list)
+		{
+			memberList.add(member.getMemberNickname());
+		}
+		
+		return memberList;
+	}
+
+
+///////////////////////////////////////////////////예림끝//////////////////////////////////////////////
 
 /////////////////////////////////지니//////////////////////////////
 	@Override
@@ -260,7 +300,8 @@ public class CafeManageServiceImpl implements CafeManageService {
 		return cafeManageDao.getCafeName(cafeName);
 	}
 
-
+	
+	
 
 	/////////////////////////////// 준호끝///////////////////////////////////////
 

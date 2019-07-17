@@ -166,7 +166,9 @@ public class CafeManageDaoImpl implements CafeManageDao {
 	public Map<String, String> getCafeStatistics(Event event) { // 예림예림
 
 		List<Map<String, String>> result = sqlSession.selectList("getCafeStatistics", event);
-//System.out.println(statisticResult);
+		//List<Map<String, String>> chartResult = sqlSession.selectList("get"); 
+		
+		//System.out.println(statisticResult);
 		Map<String, String> statisticResultMap = new HashMap<String, String>();
 
 		for (int i = 0; i < result.size(); i++) {
