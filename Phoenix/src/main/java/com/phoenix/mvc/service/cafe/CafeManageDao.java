@@ -13,60 +13,60 @@ import com.phoenix.mvc.service.domain.Cafe;
 public interface CafeManageDao {
 
 ///////////////////////////////// 지니//////////////////////////////
-public List<CafeApplication> getCafeApplicationList(Search search);
+	public List<CafeApplication> getCafeApplicationList(Search search);
 
-public int getTotalCount(Search search);
+	public int getTotalCount(Search search);
 
-public void updateAcceptStatusCode(CafeApplication cafeApplication);
+	public void updateAcceptStatusCode(CafeApplication cafeApplication);
 
-public CafeApplication getCafeApplication2(int applicationNo);
+	public CafeApplication getCafeApplication2(int applicationNo);
 
-public List getCafeGrade(int cafeNo);
+	public List getCafeGrade(int cafeNo);
 
-public void addCafeGrade (CafeGrade cafeGrade);
+	public void addCafeGrade(CafeGrade cafeGrade);
 
-public void updateCafeGrade (CafeGrade cafeGrade);
+	public void updateCafeGrade(CafeGrade cafeGrade);
 
-public List checkCafeGrade(int cafeNo);
+	public List checkCafeGrade(int cafeNo);
+	
+	public boolean dropCafe(Cafe cafe);
 
-public int flagUpdate(CafeGrade cafeGrade);
 ////////////////////////////////지니끝//////////////////////////////////
-
 
 /////////////////////////////////// 예림시작//////////////////////////////////////////
 
-public List getCafeBoard(int cafeNo);
+	public List getCafeBoard(int cafeNo);
 
-public List getCafeBoard(Search search);
+	public List getCafeBoard(Search search);
 
-public int getCafeNo(String cafeURL);
+	public int getCafeNo(String cafeURL);
 
-public List getBoardPost(int boardNo);
+	public List getBoardPost(int boardNo);
 
-public boolean addEventLog(Event event);// 예림예림 add되면 true return
+	public boolean addEventLog(Event event);// 예림예림 add되면 true return
 
-public boolean checkCafeTodayVisitLog(Event event); // 예림예림 return true- 오늘방문함 false -오늘첫방문
+	public boolean checkCafeTodayVisitLog(Event event); // 예림예림 return true- 오늘방문함 false -오늘첫방문
 
-public Map<String, String> getCafeStatistics(Event event);
+	public Map<String, String> getCafeStatistics(Event event);
 
-public boolean addCafeBoard(List<Board> newBoardList);
+	public boolean addCafeBoard(List<Board> newBoardList);
 
-public boolean updateCafeBoard(List<Board> existBoardList);
+	public boolean updateCafeBoard(List<Board> existBoardList);
 
-public boolean deleteCafeBoard(List<Board> deleteBoardList);
+	public boolean deleteCafeBoard(List<Board> deleteBoardList);
 
 ///////////////////////////////////////// 예림 끝////////////////////////////////////////////////
 
 /////////////////////////////// 준호시작///////////////////////////////////////
-public void updateCafeInfo(Cafe cafe) throws Exception;
+	public void updateCafeInfo(Cafe cafe) throws Exception;
 
-public Cafe getCafeInfo(int cafeNo) throws Exception;
+	public Cafe getCafeInfo(int cafeNo) throws Exception;
 
-public void updateCafeApplicationForm(Cafe cafe) throws Exception;
+	public void updateCafeApplicationForm(Cafe cafe) throws Exception;
 
-public Cafe getCafeName(String cafeName) throws Exception;
+	public Cafe getCafeName(String cafeName) throws Exception;
 
-public Cafe getCafeURL(String URL) throws Exception;
+	public Cafe getCafeURL(String URL) throws Exception;
 
 /////////////////////////////// 준호끝///////////////////////////////////////
 }

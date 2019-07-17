@@ -87,15 +87,14 @@ public class CafeManageServiceImpl implements CafeManageService {
 			newBoard.get(i).setCafeNo(cafeNo);
 			// 가짜데이터
 			newBoard.get(i).setAccessGrade("10002");
-			//newBoard.get(i).setPrivateFlag('0');
+			// newBoard.get(i).setPrivateFlag('0');
 			// -------------------------------------------
 			if (newBoard.get(i).getBoardDetail() == null) // 구분선이면 디테일로 수정
 			{
 				newBoard.get(i).setBoardType("cb102");
 				newBoard.get(i).setPrivateFlag('0');
-				//newBoard.get(i).setBoardName("------------");
-			} 
-			else // 자유게시판이면
+				// newBoard.get(i).setBoardName("------------");
+			} else // 자유게시판이면
 			{
 				newBoard.get(i).setBoardType("cb103"); // 자유게시판
 			}
@@ -109,68 +108,60 @@ public class CafeManageServiceImpl implements CafeManageService {
 	@Override
 	public boolean updateCafeBoard(List<Board> existBoardList) {
 		int cafeNo = cafeManageDao.getCafeNo(existBoardList.get(0).getCafeURL());
-		
+
 		List<Board> dbBoardList = cafeManageDao.getCafeBoard(cafeNo);
 		List<Board> deleteBoardList = new ArrayList<Board>();
-		
-		for (int i = 0; i < existBoardList.size(); i++) 
-		{
+
+		for (int i = 0; i < existBoardList.size(); i++) {
 			// 가짜데이터
 			existBoardList.get(i).setAccessGrade("10002");
-			//existBoardList.get(i).setPrivateFlag('0');
-			//----------------------------------------------------------
-			if(existBoardList.get(i).getBoardDetail()==null) // 구분선
+			// existBoardList.get(i).setPrivateFlag('0');
+			// ----------------------------------------------------------
+			if (existBoardList.get(i).getBoardDetail() == null) // 구분선
 			{
-				//existBoardList.get(i).setBoardName("-------------"); //디테일로 수정
+				// existBoardList.get(i).setBoardName("-------------"); //디테일로 수정
 				existBoardList.get(i).setPrivateFlag('0');
 				existBoardList.get(i).setBoardType("cb102");
-			}
-			else if(existBoardList.get(i).getBoardName().contains("신고")) //근데 신고는 아예 고칠수 없게할거임
+			} else if (existBoardList.get(i).getBoardName().contains("신고")) // 근데 신고는 아예 고칠수 없게할거임
 			{
 				existBoardList.get(i).setBoardType("cb101");
-			}
-			else if(existBoardList.get(i).getBoardName().contains("공지"))
-			{
+			} else if (existBoardList.get(i).getBoardName().contains("공지")) {
 				existBoardList.get(i).setBoardType("cb100");
-			}
-			else//자유게시판
+			} else// 자유게시판
 			{
 				existBoardList.get(i).setBoardType("cb104");
 			}
 
 		}
-		
+
 		System.out.println(existBoardList.size());
 		System.out.println(dbBoardList.size());
-		
-		if(dbBoardList.size()!=existBoardList.size()) //삭제된게있으면
+
+		if (dbBoardList.size() != existBoardList.size()) // 삭제된게있으면
 		{
-			for(int i=0; i<dbBoardList.size(); i++) //이중포문 최선인가 ㅠ 디비 더큼
+			for (int i = 0; i < dbBoardList.size(); i++) // 이중포문 최선인가 ㅠ 디비 더큼
 			{
-				for(int j=0; j<existBoardList.size(); j++) // 받아온 게시판
+				for (int j = 0; j < existBoardList.size(); j++) // 받아온 게시판
 				{
-					if(dbBoardList.get(i).getBoardNo() == existBoardList.get(j).getBoardNo())//같으면
+					if (dbBoardList.get(i).getBoardNo() == existBoardList.get(j).getBoardNo())// 같으면
 					{
-						
-						dbBoardList.remove(i);//삭제하고
+
+						dbBoardList.remove(i);// 삭제하고
 						i--;
 						break;
 					}
 				}
 			}
-			
-			
+
 			System.out.println(dbBoardList.size());
 			deleteBoardList = dbBoardList; // 삭제할 deleteBoardList
 			boolean deleteBoardResult = cafeManageDao.deleteCafeBoard(deleteBoardList);
 			System.out.println(deleteBoardResult);
 		}
-		//deleteBoardList 삭제할애
-		//existBoard  업데이트할애
-		
+		// deleteBoardList 삭제할애
+		// existBoard 업데이트할애
+
 		boolean updateBoardResult = cafeManageDao.updateCafeBoard(existBoardList);
-		
-		
 
 		return updateBoardResult;
 	}
@@ -181,6 +172,10 @@ public class CafeManageServiceImpl implements CafeManageService {
 /////////////////////////////////지니//////////////////////////////
 	@Override
 	public Map<String, Object> getCafeApplicationList(Search search) {
+		
+		
+		
+		search.setCafeNo(cafeManageDao.getCafeNo(search.getCafeURL()));
 
 		List<CafeApplication> list = cafeManageDao.getCafeApplicationList(search);
 		int totalCount = cafeManageDao.getTotalCount(search);
@@ -194,7 +189,12 @@ public class CafeManageServiceImpl implements CafeManageService {
 
 	@Override
 	public void updateAcceptStatusCode(CafeApplication cafeApplication) {
-
+		
+		if (cafeApplication.isAutoApplicationAcceptFlag()) {
+		cafeApplication.setAcceptStatusCode("ca103");
+		}else {
+			
+		}
 		cafeManageDao.updateAcceptStatusCode(cafeApplication);
 
 	}
@@ -230,11 +230,20 @@ public class CafeManageServiceImpl implements CafeManageService {
 
 		return cafeManageDao.checkCafeGrade(cafeNo);
 	}
-	
+
 	@Override
-	public int flagUpdate(CafeGrade cafeGrade) {
-		
-		return cafeManageDao.flagUpdate(cafeGrade);
+	public boolean dropCafe(Cafe cafe, String cafeURL) {
+
+		int check = cafeManageDao.getCafeNo(cafeURL);
+		int cafeNo = cafe.getCafeNo();
+
+		if (check == cafeNo) {
+
+			return cafeManageDao.dropCafe(cafe);
+
+		} else {
+			return false;
+		}
 	}
 
 ////////////////////////////////지니끝//////////////////////////////////
@@ -259,8 +268,6 @@ public class CafeManageServiceImpl implements CafeManageService {
 	public Cafe getCafeName(String cafeName) throws Exception {
 		return cafeManageDao.getCafeName(cafeName);
 	}
-
-
 
 	/////////////////////////////// 준호끝///////////////////////////////////////
 

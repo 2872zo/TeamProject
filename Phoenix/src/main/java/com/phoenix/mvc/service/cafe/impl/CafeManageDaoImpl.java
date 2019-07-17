@@ -93,9 +93,15 @@ public class CafeManageDaoImpl implements CafeManageDao {
 	}
 
 	@Override
-	public int flagUpdate(CafeGrade cafeGrade) {
+	public boolean dropCafe(Cafe cafe) {
 
-		return sqlSession.update("CafeGradeMapper.flagUpdate", cafeGrade);
+		int drop = sqlSession.update("CafeMapper.dropCafe", cafe);
+
+		if (drop == 1) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 //////////////////////////////// 지니끝//////////////////////////////////

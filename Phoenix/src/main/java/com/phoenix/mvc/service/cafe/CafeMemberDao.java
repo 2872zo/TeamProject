@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.domain.CafeApplication;
+import com.phoenix.mvc.service.domain.CafeGrade;
 import com.phoenix.mvc.service.domain.CafeMember;
 import com.phoenix.mvc.service.domain.CafeMemberBlock;
 
@@ -25,6 +26,13 @@ public interface CafeMemberDao {
 	public void updateCafeMemberProfile(CafeMember cafeMember);
 	
 	public int changeGradeNo(CafeMember cafeMember);
+	
+	public int updateMembersIncrease (int cafeNo);
+	
+	public int updateMembersDecrease (int cafeNo);
+	
+	public int lowGradeNo (int cafeNo);
+	
 
 ////////////////////////////////지니끝//////////////////////////////////
 

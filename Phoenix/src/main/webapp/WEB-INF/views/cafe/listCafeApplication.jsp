@@ -14,7 +14,7 @@
 		<script type="text/javascript">
 
 		function fncGetList(currentPage) {
-			var cafeURL = "1234";
+			var cafeURL = '${search.cafeURL}'
 			$("#currentPage").val(currentPage)
 			$("#detailFrom").attr("method" , "POST").attr("action" , "/cafe/"+cafeURL+"/manage/getCafeApplicationList").submit();	
 		}
@@ -29,7 +29,7 @@
 			$(function(){
 				$(".applicationNo").on("click", function(){
 					alert($(this).text());
-					var cafeURL = 1234;
+					var cafeURL = '${search.cafeURL}'
 					self.location ="/cafe/"+cafeURL+"/manage/getCafeApplication?applicationNo="+$(this).text().trim();
 				});
 			});
@@ -53,35 +53,15 @@
 					$("input[type=checkbox]:checked").each(function(){
 					//alert($(".applicationCheck").index(this));
 					var count = $(".applicationCheck").index(this);
-					application += $($(".nickname")[count]).text()+"&"+$($(".userNo")[count]).val()+"&"+$($(".cafeNo")[count]).val();
+					application += $($(".nickname")[count]).text()+"&"+$($(".userNo")[count]).val()+"&"+$($(".cafeNo")[count]).val()+"&"+$($(".applicationNo")[count]).text();
 					application+=",";
 					
 					});
 				//alert(application);
-					var cafeURL = "1234";
+					var cafeURL = '${search.cafeURL}'
 					$("#boardName").val(application);
 					$("#checkBox").attr("method" , "POST").attr("action" , "/cafe/"+cafeURL+"/manage/updateCafeApplication").submit();	
 					
-					
-					/* $.ajax({
-						
-						url: "/cafe/"+cafeURL+"/manage/updateCafeApplication",
-						method: "POST",
-						dataType: "text",
-						headers : {
-							"Accept" : "application/json",
-							"Content-Type" : "application/json"
-						},
-						data:JSON.stringify({
-							application : application
-						}),
-						error: function(status){
-							 //alert("에러"+status);
-							},
-						success : function(serverData){
-							//alert("serverData : "+serverData);
-							}
-						});// */
 					});//승인
 				$(".reject").on("click",function(){
 					var reject='';
@@ -92,7 +72,7 @@
 						
 						});
 					alert(reject);
-						var cafeURL = "1234";
+					var cafeURL = '${search.cafeURL}'
 						$("#boardName").val(reject);
 						$("#checkBox").attr("method" , "POST").attr("action" , "/cafe/"+cafeURL+"/manage/updateCafeApplication").submit();	
 					
@@ -114,7 +94,7 @@
 		가입을 승인하거나, 거절할 수 있습니다.
 		
 		
-		
+	
 	<div class="col-md-6 text-left">
 				<p class="text-success">전체 ${page.totalCount } 건수, 현재
 					${page.currentPage} 페이지</p>
@@ -166,7 +146,7 @@
 		  <c:set var="i" value="0" />
 		  <c:forEach var="cafeApplication" items="${list}">
 			<tr>
-			<td><input type="checkbox" class="applicationCheck"></td>
+			<td><input type="checkbox" class="applicationCheck" ></td>
 			  <td align="center" class="applicationNo" value="${cafeApplication.applicationNo}">${cafeApplication.applicationNo}</td>
 			  <td align="left" >${cafeApplication.userId}</td>
 			  <td align="left" class="nickname" value="${cafeApplication.memberNickname}">${cafeApplication.memberNickname}</td>

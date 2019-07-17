@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.cafe.CafeMemberDao;
 import com.phoenix.mvc.service.domain.CafeApplication;
+import com.phoenix.mvc.service.domain.CafeGrade;
 import com.phoenix.mvc.service.domain.CafeMember;
 import com.phoenix.mvc.service.domain.CafeMemberBlock;
 
@@ -24,60 +25,79 @@ public class CafeMemberDaoImpl implements CafeMemberDao {
 	}
 
 /////////////////////////////////지니 시작//////////////////////////////
-@Override
-public void addCafeApplication(CafeApplication cafeApplication) {
-sqlSession.insert("CafeApplicationMapper.addCafeApplication", cafeApplication);
-}
+	@Override
+	public void addCafeApplication(CafeApplication cafeApplication) {
+		sqlSession.insert("CafeApplicationMapper.addCafeApplication", cafeApplication);
+	}
 
-@Override
-public void updateCafeMember(CafeMember cafeMember) {
-sqlSession.update("CafeMemberMapper.updateCafeMember", cafeMember);
+	@Override
+	public void updateCafeMember(CafeMember cafeMember) {
+		sqlSession.update("CafeMemberMapper.updateCafeMember", cafeMember);
 
-}
+	}
 
-@Override
-public void addCafeMember(CafeMember cafeMember) {
-sqlSession.insert("CafeMemberMapper.addCafeMember", cafeMember);
+	@Override
+	public void addCafeMember(CafeMember cafeMember) {
+		sqlSession.insert("CafeMemberMapper.addCafeMember", cafeMember);
 
-}
+	}
 
-@Override
-public void updateCafeMemberProfile(CafeMember cafeMember) {
-sqlSession.update("CafeMemberMapper.updateCafeMemberProfile", cafeMember);
+	@Override
+	public void updateCafeMemberProfile(CafeMember cafeMember) {
+		sqlSession.update("CafeMemberMapper.updateCafeMemberProfile", cafeMember);
 
-}
+	}
 
-@Override
-public int changeGradeNo(CafeMember cafeMember) {
+	@Override
+	public int changeGradeNo(CafeMember cafeMember) {
 
-return sqlSession.update("CafeMemberMapper.changeGradeNo", cafeMember);
-}
+		return sqlSession.update("CafeMemberMapper.changeGradeNo", cafeMember);
+	}
+
+	@Override
+	public int updateMembersIncrease(int cafeNo) {
+		
+		return sqlSession.update("CafeMapper.increaseMember",cafeNo);
+	}
+
+	@Override
+	public int updateMembersDecrease(int cafeNo) {
+		
+		return sqlSession.update("CafeMapper.decreaseMember", cafeNo);
+	}
+	
+	@Override
+	public int lowGradeNo(int cafeNo) {
+		
+		return sqlSession.selectOne("CafeGradeMapper.lowGrade", cafeNo);
+	}
 
 ////////////////////////////////지니끝//////////////////////////////////
 
 ////////////////////////////////////////////////// 예림
 ////////////////////////////////////////////////// 시작///////////////////////////////////
-@Override // 예림예림
-public CafeMember getCafeMember(int cafeNo, int userNo) {
+	@Override // 예림예림
+	public CafeMember getCafeMember(int cafeNo, int userNo) {
 
-HashMap map = new HashMap();
-map.put("cafeNo", cafeNo);
-map.put("userNo", userNo);
+		HashMap map = new HashMap();
+		map.put("cafeNo", cafeNo);
+		map.put("userNo", userNo);
 
-CafeMember cafeMember = new CafeMember();
+		CafeMember cafeMember = new CafeMember();
 
-cafeMember = sqlSession.selectOne("getCafeMember", map);
+		cafeMember = sqlSession.selectOne("getCafeMember", map);
 
-if (cafeMember.getUserNo() == 0) // 유저가 해당하는 카페 멤버가아닌경우(db값이 없으면) 형님때문에
-{
-cafeMember.setUserNo(500); // cafe
-}
+		if (cafeMember.getUserNo() == 0) // 유저가 해당하는 카페 멤버가아닌경우(db값이 없으면) 형님때문에
+		{
+			cafeMember.setUserNo(500); // cafe
+		}
 
-return cafeMember;
-}
+		return cafeMember;
+	}
 ///////////////////////////////////////// 예림끝///////////////////////////////////////////
 
-	////////////////////////////////////기황 시작///////////////////////////////////////
+	//////////////////////////////////// 기황
+	//////////////////////////////////// 시작///////////////////////////////////////
 	@Override
 	public List getCafeMemberList(Search search) throws Exception {
 
@@ -95,7 +115,7 @@ return cafeMember;
 
 		return sqlSession.selectOne("CafeMemberMapper.getCafeMemeber", search);
 	}
-	
+
 	@Override
 	public int addCafeMemberBlock(CafeMember cafeMember) throws Exception {
 
@@ -116,7 +136,7 @@ return cafeMember;
 
 	@Override
 	public int updateCafeMemeberGrade(CafeMember cafeMember) throws Exception {
-		// TODO Auto-generated method stub  updateMemberGrade
+		// TODO Auto-generated method stub updateMemberGrade
 		return sqlSession.update("CafeMemberMapper.updateMemberGrade", cafeMember);
 	}
 
@@ -150,6 +170,8 @@ return cafeMember;
 		return sqlSession.update("CafeMemberMapper.increaseVisitCount", memberNo);
 	}
 
-	//////////////////////////////기황 끝///////////////////////////////////////	
+
+
+	////////////////////////////// 기황 끝///////////////////////////////////////
 
 }
