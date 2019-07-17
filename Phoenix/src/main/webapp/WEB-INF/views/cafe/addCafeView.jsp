@@ -263,8 +263,8 @@ body>div.container {
 						<div class="col-sm-4">
 							<select class="form-control" id="exampleFormControlSelect1"
 								name="memberNicknameFlag">								
-								<option value="0">사용</option>
-								<option value="1">미사용</option>
+								<option value="0">미사용</option>
+								<option value="1">사용</option>
 							</select>
 						</div>
 					</div>

@@ -13,25 +13,25 @@
 		<result property="userName"				column="user_name" 				jdbcType="VARCHAR" />
 		<result property="userNickname"			column="user_nickname" 			jdbcType="VARCHAR" />
 		<result property="password" 			column="password" 				jdbcType="VARCHAR" />
-		<result property="email" 				column="email" 					jdbcType="VARCHAR"  />
-		<result property="phone" 				column="phone" 					jdbcType="VARCHAR" />
+		<result property="email" 				column="email" 					jdbcType="VARCHAR" />
+		<result property="phone" 				column="phone" 					jdbcType="NUMERIC" />
 		<result property="profileImg" 			column="profile_img" 			jdbcType="VARCHAR" />		
 		<result property="regDate" 				column="reg_date" 				jdbcType="DATE" />
 		<result property="userRoleCode" 		column="user_role_code" 		jdbcType="VARCHAR" />
 		<result property="userStatusCode" 		column="user_status_code" 		jdbcType="VARCHAR" />		
 	</resultMap>
 	
-	<!-- SQL : INSERT -->
 	<insert 	id="addUser"		parameterType="com.phoenix.mvc.service.domain.User" >
-	<selectKey keyProperty="userNo" resultType="int" order="BEFORE">
-	 		SELECT SEQ_CAFE_CAFE_NO.NEXTVAL FROM DUAL
+	 	<selectKey keyProperty="userNo" resultType="int" order="BEFORE">
+	 		SELECT SEQ_USERS_USER_NO.NEXTVAL FROM DUAL
 	 	</selectKey>
-	 	INSERT INTO users( user_no , user_id , user_name , user_nickname , password, email, phone, profile_img , reg_date, user_role_code,
-	 						 user_status_code ) 
-		VALUES	 (	#{userNo}, #{userId:VARCHAR}, #{userName:VARCHAR}, #{userNickname:VARCHAR},  #{password}, #{email:VARCHAR},
-					 #{phone:VARCHAR}, #{profileImg:VARCHAR}, SYSDATE, #{userRoleCode:VARCHAR}, #{userStatusCode:VARCHAR})
+		INSERT INTO USERS (user_no, user_id, user_name, user_nickname, password, email, phone, profile_img, reg_date) 
+		VALUES ( #{userNo}, #{userId:VARCHAR}, #{userName:VARCHAR}, #{userNickname:VARCHAR}, #{password:NUMERIC}, #{email:VARCHAR}, #{phone:VARCHAR}, #{profileImg:VARCHAR}, SYSDATE)
+
 	 </insert>
-	 
+	
+	<!-- SQL : INSERT -->
+
 	 <!-- SQL : SELECT ONE -->
 	 <select 	id="getUser"	parameterType="String"	resultMap="userSelectMap">
 		SELECT
@@ -40,73 +40,24 @@
 		WHERE user_id = #{value}
 	 </select>	 
 	 
-	 <!-- SQL : SELECT ONE -->
-	 <select 	id="getUserByKakao"	parameterType="string"	resultMap="userSelectMap">
+	 <select 	id="getUserInfo"	parameterType="int"	resultMap="userSelectMap">
 		SELECT
-		user_no, user_id, user_name, user_nickname, email, phone, profile_img, reg_date, user_role_code, user_status_code 		
+		user_no, user_id, user_name, user_nickname, password, email, phone, profile_img, reg_date, user_role_code, user_status_code 		
 		FROM users 
 		WHERE user_no = #{value}
-	 </select>
-	 
-	 <!-- SQL : UPDATE -->
+	 </select>	 
+
+
 	 <update	id="updateUser"	parameterType="com.phoenix.mvc.service.domain.User" >
 	   	UPDATE users
 	   	<set>
-	   		user_name 	= #{userName} ,
-			cell_phone	= #{phone},
-			addr 		= #{addr} ,
-			email		= #{email},
-			kakao		= #{kakao}
+	   		user_name 	= #{userName:VARCHAR} ,
+			user_nickname	= #{userNickname:VARCHAR},
+			password = #{password:VARCHAR},
+			email = #{email:VARCHAR},
+			phone = #{phone:NUMERIC},
+			profile_img = #{profileImg:VARCHAR}					
 	   	</set>
-	   	WHERE user_id = #{userId}
+	  WHERE user_no = #{userNo:NUMERIC}
 	 </update>
-		 
-	<!-- SQL : SELECT LIST -->
-	<select  id="getUserList"  parameterType="com.phoenix.mvc.common.Search"	resultMap="userSelectMap">
-	  	SELECT *
-	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT user_id , user_name , email
-											FROM users
-											<if test="searchCondition != null">
-												<where>
-													<if test="searchCondition == 0 and searchKeyword !='' ">
-										 				user_id = #{searchKeyword}
-													</if>
-													<if test="searchCondition == 1 and searchKeyword !='' ">
-										 				user_name = #{searchKeyword}
-													</if>
-												</where>
-											</if>
-											ORDER BY user_id ) inner_table
-						WHERE ROWNUM &lt;= #{endRowNum} )
-		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
-	 </select>
-	 	<!--  위 두번째 subQuery 의  
-	 			WHERE ROWNUM &lt;= #{endRowNum} ) 는
-	 			WHERE ROWNUM <= #{endRowNum} ) 의미이며..
-	 			< 는 keyword 로 &lt; 를	사용.
-	 			
-	 			<![CDATA[  ~~~  ]]> 를 이용하여 아래와 같이 사용  할 수 있다.
-	 			CDATA ==> Character Data 의 의미 Java 에서 \n 같은 특수문자 처리  
-
-				WHERE ROWNUM <![CDATA[ <=]]> #{endRowNum} )
-		-->
-	
-	<!-- SQL : SELECT ROW Count -->	 
-	 <select  id="getTotalCount"  parameterType="com.phoenix.mvc.common.Search"	 resultType="int">
-	  	SELECT COUNT(*)
-	  	FROM(	SELECT user_id , user_name , email
-						FROM users
-						<if test="searchCondition != null">
-							<where>
-								<if test="searchCondition == 0 and searchKeyword !='' ">
-						 			user_id = #{searchKeyword}
-								</if>
-								<if test="searchCondition == 1 and searchKeyword !='' ">
-						 		user_name = #{searchKeyword}
-								</if>
-							</where>
-						</if> ) countTable						
-	 </select>
-	 
 </mapper>

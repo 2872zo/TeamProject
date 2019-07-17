@@ -34,7 +34,7 @@
 				var cafeURL = "22";
 				alert("수정");
 				self.location = "/cafe/"+cafeURL+"/manage/updateCafeInfoView?cafeNo=${cafe.cafeNo}"
-				//$("form").attr("method" , "GET").attr("action" , "/cafe/updateCafeInfoView?cafeNo=${cafe.cafeNo}").submit();
+				
 			});
 		});	
 

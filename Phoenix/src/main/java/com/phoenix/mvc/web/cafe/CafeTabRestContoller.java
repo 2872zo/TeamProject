@@ -53,8 +53,11 @@ public class CafeTabRestContoller {
 		return result;
 		
 	}
-
-
+	
+	
+	/*
+	 * if 입력값.equals(get){ return "ok"; }else
+	 */
 	
 ///////////////////////////////준호끝///////////////////////////////////////	
 }

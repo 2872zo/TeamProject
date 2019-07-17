@@ -260,8 +260,6 @@ public class CafeManageServiceImpl implements CafeManageService {
 		return cafeManageDao.getCafeName(cafeName);
 	}
 
-
-
 	/////////////////////////////// 준호끝///////////////////////////////////////
 
 }

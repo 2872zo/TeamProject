@@ -45,7 +45,7 @@ import com.phoenix.mvc.service.domain.Grades;
 
 @Controller
 @RequestMapping("/cafe/*")
-@PropertySource("common.properties")
+//@PropertySource("common.properties")
 public class CafeManageController {
 
 	@Autowired
@@ -59,8 +59,9 @@ public class CafeManageController {
 	public CafeManageController() {
 		System.out.println(this.getClass().getName() + "생성자 start");
 	}
-
-
+	@Value("${uploadPath}")
+	String uploadPath;
+	
 ////////////////////////////////////////////예림//////////////////////////////////////////////
 	@RequestMapping(value = "/{cafeURL}/manage/updateCafeBoardView") // 예림예림
 	public String updateCafeBoardView(@PathVariable String cafeURL, HttpSession session, Model model)// session user정보,
@@ -132,7 +133,7 @@ public class CafeManageController {
 					}
 				}
 
-			} 
+			}
 			else if (element.contains("boardDetail/")) // 원래있던애들
 			{
 				for (int i = 0; i < existBoard.size(); i++) {
@@ -483,7 +484,7 @@ public class CafeManageController {
 		System.out.println("/updateCafeInfoView : GET");
 
 		Cafe cafe = cafeManageService.getCafeInfo(cafeNo);
-// Model �� View ����
+
 		model.addAttribute("cafe", cafe);
 
 		return "cafe/updateCafeInfoView";
@@ -491,9 +492,22 @@ public class CafeManageController {
 
 // 준호
 	@RequestMapping(value = "/{cafeURL}/manage/updateCafeInfo", method = RequestMethod.POST)
-	public String updateCafeInfo(@ModelAttribute("cafe") Cafe cafe) throws Exception {
+	public String updateCafeInfo(@ModelAttribute("cafe") Cafe cafe, @RequestParam("uploadFile") MultipartFile uploadFile) throws Exception {
 
 		System.out.println("/updateCafeInfoView : POST");
+		
+		String fileName = uploadFile.getOriginalFilename();
+		File f = new File(uploadPath, fileName);
+		
+		System.out.println("파일업로드하자~~~~~~~~~~~~~~~~~~"+fileName);
+		
+		try {
+			uploadFile.transferTo(f);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		cafe.setBannerImg(fileName);
 		
 		cafeManageService.updateCafeInfo(cafe);
 
