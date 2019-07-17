@@ -67,23 +67,23 @@ $(function() {
 		var jsoned = {memberNo : memberJson, favoriteFlag : checker};
 		jsoned = JSON.stringify(jsoned);
 			$.ajax(
-				{
-				type : "POST",
-				url : "/cafe/json/updateFavorite",
-				data : jsoned,
-				contentType: "application/json", //보내는 컨텐츠의 타입
-				//dataType : "json",      //받아올 데이터의 타입 필요없음
-				success : function(serverData, status) {
-									alert(status);
-									alert("server에서 온 Data : \n" + serverData);
-									targetTag.text(checker);
-									
-								},
-				error : function(request,status,error){
-							        alert("에러남 : "+error);
-							       }
-				}
-			);
+					{
+					type : "POST",
+					url : "/cafe/json/updateFavorite",
+					data : jsoned,
+					contentType: "application/json", //보내는 컨텐츠의 타입
+					//dataType : "json",      //받아올 데이터의 타입 필요없음
+					success : function(serverData, status) {
+										alert(status);
+										alert("server에서 온 Data : \n" + serverData);
+										targetTag.text(checker);
+										
+									},
+					error : function(request,status,error){
+								        alert("에러남 : "+error);
+								       }
+					}
+				);
 	});
 
 });
@@ -103,6 +103,8 @@ $(function() {
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
+	
+	<c:if test="${!empty sessionScope.user}">
 
 	<br/>
 		<button type="button" class="btn btn-outline-warning btn-block" id='addCafe'>카페만들기</button>
@@ -153,8 +155,9 @@ $(function() {
 	</tbody>
 </table>
 
-</c:if>
-	
+	</c:if>
+
+</c:if>	
 
 	<br/>
 	<br/>

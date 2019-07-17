@@ -1,5 +1,7 @@
 package com.phoenix.mvc.service.domain;
 
+import java.util.List;
+
 public class ChatRoom {
 	
 	private int userNo;
@@ -7,6 +9,8 @@ public class ChatRoom {
 	private int myChatRoomNo;
 	private String chatRoomName;
 	private String recentMsg;
+	
+	private List<ChatFriend> chatFriendsList;
 	
 	public int getUserNo() {
 		return userNo;
@@ -37,6 +41,12 @@ public class ChatRoom {
 	}
 	public void setRecentMsg(String recentMsg) {
 		this.recentMsg = recentMsg;
+	}
+	public List<ChatFriend> getChatFriendsList() {
+		return chatFriendsList;
+	}
+	public void setChatFriendsList(List<ChatFriend> chatFriendsList) {
+		this.chatFriendsList = chatFriendsList;
 	}
 	
 	@Override

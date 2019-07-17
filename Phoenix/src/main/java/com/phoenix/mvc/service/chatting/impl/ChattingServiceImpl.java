@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.chatting.ChattingDao;
 import com.phoenix.mvc.service.chatting.ChattingService;
 
@@ -24,11 +25,11 @@ public class ChattingServiceImpl implements ChattingService{
 	}
 
 	@Override
-	public Map getMyChatRoomList(int userNo) throws Exception {
+	public Map getMyChatRoomList(Search search) throws Exception {
 		// TODO Auto-generated method stub
 		Map map = new HashMap();
 		
-		List chatRoomList = chattingDao.getMyChatRoomList(userNo);
+		List chatRoomList = chattingDao.getMyChatRoomList(search);
 		
 		map.put("chatRoomList",chatRoomList);
 		

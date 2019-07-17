@@ -14,7 +14,7 @@
 	
 	</resultMap>
 	
-	<select id="getMyRoomList" parameterType="int" resultMap="chatRoomSelectMap">
+	<select id="getMyRoomList" parameterType="Search" resultMap="chatRoomSelectMap">
 		SELECT
 		my_chat_room_no, chat_room_no, chat_room_name
 		FROM

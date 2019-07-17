@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.chatting.ChattingDao;
 
 @Repository
@@ -21,8 +22,8 @@ public class ChattingDaoImpl implements ChattingDao{
 	}
 
 	@Override
-	public List getMyChatRoomList(int userNo) throws Exception {
+	public List getMyChatRoomList(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList("ChatRoomMapper.getMyRoomList", userNo);
+		return sqlSession.selectList("ChatRoomMapper.getMyRoomList", search);
 	}
 }

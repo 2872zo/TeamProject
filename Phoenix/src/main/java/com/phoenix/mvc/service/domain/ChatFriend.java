@@ -1,12 +1,23 @@
 package com.phoenix.mvc.service.domain;
 
+import java.util.List;
+
 public class ChatFriend {
 	
+	private int chatFriendNo;
 	private int userNo;
 	private int targetUserNo;
 	private String friendNickname;
 	private int friendStatus;
 	
+	private List<ChatFriend> chatFriendsList;
+	
+	public int getChatFriendNo() {
+		return chatFriendNo;
+	}
+	public void setChatFriendNo(int chatFriendNo) {
+		this.chatFriendNo = chatFriendNo;
+	}
 	public int getUserNo() {
 		return userNo;
 	}
@@ -30,6 +41,12 @@ public class ChatFriend {
 	}
 	public void setFriendStatus(int friendStatus) {
 		this.friendStatus = friendStatus;
+	}
+	public List<ChatFriend> getChatFriendsList() {
+		return chatFriendsList;
+	}
+	public void setChatFriendsList(List<ChatFriend> chatFriendsList) {
+		this.chatFriendsList = chatFriendsList;
 	}
 	
 	@Override

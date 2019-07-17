@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ChatFriendMapper">
+ 	
+	<resultMap id="chatFriendSelectMap" type="chatFriend">
+		<result property="chatFriendNo"		column="chat_friends_no" 	jdbcType="NUMERIC"/>
+		<result property="userNo" 			column="user_no" 			jdbcType="NUMERIC" />
+		<result property="targetUserNo" 	column="target_user_no" 	jdbcType="NUMERIC" />
+		<result property="friendStatus" 	column="friend_status" 		jdbcType="VARCHAR" />
+		<result property="friendNickname" 	column="user_nickname" 		jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<select id="getMyFriendList" parameterType="Search" resultMap="chatFriendSelectMap">
+		select
+		cf.chat_friends_no, cf.user_no, cf.target_user_no, cf.friend_status, u.user_nickname
+		FROM
+		chat_friends cf, users u
+		WHERE
+		cf.target_user_no = u.user_no
+		AND cf.friend_status = #{status}
+		AND cf.user_no = #{userNo};
+	</select>
+	 
+</mapper>
