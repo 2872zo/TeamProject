@@ -78,7 +78,8 @@
 
 <body>
 	
-
+멤버 등급 사용안함 선택시
+해당 등급에 해당하는 모든 멤버는 아래등급으로 내려갑니다!
 	
 	<br/>
 	<br/>
@@ -111,10 +112,12 @@
 					<input type ="text" class="gradeName" name="gradeList[${j}].gradeName" value="${cafeGrade.gradeName}" /> 
 					<br/>
 					<br/>
-					출석 <input type ="text"class="visit" name="gradeList[${j}].requiredVisitCount"value="${cafeGrade.requiredVisitCount }"/>이상
-					게시글 <input type ="text" class="post" name="gradeList[${j}].requiredPostCount"value="${cafeGrade.requiredPostCount }"/>이상
-					댓글 <input type ="text" class="reply"name="gradeList[${j}].requiredReplyCount"value="${cafeGrade.requiredReplyCount }"/>이상&nbsp;&nbsp;&nbsp;
+					출석 <input type ="text"class="visit" name="gradeList[${j}].requiredVisitCount"value="${cafeGrade.requiredVisitCount }"/>이상,
+					게시글 <input type ="text" class="post" name="gradeList[${j}].requiredPostCount"value="${cafeGrade.requiredPostCount }"/>이상,
+					댓글 <input type ="text" class="reply"name="gradeList[${j}].requiredReplyCount"value="${cafeGrade.requiredReplyCount }"/>이상,&nbsp;&nbsp;&nbsp;
 					<input type ="hidden" class = "cafeGradeNo" name="gradeList[${j}].cafeGradeNo" value="${cafeGrade.cafeGradeNo }"/>
+					<input type ="hidden" class = "memberGradeCode" name="gradeList[${j}].memberGradeCode" value="${cafeGrade.memberGradeCode }"/>
+					
 		
 					
 					<select class ="auto"  name="gradeList[${j}].autoUpgradeFlag">

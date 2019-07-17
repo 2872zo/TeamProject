@@ -1,6 +1,5 @@
 package com.phoenix.mvc.service.domain;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class CafeGrade {

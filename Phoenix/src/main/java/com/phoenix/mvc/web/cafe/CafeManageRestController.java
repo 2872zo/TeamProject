@@ -98,7 +98,7 @@ public class CafeManageRestController {
 			cafeStatistics.put("et001", "0");
 		}
 		
-		for(int i=4; i<8; i++) 
+		for(int i=4; i<8; i++) //프로퍼티즈 설정
 		{
 			if(cafeStatistics.get("et00"+i)==null)
 				cafeStatistics.put("et00"+i, "0");
@@ -108,11 +108,19 @@ public class CafeManageRestController {
 		return cafeStatistics;
 	}
 	
+	@RequestMapping(value="json/{cafeURL}/manage/autoComplete")
+	public List autoComplete(@PathVariable String cafeURL) throws Exception
+	{
+		System.out.println("json/manage/autoComplete");
+		
+		List<String> list = cafeManageService.getCafeMemberAutocomplete(cafeURL);
+		
+		return list;
+	}
 
 	////////////////////////////////////////////////////예림 끝//////////////////////////////////////
 
-	/////////////////////////////////지니//////////////////////////////
-	//@RequestMapping(value="/{cafeURL}/manage/updateCafeApplication", method=RequestMethod.POST)
+	/////////////////////////////////지니////////////////////////////////@RequestMapping(value="/{cafeURL}/manage/updateCafeApplication", method=RequestMethod.POST)
 	public String updateCafeApplication(@RequestBody String application) {
 		
 		System.out.println("/{cafeURL}/manage/updateCafeApplication : POST");

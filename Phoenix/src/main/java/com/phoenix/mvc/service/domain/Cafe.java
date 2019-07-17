@@ -25,6 +25,9 @@ public class Cafe {
 	private boolean autoApplicationAcceptFlag;
 	private boolean closedFlag;
 	private int members;
+	private int memberNo;
+	private boolean favorited;
+	
 	
 	/// Constructor
 	public Cafe(){		
@@ -188,6 +191,22 @@ public class Cafe {
 
 	public void setMembers(int members) {
 		this.members = members;
+	}
+
+	public int getMemberNo() {
+		return memberNo;
+	}
+
+	public void setMemberNo(int memberNo) {
+		this.memberNo = memberNo;
+	}
+
+	public boolean isFavorited() {
+		return favorited;
+	}
+
+	public void setFavorited(boolean favorited) {
+		this.favorited = favorited;
 	}
 
 	@Override

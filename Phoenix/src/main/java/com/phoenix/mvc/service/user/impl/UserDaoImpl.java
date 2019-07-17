@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.phoenix.mvc.common.Search;
+import com.phoenix.mvc.service.domain.Cafe;
 import com.phoenix.mvc.service.domain.User;
 import com.phoenix.mvc.service.user.UserDao;
 
@@ -28,28 +29,20 @@ public class UserDaoImpl implements UserDao{
 
 	///Method
 	public void addUser(User user) throws Exception {
-		sqlSession.insert("addUser", user);
+		sqlSession.insert("UserMapper.addUser", user);
 	}
-
+	//get userId구현해야함
 	public User getUser(String userId) throws Exception {
 		return sqlSession.selectOne("UserMapper.getUser", userId);
 	}
 	
-	public User getUserByKakao(String kakao) throws Exception {
-		return sqlSession.selectOne("getUserByKakao", kakao);
+	public User getUserInfo(int userNo) throws Exception {
+		return sqlSession.selectOne("UserMapper.getUserInfo", userNo);
+	}	
+	
+	@Override // 준호
+	public void updateUser(User user) throws Exception {
+		sqlSession.update("UserMapper.updateUser", user);
 	}
 	
-	public void updateUser(User user) throws Exception {
-		sqlSession.update("updateUser", user);
-	}
-
-	public List<User> getUserList(Search search) throws Exception {
-		return sqlSession.selectList("getUserList", search);
-	}
-
-	// �Խ��� Page ó���� ���� ��ü Row(totalCount)  return
-	public int getTotalCount(Search search) throws Exception {
-		return sqlSession.selectOne("getTotalCount", search);
-	}
-
 }

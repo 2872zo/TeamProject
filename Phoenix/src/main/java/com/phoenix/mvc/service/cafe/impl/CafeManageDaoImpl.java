@@ -93,9 +93,15 @@ public class CafeManageDaoImpl implements CafeManageDao {
 	}
 
 	@Override
-	public int flagUpdate(CafeGrade cafeGrade) {
+	public boolean dropCafe(Cafe cafe) {
 
-		return sqlSession.update("CafeGradeMapper.flagUpdate", cafeGrade);
+		int drop = sqlSession.update("CafeMapper.dropCafe", cafe);
+
+		if (drop == 1) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 //////////////////////////////// 지니끝//////////////////////////////////
@@ -166,7 +172,9 @@ public class CafeManageDaoImpl implements CafeManageDao {
 	public Map<String, String> getCafeStatistics(Event event) { // 예림예림
 
 		List<Map<String, String>> result = sqlSession.selectList("getCafeStatistics", event);
-//System.out.println(statisticResult);
+		//List<Map<String, String>> chartResult = sqlSession.selectList("get"); 
+		
+		//System.out.println(statisticResult);
 		Map<String, String> statisticResultMap = new HashMap<String, String>();
 
 		for (int i = 0; i < result.size(); i++) {

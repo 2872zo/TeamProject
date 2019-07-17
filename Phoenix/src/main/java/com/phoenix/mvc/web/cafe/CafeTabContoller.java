@@ -26,110 +26,141 @@ import com.phoenix.mvc.service.domain.Cafe;
 import com.phoenix.mvc.service.domain.CafeMember;
 import com.phoenix.mvc.common.Page;
 import com.phoenix.mvc.service.domain.User;
+import com.phoenix.mvc.service.user.UserService;
 import com.phoenix.mvc.common.Search;
-
 
 @Controller
 @RequestMapping("/cafe/*")
 public class CafeTabContoller {
-	
+
 	@Autowired
 	@Qualifier("cafeTabServiceImpl")
 	private CafeTabService cafeTabService;
-	
+
 	@Autowired
 	@Qualifier("cafeManageServiceImpl")
 	private CafeManageService cafeManageService;
-	
+
+	@Autowired
+	@Qualifier("userServiceImpl")
+	private UserService userService;
+
 	@Value("${pageSize}")
 	private int pageSize;
-	
+
 	@Value("${pageUnit}")
 	private int pageUnit;
-	
+
 	public CafeTabContoller() {
 		System.out.println(getClass().getName() + "default Constuctor");
 	}
-	
+
 ///////////////////////////////준호시작///////////////////////////////////////	
-@GetMapping("/addCafeView")
-public String addCafeView(@ModelAttribute("cafe") Cafe cafe)throws Exception{
+	@GetMapping("/addCafeView")
+	public String addCafeView(@ModelAttribute("cafe") Cafe cafe) throws Exception {
 
-System.out.println("/addCafe : GET");
+		System.out.println("/addCafe : GET");
 
+		return "cafe/addCafeView";
+	}
 
+	@PostMapping("/{cafeURL}/addCafe")
+	public String addCafe(@ModelAttribute Cafe cafe, Model model) throws Exception {
 
-return "cafe/addCafeView";
-}
+		System.out.println("/addCafe : POST@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
-@PostMapping("/{cafeURL}/addCafe")
-public String addCafe(@ModelAttribute Cafe cafe, Model model)throws Exception{
+		/*
+		 * @PostMapping("/{cafeURL}/addCafe") public String addCafe(@ModelAttribute Cafe
+		 * cafe, Model model, HttpSession session,
+		 * 
+		 * @ModelAttribute User user,
+		 * 
+		 * @RequestParam("userNo") int userNo ) throws Exception {
+		 * 
+		 * User user2 = userService.getUserInfo(userNo);
+		 * 
+		 * user = user2;
+		 * 
+		 * //cafe.setManageUserNo(user.getUserNo());
+		 * 
+		 * 
+		 * 
+		 * int sessionId=((User)session.getAttribute("user")).getUserNo();
+		 * //if(sessionId == user.getUserNo()){ // session.setAttribute("user", user);
+		 * 
+		 * // }
+		 * 
+		 * 
+		 * 
+		 * System.out.println("유저정보도 왔냐 ?@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+user.getUserNo(
+		 * ));
+		 * 
+		 * cafe.setManageUserNo(sessionId);
+		 */
+		cafeTabService.addCafe(cafe);
 
-System.out.println("/addCafe : POST");
+		Cafe cafe2 = cafeManageService.getCafeInfo(cafe.getCafeNo());
 
-cafeTabService.addCafe(cafe);
+		cafe = cafe2;
 
-Cafe cafe2 = cafeManageService.getCafeInfo(cafe.getCafeNo());
+		System.out.println("카페인서트다다아아아앙@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + cafe);
 
-cafe = cafe2;
+		model.addAttribute("cafe", cafe);
 
-System.out.println("카페인서트다다아아아앙@@@"+cafe);
-
-model.addAttribute("cafe", cafe);
-
-return "cafe/getCafeInfo";
-}
-
-
+		return "cafe/getCafeInfo";
+	}
 
 ///////////////////////////////준호끝///////////////////////////////////////		
-	
-	/////////////////////////////////기황 시작//////////////////////////////////////
-	@RequestMapping(value = "main", method=RequestMethod.GET)
-	public String cafeMain(Model model) throws Exception {
-		
+
+///////////////////////////////// 기황 시작//////////////////////////////////////
+	@RequestMapping(value = "main", method = RequestMethod.GET)
+	public String cafeMain(HttpSession session, Model model) throws Exception {
+
 		System.out.println("/cafe/main GET");
-		
+		User user = new User();
+		if (session.getAttribute("user") != null) {
+			user = (User) session.getAttribute("user");
+		}
 		Search search = new Search();
-		search.setUserNo(10000);//유저번호세팅
-		search.setStatus(0);//활동중 카페선택 세팅
-		search.setCafeType(0);//카테고리0번 고르게 세팅
-		
+		search.setUserNo(user.getUserNo());// 유저번호세팅
+		search.setStatus(0);// 활동중 카페선택 세팅
+		search.setCafeType(0);// 카테고리0번 고르게 세팅
+
 		Map map = cafeTabService.getCafeHome(search);
 		List myCafelist = (List) map.get("myCafelist");
 		List categorizedCafeList = (List) map.get("categorizedCafeList");
-		
+
 		model.addAttribute("search", search);
 		model.addAttribute("myCafelist", myCafelist);
 		model.addAttribute("categorizedCafeList", categorizedCafeList);
-		
+
 		return "forward:/WEB-INF/views/cafe/cafeHomeMain.jsp";
 	}
-	
-	@RequestMapping(value = "main", method=RequestMethod.POST)
+
+	@RequestMapping(value = "main", method = RequestMethod.POST)
 	public String cafeMainPost(@ModelAttribute Search search, Model model) throws Exception {
 
 		System.out.println("/cafe/main POST");
-		
+
 		Map map = cafeTabService.getCafeHome(search);
 		List myCafelist = (List) map.get("myCafelist");
 		List categorizedCafeList = (List) map.get("categorizedCafeList");
-		
+
 		model.addAttribute("search", search);
 		model.addAttribute("myCafelist", myCafelist);
 		model.addAttribute("categorizedCafeList", categorizedCafeList);
-		
+
 		return "forward:/WEB-INF/views/cafe/cafeHomeMain.jsp";
 	}
-	
+
 	@RequestMapping("search")
 	public String cafeSearch(@ModelAttribute("search") Search search, Model model) throws Exception {
-	
-		System.out.println("/cafe/search입니다.");
-		
-		pageSize=2;
 
-		if(search.getCurrentPage() == 0 ){
+		System.out.println("/cafe/search입니다.");
+
+		pageSize = 2;
+
+		if (search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
@@ -138,7 +169,7 @@ return "cafe/getCafeInfo";
 		List cafeList = (List) map.get("cafeList");
 		List postList = (List) map.get("postList");
 		int totalCount = (int) map.get("totalCount");
-		Page page = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+		Page page = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
 		model.addAttribute("cafeList", cafeList);
 		model.addAttribute("postList", postList);
 		model.addAttribute("search", search);
@@ -146,76 +177,81 @@ return "cafe/getCafeInfo";
 		model.addAttribute("page", page);
 		return "forward:/WEB-INF/views/cafe/listCafeSearch.jsp";
 	}
-	
+
 	@RequestMapping("main/cafeApplicationList")
-	public String getCafeApplicationList(Model model) throws Exception {
-		
+	public String getCafeApplicationList(HttpSession session, Model model) throws Exception {
+
 		pageSize = 2;
+		User user = (User) session.getAttribute("user");
 		Search search = new Search();
-		search.setUserNo(10009);
+		search.setUserNo(user.getUserNo());
 		Map map = cafeTabService.getCafeApplicationListForUser(search);
-		
+
 		List applicationList = (List) map.get("applicationList");
 		int totalCount = (int) map.get("totalCount");
-		
+
 		model.addAttribute("applicationList", applicationList);
 		model.addAttribute("totalCount", totalCount);
-		
-		return "forward:/WEB-INF/views/cafe/listUserCafeApplication.jsp";
-		
-	}
-	
-	@RequestMapping("main/cafeNewsFeed")
-	public String getCafeNewsFeed(Model model) throws Exception {
-		return "cafe/listCafeNewsFeed";
-	}
-	
-	/*테스트용 메서드입니다.
-	@RequestMapping("main/testing")
-	public String onlyForTest(@ModelAttribute CafeMember cafeMember) throws Exception {
-		
-		System.out.println("들어왔니?????");
-		
-		List<CafeMember> list = cafeMember.getCafeMemberList();
-		for(int i=0;i<6;i++) {
-		System.out.println(list.get(i));
-		}
-		return "cafe/listCafeNewsFeed";
-	}
-	*/
-		
-	/////////////////////////////////기황 끝//////////////////////////////////////
 
-	//////////////////////////////////////////////예림시작 ////////////////////////////////////////////////
-//	@RequestMapping("/{cafeURL}")
-		public String getCafeMain(@PathVariable String cafeURL,HttpSession session,Model model)
+		return "forward:/WEB-INF/views/cafe/listUserCafeApplication.jsp";
+
+	}
+
+	@RequestMapping("main/cafeNewsFeed")
+	public String getCafeNewsFeed(@SessionAttribute("user") User user, Model model) throws Exception {
+
+		Map map = cafeTabService.getNewsFeed(user.getUserNo());
+		List newsFeed = (List) map.get("newsFeed");
+		model.addAttribute("newsFeed", newsFeed);
+		return "cafe/listCafeNewsFeed";
+
+	}
+
+	/*
+	 * 테스트용 메서드입니다.
+	 * 
+	 * @RequestMapping("main/testing") public String onlyForTest(@ModelAttribute
+	 * CafeMember cafeMember) throws Exception {
+	 * 
+	 * System.out.println("들어왔니?????");
+	 * 
+	 * List<CafeMember> list = cafeMember.getCafeMemberList(); for(int i=0;i<6;i++)
+	 * { System.out.println(list.get(i)); } return "cafe/listCafeNewsFeed"; }
+	 */
+
+///////////////////////////////// 기황 끝//////////////////////////////////////
+
+////////////////////////////////////////////// 예림시작
+////////////////////////////////////////////// ////////////////////////////////////////////////
+//@RequestMapping("/{cafeURL}")
+	public String getCafeMain(@PathVariable String cafeURL, HttpSession session, Model model) {
+		System.out.println("/cafe/{cafeURL}");
+
+// 승규 getBoardPostList Service 불러오면 안되잖아. 그럼 바로 dao부르나?? 내가 메서드를 만들어야겠네.
+		User user = new User();
+
+		if (session.getAttribute("user") != null) // session에 있으면
 		{
-			System.out.println("/cafe/{cafeURL}");
-			
-			//승규 getBoardPostList Service 불러오면 안되잖아. 그럼 바로 dao부르나?? 내가 메서드를 만들어야겠네.
-			User user = new User(); 
-			
-			if(session.getAttribute("user")!=null)  //session에 있으면
-			{
-				user = (User) session.getAttribute("user") ;
-			}
-				
-			if(user.getUserNo()==0) //포탈로그인되어있지않음. 400
-			{
-				user.setUserNo(400);
-			} 
-			//set해주고 service태워서 service에서 회원인지 아닌지 검사
-		
-			//가짜데이터
-			user.setUserNo(10000);
-			Map map = cafeTabService.getCafeMain(user, cafeURL);
-			
-			model.addAttribute("cafeURL", map.get("cafeURL"));
-			model.addAttribute("noticePostList", map.get("noticePostList"));//공지게시글리스트
-			model.addAttribute("cafeMember", map.get("cafeMember"));//내정보
-			model.addAttribute("boardList", map.get("boardList"));//카페게시판리스트
-			
-			return "cafe/mainCafe";
+			user = (User) session.getAttribute("user");
 		}
-	////////////////////////////////////////////////////예림 끝//////////////////////////////////////////////
+
+		if (user.getUserNo() == 0) // 포탈로그인되어있지않음. 400
+		{
+			user.setUserNo(400);
+		}
+// set해주고 service태워서 service에서 회원인지 아닌지 검사
+
+// 가짜데이터
+		user.setUserNo(10000);
+		Map map = cafeTabService.getCafeMain(user, cafeURL);
+
+		model.addAttribute("cafeURL", map.get("cafeURL"));
+		model.addAttribute("noticePostList", map.get("noticePostList"));// 공지게시글리스트
+		model.addAttribute("cafeMember", map.get("cafeMember"));// 내정보
+		model.addAttribute("boardList", map.get("boardList"));// 카페게시판리스트
+
+		return "cafe/mainCafe";
+	}
+//////////////////////////////////////////////////// 예림
+//////////////////////////////////////////////////// 끝//////////////////////////////////////////////
 }

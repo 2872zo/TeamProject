@@ -27,7 +27,8 @@
 		<result property="closedFlag" 				 column="closed_flag" 					jdbcType="VARCHAR" />
 		<result property="members" 					 column="members" 						jdbcType="NUMERIC" />
 		<result property="managerNickname"			 column="user_nickname" 				jdbcType="VARCHAR" />
-		
+		<result property="memberNo" 				 column="member_no" 					jdbcType="NUMERIC" />
+		<result property="favorited" 				 column="favorite_flag" 				jdbcType="CHAR" />
 	</resultMap>
 	<sql id="listCafe">
 		SELECT
@@ -104,7 +105,8 @@
 	 <sql id="cafeListByStatus">
 	 	SELECT
 		c.cafe_no, c.cafe_name, c.cafe_icon, c.url, c.cafe_detail,
-		TO_CHAR(c.reg_date, 'YYYY-MM-DD HH24:MM:SS') reg_date
+		TO_CHAR(c.reg_date, 'YYYY-MM-DD HH24:MM:SS') reg_date, 
+		m.favorite_flag, m.member_no
 	 	FROM
 		cafe c, cafe_member m
 		WHERE
@@ -141,7 +143,8 @@
 	 <sql id="getOwnCafe">
 	 	SELECT 
 		c.cafe_no, c.cafe_name, c.cafe_icon, c.url, c.cafe_detail, 
-		TO_CHAR(c.reg_date, 'YYYY-MM-DD HH24:MM:SS') reg_date
+		TO_CHAR(c.reg_date, 'YYYY-MM-DD HH24:MM:SS') reg_date, 
+		m.favorite_flag, m.member_no
 		FROM
 		cafe c, cafe_member m, cafe_member_grade g
 		WHERE

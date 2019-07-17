@@ -13,16 +13,18 @@
 <head>
 
  	<meta name="viewport" content="width=device-width, initial-scale=1">
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
   	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   	<link rel="stylesheet" href="/resources/demos/style.css">
   	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
   	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  	<script src="https://kit.fontawesome.com/e589319d43.js"></script>
+  	
+  
 	
 	<script type="text/javascript">
-
-
-		
-		
 		
 		$( function() {
 
@@ -111,59 +113,93 @@
 </head>
 <body>
 
+	<div class="container">
+		<div class="py-5 text-center">
+			<!-- <img class="d-block mx-auto mb-4" src="/docs/4.3/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72"> -->
+			카페 아이콘 넣을것
+			<h1>카페 통계</h1>
+		</div>
+		
+		<form name ="form" class="needs-validation" novalidate>
+		
+			<hr/>
+			<div class="row text-center">
+				<label for="startDate" class="far fa-calendar-alt"></label>
+				<input type="text" id="startDate" name="startDate" value="">
+				<label for="endDate" class="far fa-calendar-alt"></label>
+				<input type="text" id="endDate" name="endDate" value="">
+				
+			</div>
+			<br/><br/><br/><br/>
+			<div class="row text-center">
+				<div class="col-md-2">
+				</div>
+			
+				<div class="col-md-2">
+					<div class="thumbnail">
+						<div class="caption">
+							<h5>방문자 수</h5>
+							<h4 class="text-success" id="et001">
+								<c:if test="${empty statisticMap['et001']}">0</c:if>
+								${statisticMap['et001']}
+							</h4>
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-md-2">
+					<div class="thumbnail">
+						<div class="caption">
+							<h5>작성게시글 수</h5>
+							<h4 class="text-success" id="et004">
+								<c:if test="${empty statisticMap['et004']}">0</c:if>
+								${statisticMap['et004']}
+							</h4>
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-md-2">
+					<div class="thumbnail">
+						<div class="caption">
+							<h5>작성댓글 수 </h5>
+							<h4 class="text-success" id="et005">
+								<c:if test="${empty statisticMap['et005']}">0</c:if>
+								${statisticMap['et005']}
+							</h4>
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-md-2">
+					<div class="thumbnail">
+						<div class="caption">
+							<h5>가입신청인 수 </h5>
+							<h4 class="text-success" id="et006">
+								<c:if test="${empty statisticMap['et006']}">0</c:if>
+								${statisticMap['et006']}
+							</h4>
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-md-2">
+					<div class="thumbnail">
+						<div class="caption">
+							<h5>가입멤버 수 </h5>
+							<h4 class="text-success" id="et007">
+								<c:if test="${empty statisticMap['et007']}">0</c:if>
+								${statisticMap['et007']}
+							</h4>
+						</div>
+					</div>
+				</div>
+			
+			</div>
 
-	<strong>카페통계</strong>
-	<br/>
-	<br/>
-		<label for="startDate">시작일</label>
-		<input type="text" id="startDate" name="startDate" value="">
-		<label for="endDate">종료일</label>
-		<input type="text" id="endDate" name="endDate" value="">
-	
-	<br/>
-	<br/>
-	<br/>
-	<br/>
-	<br/>
-	<br/>
-	<br/>
-	
-	<table>
-		<thead>
-			<tr>
-				<th> 방문자 수 </th>
-				<th> 작성된 게시글 수 </th>
-				<th> 작성된 댓글 수 </th>
-				<th> 가입신청인 수 </th>
-				<th> 가입멤버 수 </th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td id="et001">
-					<c:if test="${empty statisticMap['et001']}">0</c:if>
-					${statisticMap['et001']}
-				</td>
-				<td id="et004">
-					<c:if test="${empty statisticMap['et004']}">0</c:if>
-					${statisticMap['et004']}
-				</td>
-				<td id="et005">
-					<c:if test="${empty statisticMap['et005']}">0</c:if>
-					${statisticMap['et005']}
-				</td>
-				<td id="et006">
-					<c:if test="${empty statisticMap['et006']}">0</c:if>
-					${statisticMap['et006']}
-				</td>
-				<td id="et007">
-					<c:if test="${empty statisticMap['et007']}">0</c:if>
-					${statisticMap['et007']}
-				</td>
-			</tr>
-		</tbody>
-	
-	</table>
+		</form>
+	</div>
+
 
 </body>
 </html>

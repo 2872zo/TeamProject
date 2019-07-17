@@ -11,7 +11,7 @@ public class User {
 	private String userNickname;
 	private String password;
 	private String email;
-	private String phone;
+	private int phone;
 	private String profileImg;
 	private Date regDate;
 	private String userRoleCode;
@@ -85,12 +85,12 @@ public class User {
 	}
 
 
-	public String getPhone() {
+	public int getPhone() {
 		return phone;
 	}
 
 
-	public void setPhone(String phone) {
+	public void setPhone(int phone) {
 		this.phone = phone;
 	}
 

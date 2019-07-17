@@ -41,37 +41,34 @@ body>div.container {
 	$(function() {
 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 		$("button.btn.btn-primary").on("click", function() {
-			fncAddCafe();
+			fncAddUser();
 		});
 	});
 
 	//유효성 검사
-	function fncAddCafe() {
+	function fncAddUser() {
 
-		var cafeURL = "22";
+		var userId = $("input[name='userId']").val();
+		var password = $("input[name='password']").val();
 
-		var cafeName = $("input[name='cafeName']").val();
-		var URL = $("input[name='URL']").val();
-
-		if (cafeName == null || cafeName.length < 1) {
+		if (userId == null || userId.length < 1) {
 			alert("카페이름은 반드시 입력하셔야 합니다.");
 			return;
 		}
-		if (URL == null || URL.length < 1) {
-			alert("카페URL은  반드시 입력하셔야 합니다.");
+		if (password == null || password.length < 1) {
+			alert("비밀번호는  반드시 입력하셔야 합니다.");
 			return;
 		}
 
 
-		$("form").attr("method", "POST").attr("action",
-				"/cafe/" + cafeURL + "/addCafe").submit();
+		$("form").attr("method", "POST").attr("action","/user/addUser").submit();
 	}
-	//카페이름 중복확인 
+	/*//카페이름 중복확인 
 	$(function() {
 
-		$("input[name='cafeName']").on('keyup',function() {
+		$("input[name='userId']").on('keyup',function() {
 
-							var inputed = $("input[name='cafeName']").val();
+							var inputed = $("input[name='userId']").val();
 							// alert("입력  : "+inputed);
 
 									$.ajax({
@@ -169,13 +166,13 @@ body>div.container {
 									});
 						});
 
-	});
+	});*/
 
 	//============= "만들기"  Event 연결 =============
 	$(function() {
 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-		$("button.btn btn-success").on("click", function() {
-			fncAddCafe();
+		$("button.btn btn-primary").on("click", function() {
+			fncAddUser();
 		});
 	});
 
@@ -193,17 +190,17 @@ body>div.container {
 
 	<div class="container">
 
-		<h4 class="bg-primary text-center">카페 만들기</h4>
+		<h4 class="bg-primary text-center">회원가입</h4>
 		
 			<form class="form-horizontal">
 
 				<div class="form-group">
 					<center>
-					<label for="exampleFormControlInput1" class="col-sm-offset-1 col-sm-3 control-label">카 페 이 름</label>
+					<label for="exampleFormControlInput1" class="col-sm-offset-1 col-sm-3 control-label">아이디</label>
 						<div class="col-sm-4">				
 							<input type="text" class="form-control"
-								id="exampleFormControlInput1" placeholder="" name="cafeName">
-							<span id="check"> <strong>카페이름을 입력해주세요</strong>
+								id="exampleFormControlInput1" placeholder="" name="userId">
+							<span id="check"> <strong>아이디를 입력해주세요</strong>
 							</span>
 						</div>
 					</center>
@@ -211,64 +208,76 @@ body>div.container {
 				<center>
 					<div class="form-group">
 						<label for="exampleFormControlInput1"
-							class="col-sm-offset-1 col-sm-3 control-label">카페 URL</label>
+							class="col-sm-offset-1 col-sm-3 control-label">비밀번호</label>
 						<div class="col-sm-4">
 							<input type="text" class="form-control"
-								id="exampleFormControlInput1" placeholder="" name="URL">
-							<span id="check1"> <strong>카페URL을 입력해주세요</strong>
-							</span>		
+								id="exampleFormControlInput1" placeholder="" name="password">
+							
 						</div>
 					</div>
 				</center>
 				<center>
 					<div class="form-group">
-						<label for="exampleFormControlTextarea1"
-							class="col-sm-offset-1 col-sm-3 control-label">카페 설명</label>
+						<label for="exampleFormControlInput1"
+							class="col-sm-offset-1 col-sm-3 control-label">비밀번호확인</label>
 						<div class="col-sm-4">
-							<textarea class="form-control" id="exampleFormControlTextarea1"
-								rows="3" name="cafeDetail"></textarea>
+							<input type="text" class="form-control" 
+							id="exampleFormControlTextarea1"  placeholder="" name="password1">
 						</div>
 					</div>
 				</center>
 				<center>
 					<div class="form-group">
-						<label for="exampleFormControlSelect1"
-							class="col-sm-offset-1 col-sm-3 control-label">카페 카 테 고 리</label>
+						<label for="exampleFormControlInput1"
+							class="col-sm-offset-1 col-sm-3 control-label">이름</label>
 						<div class="col-sm-4">
-							<select class="form-control" id="exampleFormControlSelect1"
-								name="cafeType">								
-								<option value="cc100">친목/모임</option>
-								<option value="cc101">스포츠/레저</option>
-								<option value="cc102">영화</option>
-								<option value="cc103">게임</option>
-								<option value="cc104">음악</option>
-								<option value="cc105">여행</option>
-							</select>
+							<input type="text" class="form-control" id="exampleFormControlInput1"
+								 placeholder="" name="userName"></textarea>
 						</div>
 					</div>
 				</center>
 				<center>
 					<div class="form-group">
-						<label for="exampleFormControlTextarea1"
-							class="col-sm-offset-3 col-sm-3 control-label">가입 안내</label>
+						<label for="exampleFormControlInput1"
+							class="col-sm-offset-1 col-sm-3 control-label">전화번호</label>
 						<div class="col-sm-4">
-							<textarea class="form-control" id="exampleFormControlTextarea1"
-								rows="3" name="applicationDetail"></textarea>
-						</div>
-					</div>
-			<center>
-			<div class="form-group">
-						<label for="exampleFormControlSelect1"
-							class="col-sm-offset-1 col-sm-3 control-label">별명사용여부</label>
-						<div class="col-sm-4">
-							<select class="form-control" id="exampleFormControlSelect1"
-								name="memberNicknameFlag">								
-								<option value="0">미사용</option>
-								<option value="1">사용</option>
-							</select>
+							<input type="text" class="form-control" id="exampleFormControlInput1"
+								placeholder="" name="phone">
 						</div>
 					</div>
 				</center>
+				<center>
+					<div class="form-group">
+						<label for="exampleFormControlInput1"
+							class="col-sm-offset-1 col-sm-3 control-label">닉네임</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="exampleFormControlInput1"
+								placeholder="" name="userNickname">
+						</div>
+					</div>
+				</center>	
+				<center>
+					<div class="form-group">
+						<label for="exampleFormControlInput1"
+							class="col-sm-offset-1 col-sm-3 control-label">이메일</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="exampleFormControlInput1"
+								placeholder="" name="email">
+						</div>
+					</div>
+				</center>
+				<center>
+					<div class="form-group">
+						<label for="exampleFormControlInput1"
+							class="col-sm-offset-1 col-sm-3 control-label">프로필이미지</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="exampleFormControlInput1"
+								placeholder="" name="profileImg">
+						</div>
+					</div>
+				</center>
+				
+				
 				<center>
 					<div class="form-group">
 						<div class="col-sm-offset-4  col-sm-4 text-center">

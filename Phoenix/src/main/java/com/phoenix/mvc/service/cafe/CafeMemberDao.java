@@ -4,16 +4,15 @@ import java.util.List;
 
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.domain.CafeApplication;
+import com.phoenix.mvc.service.domain.CafeGrade;
 import com.phoenix.mvc.service.domain.CafeMember;
 import com.phoenix.mvc.service.domain.CafeMemberBlock;
 
 public interface CafeMemberDao {
 
-	/////////////////////////////////////// 예림
-	/////////////////////////////////////// 시작////////////////////////////////////////
+	/////////////////////////////////////// 예림 시작////////////////////////////////////////
 	public CafeMember getCafeMember(int cafeNo, int userNo); // 예림예림
-	///////////////////////////////// 예림
-	///////////////////////////////// 끝/////////////////////////////////////////////
+	///////////////////////////////// 예림 끝/////////////////////////////////////////////
 
 /////////////////////////////////지니//////////////////////////////
 	public void addCafeApplication(CafeApplication cafeApplication);// 카페가입신청
@@ -25,6 +24,13 @@ public interface CafeMemberDao {
 	public void updateCafeMemberProfile(CafeMember cafeMember);
 	
 	public int changeGradeNo(CafeMember cafeMember);
+	
+	public int updateMembersIncrease (int cafeNo);
+	
+	public int updateMembersDecrease (int cafeNo);
+	
+	public int lowGradeNo (int cafeNo);
+	
 
 ////////////////////////////////지니끝//////////////////////////////////
 
@@ -52,6 +58,8 @@ public interface CafeMemberDao {
 	public int updateReplyCountDecrease (int memberNo) throws Exception;
 	
 	public int updateVisitCountIncrease (int memberNo) throws Exception;
+	
+	public int updateFavorite (CafeMember cafeMember) throws Exception;
 
 ////////////////////////////기황 끝////////////////////////////////////
 

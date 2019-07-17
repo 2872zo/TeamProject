@@ -3,6 +3,7 @@ package com.phoenix.mvc.service.user;
 import java.util.List;
 
 import com.phoenix.mvc.common.Search;
+import com.phoenix.mvc.service.domain.Cafe;
 import com.phoenix.mvc.service.domain.User;
 
 
@@ -10,21 +11,14 @@ import com.phoenix.mvc.service.domain.User;
 public interface UserDao {
 	
 	// INSERT
-	public void addUser(User user) throws Exception ;
+	public void addUser(User user) throws Exception;
 
-	// SELECT ONE
+	public void updateUser(User user) throws Exception;
 
-	public User getUser(String userId) throws Exception ;
-
-	// SELECT LIST
-	public List<User> getUserList(Search search) throws Exception ;
-
-	// UPDATE
-	public void updateUser(User user) throws Exception ;
+	public User getUser(String userId) throws Exception;
 	
-	// �Խ��� Page ó���� ���� ��üRow(totalCount)  return
-	public int getTotalCount(Search search) throws Exception ;
+	public User getUserInfo(int userNo) throws Exception;
 
-	public User getUserByKakao(String kakao) throws Exception;
+
 	
 }

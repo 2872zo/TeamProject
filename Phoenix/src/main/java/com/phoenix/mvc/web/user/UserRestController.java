@@ -34,4 +34,6 @@ public class UserRestController {
 		
 		return userService.getUser(userId);
 	}*/
+	
+	
 }

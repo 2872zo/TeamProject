@@ -32,8 +32,13 @@
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
 $(function() {
+	
 	$("#login").on("click" , function() {
-		$(self.location).attr("href","/login");
+		$(self.location).attr("href","/user/loginView");
+	});
+
+	$("#logout").on("click" , function() {
+		$(self.location).attr("href","/user/logout");
 	});
 
 	$("#phoenix").on("click" , function() {
@@ -81,19 +86,26 @@ $(function() {
       <li class="nav-item active">
         <a class="nav-link" href='#' id='cafe'>CafeHome<span class="sr-only">(current)</span></a>
       </li>
+      <c:if test='${!empty sessionScope.user}'>
       <li class="nav-item">
         <a class="nav-link" href="#" id='applications'>카페 가입신청내역</a>
       </li>   
        <li class="nav-item">
         <a class="nav-link" href="#" id='newsFeed'>새글 피드</a>
-      </li>   
+      </li>  
+      </c:if> 
     </ul>
     
   
         <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Chat</a>
      
-      <button class="btn btn-outline-light my-2 my-sm-0" type="submit" id = "login">Login</button>
-   
+      <c:if test='${empty sessionScope.user}'>
+		<button type="submit" class='btn btn-outline-light' id='login'>Login</button>
+		</c:if>
+		<c:if test='${!empty sessionScope.user}'>
+		${sessionScope.user.userNo}<button class="btn btn-outline-dark" type="submit" id = "logout">Logout</button>
+		</c:if>
+		
   </div>
   
 </nav>

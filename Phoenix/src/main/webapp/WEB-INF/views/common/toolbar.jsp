@@ -24,6 +24,8 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
  integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
  crossorigin="anonymous"></script>
+ 
+<script src="http://localhost:82/socket.io/socket.io.js"></script>
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <style>
 
@@ -33,8 +35,16 @@
 
 $(function() {
 	
+	if(${!empty sessionScope.user}){
+	var socket = io("http://192.168.0.78:82");
+	};
+
 	$("#login").on("click" , function() {
 		$(self.location).attr("href","/user/loginView");
+	});
+
+	$("#logout").on("click" , function() {
+		$(self.location).attr("href","/user/logout");
 	});
 
 	$("#phoenix").on("click" , function() {
@@ -80,22 +90,22 @@ $(function() {
         <a class="nav-link disabled" href="#">Link</a>
       </li>   
       <c:set var="uriCheck" value="${pageContext.request.requestURI}" />
-      <c:if test='${uriCheck.startsWith("/WEB-INF/views/chat/")}'>
+      <c:if test='${uriCheck.startsWith("/WEB-INF/views/chat/") && !empty sessionScope.user}'>
      <li class="nav-item">
 
     <button class="btn btn-outline-light" type="button" id='viewFriendsList'>친구목록보기</button>
     <button class="btn btn-outline-light" type="button" id='viewChatRoomList'>채팅방목록보기</button>
     <button class="btn btn-outline-light" type="button" id='viewConfig'>환경설정</button>
- </li> 
+ 	</li> 
      </c:if>
-  
-    </ul>
-    
- 		 <a class="nav-link" href="#" id='goChat'>채팅으로 떠날게</a>
-        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Chat</a>
      
-      <button class="btn btn-outline-light my-2 my-sm-0" type="submit" id = "login">Login</button>
-   
+
+    </ul>
+
+
+      	<button type="button" class='btn btn-${!empty sessionScope.user ? "outline-info' id ='goChat'>채팅가능":"dark' disabled>채팅안됨" }</button>
+		<button type="submit" class='btn btn-outline-${empty sessionScope.user ? "light' id='login'>Login" : "dark' id='logout'>Logout"}</button>
+		
   </div>
 </nav>
 

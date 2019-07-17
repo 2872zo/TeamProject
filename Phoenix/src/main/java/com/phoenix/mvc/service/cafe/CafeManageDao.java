@@ -23,37 +23,38 @@ public CafeApplication getCafeApplication2(int applicationNo);
 
 public List getCafeGrade(int cafeNo);
 
-public void addCafeGrade (CafeGrade cafeGrade);
+public void addCafeGrade(CafeGrade cafeGrade);
 
-public void updateCafeGrade (CafeGrade cafeGrade);
+public void updateCafeGrade(CafeGrade cafeGrade);
 
 public List checkCafeGrade(int cafeNo);
 
-public int flagUpdate(CafeGrade cafeGrade);
-////////////////////////////////지니끝//////////////////////////////////
+public boolean dropCafe(Cafe cafe);
 
+////////////////////////////////지니끝//////////////////////////////////
 
 /////////////////////////////////// 예림시작//////////////////////////////////////////
 
-public List getCafeBoard(int cafeNo);
+	public List getCafeBoard(int cafeNo);
 
-public List getCafeBoard(Search search);
+	public List getCafeBoard(Search search);
 
-public int getCafeNo(String cafeURL);
+	public int getCafeNo(String cafeURL);
 
-public List getBoardPost(int boardNo);
+	public List getBoardPost(int boardNo);
 
-public boolean addEventLog(Event event);// 예림예림 add되면 true return
+	public boolean addEventLog(Event event);// 예림예림 add되면 true return
 
-public boolean checkCafeTodayVisitLog(Event event); // 예림예림 return true- 오늘방문함 false -오늘첫방문
+	public boolean checkCafeTodayVisitLog(Event event); // 예림예림 return true- 오늘방문함 false -오늘첫방문
 
-public Map<String, String> getCafeStatistics(Event event);
+	public Map<String, String> getCafeStatistics(Event event);
 
-public boolean addCafeBoard(List<Board> newBoardList);
+	public boolean addCafeBoard(List<Board> newBoardList);
 
-public boolean updateCafeBoard(List<Board> existBoardList);
+	public boolean updateCafeBoard(List<Board> existBoardList);
 
-public boolean deleteCafeBoard(List<Board> deleteBoardList);
+	public boolean deleteCafeBoard(List<Board> deleteBoardList);
+	
 
 ///////////////////////////////////////// 예림 끝////////////////////////////////////////////////
 

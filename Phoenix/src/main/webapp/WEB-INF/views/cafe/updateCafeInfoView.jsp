@@ -40,7 +40,8 @@
 			$( "button.btn.btn-success" ).on("click" , function() {
 				alert("수정");
 				var cafeURL = "22";
-				$("form").attr("method" , "POST").attr("action" , "/cafe/"+cafeURL+"/manage/updateCafeInfo").submit();
+				$("form").attr("method" , "POST").attr("action" , "/cafe/"+cafeURL+"/manage/updateCafeInfo")
+				.attr("enctype","multipart/form-data").submit();
 			});
 		});	
 
@@ -91,12 +92,10 @@
 																		"<strong class=\"text-muted\">카페이름을 입력해주세요.</strong>");
 													}
 												}
-
 											});
-								});
-
-			});
-				
+										});
+									});
+					
 			
 		</script>
 <body>
@@ -132,7 +131,7 @@
     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="cafeDetail" value="${cafe.cafeDetail}"></textarea>
     </div>
   </div>  
-<!--
+<!--  
 <div class="form-group">
     <label for="exampleFormControlInput1" class="col-sm-offset-3 col-sm-3 control-label">배너이미지</label>
     <div class="col-sm-4">
@@ -144,26 +143,27 @@
     <div class="col-sm-4">
     <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="" name="mainImg">
     </div>
-  </div>  --> 
-	  <div class="input-group mb-3">
-  		<div class="input-group-prepend">
-    <span class="input-group-text" id="inputGroupFileAddon01" name="bannerImg" >배너이미지</span>
   </div>  
-  <div class="custom-file" >
-    <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" name="bannerImg">
-    <label class="custom-file-label" for="inputGroupFile01"></label>
-  </div>
-  </div>
-   	
-	<div class="input-group mb-3">
-  		<div class="input-group-prepend">
-    <span class="input-group-text" id="inputGroupFileAddon01" name="mainImg">메인이미지</span>
-  </div>  
-  <div class="custom-file" >
-    <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" name="mainImg">
-    <label class="custom-file-label" for="inputGroupFile01"></label>
-  </div>
-  </div>
+	  -->
+ 	    <div class="input-group mb-3"> 
+   		<div class="input-group-prepend"> 
+     <span class="input-group-text" id="inputGroupFileAddon01" name="uploadFile" >배너이미지</span> 
+   </div>   
+   <div class="custom-file" > 
+     <input type="file" class="custom-file-input" id="uploadFile" name="uploadFile" >
+     <label class="custom-file-label" for="inputGroupFile01"></label>
+   </div>
+   </div> 
+   	 
+<!-- 	<div class="input-group mb-3"> -->
+<!--   		<div class="input-group-prepend"> -->
+<!--     <span class="input-group-text" id="inputGroupFileAddon01" name="mainImg">메인이미지</span> -->
+<!--   </div>   -->
+<!--   <div class="custom-file" > -->
+<!--     <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" name="mainImg"> -->
+<!--     <label class="custom-file-label" for="inputGroupFile01"></label> -->
+<!--   </div> -->
+<!--   </div> -->
   			
   					<div class="form-group">
 						<label for="exampleFormControlSelect1"
@@ -186,27 +186,27 @@
 						<div class="col-sm-4">
 							<select class="form-control" id="exampleFormControlSelect1"
 								name="autoApplicationAcceptFlag">								
-								<option value="0">사용</option>
-								<option value="1">미사용</option>
+								<option value="0">미사용</option>
+								<option value="1">사용</option>
 							</select>
 						</div>
 					</div>
-<div class="form-group">
+<!--  <div class="form-group">
     <label for="exampleFormControlInput1" class="col-sm-offset-3 col-sm-3 control-label">카페아이콘</label>
     <div class="col-sm-4">
     <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="" name="cafeIcon">
     </div>
-  </div>    
-	<!--  <div class="input-group mb-3">
+  </div>   
+	  <div class="input-group mb-3">
   		<div class="input-group-prepend">
-    <span class="input-group-text" id="inputGroupFileAddon01" name="cafeIcon">카페아이콘</span>
+    <span class="input-group-text" id="inputGroupFileAddon01" name="filedata">카페아이콘</span>
   </div>  
   <div class="custom-file" >
-    <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+    <input id="uploadInputBox" class="custom-file-input" type="file" name="filedata" multiple />
     <label class="custom-file-label" for="inputGroupFile01"></label>
   </div>
-  </div>  
-		-->			
+  </div>  --> 
+					
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
 		      <button type="button" class="btn btn-success"  >수정</button>
