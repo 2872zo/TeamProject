@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -56,10 +57,15 @@ public class CafeManageController {
 	@Qualifier("cafeMemberServiceImpl")
 	private CafeMemberService cafeMemberService;
 
+	@Value("${pageSize}")
+	private int pageSize;
+
+	@Value("${pageUnit}")
+	private int pageUnit;
+
 	public CafeManageController() {
 		System.out.println(this.getClass().getName() + "생성자 start");
 	}
-
 
 ////////////////////////////////////////////예림//////////////////////////////////////////////
 	@RequestMapping(value = "/{cafeURL}/manage/updateCafeBoardView") // 예림예림
@@ -73,9 +79,9 @@ public class CafeManageController {
 		Search search = new Search();
 		search.setCafeURL(cafeURL);
 		List boardList = cafeManageService.getCafeBoard(search);
-		List<CafeGrade>	useGradeList = cafeManageService.getCafeGrade(cafeURL);
-		
-		//일단은 담는데,
+		List<CafeGrade> useGradeList = cafeManageService.getCafeGrade(cafeURL);
+
+		// 일단은 담는데,
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("useGradeList", useGradeList);
 		// 모델에 cafeURL의 cafe 객체도 같이 넘겨줌
@@ -91,13 +97,12 @@ public class CafeManageController {
 		List<Board> newBoard = new ArrayList<Board>();
 
 		String[] boards = request.getParameterValues("board");
-		//int a = request.getParameterValues("board").length;
+		// int a = request.getParameterValues("board").length;
 		int boardIndex = 1;
-		
-		String [] grades = request.getParameterValues("grade");
-		//System.out.println("grades!!"+grades.length);//구분선빼고 다나옴
-		
-		
+
+		String[] grades = request.getParameterValues("grade");
+		// System.out.println("grades!!"+grades.length);//구분선빼고 다나옴
+
 		for (int i = 0; i < boards.length; i++) // board selectbox
 		{
 			System.out.println(boards[i]); // 파싱해서 / 있는애들은 board넘버.. update여러개, newBoard인애들은 add
@@ -106,13 +111,12 @@ public class CafeManageController {
 			board.setCafeURL(cafeURL);
 			board.setBoardIndex(boardIndex); // 순서이동해도 option순서대로 오나
 			boardIndex++;
-			
+
 			if (boards[i].contains("/")) // "/"이 들어있는애==즉 기존 있던애들 (newBoard가 아님)
 			{
 				board.setBoardNo(Integer.parseInt(boards[i].split("/")[1]));
 				existBoard.add(board); // existBoardList에 넣어준다.
-			}
-			else // 새로운애들 (newBoard)
+			} else // 새로운애들 (newBoard)
 			{
 				// newBoard123에서 d로 split 해서 뒤에 number를 set해준다.
 				board.setBoardNo(Integer.parseInt(boards[i].split("d")[1]));// 최선의 방법일까?
@@ -120,28 +124,23 @@ public class CafeManageController {
 
 			}
 		}
-		
-		for(int i=0; i< grades.length; i++) //접근권한설정
+
+		for (int i = 0; i < grades.length; i++) // 접근권한설정
 		{
-			System.out.println("grade"+grades[i]);
-			String [] gradeValue= grades[i].split("/");
-			
-			if(gradeValue[1].contains("new"))//새로만들어진애일때
+			System.out.println("grade" + grades[i]);
+			String[] gradeValue = grades[i].split("/");
+
+			if (gradeValue[1].contains("new"))// 새로만들어진애일때
 			{
-				for(int j=0;j<newBoard.size(); j++)
-				{
-					if(newBoard.get(j).getBoardNo()==Integer.parseInt(gradeValue[1].split("w")[1]))
-					{
+				for (int j = 0; j < newBoard.size(); j++) {
+					if (newBoard.get(j).getBoardNo() == Integer.parseInt(gradeValue[1].split("w")[1])) {
 						newBoard.get(j).setAccessGrade(gradeValue[0]);
 					}
 				}
-			}
-			else//원래있던애일때
+			} else// 원래있던애일때
 			{
-				for(int j=0; j<existBoard.size(); j++)
-				{
-					if(existBoard.get(j).getBoardNo()==Integer.parseInt(gradeValue[1]))
-					{
+				for (int j = 0; j < existBoard.size(); j++) {
+					if (existBoard.get(j).getBoardNo() == Integer.parseInt(gradeValue[1])) {
 						existBoard.get(j).setAccessGrade(gradeValue[0]);
 					}
 				}
@@ -166,8 +165,7 @@ public class CafeManageController {
 					}
 				}
 
-			} 
-			else if (element.contains("boardDetail/")) // 원래있던애들
+			} else if (element.contains("boardDetail/")) // 원래있던애들
 			{
 				for (int i = 0; i < existBoard.size(); i++) {
 					if (existBoard.get(i).getBoardNo() == Integer.parseInt(element.split("/")[1]))// 기존애 boardNo랑같으면
@@ -175,38 +173,28 @@ public class CafeManageController {
 						existBoard.get(i).setBoardDetail(request.getParameter(element)); // Board이름 set
 					}
 				}
-			} 
-			else if(element.contains("boardPrivate/"))
-			{
-				for(int i=0; i<existBoard.size(); i++)
-				{
-					if(existBoard.get(i).getBoardNo() == Integer.parseInt(element.split("/")[1] ))
-					{
+			} else if (element.contains("boardPrivate/")) {
+				for (int i = 0; i < existBoard.size(); i++) {
+					if (existBoard.get(i).getBoardNo() == Integer.parseInt(element.split("/")[1])) {
 						existBoard.get(i).setPrivateFlag(request.getParameter(element).charAt(0));
 					}
 				}
-				
-			}
-			else if (element.contains("newBoardDetail")) // 새로 생긴애
+
+			} else if (element.contains("newBoardDetail")) // 새로 생긴애
 			{
 				for (int i = 0; i < newBoard.size(); i++) {
 					if (newBoard.get(i).getBoardNo() == Integer.parseInt(element.split("l")[1])) {
 						newBoard.get(i).setBoardDetail(request.getParameter(element));
 					}
 				}
-			}
-			else if(element.contains("newBoardPrivate"))
-			{
-				for(int i=0; i<newBoard.size(); i++)
-				{
-					if(newBoard.get(i).getBoardNo() == Integer.parseInt(element.split("e")[2] ))
-					{
+			} else if (element.contains("newBoardPrivate")) {
+				for (int i = 0; i < newBoard.size(); i++) {
+					if (newBoard.get(i).getBoardNo() == Integer.parseInt(element.split("e")[2])) {
 						newBoard.get(i).setPrivateFlag(request.getParameter(element).charAt(0));
 					}
 				}
-				
-			}
-			else if (element.contains("newBoard")) // 새로생긴애 newBoardName
+
+			} else if (element.contains("newBoard")) // 새로생긴애 newBoardName
 			{
 				// element.split("e")[2]
 				for (int i = 0; i < newBoard.size(); i++) {
@@ -214,25 +202,23 @@ public class CafeManageController {
 						newBoard.get(i).setBoardName(request.getParameter(element));
 					}
 				}
-			} 
-			
-			
-			
+			}
+
 		}
-		
+
 		System.out.println("newBoard : " + newBoard);
 		System.out.println("existBoard : " + existBoard); // 다 잘담겼는데 구분선은 boardDetail,boardName이 null이다.
 
-		if (existBoard.size() > 0) { //뭐 항상 0보다 크겠지
+		if (existBoard.size() > 0) { // 뭐 항상 0보다 크겠지
 			boolean updateCafeResult = cafeManageService.updateCafeBoard(existBoard);
 		}
-		
+
 		if (newBoard.size() > 0) // newBoard가 있다면
 		{
 			boolean addCafeResult = cafeManageService.addCafeBoard(newBoard);
 		}
 
-		return "forward:/cafe/"+cafeURL+"/manage/updateCafeBoardView";
+		return "forward:/cafe/" + cafeURL + "/manage/updateCafeBoardView";
 	}
 
 	@RequestMapping(value = "/{cafeURL}/manage/getCafeStatistics") // 예림예림 여기는 처음에만 들어온다.
@@ -260,27 +246,25 @@ public class CafeManageController {
 		return "cafe/statisticsCafe";
 	}
 
-	@RequestMapping(value="/{cafeURL}/addCafeReportView")
-	public String addCafeReportView(@ModelAttribute Search search,Model model) throws Exception
-	{
+	@RequestMapping(value = "/{cafeURL}/addCafeReportView")
+	public String addCafeReportView(@ModelAttribute Search search, Model model) throws Exception {
 		System.out.println("/addCafeReportView");
-		
+
 		return "cafe/addCafeReport";
 	}
 //////////////////////////////////////예림끝////////////////////////////////////////////
-	
+
 ///////////////////////////////// 지니//////////////////////////////
 
 	@RequestMapping(value = "/{cafeURL}/manage/getCafeApplicationList")
 	public String getCafeApplicationList(@ModelAttribute("search") Search search, Model model) {
-		int pageUnit = 5;
-		int pageSize = 5;
+
 		System.out.println("/{cafeURL}/manage/getCafeApplicationList : GET/POST");
 
 		if (search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
 		}
-		search.setPageSize(5);// 일단 5로 설정
+		search.setPageSize(pageSize);
 
 		Map<String, Object> map = cafeManageService.getCafeApplicationList(search);
 
@@ -293,13 +277,14 @@ public class CafeManageController {
 		model.addAttribute("search", search);
 
 		return "/cafe/listCafeApplication";
-
 	}
 
 	@RequestMapping(value = "/{cafeURL}/manage/updateCafeApplication", method = RequestMethod.POST)
 	public String updateCafeApplication(@ModelAttribute("search") Search search) {
 
 		System.out.println("/{cafeURL}/manage/updateCafeApplication : POST");
+		System.out.println(search);
+
 		System.out.println(search.getBoardName());
 
 		int applicationNo;
@@ -309,21 +294,20 @@ public class CafeManageController {
 
 			applicationNo = (Integer.parseInt(cafeApplication.substring(4, 9))); // true4,no5
 			CafeApplication cafe = cafeManageService.getCafeApplication2(applicationNo);
-			cafe.setAcceptStatusCode("ca102");
+			cafe.setAcceptStatusCode("ca101");
 			cafeManageService.updateAcceptStatusCode(cafe);
 
 			CafeMember member = new CafeMember();
 			member.setCafeNo(cafe.getCafeNo());
 			member.setUserNo(cafe.getUserNo());
 			member.setMemberNickname(cafe.getMemberNickname());
-			member.setCafeMemberGradeNo(10006);// 이거 나중에 조인해서 추가해11
 			cafeMemberService.addCafeMember(member);
 
 		} else if (cafeApplication.contains("false")) {// 상세조회에서 거절할때
 
 			applicationNo = (Integer.parseInt(cafeApplication.substring(5, 10)));// false5,no10
 			CafeApplication cafe = cafeManageService.getCafeApplication2(applicationNo);
-			cafe.setAcceptStatusCode("ca103");
+			cafe.setAcceptStatusCode("ca102");
 			cafeManageService.updateAcceptStatusCode(cafe);
 
 		} else {// 리스트에서 승인, 거절할때
@@ -336,11 +320,12 @@ public class CafeManageController {
 			List<String> nickName = new ArrayList<String>();
 			List<Integer> userNo = new ArrayList<Integer>();
 			List<Integer> cafeNo = new ArrayList<Integer>();
+			List<Integer> appNo = new ArrayList<Integer>();
 
 			System.out.println("true는 승인,false는 거절  " + start.contains("&"));
 
 			if (start.contains("&")) {
-//멤버닉네임,userNo,cafeNo 받아오기
+// 멤버닉네임,userNo,cafeNo,applicationNo 받아오기
 				for (int i = 0; i < split.length; i++) {
 					System.out.println("값 몇개인지부터 확인: " + split.length);
 					System.out.println("split" + split[i]);
@@ -348,32 +333,34 @@ public class CafeManageController {
 					nickName.add(result[0]);
 					userNo.add(Integer.parseInt(result[1]));
 					cafeNo.add(Integer.parseInt(result[2]));
+					appNo.add(Integer.parseInt(result[3]));
 				}
 
-//가입승인으로 cafeApplication 코드 업데이트, 카페멤버에 멤버추가
-				/*
-				 * ////기황 수정userNo로 cafeApplication가져오는 부분이 //리스트로 바뀌면서 에러발생했습니다 지니님 추후 수정해주세요~
-				 * for (int i = 0; i < count; i++) { System.out.println(userNo.get(i));
-				 * CafeApplication cafe = cafeManageService.getCafeApplication(userNo.get(i));
-				 * 
-				 * System.out.println(cafe); cafe.setAcceptStatusCode("ca102");
-				 * cafeManageService.updateAcceptStatusCode(cafe);
-				 * 
-				 * CafeMember member = new CafeMember(); member.setCafeNo(cafeNo.get(i));
-				 * member.setUserNo(userNo.get(i)); member.setMemberNickname(nickName.get(i));
-				 * member.setCafeMemberGradeNo(10006);// 이거 나중에 조인해서 추가해22
-				 * cafeMemberService.addCafeMember(member);
-				 * 
-				 * }
-				 */
+// 가입승인으로 cafeApplication 코드 업데이트, 카페멤버에 멤버추가
+
+				for (int i = 0; i < count; i++) {
+					System.out.println(appNo.get(i));
+					CafeApplication cafe = cafeManageService.getCafeApplication2(appNo.get(i));
+
+					System.out.println(cafe);
+					cafe.setAcceptStatusCode("ca101");
+					cafeManageService.updateAcceptStatusCode(cafe);
+
+					CafeMember member = new CafeMember();
+					member.setCafeNo(cafeNo.get(i));
+					member.setUserNo(userNo.get(i));
+					member.setMemberNickname(nickName.get(i));
+					cafeMemberService.addCafeMember(member);
+
+				}
 
 			} else {
-//가입거절로 cafeApplication 코드 업데이트
+// 가입거절로 cafeApplication 코드 업데이트
 				for (int i = 0; i < count; i++) {
 					applicationNo = (Integer.parseInt(split[i]));
 					System.out.println("여기 값?" + applicationNo);
 					CafeApplication cafe = cafeManageService.getCafeApplication2(applicationNo);
-					cafe.setAcceptStatusCode("ca103");
+					cafe.setAcceptStatusCode("ca102");
 					cafeManageService.updateAcceptStatusCode(cafe);
 				}
 
@@ -381,17 +368,19 @@ public class CafeManageController {
 
 		}
 
-		return "redirect:/cafe/1234/manage/getCafeApplicationList";// 카페주소 변경!!cafeNo로 url 가져오기 추가
+		return "redirect:/cafe/" + search.getCafeURL() + "/manage/getCafeApplicationList";// 카페주소 변경!!cafeNo로 url가져오기 추가
 	}
 
 	@RequestMapping(value = "/{cafeURL}/manage/getCafeApplication", method = RequestMethod.GET)
-	public String getCafeApplication(@RequestParam("applicationNo") int applicationNo, Model model) {
+	public String getCafeApplication(@RequestParam("applicationNo") int applicationNo, Model model,
+			@PathVariable String cafeURL) {
 
 		System.out.println("/{cafeURL}/manage/getCafeApplication : GET");
 
 		System.out.println(applicationNo);
 
 		CafeApplication cafeApplication = cafeManageService.getCafeApplication2(applicationNo);
+		cafeApplication.setCafeIcon(cafeURL);// 카페url 넘겨주는 용도!
 
 		model.addAttribute("cafeApplication", cafeApplication);
 
@@ -399,17 +388,34 @@ public class CafeManageController {
 
 	}
 
-	public String dropCafe() {
-		return null;
+	@GetMapping(value = "/{cafeURL}/manage/dropCafeView")
+	public String dropCafeView(@RequestParam int cafeNo, Model model) throws Exception {// 매니저유저넘버 추가
 
+		System.out.println("/{cafeURL}/manage/dropCafeView : GET");
+
+		Cafe cafe = cafeManageService.getCafeInfo(cafeNo);
+
+		model.addAttribute("cafe", cafe);
+
+		return "cafe/dropCafe";
+
+	}
+
+	@PostMapping(value = "/{cafeURL}/manage/dropCafe")
+	public String dropCafe(@PathVariable String cafeURL, @ModelAttribute("Cafe") Cafe cafe) {
+
+		System.out.println("/{cafeURL}/manage/dropCafe : POST");
+
+		System.out.println(cafe);
+
+		cafe.setClosedFlag(true);// 카페폐쇄
+		cafeManageService.dropCafe(cafe, cafeURL);
+
+		return null;// 메인으로 이동?
 	}
 
 	@RequestMapping(value = "/{cafeURL}/manage/updateCafeGradeView", method = RequestMethod.GET)
 	public String updateCafeGradeView(@PathVariable String cafeURL, Model model) {
-
-		for (int i = 2; i <= 5; i++) {
-
-		}
 
 		System.out.println("/{cafeURL}/manage/updateCafeGradeView : GET");
 
@@ -429,106 +435,92 @@ public class CafeManageController {
 		System.out.println("/{cafeURL}/manage/updateCafeGrade : POST");
 		System.out.println(cafeNo);
 		System.out.println(grades);
-		
-		System.out.println("=======================================");
-		System.out.println(grades.getGradeList().get(4));
-		System.out.println("=======================================");
-		System.out.println(grades.getGradeList().get(3));
-		System.out.println("=======================================");
-		System.out.println(grades.getGradeList().get(2));
-		System.out.println("=======================================");
-		System.out.println(grades.getGradeList().get(1));
-		System.out.println("=======================================");
-		System.out.println(grades.getGradeList().get(0));
-		System.out.println("=======================================");
 
-		
-
-		CafeGrade cafeGrade = new CafeGrade();
 		CafeMember cafeMember = new CafeMember();
-		
+
 		int size = grades.getGradeList().size();
 		System.out.println(size);
 
-		for (int i=size-1; i>=0; i--) {
-			//System.out.println("여기");
+		for (int i = size - 1; i >= 0; i--) {
+
 			CafeGrade info = grades.getGradeList().get(i);
-			//System.out.println(info);
-			
-			//System.out.println(info.isGradeFlag());
 
-			if (!info.isGradeFlag()&& i!=0) {// 등급삭제로인한 멤버 등급변경+업데이트
-				System.out.println("i값?" + i);
-				int gradeNo = info.getCafeGradeNo();
-				System.out.println("지금" + gradeNo);
-				int changeNo = (gradeNo - 1);
-				System.out.println("변할" + changeNo);
-
-				cafeMember.setCafeMemberGradeNo(gradeNo);
-				cafeMember.setChangeGradeNo(changeNo);
-
-				System.out.println("변하기전" + cafeMember);
-				cafeMemberService.changeGradeNo(cafeMember);
-				System.out.println("변하기후" + cafeMember);
-
-				//// 해당등급 기본값 세팅
-				System.out.println("전 cafeGrade값! " + cafeGrade);
-
-				cafeGrade.setCafeGradeNo(gradeNo);
-				cafeGrade.setAutoUpgradeFlag(false);
-				cafeGrade.setGradeFlag(false);
-				cafeManageService.flagUpdate(cafeGrade);
-				System.out.println("후 cafeGrade값! " + cafeGrade);
-
-			} else if (i == 0) {// 제일 기본등급은 이름만 바꿔주는 걸로
-
+			if (i == 0) {// 멤버1은 이름만 바꿈
 				System.out.println("i값이 0일때만 여기 들어와줘" + i);
 
-				cafeGrade.setCafeGradeNo(info.getCafeGradeNo());
-				cafeGrade.setGradeName(info.getGradeName());
-				cafeGrade.setGradeFlag(true);
-				cafeManageService.updateCafeGrade(cafeGrade);
+				info.setAutoUpgradeFlag(true);
+				info.setGradeFlag(true);
+				cafeManageService.updateCafeGrade(info);
 
-			} /*else {// 등급에 관한 정보 업데이트
+			} else if (i != 0) {// 일단 모든값 다 업데이트
 
-				cafeGrade.setCafeGradeNo(info.getCafeGradeNo());
-				cafeGrade.setAutoUpgradeFlag(info.isAutoUpgradeFlag());
-				cafeGrade.setGradeName(info.getGradeName());
-				cafeGrade.setRequiredPostCount(info.getRequiredPostCount());
-				cafeGrade.setRequiredReplyCount(info.getRequiredReplyCount());
-				cafeGrade.setRequiredVisitCount(info.getRequiredVisitCount());
-				cafeGrade.setGradeFlag(info.isGradeFlag());
-				cafeManageService.updateCafeGrade(cafeGrade);
+				System.out.println("i값 확인 " + i);
 
-			}*/
+				cafeManageService.updateCafeGrade(info);
+
+				if (!info.isGradeFlag() && i != 0) {// 업데이트후 등급을 삭제한 경우에는 해당 멤버 등급 내리기
+					System.out.println("i값?" + i);
+					int gradeNo = info.getCafeGradeNo();
+					int changeNo = (gradeNo - 1);
+
+					cafeMember.setCafeMemberGradeNo(gradeNo);
+					cafeMember.setChangeGradeNo(changeNo);
+
+					System.out.println("변하기전" + cafeMember);
+					cafeMemberService.changeGradeNo(cafeMember);
+					System.out.println("변하기후" + cafeMember);
+
+					System.out.println("전 info값! " + info);
+
+					if (info.getMemberGradeCode().equals("cg106")) {// 삭제한 등급값 초기화!
+						info.setGradeName("우수");
+					} else if (info.getMemberGradeCode().equals("cg105")) {
+						info.setGradeName("열심");
+					} else if (info.getMemberGradeCode().equals("cg104")) {
+						info.setGradeName("성실");
+					} else if (info.getMemberGradeCode().equals("cg103")) {
+						info.setGradeName("일반");
+					}
+
+					info.setRequiredPostCount(0);// 등업조건도 다 0처리, 자동등업도 막기
+					info.setRequiredReplyCount(0);
+					info.setRequiredVisitCount(0);
+					info.setAutoUpgradeFlag(false);
+
+					cafeManageService.updateCafeGrade(info);
+					System.out.println("후 info값! " + info);
+
+				}
+
+			}
 
 		}
 
-		return "";
-		// "redirect:/cafe/no1cafe/manage/updateCafeGradeView"; // cafeURL 수정
+		return "redirect:/cafe/no1cafe/manage/updateCafeGradeView"; // cafeURL 수정
+
 	}
 
 ////////////////////////////////지니끝//////////////////////////////////
 /////////////////////////////// 준호시작///////////////////////////////////////
-// 준호
+//준호
 	@RequestMapping(value = "/{cafeURL}/manage/updateCafeInfoView", method = RequestMethod.GET)
 	public String updateCafeInfoView(@RequestParam("cafeNo") int cafeNo, Model model) throws Exception {
 
 		System.out.println("/updateCafeInfoView : GET");
 
 		Cafe cafe = cafeManageService.getCafeInfo(cafeNo);
-// Model �� View ����
+//Model �� View ����
 		model.addAttribute("cafe", cafe);
 
 		return "cafe/updateCafeInfoView";
 	}
 
-// 준호
+//준호
 	@RequestMapping(value = "/{cafeURL}/manage/updateCafeInfo", method = RequestMethod.POST)
 	public String updateCafeInfo(@ModelAttribute("cafe") Cafe cafe) throws Exception {
 
 		System.out.println("/updateCafeInfoView : POST");
-		
+
 		cafeManageService.updateCafeInfo(cafe);
 
 		Cafe cafe2 = cafeManageService.getCafeInfo(cafe.getCafeNo());
@@ -538,21 +530,21 @@ public class CafeManageController {
 		return "cafe/updateCafeInfo";
 	}
 
-// 준호
+//준호
 	@RequestMapping(value = "/{cafeURL}/manage/getCafeInfo", method = RequestMethod.POST)
 	public String getCafeInfo(@RequestParam("cafeNo") int cafeNo, Model model) throws Exception {
-		
+
 		Cafe cafe = cafeManageService.getCafeInfo(cafeNo);
-		
-		System.out.println("카페정보들오니"+cafe);
-		
+
+		System.out.println("카페정보들오니" + cafe);
+
 		model.addAttribute("cafe", cafe);
 
 		return "cafe/getCafeInfo";
 
 	}
 
-// 준호
+//준호
 	@RequestMapping(value = "/{cafeURL}/manage/updateCafeApplicationFormView", method = RequestMethod.GET)
 	public String updateCafeApplicationFormView(@RequestParam("cafeNo") int cafeNo, Model model) throws Exception {
 
@@ -561,7 +553,7 @@ public class CafeManageController {
 		System.out.println("/updateCafeApplicationFormView : GET");
 
 		Cafe cafe = cafeManageService.getCafeInfo(cafeNo);
-// Model �� View ����
+//Model �� View ����
 		model.addAttribute("cafe", cafe);
 
 		System.out.println(cafe + "카페도메인찍자");
@@ -569,7 +561,7 @@ public class CafeManageController {
 		return "cafe/updateCafeApplicationFormView";
 	}
 
-// 준호
+//준호
 	@RequestMapping(value = "/{cafeURL}/manage/updateCafeApplicationForm", method = RequestMethod.POST)
 	public String updateCafeApplicationForm(@ModelAttribute("cafe") Cafe cafe) throws Exception {
 

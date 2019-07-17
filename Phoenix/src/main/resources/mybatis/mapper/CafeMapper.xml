@@ -94,6 +94,33 @@ VALUES ( SEQ_MEMBER_GRADE_NO.NEXTVAL, 10010, '호준백', 'cg100', '7', '7', '7'
 	  WHERE cafe_no = #{cafeNo:NUMERIC}
 	 </update>
 	 
+	 <update id ="dropCafe" parameterType= "Cafe" >
+	 	UPDATE cafe
+	 	<set>
+	 		close_reason=#{closeReason},
+	 		closed_flag=#{closedFlag}
+	 	</set>
+		 WHERE cafe_no = #{cafeNo:NUMERIC}
+	 </update>
+	 
+	 
+	 <update id="decreaseMember" parameterType="int">
+		UPDATE
+		cafe
+		<set>
+		members = members-1
+		WHERE cafe_no= #{cafeNo:NUMERIC}
+		</set>
+	</update>
+	
+	<update id="increaseMember" parameterType="int">
+		UPDATE
+		cafe
+		<set>
+		members = members+1
+		WHERE cafe_no = #{cafeNo:NUMERIC}
+		</set>
+	</update>
 	
 
 </mapper>

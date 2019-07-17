@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
 
@@ -45,17 +46,25 @@
 </head>
 
 <body>
+
 	<div class='container'>
 
-
+		<c:forEach var = 'post' items='${newsFeed}'>
 		<div class="card border-primary w-85">
 			<div class="card-body">
-				<h5 class="card-title">Card title</h5>
-				<p class="card-text">With supporting text below as a natural
-					lead-in to additional content.</p>
-				<a href="#" class="btn btn-primary">Button</a>
+				<h5 class="card-title">${post.postTitle}</h5>
+				<p class="card-text">
+				<c:if test="${fn:length(post.postContent)>53}">
+				${fn:substring(post.postContent,0,50)}...
+				</c:if>
+				<c:if test="${fn:length(post.postContent)<54}">
+				${post.postContent}
+				</c:if>
+				</p>
+				${post.regDate}
 			</div>
 		</div>
+		</c:forEach>
 	</div>
 	<!--  화면구성 div Start /////////////////////////////////////-->
 </body>

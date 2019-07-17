@@ -26,7 +26,7 @@
 			 var cafeURL =1234;
 			$( "button.btn.btn-success" ).on("click" , function() {
 				alert("가입");
-				$("form").attr("method" , "POST").attr("action" , "/cafe/"+cafeURL+"/addCafeApplication?cafeNo="+${cafe.cafeNo}).submit();
+				$("form").attr("method" , "POST").attr("action" , "/cafe/"+cafeURL+"/addCafeApplication").submit();
 			});
 		});	
 
@@ -35,8 +35,9 @@
 <body>
 	
 <form class="form-horizontal">
-
-
+<input type="hidden" name="autoApplicationAcceptFlag" value="${cafe.autoApplicationAcceptFlag }"/>
+<input type="hidden" name="memberNicknameFlag" value="${cafe.memberNicknameFlag }"/>
+<input type="hidden" name="cafeNo" value="${cafe.cafeNo }"/>
 		<div class="row" align="center">
 	  		<div class="col-sm-4"><strong>카페이름 : ${cafe.cafeName} 카페입니다.</strong></div>
 		</div>
@@ -57,6 +58,7 @@
 		  <c:if test="${!empty cafe.applicationQuestion1}">
 		 <div class="row" align="center">
 	  		<div class="col-sm-4"><strong>가입질문1: ${ cafe.applicationQuestion1}</strong></div>
+	  		<input type="hidden" name ="question1" value="${  cafe.applicationQuestion1}"/>
 		</div>
 		
 			<div class="form-group">
@@ -70,29 +72,32 @@
 		  <c:if test="${!empty cafe.applicationQuestion2}">
 		<div class="row" align="center">
 	  		<div class="col-sm-4"><strong>가입질문2: ${ cafe.applicationQuestion2}</strong></div>
+	  		<input type="hidden" name ="question2" value="${  cafe.applicationQuestion2}"/>
 		</div>
 		
 		<div class="form-group">
-		    <label for="answer1" class="col-sm-offset-1 col-sm-3 control-label">가입질문2에 대한 답변</label>
+		    <label for="answer2" class="col-sm-offset-1 col-sm-3 control-label">가입질문2에 대한 답변</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="answer2" name="answer2" placeholder="질문1에 대한 답변">
+		      <input type="text" class="form-control" id="answer2" name="answer2" placeholder="질문2에 대한 답변">
 		    </div>
 		  </div>
 		  </c:if>
 		  
-		 <c:if test="${!empty cafe.applicationQuestion3} ">
+		   <c:if test="${!empty cafe.applicationQuestion3}">
 		<div class="row" align="center">
-	  		<div class="col-sm-4"><strong>가입질문3: ${ cafe.applicationQuestion3}</strong></div>
+	  		<div class="col-sm-4"><strong>가입질문2: ${ cafe.applicationQuestion3}</strong></div>
+	  		<input type="hidden" name ="question3" value="${  cafe.applicationQuestion3}"/>
 		</div>
 		
-		
 		<div class="form-group">
-		    <label for="answer1" class="col-sm-offset-1 col-sm-3 control-label">가입질문3에 대한 답변</label>
+		    <label for="answer3" class="col-sm-offset-1 col-sm-3 control-label">가입질문3에 대한 답변</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="answer2" name="answer3" placeholder="질문1에 대한 답변">
+		      <input type="text" class="form-control" id="answer3" name="answer3" placeholder="질문3에 대한 답변">
 		    </div>
 		  </div>
 		  </c:if>
+		  
+		 
 		
 		  
 

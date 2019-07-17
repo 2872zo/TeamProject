@@ -13,23 +13,24 @@ import com.phoenix.mvc.service.domain.Cafe;
 public interface CafeManageDao {
 
 ///////////////////////////////// 지니//////////////////////////////
-	public List<CafeApplication> getCafeApplicationList(Search search);
+public List<CafeApplication> getCafeApplicationList(Search search);
 
-	public int getTotalCount(Search search);
+public int getTotalCount(Search search);
 
-	public void updateAcceptStatusCode(CafeApplication cafeApplication);
+public void updateAcceptStatusCode(CafeApplication cafeApplication);
 
-	public CafeApplication getCafeApplication2(int applicationNo);
+public CafeApplication getCafeApplication2(int applicationNo);
 
-	public List getCafeGrade(int cafeNo);
+public List getCafeGrade(int cafeNo);
 
-	public void addCafeGrade(CafeGrade cafeGrade);
+public void addCafeGrade(CafeGrade cafeGrade);
 
-	public void updateCafeGrade(CafeGrade cafeGrade);
+public void updateCafeGrade(CafeGrade cafeGrade);
 
-	public List checkCafeGrade(int cafeNo);
+public List checkCafeGrade(int cafeNo);
 
-	public int flagUpdate(CafeGrade cafeGrade);
+public boolean dropCafe(Cafe cafe);
+
 ////////////////////////////////지니끝//////////////////////////////////
 
 /////////////////////////////////// 예림시작//////////////////////////////////////////
@@ -58,15 +59,15 @@ public interface CafeManageDao {
 ///////////////////////////////////////// 예림 끝////////////////////////////////////////////////
 
 /////////////////////////////// 준호시작///////////////////////////////////////
-	public void updateCafeInfo(Cafe cafe) throws Exception;
+public void updateCafeInfo(Cafe cafe) throws Exception;
 
-	public Cafe getCafeInfo(int cafeNo) throws Exception;
+public Cafe getCafeInfo(int cafeNo) throws Exception;
 
-	public void updateCafeApplicationForm(Cafe cafe) throws Exception;
+public void updateCafeApplicationForm(Cafe cafe) throws Exception;
 
-	public Cafe getCafeName(String cafeName) throws Exception;
+public Cafe getCafeName(String cafeName) throws Exception;
 
-	public Cafe getCafeURL(String URL) throws Exception;
+public Cafe getCafeURL(String URL) throws Exception;
 
 /////////////////////////////// 준호끝///////////////////////////////////////
 }

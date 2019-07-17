@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.cafe.CafeMemberDao;
 import com.phoenix.mvc.service.domain.CafeApplication;
+import com.phoenix.mvc.service.domain.CafeGrade;
 import com.phoenix.mvc.service.domain.CafeMember;
 import com.phoenix.mvc.service.domain.CafeMemberBlock;
 
@@ -53,6 +54,24 @@ public class CafeMemberDaoImpl implements CafeMemberDao {
 		return sqlSession.update("CafeMemberMapper.changeGradeNo", cafeMember);
 	}
 
+	@Override
+	public int updateMembersIncrease(int cafeNo) {
+
+		return sqlSession.update("CafeMapper.increaseMember", cafeNo);
+	}
+
+	@Override
+	public int updateMembersDecrease(int cafeNo) {
+
+		return sqlSession.update("CafeMapper.decreaseMember", cafeNo);
+	}
+
+	@Override
+	public int lowGradeNo(int cafeNo) {
+
+		return sqlSession.selectOne("CafeGradeMapper.lowGrade", cafeNo);
+	}
+
 ////////////////////////////////지니끝//////////////////////////////////
 
 ////////////////////////////////////////////////// 예림 시작///////////////////////////////////
@@ -76,8 +95,7 @@ public class CafeMemberDaoImpl implements CafeMemberDao {
 	}
 ///////////////////////////////////////// 예림끝///////////////////////////////////////////
 
-	//////////////////////////////////// 기황
-	//////////////////////////////////// 시작///////////////////////////////////////
+////////////////////////////////////기황 시작///////////////////////////////////////
 	@Override
 	public List getCafeMemberList(Search search) throws Exception {
 
@@ -104,52 +122,58 @@ public class CafeMemberDaoImpl implements CafeMemberDao {
 
 	@Override
 	public List getCafeMemberBlocks(Search search) throws Exception {
-		// TODO Auto-generated method stub
+//TODO Auto-generated method stub
 		return sqlSession.selectList("CafeMemberMapper.getCafeMemeberBlock", search);
 	}
 
 	@Override
 	public int updateCafeMemberBlock(CafeMemberBlock cafeMemberBlock) throws Exception {
-		// TODO Auto-generated method stub
+//TODO Auto-generated method stub
 		return sqlSession.update("CafeMemberMapper.updateCafeMemberBlock", cafeMemberBlock);
 	}
 
 	@Override
 	public int updateCafeMemeberGrade(CafeMember cafeMember) throws Exception {
-		// TODO Auto-generated method stub updateMemberGrade
+//TODO Auto-generated method stub  updateMemberGrade
 		return sqlSession.update("CafeMemberMapper.updateMemberGrade", cafeMember);
 	}
 
 	@Override
 	public int updatePostCountIncrease(int memberNo) throws Exception {
-		// TODO Auto-generated method stub
+//TODO Auto-generated method stub
 		return sqlSession.update("CafeMemberMapper.increasePostCount", memberNo);
 	}
 
 	@Override
 	public int updatePostCountDecrease(int memberNo) throws Exception {
-		// TODO Auto-generated method stub
+//TODO Auto-generated method stub
 		return sqlSession.update("CafeMemberMapper.decreasePostCount", memberNo);
 	}
 
 	@Override
 	public int updateReplyCountIncrease(int memberNo) throws Exception {
-		// TODO Auto-generated method stub
+//TODO Auto-generated method stub
 		return sqlSession.update("CafeMemberMapper.increaseReplyCount", memberNo);
 	}
 
 	@Override
 	public int updateReplyCountDecrease(int memberNo) throws Exception {
-		// TODO Auto-generated method stub
+//TODO Auto-generated method stub
 		return sqlSession.update("CafeMemberMapper.decreaseReplyCount", memberNo);
 	}
 
 	@Override
 	public int updateVisitCountIncrease(int memberNo) throws Exception {
-		// TODO Auto-generated method stub
+//TODO Auto-generated method stub
 		return sqlSession.update("CafeMemberMapper.increaseVisitCount", memberNo);
 	}
 
-	////////////////////////////// 기황 끝///////////////////////////////////////
+	@Override
+	public int updateFavorite(CafeMember cafeMember) throws Exception {
+//TODO Auto-generated method stub
+		return sqlSession.update("CafeMemberMapper.updateFavorite", cafeMember);
+	}
+
+//////////////////////////////기황 끝///////////////////////////////////////	
 
 }
