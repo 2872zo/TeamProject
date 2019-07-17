@@ -7,7 +7,7 @@
 <html lang="ko">
 
 <head>
-<title>CafeTabMain</title>
+<title>카페폐쇄</title>
 
 <!-- ////////////////////////////// jQuery CDN ////////////////////////////// -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"
@@ -29,48 +29,49 @@
 
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
-
 $(function() {
 	
-	$("#addCafe").on("click" , function() {
-		$(self.location).attr("href","/cafe/addCafeView");
+	$("button[name=button]" ).on("click" , function() {
+		alert($(".cafeNo").val())
+		$("form").attr("method" , "POST").attr("action" , "/cafe/1234/manage/dropCafe").submit();
 	});
-
 });
 </script>
-	<!-- ToolBar Start /////////////////////////////////////-->
-	<jsp:include page="../common/toolbar.jsp" />
-	<!-- ToolBar End /////////////////////////////////////-->
+
+	
 </head>
 
 <body>
-<br/>
-	<!--  화면구성 div Start /////////////////////////////////////-->
-	<div class="container">
 
-	채팅방 목록 화면인가봐
-	<c:forEach items="${chatRoomList}" var ='chatRoom'>
+
+
 	
-	<div class="card mb-3" style="max-width: 540px;" id='${chatRoom.chatRoomNo}'>
-  <div class="row no-gutters">
-    <div class="col-md-4">
-      <img src="..." class="card-img" alt="...">
-    </div>
-    <div class="col-md-8">
-      <div class="card-body">
-        <h5 class="card-title">${chatRoom.chatRoomName}</h5>
-        <p class="card-text">여기에 채팅내용 찍혀야 되는데 </p>
-        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-      </div>
-    </div>
-  </div>
-</div>
+	<div class="container">
+<br>
+<br>
+	<h1 class="text-center">카페폐쇄</h1>
+			
+</br>
+</br>
+<hr>
+<form class="form-horizontal" name ="reason">
+		  <div class="form-group">
+		    <label for="closeReason" class="col-sm-offset-1 col-sm-3 control-label">폐쇄 이유를 입력해주세요</label>
+		    
+		    <div class="closeReason">
+		    	<textarea rows=10 cols=10 id="closeReason" name="closeReason" class="form-control" ></textarea>
+		    </div>
+		  </div>
+		  <input type="hidden" name="cafeNo" class="cafeNo" value="${cafe.cafeNo }"/>
+		  <button type="button" class="btn btn-success" name="button" >카페폐쇄하기</button>
 	
-	</c:forEach>
-	
+
+</form>
+
 	
 	</div>
-	<!--  화면구성 div Start /////////////////////////////////////-->
+
+	
 
 </body>
 </html>

@@ -20,9 +20,12 @@ public class CafeApplication {
 	private String answer1;
 	private String question2;
 	private String answer2;
-	private String question3;	
+	private String question3;
 	private String answer3;
-	
+	private boolean autoApplicationAcceptFlag;
+	private boolean memberNicknameFlag;
+	private int lowGrade;
+
 	public CafeApplication() {
 
 	}
@@ -171,6 +174,30 @@ public class CafeApplication {
 		this.answer3 = answer3;
 	}
 
+	public boolean isAutoApplicationAcceptFlag() {
+		return autoApplicationAcceptFlag;
+	}
+
+	public void setAutoApplicationAcceptFlag(boolean autoApplicationAcceptFlag) {
+		this.autoApplicationAcceptFlag = autoApplicationAcceptFlag;
+	}
+
+	public int getLowGrade() {
+		return lowGrade;
+	}
+
+	public void setLowGrade(int lowGrade) {
+		this.lowGrade = lowGrade;
+	}
+
+	public boolean isMemberNicknameFlag() {
+		return memberNicknameFlag;
+	}
+
+	public void setMemberNicknameFlag(boolean memberNicknameFlag) {
+		this.memberNicknameFlag = memberNicknameFlag;
+	}
+
 	@Override
 	public String toString() {
 		return "CafeApplication [applicationNo=" + applicationNo + ", acceptStatusCode=" + acceptStatusCode
@@ -178,7 +205,10 @@ public class CafeApplication {
 				+ memberNickname + ", cafeNo=" + cafeNo + ", cafeURL=" + cafeURL + ", cafeName=" + cafeName
 				+ ", managerNickname=" + managerNickname + ", cafeIcon=" + cafeIcon + ", cafeType=" + cafeType
 				+ ", question1=" + question1 + ", answer1=" + answer1 + ", question2=" + question2 + ", answer2="
-				+ answer2 + ", question3=" + question3 + ", answer3=" + answer3 + "]";
+				+ answer2 + ", question3=" + question3 + ", answer3=" + answer3 + ", autoApplicationAcceptFlag="
+				+ autoApplicationAcceptFlag + ", memberNicknameFlag=" + memberNicknameFlag + ", lowGrade=" + lowGrade
+				+ "]";
 	}
+
 	
 }

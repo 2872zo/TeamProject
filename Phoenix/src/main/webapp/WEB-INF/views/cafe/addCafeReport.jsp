@@ -10,7 +10,6 @@
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link href="/css/form-validation.css" rel="stylesheet">
-	
 	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"	crossorigin="anonymous"></script>
@@ -20,30 +19,55 @@
 	
 		
 	<script>
+
+	<!-- autoComplete -->
+		function fncAutoComplete() {
+
+			$.ajax({
+
+				url : "/cafe/json/"+$('input[name=cafeURL]').val()+"/manage/autoComplete",
+				method : "POST",
+				headers : { // 보내는거 json
+					"Accept" : "application/json",
+					"Content-Type" : "application/json ; charset=UTF-8"
+				},
+				dataType : "text",
+				success : function(serverData, status) {
+	
+					var array = JSON.parse(serverData);
+
+					//alert(array);
+					$("input#reportedUser").autocomplete({
+						source : array
+					});
+
+				}
+
+			});
+
+		}
+		
+	
 	<!-- ckeditor 설정 -->
 		$(function() {
 			CKEDITOR.replace('editor');
 		});
 
 		$(function() {
-
 			
 			$("[name=cafeURL]").val('${search.cafeURL}');
 			$("[name=memberNo]").val('10000');
 			$("[name=memberNickname]").val('매니저1');
+			$("[name=boardNo]").val('${search.boardNo}');
+			$("[name=boardName]").val('${search.boardName}');
+
+			//autoComplete
+			$("input[name=reportedUser]").keyup(function(){
+				fncAutoComplete();
+			});
+
+
 			$("form").attr("method", "POST").attr("action",	"addPost");
-
-			$("#submitButton").on("click",function(e){
-				$("[name=boardName]").val( $("[name=boardNo] option:selected").text());
-			});
-
-			$(".boardOption").each(function(){
-			    if($(this).val()==${empty search.boardNo? 0 : search.boardNo}){
-			      $(this).attr("selected","selected");
-			    }
-			});
-
-			
 		});
 
 		
@@ -68,21 +92,11 @@
 				<input type="hidden"name="memberNo"> 
 				<input type="hidden" name="memberNickname">
 				<input type="hidden" name="boardName">
+				<input type="hidden" name="boardNo">
 	
-				<div class="row">
-					<div class="col-md-8 mb-3">
-						<select class="form-control hideOption" name="boardNo">
-							<c:forEach var="board" items="${boardList }">
-								<option value="${board.boardNo }" class="boardOption">${board.boardName }</option>
-							</c:forEach>
-						</select>
-					</div>
-	
-					<div class="custom-control custom-checkbox">
-						<input type="checkbox" class="custom-control-input"	id="postNoticeFlag" name="postNoticeFlag"> 
-						<label	class="custom-control-label" for="postNoticeFlag">공지로 등록</label>
-					</div>
-				</div>
+					<label for="reportedUser">신고대상 별명(닉네임)</label> 
+					<input type="text" class="form-control" id="reportedUser" name="reportedUser" required="">
+					<div class="invalid-feedback">신고대상은 생략할 수 없습니다.</div>
 	
 					<label for="postTitle">제목</label> 
 					<input type="text" class="form-control" id="postTitle" name="postTitle" required="">
@@ -97,6 +111,9 @@
 					<br/>
 					
 					<input type="submit" class="btn btn-primary btn-lg btn-block" id="submitButton" value="등록">
+					
+					<br/>
+					
 			</form>
 	</div>
 </body>

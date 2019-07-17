@@ -27,6 +27,7 @@ public class CafeMember {
 	private String blockReason;
 	private ArrayList<CafeMemberBlock> blocks;
 	private List<CafeMember> cafeMemberList;
+	private boolean memberNicknameFlag;
 	
 	public int getMemberNo() {
 		return memberNo;
@@ -154,15 +155,24 @@ public class CafeMember {
 	public void setCafeMemberList(List<CafeMember> cafeMemberList) {
 		this.cafeMemberList = cafeMemberList;
 	}
+
+	public boolean isMemberNicknameFlag() {
+		return memberNicknameFlag;
+	}
+	public void setMemberNicknameFlag(boolean memberNicknameFlag) {
+		this.memberNicknameFlag = memberNicknameFlag;
+	}
 	@Override
 	public String toString() {
 		return "CafeMember [memberNo=" + memberNo + ", cafeNo=" + cafeNo + ", userNo=" + userNo + ", memberNickname="
 				+ memberNickname + ", memberStatusCode=" + memberStatusCode + ", noticeFlag=" + noticeFlag
-				+ ", favoriteFlag=" + favoriteFlag + ", cafeMemberGradeNo=" + cafeMemberGradeNo + ", memberGrade="
-				+ memberGrade + ", gradeName=" + gradeName + ", regDate=" + regDate + ", visitCount=" + visitCount
-				+ ", postCount=" + postCount + ", replyCount=" + replyCount + ", blockPeriod=" + blockPeriod
-				+ ", blockStartDate=" + blockStartDate + ", blockEndDate=" + blockEndDate + ", blockReason="
-				+ blockReason + "]";
+				+ ", favoriteFlag=" + favoriteFlag + ", cafeMemberGradeNo=" + cafeMemberGradeNo + ", changeGradeNo="
+				+ changeGradeNo + ", memberGrade=" + memberGrade + ", gradeName=" + gradeName + ", regDate=" + regDate
+				+ ", visitCount=" + visitCount + ", postCount=" + postCount + ", replyCount=" + replyCount
+				+ ", blockPeriod=" + blockPeriod + ", blockStartDate=" + blockStartDate + ", blockEndDate="
+				+ blockEndDate + ", blockReason=" + blockReason + ", blocks=" + blocks + ", cafeMemberList="
+				+ cafeMemberList + ", memberNicknameFlag=" + memberNicknameFlag + "]";
 	}
+	
 	
 }

@@ -22,7 +22,9 @@
 <script type="text/javascript">
  $(function(){
 	 alert(${cafe.cafeNo});
-	 var cafeURL = "1234";
+	
+	 var cafeURL = '${cafe.URL}'
+	alert(cafeURL);
 	 $( "button.btn.btn-success" ).on("click" , function() {
 		 alert("확인")
 		 self.location = "/cafe/"+cafeURL+"/updateCafeMember?cafeNo="+${cafe.cafeNo}; 
@@ -46,6 +48,9 @@
 <br>
 <hr>
 <h2>카페명 : ${ cafe.cafeName}</h2>
+
+<input type="hidden" name ="cafeNo" value="${cafe.cafeNo}"/>
+<input type="hidden" name ="URL" value="${cafe.URL}"/>
 <h2>카페에서 탈퇴하시겠습니까?</h2>
 <h3>카페 탈퇴시 작성된 게시글은 자동으로 삭제되지 않습니다.</h3>
 

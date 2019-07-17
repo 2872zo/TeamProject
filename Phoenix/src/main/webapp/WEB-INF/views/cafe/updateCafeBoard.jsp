@@ -13,10 +13,14 @@
 <head>
 
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
+	<link href="/css/form-validation.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"	crossorigin="anonymous"></script>
+	<script	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"	crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+	<script src="/js/form-validation.js"></script>
 
 	<script type="text/javascript">
 
@@ -91,15 +95,19 @@
 				if($("select[name=addableBoard]").val()=="자유게시판"){
 					//게시판 추가하면  밑에 input type text추가하고 
 					 	appendBoardDetail = "<div class ='boardDetail"+totalBoardSize+"'> <br/><br/>"
-						+"<h4>메뉴명</h4>   <input type='text' class='form-control' name='newBoard"+count+"'  placeholder='게시판이름'/><br />"
-						+"<h4>메뉴설명</h4> <input type='text'  class='form-control' name='newBoardDetail"+count+"' width='50' placeholder='게시판설명'>"
-						+"<br/><br/><h4>공개설정</h4>"
+						+"<h4>메뉴명</h4>   <input type='text' class='form-control' name='newBoard"+count+"'  placeholder='게시판이름' required /><hr/> "
+						+"<h4>메뉴설명</h4> <input type='text'  class='form-control' name='newBoardDetail"+count+"' width='50' placeholder='게시판설명' required >"
+						+"<br/><hr/><h4>공개설정</h4>"
 						+"<div class='radio'><label class='radio-inline'>"
   						+"<input type='radio' value='0' name='newBoardPrivate"+count+"' checked> 전체공개 </label>"
     					+"<label class='radio-inline'>"
    						+"<input type='radio' value='1' name='newBoardPrivate"+count+"'> 멤버공개 </label></div>"
 						+"게시판 공개여부를 설정합니다.<br/>멤버공개를 선택시, 게시판은 멤버에게만 보여집니다."
-						+"<br/><br/></div>"
+						+"<br/><hr/>"
+						+"<h4>접근권한설정</h4><div class='form-inline'><select class='form-control' name='grade'>"
+						+"<c:forEach var='grade' items='${useGradeList}'>"
+						+"<option value='${grade.cafeGradeNo}/new"+count+"'>${grade.gradeName}</option>"
+						+"</c:forEach></select> 이상</div><br/><br/><br/>	"
 						//$(".boardDetail").hide();
 				}
 				else{
@@ -210,7 +218,7 @@
 
 			$("#save").on("click",function(){
 
-
+				alert("ㄴㅁㅍ");
 				AllSelect();
 				$("form").attr("method","POST").attr("action","/cafe/no1cafe/manage/updateCafeBoard").submit();
 				
@@ -233,9 +241,10 @@
 
 
 <body>
-	<form name="form">
+	
 	<div class="container">
 	
+	<form name ="form" class="needs-validation" novalidate>
 	
 			<div class="page-header">
 	       		<div class="row">
@@ -244,7 +253,7 @@
 	       		 </h3>
 	       			 <div class="col-md-12 text-right ">
 	       			 	<button type="button" class="btn btn-primary" id="cancel">취소</button>
-					 	<button type="button" class="btn btn-primary" id="save">저장하기</button>
+					 	<button type="button" class="btn btn-primary" id="save" >저장하기</button>
 	       		 	 </div>
 	   			 </div>
 	   		 </div>
@@ -329,12 +338,13 @@
 				<c:if test="${fn:contains(board.boardName,'게시판')}">
 					<br/>
 					<h4>메뉴명</h4>  
-					<input type="text" class="form-control" name="boardName/${board.boardNo}" value="${board.boardName}" />
-					<br />
-					<h4>메뉴설명</h4>
-					<input type="text"  class="form-control" name="boardDetail/${board.boardNo}" width="50" value="${board.boardDetail}">
-					<br/><br/>
+					<input type="text" class="form-control" name="boardName/${board.boardNo}" value="${board.boardName}" required/>
+					<hr/>
 					
+					<h4>메뉴설명</h4>
+					<input type="text"  class="form-control" name="boardDetail/${board.boardNo}" width="50" value="${board.boardDetail}" required>
+					<br/>
+					<hr/>
 					<h4>공개설정</h4>
 					<div class="radio">
   						<label class="radio-inline">
@@ -346,7 +356,19 @@
     					멤버공개
   						</label>
 					</div>게시판 공개여부를 설정합니다.<br/>멤버공개를 선택시, 게시판은 멤버에게만 보여집니다.
-					<br/><br/>
+					<br/>
+					<hr/>
+					
+					<h4>접근권한설정</h4>
+					<div class="form-inline">
+						<select class="form-control" name="grade">
+							<c:forEach var="grade" items="${useGradeList}">
+								<option value="${grade.cafeGradeNo}/${board.boardNo}" ${grade.cafeGradeNo==board.accessGrade? "selected" : ""}>${grade.gradeName}</option>
+							</c:forEach>
+						</select> 이상
+					</div>	
+					<br/><br/><br/>
+				
 				</c:if>
 				
 				<c:if test="${fn:contains(board.boardName,'------')}">
@@ -364,9 +386,9 @@
 		</div>		
 				
 				
-		</div>
-		
-		</div>
+			</div>
+		</form>
+	</div>
 
 	
 	
@@ -374,6 +396,6 @@
 		
 		
 		
-	</form>
+	
 </body>
 </html>

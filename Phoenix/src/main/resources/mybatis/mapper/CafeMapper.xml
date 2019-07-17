@@ -126,6 +126,33 @@ SELECT * FROM DUAL
 	  WHERE cafe_no = #{cafeNo:NUMERIC}
 	 </update>
 	 
+	 <update id ="dropCafe" parameterType= "Cafe" >
+	 	UPDATE cafe
+	 	<set>
+	 		close_reason=#{closeReason},
+	 		closed_flag=#{closedFlag}
+	 	</set>
+		 WHERE cafe_no = #{cafeNo:NUMERIC}
+	 </update>
+	 
+	 
+	 <update id="decreaseMember" parameterType="int">
+		UPDATE
+		cafe
+		<set>
+		members = members-1
+		WHERE cafe_no= #{cafeNo:NUMERIC}
+		</set>
+	</update>
+	
+	<update id="increaseMember" parameterType="int">
+		UPDATE
+		cafe
+		<set>
+		members = members+1
+		WHERE cafe_no = #{cafeNo:NUMERIC}
+		</set>
+	</update>
 	
 
 </mapper>

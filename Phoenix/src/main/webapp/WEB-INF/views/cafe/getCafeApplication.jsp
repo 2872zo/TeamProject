@@ -29,14 +29,14 @@
  
 <script type="text/javascript">
 $(function() {
-	var cafeURL = "1234";
+	var cafeURL = '${cafeApplication.cafeIcon}'
 	$("a[href='#' ]").on("click", function(){
 		self.location = "/cafe/"+cafeURL+"/manage/getCafeApplicationList"
 		})
 });
 
 $(function() {
-	var cafeURL = "1234";
+	var cafeURL = '${cafeApplication.cafeIcon}'
 	$(".accept").on("click", function(){
 		alert($("#applicationNo").text())
 		var whether= "true"+$("#applicationNo").text();

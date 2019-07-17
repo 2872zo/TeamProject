@@ -33,7 +33,7 @@
 	 	INSERT
 		INTO cafe_member( member_no , cafe_no , user_no , cafe_member_grade_no , notice_flag, member_nickname, member_status_code , favorite_flag, reg_date, visit_count ) 
 		VALUES	 (	seq_member_no.NEXTVAL , #{cafeNo} , #{userNo} , #{cafeMemberGradeNo} , 
-							'0' , #{memberNickname} , 'cs101', '0', SYSDATE,'0')
+							'0' , #{memberNickname} , 'cs100', '0', SYSDATE,'0')
 	 </insert>
 	
 	<update id="updateCafeMember"	parameterType="CafeMember" >
@@ -208,11 +208,16 @@
 	</update>
 	
 	<update id="decreasePostCount" parameterType="int">
-		UPDATE
-		cafe_member
+		UPDATE /*+ BYPASS_UJVC */
+			(SELECT
+				m.member_no, m.post_count, p.post_no 
+			 FROM
+			 	cafe_member m, post p
+			 WHERE 
+			 	m.member_no = p.member_no
+			 	AND p.post_no = #{postNo}) t
 		SET
-		post_count = post_count-1
-		WHERE member_no = #{memberNo};
+			t.post_count = t.post_count - 1
 	</update>
 	
 	<update id="increaseReplyCount" parameterType="int">
@@ -224,11 +229,17 @@
 	</update>
 	
 	<update id="decreaseReplyCount" parameterType="int">
-		UPDATE
-		cafe_member
+		UPDATE /*+ BYPASS_UJVC */
+			(SELECT
+				m.member_no, m.reply_count, p.post_no, r.reply_no 
+			 FROM
+			 	cafe_member m, reply r, post p
+			 WHERE 
+			 	m.member_no = p.member_no
+			 	AND r.post_no = p.post_no
+			 	AND r.reply_no = #{replyNo}) t
 		SET
-		reply_count = reply_count-1
-		WHERE member_no = #{memberNo};	
+			t.reply_count = t.reply_count - 1
 	</update>
 	
 	<update id="increaseVisitCount" parameterType="int">
@@ -239,7 +250,6 @@
 		WHERE member_no = #{memberNo};	
 	</update>
 	
-
 	<update id="changeGradeNo" parameterType="CafeMember">
 		UPDATE cafe_member
 		<set>
@@ -247,5 +257,14 @@
 		</set>
 		WHERE cafe_member_grade_no=#{cafeMemberGradeNo}
 	</update> 
+	
+	<update id="updateFavorite" parameterType="CafeMember">
+	UPDATE
+	cafe_member
+	SET
+	favorite_flag=#{favoriteFlag}
+	WHERE
+	member_no=#{memberNo}
+	</update>
 	
 </mapper>
