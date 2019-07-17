@@ -1,5 +1,7 @@
 package com.phoenix.mvc.service.chatting;
 
-public interface ChattingService {
+import java.util.Map;
 
+public interface ChattingService {
+	public Map getMyChatRoomList (int userNo) throws Exception;
 }
