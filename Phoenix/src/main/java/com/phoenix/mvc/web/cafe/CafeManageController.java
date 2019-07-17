@@ -42,7 +42,6 @@ import com.phoenix.mvc.service.domain.Cafe;
 import com.phoenix.mvc.service.domain.CafeApplication;
 import com.phoenix.mvc.service.domain.CafeGrade;
 import com.phoenix.mvc.service.domain.CafeMember;
-import com.phoenix.mvc.service.domain.Grades;
 
 @Controller
 @RequestMapping("/cafe/*")
