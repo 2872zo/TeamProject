@@ -68,6 +68,10 @@ public class CafeManageController {
 
 	@Value("${uploadPath}")
 	String uploadPath;
+	@Value("${uploadPath2}")
+	String uploadPath2;
+	@Value("${uploadPath3}")
+	String uploadPath3;
 
 ////////////////////////////////////////////예림//////////////////////////////////////////////
 	@RequestMapping(value = "/{cafeURL}/manage/updateCafeBoardView") // 예림예림
@@ -506,27 +510,34 @@ public class CafeManageController {
 /////////////////////////////// 준호시작///////////////////////////////////////
 // 준호
 	@RequestMapping(value = "/{cafeURL}/manage/updateCafeInfoView", method = RequestMethod.GET)
-	public String updateCafeInfoView(@RequestParam("cafeNo") int cafeNo, Model model) throws Exception {
+	public String updateCafeInfoView(@PathVariable String cafeURL, Model model) throws Exception {
 
 		System.out.println("/updateCafeInfoView : GET");
 
+		int cafeNo = cafeMemberService.getCafeNo(cafeURL);
+		
 		Cafe cafe = cafeManageService.getCafeInfo(cafeNo);
 
 		model.addAttribute("cafe", cafe);
+		model.addAttribute("cafeURL", cafe.getCafeURL());
+		
 
 		return "cafe/updateCafeInfoView";
 	}
 
 // 준호
 	@RequestMapping(value = "/{cafeURL}/manage/updateCafeInfo", method = RequestMethod.POST)
-	public String updateCafeInfo(@ModelAttribute("cafe") Cafe cafe,
-			@RequestParam("uploadFile") MultipartFile uploadFile) throws Exception {
+	public String updateCafeInfo(@ModelAttribute("cafe") Cafe cafe,Model model,
+			@RequestParam("uploadFile") MultipartFile uploadFile,
+			@RequestParam("uploadFile2") MultipartFile uploadFile2,
+			@RequestParam("uploadFile3") MultipartFile uploadFile3) throws Exception {
 
 		System.out.println("/updateCafeInfoView : POST");
 
-		String fileName = uploadFile.getOriginalFilename();
+		String fileName = uploadFile.getOriginalFilename().substring(uploadFile.getOriginalFilename().lastIndexOf("\\")+1);
+		
+		
 		File f = new File(uploadPath, fileName);
-
 		System.out.println("파일업로드하자~~~~~~~~~~~~~~~~~~" + fileName);
 
 		try {
@@ -536,6 +547,35 @@ public class CafeManageController {
 		}
 
 		cafe.setBannerImg(fileName);
+		
+		String fileName2 = uploadFile2.getOriginalFilename().substring(uploadFile2.getOriginalFilename().lastIndexOf("\\")+1);
+		
+		
+		File f2 = new File(uploadPath2, fileName2);
+		System.out.println("파일업로드하자~~~~~~~~~~~~~~~~~~" + fileName2);
+
+		try {
+			uploadFile2.transferTo(f2);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		cafe.setMainImg(fileName2);
+
+		String fileName3 = uploadFile3.getOriginalFilename().substring(uploadFile3.getOriginalFilename().lastIndexOf("\\")+1);
+		
+		
+		File f3 = new File(uploadPath3, fileName3);
+		System.out.println("파일업로드하자~~~~~~~~~~~~~~~~~~" + fileName3);
+
+		try {
+			uploadFile3.transferTo(f3);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		cafe.setCafeIcon(fileName3);
+
 
 		cafeManageService.updateCafeInfo(cafe);
 
@@ -543,18 +583,25 @@ public class CafeManageController {
 
 		cafe = cafe2;
 
+		model.addAttribute("cafeURL", cafe.getCafeURL());
+		
 		return "cafe/updateCafeInfo";
 	}
 
-// 준호
+	// 준호
 	@RequestMapping(value = "/{cafeURL}/manage/getCafeInfo", method = RequestMethod.POST)
-	public String getCafeInfo(@RequestParam("cafeNo") int cafeNo, Model model) throws Exception {
+	public String getCafeInfo(@PathVariable String cafeURL, Model model	) throws Exception {
 
+		
+		int cafeNo = cafeMemberService.getCafeNo(cafeURL);		
+		
 		Cafe cafe = cafeManageService.getCafeInfo(cafeNo);
-
+		
 		System.out.println("카페정보들오니" + cafe);
 
 		model.addAttribute("cafe", cafe);
+		
+		model.addAttribute("cafeURL", cafe.getCafeURL());
 
 		return "cafe/getCafeInfo";
 
@@ -562,15 +609,18 @@ public class CafeManageController {
 
 // 준호
 	@RequestMapping(value = "/{cafeURL}/manage/updateCafeApplicationFormView", method = RequestMethod.GET)
-	public String updateCafeApplicationFormView(@RequestParam("cafeNo") int cafeNo, Model model) throws Exception {
+	public String updateCafeApplicationFormView(@PathVariable String cafeURL, Model model) throws Exception {
 
+		int cafeNo = cafeMemberService.getCafeNo(cafeURL);
+		
 		System.out.println(cafeNo + "카페번호뭐냐");
 
 		System.out.println("/updateCafeApplicationFormView : GET");
 
 		Cafe cafe = cafeManageService.getCafeInfo(cafeNo);
-// Model �� View ����
+
 		model.addAttribute("cafe", cafe);
+		model.addAttribute("cafeURL", cafe.getCafeURL());
 
 		System.out.println(cafe + "카페도메인찍자");
 
@@ -579,11 +629,13 @@ public class CafeManageController {
 
 // 준호
 	@RequestMapping(value = "/{cafeURL}/manage/updateCafeApplicationForm", method = RequestMethod.POST)
-	public String updateCafeApplicationForm(@ModelAttribute("cafe") Cafe cafe) throws Exception {
+	public String updateCafeApplicationForm(@ModelAttribute("cafe") Cafe cafe, Model model) throws Exception {
 
 		System.out.println("/updateCafeApplicationFormView : POST");
 
 		cafeManageService.updateCafeApplicationForm(cafe);
+		
+		model.addAttribute("cafeURL", cafe.getCafeURL());
 
 		return "cafe/updateCafeApplicationForm";
 	}

@@ -237,11 +237,15 @@ public class CafeManageDaoImpl implements CafeManageDao {
 	}
 
 	public Cafe getCafeName(String cafeName) throws Exception {
+		System.out.println("gkgkgkgkgkgk@@@@@@"+cafeName);
 		return sqlSession.selectOne("CafeMapper.getCafeName", cafeName);
 	}
 
 	public Cafe getCafeURL(String URL) throws Exception {
+		System.out.println("dsada@@@@@@@@@@@@@@@"+URL);
 		return sqlSession.selectOne("CafeMapper.getCafeURL", URL);
+		
+		
 	}
 
 /////////////////////////////// 준호끝///////////////////////////////////////

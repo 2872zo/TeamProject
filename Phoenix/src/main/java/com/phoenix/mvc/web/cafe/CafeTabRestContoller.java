@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.cafe.CafeTabService;
 import com.phoenix.mvc.service.domain.Cafe;
 import com.phoenix.mvc.service.domain.CafeMember;
@@ -46,15 +47,32 @@ public class CafeTabRestContoller {
 	@RequestMapping(value = "/json/checkCafeURLDuplication", method=RequestMethod.POST)
 	public boolean checkCafeURLDuplication(@RequestBody Cafe cafe)throws Exception{
 		
-		System.out.println("/cafe/json/checkCafeURLDuplication : POST");
+		System.out.println("/cafe/json/checkCafeNameDuplication : POST");
 		
-		boolean result = cafeTabService.checkCafeURLDuplication(cafe.getURL());
+		boolean result = cafeTabService.checkCafeURLDuplication(cafe.getCafeURL());
 
 		System.out.println("이상하ㄴ네."+result);
 		
 		return result;
 		
 	}
+//	@RequestMapping(value = "/json/checkCafeURLDuplication", method=RequestMethod.POST)
+//	public boolean checkCafeURLDuplication(@RequestBody Search search)throws Exception{
+//		
+//		
+//		
+//		System.out.println("/cafe/json/checkCafeURLDuplication : POST");
+//		
+//		System.out.println("카페URL 레스트컨트롤러"+search.getCafeURL());
+//		boolean result = cafeTabService.checkCafeURLDuplication(search.getCafeURL());
+//		
+//		//System.out.println("카페URL 레스트컨트롤러"+cafe.getURL());
+//
+//		System.out.println("이상하ㄴ네."+result);
+//		
+//		return result;
+//		
+//	}
 	
 	
 	/*

@@ -67,7 +67,7 @@ public void updateCafeApplicationForm(Cafe cafe) throws Exception;
 
 public Cafe getCafeName(String cafeName) throws Exception;
 
-public Cafe getCafeURL(String URL) throws Exception;
+public Cafe getCafeURL(String CafeURL) throws Exception;
 
 /////////////////////////////// 준호끝///////////////////////////////////////
 }

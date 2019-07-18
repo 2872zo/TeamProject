@@ -31,9 +31,10 @@
 		 $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$( "button.btn.btn-success" ).on("click" , function() {
-				var cafeURL = "22";
+				//var cafeURL = '22';
 				alert("수정");
-				self.location = "/cafe/"+cafeURL+"/manage/updateCafeInfoView?cafeNo=${cafe.cafeNo}"
+				self.location = "/cafe/${cafe.cafeURL}/manage/updateCafeInfoView?cafeNo=${cafe.cafeNo}"
+				//	self.location = "/cafe/"+cafeURL+"/manage/updateCafeInfoView"
 				
 			});
 		});	
@@ -77,7 +78,7 @@
  <div class="form-group row">
     <label for="inputPassword" class="col-sm-2 col-form-label">카페url</label>
     <div class="col-sm-10">
-      ${cafe.URL }
+      ${cafe.cafeURL }
     </div>
   </div>	
  <div class="form-group row">

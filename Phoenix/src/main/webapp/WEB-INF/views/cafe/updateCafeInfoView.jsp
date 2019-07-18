@@ -39,8 +39,8 @@
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$( "button.btn.btn-success" ).on("click" , function() {
 				alert("수정");
-				var cafeURL = "22";
-				$("form").attr("method" , "POST").attr("action" , "/cafe/"+cafeURL+"/manage/updateCafeInfo")
+				
+				$("form").attr("method" , "POST").attr("action" , "/cafe/${cafe.cafeURL}/manage/updateCafeInfo")
 				.attr("enctype","multipart/form-data").submit();
 			});
 		});	
@@ -103,6 +103,7 @@
 <form class="form-horizontal">
 
 
+
 		<div class="row" align="center">
 	  		<div class="col-sm-4"><strong>카페수정화면</strong></div>
 		</div>
@@ -121,7 +122,7 @@
   <div class="form-group">
     <label for="exampleFormControlInput1" class="col-sm-offset-3 col-sm-3 control-label">카페 URL</label>
     <div class="col-sm-4">
-    ${cafe.URL }
+    ${cafe.cafeURL }
     </div>
   </div>
   
@@ -145,6 +146,29 @@
     </div>
   </div>  
 	  -->
+	  
+	   <div class="form-group">
+		    <label for="uploadFile" class="col-sm-offset-1 col-sm-3 control-label">배너이미지</label>
+		    <div class="col-sm-4">
+		      <input type="file"  id="uploadFile" name="uploadFile" >
+		    </div>
+		  </div>
+		  
+		  <div class="form-group">
+		    <label for="uploadFile" class="col-sm-offset-1 col-sm-3 control-label">메인이미지</label>
+		    <div class="col-sm-4">
+		      <input type="file"  id="uploadFile2" name="uploadFile2" >
+		    </div>
+		  </div>
+		  
+		  <div class="form-group">
+		    <label for="uploadFile" class="col-sm-offset-1 col-sm-3 control-label">카페아이콘</label>
+		    <div class="col-sm-4">
+		      <input type="file"  id="uploadFile3" name="uploadFile3" >
+		    </div>
+		  </div>
+		  
+		 <!--    
  	    <div class="input-group mb-3"> 
    		<div class="input-group-prepend"> 
      <span class="input-group-text" id="inputGroupFileAddon01" name="uploadFile" >배너이미지</span> 
@@ -154,7 +178,7 @@
      <label class="custom-file-label" for="inputGroupFile01"></label>
    </div>
    </div> 
-   	 
+   	 -->
 <!-- 	<div class="input-group mb-3"> -->
 <!--   		<div class="input-group-prepend"> -->
 <!--     <span class="input-group-text" id="inputGroupFileAddon01" name="mainImg">메인이미지</span> -->

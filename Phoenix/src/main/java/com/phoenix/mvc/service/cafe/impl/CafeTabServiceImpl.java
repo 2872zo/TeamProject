@@ -99,13 +99,13 @@ public class CafeTabServiceImpl implements CafeTabService {
 		return result;
 	}
 	
-	public boolean checkCafeURLDuplication(String URL) throws Exception {
+	public boolean checkCafeURLDuplication(String CafeURL) throws Exception {
 		
 		boolean result=true;
-		System.out.println("cafeName!!!!!!!!!!!!!!!!!!!!!!!"+URL);
-		Cafe cafe = cafeManageDao.getCafeURL(URL);
+		System.out.println("URL!!!!!!!!!!!!!!!!!!!!!!!"+CafeURL);
+		Cafe cafe = cafeManageDao.getCafeURL(CafeURL);
 		
-		System.out.println("cafe!!!!!!!!!!!!!!!!!!!!!!!"+cafe);
+		System.out.println("URL!!!!!!!!!!!!!!!!!!!!!!!"+CafeURL);
 		
 		if(cafe != null) {
 			result=false;
