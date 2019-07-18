@@ -48,9 +48,19 @@ $(function() {
 		$(self.location).attr("href","/shopping/myCartList");
 	});
 
+	$( "#cafe1" ).on("click" , function() {
+		$(self.location).attr("href","/cafe/no1cafe/manage/dropCafeView");
+	});
+
+	$( "#cafe2" ).on("click" , function() {
+		$(self.location).attr("href","/cafe/no1cafe/");
+	});
+
+	$( "#cafe3" ).on("click" , function() {
+		$(self.location).attr("href","/cafe/no1cafe/addCafeApplicationView");
+	});
 	
 
-	
 });
 </script>
 </head>
@@ -97,10 +107,8 @@ $(function() {
 	<div class="d-flex justify-content-around">
 	<button type="button" class="btn btn-lg btn-outline-danger" id="cafe1">매니저메뉴</button>
 	<button type="button" class="btn btn-lg btn-outline-danger" id="cafe2">글작성관련</button>
-	<button type="button" class="btn btn-lg btn-outline-danger" id="cafe3">멤버상세조회관련</button>
+	<button type="button" class="btn btn-lg btn-outline-danger" id="cafe3">가입신청</button>
 	</div>
-	
-	
 	
 </div>
 	<!--  화면구성 div Start /////////////////////////////////////-->

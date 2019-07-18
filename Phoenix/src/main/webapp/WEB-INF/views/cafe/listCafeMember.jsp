@@ -73,11 +73,19 @@ $(function() {
 
 });
 </script>
-
+	<jsp:include page="../common/cafeManageTollbar.jsp" />
 </head>
 
 <body>
 <div class="container">
+
+<div class="row">
+			<div class="col-2">
+				<c:import url="/WEB-INF/views/common/cafeManageMenubar.jsp"></c:import>
+			</div>
+			
+			<div class="col-10">
+
 
   <br/>
 
@@ -176,12 +184,14 @@ $(function() {
 <br/>
 
 
-<div class = 'container'>
 
-
-</div>
   
   <jsp:include page="../common/pageNavigator.jsp" />
-</div>
+  
+  	</div><!-- col-10, #mainContent End -->
+		</div><!-- row End -->
+  </div>
+
+
 </body>
 </html>

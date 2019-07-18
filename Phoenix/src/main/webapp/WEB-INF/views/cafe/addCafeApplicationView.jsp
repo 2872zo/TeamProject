@@ -33,7 +33,7 @@
 		<script type="text/javascript">
 
 		 $(function() {
-			 var cafeURL ='${cafe.URL}'
+			 var cafeURL ='${cafe.cafeURL}'
 			
 			$( " button.btn.btn-outline-success" ).on("click" , function() {
 				alert("가입");
@@ -43,7 +43,7 @@
 
 		$(function(){
 			var cafeNo = '${cafe.cafeNo }'
-			var cafeURL ='${cafe.URL}'
+			var cafeURL ='${cafe.cafeURL}'
 			$("#memberNickname").on("keyup", function() {
 				//alert("durl")
 				//alert($("#memberNickname").val())
