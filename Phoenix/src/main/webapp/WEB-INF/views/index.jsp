@@ -47,6 +47,10 @@ $(function() {
 	$( "#shop" ).on("click" , function() {
 		$(self.location).attr("href","/shopping/myCartList");
 	});
+
+	
+
+	
 });
 </script>
 </head>
@@ -82,6 +86,22 @@ $(function() {
 	<button type="button" class="btn btn-lg btn-info" id="sns">SNS</button>
 	<button type="button" class="btn btn-lg btn-dark" id="shop">SHOP</button>
 	</div>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	
+	
+	<div class="d-flex justify-content-around">
+	<button type="button" class="btn btn-lg btn-outline-danger" id="cafe1">매니저메뉴</button>
+	<button type="button" class="btn btn-lg btn-outline-danger" id="cafe2">글작성관련</button>
+	<button type="button" class="btn btn-lg btn-outline-danger" id="cafe3">멤버상세조회관련</button>
+	</div>
+	
+	
+	
 </div>
 	<!--  화면구성 div Start /////////////////////////////////////-->
 
