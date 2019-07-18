@@ -94,6 +94,7 @@
 
 <!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">	
+	
 		<h1 align="center">카페가입</h1>
 		
 		<!-- form Start /////////////////////////////////////-->
@@ -102,11 +103,9 @@
 <input type="hidden" name="memberNicknameFlag" value="${cafe.memberNicknameFlag }"/>
 <input type="hidden" name="cafeNo" value="${cafe.cafeNo }"/>
 		
-		
+	
 		  <div class="form-group">
 		    <label for="cafeName" class="col-sm-offset-1 col-sm-3 control-label">${cafe.cafeName} 카페입니다. </label>
-		    <div class="col-sm-4">
-		    </div>
 		  </div>
 	
 		 <c:if test="${!empty cafe.cafeDetail}"> 
@@ -194,6 +193,8 @@
 		      <button type="button" class="btn btn-outline-success"  >동의후가입</button>
 		    </div>
 		  </div>
+		  
+
 		</form>
 		  
 		<!-- form /////////////////////////////////////-->

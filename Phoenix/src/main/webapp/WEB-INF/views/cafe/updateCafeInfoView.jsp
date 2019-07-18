@@ -100,8 +100,19 @@
 		</script>
 <body>
 	
-<form class="form-horizontal">
+	
 
+<jsp:include page="/common/cafeManageTollbar.jsp" />
+
+<form class="form-horizontal">
+<div class="container">
+		
+		<div class="row">
+			<div class="col-2">
+				<c:import url="/WEB-INF/views/common/cafeManageMenubar.jsp"></c:import>
+			</div>
+			
+			<div class="col-10">
 
 
 		<div class="row" align="center">
@@ -236,7 +247,9 @@
 		      <button type="button" class="btn btn-success"  >수정</button>
 		    </div>
 		  </div>
-		  
+		  </div>
+		  </div>
+		  </div>
 		</form>
 		<!-- form Start /////////////////////////////////////-->
 		

@@ -55,7 +55,18 @@
 			
 		</script>
 <body>
+
+
+<jsp:include page="/common/cafeManageTollbar.jsp" />
 		<div class="container">
+		
+		<div class="row">
+			<div class="col-2">
+				<c:import url="/WEB-INF/views/common/cafeManageMenubar.jsp"></c:import>
+			</div>
+			
+			<div class="col-10">
+		
 		
 			<h4 class="bg-primary text-center">수정완료</h4>
 <form class="form-horizontal">
@@ -114,10 +125,12 @@
 		      <button type="button" class="btn btn-success"  >수정</button>
 		    </div>
 		  </div>
+		  
 		</form>
 		
 		<!-- form Start /////////////////////////////////////-->
-		
+		</div>
+		</div>
  	</div>
 	<!--  화면구성 div end /////////////////////////////////////-->
 	

@@ -65,29 +65,16 @@ public class CafeTabContoller {
 		return "cafe/addCafeView";
 	}
 
-//	@PostMapping("/{cafeURL}/addCafe")
-//	public String addCafe(@ModelAttribute Cafe cafe, Model model) throws Exception {
-//
-//		System.out.println("/addCafe : POST@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-
-		
-		  @PostMapping("/{cafeURL}/addCafe") 
-		  public String addCafe(@ModelAttribute Cafe cafe, Model model, HttpSession session, 
-				  				@ModelAttribute User user,		  
-				  				@RequestParam("userNo") int userNo ) throws Exception {
+	@PostMapping("/addCafe") 
+	public String addCafe(@ModelAttribute Cafe cafe, Model model, HttpSession session) throws Exception {
 		  
-		 // User user2 = userService.getUserInfo(userNo);
-		  
-		 // user = user2;
-		 
-		  //cafe.setManageUserNo(user.getUserNo());
 
-		  int sessionId=((User)session.getAttribute("user")).getUserNo();
+		  User user = (User) session.getAttribute("user");
 
-		  System.out.println("유저정보도 왔냐 ?@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+user.getUserNo());
-		  
-		  cafe.setManageUserNo(sessionId);
-		 
+		  cafe.setManageUserNo(user.getUserNo());
+
+		  System.out.println("유저정보도 왔냐 ?@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+user.getUserNo());		  
+	
 		  cafeTabService.addCafe(cafe);
 
 		  Cafe cafe2 = cafeManageService.getCafeInfo(cafe.getCafeNo());

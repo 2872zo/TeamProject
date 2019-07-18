@@ -33,7 +33,8 @@ $(function() {
 	
 	$("button[name=button]" ).on("click" , function() {
 		alert($(".cafeNo").val())
-		$("form").attr("method" , "POST").attr("action" , "/cafe/1234/manage/dropCafe").submit();
+		alert('${cafe.cafeURL}')
+		$("form").attr("method" , "POST").attr("action" , "/cafe/"+'${cafe.cafeURL}'+"/manage/dropCafe").submit();
 	});
 });
 </script>

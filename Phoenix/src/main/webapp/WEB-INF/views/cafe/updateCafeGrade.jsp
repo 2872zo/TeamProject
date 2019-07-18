@@ -21,54 +21,11 @@
 		//alert($(".cafeNo").val())
 			$("#save").on("click", function(){//update
 				//alert($(".gradeFlag1").text())
-				$("form").attr("method" , "POST").attr("action" , "/cafe/no1cafe/manage/updateCafeGrade?CafeNo="+$(".cafeNo").val()).submit();
+				$("form").attr("method" , "POST").attr("action" , "/cafe/"+'${cafeURL}'+"/manage/updateCafeGrade?CafeNo="+$(".cafeNo").val()).submit();
 			});
 		
 
 	});
-
-	$(function(){
-
-		$(".delete").on("click",function(){
-			var i=$(".delete").index(this);
-			var grade = $($(".flag")[i]).val()
-			var gradeNo = $($(".cafeGradeNo")[i]).val()
-			alert(grade)
-			alert(gradeNo)
-
-			if(grade==true){
-
-				$.ajax({
-
-					url : "/cafe/json/no1cafe/checkCafeGrade",
-					method : "POST",
-					headers : {
-						"Accept" : "application/json",
-						"Content-Type" : "application/json ; charset=UTF-8"
-					},
-					data : JSON.stringify({ //보내는 data jsonString 화
-
-						gradeNo : gradeNo
-					}),
-					dataType : "text",
-					success : function(serverData){
-
-						alert("serverData : "+serverData);
-
-						
-						
-					}//success
-
-
-				});//ajax끝
-				
-
-				}
-
-			});
-		
-		});
-	
 
 		
 	</script>
