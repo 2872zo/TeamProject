@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -240,10 +242,29 @@ public class CafeManageController {
 
 		event.setStartDate(dTime);
 		event.setEndDate(dTime);
-
-		Map<String, String> cafeStatistics = cafeManageService.getCafeStatistics(event, cafeURL);
-
-		model.addAttribute("statisticMap", cafeStatistics);
+		
+		Map cafeStatistics = cafeManageService.getCafeStatistics(event, cafeURL);
+		
+		List<Map<String, String>> chartResult = (List<Map<String, String>>) cafeStatistics.get("chartResult");
+		//-------------------------------------------------------------------위로 보낼 데이터
+		List<String> dates = new ArrayList<String>();
+		dates.add(0,dTime); //오늘
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(currentTime);
+		
+		for(int i=0; i<9; i++)
+		{
+			 cal.add(Calendar.DATE, -1);
+			 dates.add(formatter.format(cal.getTime()));
+		}
+		
+		
+		Collections.reverse(dates); //list 역순
+		model.addAttribute("chartResult", chartResult);
+		model.addAttribute("statisticMap", cafeStatistics); //네모칸결과
+		model.addAttribute("dates",dates); //chart기준Dates
+		model.addAttribute("cafeURL", cafeURL);
 
 		return "cafe/statisticsCafe";
 	}

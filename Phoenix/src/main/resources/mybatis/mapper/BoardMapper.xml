@@ -52,7 +52,7 @@
 		<result property="eventNo" 			column="event_no" 			jdbcType="NUMERIC"/>
 		<result property="targetNo"			column="target_no" 			jdbcType="NUMERIC" />
 		<result property="eventType" 		column="event_type" 			jdbcType="VARCHAR" />
-		<result property="cafeNo" 			column="cafe_no" 				jdbcType="NUMERIC" />
+		<result property="cafeNo" 			column="event_cafe_no" 				jdbcType="NUMERIC" />
 		<result property="eventUserNo" 		column="event_user_no" 				jdbcType="NUMERIC" />
 		<result property="regDate" 			column="reg_date" 		jdbcType="DATE" />
 	</resultMap>
@@ -96,7 +96,7 @@
 	</select>
 	
 	<insert id="addEventLog" parameterType="Event">
-		INSERT INTO event_log (event_no,event_type,cafe_no,reg_date,event_user_no,target_no)
+		INSERT INTO event_log (event_no,event_type,event_cafe_no,reg_date,event_user_no,target_no)
 		VALUES(SEQ_EVENT_LOG_EVENT_NO.NEXTVAL,
 				#{eventType:VARCHAR},
 				#{cafeNo:NUMERIC},
@@ -108,8 +108,8 @@
 	<select id="checkCafeTodayVisitLog" parameterType="Event" resultMap="eventSelectMap">
 		SELECT * FROM event_log
 		WHERE event_user_no =#{eventUserNo:NUMERIC}
-			  AND event_type='et001' 
-			  AND cafe_no=#{cafeNo:NUMERIC}
+			  AND event_type='et100' 
+			  AND event_cafe_no=#{cafeNo:NUMERIC}
 			  AND to_char(reg_date,'yyyy-mm-dd') = to_char(SYSDATE,'yyyy-mm-dd');
 	</select>
 	
@@ -117,9 +117,18 @@
 		SELECT event_type , count(*) counts
 		FROM event_log
 		WHERE reg_date BETWEEN TO_DATE(#{startDate},'yyyymmdd') AND TO_DATE(#{endDate},'yyyymmdd')+ 0.99999
-		AND cafe_no = #{cafeNo}
+		AND event_cafe_no = #{cafeNo}
 		GROUP BY event_type
 		ORDER BY event_type
+	</select>
+		
+	<select id="getCafeChartValue" parameterType="Event" resultType="map">
+		SELECT count(*) counts , to_char(reg_date,'yyyyMMdd') reg_date
+		FROM event_log
+		WHERE reg_date > to_date(#{endDate},'yyyyMMdd')-10
+		AND event_type='et100'
+		AND event_cafe_no = #{cafeNo}
+		GROUP BY reg_date
 	</select>
 	
 	<insert id="insertCafeBoard" parameterType="list" >

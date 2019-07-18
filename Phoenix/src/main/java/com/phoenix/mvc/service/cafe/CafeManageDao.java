@@ -47,7 +47,7 @@ public boolean dropCafe(Cafe cafe);
 
 	public boolean checkCafeTodayVisitLog(Event event); // 예림예림 return true- 오늘방문함 false -오늘첫방문
 
-	public Map<String, String> getCafeStatistics(Event event);
+	public Map getCafeStatistics(Event event);
 
 	public boolean addCafeBoard(List<Board> newBoardList);
 
