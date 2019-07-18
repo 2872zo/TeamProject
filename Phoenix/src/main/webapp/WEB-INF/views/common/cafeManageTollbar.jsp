@@ -10,9 +10,9 @@
 <meta charset="EUC-KR">
 
 <!--jquery -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-	crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+ integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+ crossorigin="anonymous"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
 	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
@@ -33,18 +33,37 @@
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
 	$(function() {
+		
+		if(${!empty sessionScope.user}){
+			var socket = io("http://192.168.0.78:82");
+			};
+				
+			$("#login").on("click" , function() {
+				$(self.location).attr("href","/user/loginView");
+			});
 
-		$("#phoenix").on("click", function() {
-			$(self.location).attr("href", "/");
-		});
-		$("#cafemanage").on("click", function() {
-			var cafeURL = "1234"
-			//$(self.location).attr("href", "/cafe"+cafeURl+"/manage/getStatistics");
-		});
-		$("#cafeName").on("click", function() {
-			var cafeURL = "1234"
-			//$(self.location).attr("href", "/cafe"+cafeURl+"/main");
-		});
+			$("#logout").on("click" , function() {
+				$(self.location).attr("href","/user/logout");
+			});
+
+			$("#phoenix").on("click", function() {
+				$(self.location).attr("href", "/");
+			});
+			
+			$("#goChat").on("click" , function() {
+				$(self.location).attr("href","/chat/main");
+			});
+					
+			
+			$("#cafemanage").on("click", function() {
+				
+				location.href = "/cafe/"+"${cafeURL}"+"/manage/getCafeStatistics";
+			});
+			
+			$("#cafeName").on("click", function() {
+				
+				$(self.location).attr("href", "/cafe/" + "${cafeURL}" +"/");
+			});
 	});
 </script>
 </head>
@@ -67,14 +86,16 @@
 
 		<div class="collapse navbar-collapse" id="navbarTogglerDemo03">
 			<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-				<li class="nav-item active"><a class="nav-link" href="#"
-					id='cafemanage'>카페관리</a></li>
-				<li class="nav-item"><a class="nav-link" href="#" id = cafeName>내카페이름 : {cafe.cafeName}</a></li>
+			
+			<%-- <c:if test="${cafe.manageUserNo == user.userNo }"></c:if> --%>
+				<li class="nav-item active"><a class="nav-link" href="#" id='cafemanage'>카페관리</a></li>
+				<li class="nav-item"><a class="nav-link" href="#" id = cafeName>{cafe.cafeName}</a></li>
+			
 			</ul>
+			
 
-		<!-- 로그인후 링크는 추가 예정!! -->
-			<a class="nav-link disabled" href="#" aria-disabled="true">Chat</a>
-
+			<button type="button" class='btn btn-${!empty sessionScope.user ? "outline-info' id ='goChat'>채팅가능":"dark' disabled>채팅안됨" }</button>
+			<button type="submit" class='btn btn-outline-${empty sessionScope.user ? "light' id='login'>Login" : "dark' id='logout'>Logout"}</button>
 			
 
 		</div>

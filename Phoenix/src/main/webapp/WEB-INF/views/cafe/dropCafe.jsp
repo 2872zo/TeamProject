@@ -38,7 +38,9 @@ $(function() {
 });
 </script>
 
-	
+	<!-- ToolBar Start /////////////////////////////////////-->
+	<jsp:include page="../common/cafeManageTollbar.jsp" />
+	<!-- ToolBar End /////////////////////////////////////-->
 </head>
 
 <body>
@@ -47,31 +49,35 @@ $(function() {
 
 	
 	<div class="container">
-<br>
-<br>
-	<h1 class="text-center">카페폐쇄</h1>
+		<div class="row">
+			<div class="col-2">
+				<c:import url="/WEB-INF/views/common/cafeManageMenubar.jsp"></c:import>
+			</div>
 			
-</br>
-</br>
-<hr>
-<form class="form-horizontal" name ="reason">
-		  <div class="form-group">
-		    <label for="closeReason" class="col-sm-offset-1 col-sm-3 control-label">폐쇄 이유를 입력해주세요</label>
-		    
-		    <div class="closeReason">
-		    	<textarea rows=10 cols=10 id="closeReason" name="closeReason" class="form-control" ></textarea>
-		    </div>
-		  </div>
-		  <input type="hidden" name="cafeNo" class="cafeNo" value="${cafe.cafeNo }"/>
-		  <button type="button" class="btn btn-success" name="button" >카페폐쇄하기</button>
-	
-
-</form>
-
-	
-	</div>
-
-	
-
+			<div class="col-10">
+			<br>
+			<br>
+				<h1 class="text-center">카페폐쇄</h1>		
+			</br>
+			</br>
+			<hr>
+			
+			<form class="form-horizontal" name ="reason">
+					 <div class="form-group">
+					    <label for="closeReason" class="col-sm-offset-1 col-sm-3 control-label">폐쇄 이유를 입력해주세요</label>
+					    
+					    <div class="closeReason">
+					    	<textarea rows=10 cols=10 id="closeReason" name="closeReason" class="form-control" ></textarea>
+					    </div>
+					 </div>
+					  <input type="hidden" name="cafeNo" class="cafeNo" value="${cafe.cafeNo }"/>
+					  <div align="center">
+					  <button type="button" class="btn btn-outline-success" name="button" >카페폐쇄하기</button>
+					  </div>
+			</form>
+			
+			</div><!-- col-10, #mainContent End -->
+		</div><!-- row End -->
+	</div><!-- container End -->
 </body>
 </html>
