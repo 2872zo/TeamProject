@@ -128,18 +128,24 @@ public class CafePostServiceImpl implements CafePostService {
 	}
 
 	@Override
-	public boolean addLike(Search search) {
+	public Map<String, Object> addLike(Search search) {
 		Event event = new Event();
-		event.setEventType("et101");
+		
+		if(search.getSearchCondition().equals("0")  ) {
+			event.setEventType("et101");
+			event.setTargetNo(search.getPostNo());
+		}else if(search.getSearchCondition().equals("1")){
+			event.setEventType("et102");
+			event.setTargetNo(search.getReplyNo());
+		}
 		event.setEventUserNo(search.getUserNo());
 		event.setCafeNo(cafeManageDao.getCafeNo(search.getCafeURL()));
 		search.setCafeNo(event.getCafeNo());
-		event.setTargetNo(search.getPostNo());
+		
+		Map<String, Object> resultMap = new HashMap<String, Object>();
 		
 		boolean result = true;
 		result = cafePostDao.eventValidationCheck(search) == 0 ? true : false;
-		
-		
 		
 		if(result) {
 			result = cafeManageDao.addEventLog(event);
@@ -147,8 +153,17 @@ public class CafePostServiceImpl implements CafePostService {
 			
 			result = cafePostDao.addLike(search);
 			System.out.println("addLike 결과 : " + result);
+			
+			if(search.getSearchCondition().equals("0")) {
+				resultMap.put("likeCount", cafePostDao.getPost(search.getPostNo()).getLikeCount());
+			}else if(search.getSearchCondition().equals("1") ){
+				resultMap.put("likeCount", cafePostDao.getReply(search.getReplyNo()).getLikeCount());
+			}
 		}
-		return result;
+		
+		resultMap.put("result", result);
+		
+		return resultMap;
 	}
 	
 	

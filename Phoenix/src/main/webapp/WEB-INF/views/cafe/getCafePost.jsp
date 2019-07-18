@@ -49,7 +49,7 @@
 		
 		$(function(){
 			$("#postLikeButton").on("click",function(){
-				var JSONPostNo =  JSON.stringify({cafeURL : "${cafeURL}", postNo:${post.postNo}, userNo:10000, searchCondition : 0});
+				var JSONPostNo =  JSON.stringify({cafeURL : "${cafeURL}", postNo:${post.postNo}, userNo:10000, searchCondition : "0"});
 				console.log(JSONPostNo); 
 
 				$.ajax({
@@ -59,15 +59,51 @@
 						dataType : "JSON",
 						data: JSONPostNo,
 						success : function(data) {
-							alert("success");
-							if(data == false){
-								alert("이미 추천한 게시글입니다.")
-								}
+// 							alert("success");
 							
-// 							debugger;
+							debugger;
+							if(data.result == false){
+								alert("이미 추천한 게시글입니다.")
+							}else{
+								$("#postLikeButton").find(".count").text(data.likeCount);
+							}
+							
 						},
 						error : function(data) {
 							alert("error : " + data)
+// 							debugger;
+						}
+					});
+
+				
+				});
+
+			$(document).on("click", ".replyLikeButton", function(){
+				var JSONPostNo =  JSON.stringify({cafeURL : "${cafeURL}", replyNo:$(this).next().find("[name=replyNo]").val(), userNo:10000, searchCondition : "1"});
+				console.log(JSONPostNo); 
+
+				var count = $(this).find(".count");
+// 				debugger;
+				
+				$.ajax({
+						type : "POST",
+						contentType: "application/json",
+						url : "/cafe/${cafeURL}/json/addLike",
+						dataType : "JSON",
+						data: JSONPostNo,
+						success : function(data) {
+// 							alert("success");
+							
+// 							debugger;
+							if(data.result == false){
+								alert("이미 추천한 댓글입니다.")
+							}else{
+								count.text(data.likeCount);
+							}
+							
+						},
+						error : function(data) {
+							alert("error : " + data);
 // 							debugger;
 						}
 					});
@@ -138,7 +174,7 @@
 			
 					<h4 class="text-center">${post.postTitle } </h4><hr /> 
 					<p class="text-center">${post.postContent } <br /><br/>
-					<button id="postLikeButton"><i class="far fa-thumbs-up"></i>  ${post.likeCount }</button>
+					<button id="postLikeButton"><span class="far fa-thumbs-up"></span>&nbsp;<span class="count">${post.likeCount }</span></button>
 					<hr/>
 					
 					

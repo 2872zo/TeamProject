@@ -56,13 +56,9 @@ public class CafePostRestContoller {
 	}
 
 	@RequestMapping("/cafe/{cafeURL}/json/addLike")
-	public boolean addLike(@RequestBody Search search) {
+	public Map<String, Object> addLike(@RequestBody Search search) {
 		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>> " + search);
 		
-		boolean result = cafePostService.addLike(search);
-		
-		System.out.println("전체 결과 : " + result);
-		
-		return result;
+		return cafePostService.addLike(search);
 	}
 }

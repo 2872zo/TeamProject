@@ -35,5 +35,5 @@ public interface CafePostService {
 
 	public boolean movePost(Map map);
 	
-	public boolean addLike(Search search);
+	public Map<String, Object> addLike(Search search);
 }
