@@ -20,11 +20,25 @@
 			.postTitle:hover{
 				color: blue;
 			}
+			
+			#layerPopup{
+			  padding:20px; 
+			  border:4px solid #ddd; 
+			  position:absolute; 
+			  left:100px; 
+			  top:100px; 
+			  background:#fff;
+			}
+			
+			#layerPopup button{
+			  cursor:pointer;
+			}
 		</style>
 		
 		<script>
 			var cafeURL = '${search.cafeURL}';
 			var boardNo = ${search.boardNo};
+			var openWin;
 			
 			function fncGetPostList(idx){
 				$("[name=currentPage]").val(idx);
@@ -49,7 +63,38 @@
 				});
 			});
 
-			//체크박스 이벤트
+			//체크된 게시글 이동을 위한 팝업레이어 출력
+			$(function(){
+				
+				$("[name=movePostButton]").on("click", function(){
+					countCheck = $(":checkbox").not(":checkbox:first").filter(":checkbox:checked");
+					
+					var targetPostList = "";
+					if(countCheck.length < 1){
+						alert("이동할 게시글을 선택하십시오.");
+						return;
+					}else{
+						for(var i = 0; i < countCheck.length; i++){
+							if(targetPostList == ""){
+								targetPostList = countCheck.eq(i).parent().parent().find(".postNo").val();
+							}else{
+								targetPostList = targetPostList + "," + countCheck.eq(i).parent().parent().find(".postNo").val();
+							}
+						}
+
+						var url = "/cafe/${cafeURL}/movePost/${search.boardNo}?targetPostList=" + targetPostList;
+			            var name = "게시글 이동";
+			            var option = "width = 500, height = 500, top = 100, left = 200, location = no"
+			            openWin = window.open(url, name, option);
+			            $("#targetPostList").val(targetPostList);
+					}
+				});	
+
+			});
+
+
+			
+			//체크된 게시글 삭제
 			$(function(){
 				$("[name=deletePostButton]").on("click", function(){
 					countCheck = $(":checkbox").not(":checkbox:first").filter(":checkbox:checked");
@@ -78,7 +123,7 @@
 						tmpInputBoardNo.setAttribute("value", boardNo);
 						tmpForm.appendChild(tmpInputBoardNo);
 
-						tmpInputPostNoList = document.createElement("input");
+						tmpInputPostNoList = document.crtargetPostListt("input");
 						tmpInputPostNoList.setAttribute("type", "hidden");
 						tmpInputPostNoList.setAttribute("name", "postNoList");
 						tmpInputPostNoList.setAttribute("value", postNoList);
@@ -215,7 +260,11 @@
 				
 			</div><!-- row End -->
 			
+			<form id="movePostData">
+				<input type="hidden" name="targetPostList" id="targetPostList">
+				<input type="hidden" name="targetBoardNo" id="targetBoardNo">
+			</form>
+									
 		</div>
 	</body>
-
 </html>

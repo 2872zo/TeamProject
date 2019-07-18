@@ -2,6 +2,7 @@ package com.phoenix.mvc.web.cafe;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -61,6 +62,9 @@ public class CafePostContoller {
 	public String getCafeInnerSearchList(@ModelAttribute Search search, Map<String, Object> map) throws Exception {
 		System.out.println("[CafeInnerSearchList] Search : " + search);
 
+		if(search.getSearchCondition() == null) {
+			search.setSearchCondition("0");
+		}
 		search.setPageSize(pageSize);
 		if (search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
@@ -300,6 +304,29 @@ public class CafePostContoller {
 		return "redirect:/cafe/" + cafeURL + "/getBoard/" + boardNo;
 	}	
 
+	@GetMapping("/cafe/{cafeURL}/movePost/{boardNo}")
+	public String movePostView(@PathVariable String cafeURL, @PathVariable int boardNo, @ModelAttribute Search search, @RequestParam String targetPostList, Map<String, Object> map) {
+		System.out.println("[movePostView] : " + targetPostList);
+		
+		map.put("boardList", cafeManageService.getCafeBoard(search));
+		map.put("targetPostList", targetPostList);
+		
+		return "/cafe/movePost";
+	}
+	
+	@PostMapping("/cafe/{cafeURL}/movePost")
+	public String movePost(@PathVariable String cafeURL, @RequestParam int targetBoardNo, @ModelAttribute Search search, @RequestParam String targetPostList) {
+		System.out.println("[movePostView] : " + targetPostList);		
+		
+		Map map = new HashMap<String, String>();
+		map.put("targetBoardNo", targetBoardNo);
+		map.put("targetPostList", targetPostList);
+		
+		System.out.println("[movePost] 실행 결과 : " + cafePostService.movePost(map));
+		
+		return "redirect:/cafe/" + cafeURL + "/getBoard/" + targetBoardNo;
+	}
+	
 	@PostMapping("/cafe/{cafeURL}/addReply")
 	public String addReply(@PathVariable String cafeURL, @ModelAttribute Reply reply) throws Exception {
 		//임시 데이터

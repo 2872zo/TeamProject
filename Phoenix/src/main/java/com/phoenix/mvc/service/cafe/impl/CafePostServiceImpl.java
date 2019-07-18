@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.phoenix.mvc.common.Event;
 import com.phoenix.mvc.common.Search;
+import com.phoenix.mvc.service.cafe.CafeManageDao;
 import com.phoenix.mvc.service.cafe.CafeMemberDao;
 import com.phoenix.mvc.service.cafe.CafePostDao;
 import com.phoenix.mvc.service.cafe.CafePostService;
@@ -24,7 +26,7 @@ public class CafePostServiceImpl implements CafePostService {
 
 	@Autowired
 	@Qualifier("cafeManageDaoImpl")
-	private CafeManageDaoImpl cafeManageDaoImpl;
+	private CafeManageDao cafeManageDao;
 	
 	@Autowired
 	@Qualifier("cafeMemberDaoImpl")
@@ -119,4 +121,35 @@ public class CafePostServiceImpl implements CafePostService {
 	public boolean addReReply(Reply reply) {
 		return cafePostDao.addReReply(reply);
 	}
+
+	@Override
+	public boolean movePost(Map map) {
+		return cafePostDao.movePost(map);
+	}
+
+	@Override
+	public boolean addLike(Search search) {
+		Event event = new Event();
+		event.setEventType("et101");
+		event.setEventUserNo(search.getUserNo());
+		event.setCafeNo(cafeManageDao.getCafeNo(search.getCafeURL()));
+		search.setCafeNo(event.getCafeNo());
+		event.setTargetNo(search.getPostNo());
+		
+		boolean result = true;
+		result = cafePostDao.eventValidationCheck(search) == 0 ? true : false;
+		
+		
+		
+		if(result) {
+			result = cafeManageDao.addEventLog(event);
+			System.out.println("addLike Event 결과 : " + result);
+			
+			result = cafePostDao.addLike(search);
+			System.out.println("addLike 결과 : " + result);
+		}
+		return result;
+	}
+	
+	
 }

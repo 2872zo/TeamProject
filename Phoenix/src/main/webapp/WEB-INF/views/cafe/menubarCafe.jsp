@@ -5,6 +5,9 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 	
+	<link rel="stylesheet" href="/css/scroll-top.css">
+	<script src="/js/scroll-top.js"></script>
+	
 	<script type="text/javascript">
 		$(function(){
 			$(".myDetail").hide();
@@ -50,16 +53,22 @@
 			<h5><a href='#'>내가 쓴 댓글 보기</a></h5>
 			
 		</div>
-		
-	
+
 		<div>
 			<form name="InnerSearch">
-				<input type="text" id="menubarSearch" name="searchKeyword"><input type="button" name="menubarSubmit" value="검색">
+				<div class="input-group">
+					<input type="text" class="form-control" id="menubarSearch" name="searchKeyword">
+					<div class="input-group-append">
+						<input type="button" class="btn btn-secondary" name="menubarSubmit"	style="z-index: 0" value="검색">
+					</div>
+				</div>
 			</form>
 		</div>
-	
-		
-		<c:forEach var="board" items="${boardList}">
+
+
+
+
+	<c:forEach var="board" items="${boardList}">
 			<br/>
 			
 			<c:if test="${board.boardType eq 'cb102'}"> <!-- 구분선이면 -->
@@ -72,4 +81,10 @@
 			
 			<br/>
 		</c:forEach>
+	</div>
+
+	<div class="scroll-top-wrapper ">
+			  <span class="scroll-top-inner">
+			    <i class="fa fa-2x fa-arrow-circle-up"></i>
+			  </span>
 	</div>
