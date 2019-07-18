@@ -537,7 +537,7 @@ public class CafeManageController {
 		cafe.setClosedFlag(true);// 카페폐쇄
 		cafeManageService.dropCafe(cafe, cafeURL);
 
-		return "cafe/main";
+		return "cafe/cafeHomeMain";
 	}
 
 	@RequestMapping(value = "/{cafeURL}/manage/updateCafeGradeView", method = RequestMethod.GET)

@@ -34,7 +34,11 @@
 <script type="text/javascript">
 
 $(function() {
-	
+	if(${!empty sessionScope.user}){
+		$("#goChat").attr('class' , 'btn btn-info');
+		$("#goChat").text('로그인해서채팅가능');
+
+		}
 	
 
 	$("#login").on("click" , function() {
@@ -148,8 +152,7 @@ $(function() {
 
     </ul>
 
-
-      	<button type="button" class='btn btn-${!empty sessionScope.user ? "outline-info' id ='goChat'>채팅가능":"dark' disabled>채팅안됨" }</button>
+      	<button type="button" class='btn btn-dark' id='${empty sessionScope.user ? "noChat":"goChat"}'>채팅</button>
 		<button type="submit" class='btn btn-outline-${empty sessionScope.user ? "light' id='login'>Login" : "dark' id='logout'>Logout"}</button>
 		
   </div>

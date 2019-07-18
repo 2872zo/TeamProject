@@ -13,7 +13,7 @@ public interface CafeMemberService {
 
 	public int getCafeNo(String URL);
 
-	public void addCafeApplication(CafeApplication cafeApplication);// 카페가입신청
+	public void addCafeApplication(CafeApplication cafeApplication) throws Exception;// 카페가입신청
 
 	public void updateCafeMember(CafeMember cafeMember);// 카페탈퇴
 

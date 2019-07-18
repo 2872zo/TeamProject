@@ -35,7 +35,7 @@
 	 		SELECT SEQ_CAFE_CAFE_NO.NEXTVAL FROM DUAL
 	 	</selectKey>
 		INSERT INTO CAFE (cafe_no, cafe_name, manage_user_no, reg_date, url, cafe_detail, banner_img, main_img, cafe_type, member_nickname_flag) 
-		VALUES ( #{cafeNo}, #{cafeName:VARCHAR}, ${manageUserNo:NUMERIC}, SYSDATE, #{cafeURL:VARCHAR}, #{cafeDetail:VARCHAR}, #{bannerImg:VARCHAR} , #{mainImg:VARCHAR}, #{cafeType:VARCHAR}, #{memberNicknameFlag:CHAR})
+		VALUES ( #{cafeNo}, #{cafeName:VARCHAR}, #{manageUserNo}, SYSDATE, #{cafeURL:VARCHAR}, #{cafeDetail:VARCHAR}, #{bannerImg:VARCHAR} , #{mainImg:VARCHAR}, #{cafeType:VARCHAR}, #{memberNicknameFlag:CHAR})
 
 	 </insert>
 	 

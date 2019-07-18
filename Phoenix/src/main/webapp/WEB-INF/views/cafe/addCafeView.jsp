@@ -62,9 +62,8 @@ body>div.container {
 			return;
 		}
 
-
-		$("form").attr("method", "POST").attr("action",
-				"/cafe/{cafe.cafeURL}/addCafe").submit();
+		alert("만들기");
+		$("form").attr("method", "POST").attr("action","/cafe/addCafe").submit();
 	}
 	//카페이름 중복확인 
 	
@@ -74,7 +73,7 @@ body>div.container {
 	//============= "만들기"  Event 연결 =============
 	$(function() {
 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-		$("button.btn btn-success").on("click", function() {
+		$("button.btn btn-primary").on("click", function() {
 			fncAddCafe();
 		});
 	});
@@ -146,7 +145,7 @@ $(function() {
 	$("input[name='cafeURL']").on('keyup',function() {
 
 						var inputed = JSON.stringify({cafeURL : $("input[name='cafeURL']").val()});
-						console.log(inputed);
+		
 						// alert("입력  : "+inputed);
 
 								$.ajax({

@@ -40,11 +40,23 @@
 
 			for(var i in chartData){
 				for(var j in tenDates){
-					if(tenDates[j]==chartData[i].regDate){
-						dataArray[j]=chartData[i].count;
+					if(tenDates[j]==chartData[i].REG_DATE){
+						//alert(chartData[i].COUNTS);
+						dataArray[j]=chartData[i].COUNTS;
 					}
 				 }
 			 }
+
+			for(var i=0; i<dataArray.length; i++){ //안들어간값아 0을넣어줌
+				if(dataArray[i]==null){
+				
+					dataArray[i]=0;	
+				}
+			}
+
+			for(var i in tenDates){ //날짜 파씽
+				labels[i] = tenDates[i].substr(6,2)+"일";
+			}
 		 }
 		
 		$(function(){
@@ -55,22 +67,13 @@
 
 			<c:forEach items="${chartResult}" var="item">
 				var json = new Object();
-				json.regDate="${item.REG_DATE}";
-				json.count="${item.COUNTS}";
+				json.REG_DATE="${item.REG_DATE}";
+				json.COUNTS="${item.COUNTS}";
 				chartData.push(json);
 			</c:forEach>
 			
 			setChartData();
-			
-			for(var i=0; i<dataArray.length; i++){
-				if(dataArray[i]==null){
-					dataArray[i]=0;	
-				}
-			}
-
-			for(var i in tenDates){
-				labels[i] = tenDates[i].substr(6,2)+"일";
-			}
+		
 
 		});
 		
@@ -134,7 +137,25 @@
 						dataType : "text",
 						success : function(serverData){
 
+							alert(serverData);
 							var data = JSON.parse(serverData);
+							tenDates = data.dates; //x축설정
+							chartData= data.chartResult;
+
+							dataArray = new Array(10); //초기화
+							labels =[] //초기화
+							setChartData(); //실행하고
+							
+						//	alert(data.chartResult[0].COUNTS);
+						//	alert(data.chartResult[0].REG_DATE);
+							//alert(tenDates);
+							//alert(chartData);
+							//alert(dataArray);
+							
+							myChart.data.labels = labels;
+							myChart.data.datasets[0].data = dataArray;
+							
+							myChart.update();
 							
 							$("#et100").text(data.et100);
 							$("#et103").text(data.et103);
@@ -142,8 +163,7 @@
 							$("#et105").text(data.et105);
 							$("#et106").text(data.et106);
 
-							basisDate = endDate;
-							
+				
 							
 						}//success
 
@@ -268,12 +288,9 @@
 				           				 data: dataArray,
 				           		 backgroundColor: [
 				                'rgba(75, 192, 192, 0.2)'
-				                
 				            ],
 				            borderColor: [
-				                
 				                'rgba(75, 192, 192, 1)'
-				              
 				            ],
 				            borderWidth: 4,
 				            fill : false
@@ -285,7 +302,8 @@
 									scales : {
 										yAxes : [ {
 											ticks : {
-												beginAtZero : true
+												beginAtZero : true,
+												stepSize : 1
 											}
 										} ]
 									}
