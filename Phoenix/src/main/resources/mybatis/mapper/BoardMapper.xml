@@ -102,7 +102,7 @@
 				#{cafeNo:NUMERIC},
 				SYSDATE,
 				#{eventUserNo:NUMERIC},
-				#{targetNo:NUMERIC});
+				#{targetNo:NUMERIC})
 	</insert>
 	
 	<select id="checkCafeTodayVisitLog" parameterType="Event" resultMap="eventSelectMap">

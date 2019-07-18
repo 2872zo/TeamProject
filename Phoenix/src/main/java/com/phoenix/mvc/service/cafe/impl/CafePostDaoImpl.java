@@ -1,6 +1,7 @@
 package com.phoenix.mvc.service.cafe.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -110,5 +111,20 @@ public class CafePostDaoImpl implements CafePostDao{
 	@Override
 	public List<Post> getMyPostList(int userNo) {
 		return sqlSession.selectList("CafePostMapper.getMyPostList", userNo);
+	}
+
+	@Override
+	public boolean movePost(Map map) {
+		return (sqlSession.update("CafePostMapper.movePost", map) != 0 ? true: false);
+	}
+
+	@Override
+	public boolean addLike(Search search) {
+		return (sqlSession.update("CafePostMapper.addLike", search) == 1 ? true: false);
+	}
+
+	@Override
+	public int eventValidationCheck(Search search) {
+		return sqlSession.selectOne("CafePostMapper.eventValidationCheck", search);
 	}
 }

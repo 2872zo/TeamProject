@@ -298,6 +298,7 @@ public class CafeManageController {
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("page", resutlPage);
 		model.addAttribute("search", search);
+		model.addAttribute("cafeURL",search.getCafeURL());
 
 		return "/cafe/listCafeApplication";
 	}
@@ -406,20 +407,24 @@ public class CafeManageController {
 		cafeApplication.setCafeIcon(cafeURL);// 카페url 넘겨주는 용도!
 
 		model.addAttribute("cafeApplication", cafeApplication);
+		model.addAttribute("cafeURL",cafeURL);
 
 		return "cafe/getCafeApplication";
 
 	}
 
 	@GetMapping(value = "/{cafeURL}/manage/dropCafeView")
-	public String dropCafeView(@RequestParam int cafeNo, Model model) throws Exception {// 매니저유저넘버 추가
+	public String dropCafeView(@PathVariable String cafeURL, Model model) throws Exception {// 매니저유저넘버 추가
 
 		System.out.println("/{cafeURL}/manage/dropCafeView : GET");
+		
+		int cafeNo = cafeMemberService.getCafeNo(cafeURL);
 
 		Cafe cafe = cafeManageService.getCafeInfo(cafeNo);
 
 		model.addAttribute("cafe", cafe);
-
+		model.addAttribute("cafeURL",cafeURL);
+		
 		return "cafe/dropCafe";
 
 	}
@@ -434,7 +439,7 @@ public class CafeManageController {
 		cafe.setClosedFlag(true);// 카페폐쇄
 		cafeManageService.dropCafe(cafe, cafeURL);
 
-		return null;// 메인으로 이동?
+		return "cafe/main";
 	}
 
 	@RequestMapping(value = "/{cafeURL}/manage/updateCafeGradeView", method = RequestMethod.GET)
@@ -447,6 +452,7 @@ public class CafeManageController {
 		List cafeGrade = cafeManageService.checkCafeGrade(cafeNo);
 
 		model.addAttribute("cafeGradeList", cafeGrade);
+		model.addAttribute("cafeURL",cafeURL);
 
 		return "cafe/updateCafeGrade";
 

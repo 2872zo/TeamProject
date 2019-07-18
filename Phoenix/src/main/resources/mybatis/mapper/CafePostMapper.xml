@@ -418,4 +418,45 @@
 			ORDER BY p.reg_date DESC) news
 		WHERE rownum &lt; 11
 	</select>
+	
+	<update id="movePost" parameterType="Map">
+		UPDATE
+			post
+		SET
+			board_no = #{targetBoardNo}
+		WHERE
+			post_no IN (${targetPostList})
+	</update>
+	
+	<update id="addLike" parameterType="Search">
+		UPDATE
+			post
+		SET
+			like_count = like_count + 1
+		WHERE
+			post_no = #{postNo}
+	</update>
+	
+	<select id="eventValidationCheck" parameterType="Search" resultType="int">
+		SELECT
+			COUNT(*) AS searchCondition
+		FROM
+			(SELECT
+			 	*
+			 FROM
+			 	event_log
+			 WHERE
+			 	cafe_no = #{cafeNo}
+<!-- 			 	event_cafe_no = #{cafeNo} -->
+			 	AND event_user_no = #{userNo}
+			 	<if test="searchCondition == 0">
+			 		AND target_no = #{postNo}
+			 	</if>	
+			 	<if test="searchCondition == 1">
+			 		AND target_no = #{replyNo}
+			 	</if>
+			 	)
+			 	
+				
+	</select>
 </mapper>

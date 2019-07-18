@@ -51,7 +51,7 @@ public class CafeMemberServiceImpl implements CafeMemberService {
 
 	@Override
 	public void updateCafeMember(CafeMember cafeMember) {// 탈퇴
-		
+
 		cafeMember.setMemberStatusCode("cs102");
 		cafeMemberDao.updateCafeMember(cafeMember);
 		cafeMemberDao.updateMembersDecrease(cafeMember.getCafeNo());
@@ -59,13 +59,13 @@ public class CafeMemberServiceImpl implements CafeMemberService {
 
 	@Override
 	public void addCafeMember(CafeMember cafeMember) {// 가입
-		
-		if(!cafeMember.isMemberNicknameFlag() && cafeMember.getMemberNickname()== null ) {
-			///일단 userNickname값 세팅! userDao.getUser(cafeMember.getUserNo));
-			
+
+		if (!cafeMember.isMemberNicknameFlag() && cafeMember.getMemberNickname() == null) {
+			/// 일단 userNickname값 세팅! userDao.getUser(cafeMember.getUserNo));
+
 			String userNickname = "바보";
 			cafeMember.setMemberNickname(userNickname);
-			
+
 		}
 
 		int lowNo = cafeMemberDao.lowGradeNo(cafeMember.getCafeNo());
@@ -84,6 +84,18 @@ public class CafeMemberServiceImpl implements CafeMemberService {
 	public int changeGradeNo(CafeMember cafeMember) {
 
 		return cafeMemberDao.changeGradeNo(cafeMember);
+	}
+
+	@Override
+	public boolean checkNickname(CafeMember cafeMember) {
+
+		boolean result = true;
+		
+		CafeMember cafeMember2 = cafeMemberDao.checkNickname(cafeMember);
+		if (cafeMember2 != null) {
+			result = false;
+		}
+		return result;
 	}
 
 ////////////////////////////////////지니끝//////////////////////////////
