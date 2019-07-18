@@ -116,7 +116,7 @@
 	 
 	<select id="getCafeMemeber" parameterType="Search" resultMap="cafeMemberSelectMap">
 	 	SELECT
-		m.cafe_no, m.member_no, m.member_nickname, 
+		m.cafe_no, m.member_no, m.member_nickname, m.notice_flag, m.favorite_flag,
 		g.member_grade_code, g.grade_name, 
 		TO_CHAR(m.reg_date, 'YYYY-MM-DD HH24:MM:SS') reg_date, 
 		m.visit_count,m.member_status_code
@@ -266,5 +266,15 @@
 	WHERE
 	member_no=#{memberNo}
 	</update>
+	
+	
+	<select id="checkNickname" parameterType="CafeMember" resultMap="cafeMemberSelectMap">
+	 	SELECT
+		*
+		FROM
+		cafe_member
+		WHERE
+		member_nickname=#{memberNickname} and cafe_no=#{cafeNo}	
+	</select>
 	
 </mapper>
