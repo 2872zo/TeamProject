@@ -29,11 +29,57 @@
  
 <script type="text/javascript">
 $(function() {
-	$(".btn-success").on("click", function(){
+	$(".btn-outline-success").on("click", function(){
 		var cafeURL = '${search.cafeURL}';
 		alert(cafeURL)
-		$("form").attr("method" , "POST").attr("action" , "/cafe/"+cafeURL+"/updateCafeGrade").submit();
+		$("form").attr("method" , "POST").attr("action" , "/cafe/"+cafeURL+"/updateCafeMemberProfile").submit();
+		window.close();
 	});
+});
+
+$(function(){
+		var cafeNo = '${cafeMember.cafeNo }'
+		var cafeURL = '${search.cafeURL}';
+		$("#memberNickname").on("keyup", function() {
+			alert($("#memberNickname").val())
+			alert(cafeNo)
+
+			$.ajax(
+						{
+					url : "/cafe/json/"+cafeURL+"/checkNickName",
+					type : "POST",
+					data : JSON.stringify({
+						memberNickname : $("#memberNickname").val(),
+						cafeNo : cafeNo
+					}),
+					dataType : "json",
+					contentType: "application/json",
+					success : function(JSONData, status) {
+						
+						//alert("status : " + status);
+						//alert("JSONData.result : \n" + JSONData.result);
+
+						if	(JSONData.result == true&& JSONData.memberNickname !="") {
+							$("#here").html("<h7>사용가능</h7>")
+						} else if (JSONData.result == false) {
+							$("#here").html("<h7>사용불가능</h7>")
+						}else if( (JSONData.memberNickname=="") && JSONData.result == true ){
+							$("#here").html("<h7>중복확인하세요</h7>")
+						}else if(JSONData.memberNickname == $("#memberNickname").val()){
+							$("#here").html("<h7></h7>")
+						}
+						
+					},
+					error : function(request,status,error){
+				        alert("에러남 : "+error);
+				       }
+					
+
+					}
+						);//ajax끝
+			
+		});
+		
 });
 
 
@@ -54,11 +100,11 @@ $(function() {
 <input type="hidden" name="memberNo" value = "${cafeMember.memberNo }">
 
 
-
 		<div class="form-group">
-		    <label for="memberNickname" class="col-sm-offset-1 col-sm-3 control-label">닉네임 </label>
+		    <label for="memberNickname" class="col-sm-offset-1 col-sm-3 control-label">별명</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" name="memberNickname" value="${cafeMember.memberNickname }" >
+		      <input type="text" class="form-control" id="memberNickname" name="memberNickname" value="${cafeMember.memberNickname }" >
+		      <strong class="text-danger" id="here" name = "here">중복확인하세요</strong>
 		    </div>
 		  </div>
 
@@ -98,7 +144,9 @@ $(function() {
 		
 		
 	
-		<button type="button" class="btn btn-success btn">확 &nbsp;인</button>
+		<div align="center">
+		<button type="button" class="btn btn-outline-success">확 &nbsp;인</button>
+		</div>
 		</form>
 	</div>
 	

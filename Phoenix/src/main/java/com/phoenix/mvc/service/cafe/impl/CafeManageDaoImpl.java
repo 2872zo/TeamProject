@@ -83,212 +83,225 @@ public class CafeManageDaoImpl implements CafeManageDao {
 
 /////////////////////////////////기황끝//////////////////////////////
 ///////////////////////////////// 지니//////////////////////////////
-	@Override
-	public List<CafeApplication> getCafeApplicationList(Search search) {
+@Override
+public List<CafeApplication> getCafeApplicationList(Search search) {
 
-		return sqlSession.selectList("CafeApplicationMapper.getCafeApplicationList", search);
-	}
+return sqlSession.selectList("CafeApplicationMapper.getCafeApplicationList", search);
+}
 
-	@Override
-	public int getTotalCount(Search search) {
+@Override
+public int getTotalCount(Search search) {
 
-		return sqlSession.selectOne("CafeApplicationMapper.getTotalCount", search);
-	}
+return sqlSession.selectOne("CafeApplicationMapper.getTotalCount", search);
+}
 
-	@Override
-	public void updateAcceptStatusCode(CafeApplication cafeApplication) {
-		sqlSession.update("CafeApplicationMapper.updateAcceptStatusCode", cafeApplication);
+@Override
+public void updateAcceptStatusCode(CafeApplication cafeApplication) {
+sqlSession.update("CafeApplicationMapper.updateAcceptStatusCode", cafeApplication);
 
-	}
+}
 
-	@Override
-	public CafeApplication getCafeApplication2(int applicationNo) {
+@Override
+public CafeApplication getCafeApplication2(int applicationNo) {
 
-		return sqlSession.selectOne("CafeApplicationMapper.getCafeApplication2", applicationNo);
-	}
+return sqlSession.selectOne("CafeApplicationMapper.getCafeApplication2", applicationNo);
+}
 
-	@Override
-	public List getCafeGrade(int cafeNo) {
+@Override
+public List getCafeGrade(int cafeNo) {
 
-		List GradeList = sqlSession.selectList("CafeGradeMapper.getCafeGrade", cafeNo);
+List GradeList = sqlSession.selectList("CafeGradeMapper.getCafeGrade", cafeNo);
 
-		return GradeList;
+return GradeList;
 
-	}
+}
 
-	@Override
-	public void addCafeGrade(CafeGrade cafeGrade) {
+@Override
+public void addCafeGrade(CafeGrade cafeGrade) {
 
-		sqlSession.insert("CafeGradeMapper.addCafeGrade", cafeGrade);
+sqlSession.insert("CafeGradeMapper.addCafeGrade", cafeGrade);
 
-	}
+}
 
-	@Override
-	public void updateCafeGrade(CafeGrade cafeGrade) {
+@Override
+public void updateCafeGrade(CafeGrade cafeGrade) {
 
-		sqlSession.update("CafeGradeMapper.updateCafeGrade", cafeGrade);
+sqlSession.update("CafeGradeMapper.updateCafeGrade", cafeGrade);
 
-	}
+}
 
-	@Override
-	public List checkCafeGrade(int cafeNo) {
+@Override
+public List checkCafeGrade(int cafeNo) {
 
-		List checkList = sqlSession.selectList("CafeGradeMapper.checkCafeGrade", cafeNo);
+List checkList = sqlSession.selectList("CafeGradeMapper.checkCafeGrade", cafeNo);
 
-		return checkList;
-	}
+return checkList;
+}
 
-	@Override
-	public boolean dropCafe(Cafe cafe) {
+@Override
+public boolean dropCafe(Cafe cafe) {
 
-		int drop = sqlSession.update("CafeMapper.dropCafe", cafe);
+int drop = sqlSession.update("CafeMapper.dropCafe", cafe);
 
-		if (drop == 1) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+if (drop == 1) {
+return true;
+} else {
+return false;
+}
+}
 
-//////////////////////////////// 지니끝//////////////////////////////////
+////////////////////////////////지니끝//////////////////////////////////
 
 /////////////////////////////////////예림/////////////////////////////////////
-	@Override
-	public List getCafeBoard(int cafeNo) { // 카페번호
+@Override
+public List getCafeBoard(int cafeNo) { // 카페번호
 
-		List boardList = sqlSession.selectList("getBoardList", cafeNo);
+List boardList = sqlSession.selectList("getBoardList", cafeNo);
 
-		return boardList;
+return boardList;
 
-	}
+}
 
-	@Override
-	public List getCafeBoard(Search search) { // mapper구현x
+@Override
+public List getCafeBoard(Search search) { // mapper구현x
 
-		List boardList = sqlSession.selectList("getBoardListBySearch", search);
+List boardList = sqlSession.selectList("getBoardListBySearch", search);
 
-		return boardList;
-	}
+return boardList;
+}
 
-	@Override
-	public int getCafeNo(String cafeURL) {
+@Override
+public int getCafeNo(String cafeURL) {
 
-		return sqlSession.selectOne("getCafeNo", cafeURL);
+return sqlSession.selectOne("getCafeNo", cafeURL);
 
-	}
+}
 
-	@Override
-	public List getBoardPost(int boardNo) {
+@Override
+public List getBoardPost(int boardNo) {
 //...이거 공지 가져오기 근데 그럼 카페의 공지게시판의 boardno를 알아야함 (게시판코드,게시판No)
 
-		List postList = sqlSession.selectList("getBoardPostList", boardNo);
+List postList = sqlSession.selectList("getBoardPostList", boardNo);
 
-		return postList;
-	}
+return postList;
+}
 
-	@Override
-	public boolean addEventLog(Event event) {// 예림예림 add되면(1) true return. 근데안되면 어짜피 error아닌가여(아직test x)
+@Override
+public boolean addEventLog(Event event) {// 예림예림 add되면(1) true return. 근데안되면 어짜피 error아닌가여(아직test x)
 
-		int addOk = sqlSession.insert("addEventLog", event);
+int addOk = sqlSession.insert("addEventLog", event);
 
-		if (addOk == 1) //
-		{
-			return true;
-		} else {
-			return false;
-		}
+if (addOk == 1) //
+{
+return true;
+} else {
+return false;
+}
 
-	}
+}
 
-	@Override
-	public boolean checkCafeTodayVisitLog(Event event) { // 예림예림 오늘방문했는지 아닌지 판별 (아직 test x)
+@Override
+public boolean checkCafeTodayVisitLog(Event event) { // 예림예림 오늘방문했는지 아닌지 판별 (아직 test x)
 
-		Event visitEvent = sqlSession.selectOne("checkCafeTodayVisitLog", event); // 있으면 returnType event겠지ㅡ므ㅏ
+Event visitEvent = sqlSession.selectOne("checkCafeTodayVisitLog", event); // 있으면 returnType event겠지ㅡ므ㅏ
 
-		if (visitEvent == null) // 오늘 방문한적 없음
-		{
-			return false;
-		} else {
-			return true; // 오늘 방문함
-		}
+if (visitEvent == null) // 오늘 방문한적 없음
+{
+return false;
+} else {
+return true; // 오늘 방문함
+}
 
-	}
+}
 
-	@Override
-	public Map<String, String> getCafeStatistics(Event event) { // 예림예림
+@Override
+public Map getCafeStatistics(Event event) { // 예림예림
 
-		List<Map<String, String>> result = sqlSession.selectList("getCafeStatistics", event);
-		// List<Map<String, String>> chartResult = sqlSession.selectList("get");
+List<Map<String, String>> result = sqlSession.selectList("getCafeStatistics", event);
+//event.setEventType("et001"); //어디다가 해주는게 나은건가/? mapper?? 
+List<Map<String, String>> chartResult = sqlSession.selectList("getCafeChartValue",event); 
+System.out.println(chartResult);
+//System.out.println(statisticResult);
+Map statisticResultMap = new HashMap();
 
-		// System.out.println(statisticResult);
-		Map<String, String> statisticResultMap = new HashMap<String, String>();
+for (int i = 0; i < result.size(); i++) {
+statisticResultMap.put(result.get(i).get("EVENT_TYPE"), String.valueOf(result.get(i).get("COUNTS")));
+}
 
-		for (int i = 0; i < result.size(); i++) {
-			statisticResultMap.put(result.get(i).get("EVENT_TYPE"), String.valueOf(result.get(i).get("COUNTS")));
-		}
-		return statisticResultMap;
-	}
+//for(int i=0;i<chartResult.size(); i++)
+//{
+//statisticResultMap.put(chartResult.get(i).get("REG_DATE"), String.valueOf(chartResult.get(i).get("COUNTS")));
+//}
 
-	@Override
-	public boolean addCafeBoard(List<Board> newBoardList) {
+statisticResultMap.put("chartResult", chartResult);
 
-		int result = sqlSession.insert("insertCafeBoard", newBoardList);
+return statisticResultMap;
+}
 
-		if (result >= 1) {
-			return true;
-		} else {
-			return false;
-		}
+@Override
+public boolean addCafeBoard(List<Board> newBoardList) {
 
-	}
+int result = sqlSession.insert("insertCafeBoard", newBoardList);
 
-	@Override
-	public boolean updateCafeBoard(List<Board> existBoardList) {
+if (result >= 1) {
+return true;
+} else {
+return false;
+}
 
-		int result = sqlSession.update("updateCafeBoard", existBoardList);
-		System.out.println("updateCafeBoard Result : " + result);
-		if (result >= 1)
-			return true;
-		else
-			return false;
-	}
+}
 
-	@Override
-	public boolean deleteCafeBoard(List<Board> deleteBoardList) {
+@Override
+public boolean updateCafeBoard(List<Board> existBoardList) {
 
-		int result = sqlSession.delete("deleteCafeBoard", deleteBoardList);
+int result = sqlSession.update("updateCafeBoard", existBoardList);
+System.out.println("updateCafeBoard Result : " + result);
+if (result >= 1)
+return true;
+else
+return false;
+}
 
-		if (result >= 0)
-			return true;
-		else
-			return false;
-	}
+@Override
+public boolean deleteCafeBoard(List<Board> deleteBoardList) {
+
+int result = sqlSession.delete("deleteCafeBoard", deleteBoardList);
+
+if (result >= 0)
+return true;
+else
+return false;
+}
 
 //////////////////////////////////////////////////////////예림끝////////////////////////////////////
 
 /////////////////////////////// 준호시작///////////////////////////////////////
-	@Override // 준호
-	public void updateCafeInfo(Cafe cafe) throws Exception {
-		sqlSession.update("CafeMapper.updateCafeInfo", cafe);
-	}
+@Override // 준호
+public void updateCafeInfo(Cafe cafe) throws Exception {
+sqlSession.update("CafeMapper.updateCafeInfo", cafe);
+}
 
-	@Override // 준호
-	public Cafe getCafeInfo(int cafeNo) throws Exception {
-		return sqlSession.selectOne("CafeMapper.getCafeInfo", cafeNo);
-	}
+@Override // 준호
+public Cafe getCafeInfo(int cafeNo) throws Exception {
+return sqlSession.selectOne("CafeMapper.getCafeInfo", cafeNo);
+}
 
-	@Override // 준호
-	public void updateCafeApplicationForm(Cafe cafe) throws Exception {
-		sqlSession.update("CafeMapper.updateCafeApplicationForm", cafe);
-	}
+@Override // 준호
+public void updateCafeApplicationForm(Cafe cafe) throws Exception {
+sqlSession.update("CafeMapper.updateCafeApplicationForm", cafe);
+}
 
-	public Cafe getCafeName(String cafeName) throws Exception {
-		return sqlSession.selectOne("CafeMapper.getCafeName", cafeName);
-	}
+public Cafe getCafeName(String cafeName) throws Exception {
+System.out.println("gkgkgkgkgkgk@@@@@@"+cafeName);
+return sqlSession.selectOne("CafeMapper.getCafeName", cafeName);
+}
 
-	public Cafe getCafeURL(String URL) throws Exception {
-		return sqlSession.selectOne("CafeMapper.getCafeURL", URL);
-	}
+public Cafe getCafeURL(String URL) throws Exception {
+System.out.println("dsada@@@@@@@@@@@@@@@"+URL);
+return sqlSession.selectOne("CafeMapper.getCafeURL", URL);
+
+
+}
 
 /////////////////////////////// 준호끝///////////////////////////////////////
 

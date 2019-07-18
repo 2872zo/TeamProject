@@ -20,7 +20,8 @@
 		}
 		
 			$(function(){
-				$(".btn-default").on("click", function(){
+				
+				$(".btn-outline-success").on("click", function(){
 					alert("검색");
 					fncGetList(1);
 				});
@@ -47,7 +48,7 @@
 	                      $(".applicationCheck").not(":disabled").prop("checked",false);
 	                  }
 	              });
-				$(".accept").on("click", function(){
+				$("#accept").on("click", function(){//승인
 					var application="";
 					
 					$("input[type=checkbox]:checked").each(function(){
@@ -62,8 +63,9 @@
 					$("#boardName").val(application);
 					$("#checkBox").attr("method" , "POST").attr("action" , "/cafe/"+cafeURL+"/manage/updateCafeApplication").submit();	
 					
-					});//승인
-				$(".reject").on("click",function(){
+					});
+				
+				$("#reject").on("click",function(){//거절
 					var reject='';
 					$("input[type=checkbox]:checked").each(function(){
 						var count = $(".applicationCheck").index(this);
@@ -110,13 +112,13 @@
 							
 						</select>
 					</div>
-
+					&nbsp;&nbsp;
 					<div class="form-group">
 						<label class="sr-only" for="searchKeyword">검색어</label>
 						 <input type="text" class="form-control" id="searchKeyword" name="searchKeyword" placeholder="검색어">
 					</div>
-
-					<button type="button" class="btn btn-default">검색</button>
+					&nbsp;&nbsp;
+					<button type="button" class="btn btn-outline-success">검색</button>
 					 <input type="hidden" id="currentPage" name="currentPage" value=""/>
 					
 					
@@ -125,10 +127,14 @@
 				</form>
 			</div>
 			
-			<button type="button" class="accept">가입승인</button>
-			<button type="button" class="reject">가입거절</button>
+			<button type="button" id="accept"class="btn btn-outline-secondary">가입승인</button>
+			<button type="button" id="rejecr"class="btn btn-outline-secondary">가입거절</button>
+			
+			</br>
+			</br>
+			
       <!--  table Start /////////////////////////////////////-->
-      <table>
+      <table class="table table-hover table-striped" >
       
       <form id = "checkBox"><input type="hidden" name ="boardName" id ="boardName" value="" /></form>
           <tr>
@@ -145,9 +151,10 @@
 		
 		  <c:set var="i" value="0" />
 		  <c:forEach var="cafeApplication" items="${list}">
+		  
 			<tr>
 			<td><input type="checkbox" class="applicationCheck" ></td>
-			  <td align="center" class="applicationNo" value="${cafeApplication.applicationNo}">${cafeApplication.applicationNo}</td>
+			  <td align="left" class="applicationNo" value="${cafeApplication.applicationNo}">${cafeApplication.applicationNo}</td>
 			  <td align="left" >${cafeApplication.userId}</td>
 			  <td align="left" class="nickname" value="${cafeApplication.memberNickname}">${cafeApplication.memberNickname}</td>
 			  <td align="left">${cafeApplication.regDate}</td>

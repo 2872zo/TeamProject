@@ -48,26 +48,50 @@ body>div.container {
 	//유효성 검사
 	function fncAddCafe() {
 
-		var cafeURL = "22";
+		
 
 		var cafeName = $("input[name='cafeName']").val();
-		var URL = $("input[name='URL']").val();
+		var cafeURL = $("input[name='cafeURL']").val();
 
 		if (cafeName == null || cafeName.length < 1) {
 			alert("카페이름은 반드시 입력하셔야 합니다.");
 			return;
 		}
-		if (URL == null || URL.length < 1) {
+		if (cafeURL == null || URL.length < 1) {
 			alert("카페URL은  반드시 입력하셔야 합니다.");
 			return;
 		}
 
 
 		$("form").attr("method", "POST").attr("action",
-				"/cafe/" + cafeURL + "/addCafe").submit();
+				"/cafe/{cafe.cafeURL}/addCafe").submit();
 	}
 	//카페이름 중복확인 
+	
+
+	//==>"URL중복확인" 
+	
+	//============= "만들기"  Event 연결 =============
 	$(function() {
+		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		$("button.btn btn-success").on("click", function() {
+			fncAddCafe();
+		});
+	});
+
+	$(function() {
+		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		$("a[href='#' ]").on("click", function() {
+			//$("form")[0].reset();
+			self.location = "/cafe/main"
+		});
+	});
+</script>
+
+</head>
+<body>
+<script type="text/javascript">
+$(function() {
 
 		$("input[name='cafeName']").on('keyup',function() {
 
@@ -117,80 +141,55 @@ body>div.container {
 
 	});
 
-	//==>"URL중복확인" 
-	$(function() {
+$(function() {
 
-		$("input[name='URL']")
-				.on(
-						'keyup',
-						function() {
+	$("input[name='cafeURL']").on('keyup',function() {
 
-							var inputed = $("input[name='URL']").val();
-							// alert("입력  : "+inputed);
+						var inputed = JSON.stringify({cafeURL : $("input[name='cafeURL']").val()});
+						console.log(inputed);
+						// alert("입력  : "+inputed);
 
-									$.ajax({
-										url : "/cafe/json/checkCafeNameDuplication",
-										method : "POST",
-										dataType : "json",
-										headers : {
-											"Accept" : "application/json",
-											"Content-Type" : "application/json"
-										},
-										data : JSON.stringify({
-											cafeName : inputed,
-										}),
+								$.ajax({
+									url : "/cafe/json/checkCafeURLDuplication",
+									method : "POST",
+									dataType : "json",
+									contentType : "application/json",
+									data : inputed,
+									error:function(request,status,error){
+								        alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+								       },
+									success : function(JSONData) {
+									//	alert(JSONData); 
+									//	alert(typeof(JSONData));
 
-										success : function(JSONData) {
-											//alert(JSONData); 
-											//alert(typeof(JSONData));
-
-											if (JSONData && inputed != "") {
-												$("#check1").children("strong")
-														.remove();
-												$("#check1")
-														.append(
-																"<strong class=\"text-success\">사용 가능합니다.</strong>");
-											} else {
-												$("#check1").children("strong")
-														.remove();
-												$("#check1")
-														.append(
-																"<strong  class=\"text-danger\">사용 불가능합니다.</strong>");
-											}
-											if (inputed == "") {
-												$("#check1").children("strong")
-														.remove();
-												$("#check1")
-														.append(
-																"<strong class=\"text-muted\">URL을 입력해주세요.</strong>");
-											}
+										if (JSONData && inputed != "") {
+											$("#check1").children("strong")
+													.remove();
+											$("#check1")
+													.append(
+															"<strong class=\"text-success\">사용 가능합니다.</strong>");
+										} else {
+											$("#check1").children("strong")
+													.remove();
+											$("#check1")
+													.append(
+															"<strong  class=\"text-danger\">사용 불가능합니다.</strong>");
 										}
+										if (inputed == "") {
+											$("#check1").children("strong")
+													.remove();
+											$("#check1")
+													.append(
+															"<strong class=\"text-muted\">카페이름을 입력해주세요.</strong>");
+										}
+									}
 
-									});
-						});
+								});
+					});
 
-	});
+});
 
-	//============= "만들기"  Event 연결 =============
-	$(function() {
-		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-		$("button.btn btn-success").on("click", function() {
-			fncAddCafe();
-		});
-	});
-
-	$(function() {
-		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-		$("a[href='#' ]").on("click", function() {
-			//$("form")[0].reset();
-			self.location = "/cafe/main"
-		});
-	});
 </script>
-
-</head>
-<body>
-
 	<div class="container">
 
 		<h4 class="bg-primary text-center">카페 만들기</h4>
@@ -214,7 +213,7 @@ body>div.container {
 							class="col-sm-offset-1 col-sm-3 control-label">카페 URL</label>
 						<div class="col-sm-4">
 							<input type="text" class="form-control"
-								id="exampleFormControlInput1" placeholder="" name="URL">
+								id="exampleFormControlInput1" placeholder="" name="cafeURL">
 							<span id="check1"> <strong>카페URL을 입력해주세요</strong>
 							</span>		
 						</div>
@@ -256,7 +255,12 @@ body>div.container {
 								rows="3" name="applicationDetail"></textarea>
 						</div>
 					</div>
+					</center>
+
+					
 			<center>
+			
+			
 			<div class="form-group">
 						<label for="exampleFormControlSelect1"
 							class="col-sm-offset-1 col-sm-3 control-label">별명사용여부</label>

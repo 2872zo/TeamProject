@@ -1,5 +1,7 @@
 package com.phoenix.mvc.service.domain;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class CafeApplication {
@@ -46,11 +48,13 @@ public class CafeApplication {
 		this.acceptStatusCode = acceptStatusCode;
 	}
 
-	public Date getRegDate() {
-		return regDate;
+	public String getRegDate() {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+		return format.format(regDate);
 	}
 
-	public void setRegDate(Date regDate) {
+	public void setRegDate(Date regDate) throws ParseException {
 		this.regDate = regDate;
 	}
 
@@ -210,5 +214,4 @@ public class CafeApplication {
 				+ "]";
 	}
 
-	
 }

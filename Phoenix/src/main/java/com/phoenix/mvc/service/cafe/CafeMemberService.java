@@ -22,6 +22,8 @@ public interface CafeMemberService {
 	public void updateCafeMemberProfile(CafeMember cafeMember);
 
 	public int changeGradeNo(CafeMember cafeMember);
+	
+	public boolean checkNickname(CafeMember cafeMember);
 
 	//////////////////////////////// 지니끝//////////////////////////////////
 

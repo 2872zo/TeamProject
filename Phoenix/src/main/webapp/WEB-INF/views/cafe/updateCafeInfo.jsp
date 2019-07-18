@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
@@ -7,73 +6,122 @@
 <html lang="ko">
 	
 <head>
-	
+
 	
 	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
-	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<!-- Bootstrap CDN -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 	
 	<header>
-		<title>카페정보수정완료창</title>
+	
+	
+		<title>카페가입양식관리화면</title>
 	</header>
 	
 		<script type="text/javascript">
 
+		
 		//============= "가입"  Event 연결 =============
 		 $(function() {
+
+				//트루 펄스 값 한글로 나오게 하기
+			 $(".autoAcceptOption").each(function(){
+				    if($(this).val()=="${cafe.autoApplicationAcceptFlag}"){
+				      $(this).attr("selected","selected");
+				    }
+			 });
+			
+			 $(".check").each(function(){
+				    if($(this).val()=="${cafe.memberNicknameFlag}"){
+				      $(this).attr("selected","selected");
+				    }
+			 });
+				    
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			var cafeURL = "22";
 			$( "button.btn.btn-success" ).on("click" , function() {
-				var cafeURL = "22";
-				alert("가입양식관리");
-				self.location = "/cafe/"+cafeURL+"/manage/updateCafeApplicationFormView?cafeNo=${cafe.cafeNo}"
-				//$("form").attr("method" , "POST").attr("action" , "/cafe/1234/addCafe").submit();
+				alert("수정");
+				$("form").attr("method" , "POST").attr("action" , "/cafe/"+cafeURL+"/manage/updateCafeApplicationForm").submit();
 			});
 		});	
 
 			
+			
 		</script>
 <body>
-	
+		<div class="container">
+		
+			<h4 class="bg-primary text-center">수정완료</h4>
 <form class="form-horizontal">
 
 
-		<div class="row" align="center">
-	  		<div class="col-sm-4"><strong>수정완료</strong></div>
-		</div>
 		
+		
+		<input type="hidden" name="cafeNo" value="${cafe.cafeNo }"/>
+				
+					<div class="form-group">
 	
-		  카페이름:&nbsp;&nbsp;[${cafe.cafeName }]</br>		  
-		  카페설명:&nbsp;&nbsp;[${cafe.cafeDetail }]</br>
-		  배너이미지:&nbsp;&nbsp;[${cafe.bannerImg }]</br>
-		  메인이미지:&nbsp;&nbsp;[${cafe.mainImg}]</br>
-		  카페카테고리:&nbsp;&nbsp;[${cafe.cafeType }]</br>
-		  자동가입승인여부:&nbsp;&nbsp;[${cafe.autoApplicationAcceptFlag}]</br>
-		  카페아이콘:&nbsp;&nbsp;[${cafe.cafeIcon }]</br>
-		  		 
+					<label for="exampleFormControlInput1" class="col-sm-offset-1 col-sm-3 control-label">카 페 이 름</label>
+						<div class="col-sm-4">				
+							<input type="text" class="form-control"
+								id="exampleFormControlInput1" placeholder="" name="cafeName"  value="${cafe.cafeName}">							
+						</div>
+					</div>		
+					
+					<div class="form-group">
+	
+					<label for="exampleFormControlInput1" class="col-sm-offset-1 col-sm-3 control-label">카 페 설 명</label>
+						<div class="col-sm-4">				
+							<input type="text" class="form-control"
+								id="exampleFormControlInput1" placeholder="" name="cafeDetail"  value="${cafe.cafeDetail}">							
+						</div>
+					</div>
+		
+					<div class="form-group">
+	
+					<label for="exampleFormControlInput1" class="col-sm-offset-1 col-sm-3 control-label">배너이미지</label>
+						<div class="col-sm-4">				
+							<div class="col-xs-8 col-md-4"><img src="/images/uploadFiles/bannerImg/${cafe.bannerImg}" width="300"; height="200px";/>	</div></div>
+					</div>
+					
+					<div class="form-group">
+	
+					<label for="exampleFormControlInput1" class="col-sm-offset-1 col-sm-3 control-label">메인이미지</label>
+						<div class="col-sm-4">				
+							<div class="col-xs-8 col-md-4"><img src="/images/uploadFiles/mainImg/${cafe.mainImg}" width="300"; height="200px";/>	</div></div>
+					</div>
+					
+					<div class="form-group">
+	
+					<label for="exampleFormControlInput1" class="col-sm-offset-1 col-sm-3 control-label">카페아이콘</label>
+						<div class="col-sm-4">				
+							<div class="col-xs-8 col-md-4"><img src="/images/uploadFiles/cafeIcon/${cafe.cafeIcon}" width="300"; height="200px";/>	</div></div>
+					</div>
+			
+	
 		  
-		  
-		  
+				  
 		
 		  
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-success"  >가입양식관리</button>
+		      <button type="button" class="btn btn-success"  >수정</button>
 		    </div>
 		  </div>
-		  
 		</form>
+		
 		<!-- form Start /////////////////////////////////////-->
-	
+		
+ 	</div>
 	<!--  화면구성 div end /////////////////////////////////////-->
 	
 </body>
 
 </html>
-
 					

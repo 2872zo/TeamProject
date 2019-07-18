@@ -145,12 +145,12 @@ public class CafeManageServiceImpl implements CafeManageService {
 	}
 
 	@Override
-	public Map<String, String> getCafeStatistics(Event event, String cafeURL) { // 예림예림 작업중
+	public Map getCafeStatistics(Event event, String cafeURL) { // 예림예림 작업중
 
 		int cafeNo = cafeManageDao.getCafeNo(cafeURL);
 
 		event.setCafeNo(cafeNo); // cafeNo를 set
-		Map<String, String> statisticsList = cafeManageDao.getCafeStatistics(event); // 모든 카페는 통계가 있다. count라서 0이더라도
+		Map statisticsList = cafeManageDao.getCafeStatistics(event); // 모든 카페는 통계가 있다. count라서 0이더라도
 
 		return statisticsList;
 	}

@@ -72,6 +72,12 @@ public class CafeMemberDaoImpl implements CafeMemberDao {
 		return sqlSession.selectOne("CafeGradeMapper.lowGrade", cafeNo);
 	}
 
+	@Override
+	public CafeMember checkNickname(CafeMember cafeMember) {
+
+		return sqlSession.selectOne("CafeMemberMapper.checkNickname", cafeMember);
+	}
+
 ////////////////////////////////지니끝//////////////////////////////////
 
 ////////////////////////////////////////////////// 예림 시작///////////////////////////////////

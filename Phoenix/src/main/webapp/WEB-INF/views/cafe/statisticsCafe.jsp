@@ -21,14 +21,61 @@
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
   	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   	<script src="https://kit.fontawesome.com/e589319d43.js"></script>
+	<script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.js"></script>
+	<script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
+	<script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.js"></script>
+	<script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
   	
   
 	
 	<script type="text/javascript">
+
+		//var labels = ${dates};
+		var chartData = new Array(); //연산에따른 count와 reg_date가있는 list(map)
+		var tenDates =[]; //10일 날짜 array ->ok
+		var dataArray = new Array(10);//count값을 넣어줄 array
+		var labels =[];
+
+		function setChartData(){
+
+			for(var i in chartData){
+				for(var j in tenDates){
+					if(tenDates[j]==chartData[i].regDate){
+						dataArray[j]=chartData[i].count;
+					}
+				 }
+			 }
+		 }
+		
+		$(function(){
+
+			<c:forEach items="${dates}" var="item">
+				tenDates.push("${item}");
+			</c:forEach>
+
+			<c:forEach items="${chartResult}" var="item">
+				var json = new Object();
+				json.regDate="${item.REG_DATE}";
+				json.count="${item.COUNTS}";
+				chartData.push(json);
+			</c:forEach>
+			
+			setChartData();
+			
+			for(var i=0; i<dataArray.length; i++){
+				if(dataArray[i]==null){
+					dataArray[i]=0;	
+				}
+			}
+
+			for(var i in tenDates){
+				labels[i] = tenDates[i].substr(6,2)+"일";
+			}
+
+		});
 		
 		$( function() {
-
-
+			
 			$("#startDate").val($.datepicker.formatDate('mm/dd/yy', new Date()));
 			$("#endDate").val($.datepicker.formatDate('mm/dd/yy', new Date()));
 
@@ -68,6 +115,7 @@
 		    $("#endDate").on("change",function(){
 
 				//ajax통신해야겠네..시븨ㅡㄹ븢라브ㅏㅣ르다ㅣㄹ
+					
 					var startDate = $("#startDate").val();
 					var endDate = $("#endDate").val();
 					$.ajax({
@@ -88,11 +136,14 @@
 
 							var data = JSON.parse(serverData);
 							
-							$("#et001").text(data.et001);
-							$("#et004").text(data.et004);
-							$("#et005").text(data.et005);
-							$("#et006").text(data.et006);
-							$("#et007").text(data.et007);
+							$("#et100").text(data.et100);
+							$("#et103").text(data.et103);
+							$("#et104").text(data.et104);
+							$("#et105").text(data.et105);
+							$("#et106").text(data.et106);
+
+							basisDate = endDate;
+							
 							
 						}//success
 
@@ -104,6 +155,8 @@
 
 		    
 		  } );
+
+		
 			   
 
 	
@@ -112,6 +165,9 @@
 	
 </head>
 <body>
+
+
+	
 
 	<div class="container">
 		<div class="py-5 text-center">
@@ -139,9 +195,9 @@
 					<div class="thumbnail">
 						<div class="caption">
 							<h5>방문자 수</h5>
-							<h4 class="text-success" id="et001">
-								<c:if test="${empty statisticMap['et001']}">0</c:if>
-								${statisticMap['et001']}
+							<h4 class="text-success" id="et100">
+								<c:if test="${empty statisticMap['et100']}">0</c:if>
+								${statisticMap['et100']}
 							</h4>
 						</div>
 					</div>
@@ -151,9 +207,9 @@
 					<div class="thumbnail">
 						<div class="caption">
 							<h5>작성게시글 수</h5>
-							<h4 class="text-success" id="et004">
-								<c:if test="${empty statisticMap['et004']}">0</c:if>
-								${statisticMap['et004']}
+							<h4 class="text-success" id="et103">
+								<c:if test="${empty statisticMap['et103']}">0</c:if>
+								${statisticMap['et103']}
 							</h4>
 						</div>
 					</div>
@@ -163,9 +219,9 @@
 					<div class="thumbnail">
 						<div class="caption">
 							<h5>작성댓글 수 </h5>
-							<h4 class="text-success" id="et005">
-								<c:if test="${empty statisticMap['et005']}">0</c:if>
-								${statisticMap['et005']}
+							<h4 class="text-success" id="et104">
+								<c:if test="${empty statisticMap['et104']}">0</c:if>
+								${statisticMap['et104']}
 							</h4>
 						</div>
 					</div>
@@ -175,27 +231,67 @@
 					<div class="thumbnail">
 						<div class="caption">
 							<h5>가입신청인 수 </h5>
-							<h4 class="text-success" id="et006">
-								<c:if test="${empty statisticMap['et006']}">0</c:if>
-								${statisticMap['et006']}
+							<h4 class="text-success" id="et105">
+								<c:if test="${empty statisticMap['et105']}">0</c:if>
+								${statisticMap['et105']}
 							</h4>
 						</div>
 					</div>
 				</div>
-				
+			
 				<div class="col-md-2">
 					<div class="thumbnail">
 						<div class="caption">
 							<h5>가입멤버 수 </h5>
-							<h4 class="text-success" id="et007">
-								<c:if test="${empty statisticMap['et007']}">0</c:if>
-								${statisticMap['et007']}
+							<h4 class="text-success" id="et106">
+								<c:if test="${empty statisticMap['et106']}">0</c:if>
+								${statisticMap['et106']}
 							</h4>
 						</div>
 					</div>
 				</div>
 			
 			</div>
+			
+			<canvas id="myChart" width="10" height="10"></canvas>
+						<script>
+							
+							
+							var ctx = document.getElementById('myChart');
+							var myChart = new Chart(ctx, {
+				    					type: 'line',
+				    					data: {
+					    					
+				        				labels: labels,
+				       					 datasets: [{
+				         			   label: '멤버 방문수  ',
+				           				 data: dataArray,
+				           		 backgroundColor: [
+				                'rgba(75, 192, 192, 0.2)'
+				                
+				            ],
+				            borderColor: [
+				                
+				                'rgba(75, 192, 192, 1)'
+				              
+				            ],
+				            borderWidth: 4,
+				            fill : false
+				        }]
+				    },
+				    
+							options : {
+								maintainAspectRatio: false,
+									scales : {
+										yAxes : [ {
+											ticks : {
+												beginAtZero : true
+											}
+										} ]
+									}
+								}
+							});
+						</script>
 
 		</form>
 	</div>

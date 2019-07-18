@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.phoenix.mvc.service.cafe.CafeManageService;
@@ -64,50 +65,44 @@ public class CafeTabContoller {
 		return "cafe/addCafeView";
 	}
 
-	@PostMapping("/{cafeURL}/addCafe")
-	public String addCafe(@ModelAttribute Cafe cafe, Model model) throws Exception {
+//	@PostMapping("/{cafeURL}/addCafe")
+//	public String addCafe(@ModelAttribute Cafe cafe, Model model) throws Exception {
+//
+//		System.out.println("/addCafe : POST@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
-		System.out.println("/addCafe : POST@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		
+		  @PostMapping("/{cafeURL}/addCafe") 
+		  public String addCafe(@ModelAttribute Cafe cafe, Model model, HttpSession session, 
+				  				@ModelAttribute User user,		  
+				  				@RequestParam("userNo") int userNo ) throws Exception {
+		  
+		 // User user2 = userService.getUserInfo(userNo);
+		  
+		 // user = user2;
+		 
+		  //cafe.setManageUserNo(user.getUserNo());
 
-		/*
-		 * @PostMapping("/{cafeURL}/addCafe") public String addCafe(@ModelAttribute Cafe
-		 * cafe, Model model, HttpSession session,
-		 * 
-		 * @ModelAttribute User user,
-		 * 
-		 * @RequestParam("userNo") int userNo ) throws Exception {
-		 * 
-		 * User user2 = userService.getUserInfo(userNo);
-		 * 
-		 * user = user2;
-		 * 
-		 * //cafe.setManageUserNo(user.getUserNo());
-		 * 
-		 * 
-		 * 
-		 * int sessionId=((User)session.getAttribute("user")).getUserNo();
-		 * //if(sessionId == user.getUserNo()){ // session.setAttribute("user", user);
-		 * 
-		 * // }
-		 * 
-		 * 
-		 * 
-		 * System.out.println("유저정보도 왔냐 ?@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+user.getUserNo(
-		 * ));
-		 * 
-		 * cafe.setManageUserNo(sessionId);
-		 */
-		cafeTabService.addCafe(cafe);
+		  int sessionId=((User)session.getAttribute("user")).getUserNo();
 
-		Cafe cafe2 = cafeManageService.getCafeInfo(cafe.getCafeNo());
+		  System.out.println("유저정보도 왔냐 ?@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+user.getUserNo());
+		  
+		  cafe.setManageUserNo(sessionId);
+		 
+		  cafeTabService.addCafe(cafe);
 
-		cafe = cafe2;
+		  Cafe cafe2 = cafeManageService.getCafeInfo(cafe.getCafeNo());
 
-		System.out.println("카페인서트다다아아아앙@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + cafe);
+		  cafe = cafe2;
 
-		model.addAttribute("cafe", cafe);
+		  System.out.println("카페인서트다다아아아앙@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + cafe);
 
-		return "cafe/getCafeInfo";
+		  model.addAttribute("cafe", cafe);
+		
+		  model.addAttribute("cafeURL", cafe.getCafeURL());
+		
+		  System.out.println("카페유알엘@@@@"+cafe.getCafeURL());
+
+		  return "cafe/getCafeInfo";
 	}
 
 ///////////////////////////////준호끝///////////////////////////////////////		

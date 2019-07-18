@@ -32,4 +32,8 @@ public interface CafePostService {
 	public Reply getReply(int replyNo);
 
 	public boolean addReReply(Reply reply);
+
+	public boolean movePost(Map map);
+	
+	public boolean addLike(Search search);
 }

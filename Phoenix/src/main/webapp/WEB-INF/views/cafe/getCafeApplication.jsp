@@ -175,7 +175,7 @@ $(function() {
 
 		<hr />
 		
-		<a class="btn btn-success btn" href="#" role="button">확 &nbsp;인</a>
+		<a class=" button.btn.btn-outline-success" href="#" role="button">확 &nbsp;인</a>
 
 
 </div>

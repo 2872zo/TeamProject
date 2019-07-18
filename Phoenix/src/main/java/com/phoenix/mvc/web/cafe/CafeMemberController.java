@@ -57,12 +57,9 @@ public class CafeMemberController {
 	public String addCafeApplication(@PathVariable String cafeURL, Model model) throws Exception {
 
 		System.out.println("/cafe/{cafeURL}/addCafeApplicationView : GET");
-		System.out.println(cafeURL);
 
 		int cafeNo = cafeMemberService.getCafeNo(cafeURL);
 		Cafe cafe = cafeManageService.getCafeInfo(cafeNo);
-
-		System.out.println(cafe);
 
 		model.addAttribute("cafe", cafe);
 
@@ -78,10 +75,10 @@ public class CafeMemberController {
 
 		System.out.println(cafeApplication);
 
-		// userNo 받아오깅
-		// User user = (User) request.getSession().getAttribute("user");
-		// int userNo = user.getUserNo();
-		int userNo = 10008;
+		 //userNo 받아오깅
+		 User user = (User) request.getSession().getAttribute("user");
+		 int userNo = user.getUserNo();
+		//int userNo = 10008;
 
 		if (cafeApplication.isAutoApplicationAcceptFlag()) {// 자동가입승인 ca103, 카페멤버 추가
 			cafeApplication.setUserNo(userNo);
@@ -104,34 +101,16 @@ public class CafeMemberController {
 
 	}
 
-	@RequestMapping(value = "/{cafeURL}/updateCafeMemberView", method = RequestMethod.GET)
-	public String updateCafeMember(@PathVariable String cafeURL, Model model) throws Exception {
-
-		System.out.println("/cafe/{cafeURL}/updateCafeMemberView : GET");
-
-		int cafeNo = cafeMemberService.getCafeNo(cafeURL);
-		Cafe cafe = cafeManageService.getCafeInfo(cafeNo);
-
-		System.out.println(cafe);
-
-		model.addAttribute("cafe", cafe);
-
-		return "cafe/updateCafeMember";
-
-	}
-
-	@RequestMapping(value = "/{cafeURL}/updateCafeMember", method = RequestMethod.GET)
-	public String updateCafeMember(@RequestParam("cafeNo") int cafeNo, @ModelAttribute("Search") Search search) throws Exception {
+	@RequestMapping(value = "/{cafeURL}/updateCafeMember", method = RequestMethod.GET) // 카페탈퇴
+	public String updateCafeMember(@ModelAttribute("Search") Search search, @RequestParam int memberNo)
+			throws Exception {
 
 		System.out.println("/cafe/{cafeURL}/updateCafeMember : GET");
 		System.out.println(search);
-		
-		//세션에 memberNo 받아오기
-		int memberNo=10035;
-		
+
 		search.setMemberNo(memberNo);
 		CafeMember cafeMember = cafeMemberService.getCafeMember(search);
-		
+
 		System.out.println(cafeMember);
 
 		cafeMemberService.updateCafeMember(cafeMember);
@@ -145,7 +124,7 @@ public class CafeMemberController {
 			Model model) throws Exception {
 
 		System.out.println("/cafe/{cafeURL}/updateCafeMemberProfileView : GET");
-		
+
 		int cafeNo = cafeMemberService.getCafeNo(cafeURL);// 카페 url으로 cafeNo 확인
 
 		Search search = new Search();

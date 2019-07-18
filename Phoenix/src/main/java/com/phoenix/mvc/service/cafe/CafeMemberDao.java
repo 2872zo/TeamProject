@@ -31,6 +31,8 @@ public interface CafeMemberDao {
 	
 	public int lowGradeNo (int cafeNo);
 	
+	public CafeMember checkNickname(CafeMember cafeMember);
+	
 
 ////////////////////////////////지니끝//////////////////////////////////
 
@@ -49,6 +51,8 @@ public interface CafeMemberDao {
 	public int updateVisitCountIncrease (int memberNo) throws Exception;
 	
 	public int updateFavorite (CafeMember cafeMember) throws Exception;
+
+
 
 ////////////////////////////기황 끝////////////////////////////////////
 
