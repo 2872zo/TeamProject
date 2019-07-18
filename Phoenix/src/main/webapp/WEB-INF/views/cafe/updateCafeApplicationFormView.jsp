@@ -37,13 +37,16 @@
 			
 		</script>
 <body>
+
+
+
 		<div class="container">
 		
 			<h4 class="bg-primary text-center">가입양식관리수정</h4>
 <form class="form-horizontal">
 
 
-		
+		<center>
 		
 		<input type="hidden" name="cafeNo" value="${cafe.cafeNo }"/>
 				
@@ -111,6 +114,8 @@
 		      <button type="button" class="btn btn-success"  >저장</button>
 		    </div>
 		  </div>
+		  
+		  </center>
 		</form>
 		
 		<!-- form Start /////////////////////////////////////-->

@@ -52,16 +52,18 @@
 			
 		</script>
 <body>
+
+
 		<div class="container">
 		
-			<h4 class="bg-primary text-center">가입양식관리수정</h4>
+			<h4 class="bg-primary text-center">가입양식관리수정완료</h4>
 <form class="form-horizontal">
 
 
 		
 		
 		<input type="hidden" name="cafeNo" value="${cafe.cafeNo }"/>
-				
+				<center>
 					<div class="form-group">
 						<label for="exampleFormControlSelect1"
 							class="col-sm-offset-1 col-sm-3 control-label">자동가입승인</label>
@@ -127,6 +129,7 @@
 		      <button type="button" class="btn btn-success"  >수정</button>
 		    </div>
 		  </div>
+		  </center>
 		</form>
 		
 		<!-- form Start /////////////////////////////////////-->
