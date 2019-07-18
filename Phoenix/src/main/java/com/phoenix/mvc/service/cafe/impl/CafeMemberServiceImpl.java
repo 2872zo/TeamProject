@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.phoenix.mvc.common.Event;
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.cafe.CafeManageDao;
 import com.phoenix.mvc.service.cafe.CafeMemberDao;
@@ -15,6 +16,7 @@ import com.phoenix.mvc.service.cafe.CafeMemberService;
 import com.phoenix.mvc.service.domain.CafeApplication;
 import com.phoenix.mvc.service.domain.CafeMember;
 import com.phoenix.mvc.service.domain.CafeMemberBlock;
+import com.phoenix.mvc.service.domain.User;
 import com.phoenix.mvc.service.user.UserDao;
 
 @Service
@@ -27,6 +29,10 @@ public class CafeMemberServiceImpl implements CafeMemberService {
 	@Autowired
 	@Qualifier("cafeManageDaoImpl")
 	private CafeManageDao cafeManageDao;
+	
+	@Autowired
+	@Qualifier("userDaoImpl")
+	private UserDao userDao;
 
 	public void setCafeMemberDao(CafeMemberDao cafeMemberDao) {
 		this.cafeMemberDao = cafeMemberDao;
@@ -44,9 +50,22 @@ public class CafeMemberServiceImpl implements CafeMemberService {
 	}
 
 	@Override
-	public void addCafeApplication(CafeApplication cafeApplication) {
+	public void addCafeApplication(CafeApplication cafeApplication) throws Exception {
+		
+		if(cafeApplication.getMemberNickname()==null) {
+			
+			User user = userDao.getUserInfo(cafeApplication.getUserNo());
+			cafeApplication.setMemberNickname(user.getUserNickname());
+			
+		}
 
 		cafeMemberDao.addCafeApplication(cafeApplication);
+		
+		Event event = new Event();
+		event.setCafeNo(cafeApplication.getCafeNo());
+		event.setEventUserNo(cafeApplication.getUserNo());
+		event.setEventType("et105");//가입신청코드
+		cafeManageDao.addEventLog(event);
 	}
 
 	@Override
@@ -55,6 +74,12 @@ public class CafeMemberServiceImpl implements CafeMemberService {
 		cafeMember.setMemberStatusCode("cs102");
 		cafeMemberDao.updateCafeMember(cafeMember);
 		cafeMemberDao.updateMembersDecrease(cafeMember.getCafeNo());
+		
+		Event event = new Event();
+		event.setCafeNo(cafeMember.getCafeNo());
+		event.setEventUserNo(cafeMember.getUserNo());
+		event.setEventType("et107");//탈퇴코드
+		cafeManageDao.addEventLog(event);
 	}
 
 	@Override
@@ -72,6 +97,12 @@ public class CafeMemberServiceImpl implements CafeMemberService {
 		cafeMember.setCafeMemberGradeNo(lowNo);
 		cafeMemberDao.addCafeMember(cafeMember);
 		cafeMemberDao.updateMembersIncrease(cafeMember.getCafeNo());
+		
+		Event event = new Event();
+		event.setCafeNo(cafeMember.getCafeNo());
+		event.setEventUserNo(cafeMember.getUserNo());
+		event.setEventType("et106");//카페가입
+		cafeManageDao.addEventLog(event);
 	}
 
 	@Override

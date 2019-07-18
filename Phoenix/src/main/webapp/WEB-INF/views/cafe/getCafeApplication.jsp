@@ -37,14 +37,14 @@ $(function() {
 
 $(function() {
 	var cafeURL = '${cafeApplication.cafeIcon}'
-	$(".accept").on("click", function(){
+	$("#accept").on("click", function(){
 		alert($("#applicationNo").text())
 		var whether= "true"+$("#applicationNo").text();
 		$("#boardName").val(whether);
 		$("#whether").attr("method" , "POST").attr("action" , "/cafe/"+cafeURL+"/manage/updateCafeApplication").submit();	
 	})
 
-	$(".reject").on("click", function(){
+	$("#reject").on("click", function(){
 		alert($("#applicationNo").text())
 		var whether= "false"+$("#applicationNo").text();
 		$("#boardName").val(whether);
@@ -62,8 +62,8 @@ $(function() {
 <br/>
 <h2>가입신청상세조회</h2>
 <br/>
-<button type="button" class="accept">가입승인</button>
-<button type="button" class="reject">가입거절</button>
+<button type="button" id="accept"class="btn btn-outline-secondary">가입승인</button>
+<button type="button" id="rejecr"class="btn btn-outline-secondary">가입거절</button>
 
 <form id = "whether"><input type="hidden" name ="boardName" id ="boardName" value="" /></form>
 

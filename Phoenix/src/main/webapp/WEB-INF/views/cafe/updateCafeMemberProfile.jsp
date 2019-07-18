@@ -65,8 +65,6 @@ $(function(){
 							$("#here").html("<h7>사용불가능</h7>")
 						}else if( (JSONData.memberNickname=="") && JSONData.result == true ){
 							$("#here").html("<h7>중복확인하세요</h7>")
-						}else if(JSONData.memberNickname == $("#memberNickname").val()){
-							$("#here").html("<h7></h7>")
 						}
 						
 					},

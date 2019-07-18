@@ -46,8 +46,8 @@
 			location.href = "/cafe/"+"${cafeURL}"+"/manage/getCafeMemberList";
 		});
 
-		$(".closed").on("click",function(){dropCafeView
-			location.href = "/cafe/"+"${cafeURL}"+"/manage/getCafeMemberList";
+		$(".closed").on("click",function(){
+			location.href = "/cafe/"+"${cafeURL}"+"/manage/dropCafeView";
 		});
 		
 	});
