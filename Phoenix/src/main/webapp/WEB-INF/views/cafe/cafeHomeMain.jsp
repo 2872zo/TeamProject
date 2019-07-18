@@ -76,8 +76,7 @@ $(function() {
 					success : function(serverData, status) {
 										alert(status);
 										alert("server에서 온 Data : \n" + serverData);
-										targetTag.text(checker);
-										
+										targetTag.text(checker);	
 									},
 					error : function(request,status,error){
 								        alert("에러남 : "+error);
@@ -140,7 +139,7 @@ $(function() {
 	<c:forEach var="myCafe" items="${myCafelist}">
 	 <tr>
 	 <th scope="row">${myCafe.cafeNo}</th>
-	 <td>${myCafe.URL}</td>
+	 <td>${myCafe.cafeURL}</td>
 	 <td>${myCafe.cafeName}</td>
 	 <td>${myCafe.cafeIcon}</td>
 	 <td>${myCafe.cafeDetail}</td>

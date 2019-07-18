@@ -42,6 +42,7 @@ import com.phoenix.mvc.service.domain.Cafe;
 import com.phoenix.mvc.service.domain.CafeApplication;
 import com.phoenix.mvc.service.domain.CafeGrade;
 import com.phoenix.mvc.service.domain.CafeMember;
+import com.phoenix.mvc.service.domain.CafeMemberBlock;
 
 @Controller
 @RequestMapping("/cafe/*")
@@ -68,6 +69,100 @@ public class CafeManageController {
 
 	@Value("${uploadPath}")
 	String uploadPath;
+	
+	/////////////////////////////// 기황시작//////////////////////////////////
+	@RequestMapping(value = "/{cafeURL}/manage/getCafeMemberList")
+	public String getCafeMemberList(@PathVariable String cafeURL, @ModelAttribute("search") Search search, Model model)
+			throws Exception {
+
+		System.out.println("/cafe/{cafeURL}/getCafeMemberList : URL == " + cafeURL);
+		
+		search.setCafeURL(cafeURL);
+		pageSize = 2;
+		if (search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+
+		search.setPageSize(pageSize);
+
+		Map<String, Object> map = cafeManageService.getCafeMemberList(search);
+		List memberList = (List) map.get("memberList");
+		List gradeList = (List) map.get("gradeList");
+		int totalCount = (int) map.get("totalCount");
+		Page page = new Page(search.getCurrentPage(), totalCount, pageUnit, pageSize);
+		model.addAttribute("memberList", memberList);
+		model.addAttribute("gradeList", gradeList);
+		model.addAttribute("search", search);
+		model.addAttribute("page", page);
+		model.addAttribute("cafeURL",cafeURL);
+
+		return "cafe/listCafeMember";
+	}
+
+	@RequestMapping(value = "/{cafeURL}/manage/getCafeMember", method = RequestMethod.POST)
+	public String getCafeMember(@ModelAttribute("search") Search search, Model model, @PathVariable String cafeURL) throws Exception {
+
+		Map map = cafeManageService.getCafeMemberBlocks(search);
+
+		CafeMember member = (CafeMember) map.get("member");
+		List blocks = (List) map.get("blocks");
+		List cafeGrades = (List) map.get("cafeGrades");
+
+		model.addAttribute("member", member);
+		model.addAttribute("blocks", blocks);
+		model.addAttribute("cafeGrades", cafeGrades);
+		model.addAttribute("cafeURL",cafeURL);
+
+		return "forward:/WEB-INF/views/cafe/getCafeMember.jsp";
+	}
+
+	@PostMapping(value = "/{cafeURL}/manage/addMemberBlock")
+	public String addMemberBlock(@ModelAttribute("member") CafeMember cafeMember, Model model,
+			@PathVariable String cafeURL) throws Exception {
+
+		System.out.println("/{cafeURL}/manage/addMemberBlock");
+
+		cafeManageService.addCafeMemberBlock(cafeMember);
+		Search search = new Search();
+
+		search.setMemberNo(cafeMember.getMemberNo());
+		search.setCafeNo(cafeMember.getCafeNo());
+
+		model.addAttribute("search", search);
+		model.addAttribute("cafeURL",cafeURL);
+
+		return "forward:/cafe/" + cafeURL + "/manage/getCafeMember";
+
+	}
+
+	@RequestMapping(value = "/{cafeURL}/manage/updateCafeMemberBlock", method = RequestMethod.POST)
+	public String updateCafeMemberBlock(@ModelAttribute CafeMemberBlock cafeMemberBlock, Model model,
+			@PathVariable String cafeURL) throws Exception {
+
+		cafeManageService.updateCafeMemberBlock(cafeMemberBlock);
+		Search search = new Search();
+		search.setCafeNo(cafeMemberBlock.getCafeNo());
+		search.setMemberNo(cafeMemberBlock.getMemberNo());
+		model.addAttribute("search", search);
+		model.addAttribute("cafeURL",cafeURL);
+
+		return "forward:/cafe/" + cafeURL + "/manage/getCafeMember";
+	}
+
+	@RequestMapping(value = "/{cafeURL}/manage/updateCafeMemberGrade", method = RequestMethod.POST)
+	public String updateCafeMemberGrade(@ModelAttribute CafeMember cafeMember, Model model,
+			@PathVariable String cafeURL) throws Exception {
+
+		cafeManageService.updateCafeMemeberGrade(cafeMember);
+		Search search = new Search();
+		search.setMemberNo(cafeMember.getMemberNo());
+		search.setCafeNo(cafeMember.getCafeNo());
+		model.addAttribute("search", search);
+		model.addAttribute("cafeURL",cafeURL);
+		return "forward:/cafe/" + cafeURL + "/manage/getCafeMember";
+
+	}
+	///////////////////////////////// 기황끝//////////////////////////////////////
 
 ////////////////////////////////////////////예림//////////////////////////////////////////////
 	@RequestMapping(value = "/{cafeURL}/manage/updateCafeBoardView") // 예림예림

@@ -53,7 +53,19 @@
 		FROM cafe_member_grade
 		WHERE cafe_no = #{cafeNo} and cafe_grade_active_flag = 1
   	</select>
-
+  	
+	 <select id="getCafeGradeByURL" parameterType="Search" resultMap="cafeGradeSelectMap">
+  		SELECT 
+		g.cafe_member_grade_no, g.cafe_no, g.member_grade_code, g.grade_name, 
+		g.required_visit_count, g.required_post_count, g.required_reply_count, 
+		g.cafe_grade_active_flag, g.auto_upgrade_flag
+		FROM 
+		cafe c, cafe_member_grade g
+		WHERE c.cafe_no=g.cafe_no
+		AND g.cafe_grade_active_flag = 1
+		AND c.url=#{cafeURL}
+  	</select>
+  	
   	
 	 <select id="checkCafeGrade" parameterType="int" resultMap="cafeGradeSelectMap">
   		SELECT member_grade_code,cafe_member_grade_no, cafe_no, grade_name ,required_visit_count, required_reply_count, required_post_count, cafe_grade_active_flag, auto_upgrade_flag

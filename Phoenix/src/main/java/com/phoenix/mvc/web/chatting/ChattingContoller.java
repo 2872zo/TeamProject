@@ -1,5 +1,6 @@
 package com.phoenix.mvc.web.chatting;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -49,28 +50,29 @@ public class ChattingContoller {
 		search.setUserNo(user.getUserNo());
 		Map map = chattingService.getMyChatRoomList(search);
 		List<ChatRoom> chatRoomList = (List) map.get("chatRoomList");
+		List<Integer> roomNoList = new ArrayList<Integer>();
 		String roomNos = "";
 		for (int i =0; i<chatRoomList.size() ;i++) {
 			int a = chatRoomList.get(i).getChatRoomNo();
-			roomNos += a;
-			if(i!=chatRoomList.size()-1) {
-				roomNos +=",";
-			}
+			roomNoList.add(a);
+			roomNos += a+",";
 		}
+		session.setAttribute("roomNos",roomNos);
+		session.setAttribute("roomNoList",roomNoList);
 		model.addAttribute("chatRoomList",chatRoomList);
 		model.addAttribute("roomNos",roomNos);
 		return "chat/listChatRoom";
 	}
 	
 	@RequestMapping("chatRoom")
-	public String getChatRoom(@SessionAttribute("user") User user, @ModelAttribute ChatRoom chatRoom, Model model) throws Exception {
+	public String getChatRoom(@SessionAttribute("user") User user, @ModelAttribute("chatRoom") ChatRoom chatRoom) throws Exception {
 		
-		Search search = new Search();
-		search.setUserNo(user.getUserNo());
-		Map map = chattingService.getMyChatRoomList(search);
+		//Search search = new Search();
+		//search.setUserNo(user.getUserNo());
+		//Map map = chattingService.getMyChatRoomList(search);
 		//List chatRoomList = (List) map.get("chatRoomList");
-		//model.addAttribute("chatRoomList",chatRoomList);
-		return "chat/listChatRoom";
+		//model.addAttribute("chatRoom", chatRoom);
+		return "chat/chatRoom";
 	}
 	
 	@RequestMapping("addChatRoom")

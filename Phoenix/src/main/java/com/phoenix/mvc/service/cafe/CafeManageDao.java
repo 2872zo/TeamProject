@@ -8,10 +8,28 @@ import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.domain.CafeApplication;
 import com.phoenix.mvc.service.domain.Board;
 import com.phoenix.mvc.service.domain.CafeGrade;
+import com.phoenix.mvc.service.domain.CafeMember;
+import com.phoenix.mvc.service.domain.CafeMemberBlock;
 import com.phoenix.mvc.service.domain.Cafe;
 
 public interface CafeManageDao {
+/////////////////////////////////기황시작//////////////////////////////	
+	public List getCafeMemberList(Search search) throws Exception;
 
+	public int getCafeMemberCount(Search search) throws Exception;
+	
+	public List getCafeGradesByURL(Search search) throws Exception; 
+
+	public CafeMember getCafeMember(Search search) throws Exception;
+	
+	public int addCafeMemberBlock (CafeMember cafeMember) throws Exception;
+	
+	public List getCafeMemberBlocks (Search search) throws Exception;
+	
+	public int updateCafeMemberBlock (CafeMemberBlock cafeMemberBlock) throws Exception;
+
+	public int updateCafeMemeberGrade (CafeMember cafeMember) throws Exception;
+/////////////////////////////////기황끝//////////////////////////////	
 ///////////////////////////////// 지니//////////////////////////////
 public List<CafeApplication> getCafeApplicationList(Search search);
 

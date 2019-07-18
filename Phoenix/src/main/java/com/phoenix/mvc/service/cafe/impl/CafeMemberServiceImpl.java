@@ -88,71 +88,13 @@ public class CafeMemberServiceImpl implements CafeMemberService {
 
 ////////////////////////////////////지니끝//////////////////////////////
 ////////////////////////////////////기황시작////////////////////////////
-	@Override
-	public Map getCafeMemberList(Search search) throws Exception {
-		// TODO Auto-generated method stub
-		Map map = new HashMap();
-
-		int totalCount = cafeMemberDao.getCafeMemberCount(search);
-		List memberList = cafeMemberDao.getCafeMemberList(search);
-		List gradeList = cafeManageDao.getCafeGrade(search.getCafeNo());
-
-		map.put("memberList", memberList);
-		map.put("totalCount", new Integer(totalCount));
-		map.put("gradeList", gradeList);
-
-		return map;
-	}
-
+	
 	@Override
 	public CafeMember getCafeMember(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return cafeMemberDao.getCafeMember(search);
+		return cafeManageDao.getCafeMember(search);
 	}
-
-	@Override
-	public int addCafeMemberBlock(CafeMember cafeMember) throws Exception {
-		// TODO Auto-generated method stub
-		int blocked = cafeMemberDao.addCafeMemberBlock(cafeMember);
-		cafeMember.setMemberStatusCode("cs101");
-		cafeMemberDao.updateCafeMember(cafeMember);
-		return blocked;
-	}
-
-	@Override
-	public Map getCafeMemberBlocks(Search search) throws Exception {
-		// TODO Auto-generated method stub
-		Map map = new HashMap();
-
-		CafeMember member = cafeMemberDao.getCafeMember(search);
-		List blocks = cafeMemberDao.getCafeMemberBlocks(search);
-		List cafeGrades = cafeManageDao.getCafeGrade(search.getCafeNo());
-
-		map.put("member", member);
-		map.put("blocks", blocks);
-		map.put("cafeGrades", cafeGrades);
-
-		return map;
-	}
-
-	@Override
-	public int updateCafeMemberBlock(CafeMemberBlock cafeMemberBlock) throws Exception {
-
-		int updateCheck = cafeMemberDao.updateCafeMemberBlock(cafeMemberBlock);
-
-		CafeMember cafeMember = new CafeMember();
-		cafeMember.setMemberNo(cafeMemberBlock.getMemberNo());
-		cafeMember.setMemberStatusCode("cs100");
-		cafeMemberDao.updateCafeMember(cafeMember);
-
-		return updateCheck;
-	}
-
-	@Override
-	public int updateCafeMemeberGrade(CafeMember cafeMember) throws Exception {
-		return cafeMemberDao.updateCafeMemeberGrade(cafeMember);
-	}
-
+	
 	@Override
 	public int updatePostCountIncrease(int memberNo) throws Exception {
 		return cafeMemberDao.updatePostCountIncrease(memberNo);

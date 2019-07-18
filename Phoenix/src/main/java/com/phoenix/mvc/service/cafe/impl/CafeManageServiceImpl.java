@@ -18,6 +18,7 @@ import com.phoenix.mvc.service.domain.CafeApplication;
 import com.phoenix.mvc.service.domain.Board;
 import com.phoenix.mvc.service.domain.CafeGrade;
 import com.phoenix.mvc.service.domain.CafeMember;
+import com.phoenix.mvc.service.domain.CafeMemberBlock;
 import com.phoenix.mvc.service.domain.Cafe;
 
 @Service("cafeManageServiceImpl")
@@ -40,6 +41,76 @@ public class CafeManageServiceImpl implements CafeManageService {
 		System.out.println(this.getClass().getName());
 	}
 
+	
+	////////////////////////////기황시작/////////////////////////////////
+	
+	@Override
+	public Map getCafeMemberList(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		Map map = new HashMap();
+
+		int totalCount = cafeManageDao.getCafeMemberCount(search);
+		List memberList = cafeManageDao.getCafeMemberList(search);
+		List gradeList = cafeManageDao.getCafeGradesByURL(search);
+
+		map.put("memberList", memberList);
+		map.put("totalCount", new Integer(totalCount));
+		map.put("gradeList", gradeList);
+
+		return map;
+	}
+
+	@Override
+	public CafeMember getCafeMember(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return cafeManageDao.getCafeMember(search);
+	}
+
+	@Override
+	public int addCafeMemberBlock(CafeMember cafeMember) throws Exception {
+		// TODO Auto-generated method stub
+		int blocked = cafeManageDao.addCafeMemberBlock(cafeMember);
+		cafeMember.setMemberStatusCode("cs101");
+		cafeMemberDao.updateCafeMember(cafeMember);
+		return blocked;
+	}
+
+	@Override
+	public Map getCafeMemberBlocks(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		Map map = new HashMap();
+
+		CafeMember member = cafeManageDao.getCafeMember(search);
+		List blocks = cafeManageDao.getCafeMemberBlocks(search);
+		List cafeGrades = cafeManageDao.getCafeGrade(search.getCafeNo());
+
+		map.put("member", member);
+		map.put("blocks", blocks);
+		map.put("cafeGrades", cafeGrades);
+
+		return map;
+	}
+
+	@Override
+	public int updateCafeMemberBlock(CafeMemberBlock cafeMemberBlock) throws Exception {
+
+		int updateCheck = cafeManageDao.updateCafeMemberBlock(cafeMemberBlock);
+
+		CafeMember cafeMember = new CafeMember();
+		cafeMember.setMemberNo(cafeMemberBlock.getMemberNo());
+		cafeMember.setMemberStatusCode("cs100");
+		cafeMemberDao.updateCafeMember(cafeMember);
+
+		return updateCheck;
+	}
+
+	@Override
+	public int updateCafeMemeberGrade(CafeMember cafeMember) throws Exception {
+		return cafeManageDao.updateCafeMemeberGrade(cafeMember);
+	}
+
+	/////////////////////////////기황끝/////////////////////////////
+	
 /////////////////////////////////////////////////// 예림
 /////////////////////////////////////////////////// 시작/////////////////////////////////
 	@Override
@@ -195,7 +266,7 @@ public class CafeManageServiceImpl implements CafeManageService {
 		search.setCafeNo(cafeNo);
 		search.setPageSize(10);
 		search.setCurrentPage(1);
-		List<CafeMember> list = cafeMemberDao.getCafeMemberList(search);
+		List<CafeMember> list = cafeManageDao.getCafeMemberList(search);
 		List<String> memberList = new ArrayList<String>();
 
 		for (CafeMember member : list) {

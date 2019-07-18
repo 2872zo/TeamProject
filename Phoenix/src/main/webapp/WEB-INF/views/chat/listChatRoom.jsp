@@ -24,21 +24,44 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
  integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
  crossorigin="anonymous"></script>
-
+ 
+<script src="http://localhost:82/socket.io/socket.io.js"></script>
 <!--  ///////////////////////// CSS ////////////////////////// -->
 
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
 
 $(function() {
-	alert("!11");
-	alert(socket);
-	//alert(${roomNos});
+	var socket = io("http://192.168.0.78:82");
+	//socket.emit("joiner", ${sessionScope.user.userNo});
+	//alert("1");
+	//var roomNumbers = ${sessionScope.roomNos};
+	//alert(${sessionScope.roomNos});
+	
+	socket.emit("joiner", $("#roomNos").val());
+
+	socket.on('send_msg', function(msg) {
+		var splitter = msg.split(":");
+	     $('<div></div>').text(msg).appendTo("#chat_box");
+	     });
+    
+	//
+	//if(${!empty sessionScope.user}){
+	//	
+	//	};
+	//
+	//	
+	$(".card").on("click" , function() {
+		$("#roomNo").val($(this).attr('name'));
+		$("#rooming").attr("method" , "POST").attr("action" , "/chat/chatRoom").submit();
+		//alert($(this).attr('id'));
+	});
+		//alert(${roomNos});
 	//var roomNumbers = ${roomNos};
 	//socket.emit("joiner", "1515156");
-	//$("#addChatRoom").on("click" , function() {
-	//	$(self.location).attr("href","/cafe/addCafeView");
-	//});
+	$("#addChatRoom").on("click" , function() {
+		socket.emit("joiner", "1515156");
+	});
 
 });
 </script>
@@ -48,6 +71,9 @@ $(function() {
 </head>
 
 <body>
+<form id='rooming'>
+<input type='hidden' name = 'chatRoomNo' id='roomNo' value='' >
+</form>
 <br/>
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
@@ -58,26 +84,33 @@ $(function() {
 		</button>
 	<br/>
 
-	${roomNos}
+	<input type='hidden' id='roomNos' value ='${roomNos}'>
 
 	<c:forEach items="${chatRoomList}" var ='chatRoom'>
 	
-	<div class="card mb-3" style="max-width: 540px;" id='${chatRoom.chatRoomNo}'>
+	<div class="card mb-3 "  style="max-width: 540px;" name='${chatRoom.chatRoomNo}'>
   <div class="row no-gutters">
     <div class="col-md-4">
       <img src="..." class="card-img" alt="...">
     </div>
     <div class="col-md-8">
       <div class="card-body">
-        <h5 class="card-title">${chatRoom.chatRoomName}</h5>
+        <h5 class="card-title chatRoom">${chatRoom.chatRoomName}</h5>
         <p class="card-text">여기에 채팅내용 찍혀야 되는데 </p>
         <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
       </div>
     </div>
   </div>
 </div>
-	
 	</c:forEach>
+	
+	
+	<div class="panel panel-default" >
+				<div class="panel-body">
+					<p class="text-left" id="chat_box"></p>
+				</div>
+			</div>
+	
 	
 	
 	</div>

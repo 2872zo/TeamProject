@@ -35,19 +35,8 @@ public interface CafeMemberDao {
 ////////////////////////////////지니끝//////////////////////////////////
 
 ////////////////////////////기황 시작////////////////////////////////////
-	public List getCafeMemberList(Search search) throws Exception;
-
-	public int getCafeMemberCount(Search search) throws Exception;
-
+	
 	public CafeMember getCafeMember(Search search) throws Exception;
-	
-	public int addCafeMemberBlock (CafeMember cafeMember) throws Exception;
-	
-	public List getCafeMemberBlocks (Search search) throws Exception;
-	
-	public int updateCafeMemberBlock (CafeMemberBlock cafeMemberBlock) throws Exception;
-
-	public int updateCafeMemeberGrade (CafeMember cafeMember) throws Exception;
 	
 	public int updatePostCountIncrease (int memberNo) throws Exception;
 	

@@ -32,17 +32,17 @@ $(function() {
 
 	$("#updateBlock").on("click" , function() {
 		$("#blockNo").val($("#blockNo1").text());
-		$("#memberBlockupdateForm").attr("method" , "POST").attr("action" , "/cafe/randomCafe/manage/updateCafeMemberBlock").submit();
+		$("#memberBlockupdateForm").attr("method" , "POST").attr("action" , "/cafe/"+"${cafeURL}"+"/manage/updateCafeMemberBlock").submit();
 	});
 	
 	$("#blocking").on("click" , function() {
-		$("#memberBlockForm").attr("method" , "POST").attr("action" , "/cafe/randomCafe/manage/addMemberBlock").submit();
+		$("#memberBlockForm").attr("method" , "POST").attr("action" , "/cafe/"+"${cafeURL}"+"/manage/addMemberBlock").submit();
 	});
 	
 	$(".changeMemberGrade").on("click" , function() {
 		//alert($(this).val());
 		$("#cafeMemberGradeNo").val($(this).val());
-		$("#memberGradeForm").attr("method" , "POST").attr("action" , "/cafe/randomCafe/manage/updateCafeMemberGrade").submit();	
+		$("#memberGradeForm").attr("method" , "POST").attr("action" , "/cafe/"+"${cafeURL}"+"/manage/updateCafeMemberGrade").submit();	
 	});
 	
 });

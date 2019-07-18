@@ -14,6 +14,8 @@ import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.cafe.CafeManageDao;
 import com.phoenix.mvc.service.domain.CafeApplication;
 import com.phoenix.mvc.service.domain.CafeGrade;
+import com.phoenix.mvc.service.domain.CafeMember;
+import com.phoenix.mvc.service.domain.CafeMemberBlock;
 
 import oracle.net.aso.e;
 
@@ -36,6 +38,50 @@ public class CafeManageDaoImpl implements CafeManageDao {
 		System.out.println(this.getClass().getName());
 	}
 
+	
+////////////////////////////////////기황 시작///////////////////////////////////////
+	
+	@Override
+	public List getCafeMemberList(Search search) throws Exception {
+		return sqlSession.selectList("CafeMemberMapper.listCafeMemeber", search);
+	}
+
+	@Override
+	public int getCafeMemberCount(Search search) throws Exception {
+		return sqlSession.selectOne("CafeMemberMapper.getMemberCount", search);
+	}
+	
+	@Override
+	public List getCafeGradesByURL(Search search) throws Exception {
+		return sqlSession.selectList("CafeGradeMapper.getCafeGradeByURL", search);
+	}
+
+	@Override
+	public CafeMember getCafeMember(Search search) throws Exception {
+		return sqlSession.selectOne("CafeMemberMapper.getCafeMemeber", search);
+	}
+
+	@Override
+	public int addCafeMemberBlock(CafeMember cafeMember) throws Exception {
+		return sqlSession.insert("CafeMemberMapper.addCafeMemberBlock", cafeMember);
+	}
+
+	@Override
+	public List getCafeMemberBlocks(Search search) throws Exception {
+		return sqlSession.selectList("CafeMemberMapper.getCafeMemeberBlock", search);
+	}
+
+	@Override
+	public int updateCafeMemberBlock(CafeMemberBlock cafeMemberBlock) throws Exception {
+		return sqlSession.update("CafeMemberMapper.updateCafeMemberBlock", cafeMemberBlock);
+	}
+
+	@Override
+	public int updateCafeMemeberGrade(CafeMember cafeMember) throws Exception {
+		return sqlSession.update("CafeMemberMapper.updateMemberGrade", cafeMember);
+	}
+
+/////////////////////////////////기황끝//////////////////////////////
 ///////////////////////////////// 지니//////////////////////////////
 	@Override
 	public List<CafeApplication> getCafeApplicationList(Search search) {
@@ -172,9 +218,9 @@ public class CafeManageDaoImpl implements CafeManageDao {
 	public Map<String, String> getCafeStatistics(Event event) { // 예림예림
 
 		List<Map<String, String>> result = sqlSession.selectList("getCafeStatistics", event);
-		//List<Map<String, String>> chartResult = sqlSession.selectList("get"); 
-		
-		//System.out.println(statisticResult);
+		// List<Map<String, String>> chartResult = sqlSession.selectList("get");
+
+		// System.out.println(statisticResult);
 		Map<String, String> statisticResultMap = new HashMap<String, String>();
 
 		for (int i = 0; i < result.size(); i++) {

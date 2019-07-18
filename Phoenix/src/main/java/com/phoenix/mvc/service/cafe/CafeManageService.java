@@ -8,10 +8,28 @@ import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.domain.CafeApplication;
 import com.phoenix.mvc.service.domain.Board;
 import com.phoenix.mvc.service.domain.CafeGrade;
+import com.phoenix.mvc.service.domain.CafeMember;
+import com.phoenix.mvc.service.domain.CafeMemberBlock;
 import com.phoenix.mvc.service.domain.Cafe;
 
 public interface CafeManageService {
+	
+/////////////////////////////////기황시작//////////////////////////////
+	
+	public Map getCafeMemberList(Search search) throws Exception;
 
+	public CafeMember getCafeMember(Search search) throws Exception;
+
+	public int addCafeMemberBlock(CafeMember cafeMember) throws Exception;
+
+	public Map getCafeMemberBlocks(Search search) throws Exception;
+
+	public int updateCafeMemberBlock(CafeMemberBlock cafeMemberBlock) throws Exception;
+
+	public int updateCafeMemeberGrade(CafeMember cafeMember) throws Exception;
+	
+/////////////////////////////////기황끝/////////////////////////////
+	
 /////////////////////////////////지니//////////////////////////////
 public Map<String, Object> getCafeApplicationList(Search search);
 

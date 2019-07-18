@@ -33,37 +33,37 @@
 
 	function fncGetList(currentPage) {
 	  $("#memberCurrentPage").val(currentPage)
-	  $("#memberListingForm").attr("method" , "POST").attr("action" , "/cafe/randomURL/manage/getCafeMemberList").submit();
+	  $("#memberListingForm").attr("method" , "POST").attr("action" , "/cafe/"+"${cafeURL}"+"/manage/getCafeMemberList").submit();
 	}
 	
 $(function() {
 
 	$("#search").on("click" , function() {
-		$("#memberListingForm").attr("method" , "POST").attr("action" , "/cafe/randomURL/manage/getCafeMemberList").submit();
+		$("#memberListingForm").attr("method" , "POST").attr("action" , "/cafe/"+"${cafeURL}"+"/manage/getCafeMemberList").submit();
 	});
 
 	$(".status").on("click" , function() {
 		var count = $(".status").index(this);
 		 $("#status").val(count);
-		 $("#memberListingForm").attr("method" , "POST").attr("action" , "/cafe/randomURL/manage/getCafeMemberList").submit();
+		 $("#memberListingForm").attr("method" , "POST").attr("action" , "/cafe/"+"${cafeURL}"+"/manage/getCafeMemberList").submit();
 	});
 
 	$(".memberGrade").on("click" , function() {
 		var count = $(".memberGrade").index(this);
 		 $("#memberGrade").val(count);
-		 $("#memberListingForm").attr("method" , "POST").attr("action" , "/cafe/randomURL/manage/getCafeMemberList").submit();
+		 $("#memberListingForm").attr("method" , "POST").attr("action" , "/cafe/"+"${cafeURL}"+"/manage/getCafeMemberList").submit();
 	});
 
 	$(".sortCode").on("click" , function() {
 		var count = $(".sortCode").index(this);
 		 $("#sortCode").val(count);
-		 $("#memberListingForm").attr("method" , "POST").attr("action" , "/cafe/randomURL/manage/getCafeMemberList").submit();
+		 $("#memberListingForm").attr("method" , "POST").attr("action" , "/cafe/"+"${cafeURL}"+"/manage/getCafeMemberList").submit();
 	});
 
 	$(".memberNo").on("click" , function() {
 		var count = $(".memberNo").index(this);
 		$("#memberNo").val($($(".memberNo")[count]).text());
-		$("#memberDetailForm").attr("method" , "POST").attr("action" , "/cafe/randomURL/manage/getCafeMember").submit();
+		$("#memberDetailForm").attr("method" , "POST").attr("action" , "/cafe/"+"${cafeURL}"+"/manage/getCafeMember").submit();
 	});
 
 	$(".memberStatusCode").on("click" , function() {
@@ -101,7 +101,7 @@ $(function() {
 </form>	
 <form id='memberDetailForm'>
 <input type="hidden" name='memberNo' value='0' id='memberNo'>
-<input type="hidden" name ='cafeNo'  value='${search.cafeNo}'>
+<input type="hidden" name ='cafeNo'  value='${memberList[0].cafeNo}'>
 </form>
 	    
 <br/>

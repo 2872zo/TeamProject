@@ -35,6 +35,7 @@ function fncGetList(currentPage) {
 	}
 	
 $(function() {
+	
 	$("#addCafe").on("click" , function() {
 		$(self.location).attr("href","/cafe/addCafe");
 	});
@@ -43,9 +44,14 @@ $(function() {
 		$("#searchCondition").val(1);
 		$("form").attr("method" , "POST").attr("action" , "/cafe/search").submit();
 	});
+
 	$("#morePost").on("click" , function() {
 		$("#searchCondition").val(2);
 		$("form").attr("method" , "POST").attr("action" , "/cafe/search").submit();
+	});
+
+	$(".cafeURL").on("click" , function() {
+		$("form").attr("method" , "POST").attr("action" , "/cafe/"+$(this).text()+"/manage/getCafeMemberList").submit();
 	});
 	
 });
@@ -81,7 +87,7 @@ $(function() {
   <th scope="row">${cafe.cafeNo}</th>
   <td>${cafe.cafeName}</td>
   <td>${cafe.cafeDetail}</td>
-  <td>${cafe.URL}</td>
+  <td class ='cafeURL'>${cafe.cafeURL}</td>
   <td>${cafe.members}</td>
   <td>${cafe.managerNickname}</td>
     </tr>

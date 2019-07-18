@@ -53,7 +53,7 @@
 		cafe_member m, cafe_member_grade g
 		WHERE
 		m.cafe_member_grade_no=g.cafe_member_grade_no
-		AND	m.cafe_no = #{cafeNo}
+		AND	m.cafe_no = (SELECT cafe_no FROM cafe WHERE url = #{cafeURL})
 		<if test="searchKeyword != null">
 		AND m.member_nickname like '%' ||#{searchKeyword}|| '%'
 		</if>

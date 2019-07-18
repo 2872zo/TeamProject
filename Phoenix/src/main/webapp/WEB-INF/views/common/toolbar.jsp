@@ -25,7 +25,7 @@
  integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
  crossorigin="anonymous"></script>
  
-<script src="http://localhost:82/socket.io/socket.io.js"></script>
+
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <style>
 
@@ -35,9 +35,7 @@
 
 $(function() {
 	
-	if(${!empty sessionScope.user}){
-	var socket = io("http://192.168.0.78:82");
-	};
+	
 
 	$("#login").on("click" , function() {
 		$(self.location).attr("href","/user/loginView");
