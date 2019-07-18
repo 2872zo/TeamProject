@@ -94,14 +94,14 @@ public class CafeManageRestController {
 		Map<String,String> cafeStatistics = cafeManageService.getCafeStatistics(event,cafeURL);
 		
 	
-		if(cafeStatistics.get("et001")==null){
-			cafeStatistics.put("et001", "0");
+		if(cafeStatistics.get("et100")==null){
+			cafeStatistics.put("et100", "0");
 		}
 		
-		for(int i=4; i<8; i++) //프로퍼티즈 설정
+		for(int i=3; i<7; i++) //프로퍼티즈 설정
 		{
-			if(cafeStatistics.get("et00"+i)==null)
-				cafeStatistics.put("et00"+i, "0");
+			if(cafeStatistics.get("et10"+i)==null)
+				cafeStatistics.put("et10"+i, "0");
 		}
 		
 		

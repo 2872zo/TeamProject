@@ -20,9 +20,38 @@
 	
 		
 	<script>
+	
+
+	
 	<!-- ckeditor 설정 -->
 		$(function() {
-			CKEDITOR.replace('editor');
+
+			var uploadFileList = new Array();
+			
+			var editor = CKEDITOR.replace('editor');
+			editor.on( 'fileUploadResponse', function( evt ) {
+			    // Prevent the default response handler.
+// 			    evt.stop();
+
+// 			    // Get XHR and response.
+			    var data = evt.data,
+			        xhr = data.fileLoader.xhr,
+			        response = JSON.parse(xhr.responseText.split( '|' ));
+
+// 				console.log(response.fileName);
+				
+// 		        debugger;
+		        
+		        var fileList;
+				if(CKEDITOR.document.$.getElementById("fileList").value == ""){
+					fileList = response.fileName;
+				}else{
+					fileList = CKEDITOR.document.$.getElementById("fileList").value + ","  + response.fileName;
+				}
+		        
+		        CKEDITOR.document.$.getElementById("fileList").value = fileList;
+			} );
+
 		});
 
 		$(function() {
@@ -64,8 +93,9 @@
 		</div>
 
 			<form class="needs-validation" novalidate>
+				<input type="hidden" name="fileList" id="fileList">
 				<input type="hidden" name="cafeURL"> 
-				<input type="hidden"name="memberNo"> 
+				<input type="hidden" name="memberNo"> 
 				<input type="hidden" name="memberNickname">
 				<input type="hidden" name="boardName">
 	

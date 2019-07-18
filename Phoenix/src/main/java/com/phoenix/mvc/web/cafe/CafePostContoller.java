@@ -1,6 +1,8 @@
 package com.phoenix.mvc.web.cafe;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,6 +38,9 @@ public class CafePostContoller {
 
 	@Value("${pageUnit}")
 	private int pageUnit;
+	
+	@Value("${uploadDir}")
+	private String uploadDir;
 
 	@Autowired
 	@Qualifier("cafePostServiceImpl")
@@ -56,6 +62,9 @@ public class CafePostContoller {
 	public String getCafeInnerSearchList(@ModelAttribute Search search, Map<String, Object> map) throws Exception {
 		System.out.println("[CafeInnerSearchList] Search : " + search);
 
+		if(search.getSearchCondition() == null) {
+			search.setSearchCondition("0");
+		}
 		search.setPageSize(pageSize);
 		if (search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
@@ -148,9 +157,34 @@ public class CafePostContoller {
 	}
 
 	@PostMapping("/cafe/{cafeURL}/addPost")
-	public String addPost(@ModelAttribute Search search, @ModelAttribute Post post) {
+	public String addPost(@ModelAttribute Search search, @ModelAttribute Post post, @RequestParam String fileList) throws Exception {
 		System.out.println("[addPost] POST : " + post);
 
+		System.out.println(">>>>>>>>>>>>>>>>>>>fileList : " + fileList);
+		
+		List<String> deleteFileList = new ArrayList<String>();
+		for(String fileName : fileList.split(",")) {
+			if(post.getPostContent().indexOf(fileName) == -1) {
+				deleteFileList.add(fileName);
+			}
+		}
+		
+		System.out.println(">>>>>>>>>>>>>>>>>>>fileList : " + deleteFileList);
+		
+		for(String fileName : deleteFileList) {
+			File file = new File(uploadDir + "/" + fileName);
+			
+			if(file.exists()) {
+				System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+				if(file.delete()) {
+					System.out.println("삭제성공\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+				}else {
+					System.out.println("삭제실패\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+				}
+			}
+		}
+		
+		
 		post.setPostContent(post.getPostContent().replaceAll(System.getProperty("line.separator"), ""));
 		System.out.println("Post Insert 결과 : " + cafePostService.addPost(post));
 
@@ -213,9 +247,39 @@ public class CafePostContoller {
 	}
 
 	@PostMapping("/cafe/{cafeURL}/updatePost/{postNo}")
-	public String updatePost(@ModelAttribute Post post) {
-		System.out.println("[updatePost] post : " + post);
-
+	public String updatePost(@ModelAttribute Post post, @RequestParam String fileList) {
+		System.out.println("[ updatePost 실행 ] ");
+//		System.out.println("[updatePost] post : " + post);
+		
+		///////////////////////////todo
+		//add에서 하는 기존 파일삭제 프로세스 필요
+		//삭제 이전에 기존 content에서 삭제된 img태그의 src를 찾아서 deleteFileList에 추가해줘야함.
+		//기존 이미지를 찾는 과정은 jsp에서 content의 img태그를 찾게해서 src의 파일이름을 input에 넣기. ==> 기존 프로세스만 있으면 됨 
+		
+		System.out.println(">>>>>>>>>>>>>>>>>>>fileList : " + fileList);
+		
+		List<String> deleteFileList = new ArrayList<String>();
+		for(String fileName : fileList.split(",")) {
+			if(post.getPostContent().indexOf(fileName) == -1) {
+				deleteFileList.add(fileName);
+			}
+		}
+		
+		System.out.println(">>>>>>>>>>>>>>>>>>>deleteFileList : " + deleteFileList);
+		
+		for(String fileName : deleteFileList) {
+			File file = new File(uploadDir + "/" + fileName);
+			
+			if(file.exists()) {
+				System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+				if(file.delete()) {
+					System.out.println("삭제성공\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+				}else {
+					System.out.println("삭제실패\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+				}
+			}
+		}
+		
 		post.setPostContent(post.getPostContent().replaceAll(System.getProperty("line.separator"), ""));
 		System.out.println(cafePostService.updatePost(post));
 
@@ -223,16 +287,48 @@ public class CafePostContoller {
 	}
 
 	@GetMapping("/cafe/{cafeURL}/deletePost")
-	public String deletePost(@PathVariable String cafeURL, @RequestParam int postNo, @RequestParam int boardNo) {
-		System.out.println("[updatePost] postNo : " + postNo);
+	public String deletePost(@PathVariable String cafeURL, @RequestParam int postNo, @RequestParam int boardNo) throws Exception {
+		System.out.println("[deletePost] postNo : " + postNo);
 
 		System.out.println("[deletePost 결과 : " + cafePostService.deletePost(postNo));
 
 		return "redirect:/cafe/" + cafeURL + "/getBoard/" + boardNo;
 	}
+	
+	@PostMapping("/cafe/{cafeURL}/deletePostList")
+	public String deletePostList(@PathVariable String cafeURL, @RequestParam String postNoList, @RequestParam int boardNo) throws Exception {
+		System.out.println("[deletePostList] postNoList : " + postNoList);
 
+		System.out.println("[deletePostList 결과 : " + cafePostService.deletePostList(postNoList));
+
+		return "redirect:/cafe/" + cafeURL + "/getBoard/" + boardNo;
+	}	
+
+	@GetMapping("/cafe/{cafeURL}/movePost/{boardNo}")
+	public String movePostView(@PathVariable String cafeURL, @PathVariable int boardNo, @ModelAttribute Search search, @RequestParam String targetPostList, Map<String, Object> map) {
+		System.out.println("[movePostView] : " + targetPostList);
+		
+		map.put("boardList", cafeManageService.getCafeBoard(search));
+		map.put("targetPostList", targetPostList);
+		
+		return "/cafe/movePost";
+	}
+	
+	@PostMapping("/cafe/{cafeURL}/movePost")
+	public String movePost(@PathVariable String cafeURL, @RequestParam int targetBoardNo, @ModelAttribute Search search, @RequestParam String targetPostList) {
+		System.out.println("[movePostView] : " + targetPostList);		
+		
+		Map map = new HashMap<String, String>();
+		map.put("targetBoardNo", targetBoardNo);
+		map.put("targetPostList", targetPostList);
+		
+		System.out.println("[movePost] 실행 결과 : " + cafePostService.movePost(map));
+		
+		return "redirect:/cafe/" + cafeURL + "/getBoard/" + targetBoardNo;
+	}
+	
 	@PostMapping("/cafe/{cafeURL}/addReply")
-	public String addReply(@PathVariable String cafeURL, @ModelAttribute Reply reply) {
+	public String addReply(@PathVariable String cafeURL, @ModelAttribute Reply reply) throws Exception {
 		//임시 데이터
 		reply.setMemberNo(10000);
 		reply.setMemberNickname("매니저1");
@@ -307,7 +403,7 @@ public class CafePostContoller {
 	}
 	
 	@PostMapping("/cafe/{cafeURL}/deleteReply/{replyNo}")
-	public String deleteReply(@PathVariable String cafeURL, @ModelAttribute Search search, Map<String, Object> map) {
+	public String deleteReply(@PathVariable String cafeURL, @ModelAttribute Search search, Map<String, Object> map) throws Exception {
 		System.out.println("[deleteReply] 결과 : " + cafePostService.deleteReply(search.getReplyNo()));
 		
 		map.put("currentPage", search.getCurrentPage());

@@ -22,7 +22,7 @@ CKEDITOR.editorConfig = function( config ) {
 		{ name: 'about', groups: [ 'about' ] }
 	];
 
-	config.removeButtons = 'NewPage,Save,Templates,Preview,Print,PasteText,PasteFromWord,Scayt,Form,Checkbox,Radio,TextField,Textarea,Select,ImageButton,HiddenField,Button,Source,Anchor,Unlink,Flash,Iframe,CreateDiv,BidiRtl,BidiLtr,Language,About';
+	config.removeButtons = 'NewPage,Save,Templates,Preview,Print,PasteText,PasteFromWord,Scayt,Form,Checkbox,Radio,TextField,Source,Textarea,Select,ImageButton,HiddenField,Button,Anchor,Unlink,Flash,Iframe,CreateDiv,BidiRtl,BidiLtr,Language,About';
 	
 	config.enterMode = CKEDITOR.ENTER_BR;		//엔터키 입력시 br 태그 변경
 	config.shiftEnterMode = CKEDITOR.ENTER_P;	//엔터키 입력시 p 태그로 변경
@@ -34,11 +34,11 @@ CKEDITOR.editorConfig = function( config ) {
 	config.width = '100%';
 	config.height = '500px';
 	
-	//유튜브 플러그인 https://ckeditor.com/cke4/addon/youtube
-	config.extraPlugins = 'youtube';
-	config.youtube_responsive = true;
-	config.youtube_disabled_fields = ['chkControls'];
 	
 	//이미지 플러그인 https://ckeditor.com/cke4/addon/image2
-	config.extraPlugins = 'image2';
+	config.extraPlugins = 'image2,youtube';
+	
+	//유튜브 플러그인 https://ckeditor.com/cke4/addon/youtube
+	config.youtube_responsive = true;
+	config.youtube_disabled_fields = ['chkControls'];
 };

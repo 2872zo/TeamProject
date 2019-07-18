@@ -116,7 +116,7 @@
 	 
 	<select id="getCafeMemeber" parameterType="Search" resultMap="cafeMemberSelectMap">
 	 	SELECT
-		m.cafe_no, m.member_no, m.member_nickname, 
+		m.cafe_no, m.member_no, m.member_nickname, m.notice_flag, m.favorite_flag,
 		g.member_grade_code, g.grade_name, 
 		TO_CHAR(m.reg_date, 'YYYY-MM-DD HH24:MM:SS') reg_date, 
 		m.visit_count,m.member_status_code
@@ -208,16 +208,19 @@
 	</update>
 	
 	<update id="decreasePostCount" parameterType="int">
-		UPDATE /*+ BYPASS_UJVC */
-			(SELECT
-				m.member_no, m.post_count, p.post_no 
-			 FROM
-			 	cafe_member m, post p
-			 WHERE 
-			 	m.member_no = p.member_no
-			 	AND p.post_no = #{postNo}) t
+		UPDATE
+		cafe_member
 		SET
-			t.post_count = t.post_count - 1
+		post_count = post_count-1
+		WHERE member_no = (
+							SELECT
+								m.member_no
+			 				FROM
+			 					cafe_member m, post p
+							 WHERE 
+			 					m.member_no = p.member_no
+			 				AND p.post_no =#{postNo}
+							)
 	</update>
 	
 	<update id="increaseReplyCount" parameterType="int">
@@ -229,17 +232,19 @@
 	</update>
 	
 	<update id="decreaseReplyCount" parameterType="int">
-		UPDATE /*+ BYPASS_UJVC */
-			(SELECT
-				m.member_no, m.reply_count, p.post_no, r.reply_no 
-			 FROM
-			 	cafe_member m, reply r, post p
-			 WHERE 
-			 	m.member_no = p.member_no
-			 	AND r.post_no = p.post_no
-			 	AND r.reply_no = #{replyNo}) t
+		UPDATE
+		cafe_member
 		SET
-			t.reply_count = t.reply_count - 1
+		reply_count = reply_count-1
+		WHERE member_no = (SELECT
+								m.member_no, m.reply_count, p.post_no, r.reply_no 
+						 	FROM
+						 		cafe_member m, reply r, post p
+						 	WHERE 
+						 		m.member_no = p.member_no
+						 	AND r.post_no = p.post_no
+						 	AND r.reply_no = #{replyNo}
+						 	)
 	</update>
 	
 	<update id="increaseVisitCount" parameterType="int">
@@ -266,5 +271,15 @@
 	WHERE
 	member_no=#{memberNo}
 	</update>
+	
+	
+	<select id="checkNickname" parameterType="CafeMember" resultMap="cafeMemberSelectMap">
+	 	SELECT
+		*
+		FROM
+		cafe_member
+		WHERE
+		member_nickname=#{memberNickname} and cafe_no=#{cafeNo}	
+	</select>
 	
 </mapper>

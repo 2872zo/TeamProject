@@ -36,7 +36,7 @@ public boolean dropCafe(Cafe cafe, String cafeURL);
 
 	public boolean checkCafePost(String cafeURL, int boardNo); // 아니면 null이면?? 으로할까 일단 조원들상의 void도 int return
 
-	public Map<String, String> getCafeStatistics(Event event, String cafeURL);
+	public Map getCafeStatistics(Event event, String cafeURL);
 
 	public boolean addCafeBoard(List<Board> newBoard);
 

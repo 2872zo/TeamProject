@@ -169,17 +169,26 @@ public class CafeManageDaoImpl implements CafeManageDao {
 	}
 
 	@Override
-	public Map<String, String> getCafeStatistics(Event event) { // 예림예림
+	public Map getCafeStatistics(Event event) { // 예림예림
 
 		List<Map<String, String>> result = sqlSession.selectList("getCafeStatistics", event);
-		//List<Map<String, String>> chartResult = sqlSession.selectList("get"); 
-		
+		//event.setEventType("et001"); //어디다가 해주는게 나은건가/? mapper?? 
+		List<Map<String, String>> chartResult = sqlSession.selectList("getCafeChartValue",event); 
+		System.out.println(chartResult);
 		//System.out.println(statisticResult);
-		Map<String, String> statisticResultMap = new HashMap<String, String>();
+		Map statisticResultMap = new HashMap();
 
 		for (int i = 0; i < result.size(); i++) {
 			statisticResultMap.put(result.get(i).get("EVENT_TYPE"), String.valueOf(result.get(i).get("COUNTS")));
 		}
+		
+//		for(int i=0;i<chartResult.size(); i++)
+//		{
+//			statisticResultMap.put(chartResult.get(i).get("REG_DATE"), String.valueOf(chartResult.get(i).get("COUNTS")));
+//		}
+		
+		statisticResultMap.put("chartResult", chartResult);
+		
 		return statisticResultMap;
 	}
 

@@ -13,7 +13,9 @@
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"	crossorigin="anonymous"></script>
 	<script	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"	crossorigin="anonymous"></script>
+	<script src="https://kit.fontawesome.com/e589319d43.js"></script>
 	<script src="/js/cafeCommon.js"></script>
+	
 		
 	<script>
 		$(function() {
@@ -44,28 +46,58 @@
 			$("div .replyItems").load("/cafe/${post.cafeURL}/getReplyList/${post.postNo}", {currentPage:currentPage});
 		}
 
-// 		function updatePost(){
-// 			var getPost = $("#mainContent").html();
-			
-// 			$("#mainContent").load("/cafe/${post.cafeURL}/updatePost/${post.postNo} #mainContent", function(response, status, xhr){
-// // 				alert("response : " + response);
+		
+		$(function(){
+			$("#postLikeButton").on("click",function(){
+				var JSONPostNo =  JSON.stringify({cafeURL : "${cafeURL}", postNo:${post.postNo}, userNo:10000, searchCondition : 0});
+				console.log(JSONPostNo); 
 
-// 				var obj = response.trim();
-// 				history.replaceState(getPost, "getPost", "/cafe/${post.cafeURL}/getPost/${post.postNo}");
-// 				history.pushState(obj,"updatePost","/cafe/${post.cafeURL}/updatePost/${post.postNo}");
-// 			});
+				$.ajax({
+						type : "POST",
+						contentType: "application/json",
+						url : "/cafe/${cafeURL}/json/addLike",
+						dataType : "JSON",
+						data: JSONPostNo,
+						success : function(data) {
+							alert("success");
+							if(data == false){
+								alert("이미 추천한 게시글입니다.")
+								}
+							
+// 							debugger;
+						},
+						error : function(data) {
+							alert("error : " + data)
+// 							debugger;
+						}
+					});
 
-// 			window.CKEDITOR_BASEPATH = "/ckeditor/";
-// 			$.getScript("/ckeditor/ckeditor.js", function(data, status, xhr){
-// 				$.getScript("/js/form-validation.js");
-// 				$.getScript("/js/updatePost.js");
-// 			});
-// 		}
+				
+				});
+			});
 
-// 		$(window).on('popstate', function(event) {
-// 			console.log(event.originalEvent.state);
-// 			$("#mainContent").html( event.originalEvent.state);
-// 		});
+		// 		function updatePost(){
+		// 			var getPost = $("#mainContent").html();
+
+		// 			$("#mainContent").load("/cafe/${post.cafeURL}/updatePost/${post.postNo} #mainContent", function(response, status, xhr){
+		// // 				alert("response : " + response);
+
+		// 				var obj = response.trim();
+		// 				history.replaceState(getPost, "getPost", "/cafe/${post.cafeURL}/getPost/${post.postNo}");
+		// 				history.pushState(obj,"updatePost","/cafe/${post.cafeURL}/updatePost/${post.postNo}");
+		// 			});
+
+		// 			window.CKEDITOR_BASEPATH = "/ckeditor/";
+		// 			$.getScript("/ckeditor/ckeditor.js", function(data, status, xhr){
+		// 				$.getScript("/js/form-validation.js");
+		// 				$.getScript("/js/updatePost.js");
+		// 			});
+		// 		}
+
+		// 		$(window).on('popstate', function(event) {
+		// 			console.log(event.originalEvent.state);
+		// 			$("#mainContent").html( event.originalEvent.state);
+		// 		});
 	</script>
 
 
@@ -104,8 +136,11 @@
 						</div>
 					</div>
 			
-					제목 : ${post.postTitle } <br /> 
-					내용 : ${post.postContent } <br />
+					<h4 class="text-center">${post.postTitle } </h4><hr /> 
+					<p class="text-center">${post.postContent } <br /><br/>
+					<button id="postLikeButton"><i class="far fa-thumbs-up"></i>  ${post.likeCount }</button>
+					<hr/>
+					
 					
 					<button name="update" class="btn btn-primary btn-lg btn-block">수정</button>
 					<button name="delete" class="btn btn-primary btn-lg btn-block">삭제</button>
@@ -116,5 +151,6 @@
 			</div>
 		</div><!-- row End -->
 	</div><!-- container End -->
+	
 </body>
 </html>

@@ -1,6 +1,7 @@
 package com.phoenix.mvc.service.cafe;
 
 import java.util.List;
+import java.util.Map;
 
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.domain.Post;
@@ -24,6 +25,8 @@ public interface CafePostDao {
 	public boolean updatePost(Post post);
 
 	public boolean deletePost(int postNo);
+	
+	public boolean deletePostList(String postNoList);
 
 	public boolean addReply(Reply reply);
 	
@@ -40,4 +43,10 @@ public interface CafePostDao {
 	public boolean addReReply(Reply reply);
 	
 	public List<Post> getMyPostList(int userNo);
+
+	public boolean movePost(Map map);
+
+	public boolean addLike(Search search);
+	
+	public int eventValidationCheck(Search search);
 }
