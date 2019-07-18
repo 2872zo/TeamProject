@@ -446,8 +446,7 @@
 			 FROM
 			 	event_log
 			 WHERE
-			 	cafe_no = #{cafeNo}
-<!-- 			 	event_cafe_no = #{cafeNo} -->
+			 	event_cafe_no = #{cafeNo}
 			 	AND event_user_no = #{userNo}
 			 	<if test="searchCondition == 0">
 			 		AND target_no = #{postNo}
@@ -456,7 +455,5 @@
 			 		AND target_no = #{replyNo}
 			 	</if>
 			 	)
-			 	
-				
 	</select>
 </mapper>
