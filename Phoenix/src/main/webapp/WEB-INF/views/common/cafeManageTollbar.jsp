@@ -33,10 +33,7 @@
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
 	$(function() {
-		
-		if(${!empty sessionScope.user}){
-			var socket = io("http://192.168.0.78:82");
-			};
+	
 				
 			$("#login").on("click" , function() {
 				$(self.location).attr("href","/user/loginView");
@@ -87,15 +84,20 @@
 		<div class="collapse navbar-collapse" id="navbarTogglerDemo03">
 			<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 			
-			<%-- <c:if test="${cafe.manageUserNo == user.userNo }"></c:if> --%>
+			 <%-- <c:if test="${cafe.manageUserNo == user.userNo }"></c:if>  --%>
 				<li class="nav-item active"><a class="nav-link" href="#" id='cafemanage'>카페관리</a></li>
-				<li class="nav-item"><a class="nav-link" href="#" id = cafeName>{cafe.cafeName}</a></li>
+				<li class="nav-item"><a class="nav-link" href="#" id ='cafeName'>{cafe.cafeName}</a></li>
 			
 			</ul>
 			
-
-			<button type="button" class='btn btn-${!empty sessionScope.user ? "outline-info' id ='goChat'>채팅가능":"dark' disabled>채팅안됨" }</button>
-			<button type="submit" class='btn btn-outline-${empty sessionScope.user ? "light' id='login'>Login" : "dark' id='logout'>Logout"}</button>
+	     	<c:if test='${empty sessionScope.user}'>
+			<button type="submit" class='btn btn-outline-light' id='login'>Login</button>
+			</c:if>
+			
+			<c:if test='${!empty sessionScope.user}'>
+			<button class="btn btn-outline-dark" type="submit" id = "logout">Logout</button>
+			</c:if>
+			
 			
 
 		</div>
