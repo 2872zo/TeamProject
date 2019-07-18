@@ -83,18 +83,40 @@ $(function() {
 
   <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+    <c:set var="uriCheck" value="${pageContext.request.requestURI}" />
       <li class="nav-item active">
         <a class="nav-link" href='#' id='cafe'>CafeHome<span class="sr-only">(current)</span></a>
       </li>
-      <c:if test='${!empty sessionScope.user}'>
+   
+		<li class="nav-item">
+      <form class="form-inline" id='cafeSearch'>
+		<input type="hidden" id="currentPage" name="currentPage" value="0"/>
+		<input type ="hidden" name = 'cafeURL' value='${ !empty search.cafeURL ? search.cafeURL : "" }'>
+		<input type ="hidden" name = 'boardName' value='${ !empty search.boardName ? search.boardName : "" }'>
+	
+	   <select class="custom-select" aria-label="Example select with button addon" name='searchCondition' id='searchCondition'>
+	    <option class='searchCondition' selected value="0"   ${ !empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>카페+게시글</option>
+	    <option class='searchCondition' value="1"   ${ !empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>카페</option>
+	    <option class='searchCondition' value="2"   ${ !empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>게시글</option>
+	   </select>
+	
+	  <input type="text" class="form-control" placeholder="검색어 입력해주세요" aria-label="Text input with dropdown button" aria-describedby="button-addon2" value='${ !empty search.searchKeyword ? search.searchKeyword : '' }' name="searchKeyword" id="searchKeyword">
+	  <button class="btn btn-outline-light" type="button" id="explore">검색</button>
+	</form>	
+  	 </li>
+  	 
+  	  <c:set var="uriCheck" value="${pageContext.request.requestURI}" />
+      <c:if test='${uriCheck.startsWith("/WEB-INF/views/cafe/cafeHomeMain") && !empty sessionScope.user}'>
       <li class="nav-item">
         <a class="nav-link" href="#" id='applications'>카페 가입신청내역</a>
       </li>   
        <li class="nav-item">
         <a class="nav-link" href="#" id='newsFeed'>새글 피드</a>
       </li>  
-      </c:if> 
+      </c:if>
+
     </ul>
+    
     
   
         <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Chat</a>
@@ -112,24 +134,7 @@ $(function() {
 
  <br/>	
  <div class ='container'>
-<form id='cafeSearch'>
-<input type="hidden" id="currentPage" name="currentPage" value="0"/>
-<input type ="hidden" name = 'cafeURL' value='${ !empty search.cafeURL ? search.cafeURL : "" }'>
-<input type ="hidden" name = 'boardName' value='${ !empty search.boardName ? search.boardName : "" }'>
-	<div class="input-group mb-3">
-	  <div class="input-group-prepend">
-	   <select class="custom-select custom-select-lg" aria-label="Example select with button addon" name='searchCondition' id='searchCondition'>
-	    <option class='searchCondition' selected value="0"   ${ !empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>카페+게시글</option>
-	    <option class='searchCondition' value="1"   ${ !empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>카페</option>
-	    <option class='searchCondition' value="2"   ${ !empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>게시글</option>
-	   </select>
-	    </div>
-	  <input type="text" class="form-control form-control-lg" placeholder="검색어 입력해주세요" aria-label="Text input with dropdown button" aria-describedby="button-addon2" value='${ !empty search.searchKeyword ? search.searchKeyword : '' }' name="searchKeyword" id="searchKeyword">
-	 <div class="input-group-append">
-	    <button class="btn btn-outline-secondary" type="button" id="explore">검색</button>
-	 </div>
-	</div>
-</form>	
+
 </div>	
 </body>
 </html>

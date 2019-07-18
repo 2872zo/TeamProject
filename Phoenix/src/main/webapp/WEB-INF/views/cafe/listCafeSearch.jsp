@@ -50,7 +50,7 @@ $(function() {
 	
 });
 </script>
-<jsp:include page="../common/cafeToolbar.jsp" />
+<jsp:include page="../common/toolbar.jsp" />
 </head>
 
 <body>

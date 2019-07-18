@@ -89,7 +89,7 @@ $(function() {
 });
 </script>
 	<!-- ToolBar Start /////////////////////////////////////-->
-	<jsp:include page="../common/cafeToolbar.jsp" />
+	<jsp:include page="../common/toolbar.jsp" />
 	<!-- ToolBar End /////////////////////////////////////-->
 </head>
 

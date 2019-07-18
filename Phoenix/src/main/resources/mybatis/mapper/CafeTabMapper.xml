@@ -161,7 +161,7 @@
 	 </select>
 	 
 	 <select id="ownCafeTotalCount" parameterType="Search" resultMap="cafeTabSelectMap">
-		 SELECT
+		SELECT
 		count(*)
 		FROM (
 		<include refid="getOwnCafe"></include>

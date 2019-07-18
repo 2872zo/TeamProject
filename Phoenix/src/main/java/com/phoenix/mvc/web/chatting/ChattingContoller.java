@@ -3,6 +3,8 @@ package com.phoenix.mvc.web.chatting;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -41,12 +43,22 @@ public class ChattingContoller {
 	}
 	
 	@RequestMapping("chatRoomList")
-	public String getChatRoomList(@SessionAttribute("user") User user, Model model) throws Exception {
+	public String getChatRoomList(@SessionAttribute("user") User user, Model model, HttpSession session) throws Exception {
+		
 		Search search = new Search();
 		search.setUserNo(user.getUserNo());
 		Map map = chattingService.getMyChatRoomList(search);
-		List chatRoomList = (List) map.get("chatRoomList");
+		List<ChatRoom> chatRoomList = (List) map.get("chatRoomList");
+		String roomNos = "";
+		for (int i =0; i<chatRoomList.size() ;i++) {
+			int a = chatRoomList.get(i).getChatRoomNo();
+			roomNos += a;
+			if(i!=chatRoomList.size()-1) {
+				roomNos +=",";
+			}
+		}
 		model.addAttribute("chatRoomList",chatRoomList);
+		model.addAttribute("roomNos",roomNos);
 		return "chat/listChatRoom";
 	}
 	

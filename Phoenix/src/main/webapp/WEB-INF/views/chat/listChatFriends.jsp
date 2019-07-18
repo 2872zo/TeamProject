@@ -32,8 +32,8 @@
 
 $(function() {
 	
-	//$("#addCafe").on("click" , function() {
-	//	$(self.location).attr("href","/cafe/addCafeView");
+	//$("#addChatRoom").on("click" , function() {
+	//	$(self.location).attr("href","/chat/getCafeView");
 	//});
 
 });
@@ -47,6 +47,13 @@ $(function() {
 <br/>
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
+	
+	<br/>
+		<button type="button" class="btn btn-outline-danger btn-block" id='addChatRoom'>
+		채팅방개설
+		</button>
+	<br/>
+	
 	
 	<div class="card mb-3" style="max-width: 540px;">
   	<div class="row no-gutters">

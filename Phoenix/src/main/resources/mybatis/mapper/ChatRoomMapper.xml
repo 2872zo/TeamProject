@@ -14,6 +14,17 @@
 	
 	</resultMap>
 	
+	<insert id="addChatRoom" parameterType="chatRoom">
+		<selectKey keyProperty="chatRoomNo" resultType="int" order="BEFORE">
+	 		SELECT seq_chat_room_no.NEXTVAL FROM DUAL
+	 	</selectKey>
+			INSERT INTO 
+			chat_room  
+			(open_user_no, chat_room_no, reg_date) 
+			VALUES 
+			(#{userNo}, #{chatRoomNo}, SYSDATE)
+	</insert>
+	
 	<select id="getMyRoomList" parameterType="Search" resultMap="chatRoomSelectMap">
 		SELECT
 		my_chat_room_no, chat_room_no, chat_room_name

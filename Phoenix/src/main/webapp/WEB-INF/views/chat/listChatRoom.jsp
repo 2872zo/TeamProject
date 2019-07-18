@@ -31,10 +31,14 @@
 <script type="text/javascript">
 
 $(function() {
-	
-	$("#addCafe").on("click" , function() {
-		$(self.location).attr("href","/cafe/addCafeView");
-	});
+	alert("!11");
+	alert(socket);
+	//alert(${roomNos});
+	//var roomNumbers = ${roomNos};
+	//socket.emit("joiner", "1515156");
+	//$("#addChatRoom").on("click" , function() {
+	//	$(self.location).attr("href","/cafe/addCafeView");
+	//});
 
 });
 </script>
@@ -47,8 +51,15 @@ $(function() {
 <br/>
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
+	
+	<br/>
+		<button type="button" class="btn btn-outline-danger btn-block" id='addChatRoom'>
+		채팅방개설
+		</button>
+	<br/>
 
-	채팅방 목록 화면인가봐
+	${roomNos}
+
 	<c:forEach items="${chatRoomList}" var ='chatRoom'>
 	
 	<div class="card mb-3" style="max-width: 540px;" id='${chatRoom.chatRoomNo}'>

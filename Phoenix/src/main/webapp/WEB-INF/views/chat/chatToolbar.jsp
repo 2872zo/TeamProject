@@ -40,7 +40,6 @@ $(function() {
 });
 </script>
 	<!-- ToolBar Start /////////////////////////////////////-->
-	<jsp:include page="/chatToolbar.jsp" />
 	<!-- ToolBar End /////////////////////////////////////-->
 </head>
 
@@ -48,7 +47,7 @@ $(function() {
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
-
+		
 	</div>
 	<!--  화면구성 div Start /////////////////////////////////////-->
 
