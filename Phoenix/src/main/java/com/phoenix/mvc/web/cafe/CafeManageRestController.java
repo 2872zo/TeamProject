@@ -1,10 +1,14 @@
 package com.phoenix.mvc.web.cafe;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -75,14 +79,10 @@ public class CafeManageRestController {
 	}
 	
 	@RequestMapping(value="json/{cafeURL}/manage/getCafeStatistics", method= RequestMethod.POST) //예림예림 여기는 처음에만 들어온다.
-	public Map getCafeStatistics(@RequestBody Event event, @PathVariable String cafeURL)// 카페no랑 , 시작날, 끝날 받아오기
+	public Map getCafeStatistics(@RequestBody Event event, @PathVariable String cafeURL) throws ParseException// 카페no랑 , 시작날, 끝날 받아오기
 	{
 		System.out.println("json/cafe/{CafeURL}/manage/getCafeStatistics");
 		
-		
-		//가짜데이터
-		//event.setStartDate("20190709");
-		//event.setEndDate("20190712");
 		String date[] = event.getStartDate().split("/");
 		String startDate = date[2]+date[0]+date[1];
 		//System.out.println(startDate);
@@ -91,8 +91,7 @@ public class CafeManageRestController {
 		
 		event.setStartDate(startDate);
 		event.setEndDate(endDate);
-		Map<String,String> cafeStatistics = cafeManageService.getCafeStatistics(event,cafeURL);
-		
+		Map cafeStatistics = cafeManageService.getCafeStatistics(event,cafeURL);
 	
 		if(cafeStatistics.get("et100")==null){
 			cafeStatistics.put("et100", "0");
@@ -103,7 +102,23 @@ public class CafeManageRestController {
 			if(cafeStatistics.get("et10"+i)==null)
 				cafeStatistics.put("et10"+i, "0");
 		}
+		//--------------------------------------------------------------------------chart데이터
+		//List<Map<String, String>> chartResult = (List<Map<String, String>>) cafeStatistics.get("chartResult");
+		List<String> dates = new ArrayList<String>();
 		
+		SimpleDateFormat transFormat = new SimpleDateFormat("yyyyMMdd", Locale.KOREA);
+		Date dTime = transFormat.parse(endDate);
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(dTime);
+		dates.add(endDate);
+		
+		for (int i = 0; i < 9; i++) {
+			cal.add(Calendar.DATE, -1);
+			dates.add(transFormat.format(cal.getTime()));
+		}
+		Collections.reverse(dates); // list 역순
+		cafeStatistics.put("dates", dates);
 		
 		return cafeStatistics;
 	}
