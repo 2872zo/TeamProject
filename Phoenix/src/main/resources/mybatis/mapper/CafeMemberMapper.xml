@@ -204,7 +204,7 @@
 		cafe_member
 		SET
 		post_count = post_count+1
-		WHERE member_no = #{memberNo};
+		WHERE member_no = #{memberNo}
 	</update>
 	
 	<update id="decreasePostCount" parameterType="int">
@@ -228,7 +228,7 @@
 		cafe_member
 		SET
 		reply_count = reply_count+1
-		WHERE member_no = #{memberNo};	
+		WHERE member_no = #{memberNo}
 	</update>
 	
 	<update id="decreaseReplyCount" parameterType="int">
@@ -252,7 +252,7 @@
 		cafe_member
 		SET
 		visit_count = visit_count+1
-		WHERE member_no = #{memberNo};	
+		WHERE member_no = #{memberNo}
 	</update>
 	
 	<update id="changeGradeNo" parameterType="CafeMember">

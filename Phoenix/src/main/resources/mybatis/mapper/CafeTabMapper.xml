@@ -12,7 +12,7 @@
 		<result property="cafeIcon" 				 column="cafe_icon" 					jdbcType="VARCHAR" />
 		<result property="manageUserNo" 			 column="manage_user_no" 				jdbcType="VARCHAR" />
 		<result property="regDate" 					 column="reg_date" 						jdbcType="VARCHAR" />
-		<result property="URL" 						 column="url" 							jdbcType="VARCHAR" />
+		<result property="cafeURL" 						 column="url" 							jdbcType="VARCHAR" />
 		<result property="cafeDetail" 				 column="cafe_detail" 					jdbcType="VARCHAR" />
 		<result property="bannerImg" 				 column="banner_img" 					jdbcType="VARCHAR"  />
 		<result property="mainImg" 					 column="main_img" 						jdbcType="VARCHAR" />

@@ -190,7 +190,7 @@ $(function() {
 	<c:forEach var="categoryCafe" items="${categorizedCafeList}">
 	<tr>
 	 <th scope="row">${categoryCafe.cafeNo}</th>
-	 <td>${categoryCafe.URL}</td>
+	 <td>${categoryCafe.cafeURL}</td>
 	 <td>${categoryCafe.cafeName}</td>
 	 <td>${categoryCafe.cafeIcon}</td>
 	 <td>${categoryCafe.cafeDetail}</td>
