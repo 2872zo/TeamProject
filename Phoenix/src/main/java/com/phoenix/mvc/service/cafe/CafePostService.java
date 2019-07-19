@@ -1,5 +1,6 @@
 package com.phoenix.mvc.service.cafe;
 
+import java.util.List;
 import java.util.Map;
 
 import com.phoenix.mvc.common.Search;
@@ -35,5 +36,9 @@ public interface CafePostService {
 
 	public boolean movePost(Map map);
 	
-	public boolean addLike(Search search);
+	public Map<String, Object> addLike(Search search);
+
+	public boolean updateNoticeOrder(List<Post> postList);
+
+	public List<Post> getAllNoticePost(Search search);
 }

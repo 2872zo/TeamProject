@@ -381,6 +381,8 @@ public class CafeManageController {
 	public String getCafeApplicationList(@ModelAttribute("search") Search search, Model model) {
 
 		System.out.println("/{cafeURL}/manage/getCafeApplicationList : GET/POST");
+		
+		System.out.println(search);
 
 		if (search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);

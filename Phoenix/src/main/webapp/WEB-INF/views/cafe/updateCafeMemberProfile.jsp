@@ -102,7 +102,7 @@ $(function(){
 		    <label for="memberNickname" class="col-sm-offset-1 col-sm-3 control-label">별명</label>
 		    <div class="col-sm-4">
 		      <input type="text" class="form-control" id="memberNickname" name="memberNickname" value="${cafeMember.memberNickname }" >
-		      <strong class="text-danger" id="here" name = "here">중복확인하세요</strong>
+		      <strong class="text-danger" id="here" name = "here">사용중인별명</strong>
 		    </div>
 		  </div>
 

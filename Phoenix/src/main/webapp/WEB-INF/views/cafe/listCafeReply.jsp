@@ -22,11 +22,11 @@
 					<p>리플 작성자 : ${reply.memberNickname }</p>
 					<p>리플 내용 : ${reply.replyContent }</p>
 					<p>리플 작성일 : ${reply.regDate }</p>
-					<p>리플 추천수 : ${reply.likeCount }</p>
 					<p>리플 삭제상태 : ${reply.replyStatusFlag }</p>
 					<input type="button" name="updateReplyButton" value="수정"/>
 					<input type="button" name="deleteReplyButton" value="삭제"/>
 					<input type="button" name="addReReplyForm" value="대댓글"/>
+					<button class="replyLikeButton from-control"><span class="far fa-thumbs-up"></span>&nbsp;<span class="count">${reply.likeCount }</span></button>
 					<form name="replyItem">
 						<input type="hidden" name="replyNo" value="${reply.replyNo }">
 						<input type="hidden" name="postNo" value="${reply.postNo }">
@@ -46,9 +46,10 @@
 					<p>	&nbsp;&nbsp;&nbsp;&nbsp;대댓글 작성일 : ${reReply.regDate }</p>
 					<p>	&nbsp;&nbsp;&nbsp;&nbsp;대댓글 추천수 : ${reReply.likeCount }</p>
 					<p>	&nbsp;&nbsp;&nbsp;&nbsp;대댓글 삭제상태 : ${reReply.replyStatusFlag }</p>
-					<input type="button" name="updateReplyButton" value="수정"/>
-					<input type="button" name="deleteReplyButton" value="삭제"/>
-					<input type="button" name="addReReplyForm" value="대댓글"/>
+					<input type="button" class="from-control" name="updateReplyButton" value="수정"/>
+					<input type="button" class="from-control" name="deleteReplyButton" value="삭제"/>
+					<input type="button" class="from-control" name="addReReplyForm" value="대댓글"/>
+					<button class="replyLikeButton from-control"><span class="far fa-thumbs-up"></span>&nbsp;<span class="count">${reReply.likeCount }</span></button>
 					<form name="replyItem">
 						<input type="hidden" name="replyNo" value="${reReply.replyNo }">
 						<input type="hidden" name="postNo" value="${reReply.postNo }">
@@ -74,7 +75,7 @@
 
 			$(".replyItems").on("click", "[name=deleteReplyButton]", function(){
 				var obj = {currentPage : ${page.currentPage}, postNo : ${postNo} };
-				$(this).parent().load("/cafe/${cafeURL}/deleteReply/"+$(this).parent().find("[name=replyNo]").val(), obj);			
+				$(this).parent().parent().load("/cafe/${cafeURL}/deleteReply/"+$(this).parent().find("[name=replyNo]").val(), obj);			
 			});
 
 			$("[name=addReplyButton]").on("click", function(){
@@ -99,7 +100,7 @@
 // 				alert("reReply add!")
 				formObj = $(this).parent().find("form").serializeArray();
 
-				alert($(this).parent().find("[name=reReplyContnet]").val());
+// 				alert($(this).parent().find("[name=reReplyContnet]").val());
 				formObj.push({ name : "replyContent", value : $(this).parent().find("[name=reReplyContnet]").val()});
 
 				$("[name=addReReplyButton]").unbind("click");

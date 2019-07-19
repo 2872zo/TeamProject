@@ -98,7 +98,7 @@ $(function() {
      });
      
      socket.on('send_msg', function(msg) {
-     $('<div></div>').text(msg.chatMsg+msg.regDate).appendTo("#chat_box");
+     $('<div></div>').text(msg.userNo+" : "+msg.chatMsg+" 입력한 시간 : "+msg.regDate).appendTo("#chat_box");
      });
 
 });

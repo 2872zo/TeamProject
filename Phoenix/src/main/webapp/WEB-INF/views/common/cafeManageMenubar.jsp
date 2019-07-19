@@ -1,17 +1,5 @@
 <%@ page contentType="text/html; charset=utf-8"%>
 
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
-
-
- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
- <link rel="stylesheet" href="/resources/demos/style.css">
- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-
 
 	
 	<script type="text/javascript">
@@ -48,6 +36,10 @@
 
 		$(".closed").on("click",function(){
 			location.href = "/cafe/"+"${cafeURL}"+"/manage/dropCafeView";
+		});
+
+		$(".notice").on("click",function(){
+			location.href = "";
 		});
 		
 	});
@@ -106,6 +98,12 @@
 		
 		<div class="closed">
 			카페폐쇄
+		</div>
+		<br/>
+		<hr>
+		
+		<div class="notice">
+			공지관리
 		</div>
 		<br/>
 		<hr>

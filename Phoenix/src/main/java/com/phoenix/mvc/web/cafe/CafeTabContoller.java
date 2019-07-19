@@ -140,7 +140,7 @@ public class CafeTabContoller {
 
 		System.out.println("/cafe/search입니다.");
 
-		pageSize = 2;
+		pageSize = 3;
 
 		if (search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);

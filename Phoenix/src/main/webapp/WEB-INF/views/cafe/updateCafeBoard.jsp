@@ -12,16 +12,40 @@
 
 <head>
 
-	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-	<link href="/css/form-validation.css" rel="stylesheet">
+	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// 	-->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"	crossorigin="anonymous"></script>
 	<script	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"	crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	<script src="/js/form-validation.js"></script>
+	<script src ="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+	<script src ="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/additional-methods.min.js"></script>
 
+	<!-- 
+	<link rel="stylesheet" href="/css/zeed/bootstrap.min.css">
+	<link rel="stylesheet" href="/css/zeed/jquery-ui.css">
+	<link rel="stylesheet" href="/css/zeed/font-awesome.min.css">
+	<link rel="stylesheet" href="/css/zeed/owl.carousel.min.css">
+	<link rel="stylesheet" href="/css/zeed/slicknav.min.css">
+	<link rel="stylesheet" href="/css/zeed/magnificpopup.css">
+	<link rel="stylesheet" href="/css/zeed/jquery.mb.YTPlayer.min.css">
+	<link rel="stylesheet" href="/css/zeed/typography.css">
+	<link rel="stylesheet" href="/css/zeed/style.css">
+	<link rel="stylesheet" href="/css/zeed/responsive.css">
+	
+	<script src="/js/zeed/jquery-3.2.0.min.js"></script>
+	<script src="/js/zeed/jquery-ui.js"></script>
+	<script src="/js/zeed/bootstrap.min.js"></script>
+	<script src="/js/zeed/jquery.slicknav.min.js"></script>
+	<script src="/js/zeed/owl.carousel.min.js"></script>
+	<script src="/js/zeed/magnific-popup.min.js"></script>
+	<script src="/js/zeed/counterup.js"></script>
+	<script src="/js/zeed/jquery.waypoints.min.js"></script>
+	<script src="/js/zeed/jquery.mb.YTPlayer.min.js"></script>
+	<script src="/js/zeed/theme.js"></script>-->
+	
+	
 	<script type="text/javascript">
 
 		var totalBoardSize ="";
@@ -30,9 +54,11 @@
 		
 		function AllSelect(){
 
-			var obj = document.form.board;
-			alert(obj.length);
 
+			var obj = document.form.board;
+			//alert(obj.length);	
+			obj.setAttribute("multiple","multiple");
+			
 			for(var i=0; i<obj.length; i++)
 			{
 				//alert("a");
@@ -68,34 +94,44 @@
 		$(function() {
 
 			hideAndShow();
+
+			$("[name='form']").validate();
 			
-			$("select[name=board]").change(function(){ // listbox선택하면
+			//alert($("input[maxlength='6']"));
+			
+			$("select[name=board]").change(function(){ // listbox선택하면 focus두게
 					//alert($(this).val()); //ok
 					//alert($("input[id=totalBoardsize]").val());
-				 //여기서 display none등 설정
-
-					hideAndShow();
+					
+					//alert("악");
+					hideAndShow(); //여기서 display none등 설정
+					
 			});
 
 			
 
 			$("#plusBoard").on("click", function(){ //게시판추가
 				
-				alert($("select[name=addableBoard]").val());
+				//alert($("select[name=addableBoard]").val());
 				//기존 게시판리스트에 추가
-				var appendBoard = "<option class='apple' value='newBoard"+count+"' id=''>"+$("select[name=addableBoard]").val()+"</option>"
+				//alert($("select[name=board] option:selected").parent().html().trim());  //attr("selected",false); //추가
+				var appendBoard = "<option class='apple' value='newBoard"+count+"' id='' selected='selected' >"+$("select[name=addableBoard]").val()+"</option>"
+
+				
+				$("select[name=board] option:selected").removeAttr('selected');
+				
 				$("select[name=board]").append(appendBoard);
 				//보드사이즈증가
 				$("input[id=totalBoardsize]").val($("input[id=totalBoardsize]").val()-0+1);
 				totalBoardSize	= $("input[id=totalBoardsize]").val();
-				alert(totalBoardSize);
+				//alert(totalBoardSize);
 
 				
 				
 				if($("select[name=addableBoard]").val()=="자유게시판"){
 					//게시판 추가하면  밑에 input type text추가하고 
 					 	appendBoardDetail = "<div class ='boardDetail"+totalBoardSize+"'> <br/><br/>"
-						+"<h4>메뉴명</h4>   <input type='text' class='form-control' name='newBoard"+count+"'  placeholder='게시판이름' required /><hr/> "
+						+"<h4>메뉴명</h4>   <input type='text' class='form-control' name='newBoard"+count+"'  placeholder='게시판이름' maxlength='6' required /><hr/> "
 						+"<h4>메뉴설명</h4> <input type='text'  class='form-control' name='newBoardDetail"+count+"' width='50' placeholder='게시판설명' required >"
 						+"<br/><hr/><h4>공개설정</h4>"
 						+"<div class='radio'><label class='radio-inline'>"
@@ -120,6 +156,8 @@
 				//alert("dkd")			
 				$(".boardDetail").append(appendBoardDetail);
 				//appendBoardDetail="";
+				
+				
 				
 				count++;
 				
@@ -218,7 +256,7 @@
 
 			$("#save").on("click",function(){
 
-				alert("ㄴㅁㅍ");
+				//alert("ㄴㅁㅍ");
 				AllSelect();
 				$("form").attr("method","POST").attr("action","/cafe/no1cafe/manage/updateCafeBoard").submit();
 				
@@ -252,23 +290,29 @@
 	       			 메뉴관리
 	       		 </h3>
 	       			 <div class="col-md-12 text-right ">
-	       			 	<button type="button" class="btn btn-primary" id="cancel">취소</button>
-					 	<button type="button" class="btn btn-primary" id="save" >저장하기</button>
+	       			 	<button type="button" class="btn-primary" id="cancel">취소</button>
+					 	<button type="button" class="btn-primary" id="save" >저장하기</button>
 	       		 	 </div>
 	   			 </div>
 	   		 </div>
 	   		 
 		
 		<div class="row">
-		
+			
 		<div class="col-md-2">
-			
+				<c:import url="/WEB-INF/views/common/cafeManageMenubar.jsp"></c:import>
+		</div>
+		
+		<div class="col-md-10">
+		<div class="col-md-2">
+			<br/>
+			<br/>
 			<h4>추가메뉴</h4>
-			
+			<br/>
 			<br/>
 			<select name="addableBoard" size="10" class="form-control">
 				<option value="자유게시판" selected="selected">자유게시판</option>
-				<option value="------------" >-------------------------------</option>
+				<option value="--------------------" >구분선</option>
 			</select>
 			
 		</div >
@@ -277,7 +321,7 @@
 			
 			<br/><br/><br/><br/>
 			<button type="button" id ="plusBoard" class="btn btn-default btn-lg active">    
-				<br/><br/>
+				<br/><br/><br/>
 				      +   
 				      
 				<br/><br/><br/>
@@ -287,7 +331,7 @@
 		</div>
 				
 		<div class="col-md-3">
-			
+			<br/><br/><br/><br/>
 			<button type="button" id ="goDown" class="btn btn-default btn-sm">
 				 <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
 			</button>
@@ -303,7 +347,7 @@
 			
 			<br/>
 			<br/>
-		<select name="board" size=11 class="form-control" multiple>
+		<select name="board" size=11 class="form-control">
     		
     		<c:set var="i" value="0" />  
 			
@@ -327,7 +371,7 @@
 		</div>	
 			
 			
-		<div class="col-md-5">
+		<div class="col-md-6">
 		<div class="boardDetail">
 		<c:set var="j" value="0" />  
 		<c:forEach var="board" items="${boardList}">
@@ -335,10 +379,10 @@
 		
 			<div class ="boardDetail${j}">
 				<br/>
-				<c:if test="${fn:contains(board.boardName,'게시판')}">
+				<c:if test="${board.boardType=='cb100' || board.boardType=='cb101' || board.boardType=='cb103'}">
 					<br/>
 					<h4>메뉴명</h4>  
-					<input type="text" class="form-control" name="boardName/${board.boardNo}" value="${board.boardName}" required/>
+					<input type="text" class="form-control" name="boardName/${board.boardNo}" value="${board.boardName}" maxlength="6" required/>
 					<hr/>
 					
 					<h4>메뉴설명</h4>
@@ -371,7 +415,7 @@
 				
 				</c:if>
 				
-				<c:if test="${fn:contains(board.boardName,'------')}">
+				<c:if test="${board.boardType=='cb102'}">
 					<input type="hidden" name="boardName/${board.boardNo}" value="----------------"/>
 					<br/>
 					<h4>메뉴들을 구분선을 통해 쉽게 구분할 수 있습니다.</h4>
@@ -385,7 +429,7 @@
 				
 		</div>		
 				
-				
+			</div>	
 			</div>
 		</form>
 	</div>

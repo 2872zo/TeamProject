@@ -1,6 +1,7 @@
 package com.phoenix.mvc.service.cafe.impl;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,9 @@ public class CafePostServiceImpl implements CafePostService {
 	public Map<String, Object> getPostListByBoard(Search search) {
 		Map<String, Object> map = new HashMap<String, Object>();
 
+		if(search.getCurrentPage() == 1) {
+			map.put("noticePostList", cafePostDao.getNoticePostList(search));
+		}
 		map.put("postList", cafePostDao.getPostListByBoard(search));
 		map.put("postTotalCount", cafePostDao.postTotalCount(search));
 
@@ -128,18 +132,24 @@ public class CafePostServiceImpl implements CafePostService {
 	}
 
 	@Override
-	public boolean addLike(Search search) {
+	public Map<String, Object> addLike(Search search) {
 		Event event = new Event();
-		event.setEventType("et101");
+		
+		if(search.getSearchCondition().equals("0")  ) {
+			event.setEventType("et101");
+			event.setTargetNo(search.getPostNo());
+		}else if(search.getSearchCondition().equals("1")){
+			event.setEventType("et102");
+			event.setTargetNo(search.getReplyNo());
+		}
 		event.setEventUserNo(search.getUserNo());
 		event.setCafeNo(cafeManageDao.getCafeNo(search.getCafeURL()));
 		search.setCafeNo(event.getCafeNo());
-		event.setTargetNo(search.getPostNo());
+		
+		Map<String, Object> resultMap = new HashMap<String, Object>();
 		
 		boolean result = true;
 		result = cafePostDao.eventValidationCheck(search) == 0 ? true : false;
-		
-		
 		
 		if(result) {
 			result = cafeManageDao.addEventLog(event);
@@ -147,8 +157,27 @@ public class CafePostServiceImpl implements CafePostService {
 			
 			result = cafePostDao.addLike(search);
 			System.out.println("addLike 결과 : " + result);
+			
+			if(search.getSearchCondition().equals("0")) {
+				resultMap.put("likeCount", cafePostDao.getPost(search.getPostNo()).getLikeCount());
+			}else if(search.getSearchCondition().equals("1") ){
+				resultMap.put("likeCount", cafePostDao.getReply(search.getReplyNo()).getLikeCount());
+			}
 		}
-		return result;
+		
+		resultMap.put("result", result);
+		
+		return resultMap;
+	}
+
+	@Override
+	public boolean updateNoticeOrder(List<Post> postList) {
+		return cafePostDao.updateNoticeOrder(postList);
+	}
+
+	@Override
+	public List<Post> getAllNoticePost(Search search) {
+		return cafePostDao.getAllNoticePost(search);
 	}
 	
 	
