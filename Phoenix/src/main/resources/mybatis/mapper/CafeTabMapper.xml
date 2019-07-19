@@ -12,7 +12,7 @@
 		<result property="cafeIcon" 				 column="cafe_icon" 					jdbcType="VARCHAR" />
 		<result property="manageUserNo" 			 column="manage_user_no" 				jdbcType="VARCHAR" />
 		<result property="regDate" 					 column="reg_date" 						jdbcType="VARCHAR" />
-		<result property="cafeURL" 						 column="url" 							jdbcType="VARCHAR" />
+		<result property="cafeURL" 					 column="url" 							jdbcType="VARCHAR" />
 		<result property="cafeDetail" 				 column="cafe_detail" 					jdbcType="VARCHAR" />
 		<result property="bannerImg" 				 column="banner_img" 					jdbcType="VARCHAR"  />
 		<result property="mainImg" 					 column="main_img" 						jdbcType="VARCHAR" />
@@ -32,7 +32,7 @@
 	</resultMap>
 	<sql id="listCafe">
 		SELECT
-		c.cafe_no, c.url, c.cafe_name, c.members, u.user_nickname
+		c.cafe_icon, c.cafe_detail, c.cafe_no, c.url, c.cafe_name, c.members, u.user_nickname
 		FROM cafe c, users u
 		WHERE c.manage_user_no=u.user_no
 		AND

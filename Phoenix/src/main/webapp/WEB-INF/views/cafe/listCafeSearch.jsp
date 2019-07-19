@@ -53,6 +53,12 @@ $(function() {
 	$(".cafeURL").on("click" , function() {
 		$("form").attr("method" , "POST").attr("action" , "/cafe/"+$(this).text()+"/manage/getCafeMemberList").submit();
 	});
+
+	$(".myCafe").on("click" , function() {
+		var moveTo = $(this).attr('name');
+		$(self.location).attr("href","/cafe/"+moveTo);
+		
+	});
 	
 });
 </script>
@@ -69,32 +75,29 @@ $(function() {
  	카페 검색결과 총 ${totalCount} 건 입니다.
  	</c:if>
     <br/>
- <table class="table table-borderless">
-	<thead>
-    <tr>
-  	  <th scope="col">카페번호</th>
-      <th scope="col">카페이름</th>
-      <th scope="col">카페설명</th>
-      <th scope="col">카페주소</th>
-      <th scope="col">카페회원수</th>
-      <th scope="col">매니저닉네임</th>
-    </tr>
-	</thead>
-	<tbody>
- 
-  <c:forEach var="cafe" items="${cafeList}">
-   <tr>
-  <th scope="row">${cafe.cafeNo}</th>
-  <td>${cafe.cafeName}</td>
-  <td>${cafe.cafeDetail}</td>
-  <td class ='cafeURL'>${cafe.cafeURL}</td>
-  <td>${cafe.members}</td>
-  <td>${cafe.managerNickname}</td>
-    </tr>
-  </c:forEach>
 
-	</tbody>
-</table>
+ <div class="row d-flex justify-content-between">
+  <c:forEach var="cafe" items="${cafeList}">
+  
+  <div class="card mb-3 myCafe col-lg-6" style="" name ='${cafe.cafeURL}'>
+  <div class="row no-gutters">
+    <div class="col-md-4">
+      <img src="/images/common/16by9.png" class="card-img" alt="..." 
+      style="background: url('/images/uploadFiles/cafeicon/${cafe.cafeIcon}');
+      no-repeat center center; background-size:cover;">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">${cafe.cafeName}</h5>
+        <p class="card-text">${cafe.cafeDetail}</p>
+        <p class="card-text"><small class="text-muted">${cafe.regDate}</small></p>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  </c:forEach>
+  </div>
 
   <c:if test="${ !empty search.searchCondition && search.searchCondition==0}">
   <button type="button" class="btn btn-outline-primary" id='moreCafe'>카페 더보기</button>
