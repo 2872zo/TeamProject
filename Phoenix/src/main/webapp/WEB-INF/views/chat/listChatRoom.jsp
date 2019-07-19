@@ -41,9 +41,13 @@ $(function() {
 	socket.emit("joiner", $("#roomNos").val());
 
 	socket.on('send_msg', function(msg) {
-		var splitter = msg.split(":");
-	     $('<div></div>').text(msg).appendTo("#chat_box");
-	     });
+		//var splitter = msg.split(":");
+		//alert("11");
+		var msgTo= msg.chatRoomNo;
+		$("#"+msgTo+"").text(msg.chatMsg);
+	});
+	 //    $('<div></div>').text(msg).appendTo("#"+msgTo+"");
+	   //  });
     
 	//
 	//if(${!empty sessionScope.user}){
@@ -94,7 +98,7 @@ $(function() {
       <div class="card-body">
         <h5 class="card-title chatRoom">${chatRoom.chatRoomName}</h5>
         <p class="card-text">${chatRoom.chatRoomNo} </p>
-        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+        <p class="card-text"><small class="text-muted" id='${chatRoom.chatRoomNo}'>Last updated 3 mins ago</small></p>
       </div>
     </div>
   </div>

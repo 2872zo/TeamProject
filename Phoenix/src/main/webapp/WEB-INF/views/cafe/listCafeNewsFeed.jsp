@@ -32,28 +32,29 @@
 
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
-	$(function() {
-		
-//		var el = document.createElement( 'html' );
-	//	el.innerHTML = '${post.postContent}';
-		//for(var i = 0; i < $(el).find("img").length; i++){
-			//console.log($($(el).find("img")[i]).attr("src").substring(20));
 
-				//if($("#fileList").val() == ""){
-					//$("#fileList").val($($(el).find("img")[i]).attr("src").substring(20));
-			//	}else{
-					//$("#fileList").val($("#fileList").val() + "," + $($(el).find("img")[i]).attr("src").substring(20));
-				//}
+
+	$(function() {
+		/*
+		var el = document.createElement( 'html' );
+	el.innerHTML = '${post.postContent}';
+
+		for(var i = 0; i < $(el).find("img").length; i++){
+			console.log($($(el).find("img")[i]).attr("src").substring(20));
+
+				if($("#fileList").val() == ""){
+					$("#fileList").val($($(el).find("img")[i]).attr("src").substring(20));
+				}else{
+					$("#fileList").val($("#fileList").val() + "," + $($(el).find("img")[i]).attr("src").substring(20));
+				}
 			
-//		}
+		}
 
 		$("#addCafe").on("click", function() {
 			$(self.location).attr("href", "/cafe/addCafeView");
 		});
-
-
 		
-			
+	*/		
 		
 		
 		
@@ -61,7 +62,7 @@
 	});
 </script>
 <!-- ToolBar Start /////////////////////////////////////-->
-<jsp:include page="../common/cafeToolbar.jsp" />
+<jsp:include page="../common/toolbar.jsp" />
 <!-- ToolBar End /////////////////////////////////////-->
 </head>
 
@@ -74,11 +75,13 @@
 			<div class="card-body">
 				<h5 class="card-title">${post.postTitle}</h5>
 				<p class="card-text">
-				<c:if test="${fn:length(post.postContent)>53}">
-				${fn:substring(post.postContent,0,50)}...
+				<c:set var="modifiedContent" value='${fn:replace(post.postContent,"<img alt=","")}'/>
+				
+				<c:if test="${fn:length(modifiedContent)>53}">
+				${fn:substring(modifiedContent,0,50)}...
 				</c:if>
-				<c:if test="${fn:length(post.postContent)<54}">
-				${post.postContent}
+				<c:if test="${fn:length(modifiedContent)<54}">
+				${modifiedContent}
 				</c:if>
 				</p>
 				${post.regDate}
