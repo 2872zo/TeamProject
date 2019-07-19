@@ -47,14 +47,9 @@
 
 		 $(function() {
 
-				$("input[name='cafeName']")
-						.on(
-								'keyup',
-								function() {
-
+				$("input[name='cafeName']").on('keyup',function() {
 									var inputed = $("input[name='cafeName']").val();
 									 //alert("입력  : "+inputed);
-
 											$.ajax({
 												url : "/cafe/json/checkCafeNameDuplication",
 												method : "POST",
@@ -98,11 +93,10 @@
 					
 			
 		</script>
+		</head>
+		<jsp:include page="../common/cafeManageTollbar.jsp" />
 <body>
-	
-	
 
-<jsp:include page="/common/cafeManageTollbar.jsp" />
 
 <form class="form-horizontal">
 <div class="container">
@@ -110,24 +104,23 @@
 		<div class="row">
 			<div class="col-2">
 				<c:import url="/WEB-INF/views/common/cafeManageMenubar.jsp"></c:import>
-			</div>
-			
+			</div>			
 			<div class="col-10">
-
-
-		<div class="row" align="center">
-	  		<div class="col-sm-4"><strong>카페수정화면</strong></div>
-		</div>
 		
+			<br>
+				<h2 class="text-center">카페정보수정</h2>		
+			
+			</br>
+			<hr>	
 		<input type="hidden" name="cafeNo" value="${cafe.cafeNo }"/>
-		
+		<center>
   <div class="form-group">
     <label for="exampleFormControlInput1" class="col-sm-offset-3 col-sm-3 control-label">카 페 이 름</label>
     <div class="col-sm-4">
     <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="" name="cafeName" value="${cafe.cafeName}">
     <span id="check"> <strong>카페이름을 입력해주세요</strong>
 							</span>
-    </div>
+	    </div>
   </div>
 
   <div class="form-group">
@@ -143,20 +136,7 @@
     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="cafeDetail" value="${cafe.cafeDetail}"></textarea>
     </div>
   </div>  
-<!--  
-<div class="form-group">
-    <label for="exampleFormControlInput1" class="col-sm-offset-3 col-sm-3 control-label">배너이미지</label>
-    <div class="col-sm-4">
-    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="" name="bannerImg">
-    </div>
-  </div>		
-<div class="form-group">
-    <label for="exampleFormControlInput1" class="col-sm-offset-3 col-sm-3 control-label">메인이미지</label>
-    <div class="col-sm-4">
-    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="" name="mainImg">
-    </div>
-  </div>  
-	  -->
+
 	  
 	   <div class="form-group">
 		    <label for="uploadFile" class="col-sm-offset-1 col-sm-3 control-label">배너이미지</label>
@@ -178,28 +158,6 @@
 		      <input type="file"  id="uploadFile3" name="uploadFile3" >
 		    </div>
 		  </div>
-		  
-		 <!--    
- 	    <div class="input-group mb-3"> 
-   		<div class="input-group-prepend"> 
-     <span class="input-group-text" id="inputGroupFileAddon01" name="uploadFile" >배너이미지</span> 
-   </div>   
-   <div class="custom-file" > 
-     <input type="file" class="custom-file-input" id="uploadFile" name="uploadFile" >
-     <label class="custom-file-label" for="inputGroupFile01"></label>
-   </div>
-   </div> 
-   	 -->
-<!-- 	<div class="input-group mb-3"> -->
-<!--   		<div class="input-group-prepend"> -->
-<!--     <span class="input-group-text" id="inputGroupFileAddon01" name="mainImg">메인이미지</span> -->
-<!--   </div>   -->
-<!--   <div class="custom-file" > -->
-<!--     <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" name="mainImg"> -->
-<!--     <label class="custom-file-label" for="inputGroupFile01"></label> -->
-<!--   </div> -->
-<!--   </div> -->
-  			
   					<div class="form-group">
 						<label for="exampleFormControlSelect1"
 							class="col-sm-offset-1 col-sm-3 control-label">카페 카 테 고 리</label>
@@ -226,21 +184,6 @@
 							</select>
 						</div>
 					</div>
-<!--  <div class="form-group">
-    <label for="exampleFormControlInput1" class="col-sm-offset-3 col-sm-3 control-label">카페아이콘</label>
-    <div class="col-sm-4">
-    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="" name="cafeIcon">
-    </div>
-  </div>   
-	  <div class="input-group mb-3">
-  		<div class="input-group-prepend">
-    <span class="input-group-text" id="inputGroupFileAddon01" name="filedata">카페아이콘</span>
-  </div>  
-  <div class="custom-file" >
-    <input id="uploadInputBox" class="custom-file-input" type="file" name="filedata" multiple />
-    <label class="custom-file-label" for="inputGroupFile01"></label>
-  </div>
-  </div>  --> 
 					
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
@@ -250,6 +193,7 @@
 		  </div>
 		  </div>
 		  </div>
+		  
 		</form>
 		<!-- form Start /////////////////////////////////////-->
 		

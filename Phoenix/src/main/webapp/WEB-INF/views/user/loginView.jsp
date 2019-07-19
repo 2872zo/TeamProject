@@ -42,7 +42,7 @@
 			$("#userId").focus();
 			
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$("#login").on("click" , function() {
+			$("#login1").on("click" , function() {
 				var id=$("input:text").val();
 				var pw=$("input:password").val();
 				
@@ -70,24 +70,18 @@
 				$(self.location).attr("href","/user/addUserView");
 			});
 		});
-		$( function() {
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$("#kakaologin").on("click" , function() {
-				
-				self.location = "https://kauth.kakao.com/oauth/authorize?client_id=786f6826580a4d7936f476cd6356278a&redirect_uri=http://192.168.0.16:8080/user/kakaoLogin&response_type=code"
-			});
-		});
+		
 		
 	</script>		
 	
 </head>
-
+<jsp:include page="../common/toolbar.jsp" />
 <body>
 
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<div class="navbar  navbar-default">
         <div class="container">
-        	<a class="navbar-brand" href="/index.jsp">Model2 MVC Shop</a>
+        	
    		</div>
    	</div>
    	<!-- ToolBar End /////////////////////////////////////-->	
@@ -128,7 +122,7 @@
 					    <div class="col-sm-offset-4 col-sm-6 text-center">
 					      
 					      
-					      <button type="button" id='login' class="btn btn-primary"  >로 &nbsp;그 &nbsp;인</button>
+					      <button type="button" id='login1' class="btn btn-primary"  >로 &nbsp;그 &nbsp;인</button>
 					      <a class="btn btn-primary btn" href="#" role="button">회 &nbsp;원 &nbsp;가 &nbsp;입</a>
 					    </div>
 					  </div>
