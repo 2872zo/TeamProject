@@ -14,11 +14,8 @@
 		<script src="/js/cafeCommon.js"></script>
 		
 		<style>
-			.postTitle{
-				text-decoration: underline;
-			}
 			.postTitle:hover{
-				color: blue;
+				text-decoration: underline;
 			}
 			
 			#layerPopup{
@@ -32,6 +29,18 @@
 			
 			#layerPopup button{
 			  cursor:pointer;
+			}
+			
+			.noticeIcon{
+				height:28px; 
+				margin:0px; 
+				padding-top:0px; 
+				padding-bottom:0px;
+			}
+			
+			.thisNotice{
+				background : #F1795E;
+				border-color: #F1795E;
 			}
 		</style>
 		
@@ -123,7 +132,7 @@
 						tmpInputBoardNo.setAttribute("value", boardNo);
 						tmpForm.appendChild(tmpInputBoardNo);
 
-						tmpInputPostNoList = document.crtargetPostListt("input");
+						tmpInputPostNoList = document.createElement("input");
 						tmpInputPostNoList.setAttribute("type", "hidden");
 						tmpInputPostNoList.setAttribute("name", "postNoList");
 						tmpInputPostNoList.setAttribute("value", postNoList);
@@ -190,40 +199,52 @@
 				<div class="col-10">
 					<div id="mainContent">
 					
-					<style>
-						.postTitle{
-							text-decoration: underline;
-						}
-						.postTitle:hover{
-							color: blue;
-						}
-					</style>
-					
 					<p>총 ${postTotalCount }개</p>
-						<table class="table table-striped table-bordered">
-							<tr>
-								<td><input type="checkbox"></td>
-				<!-- 				<td>게시글 번호</td> -->
-				<!-- 				<td>게시판 번호</td> -->
-				<!-- 				<td>memberNo</td> -->
-								<td>게시판</td>
-								<td>제목</td>
-								<td>작성자</td>
-								<td>작성일</td>
-								<td>조회수</td>
-								<td>추천수</td>
-				<!-- 				<td>postStatusFlag</td> -->
-				<!-- 				<td>postNoticeFlag;</td> -->
-				<!-- 				<td>noticeIndex</td> -->
-							</tr>
+						<table class="table">
+							<thead class="thead-light">
+								<tr>
+									<th><input type="checkbox"></th>
+									<th>제목</th>
+									<th>작성자</th>
+									<th>작성일</th>
+									<th>조회수</th>
+									<th>추천수</th>
+								</tr>
+							</thead>
+							
+							<c:forEach items="${noticePostList }" var="noticePost">
+								<tr style="background:#E1DFDE;">
+									<input type="hidden" class="postNo" value="${noticePost.postNo }"/>
+									<input type="hidden" class="boardNo" value="${noticePost.boardNo }"/>
+									<input type="hidden" class="memberNo" value="${noticePost.memberNo }"/>
+									<input type="hidden" class="boardName" value="${noticePost.boardName }"/>
+									<td></td>
+									<td class="postTitle">
+										<c:if test="${noticePost.boardName eq '공지게시판' }">
+											<button type="button" class="btn btn-danger noticeIcon allNotice" disabled">공지</button>
+										</c:if>
+										<c:if test="${noticePost.boardName ne '공지게시판' }">
+											<button type="button" class="btn btn-danger noticeIcon thisNotice" disabled">공지</button>
+										</c:if>
+										${noticePost.postTitle }
+									</td>
+									<td>${noticePost.memberNickname }</td>
+									<td>${noticePost.regDate }</td>
+									<td>${noticePost.viewCount }</td>
+									<td>${noticePost.likeCount }</td>
+				<%-- 					<td>${post.postStatusFlag }</td> --%>
+				<%-- 					<td>${post.postNoticeFlag }</td> --%>
+				<%-- 					<td>${post.noticeIndex }</td> --%>
+								</tr>
+							</c:forEach>
 							
 							<c:forEach items="${postList }" var="post">
 								<tr>
 									<input type="hidden" class="postNo" value="${post.postNo }"/>
 									<input type="hidden" class="boardNo" value="${post.boardNo }"/>
 									<input type="hidden" class="memberNo" value="${post.memberNo }"/>
+									<input type="hidden" class="boardName" value="${post.boardName }"/>
 									<td><input type="checkbox"></td>
-									<td class="boardName">${post.boardName }</td>
 									<td class="postTitle">${post.postTitle }</td>
 									<td>${post.memberNickname }</td>
 									<td>${post.regDate }</td>

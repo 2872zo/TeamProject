@@ -43,7 +43,7 @@
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			var cafeURL = "22";
 			$( "button.btn.btn-success" ).on("click" , function() {
-				alert("수정");
+				alert("확인");
 				$("form").attr("method" , "POST").attr("action" , "/cafe/"+cafeURL+"/manage/updateCafeApplicationForm").submit();
 			});
 		});	
@@ -51,8 +51,9 @@
 			
 			
 		</script>
+		<jsp:include page="../common/cafeManageTollbar.jsp" />
 <body>
-<jsp:include page="/common/cafeManageTollbar.jsp" />
+
 
 		<div class="container">
 		<div class="row">
@@ -61,7 +62,12 @@
 			</div>
 			
 			<div class="col-10">
-			<h4 class="bg-primary text-center">가입양식관리수정완료</h4>
+			<br>
+			<br>
+				<h1 class="text-center">가입양식관리</h1>
+			</br>
+			</br>
+			<hr>
 <form class="form-horizontal">
 
 
@@ -131,7 +137,7 @@
 		  
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-success"  >수정</button>
+		      <button type="button" class="btn btn-success"  >확인</button>
 		    </div>
 		  </div>
 		  

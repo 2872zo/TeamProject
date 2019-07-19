@@ -79,9 +79,6 @@ $(function() {
 	<div class="container">
 	
 	<br/>
-		<button type="button" class="btn btn-outline-danger btn-block" id='addChatRoom'>
-		채팅방개설
-		</button>
 	<br/>
 
 	<input type='hidden' id='roomNos' value ='${roomNos}'>

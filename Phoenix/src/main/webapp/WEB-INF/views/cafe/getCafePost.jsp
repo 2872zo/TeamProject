@@ -49,7 +49,7 @@
 		
 		$(function(){
 			$("#postLikeButton").on("click",function(){
-				var JSONPostNo =  JSON.stringify({cafeURL : "${cafeURL}", postNo:${post.postNo}, userNo:10000, searchCondition : 0});
+				var JSONPostNo =  JSON.stringify({cafeURL : "${cafeURL}", postNo:${post.postNo}, userNo:10000, searchCondition : "0"});
 				console.log(JSONPostNo); 
 
 				$.ajax({
@@ -59,12 +59,15 @@
 						dataType : "JSON",
 						data: JSONPostNo,
 						success : function(data) {
-							alert("success");
-							if(data == false){
-								alert("이미 추천한 게시글입니다.")
-								}
+// 							alert("success");
 							
 // 							debugger;
+							if(data.result == false){
+								alert("이미 추천한 게시글입니다.")
+							}else{
+								$("#postLikeButton").find(".count").text(data.likeCount);
+							}
+							
 						},
 						error : function(data) {
 							alert("error : " + data)
@@ -74,30 +77,66 @@
 
 				
 				});
+
+			$(document).on("click", ".replyLikeButton", function(){
+				var JSONPostNo =  JSON.stringify({cafeURL : "${cafeURL}", replyNo:$(this).next().find("[name=replyNo]").val(), userNo:10000, searchCondition : "1"});
+				console.log(JSONPostNo); 
+
+				var count = $(this).find(".count");
+// 				debugger;
+				
+				$.ajax({
+						type : "POST",
+						contentType: "application/json",
+						url : "/cafe/${cafeURL}/json/addLike",
+						dataType : "JSON",
+						data: JSONPostNo,
+						success : function(data) {
+// 							alert("success");
+							
+// 							debugger;
+							if(data.result == false){
+								alert("이미 추천한 댓글입니다.")
+							}else{
+								count.text(data.likeCount);
+							}
+							
+						},
+						error : function(data) {
+							alert("error : " + data);
+// 							debugger;
+						}
+					});
+
+				
+				});
 			});
 
-		// 		function updatePost(){
-		// 			var getPost = $("#mainContent").html();
+		<%--
+				function updatePost(){
+					var getPost = $("#mainContent").html();
 
-		// 			$("#mainContent").load("/cafe/${post.cafeURL}/updatePost/${post.postNo} #mainContent", function(response, status, xhr){
-		// // 				alert("response : " + response);
+					$("#mainContent").load("/cafe/${post.cafeURL}/updatePost/${post.postNo} #mainContent", function(response, status, xhr){
+		 				alert("response : " + response);
+`
+						var obj = response.trim();
+						history.replaceState(getPost, "getPost", "/cafe/${post.cafeURL}/getPost/${post.postNo}");
+						history.pushState(obj,"updatePost","/cafe/${post.cafeURL}/updatePost/${post.postNo}");
+					});
 
-		// 				var obj = response.trim();
-		// 				history.replaceState(getPost, "getPost", "/cafe/${post.cafeURL}/getPost/${post.postNo}");
-		// 				history.pushState(obj,"updatePost","/cafe/${post.cafeURL}/updatePost/${post.postNo}");
-		// 			});
+					window.CKEDITOR_BASEPATH = "/ckeditor/";
+					$.getScript("/ckeditor/ckeditor.js", function(data, status, xhr){
+						$.getScript("/js/form-validation.js");
+						$.getScript("/js/updatePost.js");
+					});
+				}
 
-		// 			window.CKEDITOR_BASEPATH = "/ckeditor/";
-		// 			$.getScript("/ckeditor/ckeditor.js", function(data, status, xhr){
-		// 				$.getScript("/js/form-validation.js");
-		// 				$.getScript("/js/updatePost.js");
-		// 			});
-		// 		}
-
-		// 		$(window).on('popstate', function(event) {
-		// 			console.log(event.originalEvent.state);
-		// 			$("#mainContent").html( event.originalEvent.state);
-		// 		});
+				$(window).on('popstate', function(event) {
+					console.log(event.originalEvent.state);
+					$("#mainContent").html( event.originalEvent.state);
+				});
+			--%>
+		
 	</script>
 
 
@@ -106,6 +145,9 @@
 
 <body>
 	<div class="container content">
+<!-- 		<div> -->
+<%-- 			<c:import url="../common/cafeToolbar.jsp"/> --%>
+<!-- 		</div> -->
 		<div class="row">
 			<div class="col-2">
 				<c:import url="/WEB-INF/views/cafe/menubarCafe.jsp"></c:import>
@@ -138,7 +180,7 @@
 			
 					<h4 class="text-center">${post.postTitle } </h4><hr /> 
 					<p class="text-center">${post.postContent } <br /><br/>
-					<button id="postLikeButton"><i class="far fa-thumbs-up"></i>  ${post.likeCount }</button>
+					<button id="postLikeButton"><span class="far fa-thumbs-up"></span>&nbsp;<span class="count">${post.likeCount }</span></button>
 					<hr/>
 					
 					

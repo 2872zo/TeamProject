@@ -26,7 +26,10 @@
  integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
  crossorigin="anonymous"></script>
 <!--  ///////////////////////// CSS ////////////////////////// -->
-
+<style type="text/css">
+	.cafe3 {background-color:#000;color: #FFF;}
+    .cafe3:hover {background-color: #FFF;}
+</style>
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
 $(function() {
@@ -94,7 +97,7 @@ $(function() {
 	<button type="button" class="btn btn-lg btn-success" id="cafe">CAFE</button>
 	<button type="button" class="btn btn-lg btn-primary" id="mail">MAIL</button>
 	<button type="button" class="btn btn-lg btn-info" id="sns">SNS</button>
-	<button type="button" class="btn btn-lg btn-dark" id="shop">SHOP</button>
+	<button type="button" class="btn btn-lg btn-warning" id="shop">SHOP</button>
 	</div>
 	<br/>
 	<br/>
@@ -107,7 +110,7 @@ $(function() {
 	<div class="d-flex justify-content-around">
 	<button type="button" class="btn btn-lg btn-outline-danger" id="cafe1">매니저메뉴</button>
 	<button type="button" class="btn btn-lg btn-outline-danger" id="cafe2">글작성관련</button>
-	<button type="button" class="btn btn-lg btn-outline-danger" id="cafe3">가입신청</button>
+	<button type="button" class="btn btn-lg black-background cafe3" id="cafe3">가입신청</button>
 	</div>
 	
 </div>
