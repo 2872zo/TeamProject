@@ -89,7 +89,7 @@ public class CafeTabContoller {
 		
 		  System.out.println("카페유알엘@@@@"+cafe.getCafeURL());
 
-		  return "cafe/getCafeInfo";
+		  return "redirect:/cafe/"+cafe.getCafeURL();
 	}
 
 ///////////////////////////////준호끝///////////////////////////////////////		

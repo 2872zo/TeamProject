@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.phoenix.mvc.common.Search;
+import com.phoenix.mvc.service.domain.Board;
 import com.phoenix.mvc.service.domain.Cafe;
 import com.phoenix.mvc.service.domain.CafeGrade;
+import com.phoenix.mvc.service.domain.CafeMember;
 
 
 public interface CafeTabDao {
@@ -13,6 +15,10 @@ public interface CafeTabDao {
 	public void addCafe(Cafe cafe)throws Exception;
 	
 	public void addMemberGrade(CafeGrade cafeGrade)throws Exception;
+	
+	public void addBoard(Board board)throws Exception;
+	
+	
 	///////////////////////////////준호끝///////////////////////////////////////	
 	
 	///////////////////////////////////기황시작//////////////////////////////////

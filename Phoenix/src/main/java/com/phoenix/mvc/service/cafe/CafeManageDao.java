@@ -81,6 +81,8 @@ public void updateCafeInfo(Cafe cafe) throws Exception;
 
 public Cafe getCafeInfo(int cafeNo) throws Exception;
 
+public int getCafeNoNo(String cafeName) throws Exception;
+
 public void updateCafeApplicationForm(Cafe cafe) throws Exception;
 
 public Cafe getCafeName(String cafeName) throws Exception;

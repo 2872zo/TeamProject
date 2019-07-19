@@ -375,6 +375,12 @@ public class CafeManageServiceImpl implements CafeManageService {
 	public Cafe getCafeName(String cafeName) throws Exception {
 		return cafeManageDao.getCafeName(cafeName);
 	}
+	
+	public int getCafeNoNo(String cafeName) throws Exception{
+
+		return cafeManageDao.getCafeNoNo(cafeName);
+
+	}
 
 	/////////////////////////////// 준호끝///////////////////////////////////////
 

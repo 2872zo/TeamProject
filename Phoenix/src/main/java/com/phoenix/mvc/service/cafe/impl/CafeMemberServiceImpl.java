@@ -48,6 +48,8 @@ public class CafeMemberServiceImpl implements CafeMemberService {
 		return cafeManageDao.getCafeNo(cafeURL);
 
 	}
+	
+
 
 	@Override
 	public void addCafeApplication(CafeApplication cafeApplication) throws Exception {

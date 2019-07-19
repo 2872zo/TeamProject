@@ -11,11 +11,14 @@ import org.springframework.stereotype.Service;
 
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.cafe.CafeManageDao;
+import com.phoenix.mvc.service.cafe.CafeManageService;
 import com.phoenix.mvc.service.cafe.CafeMemberDao;
+import com.phoenix.mvc.service.cafe.CafeMemberService;
 import com.phoenix.mvc.service.cafe.CafePostDao;
 import com.phoenix.mvc.service.cafe.CafePostService;
 import com.phoenix.mvc.service.cafe.CafeTabDao;
 import com.phoenix.mvc.service.cafe.CafeTabService;
+import com.phoenix.mvc.service.domain.Board;
 import com.phoenix.mvc.service.domain.Cafe;
 import com.phoenix.mvc.service.domain.CafeGrade;
 import com.phoenix.mvc.service.domain.CafeMember;
@@ -44,6 +47,10 @@ public class CafeTabServiceImpl implements CafeTabService {
 	@Autowired
 	@Qualifier("cafePostServiceImpl")
 	private CafePostService cafePostServiceImpl;
+	
+	@Autowired
+	@Qualifier("cafeManageServiceImpl")
+	private CafeManageService cafeManageService;
 	
 	public void setCafeDao(CafeTabDao cafeDao) {
 	this.cafeTabDao= cafeDao;
@@ -77,6 +84,16 @@ public class CafeTabServiceImpl implements CafeTabService {
 		
 		cafeTabDao.addMemberGrade(cafeGrade);
 		
+		Board board = new Board();
+		
+		board.setCafeNo(cafe.getCafeNo());
+		
+		board.setCafeURL(cafe.getCafeURL());
+		
+		cafeTabDao.addBoard(board);
+		
+		CafeMember cafeMember = new CafeMember();
+
 		System.out.println("gkgkgkgk");
 		
 		System.out.println("여긴 서비스임플 카페다아아아"+cafe);
@@ -85,6 +102,7 @@ public class CafeTabServiceImpl implements CafeTabService {
 	}
 	
 	public boolean checkCafeNameDuplication(String cafeName) throws Exception {
+		
 		
 		boolean result=true;
 		System.out.println("cafeName!!!!!!!!!!!!!!!!!!!!!!!"+cafeName);

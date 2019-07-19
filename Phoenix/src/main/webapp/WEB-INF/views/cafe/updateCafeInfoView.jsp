@@ -65,7 +65,7 @@
 												success : function(JSONData) {
 													//alert(JSONData); 
 													//alert(typeof(JSONData));
-
+									
 													if (JSONData && inputed != "") {
 														$("#check").children("strong")
 																.remove();
@@ -79,12 +79,13 @@
 																.append(
 																		"<strong  class=\"text-danger\">사용 불가능합니다.</strong>");
 													}
-													if (inputed == "") {
+													if (inputed == "${cafe.cafeName}") {
 														$("#check").children("strong")
 																.remove();
 														$("#check")
 																.append(
-																		"<strong class=\"text-muted\">카페이름을 입력해주세요.</strong>");
+																		"<strong class=\"text-success\">현재사용중인이름</strong>");
+													
 													}
 												}
 											});

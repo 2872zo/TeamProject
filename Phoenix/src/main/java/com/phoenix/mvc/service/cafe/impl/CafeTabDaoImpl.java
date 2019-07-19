@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.cafe.CafeTabDao;
+import com.phoenix.mvc.service.domain.Board;
 import com.phoenix.mvc.service.domain.Cafe;
 import com.phoenix.mvc.service.domain.CafeGrade;
 
@@ -39,6 +40,11 @@ public class CafeTabDaoImpl implements CafeTabDao {
 		System.out.println("카페등급들어갔니 ??"+cafeGrade);
 	}
 	
+	public void addBoard(Board board) throws Exception{
+		sqlSession.insert("CafeMapper.addBoard", board);
+		
+	}
+
 
 	/////////////////////////////// 준호끝///////////////////////////////////////
 
