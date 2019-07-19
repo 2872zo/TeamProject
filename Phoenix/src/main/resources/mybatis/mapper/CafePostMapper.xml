@@ -423,7 +423,9 @@
 		UPDATE
 			post
 		SET
-			board_no = #{targetBoardNo}
+			board_no = #{targetBoardNo},
+			board_name = #{targetBoardName}
+			
 		WHERE
 			post_no IN (${targetPostList})
 	</update>

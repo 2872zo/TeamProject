@@ -20,9 +20,41 @@
 				$("#targetPostList").val(opener.document.getElementById("targetPostList").value);
 				
 				$("#movePost").on("click", function(){
-					opener.document.getElementById("targetPostList").value = $("#targetPostList").val();
-					opener.document.getElementById("targetBoardNo").value = $("#targetBoardNo").val();
-					$(opener.document.forms.movePostData).attr("method", "POST").attr("action", "/cafe/${cafeURL}/movePost").submit();
+					var tmpForm = document.createElement("form");
+					tmpForm.setAttribute("charset", "UTF-8");
+					tmpForm.setAttribute("method", "Post");
+					tmpForm.setAttribute("action", "/cafe/${cafeURL}/movePost");
+
+					var tmpInputTargetPostList = document.createElement("input");
+					tmpInputTargetPostList.setAttribute("type", "hidden");
+					tmpInputTargetPostList.setAttribute("name", "targetPostList");
+					tmpInputTargetPostList.setAttribute("value", $("#targetPostList").val());
+					tmpForm.appendChild(tmpInputTargetPostList);
+
+					var tmpInputTargetBoardNo = document.createElement("input");
+					tmpInputTargetBoardNo.setAttribute("type", "hidden");
+					tmpInputTargetBoardNo.setAttribute("name", "targetBoardNo");
+					tmpInputTargetBoardNo.setAttribute("value", $("#targetBoardNo").val());
+					tmpForm.appendChild(tmpInputTargetBoardNo);
+
+					var tmpInputTargetBoardNo = document.createElement("input");
+					tmpInputTargetBoardNo.setAttribute("type", "hidden");
+					tmpInputTargetBoardNo.setAttribute("name", "targetBoardNo");
+					tmpInputTargetBoardNo.setAttribute("value", $("#targetBoardNo").val());
+					tmpForm.appendChild(tmpInputTargetBoardNo);
+
+					var tmpInputTargetBoardName = document.createElement("input");
+					tmpInputTargetBoardName.setAttribute("type", "hidden");
+					tmpInputTargetBoardName.setAttribute("name", "targetBoardName");
+					tmpInputTargetBoardName.setAttribute("value", $("#targetBoardNo option:selected").text());
+					tmpForm.appendChild(tmpInputTargetBoardName);
+
+					opener.document.body.appendChild(tmpForm);
+					tmpForm.submit();
+					
+// 					opener.document.getElementById("targetPostList").value = $("#targetPostList").val();
+// 					opener.document.getElementById("targetBoardNo").value = $("#targetBoardNo").val();
+// 					$(opener.document.forms.movePostData).attr("method", "POST").attr("action", "/cafe/${cafeURL}/movePost").submit();
 
 					debugger;
 					self.close();

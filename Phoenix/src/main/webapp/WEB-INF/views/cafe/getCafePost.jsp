@@ -61,7 +61,7 @@
 						success : function(data) {
 // 							alert("success");
 							
-							debugger;
+// 							debugger;
 							if(data.result == false){
 								alert("이미 추천한 게시글입니다.")
 							}else{
@@ -112,28 +112,31 @@
 				});
 			});
 
-		// 		function updatePost(){
-		// 			var getPost = $("#mainContent").html();
+		<%--
+				function updatePost(){
+					var getPost = $("#mainContent").html();
 
-		// 			$("#mainContent").load("/cafe/${post.cafeURL}/updatePost/${post.postNo} #mainContent", function(response, status, xhr){
-		// // 				alert("response : " + response);
+					$("#mainContent").load("/cafe/${post.cafeURL}/updatePost/${post.postNo} #mainContent", function(response, status, xhr){
+		 				alert("response : " + response);
+`
+						var obj = response.trim();
+						history.replaceState(getPost, "getPost", "/cafe/${post.cafeURL}/getPost/${post.postNo}");
+						history.pushState(obj,"updatePost","/cafe/${post.cafeURL}/updatePost/${post.postNo}");
+					});
 
-		// 				var obj = response.trim();
-		// 				history.replaceState(getPost, "getPost", "/cafe/${post.cafeURL}/getPost/${post.postNo}");
-		// 				history.pushState(obj,"updatePost","/cafe/${post.cafeURL}/updatePost/${post.postNo}");
-		// 			});
+					window.CKEDITOR_BASEPATH = "/ckeditor/";
+					$.getScript("/ckeditor/ckeditor.js", function(data, status, xhr){
+						$.getScript("/js/form-validation.js");
+						$.getScript("/js/updatePost.js");
+					});
+				}
 
-		// 			window.CKEDITOR_BASEPATH = "/ckeditor/";
-		// 			$.getScript("/ckeditor/ckeditor.js", function(data, status, xhr){
-		// 				$.getScript("/js/form-validation.js");
-		// 				$.getScript("/js/updatePost.js");
-		// 			});
-		// 		}
-
-		// 		$(window).on('popstate', function(event) {
-		// 			console.log(event.originalEvent.state);
-		// 			$("#mainContent").html( event.originalEvent.state);
-		// 		});
+				$(window).on('popstate', function(event) {
+					console.log(event.originalEvent.state);
+					$("#mainContent").html( event.originalEvent.state);
+				});
+			--%>
+		
 	</script>
 
 
@@ -142,6 +145,9 @@
 
 <body>
 	<div class="container content">
+<!-- 		<div> -->
+<%-- 			<c:import url="../common/cafeToolbar.jsp"/> --%>
+<!-- 		</div> -->
 		<div class="row">
 			<div class="col-2">
 				<c:import url="/WEB-INF/views/cafe/menubarCafe.jsp"></c:import>
