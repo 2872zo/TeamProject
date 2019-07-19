@@ -127,4 +127,19 @@ public class CafePostDaoImpl implements CafePostDao{
 	public int eventValidationCheck(Search search) {
 		return sqlSession.selectOne("CafePostMapper.eventValidationCheck", search);
 	}
+
+	@Override
+	public List<Post> getNoticePostList(Search search) {
+		return sqlSession.selectList("CafePostMapper.getNoticePostList", search);
+	}
+
+	@Override
+	public boolean updateNoticeOrder(List<Post> postList) {
+		return (sqlSession.update("CafePostMapper.updateNoticePost", postList) != 0 ? true : false);
+	}
+
+	@Override
+	public List<Post> getAllNoticePost(Search search) {
+		return sqlSession.selectList("CafePostMapper.getAllNoticePost", search);
+	}
 }

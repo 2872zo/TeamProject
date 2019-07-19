@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -118,6 +119,8 @@ public class CafePostContoller {
 		// 게시판별 게시글 가져오기
 		Map<String, Object> queryResultMap = cafePostService.getPostListByBoard(search);
 
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>queryReslutMap : \n" + queryResultMap);
+		
 		// 전체 크기
 		int postTotalCount = (int) queryResultMap.get("postTotalCount");
 
@@ -137,6 +140,7 @@ public class CafePostContoller {
 		map.put("cafeMember", cafeMember);
 		map.put("boardList", boardList);
 
+		map.put("noticePostList", queryResultMap.get("noticePostList"));
 		map.put("postList", queryResultMap.get("postList"));
 		map.put("postTotalCount", postTotalCount);
 		map.put("search", search);
@@ -409,5 +413,17 @@ public class CafePostContoller {
 		
 		map.put("currentPage", search.getCurrentPage());
 		return "forward:/cafe/{cafeURL}/getReplyList/{search.postNo}";
+	}
+	
+	@GetMapping("/cafe/{cafeURL}/updateNoticeOrder")
+	public String updateNoticeOrderView(@ModelAttribute Search search, @PathVariable String cafeURL, Map<String, Object> map) {
+		System.out.println("[updateNoticeOrderView] search : " + search);
+		
+		//임시데이터
+		search.setCafeURL("no1cafe");
+
+		map.put("postList", cafePostService.getAllNoticePost(search));
+		
+		return "/cafe/updateNoticeOrder";
 	}
 }

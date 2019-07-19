@@ -34,18 +34,23 @@
 <script type="text/javascript">
 
 $(function() {
+	//툴바 로그아웃 기준으로 작성하고 로그인시 변경되는 부분
 	if(${!empty sessionScope.user}){
+		
+		$("#login").attr('class' , 'logout btn btn-dark')
+		$("#login").text('로그아웃');
 		$("#goChat").attr('class' , 'btn btn-info');
 		$("#goChat").text('로그인해서채팅가능');
 
 		}
-	
 
-	$("#login").on("click" , function() {
+	//페이지 별로 변경되는 부분도 여기다가 작성해야할듯
+
+	$(".login").on("click" , function() {
 		$(self.location).attr("href","/user/loginView");
 	});
 
-	$("#logout").on("click" , function() {
+	$(".logout").on("click" , function() {
 		$(self.location).attr("href","/user/logout");
 	});
 
@@ -99,8 +104,8 @@ $(function() {
 
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
-	<!-- ffb347 FFAA28 FFA01E FFAA28 FFAF00-->
-		<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #FFAF00;">
+	<!-- ffb347 FFAA28 FFA01E FFAA28 FFAF00 FFA01E F7750A-->
+		<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #F7790A;">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -153,7 +158,7 @@ $(function() {
     </ul>
 
       	<button type="button" class='btn btn-dark' id='${empty sessionScope.user ? "noChat":"goChat"}'>채팅</button>
-		<button type="submit" class='btn btn-outline-${empty sessionScope.user ? "light' id='login'>Login" : "dark' id='logout'>Logout"}</button>
+		<button type="submit" class='login btn btn-outline-light' id='login'>로그인</button>
 		
   </div>
 </nav>

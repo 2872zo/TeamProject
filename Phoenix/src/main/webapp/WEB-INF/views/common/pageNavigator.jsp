@@ -28,8 +28,8 @@
 				
 				<!--  현재 page 가르킬경우 : active -->
 				<c:if test="${ page.currentPage == i }">
-				    <li class="page-item active" aria-current="page">
-				    	<span class="page-link">
+				    <li class="page-item active " aria-current="page">
+				    	<span class="page-link" >
 				    		${ i }
 				    		<span class="sr-only">(current)</span>
 				    	</span>
