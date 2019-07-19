@@ -57,8 +57,15 @@ public class CafePostRestContoller {
 
 	@RequestMapping("/cafe/{cafeURL}/json/addLike")
 	public Map<String, Object> addLike(@RequestBody Search search) {
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>> " + search);
-		
+//		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>> " + search);
 		return cafePostService.addLike(search);
+	}
+	
+
+	@PostMapping("/cafe/{cafeURL}/json/updateNoticeOrder")
+	public boolean updateNoticeOrder(@RequestBody List<Post> postList) {
+		System.out.println("[updateNoticeOrderView] postList : " + postList);
+		
+		return cafePostService.updateNoticeOrder(postList);
 	}
 }

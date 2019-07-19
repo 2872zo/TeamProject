@@ -49,4 +49,10 @@ public interface CafePostDao {
 	public boolean addLike(Search search);
 	
 	public int eventValidationCheck(Search search);
+
+	public List<Post> getNoticePostList(Search search);
+
+	public boolean updateNoticeOrder(List<Post> postList);
+
+	public List<Post> getAllNoticePost(Search search);
 }
