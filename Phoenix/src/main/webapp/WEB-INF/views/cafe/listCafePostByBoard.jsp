@@ -123,7 +123,7 @@
 						tmpInputBoardNo.setAttribute("value", boardNo);
 						tmpForm.appendChild(tmpInputBoardNo);
 
-						tmpInputPostNoList = document.crtargetPostListt("input");
+						tmpInputPostNoList = document.createElement("input");
 						tmpInputPostNoList.setAttribute("type", "hidden");
 						tmpInputPostNoList.setAttribute("name", "postNoList");
 						tmpInputPostNoList.setAttribute("value", postNoList);

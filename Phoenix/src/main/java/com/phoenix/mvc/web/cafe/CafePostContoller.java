@@ -315,12 +315,13 @@ public class CafePostContoller {
 	}
 	
 	@PostMapping("/cafe/{cafeURL}/movePost")
-	public String movePost(@PathVariable String cafeURL, @RequestParam int targetBoardNo, @ModelAttribute Search search, @RequestParam String targetPostList) {
+	public String movePost(@PathVariable String cafeURL, @RequestParam int targetBoardNo, @RequestParam String targetBoardName, @RequestParam String targetPostList) {
 		System.out.println("[movePostView] : " + targetPostList);		
 		
 		Map map = new HashMap<String, String>();
 		map.put("targetBoardNo", targetBoardNo);
 		map.put("targetPostList", targetPostList);
+		map.put("targetBoardName", targetBoardName);
 		
 		System.out.println("[movePost] 실행 결과 : " + cafePostService.movePost(map));
 		

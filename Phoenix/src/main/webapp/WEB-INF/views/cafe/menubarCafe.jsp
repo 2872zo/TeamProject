@@ -4,15 +4,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-
-
- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
- <link rel="stylesheet" href="/resources/demos/style.css">
- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-
-
 	
 	<link rel="stylesheet" href="/css/scroll-top.css">
 	<script src="/js/scroll-top.js"></script>
@@ -41,6 +32,10 @@
 			$("[name=menubarSubmit]").on("click", function(){
 				location.href = "/cafe/" + "${cafeURL}" + "/search?searchKeyword=" + $("#menubarSearch").val(); 
 			});	
+
+			$("[name=toManage]").on("click", function(){
+				location.href = "/cafe/${cafeURL}/manage/getCafeStatistics";
+			});
 			
 		});
 
@@ -74,7 +69,7 @@
 			var memberNo = '${cafeMember.memberNo}'
 			$(".updateProfile").on("click",function(){
 				alert("여기")
-				window.open("/cafe/" + "${cafeURL}"+ "/updateCafeMemberProfileView?memberNo="+memberNo,"_blank","width=600,height=700")
+				window.open("/cafe/" + "${cafeURL}"+ "/updateCafeMemberProfileView?memberNo="+memberNo,"_blank","width=600,height=700");
 			
 				});
 			
@@ -117,6 +112,7 @@
 			<br/>
 			<h5><a href='#'>내가 쓴 글 보기</a></h5>
 			<h5><a href='#'>내가 쓴 댓글 보기</a></h5>
+			<input type="button" value="내 카페 관리" name="toManage"> 
 			
 		</div>
 
