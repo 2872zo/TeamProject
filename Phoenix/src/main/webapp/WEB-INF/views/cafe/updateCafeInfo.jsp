@@ -46,8 +46,8 @@
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			var cafeURL = "22";
 			$( "button.btn.btn-success" ).on("click" , function() {
-				alert("수정");
-				$("form").attr("method" , "POST").attr("action" , "/cafe/"+cafeURL+"/manage/updateCafeApplicationForm").submit();
+				alert("확인");
+				$("form").attr("method" , "POST").attr("action" , "/cafe/${cafe.cafeURL}/manage/updateCafeApplicationForm").submit();
 			});
 		});	
 
@@ -57,7 +57,7 @@
 <body>
 
 
-<jsp:include page="/common/cafeManageTollbar.jsp" />
+<jsp:include page="../common/cafeManageTollbar.jsp" />
 		<div class="container">
 		
 		<div class="row">
@@ -68,14 +68,18 @@
 			<div class="col-10">
 		
 		
-			<h4 class="bg-primary text-center">수정완료</h4>
+			<br>
+				<h2 class="text-center">카페정보수정</h2>		
+			
+			</br>
+			<hr>	
 <form class="form-horizontal">
 
 
 		
 		
 		<input type="hidden" name="cafeNo" value="${cafe.cafeNo }"/>
-				
+				<center>
 					<div class="form-group">
 	
 					<label for="exampleFormControlInput1" class="col-sm-offset-1 col-sm-3 control-label">카 페 이 름</label>
@@ -98,21 +102,21 @@
 	
 					<label for="exampleFormControlInput1" class="col-sm-offset-1 col-sm-3 control-label">배너이미지</label>
 						<div class="col-sm-4">				
-							<div class="col-xs-8 col-md-4"><img src="/images/uploadFiles/bannerImg/${cafe.bannerImg}" width="300"; height="200px";/>	</div></div>
+							<div><img src="/images/uploadFiles/bannerImg/${cafe.bannerImg}" width="300"; height="200px";/>	</div></div>
 					</div>
 					
 					<div class="form-group">
 	
 					<label for="exampleFormControlInput1" class="col-sm-offset-1 col-sm-3 control-label">메인이미지</label>
 						<div class="col-sm-4">				
-							<div class="col-xs-8 col-md-4"><img src="/images/uploadFiles/mainImg/${cafe.mainImg}" width="300"; height="200px";/>	</div></div>
+							<div><img src="/images/uploadFiles/mainImg/${cafe.mainImg}" width="300"; height="200px";/>	</div></div>
 					</div>
 					
 					<div class="form-group">
 	
 					<label for="exampleFormControlInput1" class="col-sm-offset-1 col-sm-3 control-label">카페아이콘</label>
 						<div class="col-sm-4">				
-							<div class="col-xs-8 col-md-4"><img src="/images/uploadFiles/cafeIcon/${cafe.cafeIcon}" width="300"; height="200px";/>	</div></div>
+							<div><img src="/images/uploadFiles/cafeIcon/${cafe.cafeIcon}" width="300"; height="200px";/>	</div></div>
 					</div>
 			
 	
@@ -122,10 +126,10 @@
 		  
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-success"  >수정</button>
+		      <button type="button" class="btn btn-success"  >확인</button>
 		    </div>
 		  </div>
-		  
+		  </center>
 		</form>
 		
 		<!-- form Start /////////////////////////////////////-->
