@@ -72,6 +72,7 @@
 			$(function(){
 				var el = document.createElement( 'html' );
 				el.innerHTML = '${post.postContent}';
+
 				for(var i = 0; i < $(el).find("img").length; i++){
 					console.log($($(el).find("img")[i]).attr("src").substring(20));
 

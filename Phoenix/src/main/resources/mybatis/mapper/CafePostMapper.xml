@@ -182,7 +182,34 @@
 		FROM
 		(<include refid="select-post-list-search"/>)
 	</select>
-		
+	
+	<select id="getNoticePostList" parameterType="Search" resultMap="postResultMap">
+		SELECT 
+			post.post_no, 
+			post.board_no, 
+			post.board_name,
+			post.member_no, 
+			post.post_title, 
+			post.post_content, 
+			TO_CHAR(post.reg_date, 'YYYY-MM-DD HH24:MI:SS') AS reg_date, 
+			post.view_count, 
+			post.like_count, 
+			post.member_nickname, 
+			post.post_status_flag, 
+			post.post_notice_flag, 
+			post.notice_index,
+			post.cafe_url
+		FROM post, board
+		<where>
+			post.board_no = board.board_no
+			AND post.cafe_url = #{cafeURL}
+			AND (board.board_type = 'cb100' OR board.board_no = #{boardNo})
+			AND post.post_status_flag = '0'
+			AND post.post_notice_flag = '1'
+		</where>
+		ORDER BY notice_index
+	</select>
+	
 	<select id="getPostListByNotice" parameterType="Search" resultMap="postResultMap">
 		SELECT 
 			post.post_no, 
@@ -207,6 +234,42 @@
 		</where>
 		ORDER BY reg_date DESC
 	</select>
+	
+	<select id="getAllNoticePost" parameterType="Search" resultMap="postResultMap">
+		SELECT 
+			post.post_no, 
+			post.board_no,
+			post.board_name,  
+			post.member_no, 
+			post.post_title, 
+			post.post_content, 
+			TO_CHAR(post.reg_date, 'YYYY-MM-DD HH24:MI:SS') AS reg_date, 
+			post.view_count, 
+			post.like_count, 
+			post.member_nickname, 
+			post.post_status_flag, 
+			post.post_notice_flag, 
+			post.notice_index,
+			post.cafe_url
+		FROM post, board
+		<where>
+			post.board_no = board.board_no
+			AND post.cafe_url = #{cafeURL}
+			AND post.post_notice_flag = '1'
+		</where>
+		ORDER BY post.board_no, post.notice_index
+	</select>
+	
+	<update id="updateNoticePost" parameterType="list">
+		<foreach collection="list" item="item" separator =";" open="DECLARE BEGIN" close="; END;">
+			UPDATE 
+				post
+			SET 
+				notice_index  = #{item.noticeIndex }
+			WHERE 
+				post_no = #{item.postNo	}
+		</foreach>
+	</update>
 	
 	<insert id="addPost" parameterType="Post">
 		<selectKey resultType="int" keyProperty="postNo" order="AFTER">

@@ -1,6 +1,7 @@
 package com.phoenix.mvc.service.cafe.impl;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,9 @@ public class CafePostServiceImpl implements CafePostService {
 	public Map<String, Object> getPostListByBoard(Search search) {
 		Map<String, Object> map = new HashMap<String, Object>();
 
+		if(search.getCurrentPage() == 1) {
+			map.put("noticePostList", cafePostDao.getNoticePostList(search));
+		}
 		map.put("postList", cafePostDao.getPostListByBoard(search));
 		map.put("postTotalCount", cafePostDao.postTotalCount(search));
 
@@ -164,6 +168,16 @@ public class CafePostServiceImpl implements CafePostService {
 		resultMap.put("result", result);
 		
 		return resultMap;
+	}
+
+	@Override
+	public boolean updateNoticeOrder(List<Post> postList) {
+		return cafePostDao.updateNoticeOrder(postList);
+	}
+
+	@Override
+	public List<Post> getAllNoticePost(Search search) {
+		return cafePostDao.getAllNoticePost(search);
 	}
 	
 	
