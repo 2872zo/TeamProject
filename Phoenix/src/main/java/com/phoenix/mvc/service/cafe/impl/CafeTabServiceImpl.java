@@ -76,6 +76,7 @@ public class CafeTabServiceImpl implements CafeTabService {
 	///////////////////////////////준호시작///////////////////////////////////////		
 	@Override
 	public void addCafe(Cafe cafe) throws Exception {
+		
 		cafeTabDao.addCafe(cafe);
 		
 		CafeGrade cafeGrade= new CafeGrade();
@@ -92,12 +93,19 @@ public class CafeTabServiceImpl implements CafeTabService {
 		
 		cafeTabDao.addBoard(board);
 		
-		CafeMember cafeMember = new CafeMember();
-
-		System.out.println("gkgkgkgk");
+		CafeMember cafeMember = new CafeMember();	
 		
-		System.out.println("여긴 서비스임플 카페다아아아"+cafe);
+		cafeMember.setCafeNo(cafe.getCafeNo());
 		
+		cafeTabDao.getChangeGrade(cafeMember.getCafeNo());	
+		
+		cafeMember.setCafeMemberGradeNo(cafeGrade.getCafeGradeNo());
+		
+		cafeMemberDao.addCafeMember(cafeMember);
+		
+		System.out.println("gkgkgkgkdsda@@@@@@@@@@@@@@@@@@"+cafeGrade);
+		
+		System.out.println("여긴 서비스임플 카페다아아아"+cafe);		
 		
 	}
 	
@@ -269,6 +277,8 @@ public class CafeTabServiceImpl implements CafeTabService {
 		// TODO Auto-generated method stub
 		return cafeMemberDao.updateFavorite(cafeMember);
 	}
+
+	
 	
 	////////////////////////////// 기황끝//////////////////////////////
 
