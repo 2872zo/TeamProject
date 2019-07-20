@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.phoenix.mvc.service.chatting.ChattingService;
 import com.phoenix.mvc.service.domain.Chat;
+import com.phoenix.mvc.service.domain.ChatRoom;
 
 @RestController
 @RequestMapping("/chat/json/*")
@@ -32,5 +33,12 @@ public class ChattingRestController {
 		System.out.println ("시간찍힘"+chat);
 		return chat;
 	}
+	
+	@PostMapping("updateChatRoomName")
+	public Chat updateChatRoomName(@RequestBody ChatRoom chatRoom){
+		return null;
+		
+	}
+	
 	
 }

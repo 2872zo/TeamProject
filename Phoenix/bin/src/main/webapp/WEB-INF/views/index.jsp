@@ -10,15 +10,26 @@
 <meta charset="EUC-KR">
 
 
-<!--  /////////////////////////  jQuery CDN ////////////////////////// -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<!-- Bootstrap CDN -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
+<!-- ////////////////////////////// jQuery CDN ////////////////////////////// -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+ integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+ crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+ integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+ crossorigin="anonymous"></script>
+<!-- ////////////////////////////// bootstrap CDN ////////////////////////////// -->
+<link rel="stylesheet"
+ href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+ integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+ crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+ integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+ crossorigin="anonymous"></script>
 <!--  ///////////////////////// CSS ////////////////////////// -->
-
+<style type="text/css">
+	.cafe3 {background-color:#000;color: #FFF;}
+    .cafe3:hover {background-color: #FFF;}
+</style>
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
 $(function() {
@@ -39,6 +50,20 @@ $(function() {
 	$( "#shop" ).on("click" , function() {
 		$(self.location).attr("href","/shopping/myCartList");
 	});
+
+	$( "#cafe1" ).on("click" , function() {
+		$(self.location).attr("href","/cafe/no1cafe/manage/dropCafeView");
+	});
+
+	$( "#cafe2" ).on("click" , function() {
+		$(self.location).attr("href","/cafe/no1cafe/");
+	});
+
+	$( "#cafe3" ).on("click" , function() {
+		$(self.location).attr("href","/cafe/no1cafe/addCafeApplicationView");
+	});
+	
+
 });
 </script>
 </head>
@@ -68,12 +93,26 @@ $(function() {
 </div>
 	
 	<br/>
-	<div class="center-block">
-	<button type="button" class="btn btn-success" id="cafe">CAFE</button>
-	<button type="button" class="btn btn-primary" id="mail">MAIL</button>
-	<button type="button" class="btn btn-info" id="sns">SNS</button>
-	<button type="button" class="btn btn-dark" id="shop">SHOP</button>
+	<div class="d-flex justify-content-around">
+	<button type="button" class="btn btn-lg btn-success" id="cafe">CAFE</button>
+	<button type="button" class="btn btn-lg btn-primary" id="mail">MAIL</button>
+	<button type="button" class="btn btn-lg btn-info" id="sns">SNS</button>
+	<button type="button" class="btn btn-lg btn-warning" id="shop">SHOP</button>
 	</div>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	
+	
+	<div class="d-flex justify-content-around">
+	<button type="button" class="btn btn-lg btn-outline-danger" id="cafe1">매니저메뉴</button>
+	<button type="button" class="btn btn-lg btn-outline-danger" id="cafe2">글작성관련</button>
+	<button type="button" class="btn btn-lg black-background cafe3" id="cafe3">가입신청</button>
+	</div>
+	
 </div>
 	<!--  화면구성 div Start /////////////////////////////////////-->
 

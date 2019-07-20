@@ -31,7 +31,8 @@
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
 $(function() {
-	var socket = io("http://192.168.0.78:82");
+	//var socket = io("http://192.168.0.78:82");
+	var socket = io("http://localhost:82");
 	socket.emit("joiner", $("#chatRoomNo").val());
 	
 	$("#addCafe").on("click" , function() {

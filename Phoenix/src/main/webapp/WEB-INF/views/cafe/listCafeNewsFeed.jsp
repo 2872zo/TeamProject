@@ -33,32 +33,21 @@
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
 
+	$(function() {	
 
-	$(function() {
-		/*
+		/*	
 		var el = document.createElement( 'html' );
-	el.innerHTML = '${post.postContent}';
+		el.innerHTML = '${post.postContent}';
+		$(el).find("img").remove().html
 
-		for(var i = 0; i < $(el).find("img").length; i++){
-			console.log($($(el).find("img")[i]).attr("src").substring(20));
-
-				if($("#fileList").val() == ""){
-					$("#fileList").val($($(el).find("img")[i]).attr("src").substring(20));
-				}else{
-					$("#fileList").val($("#fileList").val() + "," + $($(el).find("img")[i]).attr("src").substring(20));
-				}
-			
-		}
+		
 
 		$("#addCafe").on("click", function() {
 			$(self.location).attr("href", "/cafe/addCafeView");
 		});
-		
-	*/		
-		
+		*/	
 		
 		
-
 	});
 </script>
 <!-- ToolBar Start /////////////////////////////////////-->

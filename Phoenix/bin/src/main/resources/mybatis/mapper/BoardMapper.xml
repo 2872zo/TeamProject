@@ -9,6 +9,7 @@
 	
 	<resultMap id="boardSelectMap" type="com.phoenix.mvc.service.domain.Board">
 		<result property="boardNo" 			column="board_no" 			jdbcType="NUMERIC"/>
+		<result property="cafeURL"			column="cafe_url"			jdbcType="VARCHAR"/>
 		<result property="cafeNo"			column="cafe_no" 			jdbcType="NUMERIC" />
 		<result property="boardName" 		column="board_name" 			jdbcType="VARCHAR" />
 		<result property="accessGrade" 		column="access_grade" 				jdbcType="VARCHAR" />
@@ -51,7 +52,7 @@
 		<result property="eventNo" 			column="event_no" 			jdbcType="NUMERIC"/>
 		<result property="targetNo"			column="target_no" 			jdbcType="NUMERIC" />
 		<result property="eventType" 		column="event_type" 			jdbcType="VARCHAR" />
-		<result property="cafeNo" 			column="cafe_no" 				jdbcType="NUMERIC" />
+		<result property="cafeNo" 			column="event_cafe_no" 				jdbcType="NUMERIC" />
 		<result property="eventUserNo" 		column="event_user_no" 				jdbcType="NUMERIC" />
 		<result property="regDate" 			column="reg_date" 		jdbcType="DATE" />
 	</resultMap>
@@ -95,20 +96,20 @@
 	</select>
 	
 	<insert id="addEventLog" parameterType="Event">
-		INSERT INTO event_log (event_no,event_type,cafe_no,reg_date,event_user_no,target_no)
+		INSERT INTO event_log (event_no,event_type,event_cafe_no,reg_date,event_user_no,target_no)
 		VALUES(SEQ_EVENT_LOG_EVENT_NO.NEXTVAL,
 				#{eventType:VARCHAR},
 				#{cafeNo:NUMERIC},
 				SYSDATE,
 				#{eventUserNo:NUMERIC},
-				#{targetNo:NUMERIC});
+				#{targetNo:NUMERIC})
 	</insert>
 	
 	<select id="checkCafeTodayVisitLog" parameterType="Event" resultMap="eventSelectMap">
 		SELECT * FROM event_log
 		WHERE event_user_no =#{eventUserNo:NUMERIC}
-			  AND event_type='et001' 
-			  AND cafe_no=#{cafeNo:NUMERIC}
+			  AND event_type='et100' 
+			  AND event_cafe_no=#{cafeNo:NUMERIC}
 			  AND to_char(reg_date,'yyyy-mm-dd') = to_char(SYSDATE,'yyyy-mm-dd');
 	</select>
 	
@@ -116,10 +117,54 @@
 		SELECT event_type , count(*) counts
 		FROM event_log
 		WHERE reg_date BETWEEN TO_DATE(#{startDate},'yyyymmdd') AND TO_DATE(#{endDate},'yyyymmdd')+ 0.99999
-		AND cafe_no = #{cafeNo}
+		AND event_cafe_no = #{cafeNo}
 		GROUP BY event_type
 		ORDER BY event_type
 	</select>
-
+		
+	<select id="getCafeChartValue" parameterType="Event" resultType="map">
+		SELECT count(*) counts , to_char(reg_date,'yyyyMMdd') reg_date
+		FROM event_log
+		WHERE reg_date > to_date(#{endDate},'yyyyMMdd')-10
+		AND event_type='et100'
+		AND event_cafe_no = #{cafeNo}
+		GROUP BY reg_date
+	</select>
+	
+	<insert id="insertCafeBoard" parameterType="list" >
+		INSERT INTO board(board_no,cafe_no,cafe_url,board_name,access_grade,board_index,private_flag,board_type,board_detail)
+		SELECT SEQ_BOARD_BOARD_NO.NEXTVAL, A.* from(
+		<foreach collection="list" item="item" separator="UNION ALL ">
+			SELECT #{item.cafeNo} as cafe_no,
+				   #{item.cafeURL} as cafe_URL,
+				   #{item.boardName} as board_name,
+				   #{item.accessGrade} as access_grade,
+				   #{item.boardIndex} as board_index,
+				   #{item.privateFlag} as private_flag,
+				   #{item.boardType} as board_type,
+				   #{item.boardDetail:VARCHAR} as board_detail
+			FROM dual
+		</foreach>)A
+		</insert>
+		
+		<update id="updateCafeBoard" parameterType="list">
+			<foreach collection="list" item="item" separator =";" open="DECLARE BEGIN" close="; END;">
+				UPDATE board
+				SET board_name = #{item.boardName:VARCHAR},
+					access_grade = #{item.accessGrade:VARCHAR},
+					board_index = #{item.boardIndex:NUMERIC},
+					private_flag = #{item.privateFlag:CHAR},
+					board_detail = #{item.boardDetail:VARCHAR}
+				WHERE board_no = #{item.boardNo}	
+			</foreach>
+		</update>
+		
+		<delete id="deleteCafeBoard" parameterType="list" >
+			DELETE FROM board
+			WHERE
+			<foreach collection="list" item="item" separator ="or">
+				board_no = #{item.boardNo}
+			</foreach>
+		</delete>
 
 </mapper>

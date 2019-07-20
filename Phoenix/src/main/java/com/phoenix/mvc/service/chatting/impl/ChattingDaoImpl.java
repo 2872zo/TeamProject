@@ -1,6 +1,7 @@
 package com.phoenix.mvc.service.chatting.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,5 +26,11 @@ public class ChattingDaoImpl implements ChattingDao{
 	public List getMyChatRoomList(Search search) throws Exception {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("ChatRoomMapper.getMyRoomList", search);
+	}
+
+	@Override
+	public Map getMyFriendsList(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

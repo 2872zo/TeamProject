@@ -7,38 +7,111 @@
 
 <mapper namespace="CafeMapper">
  	
- 	
+
 	<resultMap id="cafeSelectMap" type="com.phoenix.mvc.service.domain.Cafe">
-		<result property="cafeNo" 						column="cafe_no" 							jdbcType="NUMERIC"/>
-		<result property="cafeName" 					column="cafe_name" 							jdbcType="VARCHAR"/>
-		<result property="cafeIcon"						column="cafe_icon" 							jdbcType="VARCHAR" />
-		<result property="manageUserNo" 				column="manage_user_no" 					jdbcType="NUMERIC" />
-		<result property="URL" 							column="url" 								jdbcType="VARCHAR" />
-		<result property="cafeDetail" 					column="cafe_detail" 						jdbcType="VARCHAR" />
-		<result property="regDate" 						column="reg_date" 							jdbcType="DATE" />
-		<result property="bannerImg" 					column="banner_img" 						jdbcType="VARCHAR"/>
-		<result property="mainImg" 						column="main_img" 							jdbcType="VARCHAR"/>
-		<result property="cafeType"						column="cafe_type" 							jdbcType="VARCHAR" />
-		<result property="applicationDetail" 			column="application_detail" 				jdbcType="VARCHAR" />
-		<result property="closeReason" 					column="close_reason" 						jdbcType="VARCHAR" />
-		<result property="applicationQuestion1" 		column="application_question1" 				jdbcType="VARCHAR" />
-		<result property="applicationQuestion2"			column="application_question2" 				jdbcType="VARCHAR" />
-		<result property="applicationQuestion3" 		column="application_question3"				jdbcType="VARCHAR" />
-		<result property="memberNicknameFlag" 			column="member_nickname_flag" 				jdbcType="CHAR" />
-		<result property="autoApplicationAcceptFlag" 	column="auto_application_accept_flag" 		jdbcType="CHAR" />
-		<result property="closedFlag" 					column="closed_flag" 						jdbcType="CHAR" />
-		<result property="members" 						column="members" 							jdbcType="NUMERIC" />
+		<result property="cafeNo" 						column="cafe_no" 						jdbcType="NUMERIC"/>
+		<result property="cafeName" 					column="cafe_name" 						jdbcType="VARCHAR"/>
+		<result property="cafeIcon"						column="cafe_icon" 						jdbcType="VARCHAR" />
+		<result property="manageUserNo" 				column="manage_user_no" 				jdbcType="NUMERIC" />
+		<result property="cafeURL" 						column="url" 							jdbcType="VARCHAR" />
+		<result property="cafeDetail" 					column="cafe_detail" 					jdbcType="VARCHAR" />
+		<result property="regDate" 						column="reg_date" 						jdbcType="DATE" />
+		<result property="bannerImg" 					column="banner_img" 					jdbcType="VARCHAR"/>
+		<result property="mainImg" 						column="main_img" 						jdbcType="VARCHAR"/>
+		<result property="cafeType"						column="cafe_type" 						jdbcType="VARCHAR" />
+		<result property="applicationDetail" 			column="application_detail" 			jdbcType="VARCHAR" />
+		<result property="closeReason" 					column="close_reason" 					jdbcType="VARCHAR" />
+		<result property="applicationQuestion1"	 		column="application_question1" 			jdbcType="VARCHAR" />
+		<result property="applicationQuestion2"			column="application_question2" 			jdbcType="VARCHAR" />
+		<result property="applicationQuestion3" 		column="application_question3"			jdbcType="VARCHAR" />
+		<result property="memberNicknameFlag" 			column="member_nickname_flag" 			jdbcType="CHAR" />
+		<result property="autoApplicationAcceptFlag" 	column="auto_application_accept_flag" 	jdbcType="CHAR" />
+		<result property="closedFlag" 					column="closed_flag" 					jdbcType="CHAR" />
+		<result property="members" 						column="members" 						jdbcType="NUMERIC" />
 	</resultMap>
 	
 	<insert 	id="addCafe"		parameterType="com.phoenix.mvc.service.domain.Cafe" >
 	 	<selectKey keyProperty="cafeNo" resultType="int" order="BEFORE">
 	 		SELECT SEQ_CAFE_CAFE_NO.NEXTVAL FROM DUAL
 	 	</selectKey>
-		INSERT INTO CAFE (cafe_no, cafe_name, manage_user_no, reg_date, url, cafe_detail, banner_img, main_img, cafe_type, application_detail) 
-		VALUES ( #{cafeNo}, #{cafeName:VARCHAR}, 10001, SYSDATE, #{URL:VARCHAR}, #{cafeDetail:VARCHAR}, #{bannerImg:VARCHAR}, #{mainImg:VARCHAR}, #{cafeType:VARCHAR}, #{applicationDetail:VARCHAR})
+		INSERT INTO CAFE (cafe_no, cafe_name, manage_user_no, reg_date, url, cafe_detail, banner_img, main_img, cafe_type, member_nickname_flag) 
+		VALUES ( #{cafeNo}, #{cafeName:VARCHAR}, #{manageUserNo}, SYSDATE, #{cafeURL:VARCHAR}, #{cafeDetail:VARCHAR}, #{bannerImg:VARCHAR} , #{mainImg:VARCHAR}, #{cafeType:VARCHAR}, #{memberNicknameFlag:CHAR})
 
 	 </insert>
 	 
+	 	 <insert id="addMemberGrade" parameterType="com.phoenix.mvc.service.domain.CafeGrade">	 
+	  	
+	  	INSERT ALL
+
+INTO CAFE_MEMBER_GRADE(cafe_member_grade_no, cafe_no, grade_name, member_grade_code, required_visit_count, required_reply_count, required_post_count, cafe_grade_active_flag)	
+
+VALUES(GET_SEQ_CAFE_MEMBER_GRADE_NO(), #{cafeNo:NUMERIC}, '매니저', 'cg100', '0', '0', '0','1')
+
+INTO CAFE_MEMBER_GRADE(cafe_member_grade_no, cafe_no, grade_name, member_grade_code, required_visit_count, required_reply_count, required_post_count, cafe_grade_active_flag)
+
+VALUES(GET_SEQ_CAFE_MEMBER_GRADE_NO(), #{cafeNo:NUMERIC}, '스탭', 'cg101', '0', '0','0','1')
+
+INTO CAFE_MEMBER_GRADE(cafe_member_grade_no, cafe_no, grade_name, member_grade_code, required_visit_count, required_reply_count, required_post_count, cafe_grade_active_flag)
+
+VALUES(GET_SEQ_CAFE_MEMBER_GRADE_NO(), #{cafeNo:NUMERIC}, '새싹', 'cg102', '0', '0','0','1')
+
+INTO CAFE_MEMBER_GRADE(cafe_member_grade_no, cafe_no, grade_name, member_grade_code, required_visit_count, required_reply_count, required_post_count)
+
+VALUES(GET_SEQ_CAFE_MEMBER_GRADE_NO(), #{cafeNo:NUMERIC}, '일반', 'cg103', '0', '0', '0')
+
+INTO CAFE_MEMBER_GRADE(cafe_member_grade_no, cafe_no, grade_name, member_grade_code, required_visit_count, required_reply_count, required_post_count)
+
+VALUES(GET_SEQ_CAFE_MEMBER_GRADE_NO(), #{cafeNo:NUMERIC}, '성실', 'cg104', '0', '0', '0')
+
+INTO CAFE_MEMBER_GRADE(cafe_member_grade_no, cafe_no, grade_name, member_grade_code, required_visit_count, required_reply_count, required_post_count)
+
+VALUES(GET_SEQ_CAFE_MEMBER_GRADE_NO(), #{cafeNo:NUMERIC}, '열심', 'cg105', '0', '0', '0')
+
+INTO CAFE_MEMBER_GRADE(cafe_member_grade_no, cafe_no, grade_name, member_grade_code, required_visit_count, required_reply_count, required_post_count)
+
+VALUES(GET_SEQ_CAFE_MEMBER_GRADE_NO(), #{cafeNo:NUMERIC}, '우수', 'cg106', '0', '0', '0')
+
+SELECT * FROM DUAL
+
+	</insert>
+	
+		 	 <insert id="addBoard" parameterType="com.phoenix.mvc.service.domain.Board">	 
+	  	
+	  	INSERT ALL
+
+INTO BOARD(board_no, cafe_no, cafe_url, board_name, access_grade, board_index, board_type, board_detail)	
+
+VALUES(GET_SEQ_BOARD_NO(), #{cafeNo:NUMERIC}, #{cafeURL:VARCHAR}, '공지게시판', 'cg102', '1', 'cb100', '공지게시판입니다')
+
+INTO BOARD(board_no, cafe_no, cafe_url, board_name, access_grade, board_index, board_type, board_detail)	
+
+VALUES(GET_SEQ_BOARD_NO(), #{cafeNo:NUMERIC}, #{cafeURL:VARCHAR}, '신고게시판', 'cg102', '2', 'cb101', '신고게시판입니다')
+
+INTO BOARD(board_no, cafe_no, cafe_url, board_name, access_grade, board_index, board_type, board_detail)	
+
+VALUES(GET_SEQ_BOARD_NO(), #{cafeNo:NUMERIC}, #{cafeURL:VARCHAR}, '-------', 'cg102', '3', 'cb102', '구분선입니다')
+
+INTO BOARD(board_no, cafe_no, cafe_url, board_name, access_grade, board_index, board_type, board_detail)	
+
+VALUES(GET_SEQ_BOARD_NO(), #{cafeNo:NUMERIC}, #{cafeURL:VARCHAR}, '자유게시판', 'cg102', '4', 'cb103', '자유게시판입니다')
+
+SELECT * FROM DUAL
+
+	</insert>
+	
+		<insert id="addCafeMember"		parameterType="CafeMember" >
+	 	INSERT
+		INTO cafe_member( member_no , cafe_no , user_no , cafe_member_grade_no , notice_flag, member_nickname, member_status_code , favorite_flag, reg_date, visit_count ) 
+		VALUES	 (	seq_member_no.NEXTVAL , #{cafeNo} , #{userNo} , #{cafeMemberGradeNo} , 
+							'0' , #{memberNickname} , 'cs100', '0', SYSDATE,'0')
+	 </insert>
+
+	<select id = "lowGrade" parameterType="int"   resultType="int">
+  		SELECT cafe_member_grade_no
+		FROM cafe_member_grade
+		WHERE cafe_no = #{cafeNo} and member_grade_code ='cg100'
+  	</select>
+
 	 <select 	id="getCafeInfo"	parameterType= "int"	resultMap="cafeSelectMap">
 		SELECT
 		cafe_no , cafe_Name ,cafe_icon, manage_user_no , url , cafe_detail, banner_img, main_img, cafe_type, application_detail, reg_date,
@@ -49,9 +122,15 @@
 	 </select>
 	 
 	 <select 	id="getCafeName"	parameterType= "String"	resultMap="cafeSelectMap">
-		SELECT	 cafe_Name		
+		SELECT	 cafe_Name	
 		FROM cafe 
 		WHERE cafe_Name = #{value}
+	 </select>
+	 
+	 <select 	id="getCafeURL"	parameterType= "String"	resultMap="cafeSelectMap">
+		SELECT	 url	
+		FROM cafe 
+		WHERE url = #{value}
 	 </select>
 	 
 	 
@@ -82,5 +161,40 @@
 	   	</set>
 	  WHERE cafe_no = #{cafeNo:NUMERIC}
 	 </update>
+	 
+	 <update id ="dropCafe" parameterType= "Cafe" >
+	 	UPDATE cafe
+	 	<set>
+	 		close_reason=#{closeReason},
+	 		closed_flag=#{closedFlag}
+	 	</set>
+		 WHERE cafe_no = #{cafeNo:NUMERIC}
+	 </update>
+	 
+	 
+	 <update id="decreaseMember" parameterType="int">
+		UPDATE
+		cafe
+		<set>
+		members = members-1
+		WHERE cafe_no= #{cafeNo:NUMERIC}
+		</set>
+	</update>
+	
+	<update id="increaseMember" parameterType="int">
+		UPDATE
+		cafe
+		<set>
+		members = members+1
+		WHERE cafe_no = #{cafeNo:NUMERIC}
+		</set>
+	</update>
+	
+	<select id="getCafeNoNo" parameterType ="string" resultType="int">
+		SELECT cafe_no
+		FROM cafe
+		WHERE cafeName = #{value}
+	</select>
+	
 
 </mapper>
