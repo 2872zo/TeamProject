@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService{
 	public UserServiceImpl() {
 		System.out.println(this.getClass());
 	}
-
+	
 	///Method
 	public void addUser(User user) throws Exception {
 		userDao.addUser(user);
@@ -48,6 +48,18 @@ public class UserServiceImpl implements UserService{
 	@Override // 준호
 	public void updateUser(User user) throws Exception {
 		userDao.updateUser(user);
+	}
+	
+	public boolean checkUserIdDuplication(String userId) throws Exception {
+		
+		boolean result=true;
+		
+		User user = userDao.getUser(userId);
+		
+		if(user != null) {
+			result=false;
+		}
+		return result;
 	}
 /////////////////////////////준호끝///////////////////////////////////
 	

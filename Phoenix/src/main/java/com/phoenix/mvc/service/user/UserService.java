@@ -18,4 +18,5 @@ public interface UserService {
 	
 	public User getUserInfo(int userNo) throws Exception;
 
+	public boolean checkUserIdDuplication(String userId) throws Exception;
 }

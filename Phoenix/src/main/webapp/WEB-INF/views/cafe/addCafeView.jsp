@@ -61,12 +61,9 @@ body>div.container {
 			alert("카페URL은  반드시 입력하셔야 합니다.");
 			return;
 		}
-	
-	
-		
 
 		
-
+	
 		alert("만들기");
 		$("form").attr("method", "POST").attr("action","/cafe/addCafe").submit();
 	}
@@ -280,6 +277,8 @@ $(function() {
 						</div>
 					</div>
 				</center>
+				
+				
 
 		</form>
 		<!-- form Start /////////////////////////////////////-->

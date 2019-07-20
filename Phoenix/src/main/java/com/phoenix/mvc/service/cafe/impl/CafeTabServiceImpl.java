@@ -77,47 +77,31 @@ public class CafeTabServiceImpl implements CafeTabService {
 	@Override
 	public void addCafe(Cafe cafe) throws Exception {
 		
-		cafeTabDao.addCafe(cafe);
+		cafeTabDao.addCafe(cafe);//카페생성
 		
-		CafeGrade cafeGrade= new CafeGrade();
-		
+		CafeGrade cafeGrade= new CafeGrade();//카페 생성시 멤버등급 레코드 추가		
 		cafeGrade.setCafeNo(cafe.getCafeNo());
-		
 		cafeTabDao.addMemberGrade(cafeGrade);
 		
-		Board board = new Board();
-		
+		Board board = new Board();//카페 생성시 게시판 레코드 추가		
 		board.setCafeNo(cafe.getCafeNo());
-		
 		board.setCafeURL(cafe.getCafeURL());
-		
 		cafeTabDao.addBoard(board);
 		
-		CafeMember cafeMember = new CafeMember();	
-		
+		CafeMember cafeMember = new CafeMember();//카페 생성시 멤버(매니저 추가)		
 		cafeMember.setCafeNo(cafe.getCafeNo());
-		
-		cafeTabDao.getChangeGrade(cafeMember.getCafeNo());	
-		
-		cafeMember.setCafeMemberGradeNo(cafeGrade.getCafeGradeNo());
-		
-		cafeMemberDao.addCafeMember(cafeMember);
-		
-		System.out.println("gkgkgkgkdsda@@@@@@@@@@@@@@@@@@"+cafeGrade);
-		
-		System.out.println("여긴 서비스임플 카페다아아아"+cafe);		
-		
+		int i = cafeTabDao.getChangeGrade(cafeMember.getCafeNo());
+		cafeMember.setCafeMemberGradeNo(i);
+		cafeMember.setUserNo(cafe.getManageUserNo());
+		cafeMember.setMemberNickname("매니저");	
+		cafeMemberDao.addCafeMember(cafeMember);		
 	}
 	
 	public boolean checkCafeNameDuplication(String cafeName) throws Exception {
 		
-		
 		boolean result=true;
-		System.out.println("cafeName!!!!!!!!!!!!!!!!!!!!!!!"+cafeName);
 		
 		Cafe cafe = cafeManageDao.getCafeName(cafeName);
-		
-		System.out.println("cafe!!!!!!!!!!!!!!!!!!!!!!!"+cafe);
 		
 		if(cafe != null) {
 			result=false;
@@ -128,10 +112,8 @@ public class CafeTabServiceImpl implements CafeTabService {
 	public boolean checkCafeURLDuplication(String CafeURL) throws Exception {
 		
 		boolean result=true;
-		System.out.println("URL!!!!!!!!!!!!!!!!!!!!!!!"+CafeURL);
-		Cafe cafe = cafeManageDao.getCafeURL(CafeURL);
 		
-		System.out.println("URL!!!!!!!!!!!!!!!!!!!!!!!"+CafeURL);
+		Cafe cafe = cafeManageDao.getCafeURL(CafeURL);		
 		
 		if(cafe != null) {
 			result=false;
