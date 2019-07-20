@@ -238,6 +238,20 @@
 								</tr>
 							</c:forEach>
 							
+							<c:forEach items="${bestPostList }" var="bestPost">
+								<tr style="background:blue;">
+									<input type="hidden" class="postNo" value="${bestPost.postNo }"/>
+									<input type="hidden" class="boardNo" value="${bestPost.boardNo }"/>
+									<input type="hidden" class="memberNo" value="${bestPost.memberNo }"/>
+									<input type="hidden" class="boardName" value="${bestPost.boardName }"/>
+									<td></td>
+									<td>${bestPost.memberNickname }</td>
+									<td>${bestPost.regDate }</td>
+									<td>${bestPost.viewCount }</td>
+									<td>${bestPost.likeCount }</td>
+								</tr>
+							</c:forEach>
+							
 							<c:forEach items="${postList }" var="post">
 								<tr>
 									<input type="hidden" class="postNo" value="${post.postNo }"/>

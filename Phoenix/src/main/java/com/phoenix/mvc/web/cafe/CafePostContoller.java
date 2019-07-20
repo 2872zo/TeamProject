@@ -140,6 +140,7 @@ public class CafePostContoller {
 		map.put("cafeMember", cafeMember);
 		map.put("boardList", boardList);
 
+		map.put("bestPostList", queryResultMap.get("bestPostList"));
 		map.put("noticePostList", queryResultMap.get("noticePostList"));
 		map.put("postList", queryResultMap.get("postList"));
 		map.put("postTotalCount", postTotalCount);
