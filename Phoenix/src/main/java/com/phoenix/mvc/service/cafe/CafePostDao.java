@@ -59,4 +59,6 @@ public interface CafePostDao {
 	public List<Post> getPostListByMember(Search search);
 
 	public int memberPostTotalCount(Search search);
+
+	public List<Post> getBestPostList(int boardNo);
 }
