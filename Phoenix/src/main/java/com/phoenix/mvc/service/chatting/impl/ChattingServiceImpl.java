@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.chatting.ChattingDao;
 import com.phoenix.mvc.service.chatting.ChattingService;
+import com.phoenix.mvc.service.domain.Chat;
 import com.phoenix.mvc.service.domain.ChatFriend;
 
 @Service
@@ -49,5 +50,11 @@ public class ChattingServiceImpl implements ChattingService{
 	public int addChatFriend(ChatFriend chatFriend) throws Exception {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public void testMethod(Chat chat) throws Exception {
+		chattingDao.testMethod(chat);
+		
 	}
 }

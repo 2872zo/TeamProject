@@ -26,11 +26,17 @@ public class ChattingRestController {
 	private ChattingService chattingService;
 
 	@PostMapping("addChat")
-	public Chat addChat(@RequestBody Chat chat){
+	public Chat addChat(@RequestBody Chat chat) throws Exception{
 		System.out.println ("/chat/json/addChat");
 		System.out.println (chat);
 		chat.setRegDate(new Date());
 		System.out.println ("시간찍힘"+chat);
+		chat.setChatNickname("대충");
+		chat.setChatProfileImg("abc");
+		chattingService.testMethod(chat);
+		
+		System.out.println ("제대로들어가면호출됨"+chat);
+		
 		return chat;
 	}
 	

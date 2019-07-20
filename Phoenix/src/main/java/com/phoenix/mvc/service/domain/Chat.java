@@ -3,6 +3,9 @@ package com.phoenix.mvc.service.domain;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection="chat")
 public class Chat {
 	
 	private int chatRoomNo;
