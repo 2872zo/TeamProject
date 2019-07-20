@@ -115,6 +115,8 @@ $(function() {
 	
 	${chatRoom.chatRoomNo}
 	<!--  화면구성 div Start /////////////////////////////////////-->
+	
+	<div class='row'>
 	<div class="container">
 
 
@@ -136,6 +138,6 @@ $(function() {
 
 </div>
 	<!--  화면구성 div Start /////////////////////////////////////-->
-
+</div>
 </body>
 </html>

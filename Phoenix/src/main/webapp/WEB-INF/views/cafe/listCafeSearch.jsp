@@ -143,9 +143,8 @@ $(function() {
   <button type="button" class="btn btn-outline-success" id='morePost'>게시글 더보기</button>
   </c:if>
    <c:if test="${ !empty search.searchCondition && search.searchCondition==2}">
-  <div class="d-flex justify-content-center">
   <jsp:include page="../common/pageNavigator.jsp" />
-  </div>
+
   </c:if>
   </c:if>
   

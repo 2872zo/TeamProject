@@ -3,8 +3,8 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
- 
-<div class="container text-center">
+
+<div class="container d-flex justify-content-center">
 		 <nav>
 		  <!-- 크기조절 :  pagination-lg pagination-sm-->
 		  <ul class="pagination" >
