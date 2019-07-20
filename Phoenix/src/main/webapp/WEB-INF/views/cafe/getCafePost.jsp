@@ -38,7 +38,27 @@
 				location.href = "/cafe/${post.cafeURL}/deletePost?postNo=${post.postNo}&boardNo=${post.boardNo}";
 			});
 
-			
+			$(".memberNo").on("click", function(){
+				var tmpForm = document.createElement("form");
+				tmpForm.setAttribute("charset", "UTF-8");
+				tmpForm.setAttribute("method", "Post");
+				tmpForm.setAttribute("action", "/cafe/${cafeURL}/getPostByMember");
+
+				var tmpInputCafeURL = document.createElement("input");
+				tmpInputCafeURL.setAttribute("type", "hidden");
+				tmpInputCafeURL.setAttribute("name", "cafeURL");
+				tmpInputCafeURL.setAttribute("value", "${cafeURL}");
+				tmpForm.appendChild(tmpInputCafeURL);
+
+				var tmpInputMemberNo = document.createElement("input");
+				tmpInputMemberNo.setAttribute("type", "hidden");
+				tmpInputMemberNo.setAttribute("name", "memberNo");
+				tmpInputMemberNo.setAttribute("value", $(this).text());
+				tmpForm.appendChild(tmpInputMemberNo);
+
+				document.body.appendChild(tmpForm);
+				tmpForm.submit();
+			});
 		});
 
 		function fncGetReplyList(currentPage){
@@ -170,7 +190,7 @@
 						<div class="col-md-8 mb-3">
 							게시판 번호 : ${post.boardNo }<br />
 							게시판 : ${post.boardName }<br /> 
-							작성자 멤버 번호 : ${post.memberNo }<br /> 
+							작성자 멤버 번호 : <a class="memberNo" href="#">${post.memberNo }</a><br /> 
 							작성자 : ${post.memberNickname }<br />
 							추천수 : ${post.likeCount }<br /> 
 							조회수 : ${post.viewCount }<br /> 

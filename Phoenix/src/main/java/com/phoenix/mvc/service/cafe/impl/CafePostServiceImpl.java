@@ -179,6 +179,15 @@ public class CafePostServiceImpl implements CafePostService {
 	public List<Post> getAllNoticePost(Search search) {
 		return cafePostDao.getAllNoticePost(search);
 	}
+
+	@Override
+	public Map<String, Object> getPostListByMember(Search search) {
+		Map<String, Object>	map = new HashMap<>();
+		map.put("postList", cafePostDao.getPostListByMember(search));
+		map.put("postTotalCount", cafePostDao.memberPostTotalCount(search));
+				
+		return map;
+	}
 	
 	
 }

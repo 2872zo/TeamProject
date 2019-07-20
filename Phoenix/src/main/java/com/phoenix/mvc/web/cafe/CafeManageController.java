@@ -373,6 +373,13 @@ public class CafeManageController {
 
 		return "cafe/addCafeReport";
 	}
+	
+	@RequestMapping(value = "/test")
+	public String test() throws Exception {
+		
+
+		return "cafe/test";
+	}
 //////////////////////////////////////예림끝////////////////////////////////////////////
 
 ///////////////////////////////// 지니//////////////////////////////

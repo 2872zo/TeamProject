@@ -136,6 +136,51 @@
 			AND target_reply_no IS NULL
 		ORDER BY reply_no
 	</sql>
+	
+	<sql id="select-post-list-member">
+		SELECT 
+			post_no, 
+			cafe_url, 
+			board_no, 
+			board_name,
+			member_no, 
+			member_nickname,
+			post_title, 
+			post_content, 
+			TO_CHAR(reg_date, 'YYYY-MM-DD HH24:MI:SS') AS reg_date, 
+			view_count, 
+			like_count, 
+			post_status_flag, 
+			post_notice_flag, 
+			notice_index
+		FROM post
+		<where>
+			post_status_flag = '0'
+			AND member_no = #{memberNo}
+			<if test="termStart != null and termStart != ''">
+				AND reg_date &gt;= #{termStart}
+			</if>
+			<if test="termEnd != null and termEnd != ''">
+				AND reg_date &lt;= #{termEnd}
+			</if>
+			<if test="boardNo != 0">
+				AND board_no = #{boardNo}
+			</if>
+			<choose>
+				<when test="searchCondition  == 0">
+					AND (post_title like '%${searchKeyword}%'
+						 OR post_content like '%${searchKeyword}%')
+				</when>
+				<when test="searchCondition == 1">
+					AND post_title like '%${searchKeyword}%'
+				</when>
+				<when test="searchCondition  == 2">
+					AND post_content like '%${searchKeyword}%'
+				</when>
+			</choose>
+		</where>
+		ORDER BY reg_date DESC
+	</sql>
 
 	<select id="getPostListByBoard"   parameterType="Search"  resultMap="postResultMap">
 		SELECT
@@ -532,5 +577,28 @@
 			 		AND target_no = #{replyNo}
 			 	</if>
 			 	)
+	</select>
+	
+	<select id="getPostListByMember" parameterType="Search" resultMap="postResultMap">
+		SELECT
+			*
+		FROM
+		(SELECT
+		 inner_table.*, ROWNUM AS row_seq
+		 FROM 
+			 (<include refid="select-post-list-member"/>) inner_table
+		 <where>
+		 	AND ROWNUM &lt;= #{endRowNum}
+		 </where>)
+		<where>
+			row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+		</where>
+	</select>
+	
+	<select id="memberPostTotalCount" parameterType="Search" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+		(<include refid="select-post-list-member"/>)
 	</select>
 </mapper>

@@ -55,4 +55,8 @@ public interface CafePostDao {
 	public boolean updateNoticeOrder(List<Post> postList);
 
 	public List<Post> getAllNoticePost(Search search);
+
+	public List<Post> getPostListByMember(Search search);
+
+	public int memberPostTotalCount(Search search);
 }
