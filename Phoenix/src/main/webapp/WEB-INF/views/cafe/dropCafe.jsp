@@ -5,49 +5,30 @@
 <!DOCTYPE html>
 
 <html lang="ko">
-
 <head>
-<title>카페폐쇄</title>
-
-
-<%--  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
- <link rel="stylesheet" href="/resources/demos/style.css">
- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
- --%>
- 
-<!-- ////////////////////////////// jQuery CDN ////////////////////////////// -->
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"
- integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
- crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
- integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
- crossorigin="anonymous"></script>
-<!-- ////////////////////////////// bootstrap CDN ////////////////////////////// -->
-<link rel="stylesheet"
- href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
- integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
- crossorigin="anonymous">
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
- integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
- crossorigin="anonymous"></script>
-
-<!--  ///////////////////////// CSS ////////////////////////// -->
-
-<!--  ///////////////////////// JavaScript ////////////////////////// -->
-<script type="text/javascript">
-$(function() {
-	
-	$("button[name=button]" ).on("click" , function() {
-		alert($(".cafeNo").val())
-		alert('${cafe.cafeURL}')
-		$("form").attr("method" , "POST").attr("action" , "/cafe/"+'${cafe.cafeURL}'+"/manage/dropCafe").submit();
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>매니저용 카페 툴바</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="images/quixlab/favicon.png">
+    <!-- Custom Stylesheet -->
+    <link href="/css/quixlab/style.css" rel="stylesheet">
+    <!--  ///////////////////////// JavaScript ////////////////////////// -->
+	<script type="text/javascript">
+	$(function() {
+		
+		$("button[name=button]" ).on("click" , function() {
+			alert($(".cafeNo").val())
+			alert('${cafe.cafeURL}')
+		
+			//$("form").attr("method" , "POST").attr("action" , "/cafe/"+'${cafe.cafeURL}'+"/manage/dropCafe").submit();
+		});
 	});
-});
-</script>
+	</script>
 
 	<!-- ToolBar Start /////////////////////////////////////-->
-	<jsp:include page="../common/cafeManageTollbar.jsp" />
+	 <jsp:include page="../common/cafeManageTollbar.jsp" /> 
 	<!-- ToolBar End /////////////////////////////////////-->
 </head>
 
@@ -59,33 +40,44 @@ $(function() {
 	<div class="container">
 		<div class="row">
 			<div class="col-2">
-				<c:import url="/WEB-INF/views/common/cafeManageMenubar.jsp"></c:import>
+				 <c:import url="/WEB-INF/views/common/cafeManageMenubar.jsp"></c:import>
 			</div>
 			
 			<div class="col-10">
 			<br>
 			<br>
-				<h1 class="text-center">카페폐쇄</h1>		
-			</br>
-			</br>
-			<hr>
-			
-			<form class="form-horizontal" name ="reason">
-					 <div class="form-group">
-					    <label for="closeReason" class="col-sm-offset-1 col-sm-3 control-label">폐쇄 이유를 입력해주세요</label>
-					    
-					    <div class="closeReason">
-					    	<textarea rows=10 cols=10 id="closeReason" name="closeReason" class="form-control" ></textarea>
-					    </div>
-					 </div>
-					  <input type="hidden" name="cafeNo" class="cafeNo" value="${cafe.cafeNo }"/>
-					  <div align="center">
-					  <button type="button" class="btn btn-outline-success" name="button" >카페폐쇄하기</button>
-					  </div>
-			</form>
+			<div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">>카페폐쇄</h4>
+                                <div class="basic-form">
+                                    <form>
+                                        <div class="form-group">
+                                            <label>폐쇄 이유를 입력해주세요</label>
+                                            <textarea class="form-control h-150px" rows="6" id="comment"></textarea>
+                                        </div>
+                                    </form>
+                                </div>
+                                <input type="hidden" name="cafeNo" class="cafeNo" value="${cafe.cafeNo }"/>
+                                <div align="center">
+                                <button type="button" name="button" class="btn mb-1 btn-outline-warning">카페폐쇄하기</button>
+                                </div>
+                            </div>
+                        </div>
 			
 			</div><!-- col-10, #mainContent End -->
 		</div><!-- row End -->
 	</div><!-- container End -->
-</body>
+	
+	<!--**********************************
+        Scripts
+    ***********************************-->
+    <script src="/plugins/quixlab/common/common.min.js"></script>
+    <script src="/js/quixlab/custom.min.js"></script>
+    <script src="/js/quixlab/settings.js"></script>
+    <script src="/js/quixlab/gleek.js"></script>
+    <script src="/js/quixlab/styleSwitcher.js"></script>
+    
+	</body>
 </html>
+
+						

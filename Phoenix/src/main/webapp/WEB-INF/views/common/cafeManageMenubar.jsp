@@ -47,76 +47,9 @@
 		
 	</script>
 
-	<div id="cafeMangeMenubar">
-	<br/>
-	<br/>
-	<br/>
-	<br/>
-	<br/>
-	
-		<div class="statistics">
-			카페통계
-		</div>
-		<br/>
-		<hr>
-		
-		<div class="menu">
-			게시판관리
-		</div>
-		<br/>
-		<hr>
-
-		<div class="info">
-			카페정보수정
-		</div>
-		<br/>
-		<hr>
-		
-		<div class="form">
-			가입양식관리
-		</div>
-		<br/>
-		<hr>
-		
-		<div class="application">
-			가입신청목록
-		</div>
-		<br/>
-		<hr>
-		
-		<div class="grade">
-			카페등급관리
-		</div>
-		<br/>
-		<hr>
-		
-		<div class="member">
-			카페멤버목록
-		</div>
-		<br/>
-		<hr>
-		
-		<div class="closed">
-			카페폐쇄
-		</div>
-		<br/>
-		<hr>
-		
-		<div class="notice">
-			공지관리
-		</div>
-		<br/>
-		<hr>
-		
-
-	</div>
-	
-	 <!--**********************************
-            Sidebar start
-        ***********************************-->
-        <div class="nk-sidebar">           
-            <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 100%;"><div class="nk-nav-scroll active" style="overflow: hidden; width: auto; height: 100%;">
-                <ul class="metismenu in" id="menu">
+	<div class="nk-sidebar">           
+            <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 100%;"><div class="nk-nav-scroll" style="overflow: hidden; width: auto; height: 100%;">
+                <ul class="metismenu" id="menu">
                     <li class="nav-label">Dashboard</li>
                     <li>
                         <a class="has-arrow" href="javascript:void()" aria-expanded="false">
@@ -220,12 +153,12 @@
                         </a>
                     </li>
                     <li class="nav-label">Forms</li>
-                    <li class="active">
+                    <li>
                         <a class="has-arrow" href="javascript:void()" aria-expanded="false">
                             <i class="icon-note menu-icon"></i><span class="nav-text">Forms</span>
                         </a>
-                        <ul aria-expanded="false" class="collapse in">
-                            <li class="active"><a href="./form-basic.html" class="active">Basic Form</a></li>
+                        <ul aria-expanded="false" class="collapse">
+                            <li><a href="./form-basic.html">Basic Form</a></li>
                             <li><a href="./form-validation.html">Form Validation</a></li>
                             <li><a href="./form-step.html">Step Form</a></li>
                             <li><a href="./form-editor.html">Editor</a></li>
@@ -263,8 +196,5 @@
                         </ul>
                     </li>
                 </ul>
-            </div><div class="slimScrollBar" style="background: transparent; width: 5px; position: absolute; top: 0px; opacity: 0.4; display: none; border-radius: 7px; z-index: 99; right: 1px; height: 9264.46px;"></div><div class="slimScrollRail" style="width: 5px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div></div>
+            </div><div class="slimScrollBar" style="background: transparent; width: 5px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 7px; z-index: 99; right: 1px; height: 30px;"></div><div class="slimScrollRail" style="width: 5px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div></div>
         </div>
-        <!--**********************************
-            Sidebar end
-        ***********************************-->
