@@ -185,9 +185,9 @@ $(function() {
 
 
 
-  
+  <div class="d-flex justify-content-center">
   <jsp:include page="../common/pageNavigator.jsp" />
-  
+  </div>
   	</div><!-- col-10, #mainContent End -->
 		</div><!-- row End -->
   </div>
