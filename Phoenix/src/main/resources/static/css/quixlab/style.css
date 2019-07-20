@@ -7322,7 +7322,7 @@ body {
 
 a {
   transition: all 0.4s ease-in-out;
-  color: #76838f; }
+  color: white; }
 
 a:focus,
 a:hover {
@@ -7747,7 +7747,7 @@ sub {
     .header-left .input-group input {
       border-radius: 5px !important; }
     .header-left .input-group .input-group-text {
-      font-size: 1.375rem; }
+      font-size: 0.85rem; }
       @media (max-width: 575.98px) {
         .header-left .input-group .input-group-text {
           padding-left: .5rem; } }
@@ -14010,7 +14010,7 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
   padding-right: 15rem; }
 
 [data-nav-headerbg="color_1"] .nav-header {
-  background-color: #7571f9; }
+  background-color: #f7790a; }
 
 [data-nav-headerbg="color_2"] .nav-header {
   background-color: #27394F !important; }
