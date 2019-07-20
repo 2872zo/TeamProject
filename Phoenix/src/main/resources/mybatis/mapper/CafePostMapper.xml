@@ -280,6 +280,40 @@
 		ORDER BY reg_date DESC
 	</select>
 	
+	<select id="getBestPostList" parameterType="int" resultMap="postResultMap">
+		SELECT
+		 inner_table.*, ROWNUM AS row_seq
+		 FROM 
+			 (SELECT 
+		    	p.post_no, 
+		    	p.board_no, 
+		    	p.member_no, 
+		    	p.post_title, 
+		    	p.post_content, 
+		    	TO_CHAR(p.reg_date, 'YYYY-MM-DD HH24:MI:SS') AS reg_date, 
+		    	p.view_count, 
+		    	p.like_count, 
+		    	p.member_nickname, 
+		    	p.post_status_flag, 
+		    	p.post_notice_flag, 
+		    	p.notice_index,
+		    	p.cafe_url,
+		    	b.best_post_count
+		    FROM post p, board b
+		    <where>
+		    	p.board_no = b.board_no
+		    	AND p.board_no = #{boardNo}
+		    	AND p.reg_date &gt; SYSDATE - b.best_Term
+		    	AND p.like_count &gt; b.best_like_count
+		    </where>
+		    ORDER BY p.like_count DESC
+		) inner_table
+		 <where>
+		 	AND ROWNUM &lt;= inner_table.best-post_count
+		 </where>
+	
+		</select>
+	
 	<select id="getAllNoticePost" parameterType="Search" resultMap="postResultMap">
 		SELECT 
 			post.post_no, 

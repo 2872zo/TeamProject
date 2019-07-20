@@ -190,7 +190,8 @@ public class CafeManageController {
 		model.addAttribute("useGradeList", useGradeList);
 //모델에 cafeURL의 cafe 객체도 같이 넘겨줌
 
-		return "/cafe/updateCafeBoard";
+		return "/cafe/test";
+		//return "/cafe/updateCafeBoard";
 	}
 
 	@RequestMapping(value = "/{cafeURL}/manage/updateCafeBoard", method = RequestMethod.POST) // 예림예림

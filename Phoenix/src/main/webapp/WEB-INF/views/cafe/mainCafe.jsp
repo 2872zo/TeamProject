@@ -11,7 +11,17 @@
 <html lang="ko">
 
 <head>
-
+	<!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
+    <!-- Pignose Calender -->
+    <link href="/plugins/quixlab/pg-calendar/css/pignose.calendar.min.css" rel="stylesheet">
+    <!-- Chartist -->
+    <link rel="stylesheet" href="/plugins/quixlab/chartist/css/chartist.min.css">
+    <link rel="stylesheet" href="/plugins/quixlab/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css">
+    <!-- Custom Stylesheet -->
+    <link href="/css/quixlab/style.css" rel="stylesheet">
+    
+    
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -78,7 +88,9 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-2">
-				<c:import url="/WEB-INF/views/cafe/menubarCafe.jsp"></c:import>
+				<div class="nk-sidebar">   
+					<c:import url="/WEB-INF/views/cafe/menubarCafe.jsp"></c:import>
+				</div>
 			</div>
 			
 			<div class="col-10">
@@ -104,5 +116,31 @@
 			</div><!-- col-10, #mainContent End -->
 		</div><!-- row End -->
 	</div><!-- container End -->
+	
+	<script src="/plugins/quixlab/common/common.min.js"></script>
+    <script src="/js/quixlab/custom.min.js"></script>
+    <script src="/js/quixlab/settings.js"></script>
+    <script src="/js/quixlab/gleek.js"></script>
+    <script src="/js/quixlab/styleSwitcher.js"></script>
+    
+    <!-- Chartjs -->
+    <script src="/plugins/quixlab/chart.js/Chart.bundle.min.js"></script>
+    <!-- Circle progress -->
+    <script src="/plugins/quixlab/circle-progress/circle-progress.min.js"></script>
+    <!-- Datamap -->
+    <script src="/plugins/quixlab/d3v3/index.js"></script>
+    <script src="/plugins/quixlab/topojson/topojson.min.js"></script>
+    <script src="/plugins/quixlab/datamaps/datamaps.world.min.js"></script>
+    <!-- Morrisjs -->
+    <script src="/plugins/quixlab/raphael/raphael.min.js"></script>
+    <script src="/plugins/quixlab/morris/morris.min.js"></script>
+    <!-- Pignose Calender -->
+    <script src="/plugins/quixlab/moment/moment.min.js"></script>
+    <script src="/plugins/quixlab/pg-calendar/js/pignose.calendar.min.js"></script>
+    <!-- ChartistJS -->
+    <script src="/plugins/quixlab/chartist/js/chartist.min.js"></script>
+    <script src="/plugins/quixlab/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
+    
+    <script src="/js/quixlab/dashboard/dashboard-1.js"></script>
 </body>
 </html>
