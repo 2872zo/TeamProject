@@ -426,4 +426,50 @@ public class CafePostContoller {
 		
 		return "/cafe/updateNoticeOrder";
 	}
+	
+	@PostMapping("/cafe/{cafeURL}/getPostByMember")
+	public String getPostByMember(@ModelAttribute Search search, @PathVariable String cafeURL, Map<String, Object> map) throws Exception {
+		
+		if(search.getSearchCondition() == null) {
+			search.setSearchCondition("0");
+		}
+		search.setPageSize(pageSize);
+		if (search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+		System.out.println("[CafeInnerSearchList] Search : " + search);
+
+		Map<String, Object> queryResultMap = cafePostService.getPostListByMember(search);
+		int postTotalCount = (int) queryResultMap.get("postTotalCount");
+		Page page = new Page(search.getCurrentPage(), postTotalCount, pageUnit, pageSize);
+		
+		System.out.println("[getPostByMember] search : " + search);
+		
+		// 메뉴바를 위한 카페 멤버 정보
+		CafeMember cafeMember = cafeMemberService.getCafeMember(search);
+		// 메뉴바를 위한 게시판 목록 - 카페URL
+		List<Board> boardList = cafeManageService.getCafeBoard(search);
+
+		// 메뉴바를 위한 속성
+		map.put("cafeURL", search.getCafeURL());
+		map.put("cafeMember", cafeMember);
+		map.put("boardList", boardList);
+		
+		
+		// 검색옵션의 게시판목록을 위한 작업
+		List<Board> boardOption = new ArrayList<Board>();
+		boardOption.addAll(boardList);
+		// 구분선 모두 처리
+		Predicate<Board> condition = board -> board.getBoardType().equals("cb102");
+		boardOption.removeIf(condition);
+
+		
+		map.put("boardOption", boardOption);
+		map.put("page", page);
+		map.put("search", search);
+		map.put("postList", queryResultMap.get("postList"));
+		map.put("postTotalCount", postTotalCount);
+		
+		return "/cafe/listCafePostByMember";
+	}
 }

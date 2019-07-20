@@ -42,9 +42,9 @@
 			});
 
 			//페이지 이동
-			function fncGetInnerSearchList(idx){
+			function fncGetMemberPostList(idx){
 				$("[name=currentPage]").val(idx);
-				$("#searchForm").attr("method","GET").attr("action","/cafe/" + cafeURL + "/search").submit();	
+				$("#searchForm").submit();	
 			};
 
 			//datePicker 생성
@@ -55,10 +55,13 @@
 			
 			//검색조건 유지
 			$(function(){
+				$("#searchForm").attr("method","POST").attr("action","/cafe/${cafeURL}/getPostByMember")
+				
 				$("[name=currentPage]").val(${search.currentPage });
 				$( "#termStart" ).val('${search.termStart}');
 			    $( "#termEnd" ).val('${search.termEnd}');	
 				$("[name=searchKeyword]").val('${search.searchKeyword}');
+				$("[name=memberNo]").val('${search.memberNo}');
 				
 				$(".boardOption").each(function(){
 				    if($(this).val()==${search.boardNo}){
@@ -106,6 +109,7 @@
 		                            <div class="dropdown-menu dropdown-menu-right" role="menu">
 										<form class="form-horizontal" role="form" id="searchForm">
 											<input type="hidden" name="currentPage">
+											<input type="hidden" name="memberNo">
 											<div class="form-group">
 												<label for="termStart">기간 시작</label> 
 												<input class="form-control" type="text" id="termStart" name="termStart" readonly="readonly">
@@ -130,10 +134,8 @@
 												<label for="searchCondition">구분</label> 
 												<select class="form-control hideOption" name="searchCondition">
 													<option value="0" class="searchOption">전체</option>
-													<option value="1" class="searchOption">호칭</option>
-													<option value="2" class="searchOption">제목</option>
-													<option value="3" class="searchOption">내용</option>
-													<option value="4" class="searchOption">댓글</option>
+													<option value="1" class="searchOption">제목</option>
+													<option value="2" class="searchOption">내용</option>
 												</select>
 											</div>
 											
@@ -166,12 +168,18 @@
 				<p>총 ${postTotalCount }개</p>
 				<table class="table table-striped table-bordered">
 					<tr>
+		<!-- 				<td>게시글 번호</td> -->
+		<!-- 				<td>게시판 번호</td> -->
+		<!-- 				<td>memberNo</td> -->
 						<td>게시판</td>
 						<td>제목</td>
 						<td>작성자</td>
 						<td>작성일</td>
 						<td>조회수</td>
 						<td>추천수</td>
+		<!-- 				<td>postStatusFlag</td> -->
+		<!-- 				<td>postNoticeFlag;</td> -->
+		<!-- 				<td>noticeIndex</td> -->
 					</tr>
 					
 					<c:forEach items="${postList }" var="post">
@@ -185,6 +193,9 @@
 							<td>${post.regDate }</td>
 							<td>${post.viewCount }</td>
 							<td>${post.likeCount }</td>
+		<%-- 					<td>${post.postStatusFlag }</td> --%>
+		<%-- 					<td>${post.postNoticeFlag }</td> --%>
+		<%-- 					<td>${post.noticeIndex }</td> --%>
 						</tr>
 					</c:forEach>
 				</table>
@@ -193,7 +204,7 @@
 					<tr>
 						<td align="center">
 							<c:import url="/WEB-INF/views/common/pageNavigator.jsp">
-								<c:param name="subject" value="InnerSearch"/>
+								<c:param name="subject" value="MemberPost"/>
 							</c:import>
 						</td>
 					</tr>

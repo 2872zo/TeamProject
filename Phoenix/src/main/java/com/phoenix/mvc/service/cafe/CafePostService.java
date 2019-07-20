@@ -41,4 +41,6 @@ public interface CafePostService {
 	public boolean updateNoticeOrder(List<Post> postList);
 
 	public List<Post> getAllNoticePost(Search search);
+
+	public Map<String, Object> getPostListByMember(Search search);
 }
