@@ -10,5 +10,5 @@ public interface ChattingDao {
 	
 	public List getMyChatRoomList (Search search) throws Exception;
 	
-	public Map getMyFriendsList(Search search) throws Exception;
+	public List getMyFriendsList(Search search) throws Exception;
 }

@@ -33,12 +33,12 @@
 $(function() {
 	//var socket = io("http://192.168.0.78:82");
 	var socket = io("http://localhost:82");
+	socket.emit("identify", $("#userId").text());
 	socket.emit("joiner", $("#chatRoomNo").val());
 	
 	$("#addCafe").on("click" , function() {
 		$(self.location).attr("href","/cafe/addCafeView");
 	});
-
 
 	 $("#msg").keydown(function(key) {
          //해당하는 키가 엔터키(13) 일떄

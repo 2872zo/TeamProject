@@ -54,36 +54,23 @@ $(function() {
 		</button>
 	<br/>
 	
+	<c:forEach items="${friendsList}" var ='friend'>
+	<div class="card mb-3" style="max-width: 540px;">
+  	<div class="row no-gutters">
+    <div class="col-md-4">
+      <img src="..." class="card-img" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">친구번호  : ${friend.chatFriendNo} </h5>
+        <p class="card-text">친구 유저번호 : ${friend.targetUserNo}</p>
+        <p class="card-text"><small class="text-muted"> ${friend.friendStatus}</small></p>
+      </div>
+    </div>
+  	</div>
+	</div>
+	</c:forEach>
 	
-	<div class="card mb-3" style="max-width: 540px;">
-  	<div class="row no-gutters">
-    <div class="col-md-4">
-      <img src="..." class="card-img" alt="...">
-    </div>
-    <div class="col-md-8">
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-      </div>
-    </div>
-  	</div>
-	</div>
-	<div class="card mb-3" style="max-width: 540px;">
-  	<div class="row no-gutters">
-    <div class="col-md-4">
-      <img src="..." class="card-img" alt="...">
-    </div>
-    
-    <div class="col-md-8">
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-      </div>
-    </div>
-  	</div>
-	</div>
 
 
 	

@@ -39,8 +39,10 @@ public class ChattingServiceImpl implements ChattingService{
 
 	@Override
 	public Map getMyFriendsList(Search search) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		Map map = new HashMap();
+		List friendsList = chattingDao.getMyFriendsList(search);
+		map.put("friendsList", friendsList);
+		return map;
 	}
 
 	@Override
