@@ -1,6 +1,7 @@
 package com.phoenix.mvc.web.chatting;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -36,6 +37,10 @@ public class ChattingRestController {
 		chattingService.testMethod(chat);
 		
 		System.out.println ("제대로들어가면호출됨"+chat);
+		
+		List list = chattingService.getChatList(chat);
+		
+		System.out.println(list);
 		
 		return chat;
 	}

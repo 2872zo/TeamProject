@@ -15,5 +15,6 @@ public interface ChattingDao {
 	
 	public void testMethod (Chat chat) throws Exception;
 	
+	public List getChatList(Chat chat) throws Exception;
 	
 }

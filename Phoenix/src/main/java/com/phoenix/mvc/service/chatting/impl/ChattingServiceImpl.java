@@ -57,4 +57,10 @@ public class ChattingServiceImpl implements ChattingService{
 		chattingDao.testMethod(chat);
 		
 	}
+
+	@Override
+	public List getChatList(Chat chat) throws Exception {
+		// TODO Auto-generated method stub
+		return chattingDao.getChatList(chat);
+	}
 }

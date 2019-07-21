@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection="chat")
 public class Chat {
 	
+	private String id;
 	private int chatRoomNo;
 	private int chatNo;
 	private int UserNo;
@@ -21,6 +22,14 @@ public class Chat {
 		
 	}
 	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
 	public int getChatRoomNo() {
 		return chatRoomNo;
 	}
@@ -74,9 +83,9 @@ public class Chat {
 
 	@Override
 	public String toString() {
-		return "Chat [chatRoomNo=" + chatRoomNo + ", chatNo=" + chatNo + ", UserNo=" + UserNo + ", chatNickname="
-				+ chatNickname + ", chatProfileImg=" + chatProfileImg + ", chatType=" + chatType + ", chatMsg="
-				+ chatMsg + ", regDate=" + regDate + "]";
+		return "Chat [id=" + id + ", chatRoomNo=" + chatRoomNo + ", chatNo=" + chatNo + ", UserNo=" + UserNo
+				+ ", chatNickname=" + chatNickname + ", chatProfileImg=" + chatProfileImg + ", chatType=" + chatType
+				+ ", chatMsg=" + chatMsg + ", regDate=" + regDate + "]";
 	}
 	
 }

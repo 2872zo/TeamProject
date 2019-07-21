@@ -1,5 +1,6 @@
 package com.phoenix.mvc.service.chatting;
 
+import java.util.List;
 import java.util.Map;
 
 import com.phoenix.mvc.common.Search;
@@ -14,4 +15,6 @@ public interface ChattingService {
 	public int addChatFriend(ChatFriend chatFriend) throws Exception;
 	
 	public void testMethod (Chat chat) throws Exception;
+	
+	public List getChatList(Chat chat) throws Exception;
 }
