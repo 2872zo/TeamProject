@@ -245,17 +245,24 @@ quixSettings.prototype.manageRtlLayout = function() {
 }
 
 quixSettings.prototype.manageResponsiveSidebar = function() {
+	
     const innerWidth = $(window).innerWidth();
-    if(innerWidth < 1200) {
+    const body = $("body");
+    const hamburger = $("div.hamburger");
+    if(innerWidth >= 1200) {
         body.attr("data-layout", "vertical");
         body.attr("data-container", "wide");
+        body.attr("data-sidebar-style", "full");
     }
-
+	
     if(innerWidth > 767 && innerWidth < 1200) {
-        body.attr("data-sidebar-style", "mini");
+    	body.attr("data-sidebar-style", "full");
+//    	$('#main-wrapper').toggleClass("menu-toggle");
+//    	$(".hamburger").toggleClass("is-active");
     }
 
-    if(innerWidth < 768) {
+    if(innerWidth <= 767) {
         body.attr("data-sidebar-style", "overlay");
     }
+	
 }
