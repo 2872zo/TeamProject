@@ -1,5 +1,6 @@
 package com.phoenix.mvc.service.domain;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -95,8 +96,10 @@ public class CafeMember {
 	public void setGradeName(String gradeName) {
 		this.gradeName = gradeName;
 	}
-	public Date getRegDate() {
-		return regDate;
+	public String getRegDate() {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		
+		return format.format(regDate);
 	}
 	public void setRegDate(Date regDate) {
 		this.regDate = regDate;
