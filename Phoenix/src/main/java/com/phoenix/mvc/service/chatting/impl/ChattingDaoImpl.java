@@ -44,8 +44,12 @@ public class ChattingDaoImpl implements ChattingDao{
 	
 	@Override
 	public void testMethod(Chat chat) throws Exception {
-		mongoTemplate.insert(chat);		
-		
+		mongoTemplate.insert(chat);	
+	}
+	
+	@Override
+	public void addChat(Chat chat) throws Exception {
+		mongoTemplate.insert(chat);	
 	}
 	
 	public List getChatList(Chat chat) throws Exception {
@@ -62,4 +66,18 @@ public class ChattingDaoImpl implements ChattingDao{
 		return mongoTemplate.find(query, Chat.class);
 		
 	}
+
+	@Override
+	public void addChatRoom(ChatRoom chatRoom) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteChatRoomFromList(ChatRoom chatRoom) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 }

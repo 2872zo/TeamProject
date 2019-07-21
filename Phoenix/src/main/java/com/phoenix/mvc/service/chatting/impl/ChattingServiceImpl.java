@@ -13,6 +13,7 @@ import com.phoenix.mvc.service.chatting.ChattingDao;
 import com.phoenix.mvc.service.chatting.ChattingService;
 import com.phoenix.mvc.service.domain.Chat;
 import com.phoenix.mvc.service.domain.ChatFriend;
+import com.phoenix.mvc.service.domain.ChatRoom;
 
 @Service
 public class ChattingServiceImpl implements ChattingService{
@@ -47,11 +48,15 @@ public class ChattingServiceImpl implements ChattingService{
 	}
 
 	@Override
-	public int addChatFriend(ChatFriend chatFriend) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+	public void addChatFriend(ChatFriend chatFriend) throws Exception {
+				
 	}
 
+	@Override
+	public void addChat(Chat chat) throws Exception {
+		chattingDao.addChat(chat);
+	}
+	
 	@Override
 	public void testMethod(Chat chat) throws Exception {
 		chattingDao.testMethod(chat);
@@ -63,4 +68,42 @@ public class ChattingServiceImpl implements ChattingService{
 		// TODO Auto-generated method stub
 		return chattingDao.getChatList(chat);
 	}
+
+	@Override
+	public Map getChatRoom(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateChatFriend(ChatFriend chatFriend) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeChatFriend(ChatFriend chatFriend) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addChatRoom(ChatRoom chatRoom) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateChatRoom(ChatRoom chatRoom) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeChatRoom(ChatRoom chatRoom) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 }

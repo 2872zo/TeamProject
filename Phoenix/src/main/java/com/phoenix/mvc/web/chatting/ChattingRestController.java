@@ -34,7 +34,7 @@ public class ChattingRestController {
 		System.out.println ("시간찍힘"+chat);
 		chat.setChatNickname("대충");
 		chat.setChatProfileImg("abc");
-		chattingService.testMethod(chat);
+		chattingService.addChat(chat);
 		
 		System.out.println ("제대로들어가면호출됨"+chat);
 		

@@ -101,13 +101,12 @@
 								class="input-group-text bg-transparent border-0 pr-2 pr-sm-3"
 								id="basic-addon1"><i class="mdi mdi-magnify" id='search1'></i></span>
 						</div>
-						
 						<form class="form-inline" id='cafeSearch'>
 		<input type="hidden" id="currentPage" name="currentPage" value="0"/>
 		<input type ="hidden" name = 'cafeURL' value='${ !empty search.cafeURL ? search.cafeURL : "" }'>
 		<input type ="hidden" name = 'boardName' value='${ !empty search.boardName ? search.boardName : "" }'>
 	
-	   <select class="custom-select-lg" name='searchCondition' id='searchCondition'>
+	   <select class="custom-select" aria-label="Example select with button addon" name='searchCondition' id='searchCondition'>
 	    <option class='searchCondition' selected value="0"   ${ !empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>카페+게시글</option>
 	    <option class='searchCondition' value="1"   ${ !empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>카페</option>
 	    <option class='searchCondition' value="2"   ${ !empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>게시글</option>
@@ -116,7 +115,6 @@
 	  <input type="text" class="form-control" placeholder="검색어 입력해주세요" aria-label="Text input with dropdown button" aria-describedby="button-addon2" value='${ !empty search.searchKeyword ? search.searchKeyword : '' }' name="searchKeyword" id="searchKeyword">
 	  <button class="btn btn-outline-light" type="button" id="cafeExplore">검색</button>
 	</form>	
-						
 						
 						<input type="search" class="form-control"
 							placeholder="Search Dashboard" aria-label="Search Dashboard"
