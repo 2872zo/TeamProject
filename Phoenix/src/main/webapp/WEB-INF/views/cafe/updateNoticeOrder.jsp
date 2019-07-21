@@ -75,6 +75,13 @@
 						url : "/cafe/" + cafeURL + "/json/updateNoticeOrder",
 						dataType : "JSON",
 						data: JSON.stringify(postList),
+						xhr: function() {
+					        var xhr = $.ajaxSettings.xhr();
+					        xhr.upload.onprogress = function(e) {
+					            console.log(Math.floor(e.loaded / e.total *100) + '%');
+					        };
+					        return xhr;
+					    },
 						success : function(data) {
 							alert("success!");
 							console.log(data);

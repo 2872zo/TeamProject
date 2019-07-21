@@ -12,6 +12,7 @@
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
     <!-- Custom Stylesheet -->
+    <link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet">
 
 	<link rel="stylesheet" href="/css/custom/scroll-top.css">
@@ -31,6 +32,13 @@
 			width:80%;
 		}
 	
+		.cursor{
+			cursor:pointer;
+		}
+		
+		.cursor:hover{
+			text-decoration: underline;
+		}
 	</style>
 </head>
 
@@ -268,27 +276,7 @@
             Content body start
         ***********************************-->
         <div class="content-body">
-			<div id="mainContent">
-					공지게시글
-					<table class="table table-striped table-bordered">
-						<tr>
-							<th>게시글 제목  </th>
-							<th>작성자      </th>
-							<th>등록일      </th>
-							<th>조회수      </th>
-						</tr>
-						<c:forEach var="post" items="${noticePostList}" > <!-- 링크이어야함 -->
-							<tr>
-								<td>${post.postTitle}  </td>
-								<td>${post.memberNickname}  </td>
-								<td>${post.regDate}  </td>
-								<td>${post.viewCount}  </td>
-							</tr>
-						</c:forEach>
-					</table>
-				</div>
-
-            <div class="row page-titles mx-0">
+        	<div class="row page-titles mx-0">
                 <div class="col p-md-0">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
@@ -296,6 +284,38 @@
                     </ol>
                 </div>
             </div>
+			<div id="container-fluid">
+				 <div class="col-lg-6">
+                       <div class="card">
+                           <div class="card-body">
+                               <h4 class="card-title">공지게시판</h4>
+                               <div class="table-responsive">
+                                   <table class="table header-border">
+                                       <thead>
+                                           <tr>
+                                           		<th scope="col">제목</th>
+												<th scope="col">작성자</th>
+												<th scope="col">등록일</th>
+												<th scope="col">조회수</th>
+                                       	   </tr>
+                                       </thead>
+                                       <tbody>
+                                       	   <c:forEach var="post" items="${noticePostList}" > <!-- 링크이어야함 -->
+												<tr>
+													<td>${post.postTitle}  </td>
+													<td>${post.memberNickname}  </td>
+													<td>${post.regDate}  </td>
+													<td>${post.viewCount}  </td>
+										   		</tr>
+										   </c:forEach>
+                                       </tbody>
+                                   </table>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+					
+				</div>
             <!-- row -->
 
             <div class="container-fluid">
@@ -333,15 +353,13 @@
     <script src="/js/gleek.js"></script>
     <script src="/js/styleSwitcher.js"></script>
     
+    <script src="/plugins/sweetalert/js/sweetalert.min.js"></script>
+    <script src="/plugins/sweetalert/js/sweetalert.init.js"></script>
+    
     <!-- 메뉴바 이용을 위한 스크립트 -->
 	<script src="/js/custom/scroll-top.js"></script>
     <script type="text/javascript">
-	    (function($) {
-	        "use strict";
-	
 	    	$(function(){
-	    		
-	    		$(".myDetail").hide();
 	    		$(".showMyDetail").on("click",function(){
 	    			if(${cafeMember.userNo}=='400')//1. 로그인이 안되어있으면
 	    			{
@@ -353,7 +371,7 @@
 	    			}
 	    			else //카페멤버라면
 	    			{
-	    				$(".myDetail").show(); 
+// 	    				$(".myDetail").show(); 
 	    			}
 	    		});
 	
@@ -370,29 +388,47 @@
 	    	});
 	
 	    	$(function(){//카페탈퇴
+	    		document.querySelector(".sweet-withdraw").onclick =
+		    		function(){
+		    			swal({
+		    				title:"카페에서 탈퇴하시겠습니까?",
+		    				text:"카페 탈퇴시 작성된 게시글은 자동으로 삭제되지 않습니다.",
+		    				type:"warning",
+		    				showCancelButton:!0,
+		    				confirmButtonColor:"#DD6B55",
+		    				confirmButtonText:"예",
+		    				cancelButtonText:"아니오",
+		    				closeOnConfirm:!1
+		    				},
+		    				function(){
+		    					swal("카페 탈퇴 완료","회원 탈퇴 되었습니다.","success")
+		    				})
+		    			}
 	
-	    		$(".deleteMember").on("click",function(){
-	    			$( "#dialog" ).dialog("open");
-	    			});
-	    		var memberNo = '${cafeMember.memberNo}'
-	    		$( "#dialog" ).dialog({ 
-	    			 autoOpen: false, 
-	    			  width: 400, 
-	    			  modal: true, 
-	    			  buttons: [ { 
-	    				   text: "확인", 
-	    				   click: function() { 
-	    					   location.href = "/cafe/" + "${cafeURL}" + "/updateCafeMember?memberNo="+memberNo;
-	    					  } 
-	    			  }, 
-	    			  { 
-	    				   text: "취소", 
-	    				    click: function() { 
-	    					   $( this ).dialog( "close" ); 
-	    					   } 
-	    			   } 
-	    			   ] 
-	    		   });
+
+				
+// 	    		$(".deleteMember").on("click",function(){
+// 	    			$( "#dialog" ).dialog("open");
+// 	    			});
+// 	    		var memberNo = '${cafeMember.memberNo}'
+// 	    		$( "#dialog" ).dialog({ 
+// 	    			 autoOpen: false, 
+// 	    			  width: 400, 
+// 	    			  modal: true, 
+// 	    			  buttons: [ { 
+// 	    				   text: "확인", 
+// 	    				   click: function() { 
+// 	    					   location.href = "/cafe/" + "${cafeURL}" + "/updateCafeMember?memberNo="+memberNo;
+// 	    					  } 
+// 	    			  }, 
+// 	    			  { 
+// 	    				   text: "취소", 
+// 	    				    click: function() { 
+// 	    					   $( this ).dialog( "close" ); 
+// 	    					   } 
+// 	    			   } 
+// 	    			   ] 
+// 	    		   });
 	    	});
 	    	
 	    	$(function(){//프로필수정
@@ -411,22 +447,17 @@
 	    		});
 	    		
 	    	});
-	    	
-	    })(jQuery);
     </script>
     
 	<script type="text/javascript">
-		(function($) {
-		    "use strict";
-	
 		    var state = new Object();
 	
-			$(function(){
-				state.cafeURL = "${cafeURL}"; 
-				state.mainContent = $("#mainContent").html().trim();
-				state.mainContent = "<script>fncGetCafeMain()</script" + ">";
-				history.replaceState(state, state.cafeURL, "/cafe/" + state.cafeURL);
-			});
+// 			$(function(){
+// 				state.cafeURL = "${cafeURL}"; 
+// 				state.mainContent = $("#mainContent").html().trim();
+// 				state.mainContent = "<script>fncGetCafeMain()</script" + ">";
+// 				history.replaceState(state, state.cafeURL, "/cafe/" + state.cafeURL);
+// 			});
 	
 			
 			function fncGetBoardPostList(boardNo, cafeURL){
@@ -453,7 +484,6 @@
 				console.log(event.originalEvent.state.mainContent);
 				$(".col-10").html( event.originalEvent.state.mainContent );
 			});
-		})(jQuery);
 	</script>
 	
 	<script src="/js/custom/cafeCommon.js"></script>
