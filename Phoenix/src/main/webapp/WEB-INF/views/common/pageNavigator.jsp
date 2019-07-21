@@ -7,7 +7,7 @@
 <div class="container text-center">
 		 <nav>
 		  <!-- 크기조절 :  pagination-lg pagination-sm-->
-		  <ul class="pagination" >
+		  <ul class="pagination" style="align-content:  center;">
 		    
 		    <!--  <<== 좌측 nav -->
 		  	<c:if test="${ page.currentPage <= page.pageUnit }">
