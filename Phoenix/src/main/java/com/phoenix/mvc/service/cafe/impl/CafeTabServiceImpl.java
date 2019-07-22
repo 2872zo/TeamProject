@@ -88,7 +88,7 @@ public class CafeTabServiceImpl implements CafeTabService {
 		board.setCafeURL(cafe.getCafeURL());
 		cafeTabDao.addBoard(board);
 		
-		CafeMember cafeMember = new CafeMember();//카페 생성시 멤버(매니저 추가)		
+		CafeMember cafeMember = new CafeMember();//카페 생성시 멤버추가(매니저)	
 		cafeMember.setCafeNo(cafe.getCafeNo());
 		int i = cafeTabDao.getChangeGrade(cafeMember.getCafeNo());
 		cafeMember.setCafeMemberGradeNo(i);
