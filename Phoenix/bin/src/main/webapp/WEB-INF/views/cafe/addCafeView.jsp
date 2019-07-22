@@ -49,7 +49,7 @@ body>div.container {
 	function fncAddCafe() {
 
 		
-
+		
 		var cafeName = $("input[name='cafeName']").val();
 		var cafeURL = $("input[name='cafeURL']").val();
 
@@ -57,13 +57,18 @@ body>div.container {
 			alert("카페이름은 반드시 입력하셔야 합니다.");
 			return;
 		}
-		if (cafeURL == null || URL.length < 1) {
+		if (cafeURL == null || cafeURL.length < 1) {
 			alert("카페URL은  반드시 입력하셔야 합니다.");
 			return;
 		}
+	
+	
+		
+
+		
 
 		alert("만들기");
-		$("form").attr("method", "POST").attr("action",	"/cafe/addCafe").submit();
+		$("form").attr("method", "POST").attr("action","/cafe/addCafe").submit();
 	}
 	//카페이름 중복확인 
 	
@@ -73,7 +78,7 @@ body>div.container {
 	//============= "만들기"  Event 연결 =============
 	$(function() {
 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-		$("button.btn btn-success").on("click", function() {
+		$("button.btn btn-primary").on("click", function() {
 			fncAddCafe();
 		});
 	});
@@ -94,58 +99,55 @@ $(function() {
 
 		$("input[name='cafeName']").on('keyup',function() {
 
-							var inputed = $("input[name='cafeName']").val();
-							// alert("입력  : "+inputed);
+				var inputed = $("input[name='cafeName']").val();
+				// alert("입력  : "+inputed);
 
-									$.ajax({
-										url : "/cafe/json/checkCafeNameDuplication",
-										method : "POST",
-										dataType : "json",
-										headers : {
-											"Accept" : "application/json",
-											"Content-Type" : "application/json"
-										},
-										data : JSON.stringify({
-											cafeName : inputed,
-										}),
+					$.ajax({
+							url : "/cafe/json/checkCafeNameDuplication",
+							method : "POST",
+							dataType : "json",
+							headers : {
+										"Accept" : "application/json",
+										"Content-Type" : "application/json"
+								},
+							data : JSON.stringify({
+							cafeName : inputed,
+							}),
 
-										success : function(JSONData) {
-											//alert(JSONData); 
-											//alert(typeof(JSONData));
-
-											if (JSONData && inputed != "") {
-												$("#check").children("strong")
-														.remove();
-												$("#check")
-														.append(
-																"<strong class=\"text-success\">사용 가능합니다.</strong>");
-											} else {
-												$("#check").children("strong")
-														.remove();
-												$("#check")
-														.append(
-																"<strong  class=\"text-danger\">사용 불가능합니다.</strong>");
-											}
-											if (inputed == "") {
-												$("#check").children("strong")
-														.remove();
-												$("#check")
-														.append(
-																"<strong class=\"text-muted\">카페이름을 입력해주세요.</strong>");
-											}
+							success : function(JSONData) {
+							//alert(JSONData); 
+							//alert(typeof(JSONData));								
+								   if (JSONData && inputed != "") {
+									$("#check").children("strong")
+												.remove();
+									$("#check")
+												.append(
+													"<strong class=\"text-success\">사용 가능합니다.</strong>");
+										} else {
+											$("#check").children("strong")
+													.remove();
+											$("#check")
+													.append(
+													"<strong  class=\"text-danger\">사용 불가능합니다.</strong>");
 										}
-
-									});
+									if (inputed == "") {
+											$("#check").children("strong")
+													.remove();
+											$("#check")
+													.append(
+													"<strong class=\"text-muted\">카페이름을 입력해주세요.</strong>");
+										}
+									}
+								});
+							});
 						});
 
-	});
-
-$(function() {
+	$(function() {
 
 	$("input[name='cafeURL']").on('keyup',function() {
 
 						var inputed = JSON.stringify({cafeURL : $("input[name='cafeURL']").val()});
-						console.log(inputed);
+		
 						// alert("입력  : "+inputed);
 
 								$.ajax({
@@ -180,13 +182,11 @@ $(function() {
 											$("#check1")
 													.append(
 															"<strong class=\"text-muted\">카페이름을 입력해주세요.</strong>");
-										}
+									 }
 									}
-
 								});
-					});
-
-});
+							});
+						});
 
 </script>
 	<div class="container">

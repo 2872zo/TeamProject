@@ -38,8 +38,13 @@ public class ChattingContoller {
 	}
 	
 	@RequestMapping("chatFriendsList")
-	public String getChatFriendsList() {
-		
+	public String getChatFriendsList(@SessionAttribute("user") User user, Model model) throws Exception {
+		Search search = new Search();
+		search.setUserNo(user.getUserNo());
+		search.setStatus(0);
+		Map map = chattingService.getMyFriendsList(search);
+		List friendsList = (List) map.get("friendsList");
+		model.addAttribute("friendsList", friendsList);
 		return "chat/listChatFriends";
 	}
 	
@@ -65,13 +70,13 @@ public class ChattingContoller {
 	}
 	
 	@RequestMapping("chatRoom")
-	public String getChatRoom(@SessionAttribute("user") User user, @ModelAttribute("chatRoom") ChatRoom chatRoom) throws Exception {
+	public String getChatRoom(@SessionAttribute("user") User user, @ModelAttribute ChatRoom chatRoom, Model model) throws Exception {
 		
 		//Search search = new Search();
 		//search.setUserNo(user.getUserNo());
 		//Map map = chattingService.getMyChatRoomList(search);
 		//List chatRoomList = (List) map.get("chatRoomList");
-		//model.addAttribute("chatRoom", chatRoom);
+		model.addAttribute("chatRoom", chatRoom);
 		return "chat/chatRoom";
 	}
 	

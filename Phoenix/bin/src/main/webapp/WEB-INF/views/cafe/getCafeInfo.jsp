@@ -10,13 +10,15 @@
 	
 	
 	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	
-	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link href="/static/css/form-validation.css" rel="stylesheet">
+	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"	crossorigin="anonymous"></script>
+	<script	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"	crossorigin="anonymous"></script>
+	<script src="/static/ckeditor/ckeditor.js"></script>
+	<script src="/static/js/form-validation.js"></script>
 
 	
 	<header>
@@ -29,13 +31,21 @@
 		 $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$( "button.btn.btn-success" ).on("click" , function() {
-				var cafeURL = "22";
+				//var cafeURL = '22';
 				alert("수정");
-				self.location = "/cafe/"+cafeURL+"/manage/updateCafeInfoView?cafeNo=${cafe.cafeNo}"
-				//$("form").attr("method" , "GET").attr("action" , "/cafe/updateCafeInfoView?cafeNo=${cafe.cafeNo}").submit();
+				self.location = "/cafe/${cafe.cafeURL}/manage/updateCafeInfoView?cafeNo=${cafe.cafeNo}"
+				//	self.location = "/cafe/"+cafeURL+"/manage/updateCafeInfoView"
+				
 			});
 		});	
 
+			$(function() {
+				//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+				$("a[href='#' ]").on("click", function() {
+					//$("form")[0].reset();
+					self.location = "/cafe/main"
+				});
+			});
 			
 		</script>
 <body>
@@ -62,13 +72,13 @@
  <div class="form-group row">
     <label for="inputPassword" class="col-sm-2 col-form-label">매니저번호</label>
     <div class="col-sm-10">
-      ${cafe.manageUserNo }
+      ${cafe.manageUserNo}
     </div>
   </div>	
  <div class="form-group row">
     <label for="inputPassword" class="col-sm-2 col-form-label">카페url</label>
     <div class="col-sm-10">
-      ${cafe.url }
+      ${cafe.cafeURL }
     </div>
   </div>	
  <div class="form-group row">
@@ -89,12 +99,22 @@
       ${cafe.mainImg }
     </div>
   </div>
- <div class="form-group row">
-    <label for="inputPassword" class="col-sm-2 col-form-label">카페카테고리</label>
-    <div class="col-sm-10">
-      ${cafe.cafeType }
-    </div>
-  </div>   
+<div class="form-group">
+						<label for="exampleFormControlSelect1"
+							class="col-sm-offset-1 col-sm-3 control-label">카페 카 테 고 리</label>
+						<div class="col-sm-4">
+				
+							
+							<select class="form-control" name="cafeType" id="exampleFormControlSelect1">
+				  	<option value="cc100" ${ ! empty cafe.cafeType && cafe.cafeType == "cc100" ? "selected" : ""  } >친목/모임</option>
+					<option value="cc101" ${ ! empty cafe.cafeType && cafe.cafeType == "cc101" ? "selected" : ""  } >스포츠/레저</option>
+					<option value="cc102" ${ ! empty cafe.cafeType && cafe.cafeType == "cc102" ? "selected" : ""  } >영화</option>
+					<option value="cc103" ${ ! empty cafe.cafeType && cafe.cafeType == "cc103" ? "selected" : ""  } >게임</option>
+					<option value="cc104" ${ ! empty cafe.cafeType && cafe.cafeType == "cc104" ? "selected" : ""  } >음악</option>
+					<option value="cc105" ${ ! empty cafe.cafeType && cafe.cafeType == "cc105" ? "selected" : ""  } >여행</option>
+				</select>
+						</div>
+					</div>   
  <div class="form-group row">
     <label for="inputPassword" class="col-sm-2 col-form-label">가입안내</label>
     <div class="col-sm-10">
@@ -104,7 +124,7 @@
  <div class="form-group row">
     <label for="inputPassword" class="col-sm-2 col-form-label">등록일</label>
     <div class="col-sm-10">
-      ${cafe.regDate }
+      ${cafe.regDate}
     </div>
   </div>       	        		 
 
@@ -113,8 +133,11 @@
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
 		      <button type="button" class="btn btn-success"  >수정</button>
+		      <a class="btn btn-success btn" href="#" role="button">취&nbsp;소</a>
 		    </div>
 		  </div>
+		  
+
 		  
 		</form>
 		<!-- form Start /////////////////////////////////////-->

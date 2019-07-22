@@ -188,9 +188,9 @@ $(function() {
 
   
   <jsp:include page="../common/pageNavigator.jsp" />
-  
+ 
   	</div><!-- col-10, #mainContent End -->
-		</div><!-- row End -->
+	  	</div><!-- row End -->
   </div>
 
 <!--**********************************

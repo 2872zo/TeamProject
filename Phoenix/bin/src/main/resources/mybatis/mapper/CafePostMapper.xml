@@ -28,14 +28,17 @@
 	</resultMap>
 	
 	<resultMap id="replyResultMap" type="Reply">
-		<result property="replyNo"        	column="reply_no"			jdbcType="NUMERIC"	/>
-		<result property="postNo"			column="post_no"			jdbcType="NUMERIC"	/>
-		<result property="memberNo"       	column="member_no"			jdbcType="NUMERIC"	/>
-		<result property="memberNickname" 	column="member_nickname"	jdbcType="VARCHAR"	/>
-		<result property="replyContent"  	column="reply_content"		jdbcType="VARCHAR"	/>
-		<result property="regDate"  		column="reg_date"			jdbcType="VARCHAR"	/>
-		<result property="likeCount"     	column="like_count"			jdbcType="NUMERIC"	/>
-		<result property="replyStatusFlag"	column="reply_status_flag"	jdbcType="CHAR"		/>
+		<result property="replyNo"        	  column="reply_no"				jdbcType="NUMERIC"	/>
+		<result property="postNo"			  column="post_no"				jdbcType="NUMERIC"	/>
+		<result property="targetReplyNo"	  column="target_reply_no"		jdbcType="NUMERIC"	/>
+		<result property="targetReplyMember"  column="target_reply_member" 	jdbcType="NUMERIC"	/>
+		<result property="memberNo"       	  column="member_no"			jdbcType="NUMERIC"	/>
+		<result property="memberNickname" 	  column="member_nickname"		jdbcType="VARCHAR"	/>
+		<result property="replyContent"  	  column="reply_content"		jdbcType="VARCHAR"	/>
+		<result property="regDate"  		  column="reg_date"				jdbcType="VARCHAR"	/>
+		<result property="likeCount"     	  column="like_count"			jdbcType="NUMERIC"	/>
+		<result property="replyStatusFlag"	  column="reply_status_flag"	jdbcType="CHAR"		/>
+		<collection property="reReplyList"	  column="reply_no"				javaType="java.util.ArrayList"	ofType="Reply"	select="getReReplyList" />
 	</resultMap>
 
 	<sql id="select-post-list">
@@ -48,7 +51,7 @@
 			member_nickname,
 			post_title, 
 <!-- 			post_content,  -->
-			TO_CHAR(reg_date, 'YYYY-MM-DD HH24:MM:SS') AS reg_date, 
+			TO_CHAR(reg_date, 'YYYY-MM-DD HH24:MI:SS') AS reg_date, 
 			view_count, 
 			like_count, 
 			post_status_flag, 
@@ -73,7 +76,7 @@
 			p.member_nickname,
 			p.post_title, 
 			p.post_content, 
-			TO_CHAR(p.reg_date, 'YYYY-MM-DD HH24:MM:SS') AS reg_date, 
+			TO_CHAR(p.reg_date, 'YYYY-MM-DD HH24:MI:SS') AS reg_date, 
 			p.view_count, 
 			p.like_count, 
 			p.post_status_flag, 
@@ -123,14 +126,15 @@
 			member_no,			
 			member_nickname,
 			reply_content,		
-			TO_CHAR(reg_date,'YYYY-MM-DD HH24:MM:SS') AS reg_date,			
+			TO_CHAR(reg_date,'YYYY-MM-DD HH24:MI:SS') AS reg_date,			
 			like_count,		
 			reply_status_flag
 		FROM 
 			reply
 		WHERE 
 			post_no = #{postNo}
-			AND reply_status_flag = '0'
+			AND target_reply_no IS NULL
+		ORDER BY reply_no
 	</sql>
 
 	<select id="getPostListByBoard"   parameterType="Search"  resultMap="postResultMap">
@@ -178,7 +182,34 @@
 		FROM
 		(<include refid="select-post-list-search"/>)
 	</select>
-		
+	
+	<select id="getNoticePostList" parameterType="Search" resultMap="postResultMap">
+		SELECT 
+			post.post_no, 
+			post.board_no, 
+			post.board_name,
+			post.member_no, 
+			post.post_title, 
+			post.post_content, 
+			TO_CHAR(post.reg_date, 'YYYY-MM-DD HH24:MI:SS') AS reg_date, 
+			post.view_count, 
+			post.like_count, 
+			post.member_nickname, 
+			post.post_status_flag, 
+			post.post_notice_flag, 
+			post.notice_index,
+			post.cafe_url
+		FROM post, board
+		<where>
+			post.board_no = board.board_no
+			AND post.cafe_url = #{cafeURL}
+			AND (board.board_type = 'cb100' OR board.board_no = #{boardNo})
+			AND post.post_status_flag = '0'
+			AND post.post_notice_flag = '1'
+		</where>
+		ORDER BY notice_index
+	</select>
+	
 	<select id="getPostListByNotice" parameterType="Search" resultMap="postResultMap">
 		SELECT 
 			post.post_no, 
@@ -186,7 +217,7 @@
 			post.member_no, 
 			post.post_title, 
 			post.post_content, 
-			TO_CHAR(post.reg_date, 'YYYY-MM-DD HH24:MM:SS') AS reg_date, 
+			TO_CHAR(post.reg_date, 'YYYY-MM-DD HH24:MI:SS') AS reg_date, 
 			post.view_count, 
 			post.like_count, 
 			post.member_nickname, 
@@ -203,6 +234,42 @@
 		</where>
 		ORDER BY reg_date DESC
 	</select>
+	
+	<select id="getAllNoticePost" parameterType="Search" resultMap="postResultMap">
+		SELECT 
+			post.post_no, 
+			post.board_no,
+			post.board_name,  
+			post.member_no, 
+			post.post_title, 
+			post.post_content, 
+			TO_CHAR(post.reg_date, 'YYYY-MM-DD HH24:MI:SS') AS reg_date, 
+			post.view_count, 
+			post.like_count, 
+			post.member_nickname, 
+			post.post_status_flag, 
+			post.post_notice_flag, 
+			post.notice_index,
+			post.cafe_url
+		FROM post, board
+		<where>
+			post.board_no = board.board_no
+			AND post.cafe_url = #{cafeURL}
+			AND post.post_notice_flag = '1'
+		</where>
+		ORDER BY post.board_no, post.notice_index
+	</select>
+	
+	<update id="updateNoticePost" parameterType="list">
+		<foreach collection="list" item="item" separator =";" open="DECLARE BEGIN" close="; END;">
+			UPDATE 
+				post
+			SET 
+				notice_index  = #{item.noticeIndex }
+			WHERE 
+				post_no = #{item.postNo	}
+		</foreach>
+	</update>
 	
 	<insert id="addPost" parameterType="Post">
 		<selectKey resultType="int" keyProperty="postNo" order="AFTER">
@@ -263,7 +330,15 @@
 			post_no = #{postNo}
 	</update>
 	
-	<insert id="addReply">
+	<update id="deletePostList" parameterType="string">
+		UPDATE post
+		SET
+			post_status_flag = '1'
+		WHERE
+			post_no IN (${value})
+	</update>
+	
+	<insert id="addReply" parameterType="Reply">
 		INSERT 
 		INTO reply 
 			( reply_no,			
@@ -271,18 +346,36 @@
 				member_no,			
 				member_nickname,
 				reply_content,		
-				reg_date,			
-				like_count,		
-				reply_status_flag)
+				reg_date)
 		VALUES 
 			( SEQ_REPLY_REPLY_NO.NEXTVAL,
 				#{postNo},			
 				#{memberNo },      
-				#{memberNickname}, 
+				#{memberNickname }, 
 				#{replyContent},  	
-				#{regDate},  		
-				#{likeCount},     	
-				#{replyStatusFlag}) 
+				SYSDATE) 
+	</insert>
+	
+	<insert id="addReReply" parameterType="Reply">
+		INSERT 
+		INTO reply 
+			( reply_no,			
+				post_no,			
+				member_no,			
+				member_nickname,
+				target_reply_no,
+				target_reply_member,
+				reply_content,		
+				reg_date)
+		VALUES 
+			( SEQ_REPLY_REPLY_NO.NEXTVAL,
+				#{postNo },			
+				#{memberNo },      
+				#{memberNickname }, 
+				#{targetReplyNo },
+				#{targetReplyMember },
+				#{replyContent},  	
+				SYSDATE) 
 	</insert>
 	
 	<select id="getReplyList" parameterType="Search" resultMap="replyResultMap">
@@ -292,14 +385,33 @@
 			(SELECT
 			 inner_table.*, ROWNUM AS row_seq
 			 FROM 
-				 (<include refid="select-reply-list"/>) inner_table
+				 (<include refid="select-reply-list"/>
+				 ) inner_table
 				  <where>
 		 				AND ROWNUM &lt;= #{endRowNum}
 				  </where>)
 		<where>
 			row_seq BETWEEN #{startRowNum} AND #{endRowNum}
 		</where>
-		
+	</select>
+	
+	<select id="getReReplyList" parameterType="int" resultMap="replyResultMap">
+		SELECT
+			reply_no,			
+			post_no,			
+			member_no,			
+			member_nickname,
+			target_reply_no,
+			target_reply_Member,
+			reply_content,		
+			TO_CHAR(reg_date,'YYYY-MM-DD HH24:MI:SS') AS reg_date,			
+			like_count,		
+			reply_status_flag
+		FROM 
+			reply
+		WHERE 
+			target_reply_no = #{replyNo}
+		ORDER BY reply_no
 	</select>
 	
 	<select id="replyTotalCount" parameterType="Search" resultType="int">
@@ -309,9 +421,26 @@
 			(<include refid="select-reply-list"/>)
 	</select>
 	
+	
+	<select id="getReply" parameterType="int" resultMap="replyResultMap">
+		SELECT
+			reply_no,			
+			post_no,			
+			member_no,			
+			member_nickname,
+			reply_content,		
+			TO_CHAR(reg_date,'YYYY-MM-DD HH24:MI:SS') AS reg_date,			
+			like_count,		
+			reply_status_flag
+		FROM 
+			reply
+		WHERE 
+			reply_no = #{replyNo}
+	</select>
+	
 	<update id="updateReply" parameterType="Reply">
 		UPDATE
-			post
+			reply
 		SET
 			reply_content = #{replyContent}
 		WHERE
@@ -320,10 +449,88 @@
 	
 	<update id="deleteReply">
 		UPDATE
-			post
+			reply
 		SET
-			reply_status_flag = #{replyStatusFlag}
+			reply_status_flag = '1'
 		WHERE
 			reply_no = #{replyNo}
 	</update>
+	
+	<select id="getMyPostList" parameterType="int" resultMap="postResultMap">
+		SELECT
+		news.cafe_name, news.cafe_url, news.cafe_icon, news.post_no, news.board_name, news.post_title, news.post_content, news.member_nickname, news.reg_date 
+		FROM
+			(SELECT
+			c.cafe_name, c.cafe_icon, p.cafe_url, 
+			p.post_no, p.board_name, p.post_title, p.post_content, p.member_nickname, 
+			TO_CHAR(p.reg_date,'YYYY-MM-DD HH24:MI:SS') AS reg_date 
+			FROM cafe c, post p
+			WHERE c.url=p.cafe_url
+			AND p.post_status_flag='0'
+			AND cafe_url in(
+					SELECT
+					c.url
+					FROM 
+					cafe c, cafe_member m
+					WHERE
+					c.cafe_no=m.cafe_no
+					AND c.closed_flag='0'
+					AND m.user_no = #{userNo}
+					AND m.member_status_code in ('cs100')
+					)
+			ORDER BY p.reg_date DESC) news
+		WHERE rownum &lt; 11
+	</select>
+	
+	<update id="movePost" parameterType="Map">
+		UPDATE
+			post
+		SET
+			board_no = #{targetBoardNo},
+			board_name = #{targetBoardName}
+			
+		WHERE
+			post_no IN (${targetPostList})
+	</update>
+	
+	<update id="addLike" parameterType="Search">
+		UPDATE
+			<if test="searchCondition == 0">
+				post
+			</if>
+			<if test="searchCondition == 1">
+				reply
+			</if>
+		SET
+			like_count = like_count + 1
+		WHERE
+			<if test="searchCondition == 0">
+				post_no = #{postNo}
+			</if>
+			<if test="searchCondition == 1">
+				reply_no = #{replyNo}
+			</if>
+	</update>
+	
+	<select id="eventValidationCheck" parameterType="Search" resultType="int">
+		SELECT
+			COUNT(*) AS validationCount
+		FROM
+			(SELECT
+			 	*
+			 FROM
+			 	event_log
+			 WHERE
+			 	event_cafe_no = #{cafeNo}
+			 	AND event_user_no = #{userNo}
+			 	<if test="searchCondition == 0">
+			 		AND event_type = 'et101'
+			 		AND target_no = #{postNo}
+			 	</if>	
+			 	<if test="searchCondition == 1">
+			 		AND event_type = 'et102'
+			 		AND target_no = #{replyNo}
+			 	</if>
+			 	)
+	</select>
 </mapper>
