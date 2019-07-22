@@ -34,7 +34,8 @@
 			<div class="replyItem">
 				<div class="media media-reply">
 			        <div class="media-body">
-			        	<div class="replyItem reReplyItem">
+			        	<div class="replyItem">
+<%-- 			        		<c:if test="${replyList.postStatusFlag != '0' }"></c:if> --%>
 					            <div class="media mt-3">
 						            <img class="mr-3 circle-rounded circle-rounded" src="멤버아이콘" width="50" height="50" alt="댓글아이콘" onerror="this.src='/images/default-profile.jpg'">
 						            <div class="media-body" style="padding:0px;">
