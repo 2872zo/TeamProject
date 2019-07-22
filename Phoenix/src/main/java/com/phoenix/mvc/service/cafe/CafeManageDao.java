@@ -17,37 +17,40 @@ public interface CafeManageDao {
 	public List getCafeMemberList(Search search) throws Exception;
 
 	public int getCafeMemberCount(Search search) throws Exception;
-	
-	public List getCafeGradesByURL(Search search) throws Exception; 
+
+	public List getCafeGradesByURL(Search search) throws Exception;
 
 	public CafeMember getCafeMember(Search search) throws Exception;
-	
-	public int addCafeMemberBlock (CafeMember cafeMember) throws Exception;
-	
-	public List getCafeMemberBlocks (Search search) throws Exception;
-	
-	public int updateCafeMemberBlock (CafeMemberBlock cafeMemberBlock) throws Exception;
 
-	public int updateCafeMemeberGrade (CafeMember cafeMember) throws Exception;
+	public int addCafeMemberBlock(CafeMember cafeMember) throws Exception;
+
+	public List getCafeMemberBlocks(Search search) throws Exception;
+
+	public int updateCafeMemberBlock(CafeMemberBlock cafeMemberBlock) throws Exception;
+
+	public int updateCafeMemeberGrade(CafeMember cafeMember) throws Exception;
+
 /////////////////////////////////기황끝//////////////////////////////	
 ///////////////////////////////// 지니//////////////////////////////
-public List<CafeApplication> getCafeApplicationList(Search search);
+	public List<CafeApplication> getCafeApplicationList(Search search);
 
-public int getTotalCount(Search search);
+	public int getTotalCount(Search search);
 
-public void updateAcceptStatusCode(CafeApplication cafeApplication);
+	public void updateAcceptStatusCode(CafeApplication cafeApplication);
 
-public CafeApplication getCafeApplication2(int applicationNo);
+	public CafeApplication getCafeApplication2(int applicationNo);
 
-public List getCafeGrade(int cafeNo);
+	public List getCafeGrade(int cafeNo);
 
-public void addCafeGrade(CafeGrade cafeGrade);
+	public void addCafeGrade(CafeGrade cafeGrade);
 
-public void updateCafeGrade(CafeGrade cafeGrade);
+	public void updateCafeGrade(CafeGrade cafeGrade);
 
-public List checkCafeGrade(int cafeNo);
+	public List checkCafeGrade(int cafeNo);
 
-public boolean dropCafe(Cafe cafe);
+	public boolean dropCafe(Cafe cafe);
+	
+	public CafeGrade getNextGrade(int cafeGradeNo);
 
 ////////////////////////////////지니끝//////////////////////////////////
 
@@ -72,22 +75,21 @@ public boolean dropCafe(Cafe cafe);
 	public boolean updateCafeBoard(List<Board> existBoardList);
 
 	public boolean deleteCafeBoard(List<Board> deleteBoardList);
-	
 
 ///////////////////////////////////////// 예림 끝////////////////////////////////////////////////
 
 /////////////////////////////// 준호시작///////////////////////////////////////
-public void updateCafeInfo(Cafe cafe) throws Exception;
+	public void updateCafeInfo(Cafe cafe) throws Exception;
 
-public Cafe getCafeInfo(int cafeNo) throws Exception;
+	public Cafe getCafeInfo(int cafeNo) throws Exception;
 
-public int getCafeNoNo(String cafeName) throws Exception;
+	public int getCafeNoNo(String cafeName) throws Exception;
 
-public void updateCafeApplicationForm(Cafe cafe) throws Exception;
+	public void updateCafeApplicationForm(Cafe cafe) throws Exception;
 
-public Cafe getCafeName(String cafeName) throws Exception;
+	public Cafe getCafeName(String cafeName) throws Exception;
 
-public Cafe getCafeURL(String CafeURL) throws Exception;
+	public Cafe getCafeURL(String CafeURL) throws Exception;
 
 /////////////////////////////// 준호끝///////////////////////////////////////
 }

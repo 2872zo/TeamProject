@@ -148,6 +148,12 @@ public class CafeManageDaoImpl implements CafeManageDao {
 			return false;
 		}
 	}
+	
+	@Override
+	public CafeGrade getNextGrade(int cafeGradeNo) {
+		
+		return sqlSession.selectOne("CafeGradeMapper.nextGrade", cafeGradeNo);
+	}
 
 ////////////////////////////////지니끝//////////////////////////////////
 
@@ -300,13 +306,13 @@ public class CafeManageDaoImpl implements CafeManageDao {
 		return sqlSession.selectOne("CafeMapper.getCafeURL", URL);
 
 	}
-	
-	public int getCafeNoNo(String cafeName) throws Exception{
-		System.out.println("getCafeNoNo!!!!!!!!!!!!"+cafeName);
+
+	public int getCafeNoNo(String cafeName) throws Exception {
+		System.out.println("getCafeNoNo!!!!!!!!!!!!" + cafeName);
 		return sqlSession.selectOne("CafeMapper.getCafeNoNo", cafeName);
-		
+
 	}
-	
+
 /////////////////////////////// 준호끝///////////////////////////////////////
 
 }

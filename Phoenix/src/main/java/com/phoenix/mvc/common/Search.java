@@ -33,6 +33,21 @@ public class Search{
 	private int chatRoomNo;
 	private int friendStatus;
 	
+	//---------------------------explore 추가
+	private boolean engineAll;
+	private boolean engineNaver;
+	private boolean engineDaum;
+	private boolean engineGoogle;
+	
+	private int orderState; //정렬종류 0:정확도 1:시간
+	private String orderStateSort; // API method에 넣을 String
+	private int searchTheme; //검색 종류 //0:통합 1:블로그  2:카페 3:웹 4:이미지
+	private String searchThemeSort; // searchThemeType에 따라 담길 string
+	private String filter;// naverImageAPI 에서만 사용하는 검색조건
+	
+	private int searchEngine; //dao API method에서 사용할애 어떤 engine인지 0:다음, 1:네이버, 2:구글
+	//-----------------------------
+	
 	///Constructor
 	public Search() {
 	}
@@ -224,17 +239,100 @@ public class Search{
 		this.friendStatus = friendStatus;
 	}
 
+	public boolean isEngineAll() {
+		return engineAll;
+	}
+
+	public void setEngineAll(boolean engineAll) {
+		this.engineAll = engineAll;
+	}
+
+	public boolean isEngineNaver() {
+		return engineNaver;
+	}
+
+	public void setEngineNaver(boolean engineNaver) {
+		this.engineNaver = engineNaver;
+	}
+
+	public boolean isEngineDaum() {
+		return engineDaum;
+	}
+
+	public void setEngineDaum(boolean engineDaum) {
+		this.engineDaum = engineDaum;
+	}
+
+	public boolean isEngineGoogle() {
+		return engineGoogle;
+	}
+
+	public void setEngineGoogle(boolean engineGoogle) {
+		this.engineGoogle = engineGoogle;
+	}
+
+	public int getOrderState() {
+		return orderState;
+	}
+
+	public void setOrderState(int orderState) {
+		this.orderState = orderState;
+	}
+
+	public String getSearchThemeSort() {
+		return searchThemeSort;
+	}
+
+	public void setSearchThemeSort(String searchThemeSort) {
+		this.searchThemeSort = searchThemeSort;
+	}
+
+	public int getSearchEngine() {
+		return searchEngine;
+	}
+
+	public void setSearchEngine(int searchEngine) {
+		this.searchEngine = searchEngine;
+	}
+
+	public String getOrderStateSort() {
+		return orderStateSort;
+	}
+
+	public void setOrderStateSort(String orderStateSort) {
+		this.orderStateSort = orderStateSort;
+	}
+
+	public String getFilter() {
+		return filter;
+	}
+
+	public void setFilter(String filter) {
+		this.filter = filter;
+	}
+
+	public int getSearchTheme() {
+		return searchTheme;
+	}
+
+	public void setSearchTheme(int searchTheme) {
+		this.searchTheme = searchTheme;
+	}
+
 	@Override
 	public String toString() {
-
-
-
-		return "Search [userNo=" + userNo + ", memberNo=" + memberNo + ", cafeNo=" + cafeNo + ", cafeURL=" + cafeURL
-				+ ", boardNo=" + boardNo + ", boardName=" + boardName + ", postNo=" + postNo + ", replyNo=" + replyNo
-				+ ", searchCondition=" + searchCondition + ", searchKeyword=" + searchKeyword + ", currentPage="
-				+ currentPage + ", pageSize=" + pageSize + ", endRowNum=" + getEndRowNum() + ", startRowNum=" + getStartRowNum()
-				+ ", sortCode=" + sortCode + ", termStart=" + termStart + ", termEnd=" + termEnd + "]";
-
+		return "Search [userNo=" + userNo + ", memberNo=" + memberNo + ", memberGrade=" + memberGrade + ", cafeNo="
+				+ cafeNo + ", cafeURL=" + cafeURL + ", cafeType=" + cafeType + ", boardNo=" + boardNo + ", boardName="
+				+ boardName + ", postNo=" + postNo + ", replyNo=" + replyNo + ", status=" + status + ", sortCode="
+				+ sortCode + ", searchCondition=" + searchCondition + ", searchKeyword=" + searchKeyword
+				+ ", currentPage=" + currentPage + ", pageSize=" + pageSize + ", endRowNum=" + endRowNum
+				+ ", startRowNum=" + startRowNum + ", termStart=" + termStart + ", termEnd=" + termEnd
+				+ ", targetUserNo=" + targetUserNo + ", chatNo=" + chatNo + ", chatRoomNo=" + chatRoomNo
+				+ ", friendStatus=" + friendStatus + ", engineAll=" + engineAll + ", engineNaver=" + engineNaver
+				+ ", engineDaum=" + engineDaum + ", engineGoogle=" + engineGoogle + ", orderState=" + orderState
+				+ ", searchTheme=" + searchTheme + "]";
 	}
+
+	
 
 }//end of class

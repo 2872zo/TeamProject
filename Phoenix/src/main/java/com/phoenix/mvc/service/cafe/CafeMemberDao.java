@@ -17,7 +17,7 @@ public interface CafeMemberDao {
 /////////////////////////////////지니//////////////////////////////
 	public void addCafeApplication(CafeApplication cafeApplication);// 카페가입신청
 
-	public void updateCafeMember(CafeMember cafeMember);// 카페탈퇴
+	public int updateCafeMember(CafeMember cafeMember);// 카페탈퇴
 
 	public void addCafeMember(CafeMember cafeMember);// 가입승인
 	

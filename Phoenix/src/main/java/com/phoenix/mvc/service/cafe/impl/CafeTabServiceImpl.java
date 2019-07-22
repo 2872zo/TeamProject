@@ -29,7 +29,7 @@ import com.phoenix.mvc.service.domain.User;
 public class CafeTabServiceImpl implements CafeTabService {
 
 	@Autowired
-	@Qualifier("cafeTabDaoImpl")	
+	@Qualifier("cafeTabDaoImpl")
 	private CafeTabDao cafeTabDao;
 
 	@Autowired
@@ -47,22 +47,20 @@ public class CafeTabServiceImpl implements CafeTabService {
 	@Autowired
 	@Qualifier("cafePostServiceImpl")
 	private CafePostService cafePostServiceImpl;
-	
+
 	@Autowired
 	@Qualifier("cafeManageServiceImpl")
 	private CafeManageService cafeManageService;
-	
+
 	public void setCafeDao(CafeTabDao cafeDao) {
-	this.cafeTabDao= cafeDao;
+		this.cafeTabDao = cafeDao;
 	}
-	
-	public void setCafeManageDao (CafeManageDao cafeManageDao)
-	{
+
+	public void setCafeManageDao(CafeManageDao cafeManageDao) {
 		this.cafeManageDao = cafeManageDao;
 	}
-	
-	public void setCafeMemberDao(CafeMemberDao cafeMemberDao)
-	{
+
+	public void setCafeMemberDao(CafeMemberDao cafeMemberDao) {
 		this.cafeMemberDao = cafeMemberDao;
 	}
 
@@ -73,69 +71,68 @@ public class CafeTabServiceImpl implements CafeTabService {
 	public CafeTabServiceImpl() {
 		System.out.println(getClass().getName() + "default Constuctor");
 	}
-	///////////////////////////////준호시작///////////////////////////////////////		
+
+	/////////////////////////////// 준호시작///////////////////////////////////////
 	@Override
 	public void addCafe(Cafe cafe) throws Exception {
 		cafeTabDao.addCafe(cafe);
-		
-		CafeGrade cafeGrade= new CafeGrade();
-		
+
+		CafeGrade cafeGrade = new CafeGrade();
+
 		cafeGrade.setCafeNo(cafe.getCafeNo());
-		
+
 		cafeTabDao.addMemberGrade(cafeGrade);
-		
+
 		Board board = new Board();
-		
+
 		board.setCafeNo(cafe.getCafeNo());
-		
+
 		board.setCafeURL(cafe.getCafeURL());
-		
+
 		cafeTabDao.addBoard(board);
-		
+
 		CafeMember cafeMember = new CafeMember();
 
 		System.out.println("gkgkgkgk");
-		
-		System.out.println("여긴 서비스임플 카페다아아아"+cafe);
-		
-		
+
+		System.out.println("여긴 서비스임플 카페다아아아" + cafe);
+
 	}
-	
+
 	public boolean checkCafeNameDuplication(String cafeName) throws Exception {
-		
-		
-		boolean result=true;
-		System.out.println("cafeName!!!!!!!!!!!!!!!!!!!!!!!"+cafeName);
-		
+
+		boolean result = true;
+		System.out.println("cafeName!!!!!!!!!!!!!!!!!!!!!!!" + cafeName);
+
 		Cafe cafe = cafeManageDao.getCafeName(cafeName);
-		
-		System.out.println("cafe!!!!!!!!!!!!!!!!!!!!!!!"+cafe);
-		
-		if(cafe != null) {
-			result=false;
+
+		System.out.println("cafe!!!!!!!!!!!!!!!!!!!!!!!" + cafe);
+
+		if (cafe != null) {
+			result = false;
 		}
 		return result;
 	}
-	
+
 	public boolean checkCafeURLDuplication(String CafeURL) throws Exception {
-		
-		boolean result=true;
-		System.out.println("URL!!!!!!!!!!!!!!!!!!!!!!!"+CafeURL);
+
+		boolean result = true;
+		System.out.println("URL!!!!!!!!!!!!!!!!!!!!!!!" + CafeURL);
 		Cafe cafe = cafeManageDao.getCafeURL(CafeURL);
-		
-		System.out.println("URL!!!!!!!!!!!!!!!!!!!!!!!"+CafeURL);
-		
-		if(cafe != null) {
-			result=false;
+
+		System.out.println("URL!!!!!!!!!!!!!!!!!!!!!!!" + CafeURL);
+
+		if (cafe != null) {
+			result = false;
 		}
 		return result;
 	}
-	
-	///////////////////////////////준호끝///////////////////////////////////////	
+
+	/////////////////////////////// 준호끝///////////////////////////////////////
 
 //////////////////////////////////////예림시작/////////////////////////////////////
 	@Override
-	public Map getCafeMain(User user, String cafeURL) { // 예림예림
+	public Map getCafeMain(User user, String cafeURL) throws Exception { // 예림예림
 
 		CafeMember cafeMember = new CafeMember();
 		Map map = new HashMap();
@@ -171,6 +168,44 @@ public class CafeTabServiceImpl implements CafeTabService {
 		List boardList = cafeManageDao.getCafeBoard(cafeNo);
 		map.put("boardList", boardList);
 
+		//// !!!!!!!!지니 자동등업 추가!!!!!!!!/////
+
+		int myGradeNo = cafeMember.getCafeMemberGradeNo();
+		int nextGradeNo = 0;
+		CafeGrade cafeGrade = new CafeGrade();
+
+		CafeGrade myGrade = cafeManageDao.getNextGrade(myGradeNo);
+
+		if (!myGrade.getMemberGradeCode().equals("cg100") && !myGrade.getMemberGradeCode().equals("cg101")) {// 현재 등급이 카페멤버만 자동등업
+																												
+			List cafeGradeList = cafeManageDao.getCafeGrade(cafeNo);
+
+			for (int i = 0; i < cafeGradeList.size(); i++) {
+				CafeGrade next = (CafeGrade) cafeGradeList.get(i);
+
+				if (next.getCafeGradeNo() > myGradeNo) {// 다음등급번호찾기
+					nextGradeNo = next.getCafeGradeNo();
+					break;
+
+				}
+
+			}
+
+			CafeGrade nextGrade = cafeManageDao.getNextGrade(nextGradeNo);
+
+			if (nextGrade.isAutoUpgradeFlag() && !nextGrade.getMemberGradeCode().equals("cg100")
+					&& !nextGrade.getMemberGradeCode().equals("cg101")) {// 다음등급이 자동등업이고, 다음등급이 매니저 스탭이 아닐때
+
+				if (nextGrade.getRequiredPostCount() <= cafeMember.getPostCount()
+						&& nextGrade.getRequiredReplyCount() <= cafeMember.getReplyCount()
+						&& nextGrade.getRequiredVisitCount() <= cafeMember.getVisitCount()) {// 출석수,댓글,게시글수 조건 만족할때
+
+					cafeMember.setCafeMemberGradeNo(nextGradeNo);
+					cafeManageDao.updateCafeMemeberGrade(cafeMember);
+				}
+			}
+		}
+
 		return map;
 	}
 
@@ -183,30 +218,28 @@ public class CafeTabServiceImpl implements CafeTabService {
 	public Map getCafeHome(Search search) throws Exception {
 		Map map = new HashMap();
 		List myCafelist = new ArrayList();
-		if (search.getStatus()==2) {
+		if (search.getStatus() == 2) {
 			myCafelist = cafeTabDao.getMyOwnCafeList(search);
-		}
-		else {
+		} else {
 			myCafelist = cafeTabDao.getMyCafeList(search);
 		}
 		List categorizedCafeList = cafeTabDao.getCategorizedCafeList(search);
-		map.put("myCafelist",myCafelist);
-		map.put("categorizedCafeList",categorizedCafeList);
+		map.put("myCafelist", myCafelist);
+		map.put("categorizedCafeList", categorizedCafeList);
 		return map;
 	}
-	
 
 	@Override
 	public Map getCafeApplicationListForUser(Search search) throws Exception {
 		// TODO Auto-generated method stub
 		Map map = new HashMap();
-		
+
 		List applicationList = cafeTabDao.getCafeApplicationListForUser(search.getUserNo());
 		int totalCount = cafeTabDao.countCafeApplicationListForUser(search.getUserNo());
-		
+
 		map.put("applicationList", applicationList);
 		map.put("totalCount", new Integer(totalCount));
-	
+
 		return map;
 	}
 
@@ -220,8 +253,8 @@ public class CafeTabServiceImpl implements CafeTabService {
 			cafeList = cafeTabDao.searchCafe(search);
 			Map postMap = cafePostServiceImpl.getPostListBySearch(search);
 			postList = (List) postMap.get("postList");
-			//totalCount = (int) postMap.get("postTotalCount");
-			//postList = cafeTabDao.seachPost(search);
+			// totalCount = (int) postMap.get("postTotalCount");
+			// postList = cafeTabDao.seachPost(search);
 			map.put("cafeList", cafeList);
 			map.put("postList", postList);
 			map.put("totalCount", new Integer(10));
@@ -257,10 +290,10 @@ public class CafeTabServiceImpl implements CafeTabService {
 	public Map getNewsFeed(int userNo) throws Exception {
 		// TODO Auto-generated method stub
 		Map map = new HashMap();
-		
+
 		List newsFeed = cafePostDao.getMyPostList(userNo);
 		map.put("newsFeed", newsFeed);
-		
+
 		return map;
 	}
 
@@ -269,7 +302,7 @@ public class CafeTabServiceImpl implements CafeTabService {
 		// TODO Auto-generated method stub
 		return cafeMemberDao.updateFavorite(cafeMember);
 	}
-	
+
 	////////////////////////////// 기황끝//////////////////////////////
 
 }

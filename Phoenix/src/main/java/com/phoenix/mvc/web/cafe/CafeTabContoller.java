@@ -206,7 +206,7 @@ public class CafeTabContoller {
 ////////////////////////////////////////////// 예림시작
 ////////////////////////////////////////////// ////////////////////////////////////////////////
 //@RequestMapping("/{cafeURL}")
-	public String getCafeMain(@PathVariable String cafeURL, HttpSession session, Model model) {
+	public String getCafeMain(@PathVariable String cafeURL, HttpSession session, Model model) throws Exception {
 		System.out.println("/cafe/{cafeURL}");
 
 // 승규 getBoardPostList Service 불러오면 안되잖아. 그럼 바로 dao부르나?? 내가 메서드를 만들어야겠네.

@@ -103,14 +103,7 @@
             Nav header start
         ***********************************-->
 		<div class="nav-header">
-			<div class="brand-logo">
-				<a href="index.html"> <b class="logo-abbr"><img
-						src="/images/logo.png" alt=""> </b> <span class="logo-compact"><img
-						src="/images/logo-compact.png" alt=""></span> <span
-					class="brand-title"> <img src="/images/logo-text.png" alt="">
-				</span>
-				</a>
-			</div>
+			<c:import url="/WEB-INF/views/common/brand-logo.jsp"/>
 		</div>
 		<!--**********************************
             Nav header end
@@ -299,7 +292,7 @@
             Content body start
         ***********************************-->
 		<div class="content-body">
-			<div class="row page-titles mx-0">
+			<div class="row page-titles mx-0" style="margin:0px;">
 				<div class="col p-md-0">
 					<ol class="breadcrumb">
 					</ol>
@@ -377,13 +370,11 @@
 										</c:forEach>
 
 										<tr>
-											<td colspan="3"></td>
-											<td>
+											<td colspan="5">
 												<c:import url="/WEB-INF/views/common/pageNavigator.jsp">
 													<c:param name="subject" value="Post" />
 												</c:import>
 											</td>
-											<td colspan="1"></td>
 											<td style="text-align: center;">
 												<span><input type="button" name="addPostButton" class="btn mb-1 btn-outline-dark btn-sm" value="글쓰기"></span>
 												<span><input type="button" name="movePostButton" class="btn mb-1 btn-outline-dark btn-sm" value="이동"></span>

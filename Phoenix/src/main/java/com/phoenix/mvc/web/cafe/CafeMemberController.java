@@ -75,10 +75,10 @@ public class CafeMemberController {
 
 		System.out.println(cafeApplication);
 
-		 //userNo 받아오깅
-		 User user = (User) request.getSession().getAttribute("user");
-		 int userNo = user.getUserNo();
-		//int userNo = 10008;
+		// userNo 받아오깅
+		User user = (User) request.getSession().getAttribute("user");
+		int userNo = user.getUserNo();
+		// int userNo = 10008;
 
 		if (cafeApplication.isAutoApplicationAcceptFlag()) {// 자동가입승인 ca103, 카페멤버 추가
 			cafeApplication.setUserNo(userNo);
@@ -97,25 +97,7 @@ public class CafeMemberController {
 			cafeMemberService.addCafeApplication(cafeApplication);
 		}
 
-		return "cafe/{cafeURL}/main";// 해당카페메인으로 이동!
-
-	}
-
-	@RequestMapping(value = "/{cafeURL}/updateCafeMember", method = RequestMethod.GET) // 카페탈퇴
-	public String updateCafeMember(@ModelAttribute("Search") Search search, @RequestParam int memberNo)
-			throws Exception {
-
-		System.out.println("/cafe/{cafeURL}/updateCafeMember : GET");
-		System.out.println(search);
-
-		search.setMemberNo(memberNo);
-		CafeMember cafeMember = cafeMemberService.getCafeMember(search);
-
-		System.out.println(cafeMember);
-
-		cafeMemberService.updateCafeMember(cafeMember);
-
-		return "cafe/{cafeURL}/home";// 메인으로 이동!
+		return "redirect:/cafe/" + cafeApplication.getCafeURL() + "/";// 해당카페메인으로 이동!
 
 	}
 
