@@ -16,6 +16,9 @@
 <link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
 <link href="/css/style.css" rel="stylesheet">
 
+<!-- Date picker plugins css -->
+<link href="/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet">
+
 <link rel="stylesheet" href="/css/custom/scroll-top.css">
 <link rel="stylesheet" href="/css/custom/advenced-search.css">
 <script src="https://kit.fontawesome.com/e589319d43.js"></script>
@@ -300,99 +303,102 @@
             Content body start
         ***********************************-->
 		<div class="content-body">
-			<div class="row page-titles mx-0">
-<!-- 				<div class="col p-md-0"> -->
-<!-- 					<ol class="breadcrumb"> -->
-<!-- 					</ol> -->
-<!-- 				</div> -->
-
-				
-
-				<div class="row">
-					<div class="col-md-12">
-
-
-						<div class="input-group mb-3">
-							<input type="text" class="form-control input-default" name="searchKeyword" id="searchKeyword" />
-							<div class="input-group-append">
-								<button type="button" class="btn btn-primary">
-										<span class="searchIcon" aria-hidden="true" id="submitButton"></span>
-								</button>
-							</div>
-						</div>
-
-
-						<div class="input-group" id="adv-search">
-							<input type="text" class="form-control input-default" name="searchKeyword" id="searchKeyword" />
-							<div class="input-group-btn">
-								<div class="btn-group" role="group">
-									<div class="dropdown dropdown-lg">
+			<div class="row page-titles mx-0" style="margin:0px;">
+                <div class="col p-md-0">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0)">Home</a></li>
+                    </ol>
+                </div>
+            </div>
+			
+				<div class="col-lg-12">
+					<div class="card">
+						<div class="card-body">
+							<form class="form-horizontal" role="form" id="searchForm">
+								<div class="form-row">
+									<input type="hidden" name="currentPage">
 									
-										<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-											<span class="caret"></span>
-										</button>
-										
-										<div class="dropdown-menu dropdown-menu-right" role="menu">
-											<form class="form-horizontal" role="form" id="searchForm">
-												<input type="hidden" name="currentPage">
-												<div class="form-group">
-													<label for="termStart">기간 시작</label> 
-													<input class="form-control" type="text" id="termStart" name="termStart" readonly="readonly">
-												</div>
-
-												<div class="form-group">
-													<label for="termEnd">시작 끝</label> 
-													<input class="form-control" type="text" id="termEnd" name="termEnd" readonly="readonly">
-												</div>
-
-												<div class="form-group">
-													<label for="boardNo">게시판</label> 
-													<select	class="form-control hideOption" name="boardNo">
-														<option value="0" class="boardOption">전체</option>
-														<c:forEach var="board" items="${boardOption }">
-															<option value="${board.boardNo }" class="boardOption">${board.boardName }</option>
-														</c:forEach>
-													</select>
-												</div>
-
-												<div class="form-group">
-													<label for="searchCondition">구분</label> <select
-														class="form-control hideOption" name="searchCondition">
-														<option value="0" class="searchOption">전체</option>
-														<option value="1" class="searchOption">호칭</option>
-														<option value="2" class="searchOption">제목</option>
-														<option value="3" class="searchOption">내용</option>
-														<option value="4" class="searchOption">댓글</option>
-													</select>
-												</div>
-
-												<div class="form-group">
-													<label for="searchKeyword">키워드</label> <input type="text"
-														class="form-control" name="searchKeyword"
-														id="advSearchKeyword">
-												</div>
-
-												<button type="submit" class="btn btn-primary"
-													style="margin-left: 15px; margin-right: 15px;"
-													id="advSubmitButton">
-													<span class="searchIcon" aria-hidden="true"></span>
-												</button>
-											</form>
+									<div class="col">
+										<div class="form-group">
+											<label for="termStart">기간 시작</label> 
+											<div class="input-group">
+												<input class="form-control" type="text" id="termStart" name="termStart" readonly="readonly" style="text-align:center;">
+												<span class="input-group-append">
+													<span class="input-group-text">
+														<i class="mdi mdi-calendar-check"></i>
+													</span>
+												</span>
+											</div>
 										</div>
 									</div>
-
-									<button type="button" class="btn btn-primary">
-										<span class="searchIcon" aria-hidden="true" id="submitButton"></span>
-									</button>
-
+									
+									<div class="col">
+										<div class="form-group">
+											<label for="termEnd">기간 끝</label>
+											<div class="input-group"> 
+												<input class="form-control" type="text" id="termEnd" name="termEnd" readonly="readonly" style="text-align:center;">
+												<span class="input-group-append">
+													<span class="input-group-text">
+														<i class="mdi mdi-calendar-check"></i>
+													</span>
+												</span>
+											</div>
+										</div>
+									</div>
+		
+									<div class="col">
+										<div class="form-group">
+											<label for="boardNo">게시판</label> 
+											<select	class="form-control hideOption" name="boardNo">
+												<option value="0" class="boardOption">전체</option>
+												<c:forEach var="board" items="${boardOption }">
+													<option value="${board.boardNo }" class="boardOption">${board.boardName }</option>
+												</c:forEach>
+											</select>
+										</div>
+									</div>
 								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-			</div>
-			<div id="container-fluid">
+								
+								<div class="form-row">
+									<div class="col">	
+										<div class="form-group">
+											<label for="searchCondition">구분</label> <select
+												class="form-control hideOption" name="searchCondition">
+												<option value="0" class="searchOption">전체</option>
+												<option value="1" class="searchOption">호칭</option>
+												<option value="2" class="searchOption">제목</option>
+												<option value="3" class="searchOption">내용</option>
+												<option value="4" class="searchOption">댓글</option>
+											</select>
+										</div>
+									</div>
+									
+									
+									<div class="col">
+										<div class="form-group">
+											<label for="searchKeyword">키워드</label> 
+											<div class="input-group">
+												<input type="text" class="form-control" name="searchKeyword" id="advSearchKeyword">
+												<div class="input-group-append">
+	                                                <button type="submit" class="btn btn-primary" style="margin:0px; padding:7px;" id="advSubmitButton">
+														<span class="searchIcon" aria-hidden="true" style="vertical-align:middle;"></span>
+													</button>
+	                                            </div>
+                                            </div>
+										</div>
+									</div>
+								
+								</div><!-- form-row end -->
+							</form><!-- form end -->
+							
+						</div><!-- row end -->
+					</div><!-- card-body end -->
+				</div><!-- card end -->
+			
+			
+			
+			
 				<div class="col-lg-12">
 					<div class="card">
 						<div class="card-body">
@@ -449,6 +455,8 @@
 			<!-- row -->
 
 		</div>
+		</div>
+		
 		<!--**********************************
             Content body end
         ***********************************-->
@@ -580,7 +588,11 @@
     </script>
 
 	<!-- 이 페이지 전용 script -->
-	
+	<script src="/plugins/moment/moment.js"></script>
+    <script src="/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+    <!-- Date Picker Plugin JavaScript -->
+    <script src="/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+    
 	<script>
 			var cafeURL = '${search.cafeURL}';
 
@@ -606,8 +618,17 @@
 
 			//datePicker 생성
 			$(function(){
-				$( "#termStart" ).datepicker({dateFormat:'yy-mm-dd'});
-			    $( "#termEnd" ).datepicker({dateFormat:'yy-mm-dd'});
+				$('#termStart').datepicker({
+			    	format:'yy-mm-dd',
+			        autoclose: true,
+			        todayHighlight: true
+			    });
+
+			    $('#termEnd').datepicker({
+			    	format:'yy-mm-dd',
+			        autoclose: true,
+			        todayHighlight: true
+			    });
 			});
 			
 			//검색조건 유지

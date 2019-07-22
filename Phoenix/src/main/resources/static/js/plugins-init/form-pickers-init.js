@@ -49,9 +49,11 @@
     $(".gradient-colorpicker").asColorPicker({
         mode: 'gradient'
     });
+    
     // Date Picker
     jQuery('.mydatepicker, #datepicker').datepicker();
     jQuery('#datepicker-autoclose').datepicker({
+    	format:'yy-mm-dd',
         autoclose: true,
         todayHighlight: true
     });
