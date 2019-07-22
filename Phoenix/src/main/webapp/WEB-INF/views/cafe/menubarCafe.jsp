@@ -47,39 +47,40 @@
 					            </div>
 					        </div>
 					        <div class="tab-pane fade" id="profile8" role="tabpanel">
-					        	
-					        	<!-- ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ -->
-		                                <div class="media align-items-center mb-4">
-		                                    <img class="mr-3" src="/images/default-profile.jpg" width="80" height="80" style="object-fit: cover; border-radius: 50%;" alt="">
-		                                    <div class="media-body">
-		                                        <h3 class="mb-0">${cafeMember.memberNickname}</h3>
-		                                        <p class="text-muted mb-0">${cafeMember.gradeName}</p>
-		                                    </div>
-		                                </div>
-		                                <ul class="card-profile__info">
-		                                    <li class="mb-1"><strong class="text-dark mr-4" style="margin-left: 10px;">가입일</strong> <span style="float: right; margin-right: 10px;">${cafeMember.regDate}</span></li>
-		                                    <li class="mb-1"><strong class="text-dark mr-4" style="margin-left: 10px;">출석</strong> <span style="float: right; margin-right: 10px;">${cafeMember.visitCount}</span></li>
-		                                    <li class="mb-1"><strong class="text-dark mr-4 myPost cursor" style="margin-left: 10px;">내가 쓴 글 보기</strong> <span class="myPost cursor" style="float: right; margin-right: 10px;">${cafeMember.postCount }</span></li>
-		                                    <li class="mb-1"><strong class="text-dark mr-4 myReply cursor" style="margin-left: 10px;">내가 쓴 댓글보기</strong> <span class="myReply cursor" style="float: right; margin-right: 10px;">${cafeMember.replyCount }</span></li>
-		                                    <li style="margin-left: 40px; margin-right: 80px;"><button type="button" class="btn mb-1 btn-rounded btn-outline-dark updateProfile">프로필수정</button></li>
-		                                </ul>
-					        <!-- ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ -->
+					        	<c:if test="${!empty cafeMember }">
+	                                <div class="media align-items-center mb-4">
+	                                    <img class="mr-3" src="/images/default-profile.jpg" width="80" height="80" style="object-fit: cover; border-radius: 50%;" alt="">
+	                                    <div class="media-body">
+	                                        <h3 class="mb-0">${cafeMember.memberNickname}</h3>
+	                                        <p class="text-muted mb-0">${cafeMember.gradeName}</p>
+	                                    </div>
+	                                </div>
+	                                <ul class="card-profile__info">
+	                                    <li class="mb-1"><strong class="text-dark mr-4" style="margin-left: 10px;">가입일</strong> <span style="float: right; margin-right: 10px;">${cafeMember.regDate}</span></li>
+	                                    <li class="mb-1"><strong class="text-dark mr-4" style="margin-left: 10px;">출석</strong> <span style="float: right; margin-right: 10px;">${cafeMember.visitCount}</span></li>
+	                                    <li class="mb-1"><strong class="text-dark mr-4 myPost cursor" style="margin-left: 10px;">내가 쓴 글 보기</strong> <span class="myPost cursor" style="float: right; margin-right: 10px;">${cafeMember.postCount }</span></li>
+	                                    <li class="mb-1"><strong class="text-dark mr-4 myReply cursor" style="margin-left: 10px;">내가 쓴 댓글보기</strong> <span class="myReply cursor" style="float: right; margin-right: 10px;">${cafeMember.replyCount }</span></li>
+	                                    <li style="text-align: center;">
+	                                    	<button class="btn mb-1 btn-rounded btn-outline-dark">
+	                                    		프로필수정
+	                                    	</button>
+	                                    </li>
+	                                    
+										<c:if test="${cafeMember.memberGrade eq 'cg100' }">
+											<li style="text-align: center;">
+												<button class="btn mb-1 btn-rounded btn-outline-dark updateProfile" name="toManage">내 카페 관리</button>
+											</li>
+										</c:if> 
+										
+	                                </ul>
+                                </c:if>
+													        
+								<c:if test="${empty cafeMember}">
+									<li>
+										<button class="btn mb-1 btn-rounded btn-outline-dark addMember" name="toManage">카페가입</button>
+									</li>
+								</c:if>
 					        
-					        
-									<c:if test="${cafeMember.memberGrade eq 'cg100' }">
-										<input type="button" value="내 카페 관리" name="toManage">
-									</c:if> 
-									
-									<c:if test="${empty cafeMember}">
-									<br/>
-									<div class="addMember">
-										카페가입
-									</div>
-									</c:if>
-									<br/>
-									<c:if test="${!empty cafeMember.memberNo}">
-									
-									</c:if>
 					        </div>
 					    </div>
 					</div>
@@ -93,7 +94,7 @@
 		<li>
 			<span class="nav-text">
 				<form name="InnerSearch">
-						<input type="text" class="form-control input-rounded" id="menubarSearch" name="searchKeyword" placeholder="카페 내부 검색" style="width:200px; margin:20px">
+						<input type="text" class="form-control input-rounded" id="menubarSearch" name="searchKeyword" placeholder="카페 내부 검색" style="width:200px; margin:20px; text-align: center;">
 				</form>
 			</span>
 		</li>
@@ -101,10 +102,10 @@
 			
 			
 			<c:forEach var="board" items="${boardList}">
-				<li>
+				<li style="text-align: center;">
 					<c:if test="${board.boardType != 'cb102'}">
 		         		<a href="javascript:fncGetBoardPostList('${board.boardNo}','no1cafe')" aria-expanded="false">
-			            	<i class="icon-badge menu-icon"></i>
+			            	<i class="icon-note menu-icon"></i>
 			            	<span class="nav-text">
 								${board.boardName}
 							</span>
@@ -127,8 +128,8 @@
 			            <div class="card">
 			                <div class="card-body">
 			                    <div class="card-content">
-			                        <div class="sweetalert m-t-30">
-			                            <button class="btn btn-warning sweet-withdraw" style="background-color:#FFAF00;">카페 탈퇴</button>
+			                        <div class="sweetalert m-t-30" style="text-align: center;">
+			                            <button class="btn btn-primary sweet-withdraw">카페 탈퇴</button>
 			                        </div>
 			                    </div>
 			                </div>

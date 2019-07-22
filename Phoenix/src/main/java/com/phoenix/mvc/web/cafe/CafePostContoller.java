@@ -134,6 +134,12 @@ public class CafePostContoller {
 		CafeMember cafeMember = cafeMemberService.getCafeMember(search);
 		// 메뉴바를 위한 게시판 목록 - 카페URL
 		List<Board> boardList = cafeManageService.getCafeBoard(search);
+		
+		for(Board board : boardList) {
+			if(board.getBoardNo() == search.getBoardNo()) {
+				search.setBoardName(board.getBoardName());
+			}
+		}
 
 		// 메뉴바를 위한 속성
 		map.put("cafeURL", search.getCafeURL());
@@ -151,12 +157,28 @@ public class CafePostContoller {
 	}
 
 	@GetMapping("/cafe/{cafeURL}/addPost")
-	public String addPostView(@ModelAttribute Search search, Map<String, Object> map) {
+	public String addPostView(@ModelAttribute Search search, Map<String, Object> map) throws Exception {
 
-		search.setSearchCondition("1");
+		// 메뉴바를 위한 임시 데이터
+		search.setMemberNo(10000);
+		// 메뉴바를 위한 카페 멤버 정보
+		CafeMember cafeMember = cafeMemberService.getCafeMember(search);
+		// 메뉴바를 위한 게시판 목록 - 카페URL
 		List<Board> boardList = cafeManageService.getCafeBoard(search);
+		
+		// 검색옵션의 게시판목록을 위한 작업
+		List<Board> boardOption = new ArrayList<Board>();
+		boardOption.addAll(boardList);
+		// 구분선 모두 처리
+		Predicate<Board> condition = board -> board.getBoardType().equals("cb102");
+		boardOption.removeIf(condition);
+		
 
+		// 메뉴바를 위한 속성
+		map.put("cafeURL", search.getCafeURL());
+		map.put("cafeMember", cafeMember);
 		map.put("boardList", boardList);
+		map.put("boardOption", boardOption);
 
 		return "/cafe/addCafePost";
 	}
