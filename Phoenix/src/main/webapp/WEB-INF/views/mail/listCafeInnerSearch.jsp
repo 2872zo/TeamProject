@@ -17,7 +17,6 @@
 <link href="/css/style.css" rel="stylesheet">
 
 <link rel="stylesheet" href="/css/custom/scroll-top.css">
-<link rel="stylesheet" href="/css/custom/advenced-search.css">
 <script src="https://kit.fontawesome.com/e589319d43.js"></script>
 
 
@@ -306,32 +305,16 @@
 <!-- 					</ol> -->
 <!-- 				</div> -->
 
-				
-
 				<div class="row">
 					<div class="col-md-12">
-
-
-						<div class="input-group mb-3">
-							<input type="text" class="form-control input-default" name="searchKeyword" id="searchKeyword" />
-							<div class="input-group-append">
-								<button type="button" class="btn btn-primary">
-										<span class="searchIcon" aria-hidden="true" id="submitButton"></span>
-								</button>
-							</div>
-						</div>
-
-
 						<div class="input-group" id="adv-search">
 							<input type="text" class="form-control input-default" name="searchKeyword" id="searchKeyword" />
 							<div class="input-group-btn">
 								<div class="btn-group" role="group">
 									<div class="dropdown dropdown-lg">
-									
 										<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 											<span class="caret"></span>
 										</button>
-										
 										<div class="dropdown-menu dropdown-menu-right" role="menu">
 											<form class="form-horizontal" role="form" id="searchForm">
 												<input type="hidden" name="currentPage">
