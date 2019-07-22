@@ -198,7 +198,10 @@
 		
         <!--**********************************
             Nav header start
-        ***********************************-->
+        ***********************************-->	
+        <!-- ToolBar Start /////////////////////////////////////-->
+		<jsp:include page="../common/cafeManageTollbar.jsp" />
+		<!-- ToolBar End /////////////////////////////////////-->
        
         <!--**********************************
             Nav header end
@@ -215,7 +218,9 @@
         <!--**********************************
             Sidebar start
         ***********************************-->
-       
+       	<div class="nk-sidebar">
+			<c:import url="/WEB-INF/views/common/cafeManageMenubar.jsp"></c:import>
+		</div>
         <!--**********************************
             Sidebar end
         ***********************************-->
@@ -257,7 +262,7 @@
 					<div class="col-md-2">
 						<div class="card text-center">
 							<div class="card-body">
-								<h5 class="card-title">방문자 수</h5>
+								<h5>방문자 수</h5>
 								<h4 class="card-text" id="et100">
 									<c:if test="${empty statisticMap['et100']}">0</c:if>
 									${statisticMap['et100']}
@@ -269,7 +274,7 @@
 					<div class="col-md-2">
 						<div class="card text-center">
 							<div class="card-body">
-								<h5 class="card-title">작성게시글 수</h5>
+								<h5>게시글 수</h5>
 								<h4 class="card-text" id="et103">
 									<c:if test="${empty statisticMap['et103']}">0</c:if>
 									${statisticMap['et103']}
@@ -281,7 +286,7 @@
 					<div class="col-md-2">
 						<div class="card text-center">
 							<div class="card-body">
-								<h5 class="card-title">작성댓글 수 </h5>
+								<h5>댓글 수 </h5>
 								<h4 class="card-text" id="et104">
 									<c:if test="${empty statisticMap['et104']}">0</c:if>
 									${statisticMap['et104']}
@@ -293,7 +298,8 @@
 					<div class="col-md-2">
 						<div class="card text-center">
 							<div class="card-body">
-								<h5 class="card-title">가입신청인 수 </h5>
+								<h5>가입</h5>
+								<h5>신청인 수</h5>
 								<h4 class="card-text" id="et105">
 									<c:if test="${empty statisticMap['et105']}">0</c:if>
 									${statisticMap['et105']}
@@ -305,7 +311,8 @@
 					<div class="col-md-2">
 						<div class="card text-center">
 							<div class="card-body">
-								<h5 class="card-title">가입멤버 수 </h5>
+								<h5>가입 </h5>
+								<h5>멤버 수 </h5>
 								<h4 class="card-text" id="et106">
 									<c:if test="${empty statisticMap['et106']}">0</c:if>
 									${statisticMap['et106']}
@@ -320,7 +327,8 @@
                 </div>
                 
                 <div class="row" style='position: relative; height:80vh; width:70vw'>
-                 <canvas id="myChart" ></canvas>	 
+                	<div class="col-md-1"></div>
+                	<canvas id="myChart" class="col-md-11"></canvas>	 
                 </div>   
                
                 
@@ -392,5 +400,6 @@
 			
 		</script>
          
+        <script src="/js/custom/cafeCommon.js"></script> 
 	</body>
 </html>

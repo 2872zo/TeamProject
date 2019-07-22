@@ -264,6 +264,9 @@
 	
 	</script>
     
+	
+	
+
 
 </head>
 
@@ -283,6 +286,14 @@
     <!--*******************
         Preloader end
     ********************-->
+    
+    <!--**********************************
+            Sidebar start
+        ***********************************-->
+	
+	<!--**********************************
+            Sidebar end
+        ***********************************-->
 
     
     <!--**********************************
@@ -294,7 +305,9 @@
         <!--**********************************
             Nav header start
         ***********************************-->
-       
+		    <!-- ToolBar Start /////////////////////////////////////-->
+			<jsp:include page="../common/cafeManageTollbar.jsp" />
+			<!-- ToolBar End /////////////////////////////////////-->
         <!--**********************************
             Nav header end
         ***********************************-->
@@ -310,7 +323,9 @@
         <!--**********************************
             Sidebar start
         ***********************************-->
-       
+       	<div class="nk-sidebar">
+		<c:import url="/WEB-INF/views/common/cafeManageMenubar.jsp"></c:import>
+		</div>
         <!--**********************************
             Sidebar end
         ***********************************-->
@@ -541,7 +556,7 @@
     <script src="js/styleSwitcher.js"></script>
     <script src="./plugins/sweetalert/js/sweetalert.min.js"></script>
     <script src="./plugins/sweetalert/js/sweetalert.init.js"></script>
-
+	<script src="/js/custom/cafeCommon.js"></script>
 
 	</form>
 </body></html>
