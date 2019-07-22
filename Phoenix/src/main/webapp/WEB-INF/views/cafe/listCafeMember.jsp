@@ -10,20 +10,10 @@
 
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>카페멤버명단</title>
-    
-
-    
-    <link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
-    <link href="/css/style.css" rel="stylesheet">
-    
-    
 	<!-- ToolBar Start /////////////////////////////////////-->
-	 <jsp:include page="../common/cafeManageTollbar.jsp" /> 
+	 <jsp:include page="../common/toolbar.jsp" /> 
 	<!-- ToolBar End /////////////////////////////////////-->
+   
 	
 	
 	
@@ -74,20 +64,17 @@ $(function() {
 
 });
 </script>
-	<jsp:include page="../common/cafeManageTollbar.jsp" />
+
 </head>
 
 <body>
+<br/>
 <div class="container">
+<div class='card'>
+<div class='card-body'>
 
-<div class="row">
-			<div class="col-2">
-				<c:import url="/WEB-INF/views/common/cafeManageMenubar.jsp"></c:import>
-			</div>
+
 			
-			<div class="col-10">
-
-
   <br/>
 
 <form id='memberListingForm'>
@@ -98,11 +85,13 @@ $(function() {
 <input type="hidden" name='sortCode' 	value='${search.sortCode}' id='sortCode'>
 	<div class="input-group mb-3">
 	  <div class="input-group-prepend">
-	   <select class="custom-select custom-select" aria-label="Example select with button addon" name='searchCondition' id='searchCondition'>
+	   <select class="custom-select-lg" aria-label="Example select with button addon" name='searchCondition' id='searchCondition'>
 	    <option class='searchCondition' selected value="0" ${ !empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>닉네임</option>
 	   </select>
 	    </div>
-	  <input type="text" class="form-control form-control" placeholder="검색어 입력해주세요" aria-label="Text input with dropdown button" aria-describedby="button-addon2" value='${ !empty search.searchKeyword ? search.searchKeyword : "" }' name="searchKeyword" id="searchKeyword">
+	    <div class="input-group-append">
+	  <input type="text" class="form-control-lg" placeholder="검색어 입력해주세요" aria-label="Text input with dropdown button" aria-describedby="button-addon2" value='${ !empty search.searchKeyword ? search.searchKeyword : "" }' name="searchKeyword" id="searchKeyword">
+	 </div>
 	 <div class="input-group-append">
 	    <button class="btn btn-outline-dark" type="button" id="search">검색</button>
 	 </div>
@@ -189,8 +178,11 @@ $(function() {
   
   <jsp:include page="../common/pageNavigator.jsp" />
  
-  	</div><!-- col-10, #mainContent End -->
-	  	</div><!-- row End -->
+  	<!-- col-10, #mainContent End -->
+	  	<!-- row End -->
+
+</div>
+</div>
   </div>
 
 <!--**********************************

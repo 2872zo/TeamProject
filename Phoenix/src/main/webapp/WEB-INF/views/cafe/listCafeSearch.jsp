@@ -8,24 +8,9 @@
 <html lang="ko">
 
 <head>
+<jsp:include page="../common/toolbar.jsp" />
 <title>CafeSearch</title>
 
-<!-- ////////////////////////////// jQuery CDN ////////////////////////////// -->
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"
- integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
- crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
- integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
- crossorigin="anonymous"></script>
-<!-- ////////////////////////////// bootstrap CDN ////////////////////////////// -->
-<link rel="stylesheet"
- href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
- integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
- crossorigin="anonymous">
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
- integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
- crossorigin="anonymous"></script>
-<!--  ///////////////////////// CSS ////////////////////////// -->
 
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
@@ -35,6 +20,10 @@ function fncGetList(currentPage) {
 	}
 	
 $(function() {
+
+	$("#cafeExplore").on("click" , function() {
+		$("#cafeSearch").attr("method" , "POST").attr("action" , "/cafe/search").submit();
+	});
 	
 	$("#addCafe").on("click" , function() {
 		$(self.location).attr("href","/cafe/addCafe");
@@ -62,14 +51,58 @@ $(function() {
 	
 });
 </script>
-<jsp:include page="../common/toolbar.jsp" />
+
 </head>
 
 <body>
+<br/>
 <div class="container">
-  카페검색창입니다.
-    <br/>
+  
+  	<!--  카페검색창 /////////////////////////////////////-->
+  <div class="card">
+
+		<form class="form-inline justify-content-center" id='cafeSearch'>
+			<input type="hidden" id="currentPage" name="currentPage" value="0" />
+			<input type="hidden" name='cafeURL'
+				value='${ !empty search.cafeURL ? search.cafeURL : "" }'> <input
+				type="hidden" name='boardName'
+				value='${ !empty search.boardName ? search.boardName : "" }'>
+
+
+
+<div class="input-group" >
+  <div class='input-group-prepend'>
+  <select class="selectpicker" name='searchCondition'
+				id='searchCondition'>
+<option class='searchCondition' selected value="0"
+					${ !empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>카페+게시글</option>
+				<option class='searchCondition' value="1"
+					${ !empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>카페</option>
+				<option class='searchCondition' value="2"
+					${ !empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>게시글</option>
+  </select>
+  </div>
+  <div class='input-group-append'>
+  &nbsp;<input type="text" class="form-control-plaintext" placeholder="검색어 입력해주세요" value='${ !empty search.searchKeyword ? search.searchKeyword : "" }' name="searchKeyword" id="searchKeyword">
+  </div>
+  <div class='input-group-append'>
+  &nbsp;<button class="btn btn-sm btn-outline-primary" type="button" id="cafeExplore">검색</button>
+	</div>
+</div>
+
+
+
+
+
+		</form>
+		
+			</div>
+			
+			<!--  카페검색창 끝 /////////////////////////////////////-->
+
   <c:if test="${!empty cafeList}">
+  <div class='card'>
+<div class="card-body">
 
   <c:if test="${ !empty search.searchCondition && search.searchCondition==1}">
  	카페 검색결과 총 ${totalCount} 건 입니다.
@@ -79,9 +112,9 @@ $(function() {
  <div class="row d-flex justify-content-between">
   <c:forEach var="cafe" items="${cafeList}">
   
-  <div class="card mb-3 myCafe col-lg-6" style="" name ='${cafe.cafeURL}'>
+  <div class="card myCafe col-lg-6" style="border: 1px solid #F7790A;" name ='${cafe.cafeURL}' >
   <div class="row no-gutters">
-    <div class="col-md-4">
+    <div class="col-md-4 d-flex align-items-center">
       <img src="/images/common/16by9.png" class="card-img" alt="..." 
       style="background: url('/images/uploadFiles/cafeicon/${cafe.cafeIcon}');
       no-repeat center center; background-size:cover;">
@@ -96,18 +129,26 @@ $(function() {
   </div>
 </div>
   
+  
   </c:forEach>
   </div>
 
   <c:if test="${ !empty search.searchCondition && search.searchCondition==0}">
   <button type="button" class="btn btn-outline-primary" id='moreCafe'>카페 더보기</button>
   </c:if>
+  
+  
    <c:if test="${ !empty search.searchCondition && search.searchCondition==1}">
   <jsp:include page="../common/pageNavigator.jsp" />
   </c:if>
+  
+  </div>
+</div>
   </c:if>
   <br/>
   <c:if test="${!empty postList}">
+  <div class='card'>
+<div class="card-body">
  	<c:if test="${ !empty search.searchCondition && search.searchCondition==2}">
   	 게시글 검색결과 총 ${totalCount} 건 입니다.
  	</c:if>
@@ -146,9 +187,12 @@ $(function() {
   <jsp:include page="../common/pageNavigator.jsp" />
 
   </c:if>
+  
+  </div>
+  </div>
   </c:if>
   
-  
 </div>
+
 </body>
 </html>

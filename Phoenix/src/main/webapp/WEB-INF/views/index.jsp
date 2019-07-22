@@ -1,34 +1,19 @@
-<%@ page contentType="text/html; charset=euc-kr"%>
-
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page contentType="text/html; charset=utf-8"%>
 
 <!DOCTYPE html>
 
 <html lang="ko">
 
 <head>
-<meta charset="EUC-KR">
-
-
-<!-- ////////////////////////////// jQuery CDN ////////////////////////////// -->
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"
- integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
- crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
- integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
- crossorigin="anonymous"></script>
-<!-- ////////////////////////////// bootstrap CDN ////////////////////////////// -->
-<link rel="stylesheet"
- href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
- integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
- crossorigin="anonymous">
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
- integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
- crossorigin="anonymous"></script>
+<!-- ToolBar Start /////////////////////////////////////-->
+	<jsp:include page="common/toolbar.jsp" />
+	<!-- ToolBar End /////////////////////////////////////-->
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <style type="text/css">
 	.cafe3 {background-color:#000;color: #FFF;}
     .cafe3:hover {background-color: #FFF;}
+    
+    i:hover{cursor : pointer; color:#f5a142;}
 </style>
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
@@ -70,38 +55,51 @@ $(function() {
 
 });
 </script>
+
 </head>
 
 <body>
+<br/>
+<div class='container'>
+<div class="card">
 
-	<!-- ToolBar Start /////////////////////////////////////-->
-	<jsp:include page="common/toolbar.jsp" />
-	<!-- ToolBar End /////////////////////////////////////-->
 
-	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
-	<div class="container">
+	<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
+	
 		<br/>
-	<div class="input-group mb-3">
-  <div class="input-group-prepend">
-   <select class="custom-select custom-select-lg" aria-label="Example select with button addon">
-    <option selected value="0">ÅëÇÕ°Ë»ö</option>
+	
+ 
+
+<div class="input-group d-flex justify-content-center" >
+  <div class='input-group-prepend'>
+  <select class="selectpicker">
+    <option selected value="0">í†µí•©ê²€ìƒ‰</option>
     <option value="1">google</option>
     <option value="2">NAVER</option>
     <option value="3">DAUM</option>
   </select>
-    </div>
-  <input type="text" class="form-control form-control-lg" placeholder="°Ë»ö¾î ÀÔ·ÂÇØÁÖ¼¼¿ä" aria-label="Text input with dropdown button" aria-describedby="button-addon2">
- <div class="input-group-append">
-    <button class="btn btn-outline-secondary" type="button" id="explore">°Ë»ö</button>
   </div>
+  <div class='input-group-append'>
+  &nbsp;<input type="text" class="form-control-plaintext" placeholder="ê²€ìƒ‰ì–´ ìž…ë ¥í•´ì£¼ì„¸ìš”" >
+  </div>
+  <div class='input-group-append'>
+  &nbsp;<button class="btn btn-sm btn-outline-primary" type="button" id="explore">ê²€ìƒ‰</button>
+	</div>
 </div>
+
+
+
+	</div>
 	
+	<div class="card">
+
+<div class="card-body">
 	<br/>
-	<div class="d-flex justify-content-around">
-	<button type="button" class="btn btn-lg btn-success" id="cafe">CAFE</button>
-	<button type="button" class="btn btn-lg btn-primary" id="mail">MAIL</button>
-	<button type="button" class="btn btn-lg btn-info" id="sns">SNS</button>
-	<button type="button" class="btn btn-lg btn-warning" id="shop">SHOP</button>
+	<div class="d-flex justify-content-around align-items-center">
+	<i class="mdi mdi-coffee" style='font-size: 50pt;' id="cafe"></i>
+	<i class="mdi mdi-email-outline" style='font-size: 50pt;' id='mail'></i>
+	<i class="mdi mdi-heart-box-outline" style='font-size: 50pt;' id='sns'></i>
+	<i class="mdi mdi-cart-outline" style='font-size: 50pt;'id="shop"></i>
 	</div>
 	<br/>
 	<br/>
@@ -112,14 +110,17 @@ $(function() {
 	
 	
 	<div class="d-flex justify-content-around">
-	<button type="button" class="btn btn-lg btn-outline-danger" id="cafe1">¸Å´ÏÀú¸Þ´º</button>
-	<button type="button" class="btn btn-lg btn-outline-danger" id="cafe2">±ÛÀÛ¼º°ü·Ã</button>
-	<button type="button" class="btn btn-lg black-background cafe3" id="cafe3">°¡ÀÔ½ÅÃ»</button>
-	<button type="button" class="btn btn-lg black-background cafe3" id="cafe4">Ã¤ÆÃÃ¤ÆÃ</button>
+	<button type="button" class="btn btn-lg btn-outline-danger" id="cafe1">ë§¤ë‹ˆì €ë©”ë‰´</button>
+	<button type="button" class="btn btn-lg btn-outline-danger" id="cafe2">ê¸€ìž‘ì„±ê´€ë ¨</button>
+	<button type="button" class="btn btn-lg black-background cafe3" id="cafe3">ê°€ìž…ì‹ ì²­</button>
+	<button type="button" class="btn btn-lg black-background cafe3" id="cafe4">ì±„íŒ…ì±„íŒ…</button>
 	</div>
 	
 </div>
-	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
+</div>
+</div>
+	<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
+
 
 </body>
 </html>
