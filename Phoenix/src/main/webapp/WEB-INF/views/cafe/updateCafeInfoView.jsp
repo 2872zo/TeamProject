@@ -7,30 +7,23 @@
 <html lang="ko">
 	
 <head>
-	<meta charset="EUC-KR">
-	
-	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>카페정보수정</title>
 
 <!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-	crossorigin="anonymous"></script>
+<script	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"	crossorigin="anonymous"></script>
+<script	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <!-- Bootstrap CDN -->
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-	crossorigin="anonymous">
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-	crossorigin="anonymous"></script>
+<link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
+<link href="/css/style.css" rel="stylesheet">
+<link rel="stylesheet" href="/css/custom/scroll-top.css">
+
+
 		
-	<header>
-		<title>카페정보수정화면</title>
-	</header>
+
 	
 		<script type="text/javascript">
 
@@ -95,27 +88,59 @@
 			
 		</script>
 		</head>
-		<jsp:include page="../common/cafeManageTollbar.jsp" />
+		
 <body>
 
+<!--*******************
+        Preloader start
+    ********************-->
+	<div id="preloader" style="display: none;">
+		<div class="loader">
+			<svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none"
+					stroke-width="3" stroke-miterlimit="10"></circle>
+            </svg>
+		</div>
+	</div>
+	<!--*******************
+        Preloader end
+    ********************-->
 
-<form class="form-horizontal">
-<div class="container">
+
+<div id="main-wrapper">
+
+		<!-- ToolBar Start /////////////////////////////////////-->
+		<jsp:include page="../common/cafeManageTollbar.jsp" />
+		<!-- ToolBar End /////////////////////////////////////-->
+
+<!--**********************************
+            Sidebar start
+        ***********************************-->
+		<div class="nk-sidebar">
+			<c:import url="/WEB-INF/views/common/cafeManageMenubar.jsp"></c:import>
+		</div>
+		<!--**********************************
+            Sidebar end
+        ***********************************-->
+
+		<!--**********************************
+            Content body start
+        ***********************************-->
+<div class="content-body" style="min-height: 743px;">
+
+
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-body">			
+					<h4 class="text-center">카페정보수정</h4>		
+					<div class="basic-form">			
+						<form>
+						<input type="hidden" name="cafeNo" value="${cafe.cafeNo }"/>
 		
-		<div class="row">
-			<div class="col-2">
-				<c:import url="/WEB-INF/views/common/cafeManageMenubar.jsp"></c:import>
-			</div>			
-			<div class="col-10">
-		
-			<br>
-				<h2 class="text-center">카페정보수정</h2>		
-			
-			</br>
-			<hr>	
-		<input type="hidden" name="cafeNo" value="${cafe.cafeNo }"/>
-		<center>
-  <div class="form-group">
+  	<div class="form-group">
     <label for="exampleFormControlInput1" class="col-sm-offset-3 col-sm-3 control-label">카 페 이 름</label>
     <div class="col-sm-4">
     <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="" name="cafeName" value="${cafe.cafeName}">
@@ -125,20 +150,22 @@
   </div>
 
   <div class="form-group">
-    <label for="exampleFormControlInput1" class="col-sm-offset-3 col-sm-3 control-label">카페 URL</label>
+    <label for="exampleFormControlInput1" class="col-sm-offset-3 col-sm-3 control-label"><h3>카페 URL</h3></label>
     <div class="col-sm-4">
-    ${cafe.cafeURL }
+    <h3>${cafe.cafeURL }</h3>
     </div>
   </div>
   
   <div class="form-group">
     <label for="exampleFormControlTextarea1" class="col-sm-offset-3 col-sm-3 control-label">카페 설명</label>
     <div class="col-sm-4">
-    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="cafeDetail" value="${cafe.cafeDetail}"></textarea>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="8" name="cafeDetail" value="${cafe.cafeDetail}"></textarea>
     </div>
   </div>  
+</form>
 
-	  
+	  <form>
+	 
 	   <div class="form-group">
 		    <label for="uploadFile" class="col-sm-offset-1 col-sm-3 control-label">배너이미지</label>
 		    <div class="col-sm-4">
@@ -186,22 +213,37 @@
 						</div>
 					</div>
 					
+					</form>
+					
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
 		      <button type="button" class="btn btn-success"  >수정</button>
+		     
 		    </div>
 		  </div>
 		  </div>
 		  </div>
 		  </div>
+		  </div>
+		  </div>
+		  </div>
+		  </div>
+		</div>
 		  
-		</form>
+		  
+	
 		<!-- form Start /////////////////////////////////////-->
 		
- 	
+ 	<script src="/plugins/common/common.min.js"></script>
+	<script src="/js/custom.min.js"></script>
+	<script src="/js/settings.js"></script>
+	<script src="/js/gleek.js"></script>
+	<script src="/js/styleSwitcher.js"></script>
+	<!-- 메뉴바 이용을 위한 스크립트 -->
+	<script src="/js/custom/scroll-top.js"></script>
  	
 	<!--  화면구성 div end /////////////////////////////////////-->
-	
+	<script src="/js/custom/cafeCommon.js"></script>
 </body>
 
 </html>
