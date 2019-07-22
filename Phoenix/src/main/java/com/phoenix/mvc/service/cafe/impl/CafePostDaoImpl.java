@@ -142,4 +142,19 @@ public class CafePostDaoImpl implements CafePostDao{
 	public List<Post> getAllNoticePost(Search search) {
 		return sqlSession.selectList("CafePostMapper.getAllNoticePost", search);
 	}
+
+	@Override
+	public List<Post> getPostListByMember(Search search) {
+		return sqlSession.selectList("CafePostMapper.getPostListByMember", search);
+	}
+
+	@Override
+	public int memberPostTotalCount(Search search) {
+		return sqlSession.selectOne("CafePostMapper.memberPostTotalCount", search);
+	}
+
+	@Override
+	public List<Post> getBestPostList(int boardNo) {
+		return sqlSession.selectList("CafePostMapper.getBestPostList", boardNo);
+	}
 }

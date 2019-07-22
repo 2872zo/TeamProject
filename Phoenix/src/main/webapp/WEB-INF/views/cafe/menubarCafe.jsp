@@ -5,160 +5,145 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 	
-	<link rel="stylesheet" href="/css/scroll-top.css">
-	<script src="/js/scroll-top.js"></script>
-	
-	<script type="text/javascript">
-		$(function(){
-			
-			$(".myDetail").hide();
-			$(".showMyDetail").on("click",function(){
-				if(${cafeMember.userNo}=='400')//1. 로그인이 안되어있으면
-				{
-					alert("로그인하세요! (로그인창 띄우기)");
-				}
-				else if(${cafeMember.userNo}=='500')//카페멤버가 아니면
-				{
-					alert("카페에 가입하세요!(카페에가입하시겠습니까?띄우기)");
-				}
-				else //카페멤버라면
-				{
-					$(".myDetail").show(); 
-				}
-			});
-
-			$("[name=InnerSearch]").attr("method", "GET").attr("action", "/cafe/${cafeURL}/search");
-			
-			$("[name=menubarSubmit]").on("click", function(){
-				location.href = "/cafe/" + "${cafeURL}" + "/search?searchKeyword=" + $("#menubarSearch").val(); 
-			});	
-
-			$("[name=toManage]").on("click", function(){
-				location.href = "/cafe/${cafeURL}/manage/getCafeStatistics";
-			});
-			
-		});
-
-		$(function(){//카페탈퇴
-
-			$(".deleteMember").on("click",function(){
-				$( "#dialog" ).dialog("open");
-				});
-			var memberNo = '${cafeMember.memberNo}'
-			$( "#dialog" ).dialog({ 
-				 autoOpen: false, 
-				  width: 400, 
-				  modal: true, 
-				  buttons: [ { 
-					   text: "확인", 
-					   click: function() { 
-						   location.href = "/cafe/" + "${cafeURL}" + "/updateCafeMember?memberNo="+memberNo;
-						  } 
-				  }, 
-				  { 
-					   text: "취소", 
-					    click: function() { 
-						   $( this ).dialog( "close" ); 
-						   } 
-				   } 
-				   ] 
-			   });
-		});
-		
-		$(function(){//프로필수정
-			var memberNo = '${cafeMember.memberNo}'
-			$(".updateProfile").on("click",function(){
-				alert("여기")
-				window.open("/cafe/" + "${cafeURL}"+ "/updateCafeMemberProfileView?memberNo="+memberNo,"_blank","width=600,height=700");
-			
-				});
-			
-			});
-
-		$(function(){//카페가입
-			$(".addMember").on("click", function(){
-				 location.href = "/cafe/" + "${cafeURL}" + "addCafeApplicationView";
-			});
-			
-		});
-		
-	</script>
-
-	<div id="cafeMenubar">
-		<div class="showMyDetail">
-			내정보 보기
-		</div>
-		
-		<c:if test="${empty cafeMember}">
-		<br/>
-		<div class="addMember">
-			카페가입
-		</div>
-		</c:if>
-		<br/>
-		<c:if test="${!empty cafeMember.memberNo}">
-		<div class="updateProfile">
-			프로필수정
-		</div>
-		</c:if>
-		
-		
-		<div class ="myDetail">
-		
-			<br/>가입 : ${cafeMember.regDate}
-			<br/><strong>닉네임 : ${cafeMember.memberNickname}</strong>
-			<br/>등급 : ${cafeMember.gradeName}
-			<br/>출석 : ${cafeMember.visitCount}
-			<br/>
-			<h5><a href='#'>내가 쓴 글 보기</a></h5>
-			<h5><a href='#'>내가 쓴 댓글 보기</a></h5>
-			<input type="button" value="내 카페 관리" name="toManage"> 
-			
-		</div>
-
-		<div>
-			<form name="InnerSearch">
-				<div class="input-group">
-					<input type="text" class="form-control" id="menubarSearch" name="searchKeyword">
-					<div class="input-group-append">
-						<input type="button" class="btn btn-secondary" name="menubarSubmit"	style="z-index: 0" value="검색">
+	<div class="nk-nav-scroll">
+		<ul class="metismenu" id="menu">
+		<li>
+			<span class="nav-text">
+				<div class="card">
+					<div class="card-body">
+					    <!-- Nav tabs -->
+					    <ul class="nav nav-tabs mb-3" role="tablist">
+					        <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#home8" style="width:92.5px; padding-left:40px; padding-right:40px;"><span><i class="ti-home"></i></span></a>
+					        </li>
+					        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#profile8" style="width:92.5px; padding-left:40px; padding-right:40px;"><span><i class="ti-user"></i></span></a>
+					        </li>
+					    </ul>
+					    <!-- Tab panes -->
+					    <div class="tab-content tabcontent-border">
+					    	<div class="tab-pane fade show active" id="home8" role="tabpanel">
+					            <div class="p-t-15">
+					            	<br/>가입 : ${cafeMember.regDate}
+									<br/><strong>닉네임 : ${cafeMember.memberNickname}</strong>
+									<br/>등급 : ${cafeMember.gradeName}
+									<br/>출석 : ${cafeMember.visitCount}
+									<br/><span class="myPost cursor">내가 쓴 글 보기</span> <span class="myPost cursor" style="text-align: right;">${cafeMember.postCount }</span>
+									<br/><span class="myReply cursor"">내가 쓴 댓글보기</span> <span class="myReply cursor">${cafeMember.replyCount }</span>
+									<c:if test="${cafeMember.memberGrade eq 'cg100' }">
+										<input type="button" value="내 카페 관리" name="toManage">
+									</c:if> 
+									
+									<c:if test="${empty cafeMember}">
+									<br/>
+									<div class="addMember">
+										카페가입
+									</div>
+									</c:if>
+									<br/>
+									<c:if test="${!empty cafeMember.memberNo}">
+									<div class="updateProfile cursor">
+										프로필수정
+									</div>
+									</c:if>
+					            </div>
+					        </div>
+					        <div class="tab-pane fade" id="profile8" role="tabpanel">
+					        	
+					        	<!-- ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ -->
+		                                <div class="media align-items-center mb-4">
+		                                    <img class="mr-3" src="/images/default-profile.jpg" width="80" height="80" style="object-fit: cover; border-radius: 50%;" alt="">
+		                                    <div class="media-body">
+		                                        <h3 class="mb-0">${cafeMember.memberNickname}</h3>
+		                                        <p class="text-muted mb-0">${cafeMember.gradeName}</p>
+		                                    </div>
+		                                </div>
+		                                <ul class="card-profile__info">
+		                                    <li class="mb-1"><strong class="text-dark mr-4" style="margin-left: 10px;">가입일</strong> <span style="float: right; margin-right: 10px;">${cafeMember.regDate}</span></li>
+		                                    <li class="mb-1"><strong class="text-dark mr-4" style="margin-left: 10px;">출석</strong> <span style="float: right; margin-right: 10px;">${cafeMember.visitCount}</span></li>
+		                                    <li class="mb-1"><strong class="text-dark mr-4 myPost cursor" style="margin-left: 10px;">내가 쓴 글 보기</strong> <span class="myPost cursor" style="float: right; margin-right: 10px;">${cafeMember.postCount }</span></li>
+		                                    <li class="mb-1"><strong class="text-dark mr-4 myReply cursor" style="margin-left: 10px;">내가 쓴 댓글보기</strong> <span class="myReply cursor" style="float: right; margin-right: 10px;">${cafeMember.replyCount }</span></li>
+		                                    <li style="margin-left: 40px; margin-right: 80px;"><button type="button" class="btn mb-1 btn-rounded btn-outline-dark updateProfile">프로필수정</button></li>
+		                                </ul>
+					        <!-- ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ -->
+					        
+					        
+									<c:if test="${cafeMember.memberGrade eq 'cg100' }">
+										<input type="button" value="내 카페 관리" name="toManage">
+									</c:if> 
+									
+									<c:if test="${empty cafeMember}">
+									<br/>
+									<div class="addMember">
+										카페가입
+									</div>
+									</c:if>
+									<br/>
+									<c:if test="${!empty cafeMember.memberNo}">
+									
+									</c:if>
+					        </div>
+					    </div>
 					</div>
-				</div>
-			</form>
-		</div>
-
-
-
-
-	<c:forEach var="board" items="${boardList}">
-			<br/>
+	            </div>
+            </span>
+        </li>
 			
-			<c:if test="${board.boardType eq 'cb102'}"> <!-- 구분선이면 -->
-				${board.boardName}
+		
+		
+
+		<li>
+			<span class="nav-text">
+				<form name="InnerSearch">
+						<input type="text" class="form-control input-rounded" id="menubarSearch" name="searchKeyword" placeholder="카페 내부 검색" style="width:200px; margin:20px">
+				</form>
+			</span>
+		</li>
+			
+			
+			
+			<c:forEach var="board" items="${boardList}">
+				<li>
+					<c:if test="${board.boardType != 'cb102'}">
+		         		<a href="javascript:fncGetBoardPostList('${board.boardNo}','no1cafe')" aria-expanded="false">
+			            	<i class="icon-badge menu-icon"></i>
+			            	<span class="nav-text">
+								${board.boardName}
+							</span>
+				     	</a>
+		         	</c:if>
+		         	<c:if test="${board.boardType == 'cb102'}">
+		         		<a aria-expanded="false">
+		         			<hr/>
+		         		</a>
+		         	</c:if>
+			     </li>
+			
+			</c:forEach>
+
+			
+			<c:if test="${!empty cafeMember.memberNo}">
+				<!-- /# column -->
+				<li>
+					<span class="nav-text">
+			            <div class="card">
+			                <div class="card-body">
+			                    <div class="card-content">
+			                        <div class="sweetalert m-t-30">
+			                            <button class="btn btn-warning sweet-withdraw" style="background-color:#FFAF00;">카페 탈퇴</button>
+			                        </div>
+			                    </div>
+			                </div>
+			            </div>
+			            <!-- /# card -->
+		            </span>
+				</li>
 			</c:if>
 			
-			<c:if test="${board.boardType ne 'cb102'}"> <!-- 구분선이면 -->
-				<a href="javascript:fncGetBoardPostList('${board.boardNo}','no1cafe');">${board.boardName}</a>
-			</c:if>
-			
-			<br/>
-		</c:forEach>
-		<br/>
-		<c:if test="${!empty cafeMember.memberNo}">
-		<div class="deleteMember">
-			카페탈퇴
-		</div>
-		</c:if>
-		
-		<div id="dialog" title="카페탈퇴">
-  			<p>카페에서 탈퇴하시겠습니까?
-  			카페 탈퇴시 작성된 게시글은 자동으로 삭제되지 않습니다.</p>
-		</div>
-		
+		</ul>
 	</div>
-
+				
+			
 	<div class="scroll-top-wrapper ">
-			  <span class="scroll-top-inner">
-			    <i class="fa fa-2x fa-arrow-circle-up"></i>
-			  </span>
+		<span class="scroll-top-inner">
+			<i class="fa fa-2x fa-arrow-circle-up"></i>
+		</span>
 	</div>

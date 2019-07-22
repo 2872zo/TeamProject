@@ -11,8 +11,41 @@ public class Board {
 	private char privateFlag;
 	private String boardType;
 	private String boardDetail;
+	private int bestLikeCount;
+	private char bestTerm;
+	private int bestPostCount;
 	
 	
+	public int getBestLikeCount() {
+		return bestLikeCount;
+	}
+
+
+	public void setBestLikeCount(int bestLikeCount) {
+		this.bestLikeCount = bestLikeCount;
+	}
+
+
+	public char getBestTerm() {
+		return bestTerm;
+	}
+
+
+	public void setBestTerm(char bestTerm) {
+		this.bestTerm = bestTerm;
+	}
+
+
+	public int getBestPostCount() {
+		return bestPostCount;
+	}
+
+
+	public void setBestPostCount(int bestPostCount) {
+		this.bestPostCount = bestPostCount;
+	}
+
+
 	public Board() {
 		// TODO Auto-generated constructor stub
 	}
@@ -112,6 +145,8 @@ public class Board {
 	public String toString() {
 		return "Board [boardNo=" + boardNo + ", cafeNo=" + cafeNo + ", cafeURL=" + cafeURL + ", boardName=" + boardName
 				+ ", accessGrade=" + accessGrade + ", boardIndex=" + boardIndex + ", privateFlag=" + privateFlag
-				+ ", boardType=" + boardType + ", boardDetail=" + boardDetail + "]";
+				+ ", boardType=" + boardType + ", boardDetail=" + boardDetail + ", bestLikeCount=" + bestLikeCount
+				+ ", bestTerm=" + bestTerm + ", bestPostCount=" + bestPostCount + "]";
 	}
+	
 }

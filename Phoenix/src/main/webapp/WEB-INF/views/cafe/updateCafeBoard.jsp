@@ -4,48 +4,26 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
+
 <!DOCTYPE html>
 
-
-
 <html lang="ko">
-
 <head>
-
-	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// 	-->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"	crossorigin="anonymous"></script>
-	<script	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"	crossorigin="anonymous"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	<script src ="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
-	<script src ="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/additional-methods.min.js"></script>
-
-	<!-- 
-	<link rel="stylesheet" href="/css/zeed/bootstrap.min.css">
-	<link rel="stylesheet" href="/css/zeed/jquery-ui.css">
-	<link rel="stylesheet" href="/css/zeed/font-awesome.min.css">
-	<link rel="stylesheet" href="/css/zeed/owl.carousel.min.css">
-	<link rel="stylesheet" href="/css/zeed/slicknav.min.css">
-	<link rel="stylesheet" href="/css/zeed/magnificpopup.css">
-	<link rel="stylesheet" href="/css/zeed/jquery.mb.YTPlayer.min.css">
-	<link rel="stylesheet" href="/css/zeed/typography.css">
-	<link rel="stylesheet" href="/css/zeed/style.css">
-	<link rel="stylesheet" href="/css/zeed/responsive.css">
-	
-	<script src="/js/zeed/jquery-3.2.0.min.js"></script>
-	<script src="/js/zeed/jquery-ui.js"></script>
-	<script src="/js/zeed/bootstrap.min.js"></script>
-	<script src="/js/zeed/jquery.slicknav.min.js"></script>
-	<script src="/js/zeed/owl.carousel.min.js"></script>
-	<script src="/js/zeed/magnific-popup.min.js"></script>
-	<script src="/js/zeed/counterup.js"></script>
-	<script src="/js/zeed/jquery.waypoints.min.js"></script>
-	<script src="/js/zeed/jquery.mb.YTPlayer.min.js"></script>
-	<script src="/js/zeed/theme.js"></script>-->
-	
-	
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Quixlab - Bootstrap Admin Dashboard Template by Themefisher.com</title>
+    
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="images/quixlab/favicon.png">
+    <!-- Custom Stylesheet -->
+    
+    <link href="./plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    
+    
+    
 	<script type="text/javascript">
 
 		var totalBoardSize ="";
@@ -95,7 +73,7 @@
 
 			hideAndShow();
 
-			$("[name='form']").validate();
+			//$("[name='form']").validate();
 			
 			//alert($("input[maxlength='6']"));
 			
@@ -131,8 +109,8 @@
 				if($("select[name=addableBoard]").val()=="자유게시판"){
 					//게시판 추가하면  밑에 input type text추가하고 
 					 	appendBoardDetail = "<div class ='boardDetail"+totalBoardSize+"'> <br/><br/>"
-						+"<h4>메뉴명</h4>   <input type='text' class='form-control' name='newBoard"+count+"'  placeholder='게시판이름' maxlength='6' required /><hr/> "
-						+"<h4>메뉴설명</h4> <input type='text'  class='form-control' name='newBoardDetail"+count+"' width='50' placeholder='게시판설명' required >"
+						+"<h4>메뉴명</h4>   <input type='text' class='form-control input-default' name='newBoard"+count+"'  placeholder='게시판이름' maxlength='6' required /><hr/> "
+						+"<h4>메뉴설명</h4> <input type='text'  class='form-control input-default' name='newBoardDetail"+count+"' width='50' placeholder='게시판설명' required >"
 						+"<br/><hr/><h4>공개설정</h4>"
 						+"<div class='radio'><label class='radio-inline'>"
   						+"<input type='radio' value='0' name='newBoardPrivate"+count+"' checked> 전체공개 </label>"
@@ -143,7 +121,19 @@
 						+"<h4>접근권한설정</h4><div class='form-inline'><select class='form-control' name='grade'>"
 						+"<c:forEach var='grade' items='${useGradeList}'>"
 						+"<option value='${grade.cafeGradeNo}/new"+count+"'>${grade.gradeName}</option>"
-						+"</c:forEach></select> 이상</div><br/><br/><br/>	"
+						+"</c:forEach></select> 이상</div><hr/>"
+						+"<label>추천게시글설정</label><div class='form-inline'>"
+						+"<select class='form-control' name='bestPostCount'><c:forEach var='i' begin='3' end='10' step='1'>"
+						+"<option value='${i}/new"+count+"'>${i}</option></c:forEach>"
+						+"</select> 개의 추천게시글을 게시글 상단에 고정</div><br/><div class='form-inline'>"
+						+"추천 개수<select class='form-control' name='bestLikeCount'>"
+						+"<c:forEach var='i' begin='5' end='100' step='1'>"
+						+"<option value='${i}/new"+count+"'>${i}</option></c:forEach></select>개 이상"
+						+"<select class='form-control' name='bestTerm'>"
+						+"<option value='0/new"+count+"'>당일</option>"
+						+"<option value='1/new"+count+"'>7일</option>"
+						+"<option value='2/new"+count+"'>10일</option>"
+						+"<option value='3/new"+count+"'>전체</option></select> 게시물 기준</div>"
 						//$(".boardDetail").hide();
 				}
 				else{
@@ -188,7 +178,7 @@
 					if($("select[name=board] option:selected").attr("id")!='')
 					{
 					
-					alert($("select[name=board] option:selected").attr("id")); //board_no
+					//alert($("select[name=board] option:selected").attr("id")); //board_no
 					var boardNo = $("select[name=board] option:selected").attr("id");
 					//ajax로 게시판에 물려있는 게시물이 있는지 체크
 					//board_no,cafe_URL을 보내서 board_no를 가지고있는 post가 있는지 post table에서 검사 
@@ -256,7 +246,6 @@
 
 			$("#save").on("click",function(){
 
-				//alert("ㄴㅁㅍ");
 				AllSelect();
 				$("form").attr("method","POST").attr("action","/cafe/no1cafe/manage/updateCafeBoard").submit();
 				
@@ -274,172 +263,285 @@
 		
 	
 	</script>
+    
 
 </head>
 
+<body data-theme-version="light" data-layout="vertical" data-nav-headerbg="color_1" data-headerbg="color_1" data-sidebar-style="full" data-sibebarbg="color_1" data-sidebar-position="static" data-header-position="static" data-container="wide" direction="ltr">
+	
+	
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader" style="display: none;">
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"></circle>
+            </svg>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
 
-<body>
-	
-	<div class="container">
-	
-	<form name ="form" class="needs-validation" novalidate>
-	
-			<div class="page-header">
-	       		<div class="row">
-	       		 <h3>
-	       			 메뉴관리
-	       		 </h3>
-	       			 <div class="col-md-12 text-right ">
-	       			 	<button type="button" class="btn-primary" id="cancel">취소</button>
-					 	<button type="button" class="btn-primary" id="save" >저장하기</button>
-	       		 	 </div>
-	   			 </div>
-	   		 </div>
-	   		 
+    
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <form name ="form" class="needs-validation" novalidate>
+    <div id="main-wrapper" class="show">
 		
-		<div class="row">
-			
-		<div class="col-md-2">
-				<c:import url="/WEB-INF/views/common/cafeManageMenubar.jsp"></c:import>
-		</div>
-		
-		<div class="col-md-10">
-		<div class="col-md-2">
-			<br/>
-			<br/>
-			<h4>추가메뉴</h4>
-			<br/>
-			<br/>
-			<select name="addableBoard" size="10" class="form-control">
-				<option value="자유게시판" selected="selected">자유게시판</option>
-				<option value="--------------------" >구분선</option>
-			</select>
-			
-		</div >
-		
-		<div class="col-md-1">
-			
-			<br/><br/><br/><br/>
-			<button type="button" id ="plusBoard" class="btn btn-default btn-lg active">    
-				<br/><br/><br/>
-				      +   
-				      
-				<br/><br/><br/>
-			</button>
-			<br/>
-			<br/>
-		</div>
-				
-		<div class="col-md-3">
-			<br/><br/><br/><br/>
-			<button type="button" id ="goDown" class="btn btn-default btn-sm">
-				 <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
-			</button>
-			<button type="button" id ="goUp" class="btn btn-default btn-sm">
-				 <span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span>
-			</button>
-			
-			<!-- <button type="button" id ="goStart"> 맨위로 </button>
-			<button type="button" id ="goEnd"> 맨아래로 </button> -->
-			
-			<button type="button" id ="delete" class="btn btn-default btn-sm"> 삭제 </button>
-	
-			
-			<br/>
-			<br/>
-		<select name="board" size=11 class="form-control">
-    		
-    		<c:set var="i" value="0" />  
-			
-			<c:forEach var="board" items="${boardList}">
-				<c:set var="i" value="${ i+1 }" />
-			
-			
-			<c:if test="${i eq 1}">
-				<option class="apple" value="${board.boardName}/${board.boardNo}" id="${board.boardNo}" selected="selected">${board.boardName}</option>
-			</c:if>
-			
-			<c:if test="${i ne 1}">
-				<option class="apple" value="${board.boardName}/${board.boardNo}" id="${board.boardNo}">${board.boardName}</option>
-			</c:if>
-			
-			</c:forEach>
-			
-   			
-		</select>
-		<input type="hidden" id="totalBoardsize" value="${i}">
-		</div>	
-			
-			
-		<div class="col-md-6">
-		<div class="boardDetail">
-		<c:set var="j" value="0" />  
-		<c:forEach var="board" items="${boardList}">
-				<c:set var="j" value="${ j+1 }" />
-		
-			<div class ="boardDetail${j}">
-				<br/>
-				<c:if test="${board.boardType=='cb100' || board.boardType=='cb101' || board.boardType=='cb103'}">
-					<br/>
-					<h4>메뉴명</h4>  
-					<input type="text" class="form-control" name="boardName/${board.boardNo}" value="${board.boardName}" maxlength="6" required/>
-					<hr/>
-					
-					<h4>메뉴설명</h4>
-					<input type="text"  class="form-control" name="boardDetail/${board.boardNo}" width="50" value="${board.boardDetail}" required>
-					<br/>
-					<hr/>
-					<h4>공개설정</h4>
-					<div class="radio">
-  						<label class="radio-inline">
-    					<input type="radio" name="boardPrivate/${board.boardNo}" id="optionsRadios1" value="0"  ${board.privateFlag eq '0'.charAt(0) ? "checked" : ""}>
-   						 전체공개
-  						</label>
-  						<label class="radio-inline">
-   						 <input type="radio" name="boardPrivate/${board.boardNo}" id="optionsRadios2" value="1" ${board.privateFlag eq '1'.charAt(0) ? "checked" : ""}>
-    					멤버공개
-  						</label>
-					</div>게시판 공개여부를 설정합니다.<br/>멤버공개를 선택시, 게시판은 멤버에게만 보여집니다.
-					<br/>
-					<hr/>
-					
-					<h4>접근권한설정</h4>
-					<div class="form-inline">
-						<select class="form-control" name="grade">
-							<c:forEach var="grade" items="${useGradeList}">
-								<option value="${grade.cafeGradeNo}/${board.boardNo}" ${grade.cafeGradeNo==board.accessGrade? "selected" : ""}>${grade.gradeName}</option>
-							</c:forEach>
-						</select> 이상
-					</div>	
-					<br/><br/><br/>
-				
-				</c:if>
-				
-				<c:if test="${board.boardType=='cb102'}">
-					<input type="hidden" name="boardName/${board.boardNo}" value="----------------"/>
-					<br/>
-					<h4>메뉴들을 구분선을 통해 쉽게 구분할 수 있습니다.</h4>
-				</c:if>
-				
-		
-			</div>
-		</c:forEach>
-		
-		</div>
-				
-		</div>		
-				
-			</div>	
-			</div>
-		</form>
-	</div>
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+       
+        <!--**********************************
+            Nav header end
+        ***********************************-->
 
-	
-	
-	<!--  게시판 리스트 불러오기 -->
-		
-		
-		
-	
-</body>
-</html>
+        <!--**********************************
+            Header start
+        ***********************************-->
+      
+        <!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+
+        <!--**********************************
+            Sidebar start
+        ***********************************-->
+       
+        <!--**********************************
+            Sidebar end
+        ***********************************-->
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body" style="min-height: 743px;">
+
+            <div class="row page-titles mx-0">
+                <div class="col p-md-0">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">관리페이지</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0)">게시판관리</a></li>
+                    </ol>
+                </div>
+            </div>
+            <!-- row -->
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">메뉴관리</h4>
+                                <!--   <p class="text-muted m-b-15 f-s-12"> 카페의 게시판을 <code>추가, 삭제, 수정 </code> 할 수 있습니다.</p> -->
+                                
+                                <div class="basic-form">
+                           			 <div class="col-lg-12 text-right ">
+       			 						<button type="button" class="btn btn-outline-primary" id="cancel">취소</button>
+				 						<button type="button" class="btn btn-primary" id="save" >저장하기</button>
+       		 	 					 </div>
+       		 	 					 <hr/>
+									<div class ="form-row">
+									
+									<div class="form-group col-md-2">
+										<label>추가메뉴</label>
+										<br /> <br /> 
+										<select name="addableBoard" size="10" class="form-control">
+											<option value="자유게시판" selected="selected">자유게시판</option>
+											<option value="--------------------">구분선</option>
+										</select>
+									</div>
+
+									<div class="form-group col-md-1">
+										<br /><br /><br />
+										<button type="button" id="plusBoard" class="btn btn-primary">
+											<br />
+											<br /> + <br />
+											<br />
+											<br />
+										</button>
+									</div>
+
+									<div class="form-group col-md-3">
+									
+										<div class="btn-group-sm">
+										<button type="button" id="goDown" class="btn btn-outline-primary">아래</button>
+										<button type="button" id="goUp" class="btn btn-outline-primary">위</button>
+										<!-- <button type="button" id ="goStart"> 맨위로 </button> 
+										<button type="button" id ="goEnd"> 맨아래로 </button> -->
+										<button type="button" id="delete" class="btn btn-outline-primary">삭제</button>
+										</div>
+
+										<br /> 
+										<select name="board" size=11 class="form-control">
+
+											<c:set var="i" value="0" />
+
+											<c:forEach var="board" items="${boardList}">
+												<c:set var="i" value="${ i+1 }" />
+
+
+												<c:if test="${i eq 1}">
+													<option class="apple"
+														value="${board.boardName}/${board.boardNo}" id="${board.boardNo}" selected="selected">${board.boardName}</option>
+												</c:if>
+
+												<c:if test="${i ne 1}">
+													<option class="apple"
+														value="${board.boardName}/${board.boardNo}" id="${board.boardNo}">${board.boardName}</option>
+												</c:if>
+
+											</c:forEach>
+											
+										</select> 
+										<input type="hidden" id="totalBoardsize" value="${i}">
+									</div>
+
+									<div class="form-group col-md-6">
+										<div class="boardDetail">
+											<c:set var="j" value="0" />
+											<c:forEach var="board" items="${boardList}">
+												<c:set var="j" value="${ j+1 }" />
+
+												<div class="boardDetail${j}">
+													<c:if test="${board.boardType=='cb100' || board.boardType=='cb101' || board.boardType=='cb103'}">
+													   
+														<label>메뉴명</label>
+														<input type="text" class="form-control input-default" name="boardName/${board.boardNo}" value="${board.boardName}" maxlength="6" required />
+														<hr />
+														
+														<label>메뉴설명</label>
+														<input type="text" class="form-control input-default"
+															name="boardDetail/${board.boardNo}" width="50"
+															value="${board.boardDetail}" required>
+														<br />
+														<hr />
+														
+														<label>공개설정</label>
+														<div class="radio">
+															<label class="radio-inline mr-3"> 
+															<input type="radio" name="boardPrivate/${board.boardNo}" id="optionsRadios1" value="0" ${board.privateFlag eq '0'.charAt(0) ? "checked" : ""}>
+																전체공개
+															</label> 
+															<label class="radio-inline mr-3"> 
+															<input type="radio" name="boardPrivate/${board.boardNo}" id="optionsRadios2" value="1" ${board.privateFlag eq '1'.charAt(0) ? "checked" : ""}>
+																멤버공개
+															</label>
+														</div>
+														게시판 공개여부를 설정합니다.<br />멤버공개를 선택시, 게시판은 멤버에게만 보여집니다.
+														<br />
+														<hr />
+
+														<label>접근권한설정</label>
+														<div class="form-inline">
+															<select class="form-control" name="grade">
+																<c:forEach var="grade" items="${useGradeList}">
+																	<option value="${grade.cafeGradeNo}/${board.boardNo}" ${grade.cafeGradeNo==board.accessGrade? "selected" : ""}>${grade.gradeName}</option>
+																</c:forEach>
+															</select> 이상
+														</div>
+													
+													
+													<c:if test="${board.boardType=='cb103'}"><!--자유게시판일때만  -->
+														
+														<hr/>
+														<label>추천게시글설정</label>
+														<div class="form-inline">
+															<select class="form-control" name="bestPostCount">
+																<c:forEach var="i" begin="3" end="10" step="1">
+																	<option value="${i}/${board.boardNo}" ${board.bestPostCount==i? "selected" : ""}>${i}</option>
+																</c:forEach>
+															</select> 개의 추천게시글을 게시글 상단에 고정
+														</div>
+														<br/>
+								
+														<div class="form-inline">
+															추천 개수
+															<select class="form-control" name="bestLikeCount">
+																<c:forEach var="i" begin="5" end="100" step="1">
+																	<option value="${i}/${board.boardNo}" ${board.bestLikeCount==i? "selected" : ""}>${i}</option>
+																</c:forEach>
+															</select>개 이상
+															
+															
+															<select class="form-control" name="bestTerm">
+																<option value="0/${board.boardNo}" ${board.bestTerm eq '0'.charAt(0) ? "selected" : ""}>당일</option>
+																<option value="1/${board.boardNo}" ${board.bestTerm eq '1'.charAt(0)? "selected" : ""}>7일</option>
+																<option value="2/${board.boardNo}" ${board.bestTerm eq '2'.charAt(0) ? "selected" : ""}>10일</option>
+																<option value="3/${board.boardNo}" ${board.bestTerm eq '3'.charAt(0) ? "selected" : ""}>전체</option>
+															</select> 게시물 기준
+															
+														</div>
+							
+													</c:if>
+													
+													
+													
+													
+													</c:if>
+
+													<c:if test="${board.boardType=='cb102'}">
+														<input type="hidden" name="boardName/${board.boardNo}" value="----------------" />
+														<br />
+														<label>메뉴들을 구분선을 통해 쉽게 구분할 수 있습니다.</label>
+													</c:if>
+
+
+												</div>
+											</c:forEach>
+
+										</div>
+
+									</div>
+									</div>
+                                    
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    
+                   
+              
+                </div>
+            </div>
+            <!-- #/ container -->
+        </div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+        
+        
+        <!--**********************************
+            Footer start
+        ***********************************-->
+        <div class="footer">
+            <div class="copyright">
+                <p>Copyright © Designed &amp; Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2018</p>
+            </div>
+        </div>
+        <!--**********************************
+            Footer end
+        ***********************************-->
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <script src="plugins/common/common.min.js"></script>
+    <script src="js/custom.min.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/gleek.js"></script>
+    <script src="js/styleSwitcher.js"></script>
+    <script src="./plugins/sweetalert/js/sweetalert.min.js"></script>
+    <script src="./plugins/sweetalert/js/sweetalert.init.js"></script>
+
+
+	</form>
+</body></html>

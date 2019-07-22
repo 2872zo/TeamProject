@@ -14,9 +14,13 @@
 		<result property="boardName" 		column="board_name" 			jdbcType="VARCHAR" />
 		<result property="accessGrade" 		column="access_grade" 				jdbcType="VARCHAR" />
 		<result property="boardIndex" 		column="board_index" 				jdbcType="NUMERIC" />
-		<result property="privateFlag" 		column="private_flag" 		jdbcType="CHAR" />
+		<result property="privateFlag" 		column="private_flag" 				jdbcType="CHAR" />
 		<result property="boardType" 		column="board_type" 				jdbcType="VARCHAR" />
 		<result property="boardDetail" 		column="board_detail" 				jdbcType="NUMERIC"  />
+		<result property="bestLikeCount" 	column="best_like_count" 				jdbcType="NUMERIC"  />
+		<result property="bestTerm" 		column="best_term" 						jdbcType="CHAR"  />
+		<result property="bestPostCount" 	column="best_post_count" 				jdbcType="NUMERIC"  />
+		
 	</resultMap>
 	
 	<resultMap id="postSelectMap" type="com.phoenix.mvc.service.domain.Post">
@@ -132,7 +136,7 @@
 	</select>
 	
 	<insert id="insertCafeBoard" parameterType="list" >
-		INSERT INTO board(board_no,cafe_no,cafe_url,board_name,access_grade,board_index,private_flag,board_type,board_detail)
+		INSERT INTO board(board_no,cafe_no,cafe_url,board_name,access_grade,board_index,private_flag,board_type,board_detail,best_like_count,best_term,best_post_count)
 		SELECT SEQ_BOARD_BOARD_NO.NEXTVAL, A.* from(
 		<foreach collection="list" item="item" separator="UNION ALL ">
 			SELECT #{item.cafeNo} as cafe_no,
@@ -142,7 +146,10 @@
 				   #{item.boardIndex} as board_index,
 				   #{item.privateFlag} as private_flag,
 				   #{item.boardType} as board_type,
-				   #{item.boardDetail:VARCHAR} as board_detail
+				   #{item.boardDetail:VARCHAR} as board_detail,
+				   #{item.bestLikeCount:NUMERIC} as best_like_count,
+				   #{item.bestTerm:CHAR} as best_term,
+				   #{item.bestPostCount:NUMERIC} as best_post_count 
 			FROM dual
 		</foreach>)A
 		</insert>
@@ -154,7 +161,10 @@
 					access_grade = #{item.accessGrade:VARCHAR},
 					board_index = #{item.boardIndex:NUMERIC},
 					private_flag = #{item.privateFlag:CHAR},
-					board_detail = #{item.boardDetail:VARCHAR}
+					board_detail = #{item.boardDetail:VARCHAR},
+					best_like_count = #{item.bestLikeCount:NUMERIC},
+					best_term = #{item.bestTerm:CHAR},
+					best_post_count = #{item.bestPostCount:NUMERIC}
 				WHERE board_no = #{item.boardNo}	
 			</foreach>
 		</update>

@@ -11,7 +11,7 @@
 		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-		<script src="/js/cafeCommon.js"></script>
+		<script src="/js/custom/cafeCommon.js"></script>
 		
 		<style>
 			.postTitle:hover{
@@ -235,6 +235,20 @@
 				<%-- 					<td>${post.postStatusFlag }</td> --%>
 				<%-- 					<td>${post.postNoticeFlag }</td> --%>
 				<%-- 					<td>${post.noticeIndex }</td> --%>
+								</tr>
+							</c:forEach>
+							
+							<c:forEach items="${bestPostList }" var="bestPost">
+								<tr style="background:blue;">
+									<input type="hidden" class="postNo" value="${bestPost.postNo }"/>
+									<input type="hidden" class="boardNo" value="${bestPost.boardNo }"/>
+									<input type="hidden" class="memberNo" value="${bestPost.memberNo }"/>
+									<input type="hidden" class="boardName" value="${bestPost.boardName }"/>
+									<td></td>
+									<td>${bestPost.memberNickname }</td>
+									<td>${bestPost.regDate }</td>
+									<td>${bestPost.viewCount }</td>
+									<td>${bestPost.likeCount }</td>
 								</tr>
 							</c:forEach>
 							

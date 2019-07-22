@@ -166,18 +166,12 @@
 				<p>총 ${postTotalCount }개</p>
 				<table class="table table-striped table-bordered">
 					<tr>
-		<!-- 				<td>게시글 번호</td> -->
-		<!-- 				<td>게시판 번호</td> -->
-		<!-- 				<td>memberNo</td> -->
 						<td>게시판</td>
 						<td>제목</td>
 						<td>작성자</td>
 						<td>작성일</td>
 						<td>조회수</td>
 						<td>추천수</td>
-		<!-- 				<td>postStatusFlag</td> -->
-		<!-- 				<td>postNoticeFlag;</td> -->
-		<!-- 				<td>noticeIndex</td> -->
 					</tr>
 					
 					<c:forEach items="${postList }" var="post">
@@ -191,9 +185,6 @@
 							<td>${post.regDate }</td>
 							<td>${post.viewCount }</td>
 							<td>${post.likeCount }</td>
-		<%-- 					<td>${post.postStatusFlag }</td> --%>
-		<%-- 					<td>${post.postNoticeFlag }</td> --%>
-		<%-- 					<td>${post.noticeIndex }</td> --%>
 						</tr>
 					</c:forEach>
 				</table>

@@ -54,6 +54,7 @@ public class CafePostServiceImpl implements CafePostService {
 
 		if(search.getCurrentPage() == 1) {
 			map.put("noticePostList", cafePostDao.getNoticePostList(search));
+//			map.put("bestPostList", cafePostDao.getBestPostList(search.getBoardNo()));
 		}
 		map.put("postList", cafePostDao.getPostListByBoard(search));
 		map.put("postTotalCount", cafePostDao.postTotalCount(search));
@@ -179,6 +180,14 @@ public class CafePostServiceImpl implements CafePostService {
 	public List<Post> getAllNoticePost(Search search) {
 		return cafePostDao.getAllNoticePost(search);
 	}
-	
+
+	@Override
+	public Map<String, Object> getPostListByMember(Search search) {
+		Map<String, Object>	map = new HashMap<>();
+		map.put("postList", cafePostDao.getPostListByMember(search));
+		map.put("postTotalCount", cafePostDao.memberPostTotalCount(search));
+				
+		return map;
+	}
 	
 }
