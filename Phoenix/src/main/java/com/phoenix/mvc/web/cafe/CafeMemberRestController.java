@@ -82,7 +82,24 @@ public class CafeMemberRestController {
 
 		return map;
 
-		//////////////////////// 지니끝//////////////////////
+	}
+	
+	@RequestMapping(value = "json/{cafeURL}/updateCafeMember", method = RequestMethod.POST)
+	public Map updateCafeMember(@RequestBody CafeMember cafeMember) throws Exception {
+
+		System.out.println("/cafe/json/{cafeURL}/updateCafeMember : POST");
+
+		System.out.println("cafeMember 확인 : " + cafeMember);
+		
+		boolean result = cafeMemberService.updateCafeMember(cafeMember);
+
+		Map map = new HashMap();
+		map.put("result", result);
+		map.put("memberStatusCode", cafeMember.getMemberStatusCode());
+
+		return map;
 
 	}
+
+////////////////////////지니끝//////////////////////
 }

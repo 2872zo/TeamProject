@@ -19,10 +19,6 @@
 <link rel="stylesheet" href="/css/custom/scroll-top.css">
 
 
-
-
-
-
 </head>
 
 <body>

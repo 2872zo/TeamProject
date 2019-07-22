@@ -15,7 +15,7 @@ public interface CafeMemberService {
 
 	public void addCafeApplication(CafeApplication cafeApplication) throws Exception;// 카페가입신청
 
-	public void updateCafeMember(CafeMember cafeMember);// 카페탈퇴
+	public boolean updateCafeMember(CafeMember cafeMember);// 카페탈퇴
 
 	public void addCafeMember(CafeMember cafeMember);// 가입승인
 

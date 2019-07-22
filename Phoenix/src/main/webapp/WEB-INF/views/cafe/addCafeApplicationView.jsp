@@ -294,7 +294,7 @@
 				<div class="col-lg-12">
 					<div class="card">
 						<div class="card-body">
-							<h4 class="card-title">${cafe.cafeName }카페가입하기</h4>
+							<h4 class="card-title">${cafe.cafeName } 카페가입하기</h4>
 							<p class="text-muted m-b-15 f-s-12">
 								카페가입을 위한 정보를 입력해주세요. 카페내규에 따라
 								<code>가입승인, 가입거절</code>
@@ -375,7 +375,9 @@
 									</c:if>
 
 									<div align="center">
-										질문 답변 시 회원님의 소중한 개인정보가 유출되지 않도록 주의해주시기 바랍니다.<br>
+										질문 답변 시 회원님의 소중한 개인정보가 유출되지 않도록 주의해주시기 바랍니다.
+										<br>
+										<br>
 										<button type="button" name="button"
 											class="btn mb-1 btn-outline-warning">가입</button>
 									</div>
