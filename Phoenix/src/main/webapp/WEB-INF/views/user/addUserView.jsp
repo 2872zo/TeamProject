@@ -27,12 +27,12 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 	crossorigin="anonymous"></script>
-
 <style>
 body>div.container {
 	border: 3px solid #D6CDB7;
 	margin-top: 10px;	
 }
+
 
 </style>
 
@@ -63,16 +63,16 @@ body>div.container {
 
 		$("form").attr("method", "POST").attr("action","/user/addUser").submit();
 	}
-	/*//카페이름 중복확인 
+	//카페이름 중복확인 
 	$(function() {
 
 		$("input[name='userId']").on('keyup',function() {
 
 							var inputed = $("input[name='userId']").val();
-							// alert("입력  : "+inputed);
+							//alert("입력  : "+inputed);
 
 									$.ajax({
-										url : "/cafe/json/checkCafeNameDuplication",
+										url : "/user/json/checkUserIdDuplication",
 										method : "POST",
 										dataType : "json",
 										headers : {
@@ -80,7 +80,7 @@ body>div.container {
 											"Content-Type" : "application/json"
 										},
 										data : JSON.stringify({
-											cafeName : inputed,
+											userId : inputed,
 										}),
 
 										success : function(JSONData) {
@@ -105,7 +105,7 @@ body>div.container {
 														.remove();
 												$("#check")
 														.append(
-																"<strong class=\"text-muted\">카페이름을 입력해주세요.</strong>");
+																"<strong class=\"text-muted\">아이디를 입력해주세요.</strong>");
 											}
 										}
 
@@ -114,59 +114,7 @@ body>div.container {
 
 	});
 
-	//==>"URL중복확인" 
-	$(function() {
-
-		$("input[name='URL']")
-				.on(
-						'keyup',
-						function() {
-
-							var inputed = $("input[name='URL']").val();
-							// alert("입력  : "+inputed);
-
-									$.ajax({
-										url : "/cafe/json/checkCafeNameDuplication",
-										method : "POST",
-										dataType : "json",
-										headers : {
-											"Accept" : "application/json",
-											"Content-Type" : "application/json"
-										},
-										data : JSON.stringify({
-											cafeName : inputed,
-										}),
-
-										success : function(JSONData) {
-											//alert(JSONData); 
-											//alert(typeof(JSONData));
-
-											if (JSONData && inputed != "") {
-												$("#check1").children("strong")
-														.remove();
-												$("#check1")
-														.append(
-																"<strong class=\"text-success\">사용 가능합니다.</strong>");
-											} else {
-												$("#check1").children("strong")
-														.remove();
-												$("#check1")
-														.append(
-																"<strong  class=\"text-danger\">사용 불가능합니다.</strong>");
-											}
-											if (inputed == "") {
-												$("#check1").children("strong")
-														.remove();
-												$("#check1")
-														.append(
-																"<strong class=\"text-muted\">URL을 입력해주세요.</strong>");
-											}
-										}
-
-									});
-						});
-
-	});*/
+	
 
 	//============= "만들기"  Event 연결 =============
 	$(function() {

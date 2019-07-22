@@ -27,10 +27,88 @@
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
-    	 body >  div.container{ 
-        	border: 3px solid #D6CDB7;
-            margin-top: 10px;
-        }
+   .member {
+ font-size: 50px;
+ text-shadow: 0 0 10px #666;
+ color: #fff;
+ margin: 0 auto;
+ text-align: center;
+ text-transform: capitalize;
+ font-family: "맑은 고딕";
+ font-style: italic;
+}
+
+body {
+ font-family: "맑은 고딕";
+ font-size: 12px;
+}
+
+.form {
+ width: 498px;
+ height: 300px;
+ border-radius: 25px;
+ border: 5px double #999;
+ margin: 30px auto;
+}
+
+.form2 {
+ width: 380px;
+ min-width: 320px;
+ height: 200px;
+ margin: 60px auto;
+ margin-left:20px;
+}
+
+.form3 {
+ float: left;
+ /*   background:#f00;  */
+}
+
+.form3 label {
+ width: 100px;
+ height: 20px;
+ /*  display: block; */
+ float: left;
+}
+
+.form4 {
+ padding: 0px 0px 0px 70px;
+}
+
+#wrap {
+ width: 600px;
+ height: 500px;
+ margin: 0 auto;
+}
+
+.clear {
+ clear: both;
+}
+
+input[type="submit"] {
+ float: left;
+ /*  display:block; */
+ height: 50px;
+ background: #FFBB00;
+ border-radius: 5px;
+ border: none;
+ font-family: "맑은 고딕";
+}
+input[type="button"] {
+ height: 30px;
+ background: gray;
+ border-radius: 5px;
+/*  width: 140px; */
+ font-family:"맑은 고딕";
+ margin-top:10px;
+ margin-right:20px;
+}
+input[type="checkbox"] {
+ margin-top:20px;
+}
+
+
+
     </style>
     
     <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -66,12 +144,10 @@
 		//============= 회원원가입화면이동 =============
 		$( function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$("a[href='#' ]").on("click" , function() {
+			$("#addUser1").on("click" , function() {
 				$(self.location).attr("href","/user/addUserView");
 			});
 		});
-		
-		
 	</script>		
 	
 </head>
@@ -91,42 +167,40 @@
 		<!--  row Start /////////////////////////////////////-->
 		<div class="row">
 		
-			<div class="col-md-6">
-					<img src="/images/logo-spring.png" class="img-rounded" width="100%" />
-			</div>
-	   	 	
+	
 	 	 	<div class="col-md-6">
 	 	 	
 		 	 	<br/><br/>
 				
-				<div class="jumbotron">	 	 	
-		 	 		<h1 class="text-center">로 &nbsp;&nbsp;그 &nbsp;&nbsp;인</h1>
 
-			        <form class="form-horizontal">
-		  
-					  <div class="form-group">
-					    <label for="userId" class="col-sm-4 control-label">아 이 디</label>
-					    <div class="col-sm-6">
-					      <input type="text" class="form-control" name="userId" id="userId"  placeholder="아이디" >
-					    </div>
-					  </div>
-					  
-					  <div class="form-group">
-					    <label for="password" class="col-sm-4 control-label">패 스 워 드</label>
-					    <div class="col-sm-6">
-					      <input type="password" class="form-control" name="password" id="password" placeholder="패스워드" >
-					    </div>
-					  </div>
-					  
-					  <div class="form-group">
-					    <div class="col-sm-offset-4 col-sm-6 text-center">
-					      
-					      
-					      <button type="button" id='login1' class="btn btn-primary"  >로 &nbsp;그 &nbsp;인</button>
-					      <a class="btn btn-primary btn" href="#" role="button">회 &nbsp;원 &nbsp;가 &nbsp;입</a>
-					    </div>
-					  </div>
-					  </form>
+			        <form>
+			        
+  <div id="wrap">
+   <h1 class="member">Phoenix</h1>
+   <div class="form">
+    <div class="form2">
+     <div class="form3">
+      <label for="user">아이디</label><input type="text" id="user" name="userId">
+      <div class="clear"></div>
+      <label for="user">비밀번호</label><input type="password" id="user" name="password">
+     </div>
+     <input type="submit" value="로그인하기" id="login1">
+     <div class="clear"></div>
+     <div class="form4">
+      <label><input type="checkbox">자동로그인</label> 
+      <div class="clear"></div>
+      <label><input type="button" value="회원가입" id="addUser1">
+      
+      </label> <label><input
+       type="button" value="아이디/비밀번호 찾기"></label>
+     </div>
+    </div>
+   </div>
+  </div>
+  
+ </form>
+
+
 					  
 					
 			   	 </div>
