@@ -188,8 +188,8 @@ input[type="checkbox"] {
 
 				<div class="header-right d-flex align-items-center">
 					<button type="button" class="btn btn-outline-success" id='goChat'>
-						<i class="fa fa-paper-plane">Chat</i>
-					</button>
+						<i class="mdi mdi-comment-processing-outline">Chat</i>
+											</button>
 					
 					<button type="button" class="btn btn-primary login"  data-toggle="modal" data-target="#exampleModalCenter"><i class="icon-key">Login</i></button>
 					<!--  <button type="button" class="btn btn-outline-primary login" >

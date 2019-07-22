@@ -40,6 +40,8 @@ public interface CafeMemberService {
 	public int updateReplyCountDecrease(int memberNo) throws Exception;
 
 	public int updateVisitCountIncrease(int memberNo) throws Exception;
+	
+	public CafeMember getCafeMemberByURL(CafeMember cafeMember) throws Exception;
 
 	//////////////////////////// 기황끝///////////////////////////////
 

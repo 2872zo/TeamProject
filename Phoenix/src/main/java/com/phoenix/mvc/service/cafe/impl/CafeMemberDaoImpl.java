@@ -144,6 +144,12 @@ public class CafeMemberDaoImpl implements CafeMemberDao {
 		return sqlSession.update("CafeMemberMapper.updateFavorite", cafeMember);
 	}
 
+	@Override
+	public CafeMember getCafeMemberByURL(CafeMember cafeMember) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("CafeMemberMapper.checkMember",cafeMember);
+	}
+
 //////////////////////////////기황 끝///////////////////////////////////////	
 
 }

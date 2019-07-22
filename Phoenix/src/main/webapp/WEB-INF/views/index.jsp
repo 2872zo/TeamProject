@@ -67,20 +67,18 @@ $(function() {
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	
 		<br/>
+		
+	
+	
+
 	
  
 
 <div class="input-group d-flex justify-content-center" >
-  <div class='input-group-prepend'>
-  <select class="selectpicker">
-    <option selected value="0">통합검색</option>
-    <option value="1">google</option>
-    <option value="2">NAVER</option>
-    <option value="3">DAUM</option>
-  </select>
+
   </div>
   <div class='input-group-append'>
-  &nbsp;<input type="text" class="form-control-plaintext" placeholder="검색어 입력해주세요" >
+  &nbsp;<input type="text" class="form-control-plaintext" placeholder="검색어 입력해주세요" style='background-color: black;'>
   </div>
   <div class='input-group-append'>
   &nbsp;<button class="btn btn-sm btn-outline-primary" type="button" id="explore">검색</button>
@@ -94,6 +92,16 @@ $(function() {
 	<div class="card">
 
 <div class="card-body">
+
+<div class='d-flex justify-content-center'>
+<div class="input-group mb-3 " style='width: 50%;'>
+  <input type="text" class="form-control form-control-lg" placeholder="검색어를 입력해주세요">
+  <div class="input-group-append">
+    <button class="btn btn-lg btn-outline-secondary" type="button" id="button-addon2">검색</button>
+  </div>
+</div>
+</div>
+
 	<br/>
 	<div class="d-flex justify-content-around align-items-center">
 	<i class="mdi mdi-coffee" style='font-size: 50pt;' id="cafe"></i>

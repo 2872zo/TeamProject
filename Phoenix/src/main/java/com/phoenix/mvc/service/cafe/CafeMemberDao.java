@@ -51,6 +51,8 @@ public interface CafeMemberDao {
 	public int updateVisitCountIncrease (int memberNo) throws Exception;
 	
 	public int updateFavorite (CafeMember cafeMember) throws Exception;
+	
+	public CafeMember getCafeMemberByURL (CafeMember cafeMember) throws Exception;
 
 
 
