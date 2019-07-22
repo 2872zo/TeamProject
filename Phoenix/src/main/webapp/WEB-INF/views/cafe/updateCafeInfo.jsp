@@ -6,25 +6,163 @@
 <html lang="ko">
 	
 <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>카페정보수정</title>
 
-	
-	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<!-- Bootstrap CDN -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
+<link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
+<link href="/css/style.css" rel="stylesheet">
+<link rel="stylesheet" href="/css/custom/scroll-top.css">
 	
-	<header>
+	</head>
+<body>
+
+
+<style>
+code {
+    font-size: 87.5%;
+    color: orange;
+    word-break: break-word;
+}
+</style>
+<!--*******************
+        Preloader start
+    ********************-->
+	<div id="preloader" style="display: none;">
+		<div class="loader">
+			<svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none"
+					stroke-width="3" stroke-miterlimit="10"></circle>
+            </svg>
+		</div>
+	</div>
+	<!--*******************
+        Preloader end
+    ********************-->
+
+
+<div id="main-wrapper">
+
+		<!-- ToolBar Start /////////////////////////////////////-->
+		<jsp:include page="../common/cafeManageTollbar.jsp" />
+		<!-- ToolBar End /////////////////////////////////////-->
+
+<!--**********************************
+            Sidebar start
+        ***********************************-->
+		<div class="nk-sidebar">
+			<c:import url="/WEB-INF/views/common/cafeManageMenubar.jsp"></c:import>
+		</div>
+		<!--**********************************
+            Sidebar end
+        ***********************************-->
+
+		<!--**********************************
+            Content body start
+        ***********************************-->
+<div class="content-body" style="min-height: 743px;">
+
+
+
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="card">
+						<div class="card-body">			
+							<h2 class="text-center">카페정보수정</h2>
+							<hr style="border: solid 1px gray;">		
+								<div class="basic-form">			
+								<br>
+									<form>
+
+
+
+		
+		
+								<input type="hidden" name="cafeNo" value="${cafe.cafeNo }"/>
+
+                                        <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="val-cafeURL"><h5>카페 URL</h5>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <h3>http://localhost:8080/<code>${cafe.cafeURL}</code></h3>
+                                            </div>
+                                        </div> <hr>
+                                        
+                                        <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="val-username"><h5>카페이름 </h5>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <h3>${cafe.cafeName}</h3>
+                                            </div>
+                                        </div>
+                                        
+                                         <hr>
+
+                                        <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="val-username"><h5>배너이미지</h5>
+                                            </label>
+                                            <div class="col-lg-6">
+                                               <div><img src="/images/uploadFiles/bannerImg/${cafe.bannerImg}" width="300"; height="200px";/>	
+												</div>
+                                            </div>
+                                        </div>
+                                        
+                                         <hr>
+
+                                        <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="val-username"><h5>메인 <span class="text-danger">*</span></h5>
+                                            </label>
+                                            <div class="col-lg-6">
+                                               <div><img src="/images/uploadFiles/mainImg/${cafe.mainImg}" width="300"; height="200px";/>	
+												</div>
+                                            </div>
+                                        </div>
+                                        
+                                         <hr>
+
+                                        <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="val-username"><h5>카페아이콘 <span class="text-danger">*</span></h5>
+                                            </label>
+                                            <div class="col-lg-6">
+                                               <div><img src="/images/uploadFiles/cafeIcon/${cafe.cafeIcon}" width="300"; height="200px";/>	
+												</div>
+                                            </div>
+                                        </div>
+                                        
+                                         <hr>
+					
+				  				<div class="form-group row">
+                                	<div class="col-lg-8 ml-auto">
+                                  		<button type="submit" class="btn btn-success">확인</button>
+                                  		<a class="btn btn-success btn" href="#" role="button">취&nbsp;소</a>
+                                    </div>
+                                   </div>
+	 					</form>
+	 						
+		 			 </div>
+		  			</div>
+		  		   </div>
+		 		  </div>
+		 		 </div>
+		 	    </div>
+		 	   </div>
+			  </div>
+		  
+		  
 	
+		<!-- form Start /////////////////////////////////////-->
+ 	<script src="/plugins/common/common.min.js"></script>
+	<script src="/js/custom.min.js"></script>
+	<script src="/js/settings.js"></script>
+	<script src="/js/gleek.js"></script>
+	<script src="/js/styleSwitcher.js"></script>
+	<!-- 메뉴바 이용을 위한 스크립트 -->
+	<script src="/js/custom/scroll-top.js"></script>
 	
-		<title>카페가입양식관리화면</title>
-	</header>
-	
-		<script type="text/javascript">
+	<script type="text/javascript">
 
 		
 		//============= "가입"  Event 연결 =============
@@ -50,93 +188,18 @@
 				$("form").attr("method" , "POST").attr("action" , "/cafe/${cafe.cafeURL}/manage/updateCafeApplicationForm").submit();
 			});
 		});	
+		 $(function() {
+				//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+				$("a[href='#' ]").on("click", function() {
+					//$("form")[0].reset();
+					self.location = "/cafe/${cafe.cafeURL}/manage/dropCafeView"
+				});
+			});
 
 			
 			
 		</script>
-<body>
-
-
-<jsp:include page="../common/cafeManageTollbar.jsp" />
-		<div class="container">
-		
-		<div class="row">
-			<div class="col-2">
-				<c:import url="/WEB-INF/views/common/cafeManageMenubar.jsp"></c:import>
-			</div>
-			
-			<div class="col-10">
-		
-		
-			<br>
-				<h2 class="text-center">카페정보수정</h2>		
-			
-			</br>
-			<hr>	
-<form class="form-horizontal">
-
-
-		
-		
-		<input type="hidden" name="cafeNo" value="${cafe.cafeNo }"/>
-				<center>
-					<div class="form-group">
-	
-					<label for="exampleFormControlInput1" class="col-sm-offset-1 col-sm-3 control-label">카 페 이 름</label>
-						<div class="col-sm-4">				
-							<input type="text" class="form-control"
-								id="exampleFormControlInput1" placeholder="" name="cafeName"  value="${cafe.cafeName}">							
-						</div>
-					</div>		
-					
-					<div class="form-group">
-	
-					<label for="exampleFormControlInput1" class="col-sm-offset-1 col-sm-3 control-label">카 페 설 명</label>
-						<div class="col-sm-4">				
-							<input type="text" class="form-control"
-								id="exampleFormControlInput1" placeholder="" name="cafeDetail"  value="${cafe.cafeDetail}">							
-						</div>
-					</div>
-		
-					<div class="form-group">
-	
-					<label for="exampleFormControlInput1" class="col-sm-offset-1 col-sm-3 control-label">배너이미지</label>
-						<div class="col-sm-4">				
-							<div><img src="/images/uploadFiles/bannerImg/${cafe.bannerImg}" width="300"; height="200px";/>	</div></div>
-					</div>
-					
-					<div class="form-group">
-	
-					<label for="exampleFormControlInput1" class="col-sm-offset-1 col-sm-3 control-label">메인이미지</label>
-						<div class="col-sm-4">				
-							<div><img src="/images/uploadFiles/mainImg/${cafe.mainImg}" width="300"; height="200px";/>	</div></div>
-					</div>
-					
-					<div class="form-group">
-	
-					<label for="exampleFormControlInput1" class="col-sm-offset-1 col-sm-3 control-label">카페아이콘</label>
-						<div class="col-sm-4">				
-							<div><img src="/images/uploadFiles/cafeIcon/${cafe.cafeIcon}" width="300"; height="200px";/>	</div></div>
-					</div>
-			
-	
-		  
-				  
-		
-		  
-		  <div class="form-group">
-		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-success"  >확인</button>
-		    </div>
-		  </div>
-		  </center>
-		</form>
-		
-		<!-- form Start /////////////////////////////////////-->
-		</div>
-		</div>
- 	</div>
-	<!--  화면구성 div end /////////////////////////////////////-->
+	<script src="/js/custom/cafeCommon.js"></script>
 	
 </body>
 
