@@ -1,183 +1,256 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 
+
 <html lang="ko">
-
 <head>
-<title>가입신청상세조회</title>
-
-
-
-<!-- ////////////////////////////// jQuery CDN ////////////////////////////// -->
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"
- integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
- crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
- integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
- crossorigin="anonymous"></script>
-<!-- ////////////////////////////// bootstrap CDN ////////////////////////////// -->
-<link rel="stylesheet"
- href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
- integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
- crossorigin="anonymous">
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
- integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
- crossorigin="anonymous"></script>
- 
-<script type="text/javascript">
-$(function() {
-	var cafeURL = '${cafeApplication.cafeIcon}'
-	$("a[href='#' ]").on("click", function(){
-		self.location = "/cafe/"+cafeURL+"/manage/getCafeApplicationList"
-		})
-});
-
-$(function() {
-	var cafeURL = '${cafeApplication.cafeIcon}'
-	$("#accept").on("click", function(){
-		alert($("#applicationNo").text())
-		var whether= "true"+$("#applicationNo").text();
-		$("#boardName").val(whether);
-		$("#whether").attr("method" , "POST").attr("action" , "/cafe/"+cafeURL+"/manage/updateCafeApplication").submit();	
-	})
-
-	$("#reject").on("click", function(){
-		alert($("#applicationNo").text())
-		var whether= "false"+$("#applicationNo").text();
-		$("#boardName").val(whether);
-		$("#whether").attr("method" , "POST").attr("action" , "/cafe/"+cafeURL+"/manage/updateCafeApplication").submit();	
-	})
-});
-</script>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
 <title>카페가입신청상세조회</title>
 
 
+
+<link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
+<link href="/css/style.css" rel="stylesheet">
+
+
+<!-- ToolBar Start /////////////////////////////////////-->
+<jsp:include page="../common/cafeManageTollbar.jsp" />
+<!-- ToolBar End /////////////////////////////////////-->
+
+
+
 </head>
+
 <body>
-<div class='container'>
-<br/>
-<h2>가입신청상세조회</h2>
-<br/>
-<button type="button" id="accept"class="btn btn-outline-secondary">가입승인</button>
-<button type="button" id="rejecr"class="btn btn-outline-secondary">가입거절</button>
+	<!--**********************************
+            Sidebar start
+        ***********************************-->
+	<div class="nk-sidebar">
+		<c:import url="/WEB-INF/views/common/cafeManageMenubar.jsp"></c:import>
+	</div>
+	<!--**********************************
+            Sidebar end
+        ***********************************-->
 
-<form id = "whether"><input type="hidden" name ="boardName" id ="boardName" value="" /></form>
+	<!--**********************************
+            Content body start
+        ***********************************-->
 
-		<div class="row">
-			<div class="col-xs-4 col-md-2">
-				<strong>가입신청번호</strong>
+
+	<div class="content-body" style="min-height: 743px;">
+
+		<div class="row page-titles mx-0">
+			<div class="col p-md-0">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="javascript:void(0)">manage</a></li>
+					<li class="breadcrumb-item active"><a
+						href="javascript:void(0)">closed</a></li>
+				</ol>
 			</div>
-			<div class="col-xs-8 col-md-4" id = "applicationNo">${cafeApplication.applicationNo}</div>
 		</div>
 
-		<hr />
-		
-		<div class="row">
-			<div class="col-xs-4 col-md-2">
-				<strong>회원번호</strong>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="card">
+						<div class="card-body">
+							<h4 class="card-title">>가입신청상세조회</h4>
+							<div align="right">
+
+								<button type="button" id="accept"
+									class="btn btn-outline-secondary">가입승인</button>
+								<button type="button" id="reject"
+									class="btn btn-outline-secondary">가입거절</button>
+							</div>
+							<br> <br>
+							<form id="whether">
+								<input type="hidden" name="boardName" id="boardName" value="" />
+							</form>
+
+							<div class="row">
+								<div class="col-xs-4 col-md-2">
+									<strong>가입신청번호</strong>
+								</div>
+								<div class="col-xs-8 col-md-4" id="applicationNo">${cafeApplication.applicationNo}</div>
+							</div>
+
+							<hr />
+
+							<div class="row">
+								<div class="col-xs-4 col-md-2">
+									<strong>회원번호</strong>
+								</div>
+								<div class="col-xs-8 col-md-4">${cafeApplication.userNo}</div>
+							</div>
+
+							<hr />
+
+							<div class="row">
+								<div class="col-xs-4 col-md-2">
+									<strong>카페번호</strong>
+								</div>
+								<div class="col-xs-8 col-md-4">${cafeApplication.cafeNo}</div>
+							</div>
+
+							<hr />
+
+							<div class="row">
+								<div class="col-xs-4 col-md-2">
+									<strong>가입신청일</strong>
+								</div>
+								<div class="col-xs-8 col-md-4">${cafeApplication.regDate}</div>
+							</div>
+
+							<hr />
+
+							<div class="row">
+								<div class="col-xs-4 col-md-2">
+									<strong>멤버닉네임</strong>
+								</div>
+								<div class="col-xs-8 col-md-4">${cafeApplication.memberNickname}</div>
+							</div>
+
+							<hr />
+
+							<div class="row">
+								<div class="col-xs-4 col-md-2">
+									<strong>질문1</strong>
+								</div>
+								<div class="col-xs-8 col-md-4">${cafeApplication.question1}</div>
+							</div>
+
+							<hr />
+
+							<div class="row">
+								<div class="col-xs-4 col-md-2">
+									<strong>질문2</strong>
+								</div>
+								<div class="col-xs-8 col-md-4">${cafeApplication.question2}</div>
+							</div>
+
+							<hr />
+
+							<div class="row">
+								<div class="col-xs-4 col-md-2">
+									<strong>질문3</strong>
+								</div>
+								<div class="col-xs-8 col-md-4">${cafeApplication.question3}</div>
+							</div>
+
+							<hr />
+
+							<div class="row">
+								<div class="col-xs-4 col-md-2">
+									<strong>답변1</strong>
+								</div>
+								<div class="col-xs-8 col-md-4">${cafeApplication.answer1}</div>
+							</div>
+
+							<hr />
+
+							<div class="row">
+								<div class="col-xs-4 col-md-2">
+									<strong>답변2</strong>
+								</div>
+								<div class="col-xs-8 col-md-4">${cafeApplication.answer2}</div>
+							</div>
+
+							<hr />
+
+							<div class="row">
+								<div class="col-xs-4 col-md-2">
+									<strong>답변3</strong>
+								</div>
+								<div class="col-xs-8 col-md-4">${cafeApplication.answer3}</div>
+							</div>
+
+							<hr />
+
+							<div class="row">
+								<div class="col-xs-4 col-md-2">
+									<strong>가입승인상태</strong>
+								</div>
+								<div class="col-xs-8 col-md-4">${cafeApplication.acceptStatusCode}</div>
+							</div>
+
+							<hr />
+
+							<div align="center">
+								<button type="button" class="btn btn-outline-warning">확인</button>
+							</div>
+
+
+						</div>
+					</div>
+				</div>
 			</div>
-			<div class="col-xs-8 col-md-4">${cafeApplication.userNo}</div>
 		</div>
-
-		<hr />
-		
-		<div class="row">
-			<div class="col-xs-4 col-md-2">
-				<strong>카페번호</strong>
-			</div>
-			<div class="col-xs-8 col-md-4">${cafeApplication.cafeNo}</div>
-		</div>
-
-		<hr />
-		
-		<div class="row">
-			<div class="col-xs-4 col-md-2">
-				<strong>가입신청일</strong>
-			</div>
-			<div class="col-xs-8 col-md-4">${cafeApplication.regDate}</div>
-		</div>
-
-		<hr />
-		
-		<div class="row">
-			<div class="col-xs-4 col-md-2">
-				<strong>멤버닉네임</strong>
-			</div>
-			<div class="col-xs-8 col-md-4">${cafeApplication.memberNickname}</div>
-		</div>
-
-		<hr />
-		
-		<div class="row">
-			<div class="col-xs-4 col-md-2">
-				<strong>질문</strong>
-			</div>
-			<div class="col-xs-8 col-md-4">${cafeApplication.question1}</div>
-		</div>
-
-		<hr />
-		
-		<div class="row">
-			<div class="col-xs-4 col-md-2">
-				<strong>질문</strong>
-			</div>
-			<div class="col-xs-8 col-md-4">${cafeApplication.question2}</div>
-		</div>
-
-		<hr />
-		
-		<div class="row">
-			<div class="col-xs-4 col-md-2">
-				<strong>질문</strong>
-			</div>
-			<div class="col-xs-8 col-md-4">${cafeApplication.question3}</div>
-		</div>
-
-		<hr />
-		
-		<div class="row">
-			<div class="col-xs-4 col-md-2">
-				<strong>답변</strong>
-			</div>
-			<div class="col-xs-8 col-md-4">${cafeApplication.answer1}</div>
-		</div>
-
-		<hr />
-		
-		<div class="row">
-			<div class="col-xs-4 col-md-2">
-				<strong>답변</strong>
-			</div>
-			<div class="col-xs-8 col-md-4">${cafeApplication.answer2}</div>
-		</div>
-
-		<hr />
-		
-		<div class="row">
-			<div class="col-xs-4 col-md-2">
-				<strong>답변</strong>
-			</div>
-			<div class="col-xs-8 col-md-4">${cafeApplication.answer3}</div>
-		</div>
-
-		<hr />
-		
-		<div class="row">
-			<div class="col-xs-4 col-md-2">
-				<strong>가입승인상태</strong>
-			</div>
-			<div class="col-xs-8 col-md-4">${cafeApplication.acceptStatusCode}</div>
-		</div>
-
-		<hr />
-		
-		<a class=" button.btn.btn-outline-success" href="#" role="button">확 &nbsp;인</a>
+	</div>
 
 
-</div>
+
+
+
+	<!--**********************************
+        Scripts
+    ***********************************-->
+	<script src="/plugins/common/common.min.js"></script>
+	<script src="/js/custom.min.js"></script>
+	<script src="/js/settings.js"></script>
+	<script src="/js/gleek.js"></script>
+	<script src="/js/styleSwitcher.js"></script>
+
+	<!-- 메뉴바 이용을 위한 스크립트 -->
+	<script src="/js/custom/scroll-top.js"></script>
+
+
+	<script type="text/javascript">
+		$(function() {
+			var cafeURL = '${cafeApplication.cafeIcon}'
+			$(".btn-outline-warning").on(
+					"click",
+					function() {
+						self.location = "/cafe/" + cafeURL
+								+ "/manage/getCafeApplicationList"
+					})
+		});
+
+		$(function() {
+			var cafeURL = '${cafeApplication.cafeIcon}'
+			$("#accept").on(
+					"click",
+					function() {
+						alert($("#applicationNo").text())
+						var whether = "true" + $("#applicationNo").text();
+						$("#boardName").val(whether);
+						$("#whether").attr("method", "POST").attr(
+								"action",
+								"/cafe/" + cafeURL
+										+ "/manage/updateCafeApplication")
+								.submit();
+					})
+
+			$("#reject").on(
+					"click",
+					function() {
+						alert($("#applicationNo").text())
+						var whether = "false" + $("#applicationNo").text();
+						$("#boardName").val(whether);
+						$("#whether").attr("method", "POST").attr(
+								"action",
+								"/cafe/" + cafeURL
+										+ "/manage/updateCafeApplication")
+								.submit();
+					})
+		});
+	</script>
+	<script src="/js/custom/cafeCommon.js"></script>
+
 </body>
 </html>
