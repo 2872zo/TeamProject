@@ -190,28 +190,32 @@ public class CafeManageController {
 		model.addAttribute("useGradeList", useGradeList);
 //모델에 cafeURL의 cafe 객체도 같이 넘겨줌
 
-		return "/cafe/test";
-		//return "/cafe/updateCafeBoard";
+		//return "/cafe/menuTest";
+		return "/cafe/updateCafeBoard";
 	}
 
 	@RequestMapping(value = "/{cafeURL}/manage/updateCafeBoard", method = RequestMethod.POST) // 예림예림
 	public String updateCafeBoard(HttpServletRequest request, @PathVariable String cafeURL) {
 
-//System.out.println(request.getParameter("board")); 첫번째값만 받아옴
+		//System.out.println(request.getParameter("board")); 첫번째값만 받아옴
 		List<Board> existBoard = new ArrayList<Board>();
 		List<Board> newBoard = new ArrayList<Board>();
 
 		String[] boards = request.getParameterValues("board");
-//int a = request.getParameterValues("board").length;
+		//int a = request.getParameterValues("board").length;
 		int boardIndex = 1;
 
-		String[] grades = request.getParameterValues("grade");
-//System.out.println("grades!!"+grades.length);//구분선빼고 다나옴
+		String[] grades = request.getParameterValues("grade"); //등급
+		//System.out.println("grades!!"+grades.length);//구분선빼고 다나옴
+		
+		String[] bestLikeCount = request.getParameterValues("bestLikeCount");
+		String[] bestTerm = request.getParameterValues("bestTerm");
+		String[] bestPostCount = request.getParameterValues("bestPostCount");
 
 		for (int i = 0; i < boards.length; i++) // board selectbox
 		{
 			System.out.println(boards[i]); // 파싱해서 / 있는애들은 board넘버.. update여러개, newBoard인애들은 add
-//가져와서 앞에가 ----인애들은 update 안해줌
+			//가져와서 앞에가 ----인애들은 update 안해줌
 			Board board = new Board();
 			board.setCafeURL(cafeURL);
 			board.setBoardIndex(boardIndex); // 순서이동해도 option순서대로 오나
@@ -251,6 +255,73 @@ public class CafeManageController {
 				}
 			}
 		}
+		
+		for (int i = 0; i < bestPostCount.length; i++) // 베스트게시글개수 설정
+		{
+			String[] bestPostCountValue = bestPostCount[i].split("/");
+			String[] bestLikeCountValue = bestLikeCount[i].split("/");
+			String[] bestTermValue = bestTerm[i].split("/");
+
+			if (bestPostCountValue[1].contains("new"))// bestPostCountValue 새로만들어진애일때
+			{
+				for (int j = 0; j < newBoard.size(); j++) {
+					if (newBoard.get(j).getBoardNo() == Integer.parseInt(bestPostCountValue[1].split("w")[1])) {
+						newBoard.get(j).setBestPostCount(Integer.parseInt(bestPostCountValue[0]));
+					}
+					
+				}
+			} 
+			else// 원래있던애일때
+			{
+				for (int j = 0; j < existBoard.size(); j++) {
+					if (existBoard.get(j).getBoardNo() == Integer.parseInt(bestPostCountValue[1])) {
+						existBoard.get(j).setBestPostCount(Integer.parseInt(bestPostCountValue[0]));
+					}
+				}
+			}
+			
+			if (bestLikeCountValue[1].contains("new"))// bestLikeCountValue새로만들어진애일때
+			{
+				for (int j = 0; j < newBoard.size(); j++) {
+					if (newBoard.get(j).getBoardNo() == Integer.parseInt(bestLikeCountValue[1].split("w")[1])) {
+						newBoard.get(j).setBestLikeCount(Integer.parseInt(bestLikeCountValue[0]));
+					}
+					
+				}
+			} 
+			else// 원래있던애일때
+			{
+				for (int j = 0; j < existBoard.size(); j++) {
+					if (existBoard.get(j).getBoardNo() == Integer.parseInt(bestLikeCountValue[1])) {
+						existBoard.get(j).setBestLikeCount(Integer.parseInt(bestLikeCountValue[0]));
+					}
+				}
+			}
+			
+			if (bestTermValue[1].contains("new"))// 새로만들어진애일때
+			{
+				for (int j = 0; j < newBoard.size(); j++) {
+					if (newBoard.get(j).getBoardNo() == Integer.parseInt(bestTermValue[1].split("w")[1])) {
+						newBoard.get(j).setBestTerm(bestTermValue[0].charAt(0));
+					}
+					
+				}
+			} 
+			else// 원래있던애일때
+			{
+				for (int j = 0; j < existBoard.size(); j++) {
+					if (existBoard.get(j).getBoardNo() == Integer.parseInt(bestTermValue[1])) {
+						existBoard.get(j).setBestTerm(bestTermValue[0].charAt(0));
+					}
+				}
+			}
+			
+			
+			
+			
+		}
+		
+		
 
 //일단 따로따로 담는다/
 		Enumeration<String> e = request.getParameterNames();
@@ -366,6 +437,7 @@ public class CafeManageController {
 		model.addAttribute("cafeURL", cafeURL);
 
 		return "cafe/statisticsCafe";
+		//return "cafe/test";
 	}
 
 	@RequestMapping(value = "/{cafeURL}/addCafeReportView")
@@ -375,12 +447,12 @@ public class CafeManageController {
 		return "cafe/addCafeReport";
 	}
 	
-	@RequestMapping(value = "/test")
-	public String test() throws Exception {
-		
-
-		return "cafe/test";
-	}
+//	@RequestMapping(value = "/test")
+//	public String test() throws Exception {
+//		
+//
+//		return "cafe/test";
+//	}
 //////////////////////////////////////예림끝////////////////////////////////////////////
 
 ///////////////////////////////// 지니//////////////////////////////
