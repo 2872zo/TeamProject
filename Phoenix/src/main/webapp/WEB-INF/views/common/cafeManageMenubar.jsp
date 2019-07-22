@@ -1,7 +1,6 @@
 <%@ page contentType="text/html; charset=utf-8"%>
 
 
-	
 	<script type="text/javascript">
 
 	$(function() {
@@ -46,67 +45,22 @@
 		
 		
 	</script>
-
-	<div id="cafeMangeMenubar">
-	<br/>
-	<br/>
-	<br/>
-	<br/>
-	<br/>
 	
-		<div class="statistics">
-			카페통계
-		</div>
-		<br/>
-		<hr>
-		
-		<div class="menu">
-			게시판관리
-		</div>
-		<br/>
-		<hr>
 
-		<div class="info">
-			카페정보수정
-		</div>
-		<br/>
-		<hr>
-		
-		<div class="form">
-			가입양식관리
-		</div>
-		<br/>
-		<hr>
-		
-		<div class="application">
-			가입신청목록
-		</div>
-		<br/>
-		<hr>
-		
-		<div class="grade">
-			카페등급관리
-		</div>
-		<br/>
-		<hr>
-		
-		<div class="member">
-			카페멤버목록
-		</div>
-		<br/>
-		<hr>
-		
-		<div class="closed">
-			카페폐쇄
-		</div>
-		<br/>
-		<hr>
-		
-		<div class="notice">
-			공지관리
-		</div>
-		<br/>
-		<hr>
-		
-
-	</div>
+			<div class="nk-nav-scroll" style="overflow: hidden; width: auto; height: 100%;">
+                <ul class="metismenu" id="menu">
+                    <li>
+                        <a class="has-arrow" href="#" aria-expanded="false">
+                            <i class="icon-speedometer menu-icon"></i><span class="nav-text">Dashboard</span>
+                        </a>
+                    </li>
+                    
+                    <li class="mega-menu mega-menu-sm">
+                        <a class="has-arrow" href="#" aria-expanded="false">
+                           <i class="icon-speedometer menu-icon"></i><span class="nav-text">Layouts</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+            

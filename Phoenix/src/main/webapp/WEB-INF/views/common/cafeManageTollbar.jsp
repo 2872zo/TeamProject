@@ -1,107 +1,149 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=utf-8"%>
+
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 
 <!DOCTYPE html>
 
 <html lang="ko">
-
 <head>
-<meta charset="EUC-KR">
-
-<!--jquery -->
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"
- integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
- crossorigin="anonymous"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-	crossorigin="anonymous"></script>
-
-<!--bootstrap -->
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-	crossorigin="anonymous">
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-	crossorigin="anonymous"></script>
-<!--  ///////////////////////// CSS ////////////////////////// -->
-<style>
-</style>
-<!--  ///////////////////////// JavaScript ////////////////////////// -->
-<script type="text/javascript">
-	$(function() {
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>매니저용 카페 툴바</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="images/quixlab/favicon.png">
+    <!-- Custom Stylesheet -->
+    <link href="/css/quixlab/style.css" rel="stylesheet">
+    <!--  ///////////////////////// JavaScript ////////////////////////// -->
+	<script type="text/javascript">
+		$(function() {
+		
+				$("#login").on("click" , function() {
+					$(self.location).attr("href","/user/loginView");
+				});
 	
+				$("#logout").on("click" , function() {
+					$(self.location).attr("href","/user/logout");
+				});
+	
+				$("#phoenix").on("click", function() {
+					alert("g")
+					$(self.location).attr("href", "/");
+				});
 				
-			$("#login").on("click" , function() {
-				$(self.location).attr("href","/user/loginView");
-			});
-
-			$("#logout").on("click" , function() {
-				$(self.location).attr("href","/user/logout");
-			});
-
-			$("#phoenix").on("click", function() {
-				$(self.location).attr("href", "/");
-			});
-			
-			$("#goChat").on("click" , function() {
-				$(self.location).attr("href","/chat/main");
-			});
+				$("#goChat").on("click" , function() {
+					$(self.location).attr("href","/chat/main");
+				});
+						
+				
+				$("#cafemanage").on("click", function() {
 					
-			
-			$("#cafemanage").on("click", function() {
+					location.href = "/cafe/"+"${cafeURL}"+"/manage/getCafeStatistics";
+				});
 				
-				location.href = "/cafe/"+"${cafeURL}"+"/manage/getCafeStatistics";
-			});
-			
-			$("#cafeName").on("click", function() {
-				
-				$(self.location).attr("href", "/cafe/" + "${cafeURL}" +"/");
-			});
-	});
-</script>
+				$("#cafeName").on("click", function() {
+					
+					$(self.location).attr("href", "/cafe/" + "${cafeURL}" +"/");
+				});
+		});
+	</script>
+
 </head>
 
-<body>
+<body data-theme-version="light" data-layout="vertical" data-nav-headerbg="color_1" data-headerbg="color_1" data-sidebar-style="full" data-sibebarbg="color_1" data-sidebar-position="static" data-header-position="static" data-container="wide" direction="ltr">
+	
+	<form name ="form" class="needs-validation" novalidate>
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader" style="display: none;">
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"></circle>
+            </svg>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+    
+    <div class="show" id="main-wrapper">
+
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+		<div class="nav-header" text-align="center">
+            <div class="brand-logo">
+                <a id="phoenix" href="#">
+                <span class="brand-title" font-size="1.5rem" align="center">
+                        Phoenix
+                    </span>
+                </a>
+            </div>
+        </div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+
+        <!--**********************************
+            Header start
+        ***********************************-->
+       <div class="header" >    
+            <div class="header-content clearfix">
+                <div class="header-left">
+                    <div class="input-group icons">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bg-transparent border-0 pr-2 pr-sm-3" id="cafemanage" line-height:initial>manage</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-left">
+                    <div class="input-group icons">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bg-transparent border-0 pr-2 pr-sm-3" id="cafeName">my cafe</span>
+                        </div>
+                    </div>
+                </div>
+                <c:if test='${empty sessionScope.user}'>
+                 <div class="header-right">
+                    <div class="input-group icons">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bg-transparent border-0 pr-2 pr-sm-3" id="login"><i class="mdi mdi-magnify">login</i></span>
+                        </div>
+                    </div>
+                </div>
+                 <div class="header-right">
+                    <div class="input-group icons">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bg-transparent border-0 pr-2 pr-sm-3" id="logout"><i class="mdi mdi-magnify">logout</i></span>
+                        </div>
+                    </div>
+                </div>
+                </c:if>
+            </div>
+        </div>
+        <!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+
+        
+
+    </div>
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <script src="/plugins/quixlab/common/common.min.js"></script>
+    <script src="/js/quixlab/custom.min.js"></script>
+    <script src="/js/quixlab/settings.js"></script>
+    <script src="/js/quixlab/gleek.js"></script>
+    <script src="/js/quixlab/styleSwitcher.js"></script>
 
 
-
-	<!--  화면구성 div Start /////////////////////////////////////-->
-
-	<nav class="navbar navbar-expand-lg navbar-light"
-		style="background-color: #ff6a00;">
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
-			data-target="#navbarTogglerDemo03"
-			aria-controls="navbarTogglerDemo03" aria-expanded="false"
-			aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<a class="navbar-brand" href="#" id="phoenix">Phoenix</a>
-
-		<div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-			<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-			
-			 <%-- <c:if test="${cafe.manageUserNo == user.userNo }"></c:if>  --%>
-				<li class="nav-item active"><a class="nav-link" href="#" id='cafemanage'>카페관리</a></li>
-				<li class="nav-item"><a class="nav-link" href="#" id ='cafeName'>{cafe.cafeName}</a></li>
-			
-			</ul>
-			
-	     	<c:if test='${empty sessionScope.user}'>
-			<button type="submit" class='btn btn-outline-light' id='login'>Login</button>
-			</c:if>
-			
-			<c:if test='${!empty sessionScope.user}'>
-			<button class="btn btn-outline-dark" type="submit" id = "logout">Logout</button>
-			</c:if>
-			
-			
-
-		</div>
-	</nav>
-
+	</form>
 </body>
 </html>
