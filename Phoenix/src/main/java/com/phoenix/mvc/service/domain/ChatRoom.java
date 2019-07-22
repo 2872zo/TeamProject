@@ -4,6 +4,7 @@ import java.util.List;
 
 public class ChatRoom {
 	
+	private String id;
 	private int userNo;
 	private int chatRoomNo;
 	private int myChatRoomNo;

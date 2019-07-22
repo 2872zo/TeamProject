@@ -6,21 +6,25 @@
 
 <mapper namespace="CafeApplicationMapper">
  	
-	
 	<resultMap id="cafeApplicationSelectMap" type="CafeApplication">
-		<result property="applicationNo" 			column="application_no" 			jdbcType="NUMERIC"/>
-		<result property="userNo"			column="user_no" 			jdbcType="NUMERIC" />
-		<result property="cafeNo" 		column="cafe_no" 			jdbcType="NUMERIC" />
-		<result property="regDate" 			column="reg_date" 				jdbcType="DATE" />
-		<result property="question1" 				column="question1" 				jdbcType="VARCHAR" />
-		<result property="question2" 			column="question2" 		jdbcType="VARCHAR" />
-		<result property="question3" 			column="question3" 				jdbcType="VARCHAR" />
-		<result property="answer1" 			column="answer1" 				jdbcType="NUMERIC"  />
+		<result property="applicationNo" 	column="application_no" 	jdbcType="NUMERIC"/>
+		<result property="userNo" 			column="user_no" 			jdbcType="NUMERIC" />
+		<result property="cafeNo" 			column="cafe_no" 			jdbcType="NUMERIC" />
+		<result property="regDate" 			column="reg_date" 			jdbcType="VARCHAR" />
+		<result property="question1" 		column="question1" 			jdbcType="VARCHAR" />
+		<result property="question2" 		column="question2" 			jdbcType="VARCHAR" />
+		<result property="question3" 		column="question3" 			jdbcType="VARCHAR" />
+		<result property="answer1" 			column="answer1" 			jdbcType="NUMERIC"  />
 		<result property="answer2" 			column="answer2" 			jdbcType="VARCHAR" />
-		<result property="answer3" 			column="answer3" 				jdbcType="VARCHAR" />
-		<result property="acceptStatusCode" 			column="accept_status_code" 				jdbcType="VARCHAR" />
-		<result property="memberNickname" 			column="member_nickname" 				jdbcType="VARCHAR" />
-		<result property="userId" 			column="user_id" 				jdbcType="VARCHAR" />
+		<result property="answer3" 			column="answer3" 			jdbcType="VARCHAR" />
+		<result property="acceptStatusCode" column="accept_status_code" jdbcType="VARCHAR" />
+		<result property="memberNickname" 	column="member_nickname" 	jdbcType="VARCHAR" />
+		<result property="userId" 			column="user_id" 			jdbcType="VARCHAR" />
+		<result property="cafeURL" 			column="URL" 				jdbcType="VARCHAR" />
+		<result property="cafeName" 		column="cafe_name" 			jdbcType="VARCHAR" />
+		<result property="managerNickname" 	column="member_nickname" 	jdbcType="VARCHAR" />
+		<result property="cafeIcon" 		column="cafe_icon" 			jdbcType="VARCHAR" />
+		<result property="cafeType" 		column="cafe_type" 			jdbcType="VARCHAR" />
 	</resultMap>
 	
 	
@@ -28,7 +32,7 @@
 	 	INSERT
 		INTO cafe_application( application_no , user_no , cafe_no , reg_date , question1, question2, question3 , answer1, answer2, answer3, accept_status_code, member_nickname ) 
 		VALUES	 (	seq_application_no.NEXTVAL , #{userNo} , #{cafeNo} , SYSDATE , #{question1:VARCHAR} , 
-							#{question2:VARCHAR} , #{question3:VARCHAR} , #{answer1:VARCHAR} , #{answer2:VARCHAR}, #{answer3:VARCHAR}, 'ca101', #{memberNickname})
+							#{question2:VARCHAR} , #{question3:VARCHAR} , #{answer1:VARCHAR} , #{answer2:VARCHAR}, #{answer3:VARCHAR}, 'ca100', #{memberNickname})
 	 </insert>
 	 
 	 	
@@ -39,6 +43,7 @@
 	  									FROM cafe_application c, users u
 	  									<where>
 	  									c.user_no = u.user_no(+)
+	  									AND c.cafe_no=#{cafeNo}
 											<if test="searchCondition != null">
 													<if test="searchCondition == 0 and searchKeyword !='' ">
 										 				AND c.member_nickname like '%' || #{searchKeyword}||'%'
@@ -47,6 +52,14 @@
 										 				AND u.user_id like '%' || #{searchKeyword}||'%'
 													</if>
 											</if>
+											<if test="status != null">
+												<if test="status==100">
+													AND accept_status_code ='ca100'
+												</if>
+												<if test ="status==101">
+												   AND accept_status_code NOT IN 'ca100'
+												</if>
+											</if>	
 											</where>
 											ORDER BY application_no ) inner_table
 						WHERE ROWNUM &lt;= #{endRowNum} )
@@ -61,6 +74,7 @@
 						FROM cafe_application c, users u
 							<where>
 							c.user_no = u.user_no(+)
+							AND c.cafe_no=#{cafeNo}
 								<if test="searchCondition != null">
 								<if test="searchCondition == 0 and searchKeyword !='' ">
 						 			AND c.member_nickname like '%' || #{searchKeyword}||'%'
@@ -72,7 +86,6 @@
 							</where>) countTable						
 	 </select>
 	 
-	 
 	 <update id="updateAcceptStatusCode"	parameterType="CafeApplication" >
 	   	UPDATE cafe_application
 	   	<set>
@@ -81,20 +94,39 @@
 	   	WHERE user_no = #{userNo}
 	 </update>
 	 
+	 <sql id="selectAllFromCafeApplication">
+	 	SELECT 
+		a.application_no, a.user_no, a.member_nickname, 
+		TO_CHAR(a.reg_date, 'YYYY-MM-DD HH24:MM:SS') reg_date, 
+		a.accept_status_code, c.cafe_no, c.cafe_icon, c.url, c.cafe_type, c.cafe_name,
+		a.question1, a.answer1, 
+		a.question2, a.answer2, 
+		a.question3, a.answer3 
+		FROM
+		cafe_application a, cafe c
+		WHERE
+		a.cafe_no = c.cafe_no
+	 </sql>
+	 
 	 <select id="getCafeApplication" parameterType="int" resultMap="cafeApplicationSelectMap">
-  		SELECT 
-		*
-		FROM cafe_application
-		WHERE user_no = #{userNo}
+  		<include refid="selectAllFromCafeApplication"/>
+  		AND a.user_no = #{userNo}
+  		ORDER BY application_no DESC
+  	</select>
+  	
+  	 <select id="countCafeApplicationForUser" parameterType="int" resultType="int">
+  		SELECT
+		count(*)
+		FROM (
+  		<include refid="selectAllFromCafeApplication"/>
+  		AND a.user_no = #{userNo}
+  		ORDER BY application_no DESC
+  		)
   	</select>
   	
   	<select id="getCafeApplication2" parameterType="int" resultMap="cafeApplicationSelectMap">
-  		SELECT 
-		*
-		FROM cafe_application
-		WHERE application_no = #{applicationNo}
+  		<include refid="selectAllFromCafeApplication"/>
+		AND application_no = #{applicationNo}
   	</select>
-	 
-
 	 
 </mapper>

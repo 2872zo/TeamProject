@@ -28,6 +28,11 @@ public class Search{
 	private String termStart;
 	private String termEnd;
 	
+	private int targetUserNo;
+	private int chatNo;
+	private int chatRoomNo;
+	private int friendStatus;
+	
 	///Constructor
 	public Search() {
 	}
@@ -185,6 +190,38 @@ public class Search{
 
 	public void setTermEnd(String termEnd) {
 		this.termEnd = termEnd;
+	}
+
+	public int getTargetUserNo() {
+		return targetUserNo;
+	}
+
+	public void setTargetUserNo(int targetUserNo) {
+		this.targetUserNo = targetUserNo;
+	}
+
+	public int getChatNo() {
+		return chatNo;
+	}
+
+	public void setChatNo(int chatNo) {
+		this.chatNo = chatNo;
+	}
+
+	public int getChatRoomNo() {
+		return chatRoomNo;
+	}
+
+	public void setChatRoomNo(int chatRoomNo) {
+		this.chatRoomNo = chatRoomNo;
+	}
+
+	public int getFriendStatus() {
+		return friendStatus;
+	}
+
+	public void setFriendStatus(int friendStatus) {
+		this.friendStatus = friendStatus;
 	}
 
 	@Override

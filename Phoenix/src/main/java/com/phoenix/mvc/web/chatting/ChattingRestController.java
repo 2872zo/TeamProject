@@ -1,6 +1,7 @@
 package com.phoenix.mvc.web.chatting;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.phoenix.mvc.service.chatting.ChattingService;
 import com.phoenix.mvc.service.domain.Chat;
+import com.phoenix.mvc.service.domain.ChatRoom;
 
 @RestController
 @RequestMapping("/chat/json/*")
@@ -25,12 +27,29 @@ public class ChattingRestController {
 	private ChattingService chattingService;
 
 	@PostMapping("addChat")
-	public Chat addChat(@RequestBody Chat chat){
+	public Chat addChat(@RequestBody Chat chat) throws Exception{
 		System.out.println ("/chat/json/addChat");
 		System.out.println (chat);
 		chat.setRegDate(new Date());
 		System.out.println ("시간찍힘"+chat);
+		chat.setChatNickname("대충");
+		chat.setChatProfileImg("abc");
+		chattingService.addChat(chat);
+		
+		System.out.println ("제대로들어가면호출됨"+chat);
+		
+		List list = chattingService.getChatList(chat);
+		
+		System.out.println(list);
+		
 		return chat;
 	}
+	
+	@PostMapping("updateChatRoomName")
+	public Chat updateChatRoomName(@RequestBody ChatRoom chatRoom){
+		return null;
+		
+	}
+	
 	
 }

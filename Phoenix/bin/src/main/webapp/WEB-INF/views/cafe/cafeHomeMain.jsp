@@ -30,125 +30,175 @@
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
 $(function() {
+
+	$($(".cafeListing")[$("#status").val()]).attr("class","btn btn-primary cafeListing");
+	$($(".cafeCategory")[$("#cafeType").val()]).attr("class","btn btn-success cafeCategory");
+
 	$("#addCafe").on("click" , function() {
 		$(self.location).attr("href","/cafe/addCafeView");
 	});
-	
+		
 	$(".cafeListing").on("click" , function() {
-		alert($(".cafeListing").index(this));
+		var count = $(".cafeListing").index(this);
+		$("#status").val(count);
+		$("#cafeHomeForm").attr("method" , "POST").attr("action" , "/cafe/main").submit();	
 	});
-
+	
 	$(".cafeCategory").on("click" , function() {
 		var count = $(".cafeCategory").index(this);
-		$("#boardNo").val(count);
-		$("#cafeCategorizing").attr("method" , "POST").attr("action" , "/cafe/category").submit();	
+		$("#cafeType").val(count);
+		$("#cafeHomeForm").attr("method" , "POST").attr("action" , "/cafe/main").submit();	
 	});
 
 	$("#memberList").on("click" , function() {
 		$("#memberListingForm").attr("method" , "POST").attr("action" , "/cafe/randomCafe/manage/getCafeMemberList").submit();
 	});
 
+	$(".myCafe").on("click" , function(aaa) {
+		//alert($(aaa.target).html());
+		var moveTo = $(this).attr('name');
+		if(!$(aaa.target).hasClass("favorited")){
+			$(self.location).attr("href","/cafe/"+moveTo);
+		}
+		
+	});
+
+	$(".favorited").on("click" , function() {
+		var targetTag = $(this);
+		var checker = $(this).text();
+
+		if(checker == "true"){
+			checker = "false";
+		}
+		else if(checker == "false"){
+			checker = "true";
+		}
+		
+		var memberJson = $($(".memberNo")[$(".favorited").index(this)]).val();
+		
+		var jsoned = {memberNo : memberJson, favoriteFlag : checker};
+		jsoned = JSON.stringify(jsoned);
+			$.ajax(
+					{
+					type : "POST",
+					url : "/cafe/json/updateFavorite",
+					data : jsoned,
+					contentType: "application/json", //보내는 컨텐츠의 타입
+					//dataType : "json",      //받아올 데이터의 타입 필요없음
+					success : function(serverData, status) {
+										
+										targetTag.text(checker);	
+									},
+					error : function(request,status,error){
+								        alert("에러남 : "+error);
+								       }
+					}
+				);
+	});
+
 });
 </script>
 	<!-- ToolBar Start /////////////////////////////////////-->
-	<jsp:include page="../common/cafeToolbar.jsp" />
+	<jsp:include page="../common/toolbar.jsp" />
 	<!-- ToolBar End /////////////////////////////////////-->
 </head>
 
 <body>
-<form id="cafeCategorizing">
-<input type="hidden" id="boardNo" name="boardNo" value="0"/>
+<form id="cafeHomeForm">
+<input type="hidden" id="userNo" name="userNo" value="${search.userNo}"/>
+<input type="hidden" id="status" name="status" value="${search.status}"/>
+<input type="hidden" id="cafeType" name="cafeType" value="${search.cafeType}"/>
 </form>
 
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
+	
+	<c:if test="${!empty sessionScope.user}">
 
 	<br/>
 		<button type="button" class="btn btn-outline-warning btn-block" id='addCafe'>카페만들기</button>
 	<br/>
 	
+	<div class="btn-group d-flex justify-content-center" role="group">
+	  <button type="button" role="group" class='btn btn-outline-primary cafeListing'>활동중인 카페</button>
+	  <button type="button" role="group" class='btn btn-outline-primary cafeListing'>즐겨찾기 카페</button>
+	  <button type="button" role="group" class='btn btn-outline-primary cafeListing'>운영중인 카페</button>
+	  <button type="button" role="group" class='btn btn-outline-primary cafeListing'>정지당한 카페</button>	
+	  </div>
+	  
+	<br/>
 	
-	<div class="btn-group" role="group" aria-label="Basic example">
-  <button type="button" class="btn btn-outline-primary cafeListing">운영중인 카페</button>
-  <button type="button" class="btn btn-outline-primary cafeListing">활동중인 카페</button>
-  <button type="button" class="btn btn-outline-primary cafeListing">즐겨찾기 카페</button>
-  <button type="button" class="btn btn-outline-primary cafeListing">가입신청 내역</button>
-  <button type="button" class="btn btn-outline-primary cafeListing">정지당한 카페</button>
-  <button type="button" class="btn btn-outline-primary cafeListing">카페 새게시글</button>
+	<c:if test="${!empty myCafelist}">
+	 <div class="row d-flex justify-content-between">
+	<c:forEach var="myCafe" items="${myCafelist}">
+	
+<div class="card mb-3 myCafe col-lg-6" style="" name ='${myCafe.cafeURL}'>
+  <div class="row no-gutters">
+    <div class="col-md-4">
+      <img src="/images/common/16by9.png" class="card-img" alt="..." 
+      style="background: url('/images/uploadFiles/cafeicon/${myCafe.cafeIcon}');
+      no-repeat center center; background-size:cover;">
+   </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">${myCafe.cafeName}</h5>
+        <p class="card-text">${myCafe.cafeDetail}</p>
+        <input type='hidden'class='memberNo' value='${myCafe.memberNo}'>
+      	<a href="#" class="btn btn-primary favorited">${myCafe.favorited}</a>
+      </div>
+    </div>
+  </div>
 </div>
-	
-	<c:if test="${!empty myCafeList}">
-<table class="table table-borderless">
-	<thead>
-    <tr>
-  	  <th scope="col">카페번호</th>
-      <th scope="col">카페URL</th>
-      <th scope="col">카페이름</th>
-      <th scope="col">카페아이콘</th>
-      <th scope="col">카페설명</th>
-      <th scope="col">개설일</th>
-    </tr>
-	</thead>
-	<tbody>
-  <tr>
-	<c:forEach var="myCafe" items="${myCafeList}">
-	 <th scope="row">${myCafe.cafeNo}</th>
-	 <td>${myCafe.url}</td>
-	 <td>${myCafe.cafeName}</td>
-	 <td>${myCafe.cafeIcon}</td>
-	 <td>${myCafe.cafeDetail}</td>
-	 <td>${myCafe.regDate}</td>
+
+
 	</c:forEach>
-  </tr>
-	</tbody>
-</table>
-</c:if>
-	
+  
+</div>
+
+	</c:if>
+
+</c:if>	
 
 	<br/>
 	<br/>
 	<br/>
 	
 	
-<div class="btn-group" role="group" aria-label="Basic example">
-  <button type="button" class="btn btn-outline-success cafeCategory">친목/모임</button>
-  <button type="button" class="btn btn-outline-success cafeCategory">스포츠/레저</button>
-  <button type="button" class="btn btn-outline-success cafeCategory">영화</button>
-  <button type="button" class="btn btn-outline-success cafeCategory">게임</button>
-  <button type="button" class="btn btn-outline-success cafeCategory">음악</button>
-  <button type="button" class="btn btn-outline-success cafeCategory">여행</button>
+<div class="btn-group d-flex justify-content-center" role="group">
+  <button type="button" role="group" class='btn btn-outline-success col-lg-2 cafeCategory'>친목/모임</button>
+  <button type="button" role="group" class='btn btn-outline-success col-lg-2 cafeCategory'>스포츠/레저</button>
+  <button type="button" role="group" class='btn btn-outline-success col-lg-2 cafeCategory'>영화</button>
+  <button type="button" role="group" class='btn btn-outline-success col-lg-2 cafeCategory'>게임</button>
+  <button type="button" role="group" class='btn btn-outline-success col-lg-2 cafeCategory'>음악</button>
+  <button type="button" role="group" class='btn btn-outline-success col-lg-2 cafeCategory'>여행</button>
 </div>
 <br/>
-<c:if test="${!empty categoryCafeList}">
-<table class="table table-borderless">
-	<thead>
-    <tr>
-  	  <th scope="col">카페번호</th>
-      <th scope="col">카페URL</th>
-      <th scope="col">카페이름</th>
-      <th scope="col">카페아이콘</th>
-      <th scope="col">카페설명</th>
-      <th scope="col">개설일</th>
-      <th scope="col">카페카테고리</th>
-    </tr>
-	</thead>
-	<tbody>
-  
-	<c:forEach var="categoryCafe" items="${categoryCafeList}">
-	<tr>
-	 <th scope="row">${categoryCafe.cafeNo}</th>
-	 <td>${categoryCafe.URL}</td>
-	 <td>${categoryCafe.cafeName}</td>
-	 <td>${categoryCafe.cafeIcon}</td>
-	 <td>${categoryCafe.cafeDetail}</td>
-	 <td>${categoryCafe.regDate}</td>
-	 <td>${categoryCafe.cafeType}</td>
-	  </tr>
+<c:if test="${!empty categorizedCafeList}">
+
+  <div class="row d-flex justify-content-between">
+	<c:forEach var="categoryCafe" items="${categorizedCafeList}">
+	
+	
+	<div class="card mb-3 myCafe col-lg-6" style="" name ='${categoryCafe.cafeURL}'>
+  <div class="row no-gutters">
+    <div class="col-md-4">
+      <img src="/images/common/16by9.png" class="card-img" alt="..." 
+      style="background: url('/images/uploadFiles/cafeicon/${categoryCafe.cafeIcon}');
+      no-repeat center center; background-size:cover;">
+   </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">${categoryCafe.cafeName}</h5>
+        <p class="card-text">${categoryCafe.cafeDetail}</p>
+        <p class="card-text"><small class="text-muted">${categoryCafe.regDate}</small></p>
+      </div>
+    </div>
+  </div>
+</div>
+
 	</c:forEach>
- 
-	</tbody>
-</table>
+</div>
 </c:if>
 
 <br/>
@@ -156,15 +206,6 @@ $(function() {
 <br/>
 
 <div class = 'container'>
-
-	<form id='memberListingForm'>
-		<div class="input-group">
-		<input type="text" class="form-control" placeholder="카페번호" name = 'cafeNo'  aria-describedby="button-addon1">
-		<div class="input-group-append" id="button-addon1">
-	    <button class="btn btn-outline-warning" type="button" id = 'memberList'>맴버리스트</button>
-	    </div>
-	    </div>
-	</form>
 	
 </div>
 

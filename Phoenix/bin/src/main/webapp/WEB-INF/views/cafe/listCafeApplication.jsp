@@ -3,8 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 	
-
-	
+<head>
+	<title>가입신청관리</title>
 	
 		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -14,13 +14,30 @@
 		<script type="text/javascript">
 
 		function fncGetList(currentPage) {
-			var cafeURL = "1234";
+			var cafeURL = '${search.cafeURL}'
 			$("#currentPage").val(currentPage)
 			$("#detailFrom").attr("method" , "POST").attr("action" , "/cafe/"+cafeURL+"/manage/getCafeApplicationList").submit();	
 		}
+
+			$(function(){
+				var cafeURL = '${search.cafeURL}'
+				$("#ing").on("click",function(){//처리중
+					alert("!0")
+					$("#status").val(100);
+					$("#currentPage").val(1)
+					$("#detailFrom").attr("method" , "POST").attr("action" , "/cafe/"+cafeURL+"/manage/getCafeApplicationList").submit();	
+				});
+				$("#end").on("click",function(){//처리완료
+					alert("?1")
+					$("#status").val(101)
+					$("#currentPage").val(1)
+					$("#detailFrom").attr("method" , "POST").attr("action" , "/cafe/"+cafeURL+"/manage/getCafeApplicationList").submit();	
+				});
+			});
 		
 			$(function(){
-				$(".btn-default").on("click", function(){
+				
+				$("#search").on("click", function(){
 					alert("검색");
 					fncGetList(1);
 				});
@@ -29,7 +46,7 @@
 			$(function(){
 				$(".applicationNo").on("click", function(){
 					alert($(this).text());
-					var cafeURL = 1234;
+					var cafeURL = '${search.cafeURL}'
 					self.location ="/cafe/"+cafeURL+"/manage/getCafeApplication?applicationNo="+$(this).text().trim();
 				});
 			});
@@ -47,43 +64,24 @@
 	                      $(".applicationCheck").not(":disabled").prop("checked",false);
 	                  }
 	              });
-				$(".accept").on("click", function(){
+				$("#accept").on("click", function(){//승인
 					var application="";
 					
 					$("input[type=checkbox]:checked").each(function(){
 					//alert($(".applicationCheck").index(this));
 					var count = $(".applicationCheck").index(this);
-					application += $($(".nickname")[count]).text()+"&"+$($(".userNo")[count]).val()+"&"+$($(".cafeNo")[count]).val();
+					application += $($(".nickname")[count]).text()+"&"+$($(".userNo")[count]).val()+"&"+$($(".cafeNo")[count]).val()+"&"+$($(".applicationNo")[count]).text();
 					application+=",";
 					
 					});
 				//alert(application);
-					var cafeURL = "1234";
+					var cafeURL = '${search.cafeURL}'
 					$("#boardName").val(application);
 					$("#checkBox").attr("method" , "POST").attr("action" , "/cafe/"+cafeURL+"/manage/updateCafeApplication").submit();	
 					
-					
-					/* $.ajax({
-						
-						url: "/cafe/"+cafeURL+"/manage/updateCafeApplication",
-						method: "POST",
-						dataType: "text",
-						headers : {
-							"Accept" : "application/json",
-							"Content-Type" : "application/json"
-						},
-						data:JSON.stringify({
-							application : application
-						}),
-						error: function(status){
-							 //alert("에러"+status);
-							},
-						success : function(serverData){
-							//alert("serverData : "+serverData);
-							}
-						});// */
-					});//승인
-				$(".reject").on("click",function(){
+					});
+				
+				$("#reject").on("click",function(){//거절
 					var reject='';
 					$("input[type=checkbox]:checked").each(function(){
 						var count = $(".applicationCheck").index(this);
@@ -92,7 +90,7 @@
 						
 						});
 					alert(reject);
-						var cafeURL = "1234";
+					var cafeURL = '${search.cafeURL}'
 						$("#boardName").val(reject);
 						$("#checkBox").attr("method" , "POST").attr("action" , "/cafe/"+cafeURL+"/manage/updateCafeApplication").submit();	
 					
@@ -104,8 +102,9 @@
 
 		</script>
 		
+		<jsp:include page="../common/cafeManageTollbar.jsp" />
+	</head>	
 		
-		<title>가입신청관리</title>
 
 	
 	<body>
@@ -114,7 +113,7 @@
 		가입을 승인하거나, 거절할 수 있습니다.
 		
 		
-		
+	
 	<div class="col-md-6 text-left">
 				<p class="text-success">전체 ${page.totalCount } 건수, 현재
 					${page.currentPage} 페이지</p>
@@ -122,7 +121,7 @@
 
 			<div class="col-md-6 text-right">
 				<form class="form-inline" name="detailForm" id ="detailFrom">
-
+<input type="hidden" id="status" name = "status" value="${search.status }"/>
 					<div class="form-group">
 						<select class="form-control" name="searchCondition">
 							<option value="0">별명</option>
@@ -130,13 +129,13 @@
 							
 						</select>
 					</div>
-
+					&nbsp;&nbsp;
 					<div class="form-group">
 						<label class="sr-only" for="searchKeyword">검색어</label>
 						 <input type="text" class="form-control" id="searchKeyword" name="searchKeyword" placeholder="검색어">
 					</div>
-
-					<button type="button" class="btn btn-default">검색</button>
+					&nbsp;&nbsp;
+					<button type="button" id="search" class="btn btn-outline-success">검색</button>
 					 <input type="hidden" id="currentPage" name="currentPage" value=""/>
 					
 					
@@ -145,10 +144,21 @@
 				</form>
 			</div>
 			
-			<button type="button" class="accept">가입승인</button>
-			<button type="button" class="reject">가입거절</button>
+			<button type="button"  id="accept"class="btn btn-outline-secondary">가입승인</button>
+			<button type="button"  id="rejecr"class="btn btn-outline-secondary">가입거절</button>
+			
+			</br>
+			</br>
+			
+			<button type="button" value="100" id="ing"class="btn btn-outline-success">처리중</button>
+			<button type="button" value="101" id="end"class="btn btn-outline-success">처리완료</button>
+			
+			</br>
+			</br>
+			
+			
       <!--  table Start /////////////////////////////////////-->
-      <table>
+      <table class="table table-hover table-striped" >
       
       <form id = "checkBox"><input type="hidden" name ="boardName" id ="boardName" value="" /></form>
           <tr>
@@ -165,9 +175,10 @@
 		
 		  <c:set var="i" value="0" />
 		  <c:forEach var="cafeApplication" items="${list}">
+		  
 			<tr>
-			<td><input type="checkbox" class="applicationCheck"></td>
-			  <td align="center" class="applicationNo" value="${cafeApplication.applicationNo}">${cafeApplication.applicationNo}</td>
+			<td><input type="checkbox" class="applicationCheck" ></td>
+			  <td align="left" class="applicationNo" value="${cafeApplication.applicationNo}">${cafeApplication.applicationNo}</td>
 			  <td align="left" >${cafeApplication.userId}</td>
 			  <td align="left" class="nickname" value="${cafeApplication.memberNickname}">${cafeApplication.memberNickname}</td>
 			  <td align="left">${cafeApplication.regDate}</td>

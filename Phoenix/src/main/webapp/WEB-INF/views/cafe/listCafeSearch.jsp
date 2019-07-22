@@ -144,6 +144,7 @@ $(function() {
   </c:if>
    <c:if test="${ !empty search.searchCondition && search.searchCondition==2}">
   <jsp:include page="../common/pageNavigator.jsp" />
+
   </c:if>
   </c:if>
   

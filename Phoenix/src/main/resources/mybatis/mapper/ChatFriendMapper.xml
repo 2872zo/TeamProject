@@ -16,13 +16,13 @@
 	
 	<select id="getMyFriendList" parameterType="Search" resultMap="chatFriendSelectMap">
 		select
-		cf.chat_friends_no, cf.user_no, cf.target_user_no, cf.friend_status, u.user_nickname
+		cf.chat_friends_no, cf.user_no, cf.friend_nickname, cf.target_user_no, cf.friend_status, u.user_nickname
 		FROM
 		chat_friends cf, users u
 		WHERE
 		cf.target_user_no = u.user_no
 		AND cf.friend_status = #{status}
-		AND cf.user_no = #{userNo};
+		AND cf.user_no = #{userNo}
 	</select>
 	 
 </mapper>

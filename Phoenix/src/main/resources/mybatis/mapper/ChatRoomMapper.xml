@@ -33,5 +33,16 @@
 		WHERE
 		user_no=#{userNo}
 	</select>
+	
+	<select id="getUserListInRoom" parameterType="Search" resultMap="chatRoomSelectMap">
+		SELECT
+		my_chat_room_no, chat_room_no, chat_room_name
+		FROM
+		my_chat_room
+		WHERE
+		chat_room_no=#{search}
+	</select>
+	
+	
 	 
 </mapper>
