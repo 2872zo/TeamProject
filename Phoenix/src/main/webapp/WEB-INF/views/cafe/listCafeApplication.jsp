@@ -13,154 +13,175 @@
 
 <link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
 <link href="/css/style.css" rel="stylesheet">
-
-
-<!-- ToolBar Start /////////////////////////////////////-->
-<jsp:include page="../common/cafeManageTollbar.jsp" />
-<!-- ToolBar End /////////////////////////////////////-->
-
+<link rel="stylesheet" href="/css/custom/scroll-top.css">
 
 
 </head>
 
 <body>
 
+	<!--*******************
+        Preloader start
+    ********************-->
+	<div id="preloader" style="display: none;">
+		<div class="loader">
+			<svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none"
+					stroke-width="3" stroke-miterlimit="10"></circle>
+            </svg>
+		</div>
+	</div>
+	<!--*******************
+        Preloader end
+    ********************-->
+
 	<!--**********************************
+        Main wrapper start
+    ***********************************-->
+
+	<div id="main-wrapper">
+
+		<!-- ToolBar Start /////////////////////////////////////-->
+		<jsp:include page="../common/cafeManageTollbar.jsp" />
+		<!-- ToolBar End /////////////////////////////////////-->
+
+
+
+		<!--**********************************
             Sidebar start
         ***********************************-->
-	<div class="nk-sidebar">
-		<c:import url="/WEB-INF/views/common/cafeManageMenubar.jsp"></c:import>
-	</div>
-	<!--**********************************
+		<div class="nk-sidebar">
+			<c:import url="/WEB-INF/views/common/cafeManageMenubar.jsp"></c:import>
+		</div>
+		<!--**********************************
             Sidebar end
         ***********************************-->
 
-	<!--**********************************
+		<!--**********************************
             Content body start
         ***********************************-->
 
 
-	<div class="content-body" style="min-height: 743px;">
+		<div class="content-body" style="min-height: 743px;">
 
-		<div class="row page-titles mx-0">
-			<div class="col p-md-0">
-				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a href="javascript:void(0)">manage</a></li>
-					<li class="breadcrumb-item active"><a
-						href="javascript:void(0)">closed</a></li>
-				</ol>
-			</div>
-		</div>
-
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="card">
-						<div class="card-body">
-							<h4 class="card-title">>가입신청목록</h4>
-
-							우리 카페에 가입을 신청한 목록입니다. 가입을 승인하거나, 거절할 수 있습니다. <br> <br>
-
-
-							<div class="col-md-6 text-right">
-								<form class="form-inline" name="detailForm" id="detailFrom">
-									<input type="hidden" id="status" name="status"
-										value="${search.status }" />
-									<div class="form-group">
-										<select class="form-control" name="searchCondition">
-											<option value="0">별명</option>
-											<option value="1">userId</option>
-
-										</select>
-									</div>
-									&nbsp;&nbsp;
-									<div class="form-group">
-										<label class="sr-only" for="searchKeyword">검색어</label> <input
-											type="text" class="form-control" id="searchKeyword"
-											name="searchKeyword" placeholder="검색어">
-									</div>
-									&nbsp;&nbsp;
-									<button type="button" id="search"
-										class="btn btn-outline-success">검색</button>
-									<input type="hidden" id="currentPage" name="currentPage"
-										value="" /> &nbsp;&nbsp; 필터: &nbsp;&nbsp;
-									<button type="button" value="100" id="ing"
-										class="btn mb-1 btn-outline-warning btn-xs">처리중</button>
-									&nbsp;&nbsp;&nbsp;
-									<button type="button" value="101" id="end"
-										class="btn mb-1 btn-outline-warning btn-xs">처리완료</button>
-
-								</form>
-							</div>
-							<br> &nbsp;&nbsp;&nbsp;
-							<button type="button" id="accept"
-								class="btn btn-outline-secondary">가입승인</button>
-							&nbsp;&nbsp;&nbsp;
-							<button type="button" id="reject"
-								class="btn btn-outline-secondary">가입거절</button>
-
-
-							<br> <br>
-
-
-
-							<!--  table Start /////////////////////////////////////-->
-							<table class="table table-hover table-striped">
-
-								<form id="checkBox">
-									<input type="hidden" name="boardName" id="boardName" value="" />
-								</form>
-								<tr>
-									<th><input type="checkbox" id="allCheck" /></th>
-									<th align="center">applicationNo</th>
-									<th align="left">userId</th>
-									<th align="left">별명</th>
-									<th align="left">가입신청일</th>
-									<th align="left">처리결과</th>
-								</tr>
-
-
-								<tbody>
-
-									<c:set var="i" value="0" />
-									<c:forEach var="cafeApplication" items="${list}">
-
-										<tr>
-											<td><input type="checkbox" class="applicationCheck"></td>
-											<td align="left" class="applicationNo"
-												value="${cafeApplication.applicationNo}">${cafeApplication.applicationNo}</td>
-											<td align="left">${cafeApplication.userId}</td>
-											<td align="left" class="nickname"
-												value="${cafeApplication.memberNickname}">${cafeApplication.memberNickname}</td>
-											<td align="left">${cafeApplication.regDate}</td>
-											<td align="left">${cafeApplication.acceptStatusCode}<input
-												type="hidden" class="userNo"
-												value="${cafeApplication.userNo}" /> <input type="hidden"
-												class="cafeNo" value="${cafeApplication.cafeNo}" /></td>
-
-										</tr>
-									</c:forEach>
-
-								</tbody>
-
-							</table>
-							<!-- 테이블 끝 -->
-							<jsp:include page="../common/pageNavigator.jsp" />
-							<!-- 페이지 끝 -->
-						</div>
-					</div>
-
+			<div class="row page-titles mx-0">
+				<div class="col p-md-0">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="javascript:void(0)">manage</a></li>
+						<li class="breadcrumb-item active"><a
+							href="javascript:void(0)">application</a></li>
+					</ol>
 				</div>
 			</div>
 
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="card">
+							<div class="card-body">
+								<h4 class="card-title">>가입신청목록</h4>
+
+								우리 카페에 가입을 신청한 목록입니다. 가입을 승인하거나, 거절할 수 있습니다. <br> <br>
+
+
+								<div class="col-md-6 text-right">
+									<form class="form-inline" name="detailForm" id="detailFrom">
+										<input type="hidden" id="status" name="status"
+											value="${search.status }" />
+										<div class="form-group">
+											<select class="form-control" name="searchCondition">
+												<option value="0">별명</option>
+												<option value="1">userId</option>
+
+											</select>
+										</div>
+										&nbsp;&nbsp;
+										<div class="form-group">
+											<label class="sr-only" for="searchKeyword">검색어</label> <input
+												type="text" class="form-control" id="searchKeyword"
+												name="searchKeyword" placeholder="검색어">
+										</div>
+										&nbsp;&nbsp;
+										<button type="button" id="search"
+											class="btn btn-outline-success">검색</button>
+										<input type="hidden" id="currentPage" name="currentPage"
+											value="" /> &nbsp;&nbsp; 필터: &nbsp;&nbsp;
+										<button type="button" value="100" id="ing"
+											class="btn mb-1 btn-outline-warning btn-xs">처리중</button>
+										&nbsp;&nbsp;&nbsp;
+										<button type="button" value="101" id="end"
+											class="btn mb-1 btn-outline-warning btn-xs">처리완료</button>
+
+									</form>
+								</div>
+								<br> &nbsp;&nbsp;&nbsp;
+								<button type="button" id="accept"
+									class="btn btn-outline-secondary">가입승인</button>
+								&nbsp;&nbsp;&nbsp;
+								<button type="button" id="reject"
+									class="btn btn-outline-secondary">가입거절</button>
+
+
+								<br> <br>
+
+
+
+								<!--  table Start /////////////////////////////////////-->
+								<table class="table header-border">
+
+									<form id="checkBox">
+										<input type="hidden" name="boardName" id="boardName" value="" />
+									</form>
+									<thead class="thead-light">
+										<tr>
+											<th><input type="checkbox" id="allCheck" /></th>
+											<th align="center">가입신청번호</th>
+											<th align="left">회원아이디</th>
+											<th align="left">별명</th>
+											<th align="left">가입신청일</th>
+											<th align="left">처리결과</th>
+										</tr>
+									</thead>
+
+									<tbody>
+
+										<c:set var="i" value="0" />
+										<c:forEach var="cafeApplication" items="${list}">
+
+											<tr>
+												<td><input type="checkbox" class="applicationCheck"></td>
+												<td align="left" class="applicationNo"
+													value="${cafeApplication.applicationNo}">${cafeApplication.applicationNo}</td>
+												<td align="left">${cafeApplication.userId}</td>
+												<td align="left" class="nickname"
+													value="${cafeApplication.memberNickname}">${cafeApplication.memberNickname}</td>
+												<td align="left">${cafeApplication.regDate}</td>
+												<td align="left">${cafeApplication.acceptStatusCode}<input
+													type="hidden" class="userNo"
+													value="${cafeApplication.userNo}" /> <input type="hidden"
+													class="cafeNo" value="${cafeApplication.cafeNo}" /></td>
+
+											</tr>
+										</c:forEach>
+
+									</tbody>
+
+								</table>
+								<!-- 테이블 끝 -->
+								<jsp:include page="../common/pageNavigator.jsp" />
+								<!-- 페이지 끝 -->
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+
 		</div>
-
-
-
-
+		<!--  table End /////////////////////////////////////-->
 	</div>
-	<!--  table End /////////////////////////////////////-->
-
+	
 	<!--**********************************
         Scripts
     ***********************************-->

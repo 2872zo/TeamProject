@@ -31,8 +31,8 @@ public class CafeMemberDaoImpl implements CafeMemberDao {
 	}
 
 	@Override
-	public void updateCafeMember(CafeMember cafeMember) {
-		sqlSession.update("CafeMemberMapper.updateCafeMember", cafeMember);
+	public int updateCafeMember(CafeMember cafeMember) {
+		return sqlSession.update("CafeMemberMapper.updateCafeMember", cafeMember);
 
 	}
 
@@ -102,12 +102,12 @@ public class CafeMemberDaoImpl implements CafeMemberDao {
 ///////////////////////////////////////// 예림끝///////////////////////////////////////////
 
 ////////////////////////////////////기황 시작///////////////////////////////////////
-	
+
 	@Override
 	public CafeMember getCafeMember(Search search) throws Exception {
 		return sqlSession.selectOne("CafeMemberMapper.getCafeMemeber", search);
 	}
-	
+
 	@Override
 	public int updatePostCountIncrease(int memberNo) throws Exception {
 //TODO Auto-generated method stub

@@ -26,7 +26,7 @@ public class CafeContoller {
 	}
 	
 	@RequestMapping("/{cafeURL}")
-	public String getCafeMain(@PathVariable String cafeURL,HttpSession session,Model model)
+	public String getCafeMain(@PathVariable String cafeURL,HttpSession session,Model model) throws Exception
 	{
 		System.out.println("/cafe/{cafeURL}");
 		
