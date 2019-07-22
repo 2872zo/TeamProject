@@ -1,117 +1,61 @@
 <%@ page contentType="text/html; charset=utf-8"%>
 
 
-	<script type="text/javascript">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-	$(function() {
 
-		$("#statistics").on("click",function(){
-			location.href = "/cafe/"+"${cafeURL}"+"/manage/getCafeStatistics";
-			alert("1")
-			alert('${cafeURL}')
-		});
 
-		$("#info").on("click",function(){
-			location.href = "/cafe/"+"${cafeURL}"+"/manage/updateCafeInfoView";
-			alert("2")
-		});
 
-		$("#board").on("click",function(){
-			location.href = "/cafe/"+"${cafeURL}"+"/manage/updateCafeBoardView";
-			alert("3")
-		});
+<div class="nk-nav-scroll">
+	<ul class="metismenu" id="menu">
+		<li><a id="statistics"
+			href="javascript:fncGetStatistics('${cafeURL}')"
+			aria-expanded="false"> <i class="icon-speedometer menu-icon"></i>
+				<span class="nav-text">카페통계</span>
+		</a></li>
 
-		$("#form").on("click",function(){
-			location.href = "/cafe/"+"${cafeURL}"+"/manage/updateCafeApplicationFormView";
-			alert("4")
-		});
+		<li><a id="board" href="javascript:fncGetBoard('${cafeURL}')"
+			aria-expanded="false"> <i class="icon-speedometer menu-icon"></i>
+				<span class="nav-text">게시판관리</span>
+		</a></li>
 
-		$("#application").on("click",function(){
-			location.href = "/cafe/"+"${cafeURL}"+"/manage/getCafeApplicationList";
-			alert("5")
-		});
+		<li><a id="info" href="javascript:fncGetInfo('${cafeURL}')"
+			aria-expanded="false"> <i class="icon-speedometer menu-icon"></i>
+				<span class="nav-text">카페정보수정</span>
+		</a></li>
 
-		$("#grade").on("click",function(){
-			location.href = "/cafe/"+"${cafeURL}"+"/manage/updateCafeGradeView";
-			alert("6")
-		});
+		<li><a id="form" href="javascript:fncGetForm('${cafeURL}')"
+			aria-expanded="false"> <i class="icon-speedometer menu-icon"></i>
+				<span class="nav-text">가입양식관리</span>
+		</a></li>
 
-		$("#member").on("click",function(){
-			location.href = "/cafe/"+"${cafeURL}"+"/manage/getCafeMemberList";
-			alert("7")
-		});
+		<li><a id="application"
+			href="javascript:fncGetApplication('${cafeURL}')"
+			aria-expanded="false"> <i class="icon-speedometer menu-icon"></i>
+				<span class="nav-text">가입신청목록</span>
+		</a></li>
 
-		$("#closed").on("click",function(){
-			location.href = "/cafe/"+"${cafeURL}"+"/manage/dropCafeView";
-			alert("8")
-		});
+		<li><a id="grade" href="javascript:fncGetGrade('${cafeURL}')"
+			aria-expanded="false"> <i class="icon-speedometer menu-icon"></i>
+				<span class="nav-text">카페등급관리</span>
+		</a></li>
 
-		$("#notice").on("click",function(){
-			location.href = "";
-		});
-		
-	});
-		
-		
-	</script>
-	
+		<li><a id="member" href="javascript:fncGetMember('${cafeURL}')"
+			aria-expanded="false"> <i class="icon-speedometer menu-icon"></i>
+				<span class="nav-text">카페멤버목록</span>
+		</a></li>
 
-			<div class="nk-nav-scroll" style="overflow: hidden; width: auto; height: 100%;">
-                <ul class="metismenu" id="menu">
-                    <li>
-                        <a class="has-arrow" id="statistics" href="#" aria-expanded="false">
-                            <i class="icon-speedometer menu-icon"></i><span class="nav-text">카페통계</span>
-                        </a>
-                    </li>
-                    
-                    <li class="mega-menu mega-menu-sm">
-                        <a class="has-arrow"id="board" href="#" aria-expanded="false">
-                           <i class="icon-speedometer menu-icon"></i><span class="nav-text">게시판관리</span>
-                        </a>
-                    </li>
-                    
-                    <li class="mega-menu mega-menu-sm">
-                        <a class="has-arrow"id="info" href="#" aria-expanded="false">
-                           <i class="icon-speedometer menu-icon"></i><span class="nav-text">카페정보수정</span>
-                        </a>
-                    </li>
-                    
-                     <li class="mega-menu mega-menu-sm">
-                        <a class="has-arrow"id="form" href="#" aria-expanded="false">
-                           <i class="icon-speedometer menu-icon"></i><span class="nav-text">가입양식관리</span>
-                        </a>
-                    </li>
-                    
-                    <li class="mega-menu mega-menu-sm">
-                        <a class="has-arrow"id="application" href="#" aria-expanded="false">
-                           <i class="icon-speedometer menu-icon"></i><span class="nav-text">가입신청목록</span>
-                        </a>
-                    </li>
-                    
-                     <li class="mega-menu mega-menu-sm">
-                        <a class="has-arrow"id="grade" href="#" aria-expanded="false">
-                           <i class="icon-speedometer menu-icon"></i><span class="nav-text">카페등급관리</span>
-                        </a>
-                    </li>
-                    
-                    <li class="mega-menu mega-menu-sm">
-                        <a class="has-arrow"id="member" href="#" aria-expanded="false">
-                           <i class="icon-speedometer menu-icon"></i><span class="nav-text">카페멤버목록</span>
-                        </a>
-                    </li>
-                    
-                    <li class="mega-menu mega-menu-sm">
-                        <a class="has-arrow"id="closed" href="#" aria-expanded="false">
-                           <i class="icon-speedometer menu-icon"></i><span class="nav-text">카페폐쇄</span>
-                        </a>
-                    </li>
-                                        
-                    <li class="mega-menu mega-menu-sm">
-                        <a class="has-arrow"id="notice" href="#" aria-expanded="false">
-                           <i class="icon-speedometer menu-icon"></i><span class="nav-text">공지관리</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            
-            
+		<li><a id="closed" href="javascript:fncGetClosed('${cafeURL}')"
+			aria-expanded="false"> <i class="icon-speedometer menu-icon"></i>
+				<span class="nav-text">카페폐쇄</span>
+		</a></li>
+
+		<li><a id="notice" href="javascript:fncGetNotice('${cafeURL}')"
+			aria-expanded="false"> <i class="icon-speedometer menu-icon"></i>
+				<span class="nav-text">공지관리</span>
+		</a></li>
+	</ul>
+</div>
+
