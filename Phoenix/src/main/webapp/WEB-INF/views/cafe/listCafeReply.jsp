@@ -63,7 +63,7 @@
 						                	<span style="float:right;">
 								                <button type="button" class="btn mb-1 btn-outline-primary btn-xs">
 													<i class="far fa-thumbs-up" style="font-size:15px;"></i>
-													<i class="count" style="font-size:15px;">${reReply.likeCount }</i>
+													<i class="count" style="font-size:15px;">${reply.likeCount }</i>
 												</button>
 											</span>
 						                	<span>
@@ -128,14 +128,21 @@
 			</div>
 		</c:forEach>
 		
-		
-		<c:import url="/WEB-INF/views/common/pageNavigator.jsp">
-			<c:param name="subject" value="Reply"/>
-		</c:import>
+		<c:if test="${!empty reply }">
+			<c:import url="/WEB-INF/views/common/pageNavigator.jsp">
+				<c:param name="subject" value="Reply"/>
+			</c:import>
 		<hr/>
-		<textarea name="addReplyContent"></textarea>
-		<input type="button" name="addReplyButton" value="등록"/>
+		</c:if>
 		
+		<div class="input-group">
+			<textarea class="form-control" name="addReplyContent" ></textarea>
+			<div class="input-group-append">
+				<input type="button" class="btn btn-primary" name="addReplyButton" value="등록"/>
+            </div>
+		</div>
+		
+		</div>
 		<script>
 			$(".replyItems ").on("click", "[name=updateReplyButton]", function(){
 				$(this).parent().load("/cafe/${cafeURL}/updateReply/"+$(this).parent().find("[name=replyNo]").val());
