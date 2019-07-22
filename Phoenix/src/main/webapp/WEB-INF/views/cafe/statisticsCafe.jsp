@@ -4,29 +4,28 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
+
 <!DOCTYPE html>
 
-
-
 <html lang="ko">
-
 <head>
-
- 	<meta name="viewport" content="width=device-width, initial-scale=1">
-  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-  	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  	<link rel="stylesheet" href="/resources/demos/style.css">
-  	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-  	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    
+    <meta charset="utf-8">
+    <title>Quixlab - Bootstrap Admin Dashboard Template by Themefisher.com</title>
+    
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="images/quixlab/favicon.png">
+    <!-- Custom Stylesheet -->
+    
+    <link href="/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+   	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   	<script src="https://kit.fontawesome.com/e589319d43.js"></script>
 	<script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.js"></script>
 	<script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
 	<script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.js"></script>
 	<script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
-  	
-  
 	
 	<script type="text/javascript">
 
@@ -73,6 +72,7 @@
 			</c:forEach>
 			
 			setChartData();
+			myChart.update();
 		
 
 		});
@@ -163,157 +163,234 @@
 							$("#et105").text(data.et105);
 							$("#et106").text(data.et106);
 
-				
-							
 						}//success
 
 
 					});//ajax끝
-				
-
+		
 			  });
 
-		    
 		  } );
 
-		
-			   
-
-	
 	</script>
 	
 	
-</head>
-<body>
-
-
 	
+</head>
 
-	<div class="container">
-		<div class="py-5 text-center">
-			<!-- <img class="d-block mx-auto mb-4" src="/docs/4.3/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72"> -->
-			카페 아이콘 넣을것
-			<h1>카페 통계</h1>
-		</div>
+<body data-theme-version="light" data-layout="vertical" data-nav-headerbg="color_1" data-headerbg="color_1" data-sidebar-style="full" data-sibebarbg="color_1" data-sidebar-position="static" data-header-position="static" data-container="wide" direction="ltr">
+	
+	
+    <!--*******************
+        Preloader start
+    ********************-->
+   
+    <!--*******************
+        Preloader end
+    ********************-->
+
+    
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <form name ="form" >
+    <div id="main-wrapper" class="show">
 		
-		<form name ="form" class="needs-validation" novalidate>
-		
-			<hr/>
-			<div class="row text-center">
-				<label for="startDate" class="far fa-calendar-alt"></label>
-				<input type="text" id="startDate" name="startDate" value="">
-				<label for="endDate" class="far fa-calendar-alt"></label>
-				<input type="text" id="endDate" name="endDate" value="">
-				
-			</div>
-			<br/><br/><br/><br/>
-			<div class="row text-center">
-				<div class="col-md-2">
-				</div>
-			
-				<div class="col-md-2">
-					<div class="thumbnail">
-						<div class="caption">
-							<h5>방문자 수</h5>
-							<h4 class="text-success" id="et100">
-								<c:if test="${empty statisticMap['et100']}">0</c:if>
-								${statisticMap['et100']}
-							</h4>
-						</div>
-					</div>
-				</div>
-				
-				<div class="col-md-2">
-					<div class="thumbnail">
-						<div class="caption">
-							<h5>작성게시글 수</h5>
-							<h4 class="text-success" id="et103">
-								<c:if test="${empty statisticMap['et103']}">0</c:if>
-								${statisticMap['et103']}
-							</h4>
-						</div>
-					</div>
-				</div>
-				
-				<div class="col-md-2">
-					<div class="thumbnail">
-						<div class="caption">
-							<h5>작성댓글 수 </h5>
-							<h4 class="text-success" id="et104">
-								<c:if test="${empty statisticMap['et104']}">0</c:if>
-								${statisticMap['et104']}
-							</h4>
-						</div>
-					</div>
-				</div>
-				
-				<div class="col-md-2">
-					<div class="thumbnail">
-						<div class="caption">
-							<h5>가입신청인 수 </h5>
-							<h4 class="text-success" id="et105">
-								<c:if test="${empty statisticMap['et105']}">0</c:if>
-								${statisticMap['et105']}
-							</h4>
-						</div>
-					</div>
-				</div>
-			
-				<div class="col-md-2">
-					<div class="thumbnail">
-						<div class="caption">
-							<h5>가입멤버 수 </h5>
-							<h4 class="text-success" id="et106">
-								<c:if test="${empty statisticMap['et106']}">0</c:if>
-								${statisticMap['et106']}
-							</h4>
-						</div>
-					</div>
-				</div>
-			
-			</div>
-			
-			<canvas id="myChart" width="10" height="10"></canvas>
-						<script>
-							
-							
-							var ctx = document.getElementById('myChart');
-							var myChart = new Chart(ctx, {
-				    					type: 'line',
-				    					data: {
-					    					
-				        				labels: labels,
-				       					 datasets: [{
-				         			   label: '멤버 방문수  ',
-				           				 data: dataArray,
-				           		 backgroundColor: [
-				                'rgba(75, 192, 192, 0.2)'
-				            ],
-				            borderColor: [
-				                'rgba(75, 192, 192, 1)'
-				            ],
-				            borderWidth: 4,
-				            fill : false
-				        }]
-				    },
-				    
-							options : {
-								maintainAspectRatio: false,
-									scales : {
-										yAxes : [ {
-											ticks : {
-												beginAtZero : true,
-												stepSize : 1
-											}
-										} ]
-									}
-								}
-							});
-						</script>
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+       
+        <!--**********************************
+            Nav header end
+        ***********************************-->
 
-		</form>
-	</div>
+        <!--**********************************
+            Header start
+        ***********************************-->
+      
+        <!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+
+        <!--**********************************
+            Sidebar start
+        ***********************************-->
+       
+        <!--**********************************
+            Sidebar end
+        ***********************************-->
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body" style="min-height: 743px;">
+
+            <div class="row page-titles mx-0">
+                <div class="col p-md-0">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">관리페이지</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0)">카페통계</a></li>
+                    </ol>
+                </div>
+            </div>
+            <!-- row -->
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                    	<h4 class="d-inline">카페통계</h4>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-lg-12 text-center ">
+                    	<label for="startDate" class="far fa-calendar-alt"></label>
+						<input type="text" id="startDate" name="startDate" value="">
+						<label for="endDate" class="far fa-calendar-alt"></label>
+						<input type="text" id="endDate" name="endDate" value="">
+						<hr/>
+                    </div>
+                </div>     
+                 
+                <div class="row">
+                
+					<div class="col-md-2">
+						<div class="card text-center">
+							<div class="card-body">
+								<h5 class="card-title">방문자 수</h5>
+								<h4 class="card-text" id="et100">
+									<c:if test="${empty statisticMap['et100']}">0</c:if>
+									${statisticMap['et100']}
+								</h4>
+							</div>
+						</div>
+					</div>
+					
+					<div class="col-md-2">
+						<div class="card text-center">
+							<div class="card-body">
+								<h5 class="card-title">작성게시글 수</h5>
+								<h4 class="card-text" id="et103">
+									<c:if test="${empty statisticMap['et103']}">0</c:if>
+									${statisticMap['et103']}
+								</h4>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-2">
+						<div class="card text-center">
+							<div class="card-body">
+								<h5 class="card-title">작성댓글 수 </h5>
+								<h4 class="card-text" id="et104">
+									<c:if test="${empty statisticMap['et104']}">0</c:if>
+									${statisticMap['et104']}
+								</h4>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-2">
+						<div class="card text-center">
+							<div class="card-body">
+								<h5 class="card-title">가입신청인 수 </h5>
+								<h4 class="card-text" id="et105">
+									<c:if test="${empty statisticMap['et105']}">0</c:if>
+									${statisticMap['et105']}
+								</h4>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-2">
+						<div class="card text-center">
+							<div class="card-body">
+								<h5 class="card-title">가입멤버 수 </h5>
+								<h4 class="card-text" id="et106">
+									<c:if test="${empty statisticMap['et106']}">0</c:if>
+									${statisticMap['et106']}
+								</h4>
+							</div>
+						</div>
+					</div>
+
+                   
+                </div>
+           		
+                </div>
+                
+                <div class="row" style='position: relative; height:80vh; width:70vw'>
+                 <canvas id="myChart" ></canvas>	 
+                </div>   
+               
+                
+            </div>
+            <!-- #/ container -->
+           
+            
+        </div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+        
+        
+        <!--**********************************
+            Footer start
+        ***********************************-->
+        <div class="footer">
+            <div class="copyright">
+                <p>Copyright © Designed &amp; Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2018</p>
+            </div>
+        </div>
+        <!--**********************************
+            Footer end
+        ***********************************-->
+        
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    
+
+           		
+   	 </form>
+   
+    <script>
 
 
-</body>
+			var ctx = document.getElementById('myChart');
+			var myChart = new Chart(ctx, {
+    					type: 'line',
+    					data: {
+	    					
+        				labels: labels,
+       					 datasets: [{
+         			   			label: '멤버 방문수  ',
+           				 		data: dataArray,
+           						backgroundColor: ['rgba(75, 192, 192, 0.2)'],
+           						borderColor: ['rgba(75, 192, 192, 1)'],
+           				 		borderWidth: 4,
+            					fill : false
+       								 }]
+    					},
+    
+					options : {
+						maintainAspectRatio: false,
+						responsive : true,
+						scales : {
+						yAxes : [ {
+							ticks : {
+								beginAtZero : true,
+								stepSize : 1 }
+							} ]
+						}
+					}
+			});
+			
+		</script>
+         
+	</body>
 </html>
