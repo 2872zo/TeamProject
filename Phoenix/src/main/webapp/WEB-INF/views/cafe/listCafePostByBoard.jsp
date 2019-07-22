@@ -44,6 +44,7 @@
 
 <style>
 .postTitle:hover {
+	cursor : pointer;
 	text-decoration: underline;
 }
 
@@ -84,8 +85,7 @@
 	<div id="preloader">
 		<div class="loader">
 			<svg class="circular" viewBox="25 25 50 50">
-                <circle class="path" cx="50" cy="50" r="20" fill="none"
-					stroke-width="3" stroke-miterlimit="10" />
+                <circle class="path" cx="50" cy="50" r="20" fill="none"	stroke-width="3" stroke-miterlimit="10" />
             </svg>
 		</div>
 	</div>
@@ -314,7 +314,7 @@
 								<form id="boardPage">
 									<input type="hidden" name="currentPage">
 								</form>
-								<p>총 ${postTotalCount }개 중 ${page.beginUnitPage} - ${page.endUnitPage - 1 }</p>
+								<p>총 ${postTotalCount }개 중 ${search.startRowNum} - ${search.endRowNum }</p>
 								<table class="table header-border">
 									<thead class="thead-light">
 										<tr>

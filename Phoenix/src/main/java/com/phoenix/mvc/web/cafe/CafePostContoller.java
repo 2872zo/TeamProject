@@ -75,7 +75,7 @@ public class CafePostContoller {
 		Map<String, Object> queryResultMap = cafePostService.getPostListBySearch(search);
 		int postTotalCount = (int) queryResultMap.get("postTotalCount");
 		Page page = new Page(search.getCurrentPage(), postTotalCount, pageUnit, pageSize);
-
+		
 		// 메뉴바를 위한 임시 데이터
 		search.setMemberNo(10000);
 
@@ -115,7 +115,7 @@ public class CafePostContoller {
 		}
 
 		System.out.println("[getBoard] Search : " + search);
-
+		
 		// 게시판별 게시글 가져오기
 		Map<String, Object> queryResultMap = cafePostService.getPostListByBoard(search);
 
@@ -126,7 +126,7 @@ public class CafePostContoller {
 
 		// paging을 위한 객체
 		Page page = new Page(search.getCurrentPage(), postTotalCount, pageUnit, pageSize);
-
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>PAGE : " + page);
 		
 		// 메뉴바를 위한 임시 데이터
 		search.setMemberNo(10000);
