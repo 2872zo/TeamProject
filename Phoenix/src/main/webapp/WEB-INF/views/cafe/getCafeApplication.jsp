@@ -17,183 +17,205 @@
 
 <link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
 <link href="/css/style.css" rel="stylesheet">
-
-
-<!-- ToolBar Start /////////////////////////////////////-->
-<jsp:include page="../common/cafeManageTollbar.jsp" />
-<!-- ToolBar End /////////////////////////////////////-->
-
+<link rel="stylesheet" href="/css/custom/scroll-top.css">
 
 
 </head>
 
 <body>
+
+
+	<!--*******************
+        Preloader start
+    ********************-->
+	<div id="preloader" style="display: none;">
+		<div class="loader">
+			<svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none"
+					stroke-width="3" stroke-miterlimit="10"></circle>
+            </svg>
+		</div>
+	</div>
+	<!--*******************
+        Preloader end
+    ********************-->
+
 	<!--**********************************
+        Main wrapper start
+    ***********************************-->
+
+	<div id="main-wrapper">
+
+		<!-- ToolBar Start /////////////////////////////////////-->
+		<jsp:include page="../common/cafeManageTollbar.jsp" />
+		<!-- ToolBar End /////////////////////////////////////-->
+
+		<!--**********************************
             Sidebar start
         ***********************************-->
-	<div class="nk-sidebar">
-		<c:import url="/WEB-INF/views/common/cafeManageMenubar.jsp"></c:import>
-	</div>
-	<!--**********************************
+		<div class="nk-sidebar">
+			<c:import url="/WEB-INF/views/common/cafeManageMenubar.jsp"></c:import>
+		</div>
+		<!--**********************************
             Sidebar end
         ***********************************-->
 
-	<!--**********************************
+		<!--**********************************
             Content body start
         ***********************************-->
 
 
-	<div class="content-body" style="min-height: 743px;">
+		<div class="content-body" style="min-height: 743px;">
 
-		<div class="row page-titles mx-0">
-			<div class="col p-md-0">
-				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a href="javascript:void(0)">manage</a></li>
-					<li class="breadcrumb-item active"><a
-						href="javascript:void(0)">closed</a></li>
-				</ol>
+			<div class="row page-titles mx-0">
+				<div class="col p-md-0">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="javascript:void(0)">manage</a></li>
+						<li class="breadcrumb-item active"><a
+							href="javascript:void(0)">application</a></li>
+					</ol>
+				</div>
 			</div>
-		</div>
 
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="card">
-						<div class="card-body">
-							<h4 class="card-title">>가입신청상세조회</h4>
-							<div align="right">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="card">
+							<div class="card-body">
+								<h4 class="card-title">>가입신청상세조회</h4>
+								<div align="right">
 
-								<button type="button" id="accept"
-									class="btn btn-outline-secondary">가입승인</button>
-								<button type="button" id="reject"
-									class="btn btn-outline-secondary">가입거절</button>
-							</div>
-							<br> <br>
-							<form id="whether">
-								<input type="hidden" name="boardName" id="boardName" value="" />
-							</form>
-
-							<div class="row">
-								<div class="col-xs-4 col-md-2">
-									<strong>가입신청번호</strong>
+									<button type="button" id="accept"
+										class="btn btn-outline-secondary">가입승인</button>
+									<button type="button" id="reject"
+										class="btn btn-outline-secondary">가입거절</button>
 								</div>
-								<div class="col-xs-8 col-md-4" id="applicationNo">${cafeApplication.applicationNo}</div>
-							</div>
+								<br> <br>
+								<form id="whether">
+									<input type="hidden" name="boardName" id="boardName" value="" />
+								</form>
 
-							<hr />
-
-							<div class="row">
-								<div class="col-xs-4 col-md-2">
-									<strong>회원번호</strong>
+								<div class="row">
+									<div class="col-xs-4 col-md-2">
+										<strong>가입신청번호</strong>
+									</div>
+									<div class="col-xs-8 col-md-4" id="applicationNo">${cafeApplication.applicationNo}</div>
 								</div>
-								<div class="col-xs-8 col-md-4">${cafeApplication.userNo}</div>
-							</div>
 
-							<hr />
+								<hr />
 
-							<div class="row">
-								<div class="col-xs-4 col-md-2">
-									<strong>카페번호</strong>
+								<div class="row">
+									<div class="col-xs-4 col-md-2">
+										<strong>회원번호</strong>
+									</div>
+									<div class="col-xs-8 col-md-4">${cafeApplication.userNo}</div>
 								</div>
-								<div class="col-xs-8 col-md-4">${cafeApplication.cafeNo}</div>
-							</div>
 
-							<hr />
+								<hr />
 
-							<div class="row">
-								<div class="col-xs-4 col-md-2">
-									<strong>가입신청일</strong>
+								<div class="row">
+									<div class="col-xs-4 col-md-2">
+										<strong>카페번호</strong>
+									</div>
+									<div class="col-xs-8 col-md-4">${cafeApplication.cafeNo}</div>
 								</div>
-								<div class="col-xs-8 col-md-4">${cafeApplication.regDate}</div>
-							</div>
 
-							<hr />
+								<hr />
 
-							<div class="row">
-								<div class="col-xs-4 col-md-2">
-									<strong>멤버닉네임</strong>
+								<div class="row">
+									<div class="col-xs-4 col-md-2">
+										<strong>가입신청일</strong>
+									</div>
+									<div class="col-xs-8 col-md-4">${cafeApplication.regDate}</div>
 								</div>
-								<div class="col-xs-8 col-md-4">${cafeApplication.memberNickname}</div>
-							</div>
 
-							<hr />
+								<hr />
 
-							<div class="row">
-								<div class="col-xs-4 col-md-2">
-									<strong>질문1</strong>
+								<div class="row">
+									<div class="col-xs-4 col-md-2">
+										<strong>멤버닉네임</strong>
+									</div>
+									<div class="col-xs-8 col-md-4">${cafeApplication.memberNickname}</div>
 								</div>
-								<div class="col-xs-8 col-md-4">${cafeApplication.question1}</div>
-							</div>
 
-							<hr />
+								<hr />
 
-							<div class="row">
-								<div class="col-xs-4 col-md-2">
-									<strong>질문2</strong>
+								<div class="row">
+									<div class="col-xs-4 col-md-2">
+										<strong>질문1</strong>
+									</div>
+									<div class="col-xs-8 col-md-4">${cafeApplication.question1}</div>
 								</div>
-								<div class="col-xs-8 col-md-4">${cafeApplication.question2}</div>
-							</div>
 
-							<hr />
+								<hr />
 
-							<div class="row">
-								<div class="col-xs-4 col-md-2">
-									<strong>질문3</strong>
+								<div class="row">
+									<div class="col-xs-4 col-md-2">
+										<strong>질문2</strong>
+									</div>
+									<div class="col-xs-8 col-md-4">${cafeApplication.question2}</div>
 								</div>
-								<div class="col-xs-8 col-md-4">${cafeApplication.question3}</div>
-							</div>
 
-							<hr />
+								<hr />
 
-							<div class="row">
-								<div class="col-xs-4 col-md-2">
-									<strong>답변1</strong>
+								<div class="row">
+									<div class="col-xs-4 col-md-2">
+										<strong>질문3</strong>
+									</div>
+									<div class="col-xs-8 col-md-4">${cafeApplication.question3}</div>
 								</div>
-								<div class="col-xs-8 col-md-4">${cafeApplication.answer1}</div>
-							</div>
 
-							<hr />
+								<hr />
 
-							<div class="row">
-								<div class="col-xs-4 col-md-2">
-									<strong>답변2</strong>
+								<div class="row">
+									<div class="col-xs-4 col-md-2">
+										<strong>답변1</strong>
+									</div>
+									<div class="col-xs-8 col-md-4">${cafeApplication.answer1}</div>
 								</div>
-								<div class="col-xs-8 col-md-4">${cafeApplication.answer2}</div>
-							</div>
 
-							<hr />
+								<hr />
 
-							<div class="row">
-								<div class="col-xs-4 col-md-2">
-									<strong>답변3</strong>
+								<div class="row">
+									<div class="col-xs-4 col-md-2">
+										<strong>답변2</strong>
+									</div>
+									<div class="col-xs-8 col-md-4">${cafeApplication.answer2}</div>
 								</div>
-								<div class="col-xs-8 col-md-4">${cafeApplication.answer3}</div>
-							</div>
 
-							<hr />
+								<hr />
 
-							<div class="row">
-								<div class="col-xs-4 col-md-2">
-									<strong>가입승인상태</strong>
+								<div class="row">
+									<div class="col-xs-4 col-md-2">
+										<strong>답변3</strong>
+									</div>
+									<div class="col-xs-8 col-md-4">${cafeApplication.answer3}</div>
 								</div>
-								<div class="col-xs-8 col-md-4">${cafeApplication.acceptStatusCode}</div>
+
+								<hr />
+
+								<div class="row">
+									<div class="col-xs-4 col-md-2">
+										<strong>가입승인상태</strong>
+									</div>
+									<div class="col-xs-8 col-md-4">${cafeApplication.acceptStatusCode}</div>
+								</div>
+
+								<hr />
+
+								<div align="center">
+									<button type="button" class="btn btn-outline-warning">확인</button>
+								</div>
+
+
 							</div>
-
-							<hr />
-
-							<div align="center">
-								<button type="button" class="btn btn-outline-warning">확인</button>
-							</div>
-
-
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+
 	</div>
-
-
 
 
 
@@ -251,6 +273,5 @@
 		});
 	</script>
 	<script src="/js/custom/cafeCommon.js"></script>
-
 </body>
 </html>

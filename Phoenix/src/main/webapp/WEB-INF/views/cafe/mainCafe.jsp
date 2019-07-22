@@ -70,15 +70,7 @@
             Nav header start
         ***********************************-->
         <div class="nav-header">
-            <div class="brand-logo">
-                <a href="index.html">
-                    <b class="logo-abbr"><img src="/images/logo.png" alt=""> </b>
-                    <span class="logo-compact"><img src="/images/logo-compact.png" alt=""></span>
-                    <span class="brand-title">
-                        <img src="/images/logo-text.png" alt="">
-                    </span>
-                </a>
-            </div>
+            <c:import url="/WEB-INF/views/common/brand-logo.jsp"/>
         </div>
         <!--**********************************
             Nav header end
@@ -375,6 +367,10 @@
 	    	});
 	
 	    	$(function(){//카페탈퇴
+	    		var memberNo = '${cafeMember.memberNo}'
+		    	var userNo ='${cafeMember.userNo}'
+		    	var cafeNo= '${cafeMember.cafeNo}'
+	    		var cafeURL = '${cafeURL}'
 	    		document.querySelector(".sweet-withdraw").onclick =
 		    		function(){
 		    			swal({
@@ -387,35 +383,31 @@
 		    				cancelButtonText:"아니오",
 		    				closeOnConfirm:!1
 		    				},
-		    				function(){
-		    					swal("카페 탈퇴 완료","회원 탈퇴 되었습니다.","success")
-		    				})
+		    				function(isConfirm){
+			    				if(isConfirm){
+				    				$.ajax({
+					    				type : "POST",
+					    				url : "/cafe/json/" +cafeURL + "/updateCafeMember",
+					    				contentType: 'application/json',
+					    				data : JSON.stringify({
+											memberNo : memberNo,
+											cafeNo : cafeNo,
+											userNo : userNo
+										}),
+										success : function(JSONData,status){
+											if (JSONData.result == true){
+												swal("카페 탈퇴 완료","탈퇴 되었습니다.","success");
+											}
+										},
+										error : function(){
+											
+											swal("카페 탈퇴 실패","탈퇴 못함","error");
+										}
+					    			});//ajax 끝
+			    				}
+			    			
+		    				});
 		    			}
-	
-
-				
-// 	    		$(".deleteMember").on("click",function(){
-// 	    			$( "#dialog" ).dialog("open");
-// 	    			});
-// 	    		var memberNo = '${cafeMember.memberNo}'
-// 	    		$( "#dialog" ).dialog({ 
-// 	    			 autoOpen: false, 
-// 	    			  width: 400, 
-// 	    			  modal: true, 
-// 	    			  buttons: [ { 
-// 	    				   text: "확인", 
-// 	    				   click: function() { 
-// 	    					   location.href = "/cafe/" + "${cafeURL}" + "/updateCafeMember?memberNo="+memberNo;
-// 	    					  } 
-// 	    			  }, 
-// 	    			  { 
-// 	    				   text: "취소", 
-// 	    				    click: function() { 
-// 	    					   $( this ).dialog( "close" ); 
-// 	    					   } 
-// 	    			   } 
-// 	    			   ] 
-// 	    		   });
 	    	});
 	    	
 	    	$(function(){//프로필수정

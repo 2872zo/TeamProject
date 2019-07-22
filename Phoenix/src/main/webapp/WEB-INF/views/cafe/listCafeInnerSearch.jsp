@@ -65,17 +65,7 @@
 	cursor: pointer;
 }
 
-.noticeIcon {
-	height: 28px;
-	margin: 0px;
-	padding-top: 0px;
-	padding-bottom: 0px;
-}
-
-.thisNotice {
-	background: #F1795E;
-	border-color: #F1795E;
-}
+checkbox
 </style>
 
 <title>${search.cafeURL}</title>
@@ -107,15 +97,10 @@
             Nav header start
         ***********************************-->
 		<div class="nav-header">
-			<div class="brand-logo">
-				<a href="index.html"> <b class="logo-abbr"><img
-						src="/images/logo.png" alt=""> </b> <span class="logo-compact"><img
-						src="/images/logo-compact.png" alt=""></span> <span
-					class="brand-title"> <img src="/images/logo-text.png" alt="">
-				</span>
-				</a>
-			</div>
+			<c:import url="/WEB-INF/views/common/brand-logo.jsp"/>
 		</div>
+		
+		
 		<!--**********************************
             Nav header end
         ***********************************-->
@@ -323,12 +308,12 @@
 										<div class="form-group">
 											<label for="termStart">기간 시작</label> 
 											<div class="input-group">
-												<input class="form-control" type="text" id="termStart" name="termStart" readonly="readonly" style="text-align:center;">
-												<span class="input-group-append">
+												<span class="input-group-prepend">
 													<span class="input-group-text">
 														<i class="mdi mdi-calendar-check"></i>
 													</span>
 												</span>
+												<input class="form-control" type="text" id="termStart" name="termStart" readonly="readonly" style="text-align:center;">
 											</div>
 										</div>
 									</div>
@@ -337,12 +322,12 @@
 										<div class="form-group">
 											<label for="termEnd">기간 끝</label>
 											<div class="input-group"> 
-												<input class="form-control" type="text" id="termEnd" name="termEnd" readonly="readonly" style="text-align:center;">
-												<span class="input-group-append">
+												<span class="input-group-prepend">
 													<span class="input-group-text">
 														<i class="mdi mdi-calendar-check"></i>
 													</span>
 												</span>
+												<input class="form-control" type="text" id="termEnd" name="termEnd" readonly="readonly" style="text-align:center;">
 											</div>
 										</div>
 									</div>
@@ -402,7 +387,7 @@
 				<div class="col-lg-12">
 					<div class="card">
 						<div class="card-body">
-							<h4 class="card-title">${search.boardName }</h4>
+							<h4 class="card-title">카페 내부 검색</h4>
 							<div class="table-responsive">
 								<form id="boardPage">
 									<input type="hidden" name="currentPage">
@@ -435,13 +420,11 @@
 										</c:forEach>
 
 										<tr>
-											<td colspan="2"></td>
-											<td>
+											<td colspan="6">
 												<c:import url="/WEB-INF/views/common/pageNavigator.jsp">
 													<c:param name="subject" value="InnerSearch" />
 												</c:import>
 											</td>
-											<td colspan="3"></td>
 										</tr>
 
 									</tbody>

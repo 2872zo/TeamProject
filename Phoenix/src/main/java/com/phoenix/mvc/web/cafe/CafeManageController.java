@@ -188,6 +188,7 @@ public class CafeManageController {
 //일단은 담는데,
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("useGradeList", useGradeList);
+		model.addAttribute("cafeURL", cafeURL);
 //모델에 cafeURL의 cafe 객체도 같이 넘겨줌
 
 		//return "/cafe/menuTest";

@@ -29,7 +29,7 @@ public class CafeMemberServiceImpl implements CafeMemberService {
 	@Autowired
 	@Qualifier("cafeManageDaoImpl")
 	private CafeManageDao cafeManageDao;
-	
+
 	@Autowired
 	@Qualifier("userDaoImpl")
 	private UserDao userDao;
@@ -48,40 +48,48 @@ public class CafeMemberServiceImpl implements CafeMemberService {
 		return cafeManageDao.getCafeNo(cafeURL);
 
 	}
-	
-
 
 	@Override
 	public void addCafeApplication(CafeApplication cafeApplication) throws Exception {
-		
-		if(cafeApplication.getMemberNickname()==null) {
-			
+
+		if (cafeApplication.getMemberNickname() == null) {
+
 			User user = userDao.getUserInfo(cafeApplication.getUserNo());
 			cafeApplication.setMemberNickname(user.getUserNickname());
-			
+
 		}
 
 		cafeMemberDao.addCafeApplication(cafeApplication);
-		
+
 		Event event = new Event();
 		event.setCafeNo(cafeApplication.getCafeNo());
 		event.setEventUserNo(cafeApplication.getUserNo());
-		event.setEventType("et105");//가입신청코드
+		event.setEventType("et105");// 가입신청코드
 		cafeManageDao.addEventLog(event);
 	}
 
 	@Override
-	public void updateCafeMember(CafeMember cafeMember) {// 탈퇴
+	public boolean updateCafeMember(CafeMember cafeMember) {// 탈퇴
+
+		boolean result = false;
 
 		cafeMember.setMemberStatusCode("cs102");
 		cafeMemberDao.updateCafeMember(cafeMember);
 		cafeMemberDao.updateMembersDecrease(cafeMember.getCafeNo());
-		
+
 		Event event = new Event();
 		event.setCafeNo(cafeMember.getCafeNo());
 		event.setEventUserNo(cafeMember.getUserNo());
-		event.setEventType("et107");//탈퇴코드
+		event.setEventType("et107");// 탈퇴코드
 		cafeManageDao.addEventLog(event);
+
+		CafeMember member = cafeMemberDao.getCafeMember(cafeMember.getCafeNo(), cafeMember.getUserNo());
+
+		if (member.getMemberStatusCode().equals("cs102")) {
+			result = true;
+		}
+		return result;
+
 	}
 
 	@Override
@@ -99,11 +107,11 @@ public class CafeMemberServiceImpl implements CafeMemberService {
 		cafeMember.setCafeMemberGradeNo(lowNo);
 		cafeMemberDao.addCafeMember(cafeMember);
 		cafeMemberDao.updateMembersIncrease(cafeMember.getCafeNo());
-		
+
 		Event event = new Event();
 		event.setCafeNo(cafeMember.getCafeNo());
 		event.setEventUserNo(cafeMember.getUserNo());
-		event.setEventType("et106");//카페가입
+		event.setEventType("et106");// 카페가입
 		cafeManageDao.addEventLog(event);
 	}
 
@@ -123,7 +131,7 @@ public class CafeMemberServiceImpl implements CafeMemberService {
 	public boolean checkNickname(CafeMember cafeMember) {
 
 		boolean result = true;
-		
+
 		CafeMember cafeMember2 = cafeMemberDao.checkNickname(cafeMember);
 		if (cafeMember2 != null) {
 			result = false;
@@ -133,13 +141,13 @@ public class CafeMemberServiceImpl implements CafeMemberService {
 
 ////////////////////////////////////지니끝//////////////////////////////
 ////////////////////////////////////기황시작////////////////////////////
-	
+
 	@Override
 	public CafeMember getCafeMember(Search search) throws Exception {
 		// TODO Auto-generated method stub
 		return cafeManageDao.getCafeMember(search);
 	}
-	
+
 	@Override
 	public int updatePostCountIncrease(int memberNo) throws Exception {
 		return cafeMemberDao.updatePostCountIncrease(memberNo);

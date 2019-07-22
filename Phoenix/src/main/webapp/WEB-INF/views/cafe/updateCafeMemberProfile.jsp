@@ -31,7 +31,7 @@
 
 <script type="text/javascript">
 	$(function() {
-		$(".btn-outline-success").on(
+		$(".btn-outline-warning").on(
 				"click",
 				function() {
 					var cafeURL = '${search.cafeURL}';
@@ -95,7 +95,7 @@
 <body>
 	<div class='container'>
 		<br />
-		<h4>멤버프로필상세조회</h4>
+		<h4>멤버프로필</h4>
 		<br />
 
 
@@ -154,7 +154,7 @@
 
 
 			<div align="center">
-				<button type="button" class="btn btn-outline-success">확&nbsp;인</button>
+				<button type="button" class="btn btn-outline-warning">확&nbsp;인</button>
 			</div>
 		</form>
 	</div>

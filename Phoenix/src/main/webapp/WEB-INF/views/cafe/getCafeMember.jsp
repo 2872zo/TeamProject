@@ -7,23 +7,14 @@
 <html lang="ko">
 
 <head>
+
+	<!-- ToolBar Start /////////////////////////////////////-->
+	 <jsp:include page="../common/toolbar.jsp" /> 
+	<!-- ToolBar End /////////////////////////////////////-->
+	
 <title>멤버상세조회</title>
 
-<!-- ////////////////////////////// jQuery CDN ////////////////////////////// -->
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"
- integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
- crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
- integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
- crossorigin="anonymous"></script>
-<!-- ////////////////////////////// bootstrap CDN ////////////////////////////// -->
-<link rel="stylesheet"
- href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
- integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
- crossorigin="anonymous">
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
- integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
- crossorigin="anonymous"></script>
+
  
 <script type="text/javascript">
 $(function() {
@@ -56,7 +47,7 @@ $(function() {
 
 <br/>
 <br/>
-
+<div class='card'>
 <table class="table table-borderless">
 	<thead>
     <tr>
@@ -81,15 +72,15 @@ $(function() {
   </tr>
 	</tbody>
 </table>
+
+</div>
+
 <c:if test='${member.memberGrade != "cg100" && member.memberStatusCode!="cs102"}'>
 
 <div class="alert alert-primary" role="alert">
   <h4 class="alert-heading">멤버등급변경</h4>
   <p>해당 카페 멤버가 클릭한 등급으로 변경됩니다.</p>
- </div>
-
-
-<div class='d-flex justify-content-center'>
+  <div class='d-flex justify-content-center'>
 <c:forEach var='cafeGrade' items='${cafeGrades}'>
 <c:if test='${cafeGrade.memberGradeCode != "cg100"}'>
 <button type="button" class='changeMemberGrade btn btn-${ cafeGrade.memberGradeCode==member.memberGrade ? "" : "outline-" }${ cafeGrade.memberGradeCode=="cg101" ? "info" : "primary" }' value='${cafeGrade.cafeGradeNo}'>
@@ -98,6 +89,10 @@ ${cafeGrade.gradeName}
 </c:if>
 </c:forEach>
 </div>
+ </div>
+
+
+
 
 <form id='memberGradeForm'>
 <input type='hidden' name='cafeNo' value='${member.cafeNo}'>
@@ -108,6 +103,7 @@ ${cafeGrade.gradeName}
 </c:if>
 
 <br/>
+<div class ='card'>
 <c:if test="${empty blocks}" >
 <br/>
 정지당한 내역이 없습니다.
@@ -144,6 +140,9 @@ ${cafeGrade.gradeName}
 		
 <br/>
 
+
+</div>
+
 <c:if test='${member.memberStatusCode=="cs100" && member.memberGrade != "cg100"}'>
 <div class="alert alert-danger">
   <h4 class="alert-heading">멤버정지메뉴</h4>
@@ -152,14 +151,12 @@ ${cafeGrade.gradeName}
  </p>
   <hr>
   <p class="mb-0">필요한 경우 기간이 되기 전에 정지상태를 해제할 수 있습니다.</p>
-</div>
-
-<form id='memberBlockForm'>
+  <form id='memberBlockForm'>
 <input type='hidden' name='cafeNo' value='${member.cafeNo}' >
 <input type='hidden' value='${member.memberNo}' name='memberNo'>
 <div class="input-group mb-3">
 	  <div class="input-group-prepend">
-	   <select class="custom-select custom-select-lg" aria-label="Example select with button addon" name='blockPeriod'>
+	   <select class="selectpicker custom-select-lg" aria-label="Example select with button addon" name='blockPeriod'>
 	    <option value="1" selected>01일</option>
 	    <option value="3" >03일</option>
 	    <option value="5" >05일</option>
@@ -169,13 +166,17 @@ ${cafeGrade.gradeName}
 	    <option value="365250" >약 천년</option>	    
 	   </select>
 	    </div>
-	    	 
-	  <input type="text" class="form-control form-control-lg" placeholder="정지사유를 (500자 이하)입력해주세요" aria-label="Text input with dropdown button" name='blockReason' id="blockReason">
+	    	 <div class="input-group-append">
+	  &nbsp;<input type="text" class="form-control-plaintext" placeholder="정지사유를 (500자 이하)입력해주세요" aria-label="Text input with dropdown button" name='blockReason' id="blockReason" style='background-color: white;'>
+	 </div>
 	 <div class="input-group-append">
-	    <button class="btn btn-outline-danger" type="button" id="blocking">정지</button>
+	    &nbsp;<button class="btn btn-sm btn-outline-danger" type="button" id="blocking">정지</button>
 	 </div>
 	</div>
 </form>
+</div>
+
+
 </c:if>
 
 
@@ -186,10 +187,9 @@ ${cafeGrade.gradeName}
   멤버가 현재 정지상태인 경우에만 나타나는 메뉴입니다.
  가장 최근에 적용되었던 정지기록의 정지사유에 입력하신 해제사유가 적용됩니다.
  </p>
-  <hr>
   <p class="mb-0">정지해제버튼을 누르는 즉시 멤버의 정지상태가 해제됩니다.</p>
-</div>
-<form id='memberBlockupdateForm'>
+  <hr>
+  <form id='memberBlockupdateForm'>
 <input type='hidden' name='cafeNo' value='${member.cafeNo}' >
 <input type='hidden' name='memberNo' value='${member.memberNo}' >
 <input type='hidden' name='blockNo' value='0' id='blockNo'>
@@ -200,8 +200,9 @@ ${cafeGrade.gradeName}
   </div>
 </div>
 </form>
-</c:if>
+</div>
 
+</c:if>
 </div>
 </body>
 </html>
