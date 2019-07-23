@@ -48,9 +48,10 @@ public class CafeInterceptor extends HandlerInterceptorAdapter {
 			throws Exception {
 		System.out.println("Interceptor > preHandle");
 
-		Map<String, String> pathVariables = (Map<String, String>) request
-				.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
+		Map<String, String> pathVariables = (Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
 
+		System.out.println(">>>>>>>>>>>aaaa : " + request.getRequestURI());
+		
 		User user = (User) request.getSession().getAttribute("user");
 
 		if (user == null) {
@@ -61,16 +62,18 @@ public class CafeInterceptor extends HandlerInterceptorAdapter {
 
 			//카페 메뉴
 			if (request.getRequestURI().startsWith("/cafe/")) {
-				
+				System.out.println(">>>>>>>>>>cafe 메뉴 접근");
 				//메인 아님
-				if (request.getRequestURI().indexOf("/cafe/main/") != -1) {
-					
+				if (request.getRequestURI().indexOf("/cafe/main/") == -1) {
+					System.out.println(">>>>>>>>>>>>cafeURL : " + pathVariables.get("cafeURL"));
 					//로그인된 유저가 접근한 카페의 멤버 정보 가져옴
 					String cafeURL = pathVariables.get("cafeURL");
 					Search search = new Search();
 					search.setCafeURL(cafeURL);
 					search.setUserNo(user.getUserNo());
 					CafeMember cafeMember = cafeMemberService.getCafeMemberByURL(search);
+					
+					System.out.println(cafeMember);
 					
 					//유저가 특정 카페에 접근했을때 해당 카페의 멤버가 아닐때
 					if (cafeMember == null) {

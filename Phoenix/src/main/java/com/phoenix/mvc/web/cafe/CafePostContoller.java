@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
+import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +64,7 @@ public class CafePostContoller {
 	}
 
 	@RequestMapping("/cafe/{cafeURL}/search")
-	public String getCafeInnerSearchList(@ModelAttribute Search search, Map<String, Object> map) throws Exception {
+	public String getCafeInnerSearchList(@ModelAttribute Search search, Map<String, Object> map, HttpSession session) throws Exception {
 		System.out.println("[CafeInnerSearchList] Search : " + search);
 
 		if(search.getSearchCondition() == null) {
@@ -79,12 +80,13 @@ public class CafePostContoller {
 		int postTotalCount = (int) queryResultMap.get("postTotalCount");
 		Page page = new Page(search.getCurrentPage(), postTotalCount, pageUnit, pageSize);
 		
-		// 메뉴바를 위한 임시 데이터
-//		search.setMemberNo(10000);
 
 		// 메뉴바를 위한 정보
+		User user = (User)session.getAttribute("user");
 		String cafeURL = search.getCafeURL();
-		CafeMember cafeMember = cafeMemberService.getCafeMember(search);
+		search.setCafeURL(cafeURL);
+		search.setUserNo(user.getUserNo());
+		CafeMember cafeMember = cafeMemberService.getCafeMemberByURL(search);
 		// 메뉴바용 게시판 목록 - 컨디션 "1", 카페URL 사용
 		List<Board> boardList = cafeManageService.getCafeBoardList(search);
 
@@ -160,14 +162,14 @@ public class CafePostContoller {
 	}
 
 	@GetMapping("/cafe/{cafeURL}/addPost")
-	public String addPostView(@ModelAttribute Search search, Map<String, Object> map) throws Exception {
-
-		// 메뉴바를 위한 임시 데이터
-//		search.setMemberNo(10000);
-		
-		// 메뉴바를 위한 카페 멤버 정보
-		CafeMember cafeMember = cafeMemberService.getCafeMember(search);
-		// 메뉴바를 위한 게시판 목록 - 카페URL
+	public String addPostView(@ModelAttribute Search search, Map<String, Object> map, HttpSession session) throws Exception {
+		// 메뉴바를 위한 정보
+		User user = (User)session.getAttribute("user");
+		String cafeURL = search.getCafeURL();
+		search.setCafeURL(cafeURL);
+		search.setUserNo(user.getUserNo());
+		CafeMember cafeMember = cafeMemberService.getCafeMemberByURL(search);
+		// 메뉴바용 게시판 목록 - 컨디션 "1", 카페URL 사용
 		List<Board> boardList = cafeManageService.getCafeBoardList(search);
 		
 		// 검색옵션의 게시판목록을 위한 작업
@@ -223,42 +225,18 @@ public class CafePostContoller {
 	}
 
 	@GetMapping("/cafe/{cafeURL}/getPost/{postNo}")
-	public String getPost(@PathVariable int postNo, Map<String, Object> map, @ModelAttribute Search search) throws Exception {
+	public String getPost(@PathVariable int postNo, Map<String, Object> map, @ModelAttribute Search search, HttpSession session) throws Exception {
 		System.out.println("[getPost] postNo : " + postNo);
 
 		Post post = cafePostService.getPost(postNo);
 
-		// 메뉴바를 위한 임시 데이터
-//		search.setMemberNo(10000);
-		
-		// 메뉴바를 위한 카페 멤버 정보
-		CafeMember cafeMember = cafeMemberService.getCafeMember(search);
-		// 메뉴바를 위한 게시판 목록 - 카페URL
-		List<Board> boardList = cafeManageService.getCafeBoardList(search);
-
-		// 메뉴바를 위한 속성
-		map.put("cafeURL", search.getCafeURL());
-		map.put("cafeMember", cafeMember);
-		map.put("boardList", boardList);
-		
-		map.put("post", post);
-
-		return "/cafe/getCafePost";
-	}
-
-	@GetMapping("/cafe/{cafeURL}/updatePost/{postNo}")
-	public String updatePostView(@PathVariable int postNo, @PathVariable String cafeURL, Map<String, Object> map,
-			@ModelAttribute Search search) throws Exception {
-		System.out.println("[updatePostView] postNo : " + postNo);
-
-		Post post = cafePostService.getPost(postNo);
-		
-		// 메뉴바를 위한 임시 데이터
-//		search.setMemberNo(10000);
-		
-		// 메뉴바를 위한 카페 멤버 정보
-		CafeMember cafeMember = cafeMemberService.getCafeMember(search);
-		// 메뉴바를 위한 게시판 목록 - condition("1"), 카페URL
+		// 메뉴바를 위한 정보
+		User user = (User)session.getAttribute("user");
+		String cafeURL = search.getCafeURL();
+		search.setCafeURL(cafeURL);
+		search.setUserNo(user.getUserNo());
+		CafeMember cafeMember = cafeMemberService.getCafeMemberByURL(search);
+		// 메뉴바용 게시판 목록 - 컨디션 "1", 카페URL 사용
 		List<Board> boardList = cafeManageService.getCafeBoardList(search);
 		
 		// 검색옵션의 게시판목록을 위한 작업
@@ -267,11 +245,46 @@ public class CafePostContoller {
 		// 구분선 모두 처리
 		Predicate<Board> condition = board -> board.getBoardType().equals("cb102");
 		boardOption.removeIf(condition);
+		
+		// 메뉴바를 위한 속성
+		map.put("cafeURL", search.getCafeURL());
+		map.put("cafeMember", cafeMember);
+		map.put("boardList", boardList);
+		map.put("boardOption", boardOption);
+		map.put("post", post);
+
+		return "/cafe/getCafePost";
+	}
+
+	@GetMapping("/cafe/{cafeURL}/updatePost/{postNo}")
+	public String updatePostView(@PathVariable int postNo, @PathVariable String cafeURL, Map<String, Object> map,
+			@ModelAttribute Search search, HttpSession session) throws Exception {
+		System.out.println("[updatePostView] postNo : " + postNo);
+
+		Post post = cafePostService.getPost(postNo);
+		
+		// 메뉴바를 위한 정보
+		User user = (User)session.getAttribute("user");
+		search.setCafeURL(cafeURL);
+		search.setUserNo(user.getUserNo());
+		CafeMember cafeMember = cafeMemberService.getCafeMemberByURL(search);
+		// 메뉴바용 게시판 목록 - 컨디션 "1", 카페URL 사용
+		List<Board> boardList = cafeManageService.getCafeBoardList(search);
+		
+		// 검색옵션의 게시판목록을 위한 작업
+		List<Board> boardOption = new ArrayList<Board>();
+		boardOption.addAll(boardList);
+		// 구분선 모두 처리
+		Predicate<Board> condition = board -> board.getBoardType().equals("cb102");
+		boardOption.removeIf(condition);
+		
 
 		// 메뉴바를 위한 속성
 		map.put("cafeURL", search.getCafeURL());
 		map.put("cafeMember", cafeMember);
 		map.put("boardList", boardList);
+		map.put("boardOption", boardOption);
+
 		
 		map.put("post", post);
 		map.put("boardOption", boardOption);
@@ -283,11 +296,6 @@ public class CafePostContoller {
 	public String updatePost(@ModelAttribute Post post, @RequestParam String fileList) {
 		System.out.println("[ updatePost 실행 ] ");
 //		System.out.println("[updatePost] post : " + post);
-		
-		///////////////////////////todo
-		//add에서 하는 기존 파일삭제 프로세스 필요
-		//삭제 이전에 기존 content에서 삭제된 img태그의 src를 찾아서 deleteFileList에 추가해줘야함.
-		//기존 이미지를 찾는 과정은 jsp에서 content의 img태그를 찾게해서 src의 파일이름을 input에 넣기. ==> 기존 프로세스만 있으면 됨 
 		
 		System.out.println(">>>>>>>>>>>>>>>>>>>fileList : " + fileList);
 		
@@ -362,10 +370,16 @@ public class CafePostContoller {
 	}
 	
 	@PostMapping("/cafe/{cafeURL}/addReply")
-	public String addReply(@PathVariable String cafeURL, @ModelAttribute Reply reply) throws Exception {
-		//임시 데이터
-//		reply.setMemberNo(10000);
-//		reply.setMemberNickname("매니저1");
+	public String addReply(@PathVariable String cafeURL, @ModelAttribute Reply reply, HttpSession session, @ModelAttribute Search search) throws Exception {
+		// 메뉴바를 위한 정보
+		User user = (User)session.getAttribute("user");
+		search.setUserNo(user.getUserNo());
+		CafeMember cafeMember = cafeMemberService.getCafeMemberByURL(search);
+		
+		
+		
+		reply.setMemberNo(cafeMember.getMemberNo());
+		reply.setMemberNickname(cafeMember.getMemberNickname());
 		
 		
 		
@@ -376,10 +390,15 @@ public class CafePostContoller {
 	}
 	
 	@PostMapping("/cafe/{cafeURL}/addReReply")
-	public String addReReply(@PathVariable String cafeURL, @ModelAttribute Reply reply) {
-		//임시 데이터
-//		reply.setMemberNo(10000);
-//		reply.setMemberNickname("매니저1");
+	public String addReReply(@PathVariable String cafeURL, @ModelAttribute Reply reply, HttpSession session, @ModelAttribute Search search) throws Exception {
+		//현재 로그인한 유저 정보
+		User user = (User)session.getAttribute("user");
+		search.setUserNo(user.getUserNo());
+		// 메뉴바를 위한 카페 멤버 정보
+		CafeMember cafeMember = cafeMemberService.getCafeMemberByURL(search);
+
+		reply.setMemberNo(cafeMember.getMemberNo());
+		reply.setMemberNickname(cafeMember.getMemberNickname());
 		
 		
 		
@@ -454,8 +473,7 @@ public class CafePostContoller {
 	public String updateNoticeOrderView(@ModelAttribute Search search, @PathVariable String cafeURL, Map<String, Object> map) {
 		System.out.println("[updateNoticeOrderView] search : " + search);
 		
-		//임시데이터
-//		search.setCafeURL("no1cafe");
+		search.setCafeURL(cafeURL);
 
 		map.put("postList", cafePostService.getAllNoticePost(search));
 		
@@ -463,7 +481,7 @@ public class CafePostContoller {
 	}
 	
 	@PostMapping("/cafe/{cafeURL}/getPostByMember")
-	public String getPostByMember(@ModelAttribute Search search, @PathVariable String cafeURL, Map<String, Object> map) throws Exception {
+	public String getPostByMember(@ModelAttribute Search search, @PathVariable String cafeURL, Map<String, Object> map, HttpSession session) throws Exception {
 		
 		if(search.getSearchCondition() == null) {
 			search.setSearchCondition("0");
@@ -480,8 +498,11 @@ public class CafePostContoller {
 		
 		System.out.println("[getPostByMember] search : " + search);
 		
+		//현재 로그인한 유저 정보
+		User user = (User)session.getAttribute("user");
+		search.setUserNo(user.getUserNo());
 		// 메뉴바를 위한 카페 멤버 정보
-		CafeMember cafeMember = cafeMemberService.getCafeMember(search);
+		CafeMember cafeMember = cafeMemberService.getCafeMemberByURL(search);
 		// 메뉴바를 위한 게시판 목록 - 카페URL
 		List<Board> boardList = cafeManageService.getCafeBoardList(search);
 
