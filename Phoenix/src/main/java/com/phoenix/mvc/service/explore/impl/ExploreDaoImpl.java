@@ -161,7 +161,21 @@ public class ExploreDaoImpl implements ExploreDao{
 	@Override
 	public List<CafeExplore> getNaverCafeExploreList(Search search) {
 		
-		 
+		//search 설정 
+		//1.정렬기준 설정 
+		if(search.getOrderState()==0)//정확도
+			search.setOrderStateSort("sim");
+		else
+			search.setOrderStateSort("date");
+		//2.검색엔진설정
+		search.setSearchEngine(1);
+		//3.검색Theme 설정
+		search.setSearchThemeSort("cafearticle");
+				
+		String jsonResult= this.APISearch(search); // API 실행
+		
+		List<CafeExplore> cafeList = new ArrayList<CafeExplore>();
+		
 		JSONObject jsonObject = (JSONObject) JSONValue.parse(jsonResult.toString());
 		List items = (List) jsonObject.get("items");
 		
