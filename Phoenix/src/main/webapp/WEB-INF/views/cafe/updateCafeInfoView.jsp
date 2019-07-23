@@ -108,30 +108,36 @@ code {
                                             <label class="col-lg-4 col-form-label" for="val-cafeDetail"><h5>카페설명</h5>
                                             </label>
                                             <div class="col-lg-6">
-                                                <textarea class="form-control" id="val-username" name="cafeDetail" rows="6"></textarea>
+                                                <textarea class="form-control" id="val-username" name="cafeDetail" rows="6" value="${cafe.cafeDetail }"></textarea>
                                             </div>
                                         </div> <hr>
                                         
                                         <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="val-bannerImg"><h5>배너 이미지 </h5>
-                                            </label>
+                                            </label>                                           
                                             <div class="col-lg-6">
-                                                <input type="file" class="form-control-file" id="uploadFile" name="uploadFile">                                            	
-                                            </div>
+                                               <div><img src="/images/uploadFiles/bannerImg/${cafe.bannerImg}" width="300"; height="200px";/>
+                                               </div>
+                                                <input type="file" class=""form-control-file"" id="uploadFile" name="uploadFile">
+                                               </div>
                                         </div> <hr>
                                         <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="val-bannerImg"><h5>메인 이미지 </h5>
-                                            </label>
+                                            </label>                                           
                                             <div class="col-lg-6">
+                                               <div><img src="/images/uploadFiles/mainImg/${cafe.mainImg}" width="300"; height="200px";/>
+                                               </div>
                                                 <input type="file" class=""form-control-file"" id="uploadFile2" name="uploadFile2">
-                                            </div>
+                                               </div>
                                         </div> <hr>
                                         <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="val-bannerImg"><h5>카페 아이콘</h5>
-                                            </label>
+                                            <label class="col-lg-4 col-form-label" for="val-bannerImg"><h5>카페 아이콘 </h5>
+                                            </label>                                           
                                             <div class="col-lg-6">
+                                               <div><img src="/images/uploadFiles/cafeIcon/${cafe.cafeIcon}" width="300"; height="200px";/>
+                                               </div>
                                                 <input type="file" class=""form-control-file"" id="uploadFile3" name="uploadFile3">
-                                            </div>
+                                               </div>
                                         </div> <hr>
 			  
 			 							 <div class="form-group row">
@@ -186,7 +192,13 @@ code {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$( "button.btn.btn-primary" ).on("click" , function() {
 				alert("수정");
-				
+
+				 $(".autoAcceptOption").each(function(){
+					    if($(this).val()=="${cafe.cafeType}"){
+					      $(this).attr("selected","selected");
+					    }
+				 });
+		
 				$("form").attr("method" , "POST").attr("action" , "/cafe/${cafe.cafeURL}/manage/updateCafeInfo")
 				.attr("enctype","multipart/form-data").submit();
 			});

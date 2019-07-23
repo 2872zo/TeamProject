@@ -123,7 +123,7 @@
 					
 	 									<div class="form-group row">
                                 	<div class="col-lg-8 ml-auto">
-                                  		<button type="submit" class="btn btn-success">확인</button>
+                                  		<button type="submit" class="btn btn-primary">저장</button>
                                   		<a class="btn btn-success btn" href="#" role="button">취&nbsp;소</a>
                                     </div>
                                    </div>
@@ -171,12 +171,18 @@
 			 });
 				    
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			var cafeURL = "22";
-			$( "button.btn.btn-success" ).on("click" , function() {
-				alert("확인");
-				$("form").attr("method" , "POST").attr("action" , "/cafe/"+cafeURL+"/manage/updateCafeApplicationForm").submit();
-			});
-		});	
+			 $("button.btn.btn-primary")
+				.on(
+						"click",
+						function() {
+							alert("저장");
+							$("form")
+									.attr("method", "POST")
+									.attr("action",
+											"/cafe/${cafe.cafeURL}/manage/updateCafeApplicationForm")
+									.submit();
+						});
+	});
 
 		 $(function() {
 				//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)

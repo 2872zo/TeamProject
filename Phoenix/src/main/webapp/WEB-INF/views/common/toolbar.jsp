@@ -191,7 +191,7 @@ input[type="checkbox"] {
 						<i class="fa fa-paper-plane">Chat</i>
 					</button>
 					
-					<button type="button" class="btn btn-primary login"  data-toggle="modal" data-target="#exampleModalCenter"><i class="icon-key">Login</i></button>
+					<button type="button" class="btn btn-primary login"  data-toggle="modal" data-target="#exampleModalCenter"><i class="icon-key">&nbsp;Login</i></button>
 					<!--  <button type="button" class="btn btn-outline-primary login" >
 						<i class="icon-key">Login</i>
 					</button>-->
