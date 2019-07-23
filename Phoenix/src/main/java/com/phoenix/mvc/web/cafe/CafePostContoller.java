@@ -77,7 +77,7 @@ public class CafePostContoller {
 		Page page = new Page(search.getCurrentPage(), postTotalCount, pageUnit, pageSize);
 		
 		// 메뉴바를 위한 임시 데이터
-		search.setMemberNo(10000);
+//		search.setMemberNo(10000);
 
 		// 메뉴바를 위한 정보
 		String cafeURL = search.getCafeURL();
@@ -129,7 +129,10 @@ public class CafePostContoller {
 		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>PAGE : " + page);
 		
 		// 메뉴바를 위한 임시 데이터
-		search.setMemberNo(10000);
+		
+		
+//		search.setMemberNo(10000);
+		
 		// 메뉴바를 위한 카페 멤버 정보
 		CafeMember cafeMember = cafeMemberService.getCafeMember(search);
 		// 메뉴바를 위한 게시판 목록 - 카페URL
@@ -160,7 +163,8 @@ public class CafePostContoller {
 	public String addPostView(@ModelAttribute Search search, Map<String, Object> map) throws Exception {
 
 		// 메뉴바를 위한 임시 데이터
-		search.setMemberNo(10000);
+//		search.setMemberNo(10000);
+		
 		// 메뉴바를 위한 카페 멤버 정보
 		CafeMember cafeMember = cafeMemberService.getCafeMember(search);
 		// 메뉴바를 위한 게시판 목록 - 카페URL
@@ -225,7 +229,8 @@ public class CafePostContoller {
 		Post post = cafePostService.getPost(postNo);
 
 		// 메뉴바를 위한 임시 데이터
-		search.setMemberNo(10000);
+//		search.setMemberNo(10000);
+		
 		// 메뉴바를 위한 카페 멤버 정보
 		CafeMember cafeMember = cafeMemberService.getCafeMember(search);
 		// 메뉴바를 위한 게시판 목록 - 카페URL
@@ -249,7 +254,8 @@ public class CafePostContoller {
 		Post post = cafePostService.getPost(postNo);
 		
 		// 메뉴바를 위한 임시 데이터
-		search.setMemberNo(10000);
+//		search.setMemberNo(10000);
+		
 		// 메뉴바를 위한 카페 멤버 정보
 		CafeMember cafeMember = cafeMemberService.getCafeMember(search);
 		// 메뉴바를 위한 게시판 목록 - condition("1"), 카페URL
@@ -358,8 +364,11 @@ public class CafePostContoller {
 	@PostMapping("/cafe/{cafeURL}/addReply")
 	public String addReply(@PathVariable String cafeURL, @ModelAttribute Reply reply) throws Exception {
 		//임시 데이터
-		reply.setMemberNo(10000);
-		reply.setMemberNickname("매니저1");
+//		reply.setMemberNo(10000);
+//		reply.setMemberNickname("매니저1");
+		
+		
+		
 		System.out.println("[addReply] : " + reply);
 		
 		System.out.println("[addReply 결과] : " + cafePostService.addReply(reply));
@@ -369,15 +378,18 @@ public class CafePostContoller {
 	@PostMapping("/cafe/{cafeURL}/addReReply")
 	public String addReReply(@PathVariable String cafeURL, @ModelAttribute Reply reply) {
 		//임시 데이터
-		reply.setMemberNo(10000);
-		reply.setMemberNickname("매니저1");
+//		reply.setMemberNo(10000);
+//		reply.setMemberNickname("매니저1");
+		
+		
+		
 		System.out.println("[addReply] : " + reply);
 		
 		System.out.println("[addReply 결과] : " + cafePostService.addReReply(reply));
 		return "redirect:/cafe/" + cafeURL + "/getReplyList/"+ reply.getPostNo();
 	}
 	
-	@RequestMapping("/cafe/{cafeURL}/getReply/{postNo}")
+	@RequestMapping("/cafe/{cafeURL}/getReply")
 	public String getReply(@PathVariable String cafeURL, @ModelAttribute Search search, Map<String, Object> map) {
 		Reply reply = cafePostService.getReply(search.getReplyNo());
 		
@@ -427,7 +439,7 @@ public class CafePostContoller {
 	public String updateReply(@PathVariable String cafeURL, @ModelAttribute Search search, @ModelAttribute Reply reply) {
 		System.out.println("[updateReply] 결과 : " + cafePostService.updateReply(reply));
 		
-		return "forward:/cafe/"+cafeURL+"/getReply/"+reply.getReplyNo();
+		return "forward:/cafe/"+cafeURL+"/getReply?replyNo="+reply.getReplyNo();
 	}
 	
 	@PostMapping("/cafe/{cafeURL}/deleteReply/{replyNo}")
@@ -435,7 +447,7 @@ public class CafePostContoller {
 		System.out.println("[deleteReply] 결과 : " + cafePostService.deleteReply(search.getReplyNo()));
 		
 		map.put("currentPage", search.getCurrentPage());
-		return "forward:/cafe/{cafeURL}/getReplyList/{search.postNo}";
+		return "forward:/cafe/" + cafeURL + "/getReply?replyNo=" + search.getReplyNo();
 	}
 	
 	@GetMapping("/cafe/{cafeURL}/updateNoticeOrder")
@@ -443,7 +455,7 @@ public class CafePostContoller {
 		System.out.println("[updateNoticeOrderView] search : " + search);
 		
 		//임시데이터
-		search.setCafeURL("no1cafe");
+//		search.setCafeURL("no1cafe");
 
 		map.put("postList", cafePostService.getAllNoticePost(search));
 		

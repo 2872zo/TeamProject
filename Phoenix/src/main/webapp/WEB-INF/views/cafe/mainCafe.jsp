@@ -264,7 +264,7 @@
                 </div>
             </div>
 			<div id="container-fluid">
-				 <div class="col-lg-6">
+				 <div class="col-lg-12">
                        <div class="card">
                            <div class="card-body">
                                <h4 class="card-title">공지게시판</h4>
