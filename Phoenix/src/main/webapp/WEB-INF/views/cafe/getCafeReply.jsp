@@ -3,25 +3,96 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<div class="replyItem">
-		<p>리플 번호 : ${reply.replyNo }</p>
-		<p>글 번호 : ${reply.postNo }</p>
-		<p>리플 작성자 멤버 번호 : ${reply.memberNo }</p>
-		<p>리플 작성자 : ${reply.memberNickname }</p>
-		<p>리플 내용 : ${reply.replyContent }</p>
-		<p>리플 작성일 : ${reply.regDate }</p>
-		<p>리플 삭제상태 : ${reply.replyStatusFlag }</p>
-		<input type="button" class="from-control" name="updateReplyButton" value="수정"/>
-		<input type="button" class="from-control" name="deleteReplyButton" value="삭제"/>
-		<input type="button" class="from-control" name="addReReplyForm" value="대댓글"/>
-		<button class="replyLikeButton from-control"><span class="far fa-thumbs-up"></span>&nbsp;<span class="count">${reply.likeCount }</span></button>
-		
-		<form name="replyItem">
-			<input type="hidden" name="replyNo" value="${reply.replyNo }">
-			<input type="hidden" name="postNo" value="${reply.postNo }">
-			<input type="hidden" name="targetReplyNo" value="${reply.replyNo }">
-			<input type="hidden" name="targetReplyMember" value="${reply.memberNickname }">
-			<input type="hidden" name="postNo" value="${reply.postNo }">
-		</form>
-		
-</div>
+<c:if test="${reply.replyStatusFlag == '0' }">
+	<c:if test="${empty reply.targetReplyMember }">
+		<div class="replyItem">
+				
+			<div class="media mt-3">
+				<img class="mr-3 circle-rounded circle-rounded" src="멤버아이콘" width="50" height="50" alt="댓글아이콘" onerror="this.src='/images/default-profile.jpg'">
+				<div class="media-body" style="padding:0px;">
+					<div class="d-sm-flex justify-content-between mb-2">
+			   			<h5 class="mb-sm-0">${reply.memberNickname } <small class="text-muted ml-3">${reply.regDate }</small></h5>
+			
+						<!-- 아이콘 부분 -->
+						<div class="media-reply__link">
+							<i class="mdi mdi-border-color" name="updateReplyButton" style="position: relative; top:3px;"></i>
+							<i class="mdi mdi-delete" name="deleteReplyButton"></i>
+							<i class="mdi mdi-reply" name="addReReplyForm"></i>
+			
+							
+						</div>
+			              <!-- 아이콘 끝 -->
+					</div>
+			            
+					<div style="color:black; overflow:hidden;" class="replyContent row">
+	                	<span class="col-10">
+	                		${reply.replyContent }
+	                	</span>
+	                	<span class="col-2">
+			                <button type="button" class="btn mb-1 btn-outline-primary btn-xs" >
+								<i class="far fa-thumbs-up" style="font-size:15px;"></i>
+								<i class="count" style="font-size:15px;">${reply.likeCount }</i>
+							</button>
+						</span>
+	                	<div style="padding-bottom:10px;"></div>
+	                </div>
+		            
+		            <form name="replyItem">
+						<input type="hidden" name="replyNo" value="${reply.replyNo }">
+						<input type="hidden" name="postNo" value="${reply.postNo }">
+						<input type="hidden" name="targetReplyNo" value="${reply.replyNo }">
+						<input type="hidden" name="targetReplyMember" value="${reply.memberNickname }">
+						<input type="hidden" name="postNo" value="${reply.postNo }">
+					</form>
+				</div>
+			</div>
+		</div>
+	</c:if>
+	
+	<c:if test="${!empty reply.targetReplyMember }">
+		<div class="replyItem reReplyItem">
+			<div style="margin-left:20px; margin-top:5px;">${reply.targetReplyMember }</div>
+			<div class="media mt-3" style="margin-left:20px; margin-top:3px !important;">
+				<img class="mr-3 circle-rounded circle-rounded" src="멤버아이콘" width="40" height="40" alt="댓글아이콘" onerror="this.src='/images/default-profile.jpg'">
+				<div class="media-body"  style="padding:0px;">
+					<div class="d-sm-flex justify-content-between mb-2">
+	   					 <h5 class="mb-sm-0">${reply.memberNickname } <small class="text-muted ml-3">${reply.regDate }</small></h5>
+						 
+						 <!-- 아이콘 부분 -->
+					     <div class="media-reply__link">
+						     <i class="mdi mdi-border-color" name="updateReplyButton" style="position: relative; top:3px;"></i>
+						     <i class="mdi mdi-delete" name="deleteReplyButton"></i>
+						     <i class="mdi mdi-reply" name="addReReplyForm"></i>
+	             		 </div>
+	             		 <!-- 아이콘 끝 -->
+	    
+					</div>
+				
+					<div style="color:black; overflow:hidden;" class="replyContent row">
+	                	<span class="col-10">
+	                		${reply.replyContent }
+	                	</span>
+	                	<span class="col-2">
+			                <button type="button" class="btn mb-1 btn-outline-primary btn-xs" >
+								<i class="far fa-thumbs-up" style="font-size:15px;"></i>
+								<i class="count" style="font-size:15px;">${reply.likeCount }</i>
+							</button>
+						</span>
+	                	<div style="padding-bottom:10px;"></div>
+	                </div>
+	                
+	               	<form name="replyItem">
+						<input type="hidden" name="replyNo" value="${reply.replyNo }">
+						<input type="hidden" name="postNo" value="${reply.postNo }">
+						<input type="hidden" name="targetReplyNo" value="${reply.targetReplyNo }">
+						<input type="hidden" name="targetReplyMember" value="${reply.memberNickname }">
+						<input type="hidden" name="postNo" value="${reply.postNo }">
+					</form>
+	           </div>
+	       </div>
+		</div>
+	</c:if>
+</c:if>
+<c:if test="${reply.replyStatusFlag != '0' }">
+	<c:import url="/WEB-INF/views/cafe/deleteReplyView.jsp"></c:import>
+</c:if>

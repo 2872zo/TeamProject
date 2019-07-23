@@ -7,6 +7,10 @@
 <html lang="ko">
 
 <head>
+		<!-- ToolBar Start /////////////////////////////////////-->
+		<jsp:include page="../common/toolbar.jsp" />
+		<!-- ToolBar End /////////////////////////////////////-->
+
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -40,9 +44,7 @@
 
 <div id="main-wrapper">
 
-		<!-- ToolBar Start /////////////////////////////////////-->
-		<jsp:include page="../common/cafeManageTollbar.jsp" />
-		<!-- ToolBar End /////////////////////////////////////-->
+
 
 <!--**********************************
             Sidebar start
@@ -146,7 +148,7 @@
                                             </div><hr>
 				  				<div class="form-group row">
                                 	<div class="col-lg-8 ml-auto">
-                                  		<button type="submit" class="btn btn-primary">만들기</button>
+                                  		<button type="button" class="btn btn-primary">만들기</button>
                                   		 <a class="btn btn-success btn" href="#" role="button">취&nbsp;소</a>
                                     </div>
                                    </div>
@@ -332,7 +334,7 @@
 	});
 	
 </script>
-	
+	<script src="/js/custom/cafeCommon.js"></script>
 
 </body>
 

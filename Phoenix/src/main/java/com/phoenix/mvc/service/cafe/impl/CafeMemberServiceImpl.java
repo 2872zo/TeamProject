@@ -173,6 +173,11 @@ public class CafeMemberServiceImpl implements CafeMemberService {
 		return cafeMemberDao.updateVisitCountIncrease(memberNo);
 	}
 
+	@Override
+	public CafeMember getCafeMemberByURL(Search search) throws Exception {
+		return cafeMemberDao.getCafeMemberByURL(search);
+	}
+
 	////////////////////////////////// 기황끝///////////////////////////////////////
 
 }

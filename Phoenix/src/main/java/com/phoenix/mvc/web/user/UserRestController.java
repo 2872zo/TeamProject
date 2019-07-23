@@ -43,7 +43,7 @@ public class UserRestController {
 	@RequestMapping(value = "/json/checkUserIdDuplication", method=RequestMethod.POST)
 	public boolean checkUserIdDuplication(@RequestBody User user)throws Exception{
 		
-		System.out.println("/cafe/json/checkCafeNameDuplication : POST");
+		System.out.println("/user/json/checkUserIdDuplication : POST");
 		
 		boolean result = userService.checkUserIdDuplication(user.getUserId());
 

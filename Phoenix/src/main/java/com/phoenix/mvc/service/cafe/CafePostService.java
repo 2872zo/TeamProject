@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.phoenix.mvc.common.Search;
+import com.phoenix.mvc.service.domain.Board;
 import com.phoenix.mvc.service.domain.Post;
 import com.phoenix.mvc.service.domain.Reply;
 
@@ -43,4 +44,8 @@ public interface CafePostService {
 	public List<Post> getAllNoticePost(Search search);
 
 	public Map<String, Object> getPostListByMember(Search search);
+	
+	public Board getBoard(int boardNo);
+	
+	public Board getBoardByPostNo(int postNo);
 }

@@ -23,7 +23,7 @@
     		
     	}
     	
-    	.blogSearch{
+    	.webSearch{
     	
     		color:#f5a142;
     	}

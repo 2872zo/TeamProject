@@ -63,9 +63,9 @@ public class UserContoller {
 
 		return "user/addUserView";
 	}
-
+	
 	@PostMapping("addUser")
-	public String addUser(@ModelAttribute User user, Model model) throws Exception {
+	public String addUser(@ModelAttribute User user, Model model, HttpSession session) throws Exception {
 
 		System.out.println("/addUser : POST");
 
@@ -78,8 +78,14 @@ public class UserContoller {
 		System.out.println("유저인서트다다아아아앙@@@" + user);
 
 		model.addAttribute("user", user);
+		
+		User dbUser=userService.getUser(user.getUserId());		
+		
+		if( user.getPassword().equals(dbUser.getPassword())){
+			session.setAttribute("user", dbUser);
+		}
 
-		return "user/getUser";
+		return "redirect:/";
 	}
 	
 	@GetMapping("logout" )

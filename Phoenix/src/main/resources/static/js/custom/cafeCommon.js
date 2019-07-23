@@ -19,7 +19,7 @@ function fncGetBoard(cafeURL){
 }
 
 function fncGetForm(cafeURL){
-	location.href = "/cafe/" + cafeURL + "/manage/updateCafeApplicationFormView";
+	location.href = "/cafe/" + cafeURL + "/manage/updateCafeApplicationForm";
 }
 
 function fncGetApplication(cafeURL){
@@ -40,7 +40,7 @@ function fncGetClosed(cafeURL){
 
 
 function fncGetNotice(cafeURL){
-	location.href = "/cafe/" + cafeURL + "";
+	location.href = "/cafe/" + cafeURL + "/manage/updateNoticeOrder";
 }
 
 function fncGetPhoenix(){

@@ -114,11 +114,11 @@ public class CafeManageServiceImpl implements CafeManageService {
 /////////////////////////////////////////////////// 예림
 /////////////////////////////////////////////////// 시작/////////////////////////////////
 	@Override
-	public List getCafeBoard(Search search) {
+	public List getCafeBoardList(Search search) {
 
 		int cafeNo = cafeManageDao.getCafeNo(search.getCafeURL());
 
-		return cafeManageDao.getCafeBoard(search);
+		return cafeManageDao.getCafeBoardList(search);
 	}
 
 	@Override

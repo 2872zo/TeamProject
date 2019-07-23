@@ -23,7 +23,7 @@
     		
     	}
     	
-    	.blogSearch{
+    	.cafeSearch{
     	
     		color:#f5a142;
     	}
@@ -128,11 +128,15 @@
                                          <label class="form-check-label">
                                              <input type="checkbox" class="form-check-input singleCheck" name="engineDaum" value="">다음</label>
                                      </div>
+                                     <div class="form-check form-check-inline disabled">
+                                         <label class="form-check-label">
+                                             <input type="checkbox" class="form-check-input singleCheck" name="enginPhoenix" value="">피닉스</label>
+                                     </div>
                                  </div>
            					</li>
            				</ul>
            			<hr/>
-           			<input type="hidden" name="searchTheme" id="searchTheme" value="1">
+           			<input type="hidden" name="searchTheme" id="searchTheme" value="2">
            			</div>
            			
            			<div class="col-md-1">
@@ -143,16 +147,16 @@
            					<ul class="list-unstyled">
 	           				
 	           				<c:set var="i" value="0"/>
-	           				<c:forEach var="blog" items="${blogList}">
+	           				<c:forEach var="cafe" items="${cafeList}">
 	           					<c:set var="i" value="${i+1}"/>
 	           					<li class="media">
-	           						<img alt="이미지없음" src="${blog.thumbnail}">
+	           						<img alt="이미지없음" src="${cafe.thumbnail}">
 									<div class="media-body">
-										<a href="${blog.resultLink}">${blog.title}</a>${blog.dateTime}
+										<a href="${cafe.resultLink}">${cafe.title}</a>${cafe.dateTime}
 										<br/>
-										${blog.contents}
+										${cafe.contents}
 										<br/>
-										<a href="${blog.blogLink}">${blog.blogName}</a>
+										<a href="${cafe.cafeLink}">${cafe.cafeName}</a>
 									</div>           					
 	           					</li>
 	           				</c:forEach>
