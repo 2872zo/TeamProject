@@ -8,6 +8,7 @@ import java.util.List;
 public class CafeMember {
 
 	private int memberNo;
+	private String cafeURL;
 	private int cafeNo;
 	private int userNo;
 	private String memberNickname;
@@ -35,6 +36,12 @@ public class CafeMember {
 	}
 	public void setMemberNo(int memberNo) {
 		this.memberNo = memberNo;
+	}
+	public String getCafeURL() {
+		return cafeURL;
+	}
+	public void setCafeURL(String cafeURL) {
+		this.cafeURL = cafeURL;
 	}
 	public int getCafeNo() {
 		return cafeNo;
