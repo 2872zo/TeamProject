@@ -71,19 +71,19 @@ public class ExploreServiceImpl implements ExploreService{
 	}
 
 	@Override
-	public List getImageExploreList() {
+	public List getImageExploreList(Search search) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List getWebsiteExploreList() {
+	public List getWebsiteExploreList(Search search) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List getInfiniteImageList() {
+	public List getInfiniteImageList(Search search) {
 		// TODO Auto-generated method stub
 		return null;
 	}

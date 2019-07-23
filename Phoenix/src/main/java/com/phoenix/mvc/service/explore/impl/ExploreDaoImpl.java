@@ -7,9 +7,12 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.ws.Response;
 
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import org.springframework.stereotype.Repository;
 
 import com.phoenix.mvc.common.Search;
@@ -34,20 +37,33 @@ public class ExploreDaoImpl implements ExploreDao{
 			search.setOrderStateSort("recency");
 		//2.검색엔진설정
 		search.setSearchEngine(0);
+		//3.검색Theme 설정
+		search.setSearchThemeSort("blog");
 		
 		String jsonResult= this.APISearch(search); // API 통신
 		List<Blog> blogList = new ArrayList<Blog>();
 		
-		for(int i=0; i<search.getPageSize(); i++)
+		JSONObject jsonObject = (JSONObject) JSONValue.parse(jsonResult.toString());
+		List items = (List) jsonObject.get("documents");
+		
+		for(int i=0; i<items.size(); i++)
 		{
+			Map item = (Map)items.get(i); 
+			
 			Blog blog = new Blog();
 			//blog 값set하고
+			blog.setBlogName(item.get("blogname").toString());
+			blog.setDateTime(item.get("datetime").toString());
+			blog.setThumbnail(item.get("thumbnail").toString());
+			blog.setContents(item.get("contents").toString());
+			blog.setTitle(item.get("title").toString());
+			blog.setResultLink(item.get("url").toString());
+			
 			blogList.add(blog);
 		}
 		
-		//jsonResult가지고 도메인으로 셋팅
 		
-		return null;//List<Blog> return
+		return blogList;// meta data는 어떻게 할건지?? 총 검색결과 등등.. Search에 넣을건가??
 	}
 
 	@Override
@@ -61,10 +77,34 @@ public class ExploreDaoImpl implements ExploreDao{
 			search.setOrderStateSort("date");
 		//2.검색엔진설정
 		search.setSearchEngine(1);
-		String jsonResult= this.APISearch(search); // 넘겨주고 
+		//3.검색Theme 설정
+		search.setSearchThemeSort("blog");
+				
+		String jsonResult= this.APISearch(search); // API 실행
+		
+		List<Blog> blogList = new ArrayList<Blog>();
+		
+		JSONObject jsonObject = (JSONObject) JSONValue.parse(jsonResult.toString());
+		List items = (List) jsonObject.get("items");
+		
+		for(int i=0; i<items.size(); i++)
+		{
+			Map item = (Map)items.get(i); 
+			
+			Blog blog = new Blog();
+			//blog 값set하고
+			blog.setBlogName(item.get("bloggername").toString());//0
+			blog.setDateTime(item.get("postdate").toString());//0
+			blog.setContents(item.get("description").toString());//0
+			blog.setTitle(item.get("title").toString());//0
+			blog.setResultLink(item.get("link").toString());//0
+			blog.setBlogLink(item.get("bloggerlink").toString());//0
+			
+			blogList.add(blog);
+		}
 		
 		
-		return null;
+		return blogList;// meta data는 어떻게 할건지?? 총 검색결과 등등.. Search에 넣을건가??
 	}
 	
 	
