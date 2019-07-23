@@ -135,10 +135,10 @@ public class CafeTabContoller {
 		return "forward:/WEB-INF/views/cafe/cafeHomeMain.jsp";
 	}
 
-	@RequestMapping("search")
+	@RequestMapping("main/search")
 	public String cafeSearch(@ModelAttribute("search") Search search, Model model) throws Exception {
 
-		System.out.println("/cafe/search입니다.");
+		System.out.println("/cafe/main/search입니다.");
 
 		pageSize = 3;
 

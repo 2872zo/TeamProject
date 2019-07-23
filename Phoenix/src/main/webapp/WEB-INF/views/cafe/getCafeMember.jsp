@@ -1,53 +1,66 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 
 <html lang="ko">
 
-<head>
 
-	<!-- ToolBar Start /////////////////////////////////////-->
-	 <jsp:include page="../common/toolbar.jsp" /> 
-	<!-- ToolBar End /////////////////////////////////////-->
-	
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>멤버상세조회</title>
 
+<link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
+<link href="/css/style.css" rel="stylesheet">
+<link rel="stylesheet" href="/css/custom/scroll-top.css">
 
- 
-<script type="text/javascript">
-$(function() {
-	
-	$("#unBlockReason").attr("placeholder", "기존 정지사유 : "+$("#blockReason1").text());
-
-	$("#updateBlock").on("click" , function() {
-		$("#blockNo").val($("#blockNo1").text());
-		$("#memberBlockupdateForm").attr("method" , "POST").attr("action" , "/cafe/"+"${cafeURL}"+"/manage/updateCafeMemberBlock").submit();
-	});
-	
-	$("#blocking").on("click" , function() {
-		$("#memberBlockForm").attr("method" , "POST").attr("action" , "/cafe/"+"${cafeURL}"+"/manage/addMemberBlock").submit();
-	});
-	
-	$(".changeMemberGrade").on("click" , function() {
-		//alert($(this).val());
-		$("#cafeMemberGradeNo").val($(this).val());
-		$("#memberGradeForm").attr("method" , "POST").attr("action" , "/cafe/"+"${cafeURL}"+"/manage/updateCafeMemberGrade").submit();	
-	});
-	
-});
-</script>
-
-<title>카페 멤버 상세조회</title>
 
 </head>
+
 <body>
+
+<div id="main-wrapper">
+
+		<!-- ToolBar Start /////////////////////////////////////-->
+		<jsp:include page="../common/cafeManageTollbar.jsp" />
+		<!-- ToolBar End /////////////////////////////////////-->
+
+
+
+		<!--**********************************
+            Sidebar start
+        ***********************************-->
+		<div class="nk-sidebar">
+			<c:import url="/WEB-INF/views/common/cafeManageMenubar.jsp"></c:import>
+		</div>
+		<!--**********************************
+            Sidebar end
+        ***********************************-->
+
+		<div class="content-body" style="min-height: 743px;">
+		
+		<div class="row page-titles mx-0">
+				<div class="col p-md-0">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="javascript:void(0)">manage</a></li>
+						<li class="breadcrumb-item active"><a
+							href="javascript:void(0)">application</a></li>
+					</ol>
+				</div>
+			</div>
+			
 <div class='container'>
 
 <br/>
 <br/>
 <div class='card'>
+<div class='card-body'>
+
 <table class="table table-borderless">
 	<thead>
     <tr>
@@ -73,7 +86,7 @@ $(function() {
 	</tbody>
 </table>
 
-</div>
+
 
 <c:if test='${member.memberGrade != "cg100" && member.memberStatusCode!="cs102"}'>
 
@@ -103,7 +116,7 @@ ${cafeGrade.gradeName}
 </c:if>
 
 <br/>
-<div class ='card'>
+
 <c:if test="${empty blocks}" >
 <br/>
 정지당한 내역이 없습니다.
@@ -141,7 +154,7 @@ ${cafeGrade.gradeName}
 <br/>
 
 
-</div>
+
 
 <c:if test='${member.memberStatusCode=="cs100" && member.memberGrade != "cg100"}'>
 <div class="alert alert-danger">
@@ -204,5 +217,55 @@ ${cafeGrade.gradeName}
 
 </c:if>
 </div>
+</div>
+</div>
+</div>
+</div>
+
+
+<!--**********************************
+        Scripts
+    ***********************************-->
+    <script src="/plugins/common/common.min.js"></script>
+    <script src="/js/custom.min.js"></script>
+    <script src="/js/settings.js"></script>
+    <script src="/js/gleek.js"></script>
+    <script src="/js/styleSwitcher.js"></script>
+    
+    <!-- 메뉴바 이용을 위한 스크립트 -->
+	<script src="/js/custom/scroll-top.js"></script>
+    
+    <script type="text/javascript">
+	</script>
+	<script src="/js/custom/cafeCommon.js"></script>
+
+	<!--  ///////////////////////// JavaScript ////////////////////////// -->
+<script type="text/javascript">
+$(function() {
+	
+	$("#unBlockReason").attr("placeholder", "기존 정지사유 : "+$("#blockReason1").text());
+
+	$("#updateBlock").on("click" , function() {
+		$("#blockNo").val($("#blockNo1").text());
+		$("#memberBlockupdateForm").attr("method" , "POST").attr("action" , "/cafe/"+"${cafeURL}"+"/manage/updateCafeMemberBlock").submit();
+	});
+	
+	$("#blocking").on("click" , function() {
+		$("#memberBlockForm").attr("method" , "POST").attr("action" , "/cafe/"+"${cafeURL}"+"/manage/addMemberBlock").submit();
+	});
+	
+	$(".changeMemberGrade").on("click" , function() {
+		//alert($(this).val());
+		$("#cafeMemberGradeNo").val($(this).val());
+		$("#memberGradeForm").attr("method" , "POST").attr("action" , "/cafe/"+"${cafeURL}"+"/manage/updateCafeMemberGrade").submit();	
+	});
+	
+});
+</script>
+
+	<!--  ///////////////////////// JavaScript ////////////////////////// -->
+
+
+
 </body>
 </html>

@@ -8,171 +8,6 @@
 <html lang="ko">
 
 <head>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<!-- Favicon icon -->
-<link rel="icon" type="image/png" sizes="16x16"
-	href="/images/favicon.png">
-<!-- Custom Stylesheet -->
-<link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
-<link href="/css/style.css" rel="stylesheet">
-
-<link rel="stylesheet" href="/css/custom/scroll-top.css">
-
-
-
-
-
-</head>
-
-<body>
-
-	<!--*******************
-        Preloader start
-    ********************-->
-	<div id="preloader">
-		<div class="loader">
-			<svg class="circular" viewBox="25 25 50 50">
-                <circle class="path" cx="50" cy="50" r="20" fill="none"
-					stroke-width="3" stroke-miterlimit="10" />
-            </svg>
-		</div>
-	</div>
-	<!--*******************
-        Preloader end
-    ********************-->
-
-
-	<!--**********************************
-        Main wrapper start
-    ***********************************-->
-	<div id="main-wrapper">
-
-		<!--**********************************
-            Nav header start
-        ***********************************-->
-		<div class="nav-header">
-			<div class="brand-logo">
-				<a href="/"> <b class="logo-abbr"> <b
-						class="align-middle font-weight-bolder text-center"
-						style='color: white; font-size: x-large;'>P</b>
-				</b> <span
-					class="brand-title align-middle font-weight-bolder text-center"
-					style='color: white; font-size: x-large;'>Phoenix</span>
-				</a>
-			</div>
-		</div>
-		<!--**********************************
-            Nav header end
-        ***********************************-->
-
-		<!--**********************************
-            Header start
-        ***********************************-->
-		<div class="header">
-			<div class="header-content clearfix">
-
-				<div class="nav-control"></div>
-				<div class="header-left d-flex align-items-center">
-				<ul class="clearfix d-flex align-items-center">
-				
-				<i class="mdi mdi-coffee" style='font-size: 30pt;' id="cafeHomeButton"></i> 
-				
-				<div id='cafeMainTools'>
-				<i class="mdi mdi-clipboard-outline" id='newsFeeding'
-				style='font-size: 30pt' data-toggle="tooltip" data-placement="bottom" title="카페 뉴스피드 보기"></i>
-				<i class="mdi mdi-library-books" id='myApplications'
-				style='font-size: 30pt' data-toggle="tooltip" data-placement="bottom" title="가입신청내역 보기"></i>
-				</div>			
-				</ul>
-				</div>
-
-				<div class="header-right">
-					<ul class="clearfix d-flex align-items-center">
-
-						<i class="mdi mdi-comment-processing-outline" id='goChat'
-							style='font-size: 30pt'></i>
-
-
-						<button type="button" class="btn btn-primary login"
-							data-toggle="modal" data-target="#exampleModalCenter">
-							<i class="icon-key">Login</i>
-						</button>
-
-						<button type="button" class="btn btn-primary logout">
-							<i class="icon-key">Logout</i>
-						</button>
-				</div>
-			</div>
-		</div>
-
-		<!-- 로그인시작 -->
-		<div class="nk-sidebar"></div>
-
-
-		<!-- Modal 내용 시작 -->
-		<div class="modal fade" id="exampleModalCenter" style="display: none;"
-			aria-hidden="true" style="max-width:100%;" style=" width: auto;">
-			<div class="modal-dialog modal-dialog-centered" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-
-						<button type="button" class="close" data-dismiss="modal">
-							<span>×</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<div class="card-body pt-5">
-							<a class="text-center">
-								<h4>불사조</h4>
-							</a>
-
-							<form class="mt-5 mb-5 login-input">
-								<div class="form-group">
-									<input type="text" class="form-control" placeholder="ID"
-										name="userId">
-								</div>
-								<div class="form-group">
-									<input type="password" class="form-control"
-										placeholder="PASSWORD" name="password">
-								</div>
-								<button class="btn login-form__btn submit w-100" id="login1">로그인</button>
-							</form>
-							<p class="mt-5 login-form__footer">
-								<a href="/user/addUserView" class="text-primary" id="addUser1">회원가입</a>
-							</p>
-						</div>
-					</div>
-
-				</div>
-			</div>
-		</div>
-
-		<!-- Modal 내용 끝 -->
-		<!--**********************************
-            Header end ti-comment-alt
-        ***********************************-->
-
-	</div>
-
-	<!--**********************************
-        Main wrapper end
-    ***********************************-->
-
-	<!--**********************************
-        Scripts
-    ***********************************-->
-	<script src="/plugins/common/common.min.js"></script>
-	<script src="/js/custom.min.js"></script>
-	<script src="/js/settings.js"></script>
-	<script src="/js/gleek.js"></script>
-	<script src="/js/styleSwitcher.js"></script>
-
-	<script src="/plugins/sweetalert/js/sweetalert.min.js"></script>
-	<script src="/plugins/sweetalert/js/sweetalert.init.js"></script>
-
-	<!-- 메뉴바 이용을 위한 스크립트 -->
-	<script src="/js/custom/scroll-top.js"></script>
-
 
 <style type="text/css">
 
@@ -285,87 +120,129 @@ input[type="checkbox"] {
 </style>
 
 
-	<script type="text/javascript">
-	    	$(function(){
-				var whereYouAt = String(window.location.pathname);
-		    	//alert(whereYouAt);
-		    	
-		    	//카페/메인도 아니고 접속도 안했을때 지워버려
-		    	if(!whereYouAt.startsWith("/cafe/main") || ${empty sessionScope.user} ){
-			    	$("#cafeMainTools").remove();
-			    	//alert("카페야");
-			    	}
-		    	///카페로 시작안하면 버튼 없애자
-		    	if(!whereYouAt.startsWith("/cafe")){
-			    	$("#cafeHomeButton").remove();
-			    	}
-		    	
-				    	
-		    	//로그인 안해서 세션에 유저가 없을 때
-	    		if(${empty sessionScope.user}){
-	    			$("#goChat").remove();
-		    		$(".logout").remove();
-	    		}
-	    		
-	    		//로그인해서 세션에 유저가 있을 때
-	    		if(${!empty sessionScope.user}){
-		    		$(".login").remove();
-	    		}
 
-	    		$("#cafeHomeButton").on("click" , function() {
-	    			$(self.location).attr("href", "/cafe/main");
-	    		});
+</head>
 
-	    		$("#newsFeeding").on("click" , function() {
-	    			$(self.location).attr("href","/cafe/main/cafeNewsFeed");
-	    		});
-	    		
-	    		$("#myApplications").on("click" , function() {
-	    			$(self.location).attr("href","/cafe/main/cafeApplicationList");
-	    		});
-
-	    		$(".logout").on("click" , function() {
-	    			$(self.location).attr("href","/user/logout");
-	    		});
-	    		
-	    		$("#goChat").on("click" , function() {
-	    			$(self.location).attr("href","/chat/chatRoomList");
-	    		});
-
-	    		
-	    	});
-
-	    	//로그인시작
-	    	$( function() {
-	    			
-	    			$("#userId").focus();
-	    			
-	    			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-	    			$("#login1").on("click" , function() {
-	    				var id=$("input:text").val();
-	    				var pw=$("input:password").val();
-	    				
-	    				if(id == null || id.length <1) {
-	    					alert('ID 를 입력하지 않으셨습니다.');
-	    					$("#userId").focus();
-	    					return;
-	    				}
-	    				
-	    				if(pw == null || pw.length <1) {
-	    					alert('패스워드를 입력하지 않으셨습니다.');
-	    					$("#password").focus();
-	    					return;
-	    				}
-	    				$("form").attr("method","POST").attr("action","/user/login").submit();
-	    				//$("form").attr("method","POST").attr("action","/user/login").attr("target","_parent").submit();
-	    			}); 
-	    		});	
-	    	
-	    		//로그인끝
-		
-	</script>
+<body>
 
 
+
+
+	<!--**********************************
+        Main wrapper start
+    ***********************************-->
+	<div id="main-wrapper">
+
+	      <!--**********************************
+            Nav header start
+        ***********************************-->
+           <div class="nav-header">
+            <c:import url="/WEB-INF/views/common/brand-logo.jsp"/>
+        </div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+        
+
+		<!--**********************************
+            Header start
+        ***********************************-->
+		<div class="header">
+			<div class="header-content clearfix">
+			
+			<div class="nav-control">
+			</div>
+
+
+				<div class="header-left d-flex align-items-center">
+				<ul class="clearfix d-flex align-items-center">
+				
+				<i class="mdi mdi-coffee" style='font-size: 30pt;' id="cafeHomeButton"></i> 
+				<i class="mdi mdi-home-variant" style='font-size: 30pt;' id="thisCafeHome"></i>
+				<div id='cafeMainTools'>
+				<i class="mdi mdi-clipboard-outline" id='newsFeeding'
+				style='font-size: 30pt' data-toggle="tooltip" data-placement="bottom" title="카페 뉴스피드 보기"></i>
+				<i class="mdi mdi-library-books" id='myApplications'
+				style='font-size: 30pt' data-toggle="tooltip" data-placement="bottom" title="가입신청내역 보기"></i>
+				</div>			
+				</ul>
+				</div>
+
+				<div class="header-right">
+					<ul class="clearfix d-flex align-items-center">
+
+						<i class="mdi mdi-comment-processing-outline" id='goChat'
+							style='font-size: 30pt'></i>
+
+
+						<button type="button" class="btn btn-primary login"
+							data-toggle="modal" data-target="#exampleModalCenter">
+							<i class="icon-key">Login</i>
+						</button>
+
+						<button type="button" class="btn btn-primary logout">
+							<i class="icon-key">Logout</i>
+						</button>
+				</div>
+			</div>
+		</div>
+
+		<!-- 로그인시작 -->
+		<div class="nk-sidebar"></div>
+
+
+		<!-- Modal 내용 시작 -->
+		<div class="modal fade" id="exampleModalCenter" style="display: none;"
+			aria-hidden="true" style="max-width:100%;" style=" width: auto;">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+
+						<button type="button" class="close" data-dismiss="modal">
+							<span>×</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="card-body pt-5">
+							<a class="text-center">
+								<h4>불사조</h4>
+							</a>
+
+							<form class="mt-5 mb-5 login-input">
+								<div class="form-group">
+									<input type="text" class="form-control" placeholder="ID"
+										name="userId">
+								</div>
+								<div class="form-group">
+									<input type="password" class="form-control"
+										placeholder="PASSWORD" name="password">
+								</div>
+								<button class="btn login-form__btn submit w-100" id="login1">로그인</button>
+							</form>
+							<p class="mt-5 login-form__footer">
+								<a href="/user/addUserView" class="text-primary" id="addUser1">회원가입</a>
+							</p>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<!-- Modal 내용 끝 -->
+		<!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+
+	</div>
+
+	<!--**********************************
+        Main wrapper end
+    ***********************************-->
+    
+    
+   
+  
 </body>
 
 </html>

@@ -6,6 +6,7 @@
 
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <!-- Favicon icon -->
@@ -25,31 +26,32 @@
 </head>
 <body>
 
-    <!--*******************
+	<!--*******************
         Preloader start
     ********************-->
-    <div id="preloader">
-        <div class="loader">
-            <svg class="circular" viewBox="25 25 50 50">
-                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+	<div id="preloader">
+		<div class="loader">
+			<svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none"
+					stroke-width="3" stroke-miterlimit="10" />
             </svg>
-        </div>
-    </div>
-    <!--*******************
+		</div>
+	</div>
+	<!--*******************
         Preloader end
     ********************-->
 
-    
-    <!--**********************************
-        Main wrapper start
-    ***********************************-->
-    <div id="main-wrapper">
+	<div id="main-wrapper">
 
-     		<!-- ToolBar Start /////////////////////////////////////-->
+		<!-- ToolBar Start /////////////////////////////////////-->
 		<jsp:include page="/WEB-INF/views/common/toolbar.jsp" />
 		<!-- ToolBar End /////////////////////////////////////-->
 
-       	<!--**********************************
+		<!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+
+		<!--**********************************
             Sidebar start
         ***********************************-->
 		<div class="nk-sidebar">
@@ -58,7 +60,8 @@
 		<!--**********************************
             Sidebar end
         ***********************************-->
-	<!--**********************************
+
+		<!--**********************************
             Content body start
         ***********************************-->
 		<div class="content-body" style="min-height: 743px;">
@@ -128,20 +131,17 @@
 		<!--**********************************
             Content body end
         ***********************************-->
-        
-        <!--**********************************
+
+
+		<!--**********************************
             Footer start
         ***********************************-->
-        <div class="footer">
-            <div class="copyright">
-                <p>Copyright &copy; Designed & Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2018</p>
-            </div>
-        </div>
-        <!--**********************************
+		<div class="footer"></div>
+		<!--**********************************
             Footer end
         ***********************************-->
-    </div>
-    <!--**********************************
+	</div>
+	<!--**********************************
         Main wrapper end
     ***********************************-->
 
@@ -221,6 +221,6 @@ var checkSessionUser = ${empty sessionScope.user};
 
 
 	<!--  ///////////////////////// JavaScript ////////////////////////// -->
-</body>
 
+</body>
 </html>
