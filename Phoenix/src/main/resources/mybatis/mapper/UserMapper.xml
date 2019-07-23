@@ -26,7 +26,7 @@
 	 		SELECT SEQ_USERS_USER_NO.NEXTVAL FROM DUAL
 	 	</selectKey>
 		INSERT INTO USERS (user_no, user_id, user_name, user_nickname, password, email, phone, profile_img, reg_date) 
-		VALUES ( #{userNo}, #{userId:VARCHAR}, #{userName:VARCHAR}, #{userNickname:VARCHAR}, #{password:NUMERIC}, #{email:VARCHAR}, #{phone:VARCHAR}, #{profileImg:VARCHAR}, SYSDATE)
+		VALUES ( #{userNo}, #{userId:VARCHAR}, #{userName:VARCHAR}, #{userNickname:VARCHAR}, #{password:NUMERIC}, #{email:VARCHAR}, #{phone:NUMERIC}, #{profileImg:VARCHAR}, SYSDATE)
 
 	 </insert>
 	

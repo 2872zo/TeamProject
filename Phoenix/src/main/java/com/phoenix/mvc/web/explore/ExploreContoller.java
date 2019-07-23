@@ -58,7 +58,7 @@ public class ExploreContoller {
 		List<Blog> blogList = exploreService.getBlogExploreList(search);
 		
 		System.out.println(blogList);
-		
+		System.out.println(blogList.size());
 		
 		model.addAttribute("blogList", blogList);
 		
@@ -69,6 +69,15 @@ public class ExploreContoller {
 	public String getCafeExploreList(@ModelAttribute Search search, Model model)
 	{
 		System.out.println("/explore/getCafeExploreList 실행");
+		
+		//가짜데이터
+		search.setEngineAll(true);//전체(네이버+다음)
+		search.setOrderState(0);//정확도
+		search.setSearchKeyword("이소라");
+		search.setCurrentPage(1);
+		search.setPageSize(5);
+		/////////////////////////////////////////////////
+		
 		
 		List<CafeExplore> cafeList = exploreService.getCafeExploreList(search);
 		

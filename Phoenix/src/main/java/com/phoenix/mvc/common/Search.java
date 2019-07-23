@@ -41,7 +41,7 @@ public class Search{
 	
 	private int orderState; //정렬종류 0:정확도 1:시간
 	private String orderStateSort; // API method에 넣을 String
-	private int searchTheme; //검색 종류 //0:통합 1:블로그  2:카페 3:웹 4:이미지
+	private int searchTheme; //검색 종류 //0:통합 1:블로그  2:카페 3:이미지 4:웹
 	private String searchThemeSort; // searchThemeType에 따라 담길 string
 	private String filter;// naverImageAPI 에서만 사용하는 검색조건
 	
