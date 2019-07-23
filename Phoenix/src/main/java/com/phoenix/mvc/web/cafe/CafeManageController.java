@@ -730,7 +730,7 @@ public class CafeManageController {
 
 //준호
 	@RequestMapping(value = "/{cafeURL}/manage/updateCafeInfo", method = RequestMethod.POST)
-	public String updateCafeInfo(@ModelAttribute("cafe") Cafe cafe, Model model,
+	public String updateCafeInfo(@ModelAttribute Cafe cafe, Model model,
 			@RequestParam("uploadFile") MultipartFile uploadFile,
 			@RequestParam("uploadFile2") MultipartFile uploadFile2,
 			@RequestParam("uploadFile3") MultipartFile uploadFile3) throws Exception {
@@ -750,7 +750,7 @@ public class CafeManageController {
 		}
 
 		cafe.setBannerImg(fileName);
-
+		System.out.println("파일명좀 알려줘~11111111111"+fileName);
 		String fileName2 = uploadFile2.getOriginalFilename()
 				.substring(uploadFile2.getOriginalFilename().lastIndexOf("\\") + 1);
 
@@ -764,7 +764,7 @@ public class CafeManageController {
 		}
 
 		cafe.setMainImg(fileName2);
-
+		System.out.println("파일명좀 알려줘22222222222~"+fileName2);
 		String fileName3 = uploadFile3.getOriginalFilename()
 				.substring(uploadFile3.getOriginalFilename().lastIndexOf("\\") + 1);
 
@@ -778,15 +778,20 @@ public class CafeManageController {
 		}
 
 		cafe.setCafeIcon(fileName3);
+		
+		System.out.println("파일명좀 알려줘~"+fileName3);
 
 		cafeManageService.updateCafeInfo(cafe);
 
 		Cafe cafe2 = cafeManageService.getCafeInfo(cafe.getCafeNo());
 
 		cafe = cafe2;
-
+		
+		System.out.println("카페2좀 찍어줘");
+		System.out.println(cafe2);
+		
 		model.addAttribute("cafeURL", cafe.getCafeURL());
-
+		model.addAttribute("cafe",cafe2);
 		return "cafe/updateCafeInfoView";
 	}
 

@@ -61,14 +61,22 @@
 	<!--**********************************
             Content body start
         ***********************************-->
+        
+        
 		<div class="content-body" style="min-height: 743px;">
-
+<div class="row">
+        <div class="col-lg-8">
 			<div class="row page-titles mx-0">
 				<div class="col p-md-0">
 					<ol class="breadcrumb">
+					
+					<!--  
 						<li class="breadcrumb-item"><a href="javascript:void(0)">manage</a></li>
 						<li class="breadcrumb-item active"><a
 							href="javascript:void(0)">application</a></li>
+						--!>
+							
+						
 					</ol>
 				</div>
 			</div>
@@ -123,11 +131,35 @@
 			</div>
 
 			<!-- #/ container -->
+		
+		 </div>
+        <!-- 컬럼 엔드 -->
+        <!-- 오른쪽화면이야 -->
+        <div class="col-lg-4">
+        
+        <div class='container-fluid'>
+
+				<div class='card'>
+					<div class='card-body'>
+        8888주ㅡㄹㅇ야
+        </div>
+        </div>
+        </div>
+        
+        
+        </div>
+        <!-- 오른쪽화면이야 -->
+		
+		
 		</div>
 
 		<!--**********************************
             Content body end
+        
         ***********************************-->
+       
+        </div>
+        <!-- row 엔드 -->
         
         <!--**********************************
             Footer start
@@ -218,6 +250,9 @@ var checkSessionUser = ${empty sessionScope.user};
 
 	<!-- 공통 툴바용 스크립트 -->
 	<script src="/js/custom/toolbarScript.js"></script>
+	
+	<!-- 채팅 사이드 툴바 스크립트 -->
+	<script src="/js/custom/chatSideBar.js"></script>
 
 
 	<!--  ///////////////////////// JavaScript ////////////////////////// -->

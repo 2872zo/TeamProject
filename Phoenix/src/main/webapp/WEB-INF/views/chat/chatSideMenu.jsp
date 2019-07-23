@@ -3,27 +3,34 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
+<!DOCTYPE html>
+<style type="text/css">
+li:hover {
+	
+	cursor: pointer;
+	
+}
+</style>
 <div class="nk-nav-scroll">
 	<ul class="metismenu" id="menu">
-		<li><a id="statistics"
+		<li id='friendsList'><a id="statistics"
 			aria-expanded="false"> <i class="icon-graph menu-icon"></i>
-				<span class="nav-text">카페통계</span>
+				<span class="nav-text" >친구목록</span>
 		</a></li>
 
-		<li><a id="board" 
+		<li id='chatRoomList'><a id="board" 
 			aria-expanded="false"> <i class="icon-globe-alt menu-icon"></i>
-				<span class="nav-text">게시판관리</span>
+				<span class="nav-text" >채팅방목록</span>
 		</a></li>
 
-		<li><a id="info"
+		<li id='config'><a id="info"
 			aria-expanded="false"> <i class="icon-note menu-icon"></i>
-				<span class="nav-text">카페정보수정</span>
+				<span class="nav-text" >환경설정</span>
 		</a></li>
 
 		<li><a id="form" 
 			aria-expanded="false"> <i class="icon-note menu-icon"></i>
-				<span class="nav-text">가입양식관리</span>
+				<span class="nav-text" id=''>가입양식관리</span>
 		</a></li>
 
 		<li><a id="application"
