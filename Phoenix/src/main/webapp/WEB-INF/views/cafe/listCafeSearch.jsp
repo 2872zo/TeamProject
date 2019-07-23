@@ -62,6 +62,7 @@ $(function() {
   <div class="card">
 
 		<form class="form-inline justify-content-center" id='cafeSearch'>
+		<jsp:include page="common/cafeSearcher.jsp" />
 			<input type="hidden" id="currentPage" name="currentPage" value="0" />
 			<input type="hidden" name='cafeURL'
 				value='${ !empty search.cafeURL ? search.cafeURL : "" }'> <input
@@ -70,25 +71,6 @@ $(function() {
 
 
 
-<div class="input-group" >
-  <div class='input-group-prepend'>
-  <select class="selectpicker" name='searchCondition'
-				id='searchCondition'>
-<option class='searchCondition' selected value="0"
-					${ !empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>카페+게시글</option>
-				<option class='searchCondition' value="1"
-					${ !empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>카페</option>
-				<option class='searchCondition' value="2"
-					${ !empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>게시글</option>
-  </select>
-  </div>
-  <div class='input-group-append'>
-  &nbsp;<input type="text" class="form-control-plaintext" placeholder="검색어 입력해주세요" value='${ !empty search.searchKeyword ? search.searchKeyword : "" }' name="searchKeyword" id="searchKeyword">
-  </div>
-  <div class='input-group-append'>
-  &nbsp;<button class="btn btn-sm btn-outline-primary" type="button" id="cafeExplore">검색</button>
-	</div>
-</div>
 
 
 

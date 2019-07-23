@@ -8,6 +8,7 @@
 
 	<resultMap id="cafeMemberSelectMap" type="CafeMember">
 		<result property="memberNo" 			column="member_no" 				jdbcType="NUMERIC"/>
+		<result property="cafeURL" 				column="url" 					jdbcType="NUMERIC"/>
 		<result property="cafeNo" 				column="cafe_no" 				jdbcType="NUMERIC" />
 		<result property="userNo" 				column="user_no" 				jdbcType="NUMERIC" />
 		<result property="cafeMemberGradeNo" 	column="cafe_member_grade_no" 	jdbcType="NUMERIC" />
@@ -116,16 +117,22 @@
 	 
 	<select id="getCafeMemeber" parameterType="Search" resultMap="cafeMemberSelectMap">
 	 	SELECT
-		m.cafe_no, m.member_no, m.member_nickname, m.notice_flag, m.favorite_flag,
-		g.member_grade_code, g.grade_name, 
-		TO_CHAR(m.reg_date, 'YYYY-MM-DD HH24:MM:SS') reg_date, 
-		m.visit_count,m.member_status_code
+			m.cafe_no, 
+			m.member_no, 
+			m.member_nickname, 
+			m.notice_flag, 
+			m.favorite_flag,
+			g.member_grade_code, 
+			g.grade_name, 
+			TO_CHAR(m.reg_date, 'YYYY-MM-DD HH24:MM:SS') reg_date, 
+			m.visit_count,
+			m.member_status_code
 		FROM
-		cafe_member m, cafe_member_grade g
+			cafe_member m, cafe_member_grade g
 		WHERE
-		m.cafe_member_grade_no=g.cafe_member_grade_no	
+			m.cafe_member_grade_no = g.cafe_member_grade_no	
 		AND
-		m.member_no = #{memberNo}
+			m.member_no = #{memberNo}
 	</select>
 		
 	<select id="getMemberCount" parameterType="Search" resultType="int">
@@ -281,5 +288,22 @@
 		WHERE
 		member_nickname=#{memberNickname} and cafe_no=#{cafeNo}	
 	</select>
+	
+	<select id = 'checkMember' parameterType="CafeMember" resultMap="cafeMemberSelectMap"> 
+		SELECT 
+			m.user_no, m.cafe_no, m.member_nickname, 
+			TO_CHAR(m.reg_date, 'YYYY-MM-DD HH24:MM:SS') reg_date, 
+			m.visit_count, m.post_count, m.reply_count, 
+			g.member_grade_code, g.grade_name
+		FROM 
+			cafe_member m, cafe c, cafe_member_grade g
+		WHERE 
+			m.cafe_member_grade_no=g.CAFE_MEMBER_GRADE_NO
+		AND 
+			c.url = #{cafeURL}
+		AND 
+			m.user_no = #{userNo}
+	</select>
+	
 	
 </mapper>

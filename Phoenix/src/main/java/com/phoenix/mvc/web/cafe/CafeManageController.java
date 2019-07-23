@@ -182,7 +182,7 @@ public class CafeManageController {
 
 		Search search = new Search();
 		search.setCafeURL(cafeURL);
-		List boardList = cafeManageService.getCafeBoard(search);
+		List boardList = cafeManageService.getCafeBoardList(search);
 		List<CafeGrade> useGradeList = cafeManageService.getCafeGrade(cafeURL);
 
 //일단은 담는데,

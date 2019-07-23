@@ -7,17 +7,31 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.ws.Response;
 
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.phoenix.mvc.common.Search;
+import com.phoenix.mvc.service.cafe.CafePostDao;
 import com.phoenix.mvc.service.domain.Blog;
+import com.phoenix.mvc.service.domain.CafeExplore;
+import com.phoenix.mvc.service.domain.Post;
+import com.phoenix.mvc.service.domain.WebExplore;
 import com.phoenix.mvc.service.explore.ExploreDao;
 
 @Repository("exploreDaoImpl")
 public class ExploreDaoImpl implements ExploreDao{
+	
+	@Autowired
+	@Qualifier("cafePostDaoImpl")
+	private CafePostDao cafePostDao;
+	
 	
 	public ExploreDaoImpl() {
 		System.out.println(getClass().getName() + "default Constuctor");
@@ -34,20 +48,33 @@ public class ExploreDaoImpl implements ExploreDao{
 			search.setOrderStateSort("recency");
 		//2.검색엔진설정
 		search.setSearchEngine(0);
+		//3.검색Theme 설정
+		search.setSearchThemeSort("blog");
 		
 		String jsonResult= this.APISearch(search); // API 통신
 		List<Blog> blogList = new ArrayList<Blog>();
 		
-		for(int i=0; i<search.getPageSize(); i++)
+		JSONObject jsonObject = (JSONObject) JSONValue.parse(jsonResult.toString());
+		List items = (List) jsonObject.get("documents");
+		
+		for(int i=0; i<items.size(); i++)
 		{
+			Map item = (Map)items.get(i); 
+			
 			Blog blog = new Blog();
 			//blog 값set하고
+			blog.setBlogName(item.get("blogname").toString());
+			blog.setDateTime(item.get("datetime").toString());
+			blog.setThumbnail(item.get("thumbnail").toString());
+			blog.setContents(item.get("contents").toString());
+			blog.setTitle(item.get("title").toString());
+			blog.setResultLink(item.get("url").toString());
+			
 			blogList.add(blog);
 		}
 		
-		//jsonResult가지고 도메인으로 셋팅
 		
-		return null;//List<Blog> return
+		return blogList;// meta data는 어떻게 할건지?? 총 검색결과 등등.. Search에 넣을건가??
 	}
 
 	@Override
@@ -61,11 +88,193 @@ public class ExploreDaoImpl implements ExploreDao{
 			search.setOrderStateSort("date");
 		//2.검색엔진설정
 		search.setSearchEngine(1);
-		String jsonResult= this.APISearch(search); // 넘겨주고 
+		//3.검색Theme 설정
+		search.setSearchThemeSort("blog");
+				
+		String jsonResult= this.APISearch(search); // API 실행
+		
+		List<Blog> blogList = new ArrayList<Blog>();
+		
+		JSONObject jsonObject = (JSONObject) JSONValue.parse(jsonResult.toString());
+		List items = (List) jsonObject.get("items");
+		
+		for(int i=0; i<items.size(); i++)
+		{
+			Map item = (Map)items.get(i); 
+			
+			Blog blog = new Blog();
+			//blog 값set하고
+			blog.setBlogName(item.get("bloggername").toString());//0
+			blog.setDateTime(item.get("postdate").toString());//0
+			blog.setContents(item.get("description").toString());//0
+			blog.setTitle(item.get("title").toString());//0
+			blog.setResultLink(item.get("link").toString());//0
+			blog.setBlogLink(item.get("bloggerlink").toString());//0
+			
+			blogList.add(blog);
+		}
 		
 		
+		return blogList;// meta data는 어떻게 할건지?? 총 검색결과 등등.. Search에 넣을건가??
+	}
+	
+	
+	@Override
+	public List<CafeExplore> getDaumCafeExploreList(Search search) {
+		
+		//search 설정 
+		//1.정렬기준 설정 
+		if(search.getOrderState()==0)
+			search.setOrderStateSort("accuracy");//정확도
+		else
+			search.setOrderStateSort("recency");
+		//2.검색엔진설정
+		search.setSearchEngine(0);
+		//3.검색Theme 설정
+		search.setSearchThemeSort("cafe");
+		
+		String jsonResult= this.APISearch(search); // API 통신
+		List<CafeExplore> cafeList = new ArrayList<CafeExplore>();
+		
+		JSONObject jsonObject = (JSONObject) JSONValue.parse(jsonResult.toString());
+		List items = (List) jsonObject.get("documents");
+		
+		for(int i=0; i<items.size(); i++)
+		{
+			Map item = (Map)items.get(i); 
+			
+			CafeExplore cafe = new CafeExplore();
+			cafe.setTitle(item.get("title").toString());
+			cafe.setContents(item.get("contents").toString());
+			cafe.setResultLink(item.get("url").toString());
+			cafe.setThumbnail(item.get("thumbnail").toString());
+			cafe.setCafeName(item.get("cafename").toString());
+			cafe.setDateTime(item.get("datetime").toString());
+			
+			cafeList.add(cafe);
+		}
+		
+		
+		return cafeList;
+	}
+
+	@Override
+	public List<CafeExplore> getNaverCafeExploreList(Search search) {
+		
+		//search 설정 
+		//1.정렬기준 설정 
+		if(search.getOrderState()==0)//정확도
+			search.setOrderStateSort("sim");
+		else
+			search.setOrderStateSort("date");
+		//2.검색엔진설정
+		search.setSearchEngine(1);
+		//3.검색Theme 설정
+		search.setSearchThemeSort("cafearticle");
+				
+		String jsonResult= this.APISearch(search); // API 실행
+		
+		List<CafeExplore> cafeList = new ArrayList<CafeExplore>();
+		
+		JSONObject jsonObject = (JSONObject) JSONValue.parse(jsonResult.toString());
+		List items = (List) jsonObject.get("items");
+		
+		for(int i=0; i<items.size(); i++)
+		{
+			Map item = (Map)items.get(i);
+			
+			CafeExplore cafeExplore = new CafeExplore();
+			cafeExplore.setTitle(item.get("title").toString());
+			cafeExplore.setResultLink(item.get("link").toString());
+			cafeExplore.setContents(item.get("description").toString());
+			cafeExplore.setCafeName(item.get("cafename").toString());
+			cafeExplore.setCafeLink(item.get("cafeurl").toString());
+			
+			cafeList.add(cafeExplore);
+		}
+		
+		return cafeList;
+	}
+
+	@Override
+	public List<CafeExplore> getPhoenixCafeExploreList(Search search) {
+		
+		List<CafeExplore> cafeList = new ArrayList<CafeExplore>();
+		
+		//설정해줄것 searchCondition , // 얘네는 controller에서 다 세팅되어있음 -키워드, currentPage, pageSize;
+		search.setSearchCondition("0"); //글+카페
+		
+		
+		List<Post> postResult = cafePostDao.getPostListBySearch(search);
+		for(int i=0; i<postResult.size();i++)
+		{
+			CafeExplore cafeExplore = new CafeExplore(); //나는 영혼이 없다 왜 ? 영혼이 없으니까ㅁ니ㅏㅇ럼;다지
+			cafeExplore.setTitle(postResult.get(i).getPostTitle());
+			cafeExplore.setResultLink("http://localhost:8080/cafe/"+postResult.get(i).getCafeURL()+"/getPost/"+postResult.get(i).getPostNo());//설정해주세여
+			if(postResult.get(i).getPostContent().length()<50) //자르려는 길이보다 작을때
+			{
+				cafeExplore.setContents(postResult.get(i).getPostContent().substring(0,postResult.get(i).getPostContent().length()-1));
+			}
+			else//클때
+			{
+				cafeExplore.setContents(postResult.get(i).getPostContent().substring(0, 49)); //검색어가 포함된지점 x
+			}
+			cafeExplore.setContents(postResult.get(i).getPostContent());//잘라주세요
+			cafeExplore.setCafeName(postResult.get(i).getCafeName()) ;
+			//cafeExplore.setThumbnail(postResult.get(i));//음 썸네일없네
+			cafeExplore.setDateTime(postResult.get(i).getRegDate());
+			cafeExplore.setCafeLink("http://localhost:8080/cafe/"+postResult.get(i).getCafeURL());
+			
+			cafeList.add(cafeExplore);
+		}
+		
+		return cafeList;
+	}
+	
+	@Override
+	public List<WebExplore> getDaumWebExploreList(Search search) {
+		
+		//search 설정 
+		//1.정렬기준 설정 
+		if(search.getOrderState()==0)
+			search.setOrderStateSort("accuracy");//정확도
+		else
+			search.setOrderStateSort("recency");
+		//2.검색엔진설정
+		search.setSearchEngine(0);
+		//3.검색Theme 설정
+		search.setSearchThemeSort("web");
+		
+		String jsonResult= this.APISearch(search); // API 통신
+		List<WebExplore> webList = new ArrayList<WebExplore>();
+		
+		JSONObject jsonObject = (JSONObject) JSONValue.parse(jsonResult.toString());
+		List items = (List) jsonObject.get("documents");
+		
+		for(int i=0; i<items.size(); i++)
+		{
+			Map item = (Map)items.get(i); 
+			
+			WebExplore web = new WebExplore();
+			web.setTitle(item.get("title").toString());
+			web.setContents(item.get("contents").toString());
+			web.setResultLink(item.get("url").toString());
+			web.setDateTime(item.get("datetime").toString());
+			
+			webList.add(web);
+		}
+		
+		
+		return webList;
+	}
+
+	@Override
+	public List<WebExplore> getNaverWebExploreList(Search search) {
+		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	
 	
 	
 	//API통신통신
@@ -149,4 +358,6 @@ public class ExploreDaoImpl implements ExploreDao{
 		return jsonResult;
 		
 	}//end Method
+
+
 }
