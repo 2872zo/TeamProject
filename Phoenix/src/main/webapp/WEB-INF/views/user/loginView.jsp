@@ -8,6 +8,8 @@
 <html lang="ko">
 	
 <head>
+
+
 	<meta charset="EUC-KR">
 	
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -25,6 +27,10 @@
 	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 	crossorigin="anonymous"></script>
 	
+	
+			<!-- ToolBar Start /////////////////////////////////////-->
+		<jsp:include page="../common/toolbar.jsp" />
+		<!-- ToolBar End /////////////////////////////////////-->
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
    .member {
@@ -120,9 +126,9 @@ input[type="checkbox"] {
 			$("#userId").focus();
 			
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$("#login1").on("click" , function() {
-				var id=$("input:text").val();
-				var pw=$("input:password").val();
+			$("#logon").on("click" , function() {
+				var id=$("input[id='userId']").val();
+				var pw=$("input[id='password']").val();
 				
 				if(id == null || id.length <1) {
 					alert('ID 를 입력하지 않으셨습니다.');
@@ -139,19 +145,24 @@ input[type="checkbox"] {
 				//$("form").attr("method","POST").attr("action","/user/login").attr("target","_parent").submit();
 			}); 
 		});	
-		
-		
+
+
 		//============= 회원원가입화면이동 =============
 		$( function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$("#addUser1").on("click" , function() {
+			$("#add").on("click" , function() {
 				$(self.location).attr("href","/user/addUserView");
 			});
 		});
+
+		
+
+		
+		
 	</script>		
 	
 </head>
-<jsp:include page="../common/toolbar.jsp" />
+
 <body>
 
 	<!-- ToolBar Start /////////////////////////////////////-->
@@ -180,16 +191,16 @@ input[type="checkbox"] {
    <div class="form">
     <div class="form2">
      <div class="form3">
-      <label for="user">아이디</label><input type="text" id="user" name="userId">
+      <label for="user">아이디</label><input type="text" id="userId" name="userId">
       <div class="clear"></div>
-      <label for="user">비밀번호</label><input type="password" id="user" name="password">
+      <label for="user">비밀번호</label><input type="password" id="password" name="password">
      </div>
-     <input type="submit" value="로그인하기" id="login1">
+     <input type="submit" value="로그인하기" id="logon">
      <div class="clear"></div>
      <div class="form4">
       <label><input type="checkbox">자동로그인</label> 
       <div class="clear"></div>
-      <label><input type="button" value="회원가입" id="addUser1">
+      <label><input type="button" value="회원가입" id="add">
       
       </label> <label><input
        type="button" value="아이디/비밀번호 찾기"></label>

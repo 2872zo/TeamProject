@@ -35,7 +35,7 @@
 				"click",
 				function() {
 					var cafeURL = '${search.cafeURL}';
-					alert(cafeURL)
+					//alert(cafeURL)
 					$("form").attr("method", "POST").attr("action",
 							"/cafe/" + cafeURL + "/updateCafeMemberProfile")
 							.submit();
@@ -49,8 +49,8 @@
 		$("#memberNickname").on(
 				"keyup",
 				function() {
-					alert($("#memberNickname").val())
-					alert(cafeNo)
+					//alert($("#memberNickname").val())
+					//alert(cafeNo)
 
 					$.ajax({
 						url : "/cafe/json/" + cafeURL + "/checkNickName",
@@ -78,7 +78,7 @@
 
 						},
 						error : function(request, status, error) {
-							alert("에러남 : " + error);
+							//alert("에러남 : " + error);
 						}
 
 					});//ajax끝

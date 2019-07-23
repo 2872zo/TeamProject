@@ -92,11 +92,6 @@ public class CafeMemberDaoImpl implements CafeMemberDao {
 
 		cafeMember = sqlSession.selectOne("getCafeMember", map);
 
-		if (cafeMember.getUserNo() == 0) // 유저가 해당하는 카페 멤버가아닌경우(db값이 없으면) 형님때문에
-		{
-			cafeMember.setUserNo(500); // cafe
-		}
-
 		return cafeMember;
 	}
 ///////////////////////////////////////// 예림끝///////////////////////////////////////////
@@ -145,9 +140,9 @@ public class CafeMemberDaoImpl implements CafeMemberDao {
 	}
 
 	@Override
-	public CafeMember getCafeMemberByURL(CafeMember cafeMember) throws Exception {
-		// TODO Auto-generated method stub
-		return sqlSession.selectOne("CafeMemberMapper.checkMember",cafeMember);
+	public CafeMember getCafeMemberByURL(Search search) throws Exception {
+// TODO Auto-generated method stub
+		return sqlSession.selectOne("CafeMemberMapper.checkMember", search);
 	}
 
 //////////////////////////////기황 끝///////////////////////////////////////	

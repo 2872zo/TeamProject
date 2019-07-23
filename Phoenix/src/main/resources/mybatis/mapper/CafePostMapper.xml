@@ -17,14 +17,13 @@
 		<result property="memberNo" 		column="member_no" 			jdbcType="NUMERIC" 	/>
 		<result property="memberNickname" 	column="member_nickname" 	jdbcType="VARCHAR"  />
 		<result property="postTitle" 		column="post_title" 		jdbcType="VARCHAR" 	/>
-		<result property="postContent" 		column="post_content" 		jdbcType="VARCHAR" 	/>
+		<result property="postContent" 		column="post_content" 		jdbcType="CLOB" 	/>
 		<result property="regDate" 			column="reg_date" 			jdbcType="VARCHAR" 	/>
 		<result property="viewCount" 		column="view_count" 		jdbcType="NUMERIC" 	/>
 		<result property="likeCount" 		column="like_count" 		jdbcType="NUMERIC"  />
 		<result property="postStatusFlag" 	column="post_status_flag" 	jdbcType="CHAR"  	/>
 		<result property="postNoticeFlag" 	column="post_notice_flag" 	jdbcType="CHAR"  	/>
 		<result property="noticeIndex" 		column="notice_index" 		jdbcType="NUMERIC"  />
-<!-- 		<collection property="replyList"	column="post_no"			javaType="java.util.ArrayList"	ofType="Reply"	select="getReplyList" /> -->
 	</resultMap>
 	
 	<resultMap id="replyResultMap" type="Reply">
@@ -510,7 +509,9 @@
 			reply_content,		
 			TO_CHAR(reg_date,'YYYY-MM-DD HH24:MI:SS') AS reg_date,			
 			like_count,		
-			reply_status_flag
+			reply_status_flag,
+			target_reply_no,
+			target_reply_member
 		FROM 
 			reply
 		WHERE 

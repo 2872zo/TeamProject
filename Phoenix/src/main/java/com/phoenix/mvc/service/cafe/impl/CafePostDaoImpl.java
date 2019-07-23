@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.cafe.CafePostDao;
+import com.phoenix.mvc.service.domain.Board;
 import com.phoenix.mvc.service.domain.Post;
 import com.phoenix.mvc.service.domain.Reply;
 
@@ -155,6 +156,17 @@ public class CafePostDaoImpl implements CafePostDao{
 
 	@Override
 	public List<Post> getBestPostList(int boardNo) {
-		return sqlSession.selectList("CafePostMapper.getBestPostList", boardNo);
+		return sqlSession.selectList("BoardMapper.getBoard", boardNo);
+	}
+
+	@Override
+	public Board getBoard(int boardNo) {
+		return sqlSession.selectOne("BoardMapper.getBoardByPostNo", boardNo);
+	}
+
+	@Override
+	public Board getBoardByPostNo(int postNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("CafePostMapper.memberPostTotalCount", postNo);
 	}
 }

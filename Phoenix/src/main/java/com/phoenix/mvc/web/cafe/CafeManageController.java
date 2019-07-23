@@ -182,7 +182,7 @@ public class CafeManageController {
 
 		Search search = new Search();
 		search.setCafeURL(cafeURL);
-		List boardList = cafeManageService.getCafeBoard(search);
+		List boardList = cafeManageService.getCafeBoardList(search);
 		List<CafeGrade> useGradeList = cafeManageService.getCafeGrade(cafeURL);
 
 //일단은 담는데,
@@ -787,7 +787,7 @@ public class CafeManageController {
 
 		model.addAttribute("cafeURL", cafe.getCafeURL());
 
-		return "cafe/updateCafeInfo";
+		return "cafe/updateCafeInfoView";
 	}
 
 // 준호
@@ -809,7 +809,7 @@ public class CafeManageController {
 	}
 
 //준호
-	@RequestMapping(value = "/{cafeURL}/manage/updateCafeApplicationFormView", method = RequestMethod.GET)
+	@RequestMapping(value = "/{cafeURL}/manage/updateCafeApplicationForm", method = RequestMethod.GET)
 	public String updateCafeApplicationFormView(@PathVariable String cafeURL, Model model) throws Exception {
 
 		int cafeNo = cafeMemberService.getCafeNo(cafeURL);
@@ -825,7 +825,7 @@ public class CafeManageController {
 
 		System.out.println(cafe + "카페도메인찍자");
 
-		return "cafe/updateCafeApplicationFormView";
+		return "cafe/updateCafeApplicationForm";
 	}
 
 //준호

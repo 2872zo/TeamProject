@@ -174,9 +174,8 @@ public class CafeMemberServiceImpl implements CafeMemberService {
 	}
 
 	@Override
-	public CafeMember getCafeMemberByURL(CafeMember cafeMember) throws Exception {
-		// TODO Auto-generated method stub
-		return cafeMemberDao.getCafeMemberByURL(cafeMember);
+	public CafeMember getCafeMemberByURL(Search search) throws Exception {
+		return cafeMemberDao.getCafeMemberByURL(search);
 	}
 
 	////////////////////////////////// 기황끝///////////////////////////////////////

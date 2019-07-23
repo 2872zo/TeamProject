@@ -18,7 +18,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="images/quixlab/favicon.png">
     <!-- Custom Stylesheet -->
     
-    <link href="./plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
+ 
     <link href="/css/style.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     
@@ -549,13 +549,7 @@
     <!--**********************************
         Scripts
     ***********************************-->
-    <script src="plugins/common/common.min.js"></script>
-    <script src="js/custom.min.js"></script>
-    <script src="js/settings.js"></script>
-    <script src="js/gleek.js"></script>
-    <script src="js/styleSwitcher.js"></script>
-    <script src="./plugins/sweetalert/js/sweetalert.min.js"></script>
-    <script src="./plugins/sweetalert/js/sweetalert.init.js"></script>
+    
 	<script src="/js/custom/cafeCommon.js"></script>
 
 	</form>

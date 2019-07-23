@@ -38,10 +38,11 @@ public class Search{
 	private boolean engineNaver;
 	private boolean engineDaum;
 	private boolean engineGoogle;
+	private boolean enginePhoenix;
 	
 	private int orderState; //정렬종류 0:정확도 1:시간
 	private String orderStateSort; // API method에 넣을 String
-	private int searchTheme; //검색 종류 //0:통합 1:블로그  2:카페 3:웹 4:이미지
+	private int searchTheme; //검색 종류 //0:통합 1:블로그  2:카페 3:이미지 4:웹
 	private String searchThemeSort; // searchThemeType에 따라 담길 string
 	private String filter;// naverImageAPI 에서만 사용하는 검색조건
 	
@@ -139,6 +140,14 @@ public class Search{
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+
+	public boolean isEnginePhoenix() {
+		return enginePhoenix;
+	}
+
+	public void setEnginePhoenix(boolean enginePhoenix) {
+		this.enginePhoenix = enginePhoenix;
 	}
 
 	public String getSearchCondition() {
@@ -329,10 +338,11 @@ public class Search{
 				+ ", startRowNum=" + startRowNum + ", termStart=" + termStart + ", termEnd=" + termEnd
 				+ ", targetUserNo=" + targetUserNo + ", chatNo=" + chatNo + ", chatRoomNo=" + chatRoomNo
 				+ ", friendStatus=" + friendStatus + ", engineAll=" + engineAll + ", engineNaver=" + engineNaver
-				+ ", engineDaum=" + engineDaum + ", engineGoogle=" + engineGoogle + ", orderState=" + orderState
-				+ ", searchTheme=" + searchTheme + "]";
+				+ ", engineDaum=" + engineDaum + ", engineGoogle=" + engineGoogle + ", enginePhoenix=" + enginePhoenix
+				+ ", orderState=" + orderState + ", orderStateSort=" + orderStateSort + ", searchTheme=" + searchTheme
+				+ ", searchThemeSort=" + searchThemeSort + ", filter=" + filter + ", searchEngine=" + searchEngine
+				+ "]";
 	}
 
 	
-
 }//end of class

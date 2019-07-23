@@ -168,7 +168,7 @@ public class CafeManageDaoImpl implements CafeManageDao {
 	}
 
 	@Override
-	public List getCafeBoard(Search search) { // mapper구현x
+	public List getCafeBoardList(Search search) { // mapper구현x
 
 		List boardList = sqlSession.selectList("getBoardListBySearch", search);
 

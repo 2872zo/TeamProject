@@ -50,7 +50,7 @@ public boolean dropCafe(Cafe cafe, String cafeURL);
 ////////////////////////////////지니끝//////////////////////////////////
 
 /////////////////////////////////////예림시작/////////////////////////////////////////
-	public List getCafeBoard(Search search);
+	public List getCafeBoardList(Search search);
 
 	public boolean checkCafePost(String cafeURL, int boardNo); // 아니면 null이면?? 으로할까 일단 조원들상의 void도 int return
 

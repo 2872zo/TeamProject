@@ -94,8 +94,10 @@
 								<c:set var="i" value="0" />
 								<c:set var="j" value="0" />
 
-								<div class="basic-form">
-									<form id="submit">
+								<div class="form-row">
+								<div class="col">
+								<div class="form-group">
+									<form id="submit" class="form-horizontal">
 										<c:forEach var="cafeGrade" items="${cafeGradeList}">
 
 											<c:set var="i" value="${ i+1 }" />
@@ -111,6 +113,17 @@
 
 											<c:if test="${i ne 1}">${i} 번째 등급명
 												<input type="text" class="gradeName"name="gradeList[${j}].gradeName" value="${cafeGrade.gradeName}" />
+												<select class="auto" name="gradeList[${j}].autoUpgradeFlag">
+													<option value="1"
+														${cafeGrade.autoUpgradeFlag== "1" ? "selected" : "" }>자동등업승인</option>
+													<option value="0"
+														${cafeGrade.autoUpgradeFlag== "0" ? "selected" : "" }>자동등업거부</option>
+												</select>
+												<input type="radio" name="gradeList[${j}].gradeFlag" value="1"
+													<c:if test="${cafeGrade.gradeFlag eq true}">checked</c:if> />사용
+													&nbsp;&nbsp;
+		     									 <input type="radio" name="gradeList[${j}].gradeFlag" value="0"
+													<c:if test="${cafeGrade.gradeFlag eq false}">checked</c:if> />사용안함
 												<br />
 												<br />
 												출석 <input type="text" class="visit"name="gradeList[${j}].requiredVisitCount"value="${cafeGrade.requiredVisitCount }" />이상,
@@ -121,20 +134,11 @@
 
 
 
-												<select class="auto" name="gradeList[${j}].autoUpgradeFlag">
-													<option value="1"
-														${cafeGrade.autoUpgradeFlag== "1" ? "selected" : "" }>자동등업승인</option>
-													<option value="0"
-														${cafeGrade.autoUpgradeFlag== "0" ? "selected" : "" }>자동등업거부</option>
-												</select>
+												
 					&nbsp;&nbsp;
 					&nbsp;&nbsp;
 					
-												 <input type="radio" name="gradeList[${j}].gradeFlag" value="1"
-													<c:if test="${cafeGrade.gradeFlag eq true}">checked</c:if> />사용
-													&nbsp;&nbsp;
-		     									 <input type="radio" name="gradeList[${j}].gradeFlag" value="0"
-													<c:if test="${cafeGrade.gradeFlag eq false}">checked</c:if> />사용안함
+												 
 		     		 
 
 
@@ -146,6 +150,8 @@
 											<c:set var="j" value="${ j+1 }" />
 										</c:forEach>
 									</form>
+									</div>
+									</div>
 								</div>
 
 								<br /> <br /> <br />
