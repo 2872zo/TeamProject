@@ -15,6 +15,7 @@ import com.phoenix.mvc.service.cafe.CafeManageDao;
 import com.phoenix.mvc.service.cafe.CafeMemberDao;
 import com.phoenix.mvc.service.cafe.CafePostDao;
 import com.phoenix.mvc.service.cafe.CafePostService;
+import com.phoenix.mvc.service.domain.Board;
 import com.phoenix.mvc.service.domain.Post;
 import com.phoenix.mvc.service.domain.Reply;
 
@@ -188,6 +189,16 @@ public class CafePostServiceImpl implements CafePostService {
 		map.put("postTotalCount", cafePostDao.memberPostTotalCount(search));
 				
 		return map;
+	}
+
+	@Override
+	public Board getBoard(int boardNo) {
+		return cafePostDao.getBoard(boardNo);
+	}
+
+	@Override
+	public Board getBoardByPostNo(int postNo) {
+		return cafePostDao.getBoardByPostNo(postNo);
 	}
 	
 }

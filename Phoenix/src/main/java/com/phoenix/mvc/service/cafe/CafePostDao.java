@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.phoenix.mvc.common.Search;
+import com.phoenix.mvc.service.domain.Board;
 import com.phoenix.mvc.service.domain.Post;
 import com.phoenix.mvc.service.domain.Reply;
 
@@ -61,4 +62,8 @@ public interface CafePostDao {
 	public int memberPostTotalCount(Search search);
 
 	public List<Post> getBestPostList(int boardNo);
+
+	public Board getBoard(int boardNo);
+
+	public Board getBoardByPostNo(int postNo);
 }

@@ -243,5 +243,36 @@
 			      });
 			      $('textarea').keyup();
 			});
+
+			$(".replyItems").on("click", ".replyLikeButton", function(){
+				var JSONPostNo =  JSON.stringify({cafeURL : "${cafeURL}", replyNo:$(this).next().find("[name=replyNo]").val(), userNo:${user.userNo}, searchCondition : "1"});
+				console.log(JSONPostNo); 
+
+				var count = $(this).find(".count");
+// 				debugger;
+				
+				$.ajax({
+						type : "POST",
+						contentType: "application/json",
+						url : "/cafe/${cafeURL}/json/addLike",
+						dataType : "JSON",
+						data: JSONPostNo,
+						success : function(data) {
+// 							alert("success");
+							
+// 							debugger;
+							if(data.result == false){
+								alert("이미 추천한 댓글입니다.")
+							}else{
+								count.text(data.likeCount);
+							}
+							
+						},
+						error : function(data) {
+							alert("error : " + data);
+// 							debugger;
+						}
+				});
+			});
 		</script>
 	</div><!-- container End -->

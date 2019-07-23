@@ -58,7 +58,7 @@ public interface CafeManageDao {
 
 	public List getCafeBoard(int cafeNo);
 
-	public List getCafeBoard(Search search);
+	public List getCafeBoardList(Search search);
 
 	public int getCafeNo(String cafeURL);
 

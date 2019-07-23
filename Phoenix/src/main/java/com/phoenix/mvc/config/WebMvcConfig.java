@@ -21,6 +21,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(interceptor)
                 .addPathPatterns("/cafe/*/**")
-                .excludePathPatterns("/user/login"); //로그인 쪽은 예외처리를 한다.
+                .excludePathPatterns("/user/login")
+                .excludePathPatterns("/user/logout")
+                .excludePathPatterns("/cafe/*"); //로그인 쪽은 예외처리를 한다.
     }
 }

@@ -39,7 +39,7 @@
 									</div>
 									</c:if>
 									<br/>
-									<c:if test="${!empty cafeMember.memberNo}">
+									<c:if test="${!empty cafeMember}">
 									<div class="updateProfile cursor">
 										프로필수정
 									</div>
@@ -61,14 +61,14 @@
 	                                    <li class="mb-1"><strong class="text-dark mr-4 myPost cursor" style="margin-left: 10px;">내가 쓴 글 보기</strong> <span class="myPost cursor" style="float: right; margin-right: 10px;">${cafeMember.postCount }</span></li>
 	                                    <li class="mb-1"><strong class="text-dark mr-4 myReply cursor" style="margin-left: 10px;">내가 쓴 댓글보기</strong> <span class="myReply cursor" style="float: right; margin-right: 10px;">${cafeMember.replyCount }</span></li>
 	                                    <li style="text-align: center;">
-	                                    	<button class="btn mb-1 btn-rounded btn-outline-dark">
+	                                    	<button class="btn mb-1 btn-rounded btn-outline-dark updateProfile">
 	                                    		프로필수정
 	                                    	</button>
 	                                    </li>
 	                                    
 										<c:if test="${cafeMember.memberGrade eq 'cg100' }">
 											<li style="text-align: center;">
-												<button class="btn mb-1 btn-rounded btn-outline-dark updateProfile" name="toManage">내 카페 관리</button>
+												<button class="btn mb-1 btn-rounded btn-outline-dark" name="toManage">내 카페 관리</button>
 											</li>
 										</c:if> 
 										
@@ -76,9 +76,9 @@
                                 </c:if>
 													        
 								<c:if test="${empty cafeMember}">
-									<li>
-										<button class="btn mb-1 btn-rounded btn-outline-dark addMember" name="toManage">카페가입</button>
-									</li>
+									<div class="media align-items-center mb-4">
+										<button class="btn mb-1 btn-rounded btn-outline-dark addMember">카페가입</button>
+									</div>
 								</c:if>
 					        
 					        </div>

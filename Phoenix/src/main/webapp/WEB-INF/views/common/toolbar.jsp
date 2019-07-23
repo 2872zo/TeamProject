@@ -76,7 +76,7 @@
 				<ul class="clearfix d-flex align-items-center">
 				
 				<i class="mdi mdi-coffee" style='font-size: 30pt;' id="cafeHomeButton"></i> 
-				
+				<i class="mdi mdi-home-variant" style='font-size: 30pt;' id="thisCafeHome"></i>
 				<div id='cafeMainTools'>
 				<i class="mdi mdi-clipboard-outline" id='newsFeeding'
 				style='font-size: 30pt' data-toggle="tooltip" data-placement="bottom" title="카페 뉴스피드 보기"></i>
@@ -299,6 +299,10 @@ input[type="checkbox"] {
 		    	if(!whereYouAt.startsWith("/cafe")){
 			    	$("#cafeHomeButton").remove();
 			    	}
+
+		    	if(!whereYouAt.startsWith("/cafe/") || whereYouAt.startsWith("/cafe/main")){
+			    	$("#thisCafeHome").remove();
+			    	}
 		    	
 				    	
 		    	//로그인 안해서 세션에 유저가 없을 때
@@ -314,6 +318,10 @@ input[type="checkbox"] {
 
 	    		$("#cafeHomeButton").on("click" , function() {
 	    			$(self.location).attr("href", "/cafe/main");
+	    		});
+
+	    		$("#thisCafeHome").on("click" , function() {
+	    			$(self.location).attr("href", "/cafe/"+whereYouAt.substring(6));
 	    		});
 
 	    		$("#newsFeeding").on("click" , function() {

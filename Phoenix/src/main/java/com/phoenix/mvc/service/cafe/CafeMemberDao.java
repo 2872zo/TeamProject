@@ -52,7 +52,7 @@ public interface CafeMemberDao {
 	
 	public int updateFavorite (CafeMember cafeMember) throws Exception;
 	
-	public CafeMember getCafeMemberByURL (CafeMember cafeMember) throws Exception;
+	public CafeMember getCafeMemberByURL (Search search) throws Exception;
 
 
 
