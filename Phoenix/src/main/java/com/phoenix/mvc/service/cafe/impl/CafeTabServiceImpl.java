@@ -245,7 +245,9 @@ public class CafeTabServiceImpl implements CafeTabService {
 		List postList = new ArrayList();
 		if (search.getSearchCondition().equals("0")) {
 			cafeList = cafeTabDao.searchCafe(search);
+			search.setSearchCondition("2");
 			Map postMap = cafePostServiceImpl.getPostListBySearch(search);
+			search.setSearchCondition("0");
 			postList = (List) postMap.get("postList");
 // totalCount = (int) postMap.get("postTotalCount");
 // postList = cafeTabDao.seachPost(search);

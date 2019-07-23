@@ -32,8 +32,8 @@
 <script type="text/javascript">
 
 $(function() {
-	//var socket = io("http://192.168.0.78:82");
-	var socket = io("http://localhost:82");
+	var socket = io("http://192.168.0.78:82");
+	//var socket = io("http://localhost:82");
 	
 	//socket.emit("joiner", ${sessionScope.user.userNo});
 	//alert("1");
@@ -83,6 +83,9 @@ $(function() {
 <br/>
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
+	<div class='card'>
+	<div class='card-body'>
+
 	
 	<br/>
 	<br/>
@@ -107,7 +110,6 @@ $(function() {
 </div>
 	</c:forEach>
 	
-	
 	<div class="panel panel-default" >
 				<div class="panel-body">
 					<p class="text-left" id="chat_box"></p>
@@ -115,8 +117,9 @@ $(function() {
 			</div>
 	
 	
-	
-	</div>
+		</div><!-- 카드바디 -->
+	</div><!-- 카드 -->
+	</div><!-- 컨테이너 -->
 	<!--  화면구성 div Start /////////////////////////////////////-->
 
 </body>
