@@ -140,9 +140,9 @@ public class CafeMemberDaoImpl implements CafeMemberDao {
 	}
 
 	@Override
-	public CafeMember getCafeMemberByURL(CafeMember cafeMember) throws Exception {
-		// TODO Auto-generated method stub
-		return sqlSession.selectOne("CafeMemberMapper.checkMember",cafeMember);
+	public CafeMember getCafeMemberByURL(Search search) throws Exception {
+// TODO Auto-generated method stub
+		return sqlSession.selectOne("CafeMemberMapper.checkMember", search);
 	}
 
 //////////////////////////////기황 끝///////////////////////////////////////	

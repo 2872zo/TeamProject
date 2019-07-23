@@ -126,28 +126,18 @@ public class CafeTabServiceImpl implements CafeTabService {
 	@Override
 	public Map getCafeMain(User user, String cafeURL) throws Exception { // 예림예림
 
-		CafeMember cafeMember = new CafeMember();
+		CafeMember cafeMember = null;
 		Map map = new HashMap();
 		Search search = new Search();
 
-// 여기서 userNo 검사해서 400 이면 로그인되어있지않음.
 		int cafeNo = cafeManageDao.getCafeNo(cafeURL);
 
-		if (user.getUserNo() != 400) // 로그인이되어있을때
-		{
-// 1.카페멤버인지 확인 (=카페멤버이면 정보가져오고 아니면 못가져옴)
+		//로그인 안되있을 경우
+		if(user != null) {
 			cafeMember = cafeMemberDao.getCafeMember(cafeNo, user.getUserNo());// 카페번호랑회원번호로
-// cafeMember.getUserNo().equals("500") 이면
-// 500설정은 dao에서해줬음.
-			System.out.println("cafeMember: " + cafeMember);
-
-		} else // 로그인이 되어있지않음.
-
-		{
-			cafeMember.setUserNo(400); // 형님때문에
 		}
+		
 		map.put("cafeMember", cafeMember);
-
 		map.put("cafeURL", cafeURL);
 // 공통
 // 1.카페의 공지게시글 가져오기 ->승규 dao (카페URL , 보드코드)
@@ -162,44 +152,47 @@ public class CafeTabServiceImpl implements CafeTabService {
 
 //// !!!!!!!!지니 자동등업 추가!!!!!!!!/////
 
-		int myGradeNo = cafeMember.getCafeMemberGradeNo();
-		int nextGradeNo = 0;
-		CafeGrade cafeGrade = new CafeGrade();
-
-		CafeGrade myGrade = cafeManageDao.getNextGrade(myGradeNo);
-
-		if (!myGrade.getMemberGradeCode().equals("cg100") && !myGrade.getMemberGradeCode().equals("cg101")) {// 현재 등급이
-																												// 카페멤버만
-																												// 자동등업
-
-			List cafeGradeList = cafeManageDao.getCafeGrade(cafeNo);
-
-			for (int i = 0; i < cafeGradeList.size(); i++) {
-				CafeGrade next = (CafeGrade) cafeGradeList.get(i);
-
-				if (next.getCafeGradeNo() > myGradeNo) {// 다음등급번호찾기
-					nextGradeNo = next.getCafeGradeNo();
-					break;
-
+		//카페 멤버 없을 경우
+		if(cafeMember != null) {
+			int myGradeNo = cafeMember.getCafeMemberGradeNo();
+			int nextGradeNo = 0;
+			CafeGrade cafeGrade = new CafeGrade();
+	
+			CafeGrade myGrade = cafeManageDao.getNextGrade(myGradeNo);
+	
+			if (!myGrade.getMemberGradeCode().equals("cg100") && !myGrade.getMemberGradeCode().equals("cg101")) {// 현재 등급이
+																													// 카페멤버만
+																													// 자동등업
+	
+				List cafeGradeList = cafeManageDao.getCafeGrade(cafeNo);
+	
+				for (int i = 0; i < cafeGradeList.size(); i++) {
+					CafeGrade next = (CafeGrade) cafeGradeList.get(i);
+	
+					if (next.getCafeGradeNo() > myGradeNo) {// 다음등급번호찾기
+						nextGradeNo = next.getCafeGradeNo();
+						break;
+	
+					}
+	
 				}
-
-			}
-
-			CafeGrade nextGrade = cafeManageDao.getNextGrade(nextGradeNo);
-
-			if (nextGrade.isAutoUpgradeFlag() && !nextGrade.getMemberGradeCode().equals("cg100")
-					&& !nextGrade.getMemberGradeCode().equals("cg101")) {// 다음등급이 자동등업이고, 다음등급이 매니저 스탭이 아닐때
-
-				if (nextGrade.getRequiredPostCount() <= cafeMember.getPostCount()
-						&& nextGrade.getRequiredReplyCount() <= cafeMember.getReplyCount()
-						&& nextGrade.getRequiredVisitCount() <= cafeMember.getVisitCount()) {// 출석수,댓글,게시글수 조건 만족할때
-
-					cafeMember.setCafeMemberGradeNo(nextGradeNo);
-					cafeManageDao.updateCafeMemeberGrade(cafeMember);
+	
+				CafeGrade nextGrade = cafeManageDao.getNextGrade(nextGradeNo);
+	
+				if (nextGrade.isAutoUpgradeFlag() && !nextGrade.getMemberGradeCode().equals("cg100")
+						&& !nextGrade.getMemberGradeCode().equals("cg101")) {// 다음등급이 자동등업이고, 다음등급이 매니저 스탭이 아닐때
+	
+					if (nextGrade.getRequiredPostCount() <= cafeMember.getPostCount()
+							&& nextGrade.getRequiredReplyCount() <= cafeMember.getReplyCount()
+							&& nextGrade.getRequiredVisitCount() <= cafeMember.getVisitCount()) {// 출석수,댓글,게시글수 조건 만족할때
+	
+						cafeMember.setCafeMemberGradeNo(nextGradeNo);
+						cafeManageDao.updateCafeMemeberGrade(cafeMember);
+					}
 				}
 			}
 		}
-
+		
 		return map;
 	}
 
