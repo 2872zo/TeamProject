@@ -21,7 +21,8 @@ $(function() {
 	
 	
 	$( "#explore" ).on("click" , function() {
-		$(self.location).attr("href","/explore/exploreList");
+		var keyword=$("#searchKeyword").val()
+		$(self.location).attr("href","/explore/"+keyword);
 	});
 	$( "#cafe" ).on("click" , function() {
 			$(self.location).attr("href","/cafe/main");
@@ -60,13 +61,13 @@ $(function() {
 
 <body>
 <br/>
-<div class='container'>
-<div class="card">
+<div class='container-fluid'>
+
 
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	
-		<br/>
+
 		
 	
 	
@@ -74,16 +75,9 @@ $(function() {
 	
  
 
-<div class="input-group d-flex justify-content-center" >
 
-  </div>
-  <div class='input-group-append'>
-  &nbsp;<input type="text" class="form-control-plaintext" placeholder="검색어 입력해주세요" style='background-color: black;'>
-  </div>
-  <div class='input-group-append'>
-  &nbsp;<button class="btn btn-sm btn-outline-primary" type="button" id="explore">검색</button>
-	</div>
-</div>
+
+
 
 
 
@@ -92,22 +86,23 @@ $(function() {
 	<div class="card">
 
 <div class="card-body">
+<p class="text-center" style='color: orange;'>Phoenix</p>
 
 <div class='d-flex justify-content-center'>
 <div class="input-group mb-3 " style='width: 50%;'>
-  <input type="text" class="form-control form-control-lg" placeholder="검색어를 입력해주세요">
+  <input type="text" class="form-control form-control-lg" placeholder="검색어를 입력해주세요" id='searchKeyword'>
   <div class="input-group-append">
-    <button class="btn btn-lg btn-outline-secondary" type="button" id="button-addon2">검색</button>
+    <button class="btn btn-lg btn-outline-primary" type="button" id="explore"><i class="mdi mdi-magnify" style='font-size: 18pt;'></i></button>
   </div>
 </div>
 </div>
 
 	<br/>
 	<div class="d-flex justify-content-around align-items-center">
-	<i class="mdi mdi-coffee" style='font-size: 50pt;' id="cafe"></i>
-	<i class="mdi mdi-email-outline" style='font-size: 50pt;' id='mail'></i>
-	<i class="mdi mdi-heart-box-outline" style='font-size: 50pt;' id='sns'></i>
-	<i class="mdi mdi-cart-outline" style='font-size: 50pt;'id="shop"></i>
+	<i class="mdi mdi-coffee" style='font-size: 75pt;' id="cafe"></i>
+	<i class="mdi mdi-email-outline" style='font-size: 75pt;' id='mail'></i>
+	<i class="mdi mdi-heart-box-outline" style='font-size: 75pt;' id='sns'></i>
+	<i class="mdi mdi-cart-outline" style='font-size: 75pt;'id="shop"></i>
 	</div>
 	<br/>
 	<br/>
@@ -126,7 +121,8 @@ $(function() {
 	
 </div>
 </div>
-</div>
+
+
 	<!--  화면구성 div Start /////////////////////////////////////-->
 
 
