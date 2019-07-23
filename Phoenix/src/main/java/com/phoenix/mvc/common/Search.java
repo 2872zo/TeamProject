@@ -38,6 +38,7 @@ public class Search{
 	private boolean engineNaver;
 	private boolean engineDaum;
 	private boolean engineGoogle;
+	private boolean enginePhoenix;
 	
 	private int orderState; //정렬종류 0:정확도 1:시간
 	private String orderStateSort; // API method에 넣을 String
@@ -139,6 +140,14 @@ public class Search{
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+
+	public boolean isEnginePhoenix() {
+		return enginePhoenix;
+	}
+
+	public void setEnginePhoenix(boolean enginePhoenix) {
+		this.enginePhoenix = enginePhoenix;
 	}
 
 	public String getSearchCondition() {
@@ -329,10 +338,11 @@ public class Search{
 				+ ", startRowNum=" + startRowNum + ", termStart=" + termStart + ", termEnd=" + termEnd
 				+ ", targetUserNo=" + targetUserNo + ", chatNo=" + chatNo + ", chatRoomNo=" + chatRoomNo
 				+ ", friendStatus=" + friendStatus + ", engineAll=" + engineAll + ", engineNaver=" + engineNaver
-				+ ", engineDaum=" + engineDaum + ", engineGoogle=" + engineGoogle + ", orderState=" + orderState
-				+ ", searchTheme=" + searchTheme + "]";
+				+ ", engineDaum=" + engineDaum + ", engineGoogle=" + engineGoogle + ", enginePhoenix=" + enginePhoenix
+				+ ", orderState=" + orderState + ", orderStateSort=" + orderStateSort + ", searchTheme=" + searchTheme
+				+ ", searchThemeSort=" + searchThemeSort + ", filter=" + filter + ", searchEngine=" + searchEngine
+				+ "]";
 	}
 
 	
-
 }//end of class

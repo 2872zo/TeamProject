@@ -68,7 +68,7 @@ body>div.container {
 
 		$("input[name='userId']").on('keyup',function() {
 
-							var inputed = $("input[name='userId']").val();
+							var inputed = $("input[id='userId']").val();
 							//alert("입력  : "+inputed);
 
 									$.ajax({

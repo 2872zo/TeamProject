@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.domain.Blog;
+import com.phoenix.mvc.service.domain.CafeExplore;
+import com.phoenix.mvc.service.domain.WebExplore;
 import com.phoenix.mvc.service.explore.ExploreDao;
 import com.phoenix.mvc.service.explore.ExploreService;
 
@@ -60,10 +62,72 @@ public class ExploreServiceImpl implements ExploreService{
 
 	@Override
 	public List getCafeExploreList(Search search) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		
+		List<CafeExplore> cafeList = new ArrayList<CafeExplore>(); //어떻게 담을까??
+		
+		//append는 할수있는데 . 내가 여기서 정렬을 해줘야하는거 아닌가??????
+		//일단 append 한다음에 list의 a에 따라서 정렬을 해줄 수 있는 method를 찾아보기
+		
+		
+		if(search.isEngineAll()) //전체엔진
+		{
+			cafeList.addAll(exploreDao.getNaverCafeExploreList(search));
+			cafeList.addAll(exploreDao.getDaumCafeExploreList(search));
+			cafeList.addAll(exploreDao.getPhoenixCafeExploreList(search));
+		}
+		else//엔진부분선택
+		{
+			if(search.isEngineDaum()) //다음엔진선택됐으면
+			{
+				cafeList.addAll(exploreDao.getDaumCafeExploreList(search));
+			}
+
+			if(search.isEngineNaver()) //네이버엔진선택됐으면
+			{
+				cafeList.addAll(exploreDao.getNaverCafeExploreList(search));
+			}
+			if(search.isEnginePhoenix())
+			{
+				cafeList.addAll(exploreDao.getPhoenixCafeExploreList(search));
+			}
+		}
+		
+		
+		return cafeList;
 	}
 
+	@Override
+	public List getWebsiteExploreList(Search search) {
+		
+		List<WebExplore> webList = new ArrayList<WebExplore>(); //어떻게 담을까??
+		
+		//append는 할수있는데 . 내가 여기서 정렬을 해줘야하는거 아닌가??????
+		//일단 append 한다음에 list의 a에 따라서 정렬을 해줄 수 있는 method를 찾아보기
+		
+		
+		if(search.isEngineAll()) //전체엔진
+		{
+			webList.addAll(exploreDao.getNaverWebExploreList(search));
+			webList.addAll(exploreDao.getDaumWebExploreList(search));
+		}
+		else//엔진부분선택
+		{
+			if(search.isEngineDaum()) //다음엔진선택됐으면
+			{
+				webList.addAll(exploreDao.getDaumWebExploreList(search));
+			}
+
+			if(search.isEngineNaver()) //네이버엔진선택됐으면
+			{
+				webList.addAll(exploreDao.getNaverWebExploreList(search));
+			}
+		}
+		
+		
+		return webList;
+	}
+	
 	@Override
 	public List getUnifiedExploreList(Search search) {
 		// TODO Auto-generated method stub
@@ -76,11 +140,6 @@ public class ExploreServiceImpl implements ExploreService{
 		return null;
 	}
 
-	@Override
-	public List getWebsiteExploreList(Search search) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public List getInfiniteImageList(Search search) {

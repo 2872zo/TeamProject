@@ -71,13 +71,12 @@ public class ExploreContoller {
 		System.out.println("/explore/getCafeExploreList 실행");
 		
 		//가짜데이터
-		search.setEngineAll(true);//전체(네이버+다음)
+		search.setEngineAll(true);//전체(네이버+다음+피닉스)
 		search.setOrderState(0);//정확도
-		search.setSearchKeyword("이소라");
+		search.setSearchKeyword("게시글");
 		search.setCurrentPage(1);
 		search.setPageSize(5);
 		/////////////////////////////////////////////////
-		
 		
 		List<CafeExplore> cafeList = exploreService.getCafeExploreList(search);
 		

@@ -4,14 +4,16 @@ import java.util.List;
 
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.domain.Blog;
+import com.phoenix.mvc.service.domain.CafeExplore;
+import com.phoenix.mvc.service.domain.WebExplore;
 
 public interface ExploreService {
 	
 	public List<Blog> getBlogExploreList(Search search);
 	
-	public List getCafeExploreList(Search search);
+	public List<CafeExplore> getCafeExploreList(Search search);
 	
-	public List getUnifiedExploreList(Search search);
+	public List<WebExplore> getUnifiedExploreList(Search search);
 	
 	public List getImageExploreList(Search search);
 	
