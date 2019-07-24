@@ -67,7 +67,7 @@
 		        		<c:if test="${reply.replyStatusFlag == '0' }">
 			        		<div class="replyItem">
 					            <div class="media mt-3">
-						            <img class="mr-3 circle-rounded circle-rounded" src="멤버아이콘" width="50" height="50" alt="댓글아이콘" onerror="this.src='/images/default-profile.jpg'">
+						            <img class="mr-3 circle-rounded circle-rounded" src="/images/uploadfiles/userIcon.jpg" width="50" height="50" alt="댓글아이콘" onerror="this.src='/images/default-profile.jpg'">
 						            <div class="media-body" style="padding:0px;">
 						                <div class="d-sm-flex justify-content-between mb-2">
 						                    <h5 class="mb-sm-0">${reply.memberNickname } <small class="text-muted ml-3">${reply.regDate }</small></h5>
@@ -82,12 +82,12 @@
 						                    
 						                </div>
 						                
-						                <div style="color:black; overflow:hidden;" class="replyContent row">
-						                	<span class="col-10">
+						                <div style="color:black; overflow:hidden;" class="replyContent flex-row">
+						                	<span class="d-flex justify-content-start">
 						                		${reply.replyContent }
 						                	</span>
-						                	<span class="col-2" style="vertical-align:baseline;">
-								                <button type="button" class="btn mb-1 btn-outline-primary btn-xs" >
+						                	<span class="d-flex justify-content-end" style="vertical-align:baseline;">
+								                <button type="button" class="btn mb-1 btn-outline-primary btn-xs replyLikeButton" >
 													<i class="far fa-thumbs-up" style="font-size:15px;"></i>
 													<i class="count" style="font-size:15px;">${reply.likeCount }</i>
 												</button>
@@ -118,7 +118,7 @@
 								<div class="replyItem reReplyItem">
 						            <div style="margin-left:20px; margin-top:5px;">${reReply.targetReplyMember }</div>
 						            <div class="media mt-3" style="margin-left:20px; margin-top:3px !important;">
-							            <img class="mr-3 circle-rounded circle-rounded" src="멤버아이콘" width="40" height="40" alt="댓글아이콘" onerror="this.src='/images/default-profile.jpg'">
+							            <img class="mr-3 circle-rounded circle-rounded" src="/images/uploadfiles/userIcon.jpg" width="40" height="40" alt="댓글아이콘" onerror="this.src='/images/default-profile.jpg'">
 							            <div class="media-body"  style="padding:0px;">
 							                <div class="d-sm-flex justify-content-between mb-2">
 							                    <h5 class="mb-sm-0">${reReply.memberNickname } <small class="text-muted ml-3">${reReply.regDate }</small></h5>
@@ -133,12 +133,12 @@
 							                    
 							                </div>
 							                
-							                <div style="color:black; overflow:hidden;" class="replyContent row">
-							                	<span class="col-10">
+							                <div style="color:black; overflow:hidden;" class="replyContent flex-row">
+							                	<span class="d-flex justify-content-start">
 							                		${reReply.replyContent }
 							                	</span>
-							                	<span class="col-2" style="vertical-align:baseline;">
-									                <button type="button" class="btn mb-1 btn-outline-primary btn-xs" >
+							                	<span class="d-flex justify-content-end" style="vertical-align:baseline;">
+									                <button type="button" class="btn mb-1 btn-outline-primary btn-xs replyLikeButton" >
 														<i class="far fa-thumbs-up" style="font-size:15px;"></i>
 														<i class="count" style="font-size:15px;">${reReply.likeCount }</i>
 													</button>
@@ -215,7 +215,7 @@
 			//대댓글 등록 폼 요청
 			$(".replyItems").on("click", "[name=addReReplyForm]", function(){
 // 				alert("form 요청 실행됨!")
-				$(this).parent().parent().parent().parent().parent().append("<div class='input-group' style='padding-left:50px;'><div class='wrap form-control'><textarea class='form-control' name='reReplyContent'></textarea><span class='counter'>0/300</span></div> <div class='input-group-append'><input class='btn btn-primary' type='button' name='addReReplyButton' value='등록'></div></div>");
+				$(this).parent().parent().parent().parent().parent().replaceWith("<div class='input-group' style='padding-left:50px;'><div class='wrap form-control'><textarea class='form-control' name='reReplyContent'></textarea><span class='counter'>0/300</span></div> <div class='input-group-append'><input class='btn btn-primary' type='button' name='addReReplyButton' value='등록'></div></div>");
 			});
 
 			//대댓글 등록
@@ -244,34 +244,41 @@
 			      $('textarea').keyup();
 			});
 
-			$(".replyItems").on("click", ".replyLikeButton", function(){
-				var JSONPostNo =  JSON.stringify({cafeURL : "${cafeURL}", replyNo:$(this).next().find("[name=replyNo]").val(), userNo:${user.userNo}, searchCondition : "1"});
-				console.log(JSONPostNo); 
+			$(function(){
+				$(".replyItems").on("click", ".replyLikeButton", function(){
+					var JSONPostNo =  JSON.stringify(
+							{cafeURL : "${cafeURL}", 
+							 replyNo:$(this).parent().parent().next().find("[name=replyNo]").val(), 
+							 userNo:${user.userNo}, 
+							 searchCondition : "1"});
+					 
+					console.log(JSONPostNo); 
 
-				var count = $(this).find(".count");
-// 				debugger;
-				
-				$.ajax({
-						type : "POST",
-						contentType: "application/json",
-						url : "/cafe/${cafeURL}/json/addLike",
-						dataType : "JSON",
-						data: JSONPostNo,
-						success : function(data) {
-// 							alert("success");
-							
-// 							debugger;
-							if(data.result == false){
-								alert("이미 추천한 댓글입니다.")
-							}else{
-								count.text(data.likeCount);
+					var count = $(this).find(".count");
+//	 				debugger;
+					
+					$.ajax({
+							type : "POST",
+							contentType: "application/json",
+							url : "/cafe/${cafeURL}/json/addLike",
+							dataType : "JSON",
+							data: JSONPostNo,
+							success : function(data) {
+//	 							alert("success");
+								
+//	 							debugger;
+								if(data.result == false){
+									alert("이미 추천한 댓글입니다.")
+								}else{
+									count.text(data.likeCount);
+								}
+								
+							},
+							error : function(data) {
+								alert("error : " + data);
+//	 							debugger;
 							}
-							
-						},
-						error : function(data) {
-							alert("error : " + data);
-// 							debugger;
-						}
+					});
 				});
 			});
 		</script>
