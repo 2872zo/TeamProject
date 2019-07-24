@@ -56,6 +56,7 @@ public class CafePostDaoImpl implements CafePostDao{
 
 	@Override
 	public Post getPost(int postNo) {
+		sqlSession.update("CafePostMapper.increaseViewCount", postNo);
 		return sqlSession.selectOne("CafePostMapper.getPost", postNo);
 	}
 

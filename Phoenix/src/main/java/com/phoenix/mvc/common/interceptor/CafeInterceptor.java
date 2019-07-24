@@ -158,6 +158,7 @@ public class CafeInterceptor extends HandlerInterceptorAdapter {
 						
 						//게시글 정보 가져옴
 						Post post = cafePostService.getPost(Integer.parseInt(pathVariables.get("postNo")));
+						request.setAttribute("post", post);
 						
 						//기존 boardList에서 해당하는 board를 찾음
 						Board board = null;

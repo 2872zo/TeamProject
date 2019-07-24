@@ -74,25 +74,26 @@
 						                    
 						                    <!-- 아이콘 부분 -->
 						                    <div class="media-reply__link">
-												<i class="mdi mdi-border-color" name="updateReplyButton" style="position: relative; top:3px;"></i>
-												<i class="mdi mdi-delete" name="deleteReplyButton"></i>
+						                    	<c:if test="${cafeMember.memberNo eq reply.memberNo or cafeMember.memberGrade eq 'cg100' or cafeMember.memberGrade eq 'cg101'}">
+													<i class="mdi mdi-border-color" name="updateReplyButton" style="position: relative; top:3px;"></i>
+													<i class="mdi mdi-delete" name="deleteReplyButton"></i>
+												</c:if>
 												<i class="mdi mdi-reply" name="addReReplyForm"></i>
 						                    </div>
 						                    <!-- 아이콘 끝 -->
 						                    
 						                </div>
 						                
-						                <div style="color:black; overflow:hidden;" class="replyContent flex-row">
-						                	<span class="d-flex justify-content-start">
+						                <div class="replyContent d-flex align-items-center justify-content-between mb-3">
+						                	<span class="col-11">
 						                		${reply.replyContent }
 						                	</span>
-						                	<span class="d-flex justify-content-end" style="vertical-align:baseline;">
-								                <button type="button" class="btn mb-1 btn-outline-primary btn-xs replyLikeButton" >
+						                	<span class="col-1" style="min-width:60px;">
+								                <button type="button" class="btn btn-outline-primary btn-xs replyLikeButton" >
 													<i class="far fa-thumbs-up" style="font-size:15px;"></i>
 													<i class="count" style="font-size:15px;">${reply.likeCount }</i>
 												</button>
 											</span>
-						                	<div style="padding-bottom:10px;"></div>
 						                </div>
 						                
 						                
@@ -105,6 +106,7 @@
 										</form>
 						            </div>
 						        </div>
+				               	<div class="reReplyForm" style="padding-bottom:10px;"></div>
 							</div>
 			        	</c:if>
 			        	<c:if test="${reply.replyStatusFlag != '0' }">
@@ -125,8 +127,10 @@
 							                    
 							                    <!-- 아이콘 부분 -->
 							                    <div class="media-reply__link">
-													<i class="mdi mdi-border-color" name="updateReplyButton" style="position: relative; top:3px;"></i>
-													<i class="mdi mdi-delete" name="deleteReplyButton"></i>
+													<c:if test="${cafeMember.memberNo eq reply.memberNo }">
+														<i class="mdi mdi-border-color" name="updateReplyButton" style="position: relative; top:3px;"></i>
+														<i class="mdi mdi-delete" name="deleteReplyButton"></i>
+													</c:if>
 													<i class="mdi mdi-reply" name="addReReplyForm"></i>
 							                    </div>
 							                    <!-- 아이콘 끝 -->
@@ -143,7 +147,6 @@
 														<i class="count" style="font-size:15px;">${reReply.likeCount }</i>
 													</button>
 												</span>
-							                	<div style="padding-bottom:10px;"></div>
 							                </div>
 							                
 							                <form name="replyItem">
@@ -155,6 +158,7 @@
 											</form>
 							            </div>
 							        </div>
+						            <div class="reReplyForm" style="margin:0px;padding-bottom:10px;"></div>
 								</div>
 							</c:if>
 							<c:if test="${reReply.replyStatusFlag != '0' }">
@@ -215,7 +219,7 @@
 			//대댓글 등록 폼 요청
 			$(".replyItems").on("click", "[name=addReReplyForm]", function(){
 // 				alert("form 요청 실행됨!")
-				$(this).parent().parent().parent().parent().parent().replaceWith("<div class='input-group' style='padding-left:50px;'><div class='wrap form-control'><textarea class='form-control' name='reReplyContent'></textarea><span class='counter'>0/300</span></div> <div class='input-group-append'><input class='btn btn-primary' type='button' name='addReReplyButton' value='등록'></div></div>");
+				$(this).parent().parent().parent().parent().parent().find(".reReplyForm").replaceWith("<div class='input-group'><div class='wrap form-control'><textarea class='form-control' name='reReplyContent'></textarea><span class='counter'>0/300</span></div> <div class='input-group-append'><input class='btn btn-primary' type='button' name='addReReplyButton' value='등록'></div></div>");
 			});
 
 			//대댓글 등록

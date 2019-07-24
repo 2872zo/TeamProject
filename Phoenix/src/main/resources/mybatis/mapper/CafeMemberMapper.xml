@@ -305,13 +305,11 @@
 		FROM 
 			cafe_member m, cafe c, cafe_member_grade g
 		WHERE 
-			m.cafe_member_grade_no=g.CAFE_MEMBER_GRADE_NO			
-		AND 
-			m.member_status_code in ('cs100','cs101')
-		AND 
-			c.url = #{cafeURL}
-		AND 
-			m.user_no = #{userNo}
+			m.cafe_member_grade_no = g.cafe_member_grade_no
+			AND m.cafe_no = c.cafe_no			
+			AND m.member_status_code in ('cs100','cs101')
+			AND c.url = #{cafeURL}
+			AND m.user_no = #{userNo}
 	</select>
 	
 	

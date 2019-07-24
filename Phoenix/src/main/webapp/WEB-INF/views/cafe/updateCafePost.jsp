@@ -416,7 +416,12 @@
 	<script>
 		$(function() {
 			var editor = CKEDITOR.replace('editor');
+			editor.on('fileUploadRequest', function( evt ){
+				$("#preloader").attr("style", "background:rgba(255,245,217,0.5);");
+			});
+			
 			editor.on( 'fileUploadResponse', function( evt ) {
+				$("#preloader").attr("style", "display:none;");
 			    // Prevent the default response handler.
 // 			    evt.stop();
 

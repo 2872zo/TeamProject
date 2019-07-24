@@ -192,10 +192,6 @@ public class CafePostContoller {
 			HttpSession session) throws Exception {
 		System.out.println("[getPost] postNo : " + postNo);
 
-		Post post = cafePostService.getPost(postNo);
-
-		map.put("post", post);
-
 		return "/cafe/getCafePost";
 	}
 

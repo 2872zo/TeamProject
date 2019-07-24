@@ -152,46 +152,46 @@ public class CafeTabServiceImpl implements CafeTabService {
 
 //// !!!!!!!!지니 자동등업 추가!!!!!!!!/////
 
-		//카페 멤버 없을 경우
-		if(cafeMember != null) {
-			int myGradeNo = cafeMember.getCafeMemberGradeNo();
-			int nextGradeNo = 0;
-			CafeGrade cafeGrade = new CafeGrade();
-	
-			CafeGrade myGrade = cafeManageDao.getNextGrade(myGradeNo);
-	
-			if (!myGrade.getMemberGradeCode().equals("cg100") && !myGrade.getMemberGradeCode().equals("cg101")) {// 현재 등급이
-																													// 카페멤버만
-																													// 자동등업
-	
-				List cafeGradeList = cafeManageDao.getCafeGrade(cafeNo);
-	
-				for (int i = 0; i < cafeGradeList.size(); i++) {
-					CafeGrade next = (CafeGrade) cafeGradeList.get(i);
-	
-					if (next.getCafeGradeNo() > myGradeNo) {// 다음등급번호찾기
-						nextGradeNo = next.getCafeGradeNo();
-						break;
-	
-					}
-	
-				}
-	
-				CafeGrade nextGrade = cafeManageDao.getNextGrade(nextGradeNo);
-	
-				if (nextGrade.isAutoUpgradeFlag() && !nextGrade.getMemberGradeCode().equals("cg100")
-						&& !nextGrade.getMemberGradeCode().equals("cg101")) {// 다음등급이 자동등업이고, 다음등급이 매니저 스탭이 아닐때
-	
-					if (nextGrade.getRequiredPostCount() <= cafeMember.getPostCount()
-							&& nextGrade.getRequiredReplyCount() <= cafeMember.getReplyCount()
-							&& nextGrade.getRequiredVisitCount() <= cafeMember.getVisitCount()) {// 출석수,댓글,게시글수 조건 만족할때
-	
-						cafeMember.setCafeMemberGradeNo(nextGradeNo);
-						cafeManageDao.updateCafeMemeberGrade(cafeMember);
-					}
-				}
-			}
-		}
+//		//카페 멤버 없을 경우
+//		if(cafeMember != null) {
+//			int myGradeNo = cafeMember.getCafeMemberGradeNo();
+//			int nextGradeNo = 0;
+//			CafeGrade cafeGrade = new CafeGrade();
+//	
+//			CafeGrade myGrade = cafeManageDao.getNextGrade(myGradeNo);
+//	
+//			if (!myGrade.getMemberGradeCode().equals("cg100") && !myGrade.getMemberGradeCode().equals("cg101")) {// 현재 등급이
+//																													// 카페멤버만
+//																													// 자동등업
+//	
+//				List cafeGradeList = cafeManageDao.getCafeGrade(cafeNo);
+//	
+//				for (int i = 0; i < cafeGradeList.size(); i++) {
+//					CafeGrade next = (CafeGrade) cafeGradeList.get(i);
+//	
+//					if (next.getCafeGradeNo() > myGradeNo) {// 다음등급번호찾기
+//						nextGradeNo = next.getCafeGradeNo();
+//						break;
+//	
+//					}
+//	
+//				}
+//	
+//				CafeGrade nextGrade = cafeManageDao.getNextGrade(nextGradeNo);
+//	
+//				if (nextGrade.isAutoUpgradeFlag() && !nextGrade.getMemberGradeCode().equals("cg100")
+//						&& !nextGrade.getMemberGradeCode().equals("cg101")) {// 다음등급이 자동등업이고, 다음등급이 매니저 스탭이 아닐때
+//	
+//					if (nextGrade.getRequiredPostCount() <= cafeMember.getPostCount()
+//							&& nextGrade.getRequiredReplyCount() <= cafeMember.getReplyCount()
+//							&& nextGrade.getRequiredVisitCount() <= cafeMember.getVisitCount()) {// 출석수,댓글,게시글수 조건 만족할때
+//	
+//						cafeMember.setCafeMemberGradeNo(nextGradeNo);
+//						cafeManageDao.updateCafeMemeberGrade(cafeMember);
+//					}
+//				}
+//			}
+//		}
 		
 		return map;
 	}

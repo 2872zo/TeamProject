@@ -21,7 +21,7 @@
 
 <link rel="stylesheet" href="/css/custom/scroll-top.css">
 <link rel="stylesheet" href="/css/custom/advenced-search.css">
-<script src="https://kit.fontawesome.com/e589319d43.js"></script>
+<!-- <script src="https://kit.fontawesome.com/e589319d43.js"></script> -->
 
 
 <style>
