@@ -152,6 +152,12 @@ public class CafeTabServiceImpl implements CafeTabService {
 
 //// !!!!!!!!지니 자동등업 추가!!!!!!!!/////
 
+		Cafe cafe = cafeManageDao.getCafeInfo(cafeNo);
+		map.put("cafe", cafe);
+		
+		///////카페정보
+		
+		
 		//카페 멤버 없을 경우
 		if(cafeMember != null) {
 			int myGradeNo = cafeMember.getCafeMemberGradeNo();

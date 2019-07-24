@@ -67,3 +67,9 @@
 	    		});
 	    		
 	    	});
+	    	
+	    	$(function(){ //카페설정이동
+	    		$(".text-dark.mr-4.manage.cursor").on("click",function(){
+	    			location.href = "/cafe/" + cafeURL + "/manage/getCafeStatistics";
+	    		});
+	    	});

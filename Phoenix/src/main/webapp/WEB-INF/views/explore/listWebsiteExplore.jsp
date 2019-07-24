@@ -73,7 +73,7 @@
             Nav header start
         ***********************************-->	
      	<!-- ToolBar Start /////////////////////////////////////-->
-		<jsp:include page="../common/toolbar.jsp" />
+		<jsp:include page="./exploreToolbar.jsp" />
 		<!-- ToolBar End /////////////////////////////////////-->
        
         <!--**********************************
@@ -143,16 +143,17 @@
            					<ul class="list-unstyled">
 	           				
 	           				<c:set var="i" value="0"/>
-	           				<c:forEach var="blog" items="${blogList}">
+	           				<c:forEach var="web" items="${webList}">
 	           					<c:set var="i" value="${i+1}"/>
 	           					<li class="media">
-	           						<img alt="이미지없음" src="${blog.thumbnail}">
 									<div class="media-body">
-										<a href="${blog.resultLink}">${blog.title}</a>${blog.dateTime}
+										<a href="${web.resultLink}">${web.title}</a>${web.dateTime}
 										<br/>
-										${blog.contents}
+										<a href="${web.resultLink}">${web.resultLink}</a>
 										<br/>
-										<a href="${blog.blogLink}">${blog.blogName}</a>
+										${web.contents}
+										<br/>
+										
 									</div>           					
 	           					</li>
 	           				</c:forEach>

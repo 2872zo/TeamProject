@@ -21,30 +21,32 @@
 					    <!-- Tab panes -->
 					    <div class="tab-content tabcontent-border">
 					    	<div class="tab-pane fade show active" id="home8" role="tabpanel">
-					            <div class="p-t-15">
-					            	<br/>가입 : ${cafeMember.regDate}
-									<br/><strong>닉네임 : ${cafeMember.memberNickname}</strong>
-									<br/>등급 : ${cafeMember.gradeName}
-									<br/>출석 : ${cafeMember.visitCount}
-									<br/><span class="myPost cursor">내가 쓴 글 보기</span> <span class="myPost cursor" style="text-align: right;">${cafeMember.postCount }</span>
-									<br/><span class="myReply cursor"">내가 쓴 댓글보기</span> <span class="myReply cursor">${cafeMember.replyCount }</span>
-									<c:if test="${cafeMember.memberGrade eq 'cg100' }">
-										<input type="button" value="내 카페 관리" name="toManage">
-									</c:if> 
-									
-									<c:if test="${empty cafeMember}">
-									<br/>
-									<div class="addMember">
-										카페가입
-									</div>
+					             	
+					           		<div class="media align-items-center mb-4">
+	                                   	<img class="mr-3" src="/images/uploadfiles/cafeIcon/${cafe.cafeIcon}" width="80" height="80" style="object-fit: cover; border-radius: 50%;" alt="">
+	                                    <div class="media-body">
+	                          				<p class="text-muted mb-0">매니저 </p>
+	                          				${cafe.managerNickname}
+	                                    </div>
+	                                </div>
+	                                
+	                                <ul class="card-profile__info">
+	                                    <li class="mb-1"><strong class="text-dark mr-4" style="margin-left: 10px;">since</strong>
+	                                     <span style="float: right; margin-right: 10px;"><fmt:formatDate value="${cafe.regDate}" pattern="yyyy.MM.dd"/></span>
+	                                    </li>
+	                                    <li class="mb-1"><strong class="text-dark mr-4" style="margin-left: 10px;"><i class="fa fa-users"></i></strong> <span style="float: right; margin-right: 10px;">${cafe.members}</span></li>
+	                                    
+	                                    <c:if test="${!empty cafeMember && cafeMember.userNo == cafe.manageUserNo}">
+	                                    	<li class="mb-1"><strong class="text-dark mr-4 manage cursor" style="margin-left: 10px;"><i class="icon-settings"></i>카페설정</strong></li>
+	                                    </c:if>
+	                                </ul>
+	                                <c:if test="${empty cafeMember}">
+										<div class="media align-items-center mb-4">
+											<button class="btn mb-1 btn-rounded btn-outline-dark addMember">카페가입</button>
+										</div>
 									</c:if>
-									<br/>
-									<c:if test="${!empty cafeMember}">
-									<div class="updateProfile cursor">
-										프로필수정
-									</div>
-									</c:if>
-					            </div>
+	                                
+					           
 					        </div>
 					        <div class="tab-pane fade" id="profile8" role="tabpanel">
 					        	<c:if test="${!empty cafeMember }">

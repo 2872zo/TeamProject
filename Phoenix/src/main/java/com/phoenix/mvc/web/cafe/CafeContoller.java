@@ -36,6 +36,7 @@ public class CafeContoller {
 		
 		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>cafemain cafemember: " + map.get("cafeMember"));
 		
+		model.addAttribute("cafe", map.get("cafe"));
 		model.addAttribute("cafeURL", cafeURL);
 		model.addAttribute("noticePostList", map.get("noticePostList"));//공지게시글리스트
 		model.addAttribute("cafeMember", map.get("cafeMember"));//내정보

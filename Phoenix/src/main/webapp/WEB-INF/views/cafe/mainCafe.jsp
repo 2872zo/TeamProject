@@ -238,11 +238,15 @@
                     </ul>
                 </div>
             </div>
+            
+            <img class="mr-3" src="/images/uploadfiles/mainImg/${cafe.mainImg}" width="100%" height="100" alt="">
+            <br/>
+            <br/>
         </div>
         <!--**********************************
             Header end ti-comment-alt
         ***********************************-->
-
+			
         <!--**********************************
             Sidebar start
         ***********************************-->
@@ -259,16 +263,23 @@
         <div class="content-body">
         	<div class="row page-titles mx-0">
                 <div class="col p-md-0">
-                    <ol class="breadcrumb">
-                    </ol>
+                  
                 </div>
             </div>
 			<div id="container-fluid">
-				 <div class="col-lg-12">
-                       <div class="card">
+				 <div class="col-lg-12"> <!-- 배너 -->
+                      <div class="card">
                            <div class="card-body">
-                               <h4 class="card-title">공지게시판</h4>
-                               <div class="table-responsive">
+                            <div class="table-responsive">
+                                   <img class="mr-3" src="/images/uploadfiles/mainImg/${cafe.mainImg}" width="910" height="auto" alt="">
+                               </div>
+                           </div>
+                       </div>
+                      
+                       <div class="card"> <!-- 공지게시판 -->
+                           <div class="card-body">
+                            <div class="table-responsive">
+                                   <h4 class="card-title">공지게시판</h4>
                                    <table class="table header-border">
                                        <thead>
                                            <tr>
@@ -292,6 +303,8 @@
                                </div>
                            </div>
                        </div>
+                       
+                       
                    </div>
 					
 				</div>

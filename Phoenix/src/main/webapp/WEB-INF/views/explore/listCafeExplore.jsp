@@ -73,7 +73,7 @@
             Nav header start
         ***********************************-->	
      	<!-- ToolBar Start /////////////////////////////////////-->
-		<jsp:include page="../common/toolbar.jsp" />
+		<jsp:include page="exploreToolbar.jsp" />
 		<!-- ToolBar End /////////////////////////////////////-->
        
         <!--**********************************
