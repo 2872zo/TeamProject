@@ -64,22 +64,16 @@
     ***********************************-->
 	<div id="main-wrapper">
 
-		<!--**********************************
+		 <!--**********************************
             Nav header start
         ***********************************-->
-		<div class="nav-header">
-			<div class="brand-logo">
-				<a href="index.html"> <b class="logo-abbr"><img
-						src="/images/logo.png" alt=""> </b> <span class="logo-compact"><img
-						src="/images/logo-compact.png" alt=""></span> <span
-					class="brand-title"> <img src="/images/logo-text.png" alt="">
-				</span>
-				</a>
-			</div>
-		</div>
-		<!--**********************************
+        <div class="nav-header">
+            <c:import url="/WEB-INF/views/common/brand-logo.jsp"/>
+        </div>
+        <!--**********************************
             Nav header end
         ***********************************-->
+
 
 		<!--**********************************
             Header start

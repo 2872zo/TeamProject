@@ -18,6 +18,8 @@ import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.phoenix.mvc.service.domain.FaceBook;
+
 public class FacebookWriteTest {
 
 	public static void main(String[] args) throws InterruptedException, IOException {
@@ -93,14 +95,17 @@ public class FacebookWriteTest {
 	public void timeLine() throws IOException, InterruptedException {
 
 		JavascriptExecutor jse = (JavascriptExecutor) driver;
-		jse.executeScript("scroll(0,20000)");
-		WebDriverWait wait = new WebDriverWait(driver, 200);
+		WebDriverWait wait = new WebDriverWait(driver, 20);
 
-		WebElement feed = driver.findElement(By.xpath("//div[@role='feed']")); // 피드 전체
-		List<WebElement> post = feed.findElements(By.cssSelector("[data-testid='post_message']")); // 포스트
-		List<WebElement> regDate = feed.findElements(By.xpath("//span[@class='fsm fwn fcg']")); // 작성일
+		WebElement feed = driver.findElement(By.cssSelector("div[role='feed']")); // 피드 전체
+		List<WebElement> each = feed.findElements(By.cssSelector("div[class='_5pcr userContentWrapper']"));// 각자피드
+		// List<WebElement> post =
+		// each.findElements(By.cssSelector("[data-testid='post_message']")); // 포스트
+		// List<WebElement> regDate = each.findElements(By.xpath("//span[@class='fsm fwn
+		// fcg']")); // 작성일
 		List<WebElement> postId = feed.findElements(By.xpath("//h5[@class='_7tae _14f3 _14f5 _5pbw _5vra']")); // 작성자.id
-		List<WebElement> likeCount = feed.findElements(By.cssSelector("[data-testid='UFI2ReactionsCount/sentenceWithSocialContext']"));// 좋아요수
+		// List<WebElement> likeCount =
+		// each.findElements(By.cssSelector("[data-testid='UFI2ReactionsCount/sentenceWithSocialContext']"));좋아요수
 		// List<WebElement> dimg = driver.findElements(By.xpath("//a[@class='_5dec _xcx
 		// _487t']")); // 이미지 맨 처음
 		List<WebElement> img = feed.findElements(By.xpath("//a[@class='_5dec _xcx']")); // 이미지
@@ -108,45 +113,41 @@ public class FacebookWriteTest {
 		// List<WebElement> post = driver.findElements(By.xpath("//div[@class='_1dwg
 		// _1w_m _q7o']"));// 포스트 수
 
+		wait.until(ExpectedConditions.visibilityOfAllElements(feed));
 		System.out.println("포스트 개수 알려줘!" + postId.size());
 
-		for (int i = 0; i < postId.size(); i++) {
-			System.out.println(i + "번째");
-			System.out.println("아이디" + postId.get(i).getText());
-			if (post.get(i) != null) {// 내용없는피드도 있음
-				System.out.println("내용" + post.get(i).getText());
-			}
-			System.out.println("날짜" + regDate.get(i).getText());
-			if (likeCount.get(i) != null) {// 좋아요가 없는피드도 있음^^
-				System.out.println("좋아요수" + likeCount.get(i).getText());
-			}
-			if (img.get(i) != null) {
-
-				List<WebElement> thumbNail = img.get(i).findElements(By.xpath("//a[@class='_5dec _xcx']"));
-				System.out.println(i + "번째" + "thumbnail사이즈는? " + thumbNail.size());
-				for (int j = 0; j <2; j++) {
-					System.out.println("-------------------------------------");
-					System.out.println("j는? " + j);
-					System.out.println("여기는 xcx 이미지링크" + thumbNail.get(j).getAttribute("data-ploi"));
-					System.out.println("-------------------------------------");
-				}
+		for (int i = 0; i < postId.size(); i++) {// 포스트내용,작성자아이디,작성일,좋아요수,이미지
+				
+			FaceBook faceBook = new FaceBook();
+				
+				faceBook.setPost(each.get(i).findElement(By.cssSelector("[data-testid='post_message']")).getText());
+				faceBook.setPostId(each.get(i).findElement(By.xpath("//h5[@class='_7tae _14f3 _14f5 _5pbw _5vra']")).getText());
+				faceBook.setRegDate(each.get(i).findElement(By.xpath("//span[@class='fsm fwn fcg']")).getText());
+				faceBook.setLikeCount(each.get(i).findElement(By.cssSelector("[data-testid='UFI2ReactionsCount/sentenceWithSocialContext']"))
+						.getText());
 				
 				
-			} else if (sImg.get(i) != null) {
+				wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector("a[class='_4-eo _2t9n _50z9']")));
+				wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//a[@class='_5dec _xcx']")));
+				
+				if (each.get(i).findElements(By.cssSelector("a[class='_4-eo _2t9n _50z9']")).size()!=0) {//이미지태그 두개중 첫번째
+					faceBook.setThumbnail(each.get(i).findElement(By.cssSelector("a[class='_4-eo _2t9n _50z9']")).getAttribute("data-ploi"));
+					faceBook.setLink(each.get(i).findElement(By.cssSelector("a[class='_4-eo _2t9n _50z9']")).getAttribute("href"));
 
-				List<WebElement> thumbNail = sImg.get(i).findElements(By.xpath("//a[@class='_4-eo _2t9n']"));
-				System.out.println(i + "번째" + "thumbnail사이즈는? " + thumbNail.size());
+				} else if (each.get(i).findElements(By.xpath("//a[@class='_5dec _xcx']")).size()!=0) {//이미지태그 두개중 두번째
+					faceBook.setThumbnail( each.get(i).findElement(By.xpath("//a[@class='_5dec _xcx']")).getAttribute("data-ploi"));
 
-				for (int j = 0; j < 2; j++) {
-					System.out.println("-------------------------------------");
-					System.out.println("j는? " + j);
-					System.out.println("여기는 2t9n 이미지링크" + thumbNail.get(j).getAttribute("data-ploi"));
-					System.out.println("-------------------------------------");
 				}
-			}
-			jse.executeScript("scroll(0,30000)");
+				System.out.println(faceBook);
+				if(faceBook != null) {
+					System.out.println(i+"번 성공!");
+					jse.executeScript("scroll(0,1300)");
+					wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector("[data-testid='UFI2ReactionsCount/sentenceWithSocialContext']")));
+				}
 
+			
 		}
 
 	}
+
 }

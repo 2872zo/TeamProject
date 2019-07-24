@@ -152,6 +152,13 @@ public class CafeTabServiceImpl implements CafeTabService {
 
 //// !!!!!!!!지니 자동등업 추가!!!!!!!!/////
 
+		Cafe cafe = cafeManageDao.getCafeInfo(cafeNo);
+		map.put("cafe", cafe);
+		
+		///////카페정보
+		
+		
+		
 		//카페 멤버 없을 경우
 		if(cafeMember != null) {
 			int myGradeNo = cafeMember.getCafeMemberGradeNo();
@@ -179,7 +186,7 @@ public class CafeTabServiceImpl implements CafeTabService {
 	
 				CafeGrade nextGrade = cafeManageDao.getNextGrade(nextGradeNo);
 	
-				if (nextGrade.isAutoUpgradeFlag() && !nextGrade.getMemberGradeCode().equals("cg100")
+				if (nextGrade!=null && nextGrade.isAutoUpgradeFlag() && !nextGrade.getMemberGradeCode().equals("cg100")
 						&& !nextGrade.getMemberGradeCode().equals("cg101")) {// 다음등급이 자동등업이고, 다음등급이 매니저 스탭이 아닐때
 	
 					if (nextGrade.getRequiredPostCount() <= cafeMember.getPostCount()

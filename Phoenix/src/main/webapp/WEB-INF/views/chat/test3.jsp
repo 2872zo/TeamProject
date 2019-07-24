@@ -64,7 +64,15 @@
   <br/>
   
   
-              
+ 
+                                            <select class="form-control" id="sel1">
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                            </select>
+                                       
+  
   
 
 <form id='memberListingForm'>
@@ -73,27 +81,27 @@
 <input type="hidden" name='memberGrade' value='${search.memberGrade}' id='memberGrade'>		
 <input type="hidden" name='status' 		value='${search.status}' id='status'>
 <input type="hidden" name='sortCode' 	value='${search.sortCode}' id='sortCode'>
-	
-	
-	
-</form>	
-<form id='memberDetailForm'>
-<input type="hidden" name='memberNo' id='memberNo' value='0'>
-</form>
-	    
-<br/>
-
-<div class='row'>
-<div class="col-lg-4">
-  <button type="button" class='status btn btn-${ (empty search.status||search.status==0) ? "" : "outline-" }primary'>전체</button>
-  <button type="button" class='status btn btn-${ search.status==1 ? "" : "outline-" }success'>활동</button>
-  <button type="button" class='status btn btn-${ search.status==2 ? "" : "outline-" }danger'>정지</button>
-  <button type="button" class='status btn btn-${ search.status==3 ? "" : "outline-" }secondary'>탈퇴</button>
-</div>
-<div class="col-lg-4"></div>
-<div class="col-lg-4">
-<div class="input-group mb-3">
-	  <div class="input-group-prepend">
+	<div class="input-group mb-3">
+	<div class="input-group-prepend">
+	 <select class="form-control" id="sel1"> <option>1111111111111111111</option>
+                                                <option>22</option>
+                                                <option>333</option>
+                                                <option>44444</option>
+                                                <option>1</option>
+                                                <option>22</option>
+                                                <option>333</option>
+                                                <option>44444</option>
+                                            </select>
+	</div>
+	<div class="input-group-append">
+	 <select class="form-control" id="sel1">
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                            </select>
+	</div>
+	  <div class="input-group-append">
 	   <select class="form-control valid" aria-label="Example select with button addon" name='searchCondition' id='searchCondition'>
 	    <option class='searchCondition' selected value="0" ${ !empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>닉네임</option>
 	   </select>
@@ -105,10 +113,22 @@
 	    <button class="btn btn-outline-dark" type="button" id="search">검색</button>
 	 </div>
 	</div>
-	</div>
-	
-	</div>
+</form>	
+<form id='memberDetailForm'>
+<input type="hidden" name='memberNo' value='0' id='memberNo'>
+<input type="hidden" name ='cafeNo'  value='${memberList[0].cafeNo}'>
+</form>
+	    
+<br/>
 
+ 상태별 검색:
+  <button type="button" class='status btn btn-${ (empty search.status||search.status==0) ? "" : "outline-" }primary'>전체</button>
+  <button type="button" class='status btn btn-${ search.status==1 ? "" : "outline-" }success'>활동중</button>
+  <button type="button" class='status btn btn-${ search.status==2 ? "" : "outline-" }danger'>정지중</button>
+  <button type="button" class='status btn btn-${ search.status==3 ? "" : "outline-" }secondary'>탈퇴한회원</button>
+  <br/>
+  
+  등급별 검색:
    <button type="button" class='memberGrade btn btn-${ (empty search.memberGrade||search.memberGrade==0) ? "" : "outline-" }info'>전체</button>
    <c:set var="i" value="0" />
    <c:forEach var="cafeGrade" items="${gradeList}">
@@ -118,29 +138,27 @@
   </button>
   </c:forEach>
   
-  <br/> <br/>
-<div class='d-flex justify-content-around'>
+  <br/>
+  정렬 :
   <a href="#" class='sortCode badge badge-${ (empty search.sortCode||search.sortCode==0) ? "dark" : "light" }'>최신가입부터</a>
   <a href="#" class='sortCode badge badge-${ search.sortCode==1 ? "dark" : "light" }'>가입순서대로</a>
   <a href="#" class='sortCode badge badge-${ search.sortCode==2 ? "dark" : "light" }'>닉네임순</a>
   <a href="#" class='sortCode badge badge-${ search.sortCode==3 ? "dark" : "light" }'>닉네임역순</a>
   <a href="#" class='sortCode badge badge-${ search.sortCode==4 ? "dark" : "light" }'>출석많은순</a>
   <a href="#" class='sortCode badge badge-${ search.sortCode==5 ? "dark" : "light" }'>출석적은순</a>
- </div> 
+  
 
   <table class="table table-borderless">
   <thead>
     <tr>
- 
+      <th scope="col">멤버번호</th>
       <th scope="col">닉네임</th>
-      
+      <th scope="col">가입일</th>
+      <th scope="col">카페번호</th>
+      <th scope="col">방문수</th>
       <th scope="col">등급</th>
       <th scope="col">등급명</th>
       <th scope="col">멤버상태</th>
-      <th scope="col">가입일</th>
-      <th scope="col">방문수</th>
-      <th scope="col">작성글</th>
-      <th scope="col">작성댓글</th>
       
     </tr>
   </thead>
@@ -151,17 +169,15 @@
   
   <c:forEach var="cafeMember" items="${memberList}">
  <c:set var="i" value="${i+1}" />
-  <tr class='goToMember' id='${cafeMember.memberNo}'>
-      
-     <th scope="row">${cafeMember.memberNickname}</th>
-      
+  <tr>
+      <th scope="row" class='memberNo'>${cafeMember.memberNo}</th>
+      <td>${cafeMember.memberNickname}</td>
+      <td>${cafeMember.regDate}</td>
+      <td>${cafeMember.cafeNo}</td>
+      <td>${cafeMember.visitCount}</td>
       <td>${cafeMember.memberGrade}</td>
       <td>${cafeMember.gradeName}</td>
       <td class='memberStatusCode'>${cafeMember.memberStatusCode}</td>
-      <td>${cafeMember.regDate}</td> 
-      <td>${cafeMember.visitCount}</td>
-      <td>${cafeMember.postCount}</td>
-      <td>${cafeMember.replyCount}</td>
   </tr>
   </c:forEach>
 
@@ -239,16 +255,11 @@ $(function() {
 	});
 
 	$(".memberNo").on("click" , function() {
-		//var count = $(".memberNo").index(this);
-		//$("#memberNo").val($($(".memberNo")[count]).text());
-		//$("#memberDetailForm").attr("method" , "POST").attr("action" , "/cafe/"+"${cafeURL}"+"/manage/getCafeMember").submit();
+		var count = $(".memberNo").index(this);
+		$("#memberNo").val($($(".memberNo")[count]).text());
+		$("#memberDetailForm").attr("method" , "POST").attr("action" , "/cafe/"+"${cafeURL}"+"/manage/getCafeMember").submit();
 	});
-	$(".goToMember").on("click" , function() {
-			//alert($(this).attr("id"));
-			$("#memberNo").val($(this).attr("id"));
-			$("#memberDetailForm").attr("method" , "POST").attr("action" , "/cafe/"+"${cafeURL}"+"/manage/getCafeMember").submit();
-		});
-	
+
 	$(".memberStatusCode").on("click" , function() {
 		var count = $(".memberStatusCode").index(this);
 		alert($($(".memberNo")[count]).text());

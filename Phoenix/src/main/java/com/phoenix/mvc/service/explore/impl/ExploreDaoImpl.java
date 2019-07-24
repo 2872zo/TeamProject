@@ -21,6 +21,7 @@ import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.cafe.CafePostDao;
 import com.phoenix.mvc.service.domain.Blog;
 import com.phoenix.mvc.service.domain.CafeExplore;
+import com.phoenix.mvc.service.domain.Image;
 import com.phoenix.mvc.service.domain.Post;
 import com.phoenix.mvc.service.domain.WebExplore;
 import com.phoenix.mvc.service.explore.ExploreDao;
@@ -270,11 +271,119 @@ public class ExploreDaoImpl implements ExploreDao{
 
 	@Override
 	public List<WebExplore> getNaverWebExploreList(Search search) {
-		// TODO Auto-generated method stub
-		return null;
+			
+		//search 설정 
+		//1.정렬기준 설정 
+		if(search.getOrderState()==0)//정확도
+			search.setOrderStateSort("sim");
+		else
+			search.setOrderStateSort("date");
+		//2.검색엔진설정
+		search.setSearchEngine(1);
+		//3.검색Theme 설정
+		search.setSearchThemeSort("webkr");
+				
+		String jsonResult= this.APISearch(search); // API 실행
+		
+		List<WebExplore> webList = new ArrayList<WebExplore>();
+		
+		JSONObject jsonObject = (JSONObject) JSONValue.parse(jsonResult.toString());
+		List items = (List) jsonObject.get("items");
+		
+		for(int i=0; i<items.size(); i++)
+		{
+			Map item = (Map)items.get(i);
+			
+			WebExplore webExplore = new WebExplore();
+			webExplore.setTitle(item.get("title").toString());
+			webExplore.setResultLink(item.get("link").toString());
+			webExplore.setContents(item.get("description").toString());
+			
+			webList.add(webExplore);
+		}
+		
+		return webList;
 	}
 	
+	@Override
+	public List<Image> getDaumImageExploreList(Search search) {
 	
+		//search 설정 
+		//1.정렬기준 설정 
+		if(search.getOrderState()==0)
+			search.setOrderStateSort("accuracy");//정확도
+		else
+			search.setOrderStateSort("recency");
+		//2.검색엔진설정
+		search.setSearchEngine(0);
+		//3.검색Theme 설정
+		search.setSearchThemeSort("image");
+		
+		String jsonResult= this.APISearch(search); // API 통신
+		List<Image> imageList = new ArrayList<Image>();
+		
+		JSONObject jsonObject = (JSONObject) JSONValue.parse(jsonResult.toString());
+		List items = (List) jsonObject.get("documents");
+		
+		for(int i=0; i<items.size(); i++)
+		{
+			Map item = (Map)items.get(i); 
+			
+			Image image = new Image();
+			image.setCollection(item.get("collection").toString());
+			image.setThumbnail(item.get("thumbnail_url").toString());
+			image.setImage(item.get("image_url").toString());
+			image.setSizeWidth(item.get("width").toString());
+			image.setSizeHeight(item.get("height").toString());
+			image.setSiteName(item.get("display_sitename").toString());
+			image.setDateTime(item.get("datetime").toString());
+			image.setResultLink(item.get("doc_url").toString());
+	
+			imageList.add(image);
+		}
+		
+		
+		return imageList;
+	}
+
+	@Override
+	public List<Image> getNaverImageExploreList(Search search) {
+		
+		//search 설정 
+		//1.정렬기준 설정 
+		if(search.getOrderState()==0)//정확도
+			search.setOrderStateSort("sim");
+		else
+			search.setOrderStateSort("date");
+		//2.검색엔진설정
+		search.setSearchEngine(1);
+		//3.검색Theme 설정
+		search.setSearchThemeSort("image");
+				
+		String jsonResult= this.APISearch(search); // API 실행
+		
+		List<Image> imageList = new ArrayList<Image>();
+		
+		JSONObject jsonObject = (JSONObject) JSONValue.parse(jsonResult.toString());
+		List items = (List) jsonObject.get("items");
+		
+		for(int i=0; i<items.size(); i++)
+		{
+			Map item = (Map)items.get(i);
+			
+			Image image = new Image();
+			image.setTitle(item.get("title").toString());
+			image.setResultLink(item.get("link").toString());
+			image.setThumbnail(item.get("thumbnail").toString());
+			image.setSizeHeight(item.get("sizeheight").toString());
+			image.setSizeWidth(item.get("sizewidth").toString());
+			
+			imageList.add(image);
+		}
+		
+		return imageList;
+	}
+
 	
 	
 	//API통신통신
@@ -358,6 +467,5 @@ public class ExploreDaoImpl implements ExploreDao{
 		return jsonResult;
 		
 	}//end Method
-
 
 }

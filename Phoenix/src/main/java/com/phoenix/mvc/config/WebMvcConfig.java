@@ -20,10 +20,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(interceptor)
-                .addPathPatterns("/cafe/*/**")
+                .addPathPatterns("/cafe/**")
+                .excludePathPatterns("/cafe/main/**")
                 .excludePathPatterns("/user/login")
-                .excludePathPatterns("/user/logout")
-                .excludePathPatterns("/cafe/main/**")//로그인 쪽은 예외처리를 한다.
-                .excludePathPatterns("/main/addCafe"); 
+                .excludePathPatterns("/user/logout"); //로그인 쪽은 예외처리를 한다.
+        
     }
 }

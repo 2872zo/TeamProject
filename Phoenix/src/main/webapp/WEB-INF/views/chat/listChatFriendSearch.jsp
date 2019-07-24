@@ -109,21 +109,9 @@ img {
 					
 					
 					</div>
-						<form>
-	
-					<div class='d-flex justify-content-center'>
-				<div class="input-group mb-3 " style='width: 50%;'>
-					<input type="text" class="form-control form-control-lg"
-						placeholder="검색어를 입력해주세요" id='searchKeyword'>
-					<div class="input-group-append">
-						<button class="btn btn-lg btn-outline-primary" type="button"
-							id="explore">
-							<i class="mdi mdi-magnify" style='font-size: 18pt;'></i>
-						</button>
-					</div>
-				</div>
-			</div>
-						</form>
+						
+						
+					여기서 검색할거야
 						
 	<div class="card friends">
       <div class="card-body">
@@ -139,26 +127,6 @@ img {
       </div>
       </div>
     </div>
-
-
-<c:forEach items='${searchList}' var = 'searchedChatFriend'>
-
-<div class="card friends">
-      <div class="card-body">
-      <div class ='row'>
-      <div class='col-lg-4'>
-      <img alt="" src="/images/avatar/1.jpg" class='rounded img-fluid' alt="Responsive image" >
-      </div>
-      <div class='col-lg-8'>
-        <h5 class="card-title">Special title treatment</h5>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
-      </div>
-      </div>
-      </div>
-    </div>
-</c:forEach>
-
 
 					</div>
 
@@ -244,15 +212,9 @@ var checkSessionUser = ${empty sessionScope.user};
 	$(function() {
 		var checkSessionUser = ${empty sessionScope.user};
 
-		$("#searchKeyword").focus(function() {
-			$(this).attr("style", "border: 2px solid #f5a142");
-		});
-
-		$("#searchKeyword").blur(function() {
-			$(this).attr("style", "");
-		});
+		 
 		
-			//$("#explore").on))
+			
 		
 
 	});

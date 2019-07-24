@@ -356,7 +356,7 @@ input[type="checkbox"] {
     </div>
    </div>
   </div>
-  
+  <input type="hidden" name="targetURL" value="${targetURL }">
  </form>
 
 			   	 </div>

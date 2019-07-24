@@ -17,7 +17,19 @@
 <link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
 <link href="/css/style.css" rel="stylesheet">
 <link rel="stylesheet" href="/css/custom/scroll-top.css">
+<style>
+.form-inline .form-control {
+	width: 45px;
+	text-align: center
+}
 
+.form-control.input-default.tbox {
+	width: 110px;
+	text-align: center
+}
+
+
+</style>
 
 </head>
 
@@ -65,7 +77,7 @@
             Content body start
         ***********************************-->
 
-		<div class="content-body" style="min-height: 743px;">
+		<div class="content-body">
 
 			<div class="row page-titles mx-0">
 				<div class="col p-md-0">
@@ -83,90 +95,79 @@
 						<div class="card">
 							<div class="card-body">
 								<h4 class="card-title">>카페등급관리</h4>
-
 								멤버 등급
 								<code>사용안함</code>
 								선택시 해당 등급에 해당하는 모든 멤버는 한단계 아래등급으로 내려갑니다 <br /> <br /> <br />
-
-
-
-
+						
 								<c:set var="i" value="0" />
 								<c:set var="j" value="0" />
 
 								<div class="form-row">
-								<div class="col">
-								<div class="form-group">
-									<form id="submit" class="form-horizontal">
-										<c:forEach var="cafeGrade" items="${cafeGradeList}">
-
-											<c:set var="i" value="${ i+1 }" />
-											<input type="hidden" class="cafeNo"value="${cafeGrade.cafeNo}" />
-											<c:if test="${i eq 1}">${i}번째 등급명
-												<input type="text" class="gradeName"name="gradeList[${j}].gradeName"value="${cafeGrade.gradeName}" />
-												<input type="hidden" class="cafeGradeNo"name="gradeList[${j}].cafeGradeNo"value="${cafeGrade.cafeGradeNo }" />
-												<br />
-												<hr />
-												<br />
-
-											</c:if>
-
-											<c:if test="${i ne 1}">${i} 번째 등급명
-												<input type="text" class="gradeName"name="gradeList[${j}].gradeName" value="${cafeGrade.gradeName}" />
-												<select class="auto" name="gradeList[${j}].autoUpgradeFlag">
-													<option value="1"
-														${cafeGrade.autoUpgradeFlag== "1" ? "selected" : "" }>자동등업승인</option>
-													<option value="0"
-														${cafeGrade.autoUpgradeFlag== "0" ? "selected" : "" }>자동등업거부</option>
-												</select>
-												<input type="radio" name="gradeList[${j}].gradeFlag" value="1"
-													<c:if test="${cafeGrade.gradeFlag eq true}">checked</c:if> />사용
-													&nbsp;&nbsp;
-		     									 <input type="radio" name="gradeList[${j}].gradeFlag" value="0"
-													<c:if test="${cafeGrade.gradeFlag eq false}">checked</c:if> />사용안함
-												<br />
-												<br />
-												출석 <input type="text" class="visit"name="gradeList[${j}].requiredVisitCount"value="${cafeGrade.requiredVisitCount }" />이상,
-												게시글 <input type="text" class="post"name="gradeList[${j}].requiredPostCount"value="${cafeGrade.requiredPostCount }" />이상,
-												댓글 <input type="text" class="reply"name="gradeList[${j}].requiredReplyCount"value="${cafeGrade.requiredReplyCount }" />이상,&nbsp;&nbsp;&nbsp;
+									<div class="col">
+										<form id="submit">
+											<c:forEach var="cafeGrade" items="${cafeGradeList}">
+												<c:set var="i" value="${ i+1 }" />
+												<input type="hidden" class="cafeNo"value="${cafeGrade.cafeNo}" />
+												<br>
+												
+												<div class="form-inline">
+													<c:if test="${i eq 1}"><h6>${i}번째 등급명</h6>&nbsp;&nbsp;&nbsp;&nbsp;
+													<input type="text" class="form-control input-default tbox"name="gradeList[${j}].gradeName"value="${cafeGrade.gradeName}" />	
+													<br>
+													<input type="hidden" class="cafeGradeNo"name="gradeList[${j}].cafeGradeNo"value="${cafeGrade.cafeGradeNo }" />
+													</c:if>
+												</div>
+												
+												<div class="form-inline">
+												<c:if test="${i ne 1}"><h6>${i} 번째 등급명</h6>&nbsp;&nbsp;&nbsp;&nbsp;
+												<input type="text" class="form-control input-default tbox"name="gradeList[${j}].gradeName"value="${cafeGrade.gradeName}" />
+												&nbsp;&nbsp;&nbsp;&nbsp;
+												출석&nbsp;&nbsp;&nbsp;&nbsp; <input type="text"class="form-control input-default bbox"name="gradeList[${j}].requiredVisitCount" value="${cafeGrade.requiredVisitCount }" />&nbsp;&nbsp;&nbsp;&nbsp;이상,&nbsp;&nbsp;&nbsp;&nbsp;
+												게시글 &nbsp;&nbsp;&nbsp;&nbsp;<input type="text"class="form-control input-default bbox"name="gradeList[${j}].requiredPostCount"value="${cafeGrade.requiredPostCount }" />&nbsp;&nbsp;&nbsp;&nbsp;이상,&nbsp;&nbsp;&nbsp;&nbsp;
+												댓글&nbsp;&nbsp;&nbsp;&nbsp; <input type="text"class="form-control input-default bbox"name="gradeList[${j}].requiredReplyCount"value="${cafeGrade.requiredReplyCount }" />&nbsp;&nbsp;&nbsp;&nbsp;이상&nbsp;&nbsp;&nbsp;&nbsp;
 												<input type="hidden" class="cafeGradeNo"name="gradeList[${j}].cafeGradeNo"value="${cafeGrade.cafeGradeNo }" />
 												<input type="hidden" class="memberGradeCode"name="gradeList[${j}].memberGradeCode"value="${cafeGrade.memberGradeCode }" />
 
-
+													
+														<label class="radio-inline mr-3"> 
+														<input type="radio" name="gradeList[${j}].gradeFlag" value="1"<c:if test="${cafeGrade.gradeFlag eq true}">checked</c:if> />사용
+														</label> 
+														<label class="radio-inline mr-3"> 
+														<input type="radio" name="gradeList[${j}].gradeFlag" value="0"<c:if test="${cafeGrade.gradeFlag eq false}">checked</c:if> />사용안함
+														</label>
 
 												
-					&nbsp;&nbsp;
-					&nbsp;&nbsp;
-					
-												 
-		     		 
-
-
-												<br />
-												<br />
-												<hr />
-												<br />
-											</c:if>
-											<c:set var="j" value="${ j+1 }" />
-										</c:forEach>
-									</form>
+														<select class="form-control" style=width:12%; name="gradeList[${j}].autoUpgradeFlag">
+															<option value="1"${cafeGrade.autoUpgradeFlag== "1" ? "selected" : "" }>자동등업승인</option>
+															<option value="0"${cafeGrade.autoUpgradeFlag== "0" ? "selected" : "" }>자동등업거부</option>
+														</select>
+												
+											
+												</c:if>
+												</div>
+												<br>
+												<hr>
+												<c:set var="j" value="${ j+1 }" />
+											</c:forEach>
+										</form>
 									</div>
-									</div>
-								</div>
-
-								<br /> <br /> <br />
-								<div align="center">
-									<button type="button" name="button" id="save"
-										class="btn mb-1 btn-outline-warning">저장</button>
 								</div>
 							</div>
+
+							<br /> <br />
+							<div align="center">
+								<button type="button" name="button" id="save" class="btn mb-1 btn-outline-warning">저장</button>
+							</div>
+							<br /> 
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-
 	</div>
+
+
+
 
 
 
@@ -199,7 +200,7 @@
 
 		});
 	</script>
-	
+
 	<script src="/js/custom/cafeCommon.js"></script>
 
 </body>

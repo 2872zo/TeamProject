@@ -48,10 +48,20 @@ public class ChattingServiceImpl implements ChattingService{
 	}
 
 	@Override
-	public void addChatFriend(ChatFriend chatFriend) throws Exception {
-				
+	public int addFriend(ChatFriend chatFriend) throws Exception {
+		return chattingDao.addFriend(chatFriend);
 	}
 
+	@Override
+	public int updateFriend(ChatFriend chatFriend) throws Exception {
+		return chattingDao.updateFriend(chatFriend);
+	}
+
+	@Override
+	public int deleteFriend(ChatFriend chatFriend) throws Exception {
+		return chattingDao.deleteFriend(chatFriend);
+	}
+	
 	@Override
 	public void addChat(Chat chat) throws Exception {
 		chattingDao.addChat(chat);
@@ -59,8 +69,7 @@ public class ChattingServiceImpl implements ChattingService{
 	
 	@Override
 	public void testMethod(Chat chat) throws Exception {
-		chattingDao.testMethod(chat);
-		
+		chattingDao.testMethod(chat);		
 	}
 
 	@Override
@@ -75,17 +84,7 @@ public class ChattingServiceImpl implements ChattingService{
 		return null;
 	}
 
-	@Override
-	public void updateChatFriend(ChatFriend chatFriend) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void removeChatFriend(ChatFriend chatFriend) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 	@Override
 	public void addChatRoom(ChatRoom chatRoom) throws Exception {
@@ -103,6 +102,15 @@ public class ChattingServiceImpl implements ChattingService{
 	public void removeChatRoom(ChatRoom chatRoom) throws Exception {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Map getFriendSearchList(Search search) throws Exception {
+
+		Map map = new HashMap();
+		List searchList = chattingDao.getFriendSearchList(search);
+		map.put("searchList", searchList);
+		return map;
 	}
 
 

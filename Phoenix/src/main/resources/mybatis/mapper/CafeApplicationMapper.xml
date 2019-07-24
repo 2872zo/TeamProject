@@ -83,6 +83,14 @@
 						 			AND u.user_id like '%' || #{searchKeyword}||'%'
 								</if>
 								</if> 
+								<if test="status != null">
+									<if test="status==100">
+										AND accept_status_code ='ca100'
+									</if>
+									<if test ="status==101">
+									   AND accept_status_code NOT IN 'ca100'
+									</if>
+								</if>
 							</where>) countTable						
 	 </select>
 	 

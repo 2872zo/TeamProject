@@ -115,6 +115,31 @@ SELECT * FROM DUAL
 		WHERE cafe_No = #{value}
 	 </select>
 	 
+	 <select id="getCafeInfoByURL" parameterType="String" resultMap="cafeSelectMap">
+		SELECT
+			cafe_no, 
+			cafe_Name,
+			cafe_icon, 
+			manage_user_no, 
+			url, 
+			cafe_detail, 
+			banner_img, 
+			main_img, 
+			cafe_type, 
+			application_detail, 
+			reg_date,
+			close_reason, 
+			application_question1, 
+			application_question2, 
+			application_question3, 
+			member_nickname_flag, 
+			auto_application_accept_flag,
+			closed_flag, 
+			members 		
+		FROM cafe 
+		WHERE URL = #{value}
+	 </select>
+	 
 	 <select 	id="getCafeName"	parameterType= "String"	resultMap="cafeSelectMap">
 		SELECT	 cafe_Name	
 		FROM cafe 

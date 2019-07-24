@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.domain.Blog;
 import com.phoenix.mvc.service.domain.CafeExplore;
+import com.phoenix.mvc.service.domain.Image;
 import com.phoenix.mvc.service.domain.WebExplore;
 import com.phoenix.mvc.service.explore.ExploreService;
 
@@ -89,11 +90,46 @@ public class ExploreContoller {
 	{
 		System.out.println("/explore/getWebsiteList 실행");
 		
+		//가짜데이터
+		search.setEngineAll(true);//전체(네이버+다음+피닉스)
+		search.setOrderState(0);//정확도
+		search.setSearchKeyword("게시글");
+		search.setCurrentPage(1);
+		search.setPageSize(5);
+		/////////////////////////////////////////////////
+		
 		List<WebExplore> websiteList = exploreService.getWebsiteExploreList(search);
 		
 		
 		model.addAttribute("webList", websiteList);
 		return "explore/listWebsiteExplore";
+	}
+	
+	@RequestMapping("getImageList")
+	public String getImageExploreList(@ModelAttribute Search search, Model model)
+	{
+		System.out.println("/explore/getImageList");
+		
+		//가짜데이터
+		search.setEngineAll(true);//전체(네이버+다음+피닉스)
+		search.setOrderState(0);//정확도
+		search.setSearchKeyword("태양");
+		search.setCurrentPage(1);
+		search.setPageSize(5);
+		/////////////////////////////////////////////////
+		
+		
+		List<Image> imageList = exploreService.getImageExploreList(search);
+		
+		model.addAttribute("imageList", imageList);
+		return "explore/listImageExplore";
+	}
+	
+	@RequestMapping("test")
+	public String a()
+	{
+		return "cafe/accessDenied";
+		//return "cafe/memberBlock";
 	}
 	
 }

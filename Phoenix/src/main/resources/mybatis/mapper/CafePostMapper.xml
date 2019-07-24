@@ -74,18 +74,18 @@
 			p.member_no, 
 			p.member_nickname,
 			p.post_title, 
-			p.post_content, 
 			TO_CHAR(p.reg_date, 'YYYY-MM-DD HH24:MI:SS') AS reg_date, 
 			p.view_count, 
 			p.like_count, 
 			p.post_status_flag, 
 			p.post_notice_flag, 
 			p.notice_index
-		FROM post p, board b, cafe c
+		FROM post p, board b, cafe c, reply r
 		<where>
 			c.cafe_no = b.cafe_no
 			AND	p.board_no = b.board_no
 			AND p.post_status_flag = '0'
+			AND p.post_no = r.post_no(+)
 			<if test="cafeURL != null and cafeURL != ''">
 				AND p.cafe_url = #{cafeURL}
 			</if>
@@ -102,7 +102,8 @@
 				<when test="searchCondition  == 0">
 					AND (p.member_nickname like '%${searchKeyword}%'
 						 OR p.post_title like '%${searchKeyword}%'
-						 OR p.post_content like '%${searchKeyword}%')
+						 OR p.post_content like '%${searchKeyword}%'
+						 OR r.reply_content like '%${searchKeyword}%')
 				</when>
 				<when test="searchCondition  == 1">
 					AND p.member_nickname like '%${searchKeyword}%'
@@ -113,8 +114,28 @@
 				<when test="searchCondition  == 3">
 					AND p.post_content like '%${searchKeyword}%'
 				</when>
+				<when test="searchCondition  == 4">
+					AND r.reply_content like '%${searchKeyword}%'
+				</when>
 			</choose>
 		</where>
+		GROUP BY
+			p.post_no,
+			p.cafe_url, 
+			c.cafe_name, 
+			c.cafe_icon, 
+			p.board_no, 
+			p.board_name,
+			p.member_no, 
+			p.member_nickname,
+			p.post_title, 
+			p.reg_date, 
+			p.view_count, 
+			p.like_count, 
+			p.post_status_flag, 
+			p.post_notice_flag, 
+			p.notice_index
+		
 		ORDER BY p.reg_date DESC
 	</sql>
 
@@ -387,6 +408,15 @@
 		WHERE 
 			post_no = #{postNo}
 	</select>
+	
+	<update id="increaseViewCount" parameterType="int">
+		UPDATE
+			post
+		SET
+			view_count = view_count + 1
+		WHERE
+			post_no = #{value}
+	</update>
 	
 	<update id="updatePost" parameterType="Post">
 		UPDATE post

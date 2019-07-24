@@ -10,13 +10,14 @@
 		<result property="chatFriendNo"		column="chat_friends_no" 	jdbcType="NUMERIC"/>
 		<result property="userNo" 			column="user_no" 			jdbcType="NUMERIC" />
 		<result property="targetUserNo" 	column="target_user_no" 	jdbcType="NUMERIC" />
+		<result property="friendNickname" 	column="friend_nickname" 	jdbcType="VARCHAR" />
+		<result property="userNickname" 	column="user_nickname" 		jdbcType="VARCHAR" />
 		<result property="friendStatus" 	column="friend_status" 		jdbcType="VARCHAR" />
-		<result property="friendNickname" 	column="user_nickname" 		jdbcType="VARCHAR" />
 	</resultMap>
 	
 	<select id="getMyFriendList" parameterType="Search" resultMap="chatFriendSelectMap">
-		select
-		cf.chat_friends_no, cf.user_no, cf.friend_nickname, cf.target_user_no, cf.friend_status, u.user_nickname
+		SELECT
+		cf.chat_friends_no, cf.friend_nickname, cf.target_user_no, cf.friend_status, u.user_nickname
 		FROM
 		chat_friends cf, users u
 		WHERE
@@ -24,5 +25,53 @@
 		AND cf.friend_status = #{status}
 		AND cf.user_no = #{userNo}
 	</select>
-	 
+	
+	<select id="searchChatFriend" parameterType="Search" resultMap="chatFriendSelectMap">
+		
+		SELECT
+			user_no, user_nickname, profile_img
+		FROM
+			users
+		WHERE
+			user_role_code='ur101'
+		AND
+			user_status_code not in ('cs102')
+		AND
+			user_nickname like '%' ||#{searchKeyword}|| '%'
+		AND
+			user_no not in (
+							SELECT
+							target_user_no 
+							FROM
+							chat_friends
+							WHERE user_no=#{userNo}
+							)
+				
+	</select>
+	
+	<insert id="addFriend" parameterType="ChatFriend">
+	INSERT INTO 
+	chat_friends 
+		(chat_friends_no, user_no, target_user_no, friend_status) 
+	VALUES 
+		(seq_chat_friends_no.NEXTVAL, #{userNo}, #{targetUserNo}, #{friendStatus}) 
+	</insert> 
+	
+	<delete id="deleteFriend" parameterType="ChatFriend">
+	DELETE FROM 
+	chat_friends 
+	WHERE 
+		chat_friend_no = #{chatFriendNo}
+	</delete>
+
+	<update id="updateFriend" parameterType="ChatFriend">
+	UPDATE
+	chat_friends
+	<set>
+		friend_status = #{friendStatus:VARCHAR}, 
+		friend_nickname = #{friendNickname:VARCHAR}
+	</set>
+	WHERE chat_friends_no = #{chatFriendNo}
+	</update>
+	
 </mapper>

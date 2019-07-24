@@ -57,10 +57,15 @@ $(function() {
 	//	};
 	//
 	//	
-	$(".card").on("click" , function() {
-		$("#roomNo").val($(this).attr('name'));
+	$(".xxxxx").on("click" , function() {
+		//alert("실행됨!");
+		var roomNumber =  parseInt($(this).attr('name'));
+		//alert(parseInt($(this).attr('name')));
+		$("#roomNo").val(parseInt($(this).attr('name')));
+		//alert(isNan(roomNumber));
+		//alert($("#rooming").serialize());
 		$("#rooming").attr("method" , "POST").attr("action" , "/chat/chatRoom").submit();
-		//alert($(this).attr('id'));
+		
 	});
 		//alert(${roomNos});
 	//var roomNumbers = ${roomNos};
@@ -78,7 +83,7 @@ $(function() {
 
 <body>
 <form id='rooming'>
-<input type='hidden' name = 'chatRoomNo' id='roomNo' value='' >
+<input type='hidden' name = 'chatRoomNo' id='roomNo' >
 </form>
 <br/>
 	<!--  화면구성 div Start /////////////////////////////////////-->
@@ -94,7 +99,7 @@ $(function() {
 
 	<c:forEach items="${chatRoomList}" var ='chatRoom'>
 	
-	<div class="card mb-3 "  style="max-width: 540px;" name='${chatRoom.chatRoomNo}'>
+	<div class="card mb-3  xxxxx "  style="max-width: 540px;" name='${chatRoom.chatRoomNo}'>
   <div class="row no-gutters">
     <div class="col-md-4">
       <img src="..." class="card-img" alt="...">
