@@ -23,6 +23,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/cafe/*/**")
                 .excludePathPatterns("/user/login")
                 .excludePathPatterns("/user/logout")
-                .excludePathPatterns("/cafe/main/**"); //로그인 쪽은 예외처리를 한다.
+                .excludePathPatterns("/cafe/main/**")//로그인 쪽은 예외처리를 한다.
+                .excludePathPatterns("/main/addCafe"); 
     }
 }

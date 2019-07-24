@@ -77,12 +77,49 @@ $(function() {
 						$("#password").focus();
 						return;
 					}
-					$("form").attr("method", "POST").attr("action",
-							"/user/login").submit();
+					$("form").attr("method", "POST").attr("action",	"/user/login").submit();
 					// $("form").attr("method","POST").attr("action","/user/login").attr("target","_parent").submit();
 				});
 	});
 
 	// 로그인끝
+	
+	$(function() {
+
+		$("#logon").on('click',function() {
+					debugger;
+							var id = $("input:text").val();
+							var pw = $("input:password").val();
+							//alert("입력  : "id);
+							//alert("입력  : "+pw);
+							//alert("입력  : "password);
+									$.ajax({
+										url : "/user/json/login",
+										method : "POST",
+										dataType : "json",
+										headers : {
+											"Accept" : "application/json",
+											"Content-Type" : "application/json"
+										},										
+										data : JSON.stringify({											
+										userId : id,
+										password : pw,
+										}),
+										
+										success : function(JSONData) {
+											//alert(JSONData); 
+											//alert(typeof(JSONData));
+											
+											if(JSONData == 1){
+												alert("아이디 또는 비밀번호가 일치하지 않습니다.");
+												}else{
+													//$("form").attr("method","POST").attr("action","/user/login").submit();
+													}
+				
+										}
+
+									});
+		  						  });
+								});
 
 });

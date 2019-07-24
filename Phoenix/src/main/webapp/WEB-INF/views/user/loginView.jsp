@@ -120,8 +120,148 @@ input[type="checkbox"] {
     <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
 
+	/*$(function() {
+
+		$("input[id='userId']").on('keyup',function() {
+					debugger;
+							inputed = $("input[id='userId']").val();
+							//alert("입력  : "+inputed);
+
+									$.ajax({
+										url : "/user/json/checkUserIdDuplication",
+										method : "POST",
+										dataType : "json",
+										headers : {
+											"Accept" : "application/json",
+											"Content-Type" : "application/json"
+										},
+										data : JSON.stringify({
+											userId : inputed,
+										}),
+
+										success : function(JSONData) {
+											//alert(JSONData); 
+											//alert(typeof(JSONData));
+
+											if (JSONData && inputed != "") {
+												$("#check").children("strong")
+														.remove();
+												$("#check")
+														.append(
+																"<strong class=\"text-danger\">아이디 불일치</strong>");
+											} else {
+												$("#check").children("strong")
+														.remove();
+												$("#check")
+														.append(
+																"<strong  class=\"text-success\">아이디 일치</strong>");
+											}
+											if (inputed == "") {
+												$("#check").children("strong")
+														.remove();
+												$("#check")
+														.append(
+																"<strong class=\"text-muted\">아이디를 입력해주세요.</strong>");
+											}
+										}
+
+									});
+		  						  });
+								});
+
+	$(function() {
+
+		$("input[id='password']").on('keyup',function() {
+					debugger;
+							inputed = $("input[id='password']").val();
+							//alert("입력  : "+inputed);
+
+									$.ajax({
+										url : "/user/json/checkUserPwDuplication",
+										method : "POST",
+										dataType : "json",
+										headers : {
+											"Accept" : "application/json",
+											"Content-Type" : "application/json"
+										},
+										data : JSON.stringify({
+										password : inputed,
+										}),
+
+										success : function(JSONData) {
+											//alert(JSONData); 
+											//alert(typeof(JSONData));
+
+											if (JSONData && inputed != "") {
+												$("#check1").children("strong")
+														.remove();
+												$("#check1")
+														.append(
+																"<strong class=\"text-danger\">비밀번호 불일치</strong>");
+											} else {
+												$("#check1").children("strong")
+														.remove();
+												$("#check1")
+														.append(
+																"<strong  class=\"text-success\">비밀번호 일치</strong>");
+											}
+											if (inputed == "") {
+												$("#check1").children("strong")
+														.remove();
+												$("#check1")
+														.append(
+																"<strong class=\"text-muted\">비밀번호를 입력해주세요.</strong>");
+											}
+										}
+
+									});
+		  						  });
+								});*/
+	
+
+
+	$(function() {
+
+		$("#logon").on('click',function() {
+					debugger;
+							var id = $("input[id='userId']").val();
+							var pw = $("input[id='password']").val();
+							//alert("입력  : "id);
+							//alert("입력  : "+pw);
+							//alert("입력  : "password);
+									$.ajax({
+										url : "/user/json/login",
+										method : "POST",
+										dataType : "json",
+										headers : {
+											"Accept" : "application/json",
+											"Content-Type" : "application/json"
+										},										
+										data : JSON.stringify({											
+										userId : id,
+										password : pw,
+										}),
+										
+										success : function(JSONData) {
+											//alert(JSONData); 
+											//alert(typeof(JSONData));
+											
+											if(JSONData == 1){
+												alert("아이디 또는 비밀번호가 일치하지 않습니다.");
+												return;
+												}else{
+													$("form").attr("method","POST").attr("action","/user/login").submit();
+													}
+				
+										}
+
+									});
+		  						  });
+								});
+				
+	
 		//============= "로그인"  Event 연결 =============
-		$( function() {
+	$( function() {
 			
 			$("#userId").focus();
 			
@@ -131,17 +271,24 @@ input[type="checkbox"] {
 				var pw=$("input[id='password']").val();
 				
 				if(id == null || id.length <1) {
-					alert('ID 를 입력하지 않으셨습니다.');
-					$("#userId").focus();
+					alert('아이디를 입력하세요');
+					$("input[id='userId']").focus();
 					return;
 				}
 				
 				if(pw == null || pw.length <1) {
-					alert('패스워드를 입력하지 않으셨습니다.');
-					$("#password").focus();
+					alert('비밀번호를 입력하세요');
+					$("input[id='password']").focus();
 					return;
 				}
-				$("form").attr("method","POST").attr("action","/user/login").submit();
+
+				if(pw != sessionscope.user.password){
+					alert("${user.password}");
+					alert('아이디 또는 비밀번호가 일치하지 않습니다.');
+					return;
+					}
+				
+					
 				//$("form").attr("method","POST").attr("action","/user/login").attr("target","_parent").submit();
 			}); 
 		});	
@@ -155,9 +302,6 @@ input[type="checkbox"] {
 			});
 		});
 
-		
-
-		
 		
 	</script>		
 	
@@ -191,10 +335,14 @@ input[type="checkbox"] {
    <div class="form">
     <div class="form2">
      <div class="form3">
-      <label for="user">아이디</label><input type="text" id="userId" name="userId">
+      <label for="user">아이디</label><input type="text" id="userId" name="userId">      
       <div class="clear"></div>
+      
+  
       <label for="user">비밀번호</label><input type="password" id="password" name="password">
+      <div class="clear"></div>
      </div>
+     
      <input type="submit" value="로그인하기" id="logon">
      <div class="clear"></div>
      <div class="form4">
@@ -211,9 +359,6 @@ input[type="checkbox"] {
   
  </form>
 
-
-					  
-					
 			   	 </div>
 			
 			</div>

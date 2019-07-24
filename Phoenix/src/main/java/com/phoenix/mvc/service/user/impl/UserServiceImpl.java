@@ -61,6 +61,20 @@ public class UserServiceImpl implements UserService{
 		}
 		return result;
 	}
+	
+	public boolean checkUserPwDuplication(String password) throws Exception {
+		
+		boolean result=true;
+		
+		User user = userDao.getUser(password);
+		
+		if(user != null) {
+			result=false;
+		}
+		return result;
+	}	
+	
+	
 /////////////////////////////준호끝///////////////////////////////////
 	
 

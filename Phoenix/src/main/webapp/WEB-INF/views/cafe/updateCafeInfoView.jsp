@@ -127,7 +127,7 @@ code {
                                             <div class="col-lg-6">
                                                <div><img src="/images/uploadFiles/mainImg/${cafe.mainImg}" width="300"; height="200px";/>
                                                </div>
-                                                <input type="file" class=""form-control-file"" id="uploadFile2" name="uploadFile2">
+                                                <input type="file" class=""form-control-file"" id="uploadFile2" name="uploadFile2" >
                                                </div>
                                         </div> <hr>
                                         <div class="form-group row">
@@ -222,8 +222,8 @@ code {
 												}),
 
 												success : function(JSONData) {
-													//alert(JSONData); 
-													//alert(typeof(JSONData));
+													alert(JSONData); 
+													alert(typeof(JSONData));
 									
 													if (JSONData && inputed != "") {
 														$("#check").children("strong")
