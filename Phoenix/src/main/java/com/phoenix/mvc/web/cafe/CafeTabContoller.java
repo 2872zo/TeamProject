@@ -209,24 +209,28 @@ public class CafeTabContoller {
 	public String getCafeMain(@PathVariable String cafeURL, HttpSession session, Model model) throws Exception {
 		System.out.println("/cafe/{cafeURL}");
 
-// 승규 getBoardPostList Service 불러오면 안되잖아. 그럼 바로 dao부르나?? 내가 메서드를 만들어야겠네.
+		// 승규 getBoardPostList Service 불러오면 안되잖아. 그럼 바로 dao부르나?? 내가 메서드를 만들어야겠네.
 		User user = new User();
 
-		if (session.getAttribute("user") != null) // session에 있으면
+		if (session.getAttribute("user") == null) // session에 있으면
 		{
-			user = (User) session.getAttribute("user");
+			System.out.println("user 없음");
 		}
-
-		if (user.getUserNo() == 0) // 포탈로그인되어있지않음. 400
+		else
 		{
-			user.setUserNo(400);
+			System.out.println("user있음");
+			user= (User) session.getAttribute("user");
 		}
+		
 // set해주고 service태워서 service에서 회원인지 아닌지 검사
 
 // 가짜데이터
-		user.setUserNo(10000);
+		//user.setUserNo(10000);
 		Map map = cafeTabService.getCafeMain(user, cafeURL);
-
+		System.out.println("엥");
+		System.out.println("cafecafecafECAFE!!!!!"+map.get("cafe"));
+		
+		model.addAttribute("cafe", map.get("cafe"));
 		model.addAttribute("cafeURL", map.get("cafeURL"));
 		model.addAttribute("noticePostList", map.get("noticePostList"));// 공지게시글리스트
 		model.addAttribute("cafeMember", map.get("cafeMember"));// 내정보

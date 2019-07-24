@@ -5,6 +5,7 @@ import java.util.List;
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.domain.Blog;
 import com.phoenix.mvc.service.domain.CafeExplore;
+import com.phoenix.mvc.service.domain.Image;
 import com.phoenix.mvc.service.domain.WebExplore;
 
 public interface ExploreDao {
@@ -22,5 +23,9 @@ public interface ExploreDao {
 	public List<WebExplore> getDaumWebExploreList(Search search);
 	
 	public List<WebExplore> getNaverWebExploreList(Search search);
+	
+	public List<Image> getDaumImageExploreList(Search search);
+	
+	public List<Image> getNaverImageExploreList(Search search);
 
 }
