@@ -63,7 +63,7 @@
 	
 	    	$(function(){//카페가입
 	    		$(".addMember").on("click", function(){
-	    			 location.href = "/cafe/" + cafeURL + "addCafeApplicationView";
+	    			 location.href = "/cafe/" + cafeURL + "/addCafeApplicationView";
 	    		});
 	    		
 	    	});

@@ -58,3 +58,7 @@ function fncLogout(){
 function fncGoChat(){
 	location.href = "/chat/main";
 }
+
+function fncAddCafeApplication(cafeURL){
+	location.href= "/cafe/"+ cafeURL +"/addCafeApplicationView";
+}

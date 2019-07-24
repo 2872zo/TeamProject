@@ -179,7 +179,7 @@ public class CafeTabServiceImpl implements CafeTabService {
 	
 				CafeGrade nextGrade = cafeManageDao.getNextGrade(nextGradeNo);
 	
-				if (nextGrade.isAutoUpgradeFlag() && !nextGrade.getMemberGradeCode().equals("cg100")
+				if (nextGrade!=null && nextGrade.isAutoUpgradeFlag() && !nextGrade.getMemberGradeCode().equals("cg100")
 						&& !nextGrade.getMemberGradeCode().equals("cg101")) {// 다음등급이 자동등업이고, 다음등급이 매니저 스탭이 아닐때
 	
 					if (nextGrade.getRequiredPostCount() <= cafeMember.getPostCount()

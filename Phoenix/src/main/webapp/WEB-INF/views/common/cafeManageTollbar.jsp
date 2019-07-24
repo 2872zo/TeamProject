@@ -8,13 +8,8 @@
 <!--**********************************
             Nav header start
         ***********************************-->
-<div class="nav-header" text-align="center">
-	<div class="brand-logo">
-		<a id="phoenix" href="javascript:fncGetPhoenix()"> <span
-			class="brand-title" font-size="1.5rem" align="center"> Phoenix
-		</span>
-		</a>
-	</div>
+<div class="nav-header">
+	<c:import url="/WEB-INF/views/common/brand-logo.jsp" />
 </div>
 <!--**********************************
             Nav header end

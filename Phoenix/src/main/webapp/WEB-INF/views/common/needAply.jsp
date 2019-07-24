@@ -4,11 +4,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
+
+
 <!DOCTYPE html>
 <html lang="ko">
 
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Favicon icon -->
+<link rel="icon" type="image/png" sizes="16x16"
+	href="/images/favicon.png">
 <!-- Custom Stylesheet -->
 <link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
 <link href="/css/style.css" rel="stylesheet">
@@ -37,11 +42,18 @@
 .cursor:hover {
 	text-decoration: underline;
 }
+
+.error-text {
+	font-size: 2rem;
+	line-height: 5rem;
+	color: #FFAF00;
+}
 </style>
+
+<title>카페가입</title>
 </head>
 
 <body>
-
 
 	<!--*******************
         Preloader start
@@ -64,16 +76,15 @@
     ***********************************-->
 	<div id="main-wrapper">
 
-		 <!--**********************************
+		<!--**********************************
             Nav header start
         ***********************************-->
-        <div class="nav-header">
-            <c:import url="/WEB-INF/views/common/brand-logo.jsp"/>
-        </div>
-        <!--**********************************
+		<div class="nav-header">
+			<c:import url="/WEB-INF/views/common/brand-logo.jsp" />
+		</div>
+		<!--**********************************
             Nav header end
         ***********************************-->
-
 
 		<!--**********************************
             Header start
@@ -84,22 +95,6 @@
 				<div class="nav-control">
 					<div class="hamburger">
 						<span class="toggle-icon"><i class="icon-menu"></i></span>
-					</div>
-				</div>
-				<div class="header-left">
-					<div class="input-group icons">
-						<div class="input-group-prepend">
-							<span
-								class="input-group-text bg-transparent border-0 pr-2 pr-sm-3"
-								id="basic-addon1"><i class="mdi mdi-magnify"></i></span>
-						</div>
-						<input type="search" class="form-control"
-							placeholder="Search Dashboard" aria-label="Search Dashboard">
-						<div class="drop-down   d-md-none">
-							<form action="#">
-								<input type="text" class="form-control" placeholder="Search">
-							</form>
-						</div>
 					</div>
 				</div>
 
@@ -269,128 +264,39 @@
             Sidebar end
         ***********************************-->
 
-		<!--**********************************
-            Content body start
-        ***********************************-->
-
-
-		<div class="content-body">
-			<div class="row page-titles mx-0">
-				<div class="col p-md-0">
-					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="javascript:void(0)">Member</a></li>
-						<li class="breadcrumb-item active"><a
-							href="javascript:void(0)">application</a></li>
-					</ol>
-				</div>
+		<div class="row page-titles mx-0">
+			<div class="col p-md-0">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="javascript:void(0)">카페</a></li>
+					<li class="breadcrumb-item active"><a
+						href="javascript:void(0)">카페가입</a></li>
+				</ol>
 			</div>
-			<div id="container-fluid">
-				<div class="col-lg-12">
-					<div class="card">
-						<div class="card-body">
-							<h4 class="card-title">${cafe.cafeName } 카페가입하기</h4>
-							<p class="text-muted m-b-15 f-s-12">
-								카페가입을 위한 정보를 입력해주세요. 카페내규에 따라
-								<code>가입승인, 가입거절</code>
-								될 수 있습니다.
-							</p>
-							<div class="basic-form">
-								<!-- form Start /////////////////////////////////////-->
-								<form>
-									<input type="hidden" name="autoApplicationAcceptFlag"
-										value="${cafe.autoApplicationAcceptFlag }" /> <input
-										type="hidden" name="memberNicknameFlag"
-										value="${cafe.memberNicknameFlag }" /> <input type="hidden"
-										name="cafeNo" value="${cafe.cafeNo }" />
+		</div>
+		<div class="login-form-bg h-100">
+			<div class="container h-100">
+				<div class="row justify-content-center h-100">
+					<div class="col-xl-8">
+						<div class="error-content">
+							<div class="card mb-0">
+								<div class="card-body text-center">
+									<h1 class="error-text text-primary">카페 멤버에게만 공개된 게시물입니다</h1>
+									<h4 class="mt-4">${cafe.cafeName}</h4>
+									<p>카페에 가입에보세요!</p>
+									<form class="mt-5 mb-5">
 
-									<c:if test="${!empty cafe.cafeDetail}">
-										<div class="form-group">
-											>카페설명 <input type="text" readonly="readonly"
-												class="form-control-plaintext" value="${cafe.cafeDetail }">
+										<div class="text-center mb-4 mt-4">
+											<a href="javascript:fncAddCafeApplication('${cafeURL}')" class="btn btn-primary">카페가입하기</a>
 										</div>
-									</c:if>
-
-									<c:if test="${cafe.memberNicknameFlag eq true }">
-                                    >별명
-                                        <div class="form-row">
-											<div class="col">
-												<input type="text" class="form-control input-default"
-													id="memberNickname" name="memberNickname"
-													placeholder="사용할별명"> <span id="helpBlock"
-													class="help-block"> <strong class="text-danger"
-													id="here" name="here">중복확인하세요</strong>
-												</span>
-											</div>
-											<div class="col-7"></div>
-											<div class="col"></div>
-										</div>
-									</c:if>
-									<br>
-									<c:if test="${!empty cafe.applicationQuestion1}">
-										<div class="form-group">
-											>질문1 <input type="text" readonly="readonly"
-												class="form-control-plaintext"
-												value="${  cafe.applicationQuestion1}"> <input
-												type="hidden" name="question1"
-												value="${  cafe.applicationQuestion1}" />
-										</div>
-										<div class="form-group">
-											<input type="text" class="form-control input-default"
-												id="answer1" name="answer1" placeholder="질문1에 대한 답변을 입력해주세요">
-										</div>
-									</c:if>
-
-									<c:if test="${!empty cafe.applicationQuestion2}">
-										<div class="form-group">
-											>질문2 <input type="text" readonly="readonly"
-												class="form-control-plaintext"
-												value="${  cafe.applicationQuestion2}"> <input
-												type="hidden" name="question2"
-												value="${  cafe.applicationQuestion2}" />
-										</div>
-										<div class="form-group">
-											<input type="text" class="form-control input-default"
-												id="answer2" name="answer2" placeholder="질문2에 대한 답변을 입력해주세요">
-										</div>
-									</c:if>
-
-									<c:if test="${!empty cafe.applicationQuestion3}">
-										<div class="form-group">
-											>질문3 <input type="text" readonly="readonly"
-												class="form-control-plaintext"
-												value="${  cafe.applicationQuestion3}"> <input
-												type="hidden" name="question3"
-												value="${  cafe.applicationQuestion3}" />
-										</div>
-										<div class="form-group">
-											<input type="text" class="form-control input-default"
-												id="answer3" name="answer3" placeholder="질문3에 대한 답변을 입력해주세요">
-										</div>
-									</c:if>
-
-									<div align="center">
-										질문 답변 시 회원님의 소중한 개인정보가 유출되지 않도록 주의해주시기 바랍니다.
-										<br>
-										<br>
-										<button type="button" name="button"
-											class="btn mb-1 btn-outline-warning">가입</button>
-									</div>
-
-								</form>
+									</form>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-
 			</div>
-			<!-- row -->
-
-			<div class="container-fluid"></div>
-			<!-- #/ container -->
 		</div>
-		<!--**********************************
-            Content body end
-        ***********************************-->
+
 	</div>
 	<!--**********************************
         Main wrapper end
@@ -409,70 +315,14 @@
 	<script src="/plugins/sweetalert/js/sweetalert.init.js"></script>
 
 	<!-- 메뉴바 이용을 위한 스크립트 -->
-	<script src="/js/custom/scroll-top.js"></script>
-
-	<!--  ///////////////////////// JavaScript ////////////////////////// -->
-	<script type="text/javascript">
-		$(function() {
-			var cafeURL = '${cafe.cafeURL}'
-
-			$("button[name=button]").on(
-					"click",
-					function() {
-						alert("가입");
-						$("form").attr("method", "POST").attr("action",
-								"/cafe/" + cafeURL + "/addCafeApplication")
-								.submit();
-					});
-		});
-
-		$(function() {
-			var cafeNo = '${cafe.cafeNo }'
-			var cafeURL = '${cafe.cafeURL}'
-			$("#memberNickname").on(
-					"keyup",
-					function() {
-						//alert("durl")
-						//alert($("#memberNickname").val())
-						//alert(cafeNo)
-
-						$.ajax({
-							url : "/cafe/json/" + cafeURL + "/checkNickName",
-							type : "POST",
-							data : JSON.stringify({
-								memberNickname : $("#memberNickname").val(),
-								cafeNo : cafeNo
-							}),
-							dataType : "json",
-							contentType : "application/json",
-							success : function(JSONData, status) {
-
-								//alert("status : " + status);
-								//alert("JSONData.result : \n" + JSONData.result);
-
-								if (JSONData.result == true
-										&& JSONData.memberNickname != "") {
-									$("#here").html("<h7>사용가능</h7>")
-								} else if (JSONData.result == false) {
-									$("#here").html("<h7>사용불가능</h7>")
-								} else if ((JSONData.memberNickname == "")
-										&& JSONData.result == true) {
-									$("#here").html("<h7>중복확인하세요</h7>")
-								}
-
-							},
-							error : function(request, status, error) {
-								alert("에러남 : " + error);
-							}
-
-						});//ajax끝
-
-					});//keyup끝
-
-		});
+	<script>
+		
 	</script>
-
+	<script src="/js/custom/scroll-top.js"></script>
+	<script src="/js/custom/menubarCafe.js"></script>
 	<script src="/js/custom/cafeCommon.js"></script>
+
+
 
 </body>
 
