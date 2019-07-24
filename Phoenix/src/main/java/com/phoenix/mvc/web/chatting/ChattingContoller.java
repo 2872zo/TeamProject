@@ -10,7 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
@@ -39,14 +43,35 @@ public class ChattingContoller {
 	
 	@RequestMapping("chatFriendsList")
 	public String getChatFriendsList(@SessionAttribute("user") User user, Model model) throws Exception {
-		Search search = new Search();
-		search.setUserNo(user.getUserNo());
-		search.setStatus(0);
-		Map map = chattingService.getMyFriendsList(search);
-		List friendsList = (List) map.get("friendsList");
-		model.addAttribute("friendsList", friendsList);
+		//Search search = new Search();
+		//search.setUserNo(user.getUserNo());
+		//search.setStatus(0);
+		//Map map = chattingService.getMyFriendsList(search);
+		//List friendsList = (List) map.get("friendsList");
+		//model.addAttribute("friendsList", friendsList);
 		return "chat/listChatFriends";
 	}
+	
+	
+	@GetMapping("searchChatFriend")
+	public String searchChatFriendView() throws Exception {
+		//Search search = new Search();
+		//search.setUserNo(user.getUserNo());
+		//search.setStatus(0);
+		//Map map = chattingService.getMyFriendsList(search);
+		//List friendsList = (List) map.get("friendsList");
+		//model.addAttribute("friendsList", friendsList);
+		return "chat/listChatFriends";
+	}
+	
+	@PostMapping("searchChatFriend")
+	public String searchChatFriend(@ModelAttribute Search search, Model model) throws Exception {
+		Map map=chattingService.getFriendSearchList(search);
+		List searchList = (List) map.get("searchList");
+		model.addAttribute("searchList", searchList);
+		return "chat/listChatFriends";
+	}
+	
 	
 	@RequestMapping("chatRoomList")
 	public String getChatRoomList(@SessionAttribute("user") User user, Model model, HttpSession session) throws Exception {
@@ -70,8 +95,8 @@ public class ChattingContoller {
 	}
 	
 	@RequestMapping("chatRoom")
-	public String getChatRoom(@SessionAttribute("user") User user, @ModelAttribute ChatRoom chatRoom, Model model) throws Exception {
-		
+	public String getChatRoom(@ModelAttribute ChatRoom chatRoom, @SessionAttribute("user") User user, Model model) throws Exception {
+		System.out.println(chatRoom.getChatRoomNo());
 		//Search search = new Search();
 		//search.setUserNo(user.getUserNo());
 		//Map map = chattingService.getMyChatRoomList(search);
@@ -91,5 +116,27 @@ public class ChattingContoller {
 		
 		return "chat/chatConfig";
 	}
+	
+	/////////////////////////jsp 테스트용 페이지들/////////////////////////
+	@RequestMapping("test")
+	public String testpage() {
+		return "chat/test";
+	}
+	
+	@RequestMapping("test1")
+	public String testpage1() {
+		return "chat/test1";
+	}
+	
+	@RequestMapping("test2")
+	public String testpage2() {
+		return "chat/test2";
+	}
+	
+	@RequestMapping("test3")
+	public String testpage3() {
+		return "chat/test3";
+	}
+	/////////////////////////jsp 테스트용 페이지들/////////////////////////
 	
 }

@@ -44,6 +44,11 @@ public class ChattingDaoImpl implements ChattingDao{
 	}
 	
 	@Override
+	public List getFriendSearchList(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("ChatFriendMapper.searchChatFriend", search);
+	}
+	@Override
 	public void testMethod(Chat chat) throws Exception {
 		mongoTemplate.insert(chat);	
 	}
@@ -69,60 +74,54 @@ public class ChattingDaoImpl implements ChattingDao{
 		return mongoTemplate.find(query, Chat.class);
 		
 	}
+	
+
 
 	@Override
 	public void addChatRoom(ChatRoom chatRoom) throws Exception {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void deleteChatRoomFromList(ChatRoom chatRoom) throws Exception {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public int getMyChatRoomCount(Search search) throws Exception {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public ChatFriend getFriend(ChatFriend chatFriend) throws Exception {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void addFriend(ChatFriend chatFriend) throws Exception {
-		// TODO Auto-generated method stub
-		
+	public int addFriend(ChatFriend chatFriend) throws Exception {
+		return sqlSession.insert("ChatFriendMapper.addFriend",chatFriend);
 	}
 
 	@Override
-	public void updateFriend(ChatFriend chatFriend) throws Exception {
-		// TODO Auto-generated method stub
-		
+	public int updateFriend(ChatFriend chatFriend) throws Exception {
+		return sqlSession.update("ChatFriendMapper.updateFriend", chatFriend);
 	}
 
 	@Override
-	public void removeFriend(ChatFriend chatFriend) throws Exception {
-		// TODO Auto-generated method stub
-		
+	public int deleteFriend(ChatFriend chatFriend) throws Exception {
+		return sqlSession.delete("ChatFriendMapper.deleteFriend", chatFriend);
 	}
 
 	@Override
 	public int getMyChatCount(Search search) throws Exception {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public List getChatRoomUserList(Search search) throws Exception {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
+	
 	
 }

@@ -1,81 +1,271 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=utf-8"%>
+
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!DOCTYPE html>
-
 <html lang="ko">
-
 <head>
-<title>CafeTabMain</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Favicon icon -->
+<link rel="icon" type="image/png" sizes="16x16"
+	href="/images/favicon.png">
+<!-- Custom Stylesheet -->
+<link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
+<link href="/css/style.css" rel="stylesheet">
 
-<!-- ////////////////////////////// jQuery CDN ////////////////////////////// -->
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"
- integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
- crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
- integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
- crossorigin="anonymous"></script>
-<!-- ////////////////////////////// bootstrap CDN ////////////////////////////// -->
-<link rel="stylesheet"
- href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
- integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
- crossorigin="anonymous">
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
- integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
- crossorigin="anonymous"></script>
+<link rel="stylesheet" href="/css/custom/scroll-top.css">
+
 
 <!--  ///////////////////////// CSS ////////////////////////// -->
+<style type="text/css">
+.friends{ border: 1px solid red;}
+img {
+    max-width: 100%; /* 이미지의 최대사이즈 */
+    height: auto;
+    vertical-align: center;
+}
+</style>
 
-<!--  ///////////////////////// JavaScript ////////////////////////// -->
-<script type="text/javascript">
-
-$(function() {
-	
-	//$("#addChatRoom").on("click" , function() {
-	//	$(self.location).attr("href","/chat/getCafeView");
-	//});
-
-});
-</script>
-	<!-- ToolBar Start /////////////////////////////////////-->
-	<jsp:include page="../common/toolbar.jsp" />
-	<!-- ToolBar End /////////////////////////////////////-->
 </head>
-
 <body>
-<br/>
-	<!--  화면구성 div Start /////////////////////////////////////-->
-	<div class="container">
-	
-	<br/>
-		<button type="button" class="btn btn-outline-danger btn-block" id='addChatRoom'>
-		채팅방개설
-		</button>
-	<br/>
-	
-	<c:forEach items="${friendsList}" var ='friend'>
-	<div class="card mb-3" style="max-width: 540px;">
-  	<div class="row no-gutters">
-    <div class="col-md-4">
-      <img src="..." class="card-img" alt="...">
+
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+            </svg>
+        </div>
     </div>
-    <div class="col-md-8">
+    <!--*******************
+        Preloader end
+    ********************-->
+
+    
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+
+     		<!-- ToolBar Start /////////////////////////////////////-->
+		<jsp:include page="/WEB-INF/views/common/toolbar.jsp" />
+		<!-- ToolBar End /////////////////////////////////////-->
+
+       	<!--**********************************
+            Sidebar start
+        ***********************************-->
+		<div class="nk-sidebar">
+			<c:import url="/WEB-INF/views/chat/chatSideMenu.jsp"></c:import>
+		</div>
+		<!--**********************************
+            Sidebar end
+        ***********************************-->
+	<!--**********************************
+            Content body start
+        ***********************************-->
+        
+        
+		<div class="content-body" style="min-height: 600px;">
+	<div class="row">
+        <div class="col-lg-8">
+        
+        
+        
+        
+        <!--  
+        
+			<div class="row page-titles mx-0">
+				<div class="col p-md-0">
+					<ol class="breadcrumb">
+					
+					 
+						<li class="breadcrumb-item"><a href="javascript:void(0)">manage</a></li>
+						<li class="breadcrumb-item active"><a href="javascript:void(0)">application</a></li>
+						
+						
+					</ol>
+				</div>
+			</div>
+			
+		-->
+		
+			<div class='container-fluid'>
+			
+			
+
+				<div class='card'>
+					<div class='card-body'>
+						
+					<div class="d-flex justify-content-around">
+					
+					<i class="mdi mdi-account-multiple-outline" style='font-size: 30pt;'></i>
+					<i class="mdi mdi-account-check" style='font-size: 30pt;'></i>
+					<i class="mdi mdi-account-search" style='font-size: 30pt;'></i>
+					<i class="mdi mdi-sleep-off" style='font-size: 30pt;'></i>
+					
+					
+					</div>
+						<form>
+	
+					<div class='d-flex justify-content-center'>
+				<div class="input-group mb-3 " style='width: 50%;'>
+					<input type="text" class="form-control form-control-lg"
+						placeholder="검색어를 입력해주세요" id='searchKeyword'>
+					<div class="input-group-append">
+						<button class="btn btn-lg btn-outline-primary" type="button"
+							id="explore">
+							<i class="mdi mdi-magnify" style='font-size: 18pt;'></i>
+						</button>
+					</div>
+				</div>
+			</div>
+						</form>
+						
+	<div class="card friends">
       <div class="card-body">
-        <h5 class="card-title">친구번호  : ${friend.chatFriendNo} </h5>
-        <p class="card-text">친구 유저번호 : ${friend.targetUserNo}</p>
-        <p class="card-text"><small class="text-muted"> ${friend.friendStatus}</small></p>
+      <div class ='row'>
+      <div class='col-lg-4'>
+      <img alt="" src="/images/avatar/1.jpg" class='rounded img-fluid' alt="Responsive image" >
+      </div>
+      <div class='col-lg-8'>
+        <h5 class="card-title">Special title treatment</h5>
+        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+      </div>
+      </div>
       </div>
     </div>
-  	</div>
-	</div>
-	</c:forEach>
+
+
+<c:forEach items='${searchList}' var = 'searchedChatFriend'>
+
+<div class="card friends">
+      <div class="card-body">
+      <div class ='row'>
+      <div class='col-lg-4'>
+      <img alt="" src="/images/avatar/1.jpg" class='rounded img-fluid' alt="Responsive image" >
+      </div>
+      <div class='col-lg-8'>
+        <h5 class="card-title">Special title treatment</h5>
+        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+      </div>
+      </div>
+      </div>
+    </div>
+</c:forEach>
+
+
+					</div>
+
+					<!-- card body -->
+				</div>
+				<!-- card -->
+			</div>
+
+			<!-- #/ container -->
+		
+		 </div>
+        <!-- 왼쪽 컬럼 엔드 -->
+        
+        <!-- 오른컬럼이야 -->
+         
+        <div class="col-lg-4">
+        
+	        <div class='container-fluid'>
 	
+					<div class='card'>
+						<div class='card-body'>
+	        				8888주ㅡㄹㅇ야
+	        			</div>
+	        		</div>
+	        </div>
+        
+        </div>
+        
+        <!-- 오른쪽컬럼끝야 -->
+		
+		
+		</div>   <!-- row 엔드 -->
+        
+
+		
+       
+        </div>
+        <!--**********************************
+            Content body end
+        
+        ***********************************-->
+      
+        <!--**********************************
+            Footer start
+        ***********************************-->
+        <div class="footer">
+            <div class="copyright">
+                <p>Copyright &copy; Designed & Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2018</p>
+            </div>
+        </div>
+        <!--**********************************
+            Footer end
+        ***********************************-->
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+	<!--**********************************
+        Scripts
+    ***********************************-->
+	<script src="/plugins/common/common.min.js"></script>
+	<script src="/js/custom.min.js"></script>
+	<script src="/js/settings.js"></script>
+	<script src="/js/gleek.js"></script>
+	<script src="/js/styleSwitcher.js"></script>
+	<!-- 메뉴바 이용을 위한 스크립트 -->
+	<script src="/js/custom/scroll-top.js"></script>
 
 
+	<!--**********************************
+        Scripts
+    ***********************************-->
+
+	<!--  ///////////////////////// JavaScript ////////////////////////// -->
+	<script type="text/javascript">
+
+//툴바 스크립트용 세션체커
+var checkSessionUser = ${empty sessionScope.user};
+		
 	
-	</div>
-	<!--  화면구성 div Start /////////////////////////////////////-->
+		
+	$(function() {
+		var checkSessionUser = ${empty sessionScope.user};
 
+		$("#searchKeyword").focus(function() {
+			$(this).attr("style", "border: 2px solid #f5a142");
+		});
+
+		$("#searchKeyword").blur(function() {
+			$(this).attr("style", "");
+		});
+		
+			//$("#explore").on))
+		
+
+	});
+</script>
+
+	<!-- 공통 툴바용 스크립트 -->
+	<script src="/js/custom/toolbarScript.js"></script>
+	
+	<!-- 채팅 사이드 툴바 스크립트 -->
+	<script src="/js/custom/chatSideBar.js"></script>
+
+
+	<!--  ///////////////////////// JavaScript ////////////////////////// -->
 </body>
+
 </html>

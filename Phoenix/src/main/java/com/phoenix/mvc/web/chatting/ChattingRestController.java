@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.chatting.ChattingService;
 import com.phoenix.mvc.service.domain.Chat;
+import com.phoenix.mvc.service.domain.ChatFriend;
 import com.phoenix.mvc.service.domain.ChatRoom;
 
 @RestController
@@ -43,6 +45,29 @@ public class ChattingRestController {
 		System.out.println(list);
 		
 		return chat;
+	}
+	
+	
+	@PostMapping("inviteFriend")
+	public ChatFriend inviteFriend(@RequestBody ChatFriend chatFriend) throws Exception{
+		
+		
+		return new ChatFriend();
+	}
+	
+	@PostMapping("addChatFriend")
+	public boolean addChatFriend(@RequestBody Search search){
+		return true;
+	}
+	
+	@PostMapping("updateChatFriend")
+	public boolean updateChatFriend(@RequestBody Search search){
+		return true;
+	}
+	
+	@PostMapping("cancelChatFriend")
+	public boolean cancelChatFriend(@RequestBody Search search) {
+		return true;
 	}
 	
 	@PostMapping("updateChatRoomName")

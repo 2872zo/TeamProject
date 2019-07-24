@@ -17,13 +17,15 @@ public interface ChattingDao {
 	
 	public List getMyFriendsList(Search search) throws Exception;
 	
+	public List getFriendSearchList(Search search) throws Exception;
+	
 	public ChatFriend getFriend(ChatFriend chatFriend) throws Exception;
 	
-	public void addFriend(ChatFriend chatFriend) throws Exception;
+	public int addFriend(ChatFriend chatFriend) throws Exception;
 	
-	public void updateFriend(ChatFriend chatFriend) throws Exception;
+	public int updateFriend(ChatFriend chatFriend) throws Exception;
 	
-	public void removeFriend(ChatFriend chatFriend) throws Exception;
+	public int deleteFriend(ChatFriend chatFriend) throws Exception;
 	
 	public void addChatRoom(ChatRoom chatRoom) throws Exception;
 	

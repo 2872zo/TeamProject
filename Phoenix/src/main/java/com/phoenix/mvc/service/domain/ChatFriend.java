@@ -3,24 +3,15 @@ package com.phoenix.mvc.service.domain;
 import java.util.List;
 
 public class ChatFriend {
-	
-	private String id;
-	
+		
 	private int chatFriendNo;
 	private int userNo;
 	private int targetUserNo;
+	private String userNickname;
 	private String friendNickname;
-	private int friendStatus;
+	private String friendStatus;
 	
 	private List<ChatFriend> chatFriendsList;
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
 
 	public int getChatFriendNo() {
 		return chatFriendNo;
@@ -46,6 +37,14 @@ public class ChatFriend {
 		this.targetUserNo = targetUserNo;
 	}
 
+	public String getUserNickname() {
+		return userNickname;
+	}
+
+	public void setUserNickname(String userNickname) {
+		this.userNickname = userNickname;
+	}
+
 	public String getFriendNickname() {
 		return friendNickname;
 	}
@@ -54,11 +53,11 @@ public class ChatFriend {
 		this.friendNickname = friendNickname;
 	}
 
-	public int getFriendStatus() {
+	public String getFriendStatus() {
 		return friendStatus;
 	}
 
-	public void setFriendStatus(int friendStatus) {
+	public void setFriendStatus(String friendStatus) {
 		this.friendStatus = friendStatus;
 	}
 
@@ -72,7 +71,7 @@ public class ChatFriend {
 
 	@Override
 	public String toString() {
-		return "ChatFriend [id=" + id + ", chatFriendNo=" + chatFriendNo + ", userNo=" + userNo + ", targetUserNo="
+		return "ChatFriend [chatFriendNo=" + chatFriendNo + ", userNo=" + userNo + ", targetUserNo="
 				+ targetUserNo + ", friendNickname=" + friendNickname + ", friendStatus=" + friendStatus
 				+ ", chatFriendsList=" + chatFriendsList + "]";
 	}

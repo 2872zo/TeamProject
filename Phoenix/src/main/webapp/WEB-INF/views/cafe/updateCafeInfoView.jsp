@@ -207,6 +207,7 @@ code {
 		 $(function() {
 
 				$("input[name='cafeName']").on('keyup',function() {
+				
 									var inputed = $("input[name='cafeName']").val();
 									 //alert("입력  : "+inputed);
 											$.ajax({
