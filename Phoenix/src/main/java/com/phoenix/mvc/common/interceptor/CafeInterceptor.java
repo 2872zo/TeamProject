@@ -13,6 +13,7 @@ import com.phoenix.mvc.service.cafe.CafeMemberService;
 import com.phoenix.mvc.service.cafe.CafePostService;
 import com.phoenix.mvc.service.domain.Board;
 import com.phoenix.mvc.service.domain.CafeMember;
+import com.phoenix.mvc.service.domain.Post;
 import com.phoenix.mvc.service.domain.User;
 import com.phoenix.mvc.service.user.UserService;
 
@@ -83,21 +84,24 @@ public class CafeInterceptor extends HandlerInterceptorAdapter {
 					} 
 					//해당 카페의 멤버일때 접근하는 메뉴에 따른 권한 체크
 					else {
+						//출석일 체크
+						
 						
 						//정지멤버일 경우 정지 기간 표시 페이지로
 						if(cafeMember.getMemberStatusCode().equals("cs101")) {
-							System.out.println("interceptor >>> 정지 회원접근");
+							System.out.println("CafeInterceptor >>> 정지 회원접근");
 							response.sendRedirect(request.getContextPath() + "/cafe/" + cafeURL + "/memberBlock");
 							return false;
 						}
 
 						//게시판 조회
 						if (request.getRequestURI().indexOf("getBoard") != -1) {
-							System.out.println("interceptor >>> 카페 메뉴 접근 >>> getBoard");
+							System.out.println("CafeInterceptor >>> 카페 메뉴 접근 >>> getBoard");
 							Board board = cafePostService.getBoard(Integer.parseInt(pathVariables.get("boardNo")));
 							int cafeMemberGrade = Integer.parseInt(cafeMember.getMemberGrade().substring(2));
 							int boardGrade = Integer.parseInt(board.getAccessGrade().substring(2));
 
+							//게시판 접근권한이 모자랄 경우
 							if (!user.getUserRoleCode().equals("ur100") && cafeMemberGrade > 101 && cafeMemberGrade < boardGrade) {
 								System.out.println("CafeInterceptor >>> 권한 부족");
 								response.sendRedirect(request.getContextPath() + "/cafe/" + cafeURL + "/accessDenied");
@@ -107,13 +111,22 @@ public class CafeInterceptor extends HandlerInterceptorAdapter {
 
 						//게시글 조회
 						if (request.getRequestURI().indexOf("getPost") != -1) {
-							System.out.println("interceptor >>> 카페 메뉴 접근 >>> getPost");
+							System.out.println("CafeInterceptor >>> 카페 메뉴 접근 >>> getPost");
 							Board board = cafePostService.getBoardByPostNo(Integer.parseInt(pathVariables.get("postNo")));
+							Post post = cafePostService.getPost(Integer.parseInt(pathVariables.get("postNo")));
 							int cafeMemberGrade = Integer.parseInt(cafeMember.getMemberGrade().substring(2));
 							int boardGrade = Integer.parseInt(board.getAccessGrade().substring(2));
 
+							//게시글이 삭제된 경우
+							if(post.isPostStatusFlag()) {
+								System.out.println("CafeInterceptor >>>>>>>>>> 게시글 삭제됨!");
+								response.sendRedirect(request.getContextPath() + "/cafe/" + cafeURL + "/deletedPost");
+								return false;
+							}
+							
+							//해당 게시글이 있는 게시판의 접근권한이 모자랄 경우
 							if (!user.getUserRoleCode().equals("ur100") && cafeMemberGrade > 101 && cafeMemberGrade < boardGrade) {
-								System.out.println("CafeInterceptor >>> 권한 부족");
+								System.out.println("CafeInterceptor >>>>>>>>>> 권한 부족");
 								response.sendRedirect(request.getContextPath() + "/cafe/" + cafeURL + "/accessDenied");
 								return false;
 							}
