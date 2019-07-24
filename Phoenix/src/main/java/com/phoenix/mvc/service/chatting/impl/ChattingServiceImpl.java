@@ -46,6 +46,22 @@ public class ChattingServiceImpl implements ChattingService{
 		map.put("friendsList", friendsList);
 		return map;
 	}
+	
+	@Override
+	public Map getFriendSearchList(Search search) throws Exception {
+		Map map = new HashMap();
+		List searchList = chattingDao.getFriendSearchList(search);
+		map.put("searchList", searchList);
+		return map;
+	}
+
+	@Override
+	public Map getWannaBeFriendList(Search search) throws Exception {
+		Map map = new HashMap();
+		List wannaBeFreindList = chattingDao.getWannaBeFriendList(search);
+		map.put("wannaBeFreindList", wannaBeFreindList);
+		return map;
+	}
 
 	@Override
 	public int addFriend(ChatFriend chatFriend) throws Exception {
@@ -103,15 +119,5 @@ public class ChattingServiceImpl implements ChattingService{
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	public Map getFriendSearchList(Search search) throws Exception {
-
-		Map map = new HashMap();
-		List searchList = chattingDao.getFriendSearchList(search);
-		map.put("searchList", searchList);
-		return map;
-	}
-
 
 }

@@ -19,6 +19,8 @@ public interface ChattingDao {
 	
 	public List getFriendSearchList(Search search) throws Exception;
 	
+	public List getWannaBeFriendList(Search search) throws Exception;
+	
 	public ChatFriend getFriend(ChatFriend chatFriend) throws Exception;
 	
 	public int addFriend(ChatFriend chatFriend) throws Exception;

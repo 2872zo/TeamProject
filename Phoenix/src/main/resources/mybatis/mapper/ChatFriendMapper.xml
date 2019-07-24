@@ -26,6 +26,34 @@
 		AND cf.user_no = #{userNo}
 	</select>
 	
+	<select id="getWannaBeFriendList" parameterType="Search" resultMap="chatFriendSelectMap">
+	
+	SELECT
+		user_no, user_nickname, profile_img
+	FROM
+		users
+	WHERE
+		user_role_code='ur101'
+	AND 
+		user_status_code not in ('cs102')
+	AND 
+		user_no not in (SELECT
+							target_user_no 
+						FROM
+							chat_friends
+						WHERE 
+							user_no = #{userNo})
+	AND 
+		user_no IN (SELECT 
+						user_no
+					FROM 
+						chat_friends
+					WHERE 
+						target_user_no = #{userNo})
+	</select>
+	
+	
+	
 	<select id="searchChatFriend" parameterType="Search" resultMap="chatFriendSelectMap">
 		
 		SELECT
@@ -50,11 +78,14 @@
 	</select>
 	
 	<insert id="addFriend" parameterType="ChatFriend">
+	<selectKey keyProperty="chatFriendNo" resultType="int" order="BEFORE">
+	 		SELECT seq_chat_friends_no.NEXTVAL FROM DUAL
+	 	</selectKey>
 	INSERT INTO 
 	chat_friends 
 		(chat_friends_no, user_no, target_user_no, friend_status) 
 	VALUES 
-		(seq_chat_friends_no.NEXTVAL, #{userNo}, #{targetUserNo}, #{friendStatus}) 
+		(#{chatFriendNo}, #{userNo}, #{targetUserNo}, #{friendStatus}) 
 	</insert> 
 	
 	<delete id="deleteFriend" parameterType="ChatFriend">

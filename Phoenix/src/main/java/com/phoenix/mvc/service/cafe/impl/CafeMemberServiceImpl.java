@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.phoenix.mvc.common.Event;
 import com.phoenix.mvc.common.Search;
@@ -20,6 +21,7 @@ import com.phoenix.mvc.service.domain.User;
 import com.phoenix.mvc.service.user.UserDao;
 
 @Service
+@Transactional
 public class CafeMemberServiceImpl implements CafeMemberService {
 
 	@Autowired

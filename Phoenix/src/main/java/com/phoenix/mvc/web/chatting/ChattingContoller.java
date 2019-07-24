@@ -43,12 +43,12 @@ public class ChattingContoller {
 	
 	@RequestMapping("chatFriendsList")
 	public String getChatFriendsList(@SessionAttribute("user") User user, Model model) throws Exception {
-		//Search search = new Search();
-		//search.setUserNo(user.getUserNo());
-		//search.setStatus(0);
-		//Map map = chattingService.getMyFriendsList(search);
-		//List friendsList = (List) map.get("friendsList");
-		//model.addAttribute("friendsList", friendsList);
+		Search search = new Search();
+		search.setUserNo(user.getUserNo());
+		search.setStatus(0);
+		Map map = chattingService.getMyFriendsList(search);
+		List friendsList = (List) map.get("friendsList");
+		model.addAttribute("friendsList", friendsList);
 		return "chat/listChatFriends";
 	}
 	
@@ -65,10 +65,21 @@ public class ChattingContoller {
 	}
 	
 	@PostMapping("searchChatFriend")
-	public String searchChatFriend(@ModelAttribute Search search, Model model) throws Exception {
+	public String searchChatFriend(@SessionAttribute("user") User user,@ModelAttribute Search search, Model model) throws Exception {
+		search.setUserNo(user.getUserNo());
 		Map map=chattingService.getFriendSearchList(search);
 		List searchList = (List) map.get("searchList");
 		model.addAttribute("searchList", searchList);
+		return "chat/listChatFriends";
+	}
+	
+	@PostMapping("wannaBeFriend")
+	public String getWannaBeFriendList(@SessionAttribute("user") User user, Model model) throws Exception {
+		Search search = new Search();
+		search.setUserNo(user.getUserNo());
+		Map map=chattingService.getWannaBeFriendList(search);
+		List wannaBeFreindList = (List) map.get("wannaBeFreindList");
+		model.addAttribute("wannaBeFreindList", wannaBeFreindList);
 		return "chat/listChatFriends";
 	}
 	

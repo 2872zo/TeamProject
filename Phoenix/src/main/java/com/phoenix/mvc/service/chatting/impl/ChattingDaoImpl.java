@@ -45,7 +45,6 @@ public class ChattingDaoImpl implements ChattingDao{
 	
 	@Override
 	public List getFriendSearchList(Search search) throws Exception {
-		// TODO Auto-generated method stub
 		return sqlSession.selectList("ChatFriendMapper.searchChatFriend", search);
 	}
 	@Override
@@ -120,6 +119,11 @@ public class ChattingDaoImpl implements ChattingDao{
 	@Override
 	public List getChatRoomUserList(Search search) throws Exception {
 		return null;
+	}
+
+	@Override
+	public List getWannaBeFriendList(Search search) throws Exception {
+		return sqlSession.selectList("ChatFriendMapper.getWannaBeFriendList", search);
 	}
 
 	

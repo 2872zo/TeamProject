@@ -13,6 +13,8 @@ public interface ChattingService {
 	public Map getMyFriendsList(Search search) throws Exception;
 	
 	public Map getFriendSearchList(Search search) throws Exception;
+	
+	public Map getWannaBeFriendList(Search search) throws Exception;
 		
 	public int addFriend(ChatFriend chatFriend) throws Exception;
 	

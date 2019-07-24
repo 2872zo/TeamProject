@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.phoenix.mvc.common.Event;
 import com.phoenix.mvc.common.Search;
@@ -22,6 +23,7 @@ import com.phoenix.mvc.service.domain.CafeMemberBlock;
 import com.phoenix.mvc.service.domain.Cafe;
 
 @Service("cafeManageServiceImpl")
+@Transactional
 public class CafeManageServiceImpl implements CafeManageService {
 
 	@Autowired
