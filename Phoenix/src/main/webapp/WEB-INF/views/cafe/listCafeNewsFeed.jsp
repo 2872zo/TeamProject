@@ -8,48 +8,20 @@
 <html lang="ko">
 
 <head>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Favicon icon -->
+<link rel="icon" type="image/png" sizes="16x16"
+	href="/images/favicon.png">
+<!-- Custom Stylesheet -->
+<link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
+<link href="/css/style.css" rel="stylesheet">
+
+<link rel="stylesheet" href="/css/custom/scroll-top.css">
+
 <title>카페뉴스피드</title>
 
-<!-- ////////////////////////////// jQuery CDN ////////////////////////////// -->
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"
-	integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-	crossorigin="anonymous"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-	crossorigin="anonymous"></script>
-<!-- ////////////////////////////// bootstrap CDN ////////////////////////////// -->
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-	crossorigin="anonymous">
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-	crossorigin="anonymous"></script>
 
-<!--  ///////////////////////// CSS ////////////////////////// -->
 
-<!--  ///////////////////////// JavaScript ////////////////////////// -->
-<script type="text/javascript">
-
-	$(function() {	
-
-		/*	
-		var el = document.createElement( 'html' );
-		el.innerHTML = '${post.postContent}';
-		$(el).find("img").remove().html
-
-		
-
-		$("#addCafe").on("click", function() {
-			$(self.location).attr("href", "/cafe/addCafeView");
-		});
-		*/	
-		
-		
-	});
-</script>
 <!-- ToolBar Start /////////////////////////////////////-->
 <jsp:include page="../common/toolbar.jsp" />
 <!-- ToolBar End /////////////////////////////////////-->
@@ -79,5 +51,29 @@
 		</c:forEach>
 	</div>
 	<!--  화면구성 div Start /////////////////////////////////////-->
+	
+	
+	<!--**********************************
+        Scripts
+    ***********************************-->
+	<script src="/plugins/common/common.min.js"></script>
+	<script src="/js/custom.min.js"></script>
+	<script src="/js/settings.js"></script>
+	<script src="/js/gleek.js"></script>
+	<script src="/js/styleSwitcher.js"></script>
+
+	<script src="/plugins/sweetalert/js/sweetalert.min.js"></script>
+	<script src="/plugins/sweetalert/js/sweetalert.init.js"></script>
+
+	<!-- 메뉴바 이용을 위한 스크립트 -->
+	<script src="/js/custom/scroll-top.js"></script>
+	
+	<!--  ///////////////////////// JavaScript ////////////////////////// -->
+<script type="text/javascript">
+var checkSessionUser = ${empty sessionScope.user};
+</script>
+
+<!-- 공통 툴바용 스크립트 -->	
+	<script src="/js/custom/toolbarScript.js"></script>
 </body>
 </html>

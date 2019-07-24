@@ -21,7 +21,7 @@
 
 <link rel="stylesheet" href="/css/custom/scroll-top.css">
 <link rel="stylesheet" href="/css/custom/advenced-search.css">
-<script src="https://kit.fontawesome.com/e589319d43.js"></script>
+<!-- <script src="https://kit.fontawesome.com/e589319d43.js"></script> -->
 
 
 <style>
@@ -304,7 +304,7 @@ checkbox
 								<div class="form-row">
 									<input type="hidden" name="currentPage">
 									
-									<div class="col">
+									<div class="col-sm">
 										<div class="form-group">
 											<label for="termStart">기간 시작</label> 
 											<div class="input-group">
@@ -318,7 +318,7 @@ checkbox
 										</div>
 									</div>
 									
-									<div class="col">
+									<div class="col-sm">
 										<div class="form-group">
 											<label for="termEnd">기간 끝</label>
 											<div class="input-group"> 
@@ -332,7 +332,7 @@ checkbox
 										</div>
 									</div>
 		
-									<div class="col">
+									<div class="col-sm">
 										<div class="form-group">
 											<label for="boardNo">게시판</label> 
 											<select	class="form-control hideOption" name="boardNo">
@@ -346,7 +346,7 @@ checkbox
 								</div>
 								
 								<div class="form-row">
-									<div class="col">	
+									<div class="col-sm">	
 										<div class="form-group">
 											<label for="searchCondition">구분</label> <select
 												class="form-control hideOption" name="searchCondition">
@@ -360,7 +360,7 @@ checkbox
 									</div>
 									
 									
-									<div class="col">
+									<div class="col-sm">
 										<div class="form-group">
 											<label for="searchKeyword">키워드</label> 
 											<div class="input-group">

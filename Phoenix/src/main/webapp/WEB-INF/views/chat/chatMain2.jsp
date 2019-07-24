@@ -6,6 +6,7 @@
 
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <!-- Favicon icon -->
@@ -25,31 +26,32 @@
 </head>
 <body>
 
-    <!--*******************
+	<!--*******************
         Preloader start
     ********************-->
-    <div id="preloader">
-        <div class="loader">
-            <svg class="circular" viewBox="25 25 50 50">
-                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+	<div id="preloader">
+		<div class="loader">
+			<svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none"
+					stroke-width="3" stroke-miterlimit="10" />
             </svg>
-        </div>
-    </div>
-    <!--*******************
+		</div>
+	</div>
+	<!--*******************
         Preloader end
     ********************-->
 
-    
-    <!--**********************************
-        Main wrapper start
-    ***********************************-->
-    <div id="main-wrapper">
+	<div id="main-wrapper">
 
-     		<!-- ToolBar Start /////////////////////////////////////-->
+		<!-- ToolBar Start /////////////////////////////////////-->
 		<jsp:include page="/WEB-INF/views/common/toolbar.jsp" />
 		<!-- ToolBar End /////////////////////////////////////-->
 
-       	<!--**********************************
+		<!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+
+		<!--**********************************
             Sidebar start
         ***********************************-->
 		<div class="nk-sidebar">
@@ -58,37 +60,28 @@
 		<!--**********************************
             Sidebar end
         ***********************************-->
-	<!--**********************************
+
+		<!--**********************************
             Content body start
         ***********************************-->
-        
-        
-		<div class="content-body" style="min-height: 600px;">
-	<div class="row">
-        <div class="col-lg-8">
-        
-        <!--  
-        
+		<div class="content-body" style="min-height: 743px;">
+
 			<div class="row page-titles mx-0">
 				<div class="col p-md-0">
 					<ol class="breadcrumb">
-					
-					 
 						<li class="breadcrumb-item"><a href="javascript:void(0)">manage</a></li>
-						<li class="breadcrumb-item active"><a href="javascript:void(0)">application</a></li>
-						
-						
+						<li class="breadcrumb-item active"><a
+							href="javascript:void(0)">application</a></li>
 					</ol>
 				</div>
 			</div>
-			
-		-->
-		
+
 			<div class='container-fluid'>
 
 				<div class='card'>
 					<div class='card-body'>
-						
+						aaaaaaaaaaaaaaa
+
 						<div id="tableLayer"
 							style="overflow-x: hidden; overflow-y: scroll; height: 400px; border: 1px solid black;">
 
@@ -133,52 +126,22 @@
 			</div>
 
 			<!-- #/ container -->
-		
-		 </div>
-        <!-- 왼쪽 컬럼 엔드 -->
-        
-        <!-- 오른컬럼이야 -->
-         
-        <div class="col-lg-4">
-        
-	        <div class='container-fluid'>
-	
-					<div class='card'>
-						<div class='card-body'>
-	        				8888주ㅡㄹㅇ야
-	        			</div>
-	        		</div>
-	        </div>
-        
-        </div>
-        
-        <!-- 오른쪽컬럼끝야 -->
-		
-		
-		</div>   <!-- row 엔드 -->
-        
+		</div>
 
-		
-       
-        </div>
-        <!--**********************************
+		<!--**********************************
             Content body end
-        
         ***********************************-->
-      
-        <!--**********************************
+
+
+		<!--**********************************
             Footer start
         ***********************************-->
-        <div class="footer">
-            <div class="copyright">
-                <p>Copyright &copy; Designed & Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2018</p>
-            </div>
-        </div>
-        <!--**********************************
+		<div class="footer"></div>
+		<!--**********************************
             Footer end
         ***********************************-->
-    </div>
-    <!--**********************************
+	</div>
+	<!--**********************************
         Main wrapper end
     ***********************************-->
 
@@ -255,12 +218,9 @@ var checkSessionUser = ${empty sessionScope.user};
 
 	<!-- 공통 툴바용 스크립트 -->
 	<script src="/js/custom/toolbarScript.js"></script>
-	
-	<!-- 채팅 사이드 툴바 스크립트 -->
-	<script src="/js/custom/chatSideBar.js"></script>
 
 
 	<!--  ///////////////////////// JavaScript ////////////////////////// -->
-</body>
 
+</body>
 </html>

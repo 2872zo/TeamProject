@@ -56,6 +56,7 @@ public class CafePostDaoImpl implements CafePostDao{
 
 	@Override
 	public Post getPost(int postNo) {
+		sqlSession.update("CafePostMapper.increaseViewCount", postNo);
 		return sqlSession.selectOne("CafePostMapper.getPost", postNo);
 	}
 
@@ -156,17 +157,16 @@ public class CafePostDaoImpl implements CafePostDao{
 
 	@Override
 	public List<Post> getBestPostList(int boardNo) {
-		return sqlSession.selectList("BoardMapper.getBoard", boardNo);
+		return sqlSession.selectList("CafePostMapper.getBestPostList", boardNo);
 	}
 
 	@Override
 	public Board getBoard(int boardNo) {
-		return sqlSession.selectOne("BoardMapper.getBoardByPostNo", boardNo);
+		return sqlSession.selectOne("BoardMapper.getBoard", boardNo);
 	}
 
 	@Override
 	public Board getBoardByPostNo(int postNo) {
-		// TODO Auto-generated method stub
-		return sqlSession.selectOne("CafePostMapper.memberPostTotalCount", postNo);
+		return sqlSession.selectOne("BoardMapper.getBoardByPostNo", postNo);
 	}
 }

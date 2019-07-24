@@ -6,6 +6,10 @@ function fncGetCafeMain(cafeURL){
 	location.href = "/cafe/" + cafeURL;
 }
 
+function fncGetCafeHome(){
+	location.href = "/cafe/main/";
+}
+
 function fncGetStatistics(cafeURL){
 	location.href = "/cafe/" + cafeURL + "/manage/getCafeStatistics";
 }

@@ -252,9 +252,7 @@ public class CafeManageServiceImpl implements CafeManageService {
 	@Override
 	public Cafe getCafeInfo(String cafeURL) throws Exception { // return map 해야할듯?? 없없
 
-		int cafeNo = cafeManageDao.getCafeNo(cafeURL);
-
-		return cafeManageDao.getCafeInfo(cafeNo);
+		return cafeManageDao.getCafeInfo(cafeURL);
 	}
 
 	@Override

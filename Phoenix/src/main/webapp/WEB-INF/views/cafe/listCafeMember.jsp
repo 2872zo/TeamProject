@@ -10,65 +10,51 @@
 
 
 <head>
-	<!-- ToolBar Start /////////////////////////////////////-->
-	 <jsp:include page="../common/toolbar.jsp" /> 
-	<!-- ToolBar End /////////////////////////////////////-->
-   
-	
-	
-	
-</head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>카페멤버목록</title>
 
-<!--  ///////////////////////// JavaScript ////////////////////////// -->
-<script type="text/javascript">
+<link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
+<link href="/css/style.css" rel="stylesheet">
+<link rel="stylesheet" href="/css/custom/scroll-top.css">
 
-	function fncGetList(currentPage) {
-	  $("#memberCurrentPage").val(currentPage)
-	  $("#memberListingForm").attr("method" , "POST").attr("action" , "/cafe/"+"${cafeURL}"+"/manage/getCafeMemberList").submit();
-	}
-	
-$(function() {
-
-	$("#search").on("click" , function() {
-		$("#memberListingForm").attr("method" , "POST").attr("action" , "/cafe/"+"${cafeURL}"+"/manage/getCafeMemberList").submit();
-	});
-
-	$(".status").on("click" , function() {
-		var count = $(".status").index(this);
-		 $("#status").val(count);
-		 $("#memberListingForm").attr("method" , "POST").attr("action" , "/cafe/"+"${cafeURL}"+"/manage/getCafeMemberList").submit();
-	});
-
-	$(".memberGrade").on("click" , function() {
-		var count = $(".memberGrade").index(this);
-		 $("#memberGrade").val(count);
-		 $("#memberListingForm").attr("method" , "POST").attr("action" , "/cafe/"+"${cafeURL}"+"/manage/getCafeMemberList").submit();
-	});
-
-	$(".sortCode").on("click" , function() {
-		var count = $(".sortCode").index(this);
-		 $("#sortCode").val(count);
-		 $("#memberListingForm").attr("method" , "POST").attr("action" , "/cafe/"+"${cafeURL}"+"/manage/getCafeMemberList").submit();
-	});
-
-	$(".memberNo").on("click" , function() {
-		var count = $(".memberNo").index(this);
-		$("#memberNo").val($($(".memberNo")[count]).text());
-		$("#memberDetailForm").attr("method" , "POST").attr("action" , "/cafe/"+"${cafeURL}"+"/manage/getCafeMember").submit();
-	});
-
-	$(".memberStatusCode").on("click" , function() {
-		var count = $(".memberStatusCode").index(this);
-		alert($($(".memberNo")[count]).text());
-	});
-
-});
-</script>
 
 </head>
 
 <body>
-<br/>
+<br/>	
+
+<div id="main-wrapper">
+
+		<!-- ToolBar Start /////////////////////////////////////-->
+		<jsp:include page="../common/cafeManageTollbar.jsp" />
+		<!-- ToolBar End /////////////////////////////////////-->
+
+
+
+		<!--**********************************
+            Sidebar start
+        ***********************************-->
+		<div class="nk-sidebar">
+			<c:import url="/WEB-INF/views/common/cafeManageMenubar.jsp"></c:import>
+		</div>
+		<!--**********************************
+            Sidebar end
+        ***********************************-->
+
+		<div class="content-body" style="min-height: 743px;">
+		
+		<div class="row page-titles mx-0">
+				<div class="col p-md-0">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="javascript:void(0)">manage</a></li>
+						<li class="breadcrumb-item active"><a
+							href="javascript:void(0)">application</a></li>
+					</ol>
+				</div>
+			</div>
+
 <div class="container">
 <div class='card'>
 <div class='card-body'>
@@ -184,6 +170,10 @@ $(function() {
 </div>
 </div>
   </div>
+  
+  </div>
+  
+  </div>
 
 <!--**********************************
         Scripts
@@ -200,6 +190,52 @@ $(function() {
     <script type="text/javascript">
 	</script>
 	<script src="/js/custom/cafeCommon.js"></script>
+	
+	<!--  ///////////////////////// JavaScript ////////////////////////// -->
+<script type="text/javascript">
+
+	function fncGetList(currentPage) {
+	  $("#memberCurrentPage").val(currentPage)
+	  $("#memberListingForm").attr("method" , "POST").attr("action" , "/cafe/"+"${cafeURL}"+"/manage/getCafeMemberList").submit();
+	}
+	
+$(function() {
+
+	$("#search").on("click" , function() {
+		$("#memberListingForm").attr("method" , "POST").attr("action" , "/cafe/"+"${cafeURL}"+"/manage/getCafeMemberList").submit();
+	});
+
+	$(".status").on("click" , function() {
+		var count = $(".status").index(this);
+		 $("#status").val(count);
+		 $("#memberListingForm").attr("method" , "POST").attr("action" , "/cafe/"+"${cafeURL}"+"/manage/getCafeMemberList").submit();
+	});
+
+	$(".memberGrade").on("click" , function() {
+		var count = $(".memberGrade").index(this);
+		 $("#memberGrade").val(count);
+		 $("#memberListingForm").attr("method" , "POST").attr("action" , "/cafe/"+"${cafeURL}"+"/manage/getCafeMemberList").submit();
+	});
+
+	$(".sortCode").on("click" , function() {
+		var count = $(".sortCode").index(this);
+		 $("#sortCode").val(count);
+		 $("#memberListingForm").attr("method" , "POST").attr("action" , "/cafe/"+"${cafeURL}"+"/manage/getCafeMemberList").submit();
+	});
+
+	$(".memberNo").on("click" , function() {
+		var count = $(".memberNo").index(this);
+		$("#memberNo").val($($(".memberNo")[count]).text());
+		$("#memberDetailForm").attr("method" , "POST").attr("action" , "/cafe/"+"${cafeURL}"+"/manage/getCafeMember").submit();
+	});
+
+	$(".memberStatusCode").on("click" , function() {
+		var count = $(".memberStatusCode").index(this);
+		alert($($(".memberNo")[count]).text());
+	});
+
+});
+</script>
     
 
 </body>

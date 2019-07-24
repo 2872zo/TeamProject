@@ -291,18 +291,25 @@
 	
 	<select id = 'checkMember' parameterType="CafeMember" resultMap="cafeMemberSelectMap"> 
 		SELECT 
-			m.user_no, m.cafe_no, m.member_nickname, 
+			m.user_no, 
+			m.cafe_no, 
+			m.member_no,
+			m.member_nickname, 
 			TO_CHAR(m.reg_date, 'YYYY-MM-DD HH24:MM:SS') reg_date, 
-			m.visit_count, m.post_count, m.reply_count, 
-			g.member_grade_code, g.grade_name
+			m.visit_count, 
+			m.post_count, 
+			m.reply_count, 
+			g.member_grade_code, 
+			g.grade_name,
+			m.member_status_code
 		FROM 
 			cafe_member m, cafe c, cafe_member_grade g
 		WHERE 
-			m.cafe_member_grade_no=g.CAFE_MEMBER_GRADE_NO
-		AND 
-			c.url = #{cafeURL}
-		AND 
-			m.user_no = #{userNo}
+			m.cafe_member_grade_no = g.cafe_member_grade_no
+			AND m.cafe_no = c.cafe_no			
+			AND m.member_status_code in ('cs100','cs101')
+			AND c.url = #{cafeURL}
+			AND m.user_no = #{userNo}
 	</select>
 	
 	

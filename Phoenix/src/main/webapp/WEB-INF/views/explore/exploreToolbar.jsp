@@ -7,6 +7,8 @@
 <!DOCTYPE html>
 <html lang="ko">
 
+<head>
+
 <style type="text/css">
 
 i:hover {
@@ -119,6 +121,9 @@ input[type="checkbox"] {
 
 
 
+</head>
+
+<body>
 
 
 
@@ -126,7 +131,7 @@ input[type="checkbox"] {
 	<!--**********************************
         Main wrapper start
     ***********************************-->
-
+	<div id="main-wrapper">
 
 	      <!--**********************************
             Nav header start
@@ -137,21 +142,16 @@ input[type="checkbox"] {
         <!--**********************************
             Nav header end
         ***********************************-->
-   
-<!--**********************************
+        
+
+		<!--**********************************
             Header start
         ***********************************-->
 		<div class="header">
-			<div class="header-content clearfix">
+			<div class="form-inline">
 
-				<div class="nav-control">
-					<div class="hamburger">
-						<span class="toggle-icon"><i class="icon-menu"></i></span>
-					</div>
-				</div>
-				
-					<div class="header-left">
-					<ul class="clearfix d-flex align-items-center">
+				<div class="header-left d-flex align-items-center">
+				<ul class="clearfix d-flex align-items-center">
 				
 				<i class="mdi mdi-coffee" style='font-size: 30pt;' id="cafeHomeButton"></i> 
 				<i class="mdi mdi-home-variant" style='font-size: 30pt;' id="thisCafeHome"></i>
@@ -160,64 +160,46 @@ input[type="checkbox"] {
 				style='font-size: 30pt' data-toggle="tooltip" data-placement="bottom" title="카페 뉴스피드 보기"></i>
 				<i class="mdi mdi-library-books" id='myApplications'
 				style='font-size: 30pt' data-toggle="tooltip" data-placement="bottom" title="가입신청내역 보기"></i>
-				</div>
-			
+				</div>			
 				</ul>
 				</div>
 				
-
-				<div class="header-right">
+				<div class="input-group" style='width: 50%;'>
+					<input type="text" class="form-control form-control-lg"
+						placeholder="검색어를 입력해주세요" id='searchKeyword'>
+					<div class="input-group-append">
+						<button class="btn btn-lg btn-outline-primary" type="button"
+							id="explore">
+							<i class="mdi mdi-magnify" style='font-size: 18pt;'></i>
+						</button>
+					</div>
+				</div>
+				
+				<div class="text-right">
 					<ul class="clearfix d-flex align-items-center">
-						
-						<i class="mdi mdi-comment-processing-outline" id='goChat'
-							style='font-size: 30pt'></i>
+
+						<i class="mdi mdi-comment-processing-outline" id='goChat' style='font-size: 30pt'></i>
 
 
-						<button type="button" class="btn btn-primary login"
-							data-toggle="modal" data-target="#exampleModalCenter">
+						<button type="button" class="btn btn-primary login" data-toggle="modal" data-target="#exampleModalCenter">
 							<i class="icon-key">Login</i>
 						</button>
 
 						<button type="button" class="btn btn-primary logout">
 							<i class="icon-key">Logout</i>
 						</button>
-						
-					
-					
 					</ul>
 				</div>
+				
+				
+			
 			</div>
+			
+			
 		</div>
-		<!--**********************************
-            Header end ti-comment-alt
-        ***********************************-->
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
+		<!-- 로그인시작 -->
+		
 
 
 		<!-- Modal 내용 시작 -->
@@ -263,7 +245,7 @@ input[type="checkbox"] {
             Header end ti-comment-alt
         ***********************************-->
 
-
+	</div>
 
 	<!--**********************************
         Main wrapper end
@@ -272,5 +254,6 @@ input[type="checkbox"] {
     
    
   
+</body>
 
 </html>

@@ -310,8 +310,10 @@
 								<span>${post.postTitle }</span> 
 								<span style="float:right;">
 									<span style="color:#76838f; font-size:0.75em;">${post.regDate }&nbsp; </span>
-									<a href="#" name="update" class="badge badge-dark">수정</a>
-									<a href="#"	name="delete" class="badge badge-dark">삭제</a>
+									<c:if test="${cafeMember.memberNo eq reply.memberNo or cafeMember.memberGrade eq 'cg100' or cafeMember.memberGrade eq 'cg101'}">
+										<a href="#" name="update" class="badge badge-dark">수정</a>
+										<a href="#"	name="delete" class="badge badge-dark">삭제</a>
+									</c:if>
 								</span>
 							</div>
 							<div>
@@ -403,7 +405,6 @@
 	<script>
 		$(function() {
 			$("[name=cafeURL]").val('${cafeURL}');
-			$("form").attr("method", "POST").attr("action",	"addPost");
 
 			$("#submitButton").on("click",function(e){
 				$("[name=boardName]").val( $("[name=boardNo] option:selected").text());
