@@ -18,9 +18,6 @@
 
 <link rel="stylesheet" href="/css/custom/scroll-top.css">
 
-<!-- ToolBar Start /////////////////////////////////////-->
-<jsp:include page="../common/toolbar.jsp" />
-
 <title>카페뉴스피드</title>
 
 

@@ -1,9 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=utf-8"%>
+
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!DOCTYPE html>
-
 <html lang="ko">
 
 <head>
@@ -20,6 +21,10 @@
 <!-- ToolBar Start /////////////////////////////////////-->
 <jsp:include page="/WEB-INF/views/common/toolbar.jsp" />
 <!-- ToolBar End /////////////////////////////////////-->
+<!--  ///////////////////////// CSS ////////////////////////// -->
+<style type="text/css">
+
+</style>
 
 </head>
 <body>
@@ -169,11 +174,18 @@
 
 	<!--  화면구성 div end /////////////////////////////////////-->
 
+<!--**********************************
+        Scripts
+    ***********************************-->
 	<script src="/plugins/common/common.min.js"></script>
 	<script src="/js/custom.min.js"></script>
 	<script src="/js/settings.js"></script>
 	<script src="/js/gleek.js"></script>
 	<script src="/js/styleSwitcher.js"></script>
+
+	<script src="/plugins/sweetalert/js/sweetalert.min.js"></script>
+	<script src="/plugins/sweetalert/js/sweetalert.init.js"></script>
+
 	<!-- 메뉴바 이용을 위한 스크립트 -->
 	<script src="/js/custom/scroll-top.js"></script>
 	
@@ -181,7 +193,6 @@
 	<script type="text/javascript">
 
 	var checkSessionUser = ${empty sessionScope.user};
-
 	
 	$(function() {
 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
@@ -336,6 +347,8 @@
 	
 </script>
 	<script src="/js/custom/toolbarScript.js"></script>
+
+	<script src="/js/custom/cafeCommon.js"></script>
 
 </body>
 

@@ -387,7 +387,7 @@ checkbox
 				<div class="col-lg-12">
 					<div class="card">
 						<div class="card-body">
-							<h4 class="card-title">${search.boardName }</h4>
+							<h4 class="card-title">작성글 검색</h4>
 							<div class="table-responsive">
 								<form id="boardPage">
 									<input type="hidden" name="currentPage">

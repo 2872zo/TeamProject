@@ -445,8 +445,8 @@
 
 		$(function() {
 			$("[name=cafeURL]").val('${search.cafeURL}');
-			$("[name=memberNo]").val('10000');
-			$("[name=memberNickname]").val('매니저1');
+			$("[name=memberNo]").val("${cafeMember.memberNo}");
+			$("[name=memberNickname]").val('${cafeMember.memberNickname}');
 			$("form").attr("method", "POST").attr("action",	"addPost");
 
 			$("#submitButton").on("click",function(e){

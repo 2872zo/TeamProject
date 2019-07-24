@@ -108,7 +108,7 @@ code {
                                             <label class="col-lg-4 col-form-label" for="val-cafeDetail"><h5>카페설명</h5>
                                             </label>
                                             <div class="col-lg-6">
-                                                <textarea class="form-control" id="val-username" name="cafeDetail" rows="6" value="${cafe.cafeDetail }"></textarea>
+                                                <textarea class="form-control" id="val-username" name="cafeDetail" rows="6" value="">${cafe.cafeDetail}</textarea>
                                             </div>
                                         </div> <hr>
                                         
@@ -118,7 +118,7 @@ code {
                                             <div class="col-lg-6">
                                                <div><img src="/images/uploadFiles/bannerImg/${cafe.bannerImg}" width="300"; height="200px";/>
                                                </div>
-                                                <input type="file" class=""form-control-file"" id="uploadFile" name="uploadFile">
+                                                <input type="file" class="form-control-file" id="uploadFile" name="uploadFile">
                                                </div>
                                         </div> <hr>
                                         <div class="form-group row">

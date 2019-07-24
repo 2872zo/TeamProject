@@ -322,17 +322,18 @@
 									<tbody>
 										<c:forEach items="${noticePostList }" var="noticePost">
 											<tr style="background: #E1DFDE;">
-												<input type="hidden" class="postNo"	value="${bestPost.postNo }" />
-												<input type="hidden" class="boardNo" value="${bestPost.boardNo }" />
-												<input type="hidden" class="memberNo" value="${bestPost.memberNo }" />
-												<input type="hidden" class="boardName" value="${bestPost.boardName }" />
+												<input type="hidden" class="postNo"	value="${noticePost.postNo }" />
+												<input type="hidden" class="boardNo" value="${noticePost.boardNo }" />
+												<input type="hidden" class="memberNo" value="${noticePost.memberNo }" />
+												<input type="hidden" class="boardName" value="${noticePost.boardName }" />
 												<td></td>
 												<td class="postTitle">
 													<c:if test="${noticePost.boardName eq '공지게시판' }">
 														<span class="badge badge-danger">공지</span>
 													</c:if> <c:if test="${noticePost.boardName ne '공지게시판' }">
 														<span class="badge badge-warning">공지</span>
-													</c:if> ${noticePost.postTitle }</td>
+													</c:if> ${noticePost.postTitle }
+												</td>
 												<td>${noticePost.memberNickname }</td>
 												<td>${noticePost.regDate }</td>
 												<td>${noticePost.viewCount }</td>

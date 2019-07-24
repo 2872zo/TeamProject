@@ -350,7 +350,7 @@ $(function() {
 					jsoned = JSON.stringify(jsoned);
 					$.ajax({
 						type : "POST",
-						url : "/cafe/json/updateFavorite",
+						url : "/cafe/main/json/updateFavorite",
 						data : jsoned,
 						contentType : "application/json", //보내는 컨텐츠의 타입
 						//dataType : "json",      //받아올 데이터의 타입 필요없음
