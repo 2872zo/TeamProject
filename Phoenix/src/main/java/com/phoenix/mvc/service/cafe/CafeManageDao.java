@@ -82,6 +82,8 @@ public interface CafeManageDao {
 	public void updateCafeInfo(Cafe cafe) throws Exception;
 
 	public Cafe getCafeInfo(int cafeNo) throws Exception;
+	
+	public Cafe getCafeInfo(String cafeURL);
 
 	public int getCafeNoNo(String cafeName) throws Exception;
 

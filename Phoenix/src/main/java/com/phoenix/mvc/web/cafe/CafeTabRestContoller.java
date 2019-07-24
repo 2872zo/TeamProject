@@ -83,10 +83,10 @@ public class CafeTabRestContoller {
 	
 	//////////////////////////////기황시작//////////////////////////////	
 	
-	@PostMapping("json/updateFavorite")
+	@PostMapping("main/json/updateFavorite")
 	public boolean updateCafeFavorite(@RequestBody CafeMember cafeMember) throws Exception{
 		
-		System.out.println("json/updateFavorite 입니다");
+		System.out.println("main/json/updateFavorite 입니다");
 		
 		System.out.println(cafeMember);
 		

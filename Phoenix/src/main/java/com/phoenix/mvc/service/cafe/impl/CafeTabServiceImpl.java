@@ -158,6 +158,7 @@ public class CafeTabServiceImpl implements CafeTabService {
 		///////카페정보
 		
 		
+		
 		//카페 멤버 없을 경우
 		if(cafeMember != null) {
 			int myGradeNo = cafeMember.getCafeMemberGradeNo();

@@ -39,6 +39,11 @@
 		.cursor:hover{
 			text-decoration: underline;
 		}
+		
+		.postTitle:hover{
+			cursor : pointer;
+			text-decoration: underline;
+		}
 	</style>
 	
 	<title>${search.cafeURL}</title>
@@ -292,7 +297,8 @@
                                        <tbody>
                                        	   <c:forEach var="post" items="${noticePostList}" > <!-- 링크이어야함 -->
 												<tr>
-													<td>${post.postTitle}  </td>
+													<input type="hidden" class="postNo" value="${post.postNo }">
+													<td class="postTitle">${post.postTitle}  </td>
 													<td>${post.memberNickname}  </td>
 													<td>${post.regDate}  </td>
 													<td>${post.viewCount}  </td>
@@ -394,6 +400,12 @@
 				$("#mainContent").remove();
 				console.log(event.originalEvent.state.mainContent);
 				$(".col-10").html( event.originalEvent.state.mainContent );
+			});
+
+			$(function(){
+				$(".postTitle").on("click", function(){
+					location.href = "/cafe/" + cafeURL + "/getPost/" + 	$(this).parent().find(".postNo").val();				
+				});			
 			});
 	</script>
 	
