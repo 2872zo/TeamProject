@@ -7,22 +7,19 @@
 <html lang="ko">
 
 <head>
-		<!-- ToolBar Start /////////////////////////////////////-->
-		<jsp:include page="../common/toolbar.jsp" />
-		<!-- ToolBar End /////////////////////////////////////-->
-
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>카페만들기</title>
-
-
+<!-- Favicon icon -->
+<link rel="icon" type="image/png" sizes="16x16"
+	href="/images/favicon.png">
+<!-- Custom Stylesheet -->
 <link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
 <link href="/css/style.css" rel="stylesheet">
+
 <link rel="stylesheet" href="/css/custom/scroll-top.css">
 
-
-
+<!-- ToolBar Start /////////////////////////////////////-->
+<jsp:include page="/WEB-INF/views/common/toolbar.jsp" />
+<!-- ToolBar End /////////////////////////////////////-->
 
 </head>
 <body>
@@ -182,6 +179,10 @@
 	
 
 	<script type="text/javascript">
+
+	var checkSessionUser = ${empty sessionScope.user};
+
+	
 	$(function() {
 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 		$("button.btn.btn-primary").on("click", function() {
@@ -334,7 +335,7 @@
 	});
 	
 </script>
-	<script src="/js/custom/cafeCommon.js"></script>
+	<script src="/js/custom/toolbarScript.js"></script>
 
 </body>
 
