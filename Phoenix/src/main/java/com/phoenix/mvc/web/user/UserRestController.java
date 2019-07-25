@@ -75,17 +75,24 @@ public class UserRestController {
 	public boolean login(@RequestBody User user, HttpSession session ) throws Exception{
 		
 		System.out.println("/user/login:REST : POST");
+		
 		//Business Logic
 		
 		User dbUser=userService.getUser(user.getUserId());
 		
 		System.out.println("REST@@!!!!!!!!!!!!!!!!!!!"+user.getUserId());
 		
-		boolean result = userService.checkUserIdDuplication(user.getPassword());
+		System.out.println("REST@@!!!!!!!!!!!!!!!!!!!"+user.getPassword());
+		
+		boolean result = false;
+		//= userService.checkUserPwDuplication(user.getUserId());
 		
 		
-		if( user.getPassword().equals(dbUser.getPassword())){
+		
+		if( dbUser != null && user.getPassword().equals(dbUser.getPassword())){
 			session.setAttribute("user", dbUser);
+			
+			result = true;
 		}
 		
 		return result;

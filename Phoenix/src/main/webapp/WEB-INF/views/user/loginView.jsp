@@ -8,257 +8,138 @@
 <html lang="ko">
 	
 <head>
-
-
-	<meta charset="EUC-KR">
-	
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-	crossorigin="anonymous"></script>
-<!-- Bootstrap CDN -->
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-	crossorigin="anonymous">
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-	crossorigin="anonymous"></script>
-	
-	
-			<!-- ToolBar Start /////////////////////////////////////-->
+		<!-- ToolBar Start /////////////////////////////////////-->
 		<jsp:include page="../common/toolbar.jsp" />
 		<!-- ToolBar End /////////////////////////////////////-->
-	<!--  ///////////////////////// CSS ////////////////////////// -->
-	<style>
-   .member {
- font-size: 50px;
- text-shadow: 0 0 10px #666;
- color: #fff;
- margin: 0 auto;
- text-align: center;
- text-transform: capitalize;
- font-family: "맑은 고딕";
- font-style: italic;
-}
 
-body {
- font-family: "맑은 고딕";
- font-size: 12px;
-}
-
-.form {
- width: 498px;
- height: 300px;
- border-radius: 25px;
- border: 5px double #999;
- margin: 30px auto;
-}
-
-.form2 {
- width: 380px;
- min-width: 320px;
- height: 200px;
- margin: 60px auto;
- margin-left:20px;
-}
-
-.form3 {
- float: left;
- /*   background:#f00;  */
-}
-
-.form3 label {
- width: 100px;
- height: 20px;
- /*  display: block; */
- float: left;
-}
-
-.form4 {
- padding: 0px 0px 0px 70px;
-}
-
-#wrap {
- width: 600px;
- height: 500px;
- margin: 0 auto;
-}
-
-.clear {
- clear: both;
-}
-
-input[type="submit"] {
- float: left;
- /*  display:block; */
- height: 50px;
- background: #FFBB00;
- border-radius: 5px;
- border: none;
- font-family: "맑은 고딕";
-}
-input[type="button"] {
- height: 30px;
- background: gray;
- border-radius: 5px;
-/*  width: 140px; */
- font-family:"맑은 고딕";
- margin-top:10px;
- margin-right:20px;
-}
-input[type="checkbox"] {
- margin-top:20px;
-}
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>로그인</title>
 
 
-
-    </style>
-    
-    <!--  ///////////////////////// JavaScript ////////////////////////// -->
-	<script type="text/javascript">
-
-	/*$(function() {
-
-		$("input[id='userId']").on('keyup',function() {
-					debugger;
-							inputed = $("input[id='userId']").val();
-							//alert("입력  : "+inputed);
-
-									$.ajax({
-										url : "/user/json/checkUserIdDuplication",
-										method : "POST",
-										dataType : "json",
-										headers : {
-											"Accept" : "application/json",
-											"Content-Type" : "application/json"
-										},
-										data : JSON.stringify({
-											userId : inputed,
-										}),
-
-										success : function(JSONData) {
-											//alert(JSONData); 
-											//alert(typeof(JSONData));
-
-											if (JSONData && inputed != "") {
-												$("#check").children("strong")
-														.remove();
-												$("#check")
-														.append(
-																"<strong class=\"text-danger\">아이디 불일치</strong>");
-											} else {
-												$("#check").children("strong")
-														.remove();
-												$("#check")
-														.append(
-																"<strong  class=\"text-success\">아이디 일치</strong>");
-											}
-											if (inputed == "") {
-												$("#check").children("strong")
-														.remove();
-												$("#check")
-														.append(
-																"<strong class=\"text-muted\">아이디를 입력해주세요.</strong>");
-											}
-										}
-
-									});
-		  						  });
-								});
-
-	$(function() {
-
-		$("input[id='password']").on('keyup',function() {
-					debugger;
-							inputed = $("input[id='password']").val();
-							//alert("입력  : "+inputed);
-
-									$.ajax({
-										url : "/user/json/checkUserPwDuplication",
-										method : "POST",
-										dataType : "json",
-										headers : {
-											"Accept" : "application/json",
-											"Content-Type" : "application/json"
-										},
-										data : JSON.stringify({
-										password : inputed,
-										}),
-
-										success : function(JSONData) {
-											//alert(JSONData); 
-											//alert(typeof(JSONData));
-
-											if (JSONData && inputed != "") {
-												$("#check1").children("strong")
-														.remove();
-												$("#check1")
-														.append(
-																"<strong class=\"text-danger\">비밀번호 불일치</strong>");
-											} else {
-												$("#check1").children("strong")
-														.remove();
-												$("#check1")
-														.append(
-																"<strong  class=\"text-success\">비밀번호 일치</strong>");
-											}
-											if (inputed == "") {
-												$("#check1").children("strong")
-														.remove();
-												$("#check1")
-														.append(
-																"<strong class=\"text-muted\">비밀번호를 입력해주세요.</strong>");
-											}
-										}
-
-									});
-		  						  });
-								});*/
+<link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
+<link href="/css/style.css" rel="stylesheet">
+<link rel="stylesheet" href="/css/custom/scroll-top.css">
+<link rel="stylesheet" href="/plugins/sweetalert/css/sweetalert.css">
 	
+	<style>
+	input[type="submit"] {
+	float: left;
+	/*  display:block; */
+	height: 50px;
+	background: #FFBB00;
+	border-radius: 5px;
+	border: none;
+	font-family: "맑은 고딕";
+}
+	</style>
+	
+	
+	
+</head>
+
+<body>
+
+<!--*******************
+        Preloader start
+    ********************-->
+	<div id="preloader" style="display: none;">
+		<div class="loader">
+			<svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none"
+					stroke-width="3" stroke-miterlimit="10"></circle>
+            </svg>
+		</div>
+	</div>
+	<!--*******************
+        Preloader end
+    ********************-->
 
 
-	$(function() {
+<div id="main-wrapper">
 
-		$("#logon").on('click',function() {
-					debugger;
-							var id = $("input[id='userId']").val();
-							var pw = $("input[id='password']").val();
-							//alert("입력  : "id);
-							//alert("입력  : "+pw);
-							//alert("입력  : "password);
-									$.ajax({
-										url : "/user/json/login",
-										method : "POST",
-										dataType : "json",
-										headers : {
-											"Accept" : "application/json",
-											"Content-Type" : "application/json"
-										},										
-										data : JSON.stringify({											
-										userId : id,
-										password : pw,
-										}),
-										
-										success : function(JSONData) {
-											//alert(JSONData); 
-											//alert(typeof(JSONData));
-											
-											if(JSONData == 1){
-												alert("아이디 또는 비밀번호가 일치하지 않습니다.");
-												return;
-												}else{
-													$("form").attr("method","POST").attr("action","/user/login").submit();
-													}
-				
-										}
 
-									});
-		  						  });
-								});
-				
+
+<!--**********************************
+            Sidebar start
+        ***********************************-->
+		
+		<!--**********************************
+            Sidebar end
+        ***********************************-->
+
+		<!--**********************************
+            Content body start
+        ***********************************-->
+<div class="content-body" style="min-height: 743px;">
+
+
+
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="card">
+						<div class="card-body">			
+							<h2 class="text-center">로그인</h2>
+							<hr style="border: solid 1px gray;">		
+								<div class="basic-form">			
+								<br>
+			     
+  
+  <div class="login-form-bg h-100">
+        <div class="container h-100">
+            <div class="row justify-content-center h-100">
+                <div class="col-xl-6">
+                    <div class="form-input-content">
+                        <div class="card login-form mb-0">
+                            <div class="card-body pt-5">
+                                <a class="text-center" href="index.html"> <h4>Phoenix</h4></a>
+        
+                                <form class="mt-5 mb-5 login-input">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="ID" id="userId" name="userId">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" class="form-control" placeholder="Password" id="password" name="password">
+                                    </div>
+                                    <button class="btn login-form__btn submit w-100" id = "logon">로그인</button>
+                                    
+                                </form>
+                                <a href="/user/addUserView" class="text-primary" id="addUser1">회원가입</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+  <input type="hidden" name="targetURL" value="${targetURL }">
+
+
+	 			 	 </div>
+		  			</div>
+		  		   </div>
+		 		  </div>
+		 		 </div>
+		 	    </div>
+		 	   </div>
+			  </div>
+		  
+
+ 	<!--  화면구성 div end /////////////////////////////////////-->
+ 	<script src="/plugins/common/common.min.js"></script>
+	<script src="/js/custom.min.js"></script>
+	<script src="/js/settings.js"></script>
+	<script src="/js/gleek.js"></script>
+	<script src="/js/styleSwitcher.js"></script>
+	<!-- 메뉴바 이용을 위한 스크립트 -->
+	<script src="/js/custom/scroll-top.js"></script>
+	<script src="/plugins/sweetalert/js/sweetalert.min.js"></script>
+	
+	<script src="/plugins/sweetalert/js/sweetalert.min.js"></script>
+	<script type="text/javascript">
 	
 		//============= "로그인"  Event 연결 =============
 	$( function() {
@@ -267,108 +148,58 @@ input[type="checkbox"] {
 			
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$("#logon").on("click" , function() {
+				
 				var id=$("input[id='userId']").val();
 				var pw=$("input[id='password']").val();
 				
 				if(id == null || id.length <1) {
-					alert('아이디를 입력하세요');
-					$("input[id='userId']").focus();
-					return;
-				}
-				
-				if(pw == null || pw.length <1) {
-					alert('비밀번호를 입력하세요');
-					$("input[id='password']").focus();
-					return;
-				}
-
-				if(pw != sessionscope.user.password){
-					alert("${user.password}");
-					alert('아이디 또는 비밀번호가 일치하지 않습니다.');
-					return;
-					}
-				
 					
-				//$("form").attr("method","POST").attr("action","/user/login").attr("target","_parent").submit();
+					sweetAlert("아이디를 입력하세요","","error");
+					$("input[id='userId']").focus();
+					
+					return false;
+				}else if(pw == null || pw.length <1) {
+					sweetAlert("비밀번호를 입력하세요","","error");
+					$("input[id='password']").focus();
+					return false;
+				}else{
+					//alert("입력  : "+id);
+					//alert("입력  : "+pw);
+					//alert("입력  : "password);
+					$.ajax({
+						url : "/user/json/login",
+						method : "POST",
+						dataType : "json",
+						headers : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+						},										
+						data : JSON.stringify({											
+						userId : id,
+						password : pw,
+						}),
+						
+						success : function(JSONData) {
+							//alert(JSONData); 
+							//alert(typeof(JSONData));
+							
+							if(JSONData == false){
+								
+								sweetAlert("아이디 또는 비밀번호가 일치하지 않습니다.","","error");
+								return false;
+							}else{								
+							self.location = "/";							
+							}							
+						}
+					});//ajax
+					return false;
+				}//else
 			}); 
 		});	
 
 
-		//============= 회원원가입화면이동 =============
-		$( function() {
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$("#add").on("click" , function() {
-				$(self.location).attr("href","/user/addUserView");
-			});
-		});
 
-		
 	</script>		
-	
-</head>
-
-<body>
-
-	<!-- ToolBar Start /////////////////////////////////////-->
-	<div class="navbar  navbar-default">
-        <div class="container">
-        	
-   		</div>
-   	</div>
-   	<!-- ToolBar End /////////////////////////////////////-->	
-	
-	<!--  화면구성 div Start /////////////////////////////////////-->
-	<div class="container">
-		<!--  row Start /////////////////////////////////////-->
-		<div class="row">
-		
-	
-	 	 	<div class="col-md-6">
-	 	 	
-		 	 	<br/><br/>
-				
-
-			        <form>
-			        
-  <div id="wrap">
-   <h1 class="member">Phoenix</h1>
-   <div class="form">
-    <div class="form2">
-     <div class="form3">
-      <label for="user">아이디</label><input type="text" id="userId" name="userId">      
-      <div class="clear"></div>
-      
-  
-      <label for="user">비밀번호</label><input type="password" id="password" name="password">
-      <div class="clear"></div>
-     </div>
-     
-     <input type="submit" value="로그인하기" id="logon">
-     <div class="clear"></div>
-     <div class="form4">
-      <label><input type="checkbox">자동로그인</label> 
-      <div class="clear"></div>
-      <label><input type="button" value="회원가입" id="add">
-      
-      </label> <label><input
-       type="button" value="아이디/비밀번호 찾기"></label>
-     </div>
-    </div>
-   </div>
-  </div>
-  <input type="hidden" name="targetURL" value="${targetURL }">
- </form>
-
-			   	 </div>
-			
-			</div>
-			
-  	 	</div>
-  	 	<!--  row Start /////////////////////////////////////-->
-  	 	
- 	</div>
- 	<!--  화면구성 div end /////////////////////////////////////-->
-
 </body>
 
 </html>

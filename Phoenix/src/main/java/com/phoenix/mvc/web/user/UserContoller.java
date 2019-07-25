@@ -52,7 +52,7 @@ public class UserContoller {
 		if( user.getPassword().equals(dbUser.getPassword())){
 			session.setAttribute("user", dbUser);
 		}
-		
+			
 		return "redirect:/";
 	}
 	
@@ -75,7 +75,7 @@ public class UserContoller {
 
 		user = user2;
 
-		System.out.println("유저인서트다다아아아앙@@@" + user);
+		System.out.println("유저인서트다다아아아앙@@난 준호당!!!!!>_< 난 문체부@" + user);
 
 		model.addAttribute("user", user);
 		

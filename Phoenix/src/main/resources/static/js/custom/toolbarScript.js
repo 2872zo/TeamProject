@@ -53,73 +53,65 @@ $(function() {
 		$(self.location).attr("href", "/chat/chatRoomList");
 	});
 
-	// 로그인시작
-	$(function() {
-
+	//로그인시작
+	$( function() {
+		
 		$("#userId").focus();
-
-		// ==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) :
-		// 3.$(.className)
-		$("#login1").on(
-				"click",
-				function() {
-					var id = $("input:text").val();
-					var pw = $("input:password").val();
-
-					if (id == null || id.length < 1) {
-						alert('ID 를 입력하지 않으셨습니다.');
-						$("#userId").focus();
-						return;
-					}
-
-					if (pw == null || pw.length < 1) {
-						alert('패스워드를 입력하지 않으셨습니다.');
-						$("#password").focus();
-						return;
-					}
-					$("form").attr("method", "POST").attr("action",	"/user/login").submit();
-					// $("form").attr("method","POST").attr("action","/user/login").attr("target","_parent").submit();
-				});
-	});
-
-	// 로그인끝
-	
-	$(function() {
-
-		$("#logon").on('click',function() {
-					debugger;
-							var id = $("input:text").val();
-							var pw = $("input:password").val();
-							//alert("입력  : "id);
-							//alert("입력  : "+pw);
-							//alert("입력  : "password);
-									$.ajax({
-										url : "/user/json/login",
-										method : "POST",
-										dataType : "json",
-										headers : {
-											"Accept" : "application/json",
-											"Content-Type" : "application/json"
-										},										
-										data : JSON.stringify({											
-										userId : id,
-										password : pw,
-										}),
-										
-										success : function(JSONData) {
-											//alert(JSONData); 
-											//alert(typeof(JSONData));
-											
-											if(JSONData == 1){
-												alert("아이디 또는 비밀번호가 일치하지 않습니다.");
-												}else{
-													//$("form").attr("method","POST").attr("action","/user/login").submit();
-													}
+		
+		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		$("#login1").on("click" , function() {
+			var id = $("input:text").val();
+			var pw = $("input:password").val();
+			
+			if(id == null || id.length <1) {
+				sweetAlert("아이디를 입력하세요","","error");
+				//alert('ID 와 비밀번호를 입력하지 않으셨습니다.');
 				
-										}
-
-									});
-		  						  });
-								});
+				$("#userId").focus();
+				
+				return false;
+			}else if(pw == null || pw.length <1) {
+				sweetAlert("비밀번호를 입력하세요","","error");
+				//alert('패스워드를 입력하지 않으셨습니다.');
+				
+				$("#password").focus();
+				return false;
+			}else{
+				//alert("입력  : "+id);
+				//alert("입력  : "+pw);
+				//alert("입력  : "password);
+				$.ajax({
+					url : "/user/json/login",
+					method : "POST",
+					dataType : "json",
+					headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					},										
+					data : JSON.stringify({											
+					userId : id,
+					password : pw,
+					}),
+					
+					success : function(JSONData) {
+						//alert(JSONData); 
+						//alert(typeof(JSONData));
+						
+						if(JSONData == false){
+							
+							sweetAlert("아이디 또는 비밀번호가 일치하지 않습니다.","","error");
+							return false;
+						}else{
+						self.location = "/";
+						}						
+					}
+				});//ajax
+				return false;
+			}//else
+		}); 
+	});	
+	//로그인끝
+	
+	
 
 });
