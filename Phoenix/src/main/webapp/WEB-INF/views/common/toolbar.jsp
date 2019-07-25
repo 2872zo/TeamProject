@@ -141,49 +141,61 @@ input[type="checkbox"] {
 <!--**********************************
             Header start
         ***********************************-->
+        <c:set var="URI" value="${pageContext.request.requestURI}" />
 		<div class="header">
 			<div class="header-content clearfix">
 
 				<div class="nav-control">
+				<c:if test='${fn:startsWith(URI,"/WEB-INF/views/chat/")}'>
 					<div class="hamburger">
 						<span class="toggle-icon"><i class="icon-menu"></i></span>
 					</div>
+					</c:if>
 				</div>
 				
-					<div class="header-left">
-					<ul class="clearfix d-flex align-items-center">
+					<div class="header-left d-flex align-items-center">
+					
+							<c:if test='${fn:startsWith(URI,"/WEB-INF/views/cafe/")}'>
+							<i class="mdi mdi-coffee" style='font-size: 30pt;' id="cafeHomeButton">
+							</i>
+							</c:if>
+							
+							<c:if test='${fn:startsWith(URI,"/WEB-INF/views/cafe/cafeHomeMain.jsp")
+							 || fn:startsWith(URI,"/WEB-INF/views/cafe/listCafeNewsFeed.jsp") 
+							 || fn:startsWith(URI,"/WEB-INF/views/cafe/listUserCafeApplication.jsp")}'>
+								<c:if test="${!empty sessionScope.user}">
+									<i class="mdi mdi-clipboard-outline" id='newsFeeding' style='font-size: 30pt'></i>
+									<i class="mdi mdi-library-books" id='myApplications' style='font-size: 30pt'></i>
+								</c:if>
+							</c:if>
+					</div>
+						 
+						
+						
+						
+					
+					
 				
-				<i class="mdi mdi-coffee" style='font-size: 30pt;' id="cafeHomeButton"></i> 
-				<i class="mdi mdi-home-variant" style='font-size: 30pt;' id="thisCafeHome"></i>
-				<div id='cafeMainTools'>
-				<i class="mdi mdi-clipboard-outline" id='newsFeeding'
-				style='font-size: 30pt' data-toggle="tooltip" data-placement="bottom" title="카페 뉴스피드 보기"></i>
-				<i class="mdi mdi-library-books" id='myApplications'
-				style='font-size: 30pt' data-toggle="tooltip" data-placement="bottom" title="가입신청내역 보기"></i>
-				</div>
-			
-				</ul>
-				</div>
+				
 				
 
 				<div class="header-right">
 					<ul class="clearfix d-flex align-items-center">
-						
-						<i class="mdi mdi-comment-processing-outline" id='goChat'
-							style='font-size: 30pt'></i>
+						<c:if test="${!empty sessionScope.user}">
+							<i class="mdi mdi-comment-processing-outline" id='goChat'
+								style='font-size: 30pt'></i>
+							<button type="button" class="btn btn-primary logout">
+								<i class="icon-key">Logout</i>
+							</button>
+						</c:if>
 
-
-						<button type="button" class="btn btn-primary login"
-							data-toggle="modal" data-target="#exampleModalCenter">
-							<i class="icon-key">Login</i>
-						</button>
-
-						<button type="button" class="btn btn-primary logout">
-							<i class="icon-key">Logout</i>
-						</button>
-						
-					
-					
+						<c:if test="${empty sessionScope.user}">
+							<button type="button" class="btn btn-primary login"
+								data-toggle="modal" data-target="#exampleModalCenter">
+								<i class="icon-key">Login</i>
+							</button>
+						</c:if>
+		
 					</ul>
 				</div>
 			</div>

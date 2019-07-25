@@ -1,7 +1,6 @@
 package com.phoenix.mvc.service.chatting;
 
 import java.util.List;
-import java.util.Map;
 
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.domain.Chat;
@@ -19,6 +18,8 @@ public interface ChattingDao {
 	
 	public List getFriendSearchList(Search search) throws Exception;
 	
+	public List getWannaBeFriendList(Search search) throws Exception;
+	
 	public ChatFriend getFriend(ChatFriend chatFriend) throws Exception;
 	
 	public int addFriend(ChatFriend chatFriend) throws Exception;
@@ -35,7 +36,7 @@ public interface ChattingDao {
 	
 	public void addChat (Chat chat) throws Exception;
 	
-	public List getChatList(Chat chat) throws Exception;
+	public List getChatList(Search search) throws Exception;
 	
 	public int getMyChatCount(Search search) throws Exception;
 	

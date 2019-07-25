@@ -24,10 +24,10 @@ public class FacebookWriteTest {
 
 	public static void main(String[] args) throws InterruptedException, IOException {
 		FacebookWriteTest selTest = new FacebookWriteTest();
-		selTest.login();
+		//selTest.login();
 		// selTest.write();
 		// selTest.update();
-		selTest.timeLine();
+		//selTest.timeLine();
 	}
 
 	private WebDriver driver;
@@ -112,9 +112,12 @@ public class FacebookWriteTest {
 		List<WebElement> sImg = feed.findElements(By.xpath("//a[@class='_4-eo _2t9n']"));// 이미지
 		// List<WebElement> post = driver.findElements(By.xpath("//div[@class='_1dwg
 		// _1w_m _q7o']"));// 포스트 수
-
+		
+		jse.executeScript("scroll(0,1000)");
 		wait.until(ExpectedConditions.visibilityOfAllElements(feed));
 		System.out.println("포스트 개수 알려줘!" + postId.size());
+		
+		
 
 		for (int i = 0; i < postId.size(); i++) {// 포스트내용,작성자아이디,작성일,좋아요수,이미지
 				
@@ -139,11 +142,13 @@ public class FacebookWriteTest {
 
 				}
 				System.out.println(faceBook);
+				
 				if(faceBook != null) {
 					System.out.println(i+"번 성공!");
 					jse.executeScript("scroll(0,1300)");
 					wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector("[data-testid='UFI2ReactionsCount/sentenceWithSocialContext']")));
 				}
+			
 
 			
 		}

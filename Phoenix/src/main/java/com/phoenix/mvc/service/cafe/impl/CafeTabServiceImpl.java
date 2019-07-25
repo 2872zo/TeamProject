@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.cafe.CafeManageDao;
@@ -26,6 +27,7 @@ import com.phoenix.mvc.service.domain.Post;
 import com.phoenix.mvc.service.domain.User;
 
 @Service("cafeTabServiceImpl")
+@Transactional
 public class CafeTabServiceImpl implements CafeTabService {
 
 	@Autowired

@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.phoenix.mvc.common.Event;
 import com.phoenix.mvc.common.Search;
@@ -20,6 +21,7 @@ import com.phoenix.mvc.service.domain.User;
 import com.phoenix.mvc.service.user.UserDao;
 
 @Service
+@Transactional
 public class CafeMemberServiceImpl implements CafeMemberService {
 
 	@Autowired
@@ -69,7 +71,7 @@ public class CafeMemberServiceImpl implements CafeMemberService {
 	}
 
 	@Override
-	public boolean updateCafeMember(CafeMember cafeMember) {// 탈퇴
+	public boolean updateCafeMember(CafeMember cafeMember) throws Exception {// 탈퇴
 
 		boolean result = false;
 
@@ -83,7 +85,12 @@ public class CafeMemberServiceImpl implements CafeMemberService {
 		event.setEventType("et107");// 탈퇴코드
 		cafeManageDao.addEventLog(event);
 
-		CafeMember member = cafeMemberDao.getCafeMember(cafeMember.getCafeNo(), cafeMember.getUserNo());
+		Search search = new Search();
+
+		int memberNo = cafeMember.getMemberNo();
+		search.setMemberNo(memberNo);
+
+		CafeMember member = cafeMemberDao.getCafeMember(search);
 
 		if (member.getMemberStatusCode().equals("cs102")) {
 			result = true;

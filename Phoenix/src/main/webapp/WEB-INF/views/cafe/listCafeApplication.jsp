@@ -23,7 +23,7 @@
 	<!--*******************
         Preloader start
     ********************-->
-	<div id="preloader" style="display: none;">
+	<div id="preloader">
 		<div class="loader">
 			<svg class="circular" viewBox="25 25 50 50">
                 <circle class="path" cx="50" cy="50" r="20" fill="none"
@@ -150,17 +150,17 @@
 
 											<tr>
 												<td><input type="checkbox" class="applicationCheck"></td>
-												<td align="left" class="applicationNo"
-													value="${cafeApplication.applicationNo}">${cafeApplication.applicationNo}</td>
+												<td align="left" class="applicationNo"value="${cafeApplication.applicationNo}">${cafeApplication.applicationNo}</td>
 												<td align="left">${cafeApplication.userId}</td>
-												<td align="left" class="nickname"
-													value="${cafeApplication.memberNickname}">${cafeApplication.memberNickname}</td>
+												<td align="left" class="nickname"value="${cafeApplication.memberNickname}">${cafeApplication.memberNickname}</td>
 												<td align="left">${cafeApplication.regDate}</td>
-												<td align="left">${cafeApplication.acceptStatusCode}<input
-													type="hidden" class="userNo"
-													value="${cafeApplication.userNo}" /> <input type="hidden"
-													class="cafeNo" value="${cafeApplication.cafeNo}" /></td>
-
+												<td align="left">
+												<c:if test="${cafeApplication.acceptStatusCode eq 'ca100' }">가입대기</c:if>
+												<c:if test="${cafeApplication.acceptStatusCode eq 'ca101' }">가입승인</c:if>
+												<c:if test="${cafeApplication.acceptStatusCode eq 'ca102' }">가입거절</c:if>
+												<c:if test="${cafeApplication.acceptStatusCode eq 'ca103' }">자동가입</c:if>
+													<input type="hidden" class="userNo"value="${cafeApplication.userNo}" /> 
+													<input type="hidden"class="cafeNo" value="${cafeApplication.cafeNo}" /></td>
 											</tr>
 										</c:forEach>
 
@@ -205,9 +205,7 @@
 
 		$(function() {
 			var cafeURL = '${search.cafeURL}'
-			$("#ing").on(
-					"click",
-					function() {//처리중
+			$("#ing").on("click",function() {//처리중
 						alert("!0")
 						$("#status").val(100);
 						$("#currentPage").val(1)
@@ -217,9 +215,7 @@
 										+ "/manage/getCafeApplicationList")
 								.submit();
 					});
-			$("#end").on(
-					"click",
-					function() {//처리완료
+			$("#end").on("click",function() {//처리완료
 						alert("?1")
 						$("#status").val(101)
 						$("#currentPage").val(1)
@@ -240,9 +236,7 @@
 		});//검색
 
 		$(function() {
-			$(".applicationNo").on(
-					"click",
-					function() {
+			$(".applicationNo").on("click",function() {
 						alert($(this).text());
 						var cafeURL = '${search.cafeURL}'
 						self.location = "/cafe/" + cafeURL
@@ -252,8 +246,7 @@
 		});
 
 		$(function() {
-			$("#allCheck").click(
-					function() {
+			$("#allCheck").click(function() {
 						//클릭되었으면
 						if ($("#allCheck").not(":disabled").prop("checked")) {
 							//input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
@@ -266,9 +259,7 @@
 									"checked", false);
 						}
 					});
-			$("#accept").on(
-					"click",
-					function() {//승인
+			$("#accept").on("click",function() {//승인
 						var application = "";
 
 						$("input[type=checkbox]:checked").each(

@@ -22,6 +22,9 @@
 <jsp:include page="/WEB-INF/views/common/toolbar.jsp" />
 <!-- ToolBar End /////////////////////////////////////-->
 <!--  ///////////////////////// CSS ////////////////////////// -->
+
+<link rel="stylesheet" href="/plugins/sweetalert/css/sweetalert.css">
+
 <style type="text/css">
 
 </style>
@@ -188,6 +191,8 @@
 
 	<!-- 메뉴바 이용을 위한 스크립트 -->
 	<script src="/js/custom/scroll-top.js"></script>
+	
+	<script src="/plugins/sweetalert/js/sweetalert.min.js"></script>
 	
 
 	<script type="text/javascript">
