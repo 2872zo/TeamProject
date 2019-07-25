@@ -11,12 +11,14 @@ import com.phoenix.mvc.service.domain.ChatRoom;
 public interface ChattingService {
 	
 	public Map getMyFriendsList(Search search) throws Exception;
+	
+	public Map getFriendSearchList(Search search) throws Exception;
 		
-	public void addChatFriend(ChatFriend chatFriend) throws Exception;
+	public int addFriend(ChatFriend chatFriend) throws Exception;
 	
-	public void updateChatFriend(ChatFriend chatFriend) throws Exception;
+	public int updateFriend(ChatFriend chatFriend) throws Exception;
 	
-	public void removeChatFriend(ChatFriend chatFriend) throws Exception;
+	public int deleteFriend(ChatFriend chatFriend) throws Exception;
 	
 	public Map getMyChatRoomList(Search search) throws Exception;
 	

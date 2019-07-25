@@ -135,7 +135,7 @@
 		WHERE event_user_no =#{eventUserNo:NUMERIC}
 			  AND event_type='et100' 
 			  AND event_cafe_no=#{cafeNo:NUMERIC}
-			  AND to_char(reg_date,'yyyy-mm-dd') = to_char(SYSDATE,'yyyy-mm-dd');
+			  AND to_char(reg_date,'yyyy-mm-dd') = to_char(SYSDATE,'yyyy-mm-dd')
 	</select>
 	
 	<select id="getCafeStatistics" parameterType="Event" resultType="map">

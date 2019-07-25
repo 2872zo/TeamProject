@@ -244,9 +244,6 @@
                 </div>
             </div>
             
-            <img class="mr-3" src="/images/uploadfiles/mainImg/${cafe.mainImg}" width="100%" height="100" alt="">
-            <br/>
-            <br/>
         </div>
         <!--**********************************
             Header end ti-comment-alt
@@ -266,18 +263,31 @@
             Content body start
         ***********************************-->
         <div class="content-body">
-        	<div class="row page-titles mx-0">
-                <div class="col p-md-0">
-                  
-                </div>
-            </div>
+        	<br/>
 			<div id="container-fluid">
-				 <div class="col-lg-12"> <!-- 배너 -->
+				 <div class="col-lg-12"> <!-- 대문 -->
                       <div class="card">
                            <div class="card-body">
-                            <div class="table-responsive">
-                                   <img class="mr-3" src="/images/uploadfiles/mainImg/${cafe.mainImg}" width="910" height="auto" alt="">
-                               </div>
+                           		 
+                            	   <c:if test="${empty cafe.mainImg}"> <!--대문이 없을경우  -->
+                            	   	<div class="form-inline">
+		                           	   	<div class="col-lg-6">
+		                           	   		<h2><strong>카페에 오신것을 환영합니다.</strong></h2>
+		                           	   		<h5>혼자보단 둘이, 둘보단 셋이 더 재미있을 거예요.</h5>
+		                           	   		<h5>함께 재미있는 이야기 나누며 행복한 카페를 만들어 가요!</h5>
+		                           	   		 <c:if test="${cafe.manageUserNo == user.userNo}"> <!-- 로그인한매니저일경우 -->
+		                           	   			<div class="btn btn-primary mainImg">카페대문 꾸미기</div>
+		                           	   		 </c:if>
+		                           	   	</div>
+		                           	   	<div class="col-lg-5">
+		                                  	 	<img class="mr-3" src="/images/default-cafe-mainImg.jpg" width="400" alt="">
+		                           	   	</div>
+                            	   	</div>
+                            	   </c:if>
+                            	   <c:if test="${!empty cafe.mainImg}"> <!-- 대문있을경우 -->
+                                   	 	<img class="mr-3" src="/images/uploadfiles/mainImg/${cafe.mainImg}" width="910" height="auto" alt="">
+                            	   </c:if>
+                            	   
                            </div>
                        </div>
                       
@@ -360,6 +370,15 @@
     	var userNo ='${user.userNo}'
     	var cafeNo= '${cafeMember.cafeNo}'
 		var cafeURL = "${cafeURL}";
+
+		$(function(){
+
+			$(".btn.btn-primary.mainImg").on("click",function(){
+				$(self.location).attr("href", "/cafe/${cafeURL}/manage/updateCafeInfoView");
+			});
+	
+		});
+		
     </script>
 	<script src="/js/custom/scroll-top.js"></script>
 	<script src="/js/custom/menubarCafe.js"></script>

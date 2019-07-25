@@ -20,12 +20,6 @@
 
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <style type="text/css">
-.friends{ border: 1px solid red;}
-img {
-    max-width: 100%; /* 이미지의 최대사이즈 */
-    height: auto;
-    vertical-align: center;
-}
 </style>
 
 </head>
@@ -73,9 +67,6 @@ img {
 	<div class="row">
         <div class="col-lg-8">
         
-        
-        
-        
         <!--  
         
 			<div class="row page-titles mx-0">
@@ -94,70 +85,44 @@ img {
 		-->
 		
 			<div class='container-fluid'>
-			
-			
 
 				<div class='card'>
 					<div class='card-body'>
 						
-					<div class="d-flex justify-content-around">
-					
-					<i class="mdi mdi-account-multiple-outline" style='font-size: 30pt;'></i>
-					<i class="mdi mdi-account-check" style='font-size: 30pt;'></i>
-					<i class="mdi mdi-account-search" style='font-size: 30pt;'></i>
-					<i class="mdi mdi-sleep-off" style='font-size: 30pt;'></i>
-					
-					
-					</div>
-						<form>
-	
-					<div class='d-flex justify-content-center'>
-				<div class="input-group mb-3 " style='width: 50%;'>
-					<input type="text" class="form-control form-control-lg"
-						placeholder="검색어를 입력해주세요" id='searchKeyword'>
-					<div class="input-group-append">
-						<button class="btn btn-lg btn-outline-primary" type="button"
-							id="explore">
-							<i class="mdi mdi-magnify" style='font-size: 18pt;'></i>
-						</button>
-					</div>
-				</div>
-			</div>
-						</form>
-						
-	<div class="card friends">
-      <div class="card-body">
-      <div class ='row'>
-      <div class='col-lg-4'>
-      <img alt="" src="/images/avatar/1.jpg" class='rounded img-fluid' alt="Responsive image" >
-      </div>
-      <div class='col-lg-8'>
-        <h5 class="card-title">Special title treatment</h5>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
-      </div>
-      </div>
-      </div>
-    </div>
+						<div id="tableLayer"
+							style="overflow-x: hidden; overflow-y: scroll; height: 400px; border: 1px solid black;">
 
-
-<c:forEach items='${searchList}' var = 'searchedChatFriend'>
-
-<div class="card friends">
-      <div class="card-body">
-      <div class ='row'>
-      <div class='col-lg-4'>
-      <img alt="" src="/images/avatar/1.jpg" class='rounded img-fluid' alt="Responsive image" >
-      </div>
-      <div class='col-lg-8'>
-        <h5 class="card-title">Special title treatment</h5>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
-      </div>
-      </div>
-      </div>
-    </div>
-</c:forEach>
+							aaaaaaaaaaaaaaaaaaaaaaaaaaa
+							aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+							aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+							aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaa
+							aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+							bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+							QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQaaaaaaaaaaaaaaaaaaaaaaaaaaa
+							aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+							aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+							aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaa
+							aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+							bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+							QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQaaaaaaaaaaaaaaaaaaaaaaaaaaa
+							aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+							aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+							aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaa
+							aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+							bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+							QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQaaaaaaaaaaaaaaaaaaaaaaaaaaa
+							aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+							aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+							aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaa
+							aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+							bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+							QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQaaaaaaaaaaaaaaaaaaaaaaaaaaa
+							aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+							aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+							aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaa
+							aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+							bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+							QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ</div>
 
 
 					</div>
@@ -225,6 +190,10 @@ img {
 	<script src="/js/settings.js"></script>
 	<script src="/js/gleek.js"></script>
 	<script src="/js/styleSwitcher.js"></script>
+
+	<script src="/plugins/sweetalert/js/sweetalert.min.js"></script>
+	<script src="/plugins/sweetalert/js/sweetalert.init.js"></script>
+
 	<!-- 메뉴바 이용을 위한 스크립트 -->
 	<script src="/js/custom/scroll-top.js"></script>
 
@@ -242,7 +211,14 @@ var checkSessionUser = ${empty sessionScope.user};
 	
 		
 	$(function() {
-		var checkSessionUser = ${empty sessionScope.user};
+
+
+		 
+		
+		$("#explore").on("click", function() {
+			var keyword = $("#searchKeyword").val()
+			$(self.location).attr("href", "/explore/" + keyword);
+		});
 
 		$("#searchKeyword").focus(function() {
 			$(this).attr("style", "border: 2px solid #f5a142");
@@ -251,9 +227,28 @@ var checkSessionUser = ${empty sessionScope.user};
 		$("#searchKeyword").blur(function() {
 			$(this).attr("style", "");
 		});
+
+		$("#searchKeyword").on("keyup", function(a) {
+			if (a.keyCode == 13) {
+				$('#explore').trigger('click');
+			}
+		});
+
+		$("#cafe").on("click", function() {
+			$(self.location).attr("href", "/cafe/main");
+		});
 		
-			//$("#explore").on))
+		$("#mail").on("click", function() {
+			$(self.location).attr("href", "/mail/main");
+		});
 		
+		$("#sns").on("click", function() {
+			$(self.location).attr("href", "/sns/main");
+		});
+		
+		$("#shop").on("click", function() {
+			$(self.location).attr("href", "/shopping/myCartList");
+		});
 
 	});
 </script>

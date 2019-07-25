@@ -14,18 +14,18 @@ li:hover {
 <div class="nk-nav-scroll">
 	<ul class="metismenu" id="menu">
 		<li id='friendsList'><a id="statistics"
-			aria-expanded="false"> <i class="icon-graph menu-icon"></i>
-				<span class="nav-text" >친구목록</span>
+			aria-expanded="false"> <i class="mdi  mdi-account-multiple" style='font-size: 25pt'></i>
+				<span class="nav-text align-middle" style='font-size: 15pt'>친구목록</span>
 		</a></li>
 
 		<li id='chatRoomList'><a id="board" 
-			aria-expanded="false"> <i class="icon-globe-alt menu-icon"></i>
-				<span class="nav-text" >채팅방목록</span>
+			aria-expanded="false"> <i class="mdi mdi-server" style='font-size: 25pt'></i>
+				<span class="nav-text align-middle" style='font-size: 15pt'>채팅방목록</span>
 		</a></li>
 
 		<li id='config'><a id="info"
-			aria-expanded="false"> <i class="icon-note menu-icon"></i>
-				<span class="nav-text" >환경설정</span>
+			aria-expanded="false"> <i class="mdi mdi-settings" style='font-size: 25pt'></i>
+				<span class="nav-text align-middle" style='font-size: 15pt'>환경설정</span>
 		</a></li>
 
 		<li><a id="form" 

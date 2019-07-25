@@ -127,7 +127,7 @@ code {
                                             <div class="col-lg-6">
                                                <div><img src="/images/uploadFiles/mainImg/${cafe.mainImg}" width="300"; height="200px";/>
                                                </div>
-                                                <input type="file" class=""form-control-file"" id="uploadFile2" name="uploadFile2">
+                                                <input type="file" class=""form-control-file"" id="uploadFile2" name="uploadFile2" >
                                                </div>
                                         </div> <hr>
                                         <div class="form-group row">
@@ -144,7 +144,7 @@ code {
                                             <label class="col-lg-4 col-form-label" for="exampleFormControlSelect1"> <h5>카페 카테고리<span class="text-danger">*</span></h5>
                                             </label>
                                             <div class="col-lg-6">
-                                                <select class="form-control" id="exampleFormControlSelect1"	name="cafeType">								
+                                                <select class="form-control aaa" id="exampleFormControlSelect1"	name="cafeType">								
 													<option value="cc100">친목/모임</option>
 													<option value="cc101">스포츠/레저</option>
 													<option value="cc102">영화</option>
@@ -193,11 +193,11 @@ code {
 			$( "button.btn.btn-primary" ).on("click" , function() {
 				alert("수정");
 
-				 $(".autoAcceptOption").each(function(){
-					    if($(this).val()=="${cafe.cafeType}"){
-					      $(this).attr("selected","selected");
-					    }
-				 });
+				$("#exampleFormControlSelect1 option:selected").text();
+	            $("option:selected").text();
+	            $(":selected").text();
+
+	
 		
 				$("form").attr("method" , "POST").attr("action" , "/cafe/${cafe.cafeURL}/manage/updateCafeInfo")
 				.attr("enctype","multipart/form-data").submit();
@@ -207,6 +207,7 @@ code {
 		 $(function() {
 
 				$("input[name='cafeName']").on('keyup',function() {
+				
 									var inputed = $("input[name='cafeName']").val();
 									 //alert("입력  : "+inputed);
 											$.ajax({
@@ -222,8 +223,8 @@ code {
 												}),
 
 												success : function(JSONData) {
-													//alert(JSONData); 
-													//alert(typeof(JSONData));
+													alert(JSONData); 
+													alert(typeof(JSONData));
 									
 													if (JSONData && inputed != "") {
 														$("#check").children("strong")
