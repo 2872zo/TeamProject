@@ -28,6 +28,8 @@ public interface CafeManageService {
 
 	public int updateCafeMemeberGrade(CafeMember cafeMember) throws Exception;
 	
+	public boolean checkBlockExpired(int memberNo) throws Exception;
+	
 /////////////////////////////////기황끝/////////////////////////////
 	
 /////////////////////////////////지니//////////////////////////////

@@ -5,37 +5,33 @@ $(function() {
 	var whereYouAt = String(window.location.pathname);
 
 	// 카페/메인도 아니고 접속도 안했을때 지워버려
-	if (!whereYouAt.startsWith("/cafe/main") || checkSessionUser) {
-		$("#cafeMainTools").remove();
-	}
+	//if (!whereYouAt.startsWith("/cafe/main") || checkSessionUser) {
+	//	$("#cafeMainTools").remove();
+	//}
 
 	// /카페로 시작안하면 버튼 없애자
-	if (!whereYouAt.startsWith("/cafe")) {
-		$("#cafeHomeButton").remove();
-	}
+	//if (!whereYouAt.startsWith("/cafe")) {
+	//	$("#cafeHomeButton").remove();
+	//}
 
-	if (!whereYouAt.startsWith("/cafe/") || whereYouAt.startsWith("/cafe/main")) {
-		$("#thisCafeHome").remove();
-	}
+
 
 	// 로그인 안해서 세션에 유저가 없을 때
-	if (checkSessionUser) {
-		$("#goChat").remove();
-		$(".logout").remove();
-	}
+	//if (checkSessionUser) {
+	//	$("#goChat").remove();
+	//	$(".logout").remove();
+	//}
 
 	// 로그인해서 세션에 유저가 있을 때
-	if (!checkSessionUser) {
-		$(".login").remove();
-	}
+	//if (!checkSessionUser) {
+	//	$(".login").remove();
+	//}
 
 	$("#cafeHomeButton").on("click", function() {
 		$(self.location).attr("href", "/cafe/main");
 	});
 
-	$("#thisCafeHome").on("click", function() {
-		$(self.location).attr("href", "/cafe/" + whereYouAt.substring(6));
-	});
+
 
 	$("#newsFeeding").on("click", function() {
 		$(self.location).attr("href", "/cafe/main/cafeNewsFeed");

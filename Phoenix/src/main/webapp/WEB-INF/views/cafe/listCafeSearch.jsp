@@ -62,7 +62,6 @@
   	
   	
   	
-  <div class="card">
 
 
 
@@ -82,7 +81,7 @@
 
 		</form>
 		
-			</div>
+			
 			
 			<!--  카페검색창 끝 /////////////////////////////////////-->
 
@@ -139,32 +138,42 @@
   	 게시글 검색결과 총 ${totalCount} 건 입니다.
  	</c:if>
  	<br/>
-   <table class="table table-borderless">
-	<thead>
-    <tr> 
-      <th scope="col">카페이름</th>
-      <th scope="col">카페아이콘</th>
-      <th scope="col">게시글제목</th> 
-      <th scope="col">작성자닉네임</th>
-      <th scope="col">작성시간</th>
-      <th scope="col">게시글 번호</th>
-    </tr>
-	</thead>
-	<tbody>
-  
+   
   <c:forEach var="post" items="${postList}">
-  	<tr>
-	  <th scope="row">${post.cafeName}</th>
-	  <td>${post.cafeIcon}</td>
-	  <td>${post.postTitle}</td>
-	  <td>${post.memberNickname}</td>
-	  <td>${post.regDate}</td>
-	  <td>${post.postNo}</td>
-	  
-    </tr>
+
+  <input type='hidden' class='cafeURL' value='${post.cafeURL}'>
+		<input type='hidden' class='postNo'  value='${post.postNo}'>
+		<div class="card w-85 goToPost" style=" border: 1px solid #F7790A; ">
+			<div class='row'>
+			<div class='col-lg-3'>
+			<div class="card-body">
+			<img src="/images/common/16by9.png" class="card-img" alt="..."
+			style="background: url('/images/uploadFiles/cafeicon/${post.cafeIcon}');
+      no-repeat center center; background-size:cover; height:100px; width:auto;">
+			${post.cafeName} 
+			</div>
+			</div>
+			<div class='col-lg-6'>
+			<div class="card-body">
+				<h5 class="card-title">${post.postTitle}</h5>
+				<p class="card-text">
+				
+				</p>
+				
+				</div>
+			</div>
+			<div class='col-lg-3'>
+			 작성자 : ${post.memberNickname}
+			 <br/>
+			 ${post.regDate}
+			</div>
+			</div>
+		</div>
+
   </c:forEach>
-  	</tbody>
-</table>
+
+  
+  
   
   <c:if test="${ !empty search.searchCondition && search.searchCondition==0}">
   <button type="button" class="btn btn-outline-success" id='morePost'>게시글 더보기</button>
@@ -188,9 +197,6 @@
 	<script src="/js/settings.js"></script>
 	<script src="/js/gleek.js"></script>
 	<script src="/js/styleSwitcher.js"></script>
-
-	<script src="/plugins/sweetalert/js/sweetalert.min.js"></script>
-	<script src="/plugins/sweetalert/js/sweetalert.init.js"></script>
 
 	<!-- 메뉴바 이용을 위한 스크립트 -->
 	<script src="/js/custom/scroll-top.js"></script>
@@ -266,6 +272,17 @@ $(function() {
 		$(self.location).attr("href","/cafe/"+moveTo);
 		
 	});
+
+	$(".goToPost").on(
+			"click",
+			function() {
+				var countNo=$(".goToPost").index(this);
+				var cafeURL = $($(".cafeURL")[countNo]).val();
+				var postNo = $($(".postNo")[countNo]).val();
+				//alert(cafeURL);
+				//alert(postNo);
+				$(self.location).attr("href", "/cafe/"+cafeURL+"/getPost/"+postNo);
+			});
 	
 });
 </script>
@@ -273,7 +290,5 @@ $(function() {
 <!-- 공통 툴바용 스크립트 -->	
 	<script src="/js/custom/toolbarScript.js"></script>
 	
-	<!-- 카페 검색용 스크립트 -->		
-	<script src="/js/custom/cafeSearcher/cafeSearcher.js"></script>
 </body>
 </html>

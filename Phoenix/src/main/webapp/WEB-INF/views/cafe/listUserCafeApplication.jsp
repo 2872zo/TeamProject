@@ -28,10 +28,16 @@
 <input type="hidden" id="status" name="status" value="${search.status}"/>
 <input type="hidden" id="boardNo" name="boardNo" value="${search.boardNo}"/>
 </form>
+<br/>
+	<div class='container'>
+
+<div class='card'>
+<div class='card-body'>
+
 
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
-	<div class="container">
+	
 	총 ${totalCount} 건 
 
 	
@@ -76,6 +82,8 @@
 	
 
 	
+</div>
+</div>
 </div>
 	<!--  화면구성 div Start /////////////////////////////////////-->
 <!--**********************************

@@ -105,43 +105,36 @@ public class CafeMemberDaoImpl implements CafeMemberDao {
 
 	@Override
 	public int updatePostCountIncrease(int memberNo) throws Exception {
-//TODO Auto-generated method stub
 		return sqlSession.update("CafeMemberMapper.increasePostCount", memberNo);
 	}
 
 	@Override
 	public int updatePostCountDecrease(int memberNo) throws Exception {
-//TODO Auto-generated method stub
 		return sqlSession.update("CafeMemberMapper.decreasePostCount", memberNo);
 	}
 
 	@Override
 	public int updateReplyCountIncrease(int memberNo) throws Exception {
-//TODO Auto-generated method stub
 		return sqlSession.update("CafeMemberMapper.increaseReplyCount", memberNo);
 	}
 
 	@Override
 	public int updateReplyCountDecrease(int memberNo) throws Exception {
-//TODO Auto-generated method stub
 		return sqlSession.update("CafeMemberMapper.decreaseReplyCount", memberNo);
 	}
 
 	@Override
 	public int updateVisitCountIncrease(int memberNo) throws Exception {
-//TODO Auto-generated method stub
 		return sqlSession.update("CafeMemberMapper.increaseVisitCount", memberNo);
 	}
 
 	@Override
 	public int updateFavorite(CafeMember cafeMember) throws Exception {
-//TODO Auto-generated method stub
 		return sqlSession.update("CafeMemberMapper.updateFavorite", cafeMember);
 	}
 
 	@Override
 	public CafeMember getCafeMemberByURL(Search search) throws Exception {
-// TODO Auto-generated method stub
 		return sqlSession.selectOne("CafeMemberMapper.checkMember", search);
 	}
 

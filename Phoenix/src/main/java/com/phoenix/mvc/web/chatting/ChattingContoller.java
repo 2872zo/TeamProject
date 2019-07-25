@@ -106,7 +106,7 @@ public class ChattingContoller {
 	}
 	
 	@RequestMapping("chatRoom")
-	public String getChatRoom(@ModelAttribute ChatRoom chatRoom, @SessionAttribute("user") User user, Model model) throws Exception {
+	public String getChatRoom(@SessionAttribute("user") User user, @ModelAttribute ChatRoom chatRoom, Model model) throws Exception {
 		System.out.println(chatRoom.getChatRoomNo());
 		//Search search = new Search();
 		//search.setUserNo(user.getUserNo());
@@ -119,6 +119,8 @@ public class ChattingContoller {
 	@RequestMapping("addChatRoom")
 	public String addChatRoom(@SessionAttribute("user") User user, @ModelAttribute ChatRoom chatRoom, Model model) throws Exception {
 		
+		chattingService.addChatRoom(chatRoom);
+		model.addAttribute("chatRoom", chatRoom);
 		return "chat/chatRoom";
 	}
 	

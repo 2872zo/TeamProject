@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.chatting.ChattingDao;
@@ -16,6 +17,7 @@ import com.phoenix.mvc.service.domain.ChatFriend;
 import com.phoenix.mvc.service.domain.ChatRoom;
 
 @Service
+@Transactional
 public class ChattingServiceImpl implements ChattingService{
 	
 	@Autowired
@@ -89,23 +91,27 @@ public class ChattingServiceImpl implements ChattingService{
 	}
 
 	@Override
-	public List getChatList(Chat chat) throws Exception {
+	public Map getChatList(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return chattingDao.getChatList(chat);
+		Map map = new HashMap();
+		List chatList = chattingDao.getChatList(search);
+		return map;
 	}
 
 	@Override
 	public Map getChatRoom(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		Map map = new HashMap();
+		List chatList = chattingDao.getChatList(search);
+		map.put("chatList", chatList);
+		return map;
 	}
 
 	
 
 	@Override
 	public void addChatRoom(ChatRoom chatRoom) throws Exception {
-		// TODO Auto-generated method stub
-		
+		chattingDao.addChatRoom(chatRoom);
 	}
 
 	@Override

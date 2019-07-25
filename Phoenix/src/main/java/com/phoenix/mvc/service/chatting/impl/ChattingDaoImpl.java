@@ -1,7 +1,6 @@
 package com.phoenix.mvc.service.chatting.impl;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +56,7 @@ public class ChattingDaoImpl implements ChattingDao{
 		mongoTemplate.insert(chat);	
 	}
 	
-	public List getChatList(Chat chat) throws Exception {
+	public List getChatList(Search search) throws Exception {
 		
 		Query query = new Query();
 		//정렬
@@ -68,7 +67,8 @@ public class ChattingDaoImpl implements ChattingDao{
 		//검색조건
 		//criteria.where("chatRoomNo").is(10007);
 		//query.addCriteria(criteria);
-		criteria.andOperator(Criteria.where("chatProfileImg").is("abc"), Criteria.where("chatRoomNo").is(10007));
+		//criteria.andOperator(Criteria.where("chatProfileImg").is("abc"), Criteria.where("chatRoomNo").is(search.getChatRoomNo()));
+		criteria.andOperator(Criteria.where("chatRoomNo").is(search.getChatRoomNo()));
 		query.addCriteria(criteria);
 		return mongoTemplate.find(query, Chat.class);
 		
@@ -78,7 +78,7 @@ public class ChattingDaoImpl implements ChattingDao{
 
 	@Override
 	public void addChatRoom(ChatRoom chatRoom) throws Exception {
-		
+		mongoTemplate.insert(chatRoom);
 	}
 
 	@Override

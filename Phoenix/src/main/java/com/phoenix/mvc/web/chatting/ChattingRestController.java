@@ -40,9 +40,9 @@ public class ChattingRestController {
 		
 		System.out.println ("제대로들어가면호출됨"+chat);
 		
-		List list = chattingService.getChatList(chat);
+		//List list = chattingService.getChatList(chat);
 		
-		System.out.println(list);
+		//System.out.println(list);
 		
 		return chat;
 	}

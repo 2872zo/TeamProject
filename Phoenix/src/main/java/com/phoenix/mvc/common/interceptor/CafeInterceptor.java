@@ -119,8 +119,21 @@ public class CafeInterceptor extends HandlerInterceptorAdapter {
 				//정지 회원 접근 확인
 				else if(cafeMember.getMemberStatusCode().equals("cs101")) {
 					System.out.println(">>> 정지 회원접근");
-					response.sendRedirect(request.getContextPath() + "/cafe/" + cafeURL + "/memberBlock");
-					return false;
+					//////////////////////////////기황시작//////////////////////////////
+					//정지가 만료되었는지 체크하는 부분 
+					boolean expired = cafeManageService.checkBlockExpired(cafeMember.getMemberNo());
+					
+					if(expired) {
+						System.out.println("정지기간 만료로 해제되었음");
+					}
+					
+					else if(!expired) {
+						System.out.println("정지기간 진행중임");
+						response.sendRedirect(request.getContextPath() + "/cafe/" + cafeURL + "/memberBlock");
+						return false;
+					}
+					//////////////////////////////기황끝//////////////////////////////
+					
 				} 
 				//세부 권한 확인
 				else {
