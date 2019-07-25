@@ -164,15 +164,15 @@ public class CafeInterceptor extends HandlerInterceptorAdapter {
 							request.getContextPath() + "/user/loginView?targetURL=" + request.getRequestURI());
 					return false;
 				}
-				// 카페 멤버 여부 확인
-				else if (cafeMember == null ) {
+				// 카페 멤버 여부 확인//지니
+				else if (cafeMember == null || cafeMember.getMemberStatusCode().equals("cs102") ) {
 					
 					if (request.getRequestURI().contains("addCafeApplication")) {
 						System.out.println(">>> 카페 회원가입 접근");
 						return true;
 					}
 					System.out.println(">>> 카페 멤버 아님");
-					response.sendRedirect("/WEB-INF/views/common/needAply.jsp");
+					response.sendRedirect(request.getContextPath()+"/WEB-INF/views/common/needAply.jsp");//이거 수정 ㅠ.ㅠ
 					return false;
 
 				}

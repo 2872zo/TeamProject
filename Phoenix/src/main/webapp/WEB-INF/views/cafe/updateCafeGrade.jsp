@@ -10,9 +10,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>카페폐쇄</title>
-
-
+<title>카페등급관리</title>
 
 <link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
 <link href="/css/style.css" rel="stylesheet">
@@ -40,7 +38,7 @@
 	<!--*******************
         Preloader start
     ********************-->
-	<div id="preloader" style="display: none;">
+	<div id="preloader">
 		<div class="loader">
 			<svg class="circular" viewBox="25 25 50 50">
                 <circle class="path" cx="50" cy="50" r="20" fill="none"
@@ -122,9 +120,9 @@
 												<c:if test="${i ne 1}"><h6>${i} 번째 등급명</h6>&nbsp;&nbsp;&nbsp;&nbsp;
 												<input type="text" class="form-control input-default tbox"name="gradeList[${j}].gradeName"value="${cafeGrade.gradeName}" />
 												&nbsp;&nbsp;&nbsp;&nbsp;
-												출석&nbsp;&nbsp;&nbsp;&nbsp; <input type="text"class="form-control input-default bbox"name="gradeList[${j}].requiredVisitCount" value="${cafeGrade.requiredVisitCount }" />&nbsp;&nbsp;&nbsp;&nbsp;이상,&nbsp;&nbsp;&nbsp;&nbsp;
-												게시글 &nbsp;&nbsp;&nbsp;&nbsp;<input type="text"class="form-control input-default bbox"name="gradeList[${j}].requiredPostCount"value="${cafeGrade.requiredPostCount }" />&nbsp;&nbsp;&nbsp;&nbsp;이상,&nbsp;&nbsp;&nbsp;&nbsp;
-												댓글&nbsp;&nbsp;&nbsp;&nbsp; <input type="text"class="form-control input-default bbox"name="gradeList[${j}].requiredReplyCount"value="${cafeGrade.requiredReplyCount }" />&nbsp;&nbsp;&nbsp;&nbsp;이상&nbsp;&nbsp;&nbsp;&nbsp;
+												출석&nbsp;&nbsp;&nbsp;&nbsp; <input type="text"  class="form-control input-default abox"name="gradeList[${j}].requiredVisitCount" value="${cafeGrade.requiredVisitCount }" />&nbsp;&nbsp;&nbsp;&nbsp;이상,&nbsp;&nbsp;&nbsp;&nbsp;
+												게시글 &nbsp;&nbsp;&nbsp;&nbsp;<input type="text"  class="form-control input-default bbox"name="gradeList[${j}].requiredPostCount"value="${cafeGrade.requiredPostCount }" />&nbsp;&nbsp;&nbsp;&nbsp;이상,&nbsp;&nbsp;&nbsp;&nbsp;
+												댓글&nbsp;&nbsp;&nbsp;&nbsp; <input type="text"  class="form-control input-default cbox"name="gradeList[${j}].requiredReplyCount"value="${cafeGrade.requiredReplyCount }" />&nbsp;&nbsp;&nbsp;&nbsp;이상&nbsp;&nbsp;&nbsp;&nbsp;
 												<input type="hidden" class="cafeGradeNo"name="gradeList[${j}].cafeGradeNo"value="${cafeGrade.cafeGradeNo }" />
 												<input type="hidden" class="memberGradeCode"name="gradeList[${j}].memberGradeCode"value="${cafeGrade.memberGradeCode }" />
 
@@ -179,6 +177,7 @@
 	<script src="/js/settings.js"></script>
 	<script src="/js/gleek.js"></script>
 	<script src="/js/styleSwitcher.js"></script>
+	<script src="/plugins/sweetalert/js/sweetalert.init.js"></script>
 
 	<!-- 메뉴바 이용을 위한 스크립트 -->
 	<script src="/js/custom/scroll-top.js"></script>
@@ -187,18 +186,41 @@
 		$(function() {
 
 			//alert($(".cafeNo").val())
-			$("#save").on(
-					"click",
-					function() {//update
+			$("#save").on("click",function() {//update
 						//alert($(".gradeFlag1").text())
-						$("form").attr("method", "POST").attr(
-								"action",
-								"/cafe/" + '${cafeURL}'
-										+ "/manage/updateCafeGrade?CafeNo="
-										+ $(".cafeNo").val()).submit();
-					});
+					for(var i =0; i<3; i++){
+						//alert("i"+i);
+						var visit = $($(".abox")[i]).val();
+						var nextV = $($(".abox")[i+1]).val();
+						//alert("visit "+visit)
+						//alert("nextV "+nextV)
+						var post = $($(".bbox")[i]).val();
+						var nextP = $($(".bbox")[i+1]).val();
+						//alert("post "+post)
+						//alert("nextP "+nextP)
+						var reply = $($(".cbox")[i]).val();
+						var nextR = $($(".cbox")[i+1]).val();
+						//alert("reply "+reply)
+						//alert("nextR "+nextR)
+
+							if(visit>nextV || post>nextP || reply>nextR){
+								alert((i+3)+"번째의 등업 조건이 낮은 등급보다 높아야 합니다.")
+								break;
+							}else if(i==2 &&visit<nextV && post<nextP && reply<nextR){
+								//alert("ok")
+								$("form").attr("method", "POST").attr("action","/cafe/" + '${cafeURL}'+ "/manage/updateCafeGrade?CafeNo="+ $(".cafeNo").val()).submit();	
+							}else if(visit==nextV || post==nextP || reply==nextR){
+								alert("등업 조건이 같을 수는 없습니다.")
+								break;
+							}
+					}
+					
+					
+			});
 
 		});
+		
+	
 	</script>
 
 	<script src="/js/custom/cafeCommon.js"></script>
