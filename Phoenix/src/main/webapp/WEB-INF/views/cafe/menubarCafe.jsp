@@ -23,7 +23,13 @@
 					    	<div class="tab-pane fade show active" id="home8" role="tabpanel">
 					             	
 					           		<div class="media align-items-center mb-4">
-	                                   	<img class="mr-3" src="/images/uploadfiles/cafeIcon/${cafe.cafeIcon}" width="80" height="80" style="object-fit: cover; border-radius: 50%;" alt="">
+					           			<c:if test="${empty cafe.cafeIcon}">
+					     					<img class="mr-3" src="/images/default-cafe-icon.jpg" width="80" height="80" style="object-fit: cover; border-radius: 50%;" alt="">
+					           			</c:if>
+					           			<c:if test="${!empty cafe.cafeIcon}">
+					     					<img class="mr-3" src="/images/uploadfiles/cafeIcon/${cafe.cafeIcon}" width="80" height="80" style="object-fit: cover; border-radius: 50%;" alt="">
+					           			</c:if>
+	                               
 	                                    <div class="media-body">
 	                          				<p class="text-muted mb-0">매니저 </p>
 	                          				${cafe.managerNickname}
@@ -35,10 +41,15 @@
 	                                     <span style="float: right; margin-right: 10px;"><fmt:formatDate value="${cafe.regDate}" pattern="yyyy.MM.dd"/></span>
 	                                    </li>
 	                                    <li class="mb-1"><strong class="text-dark mr-4" style="margin-left: 10px;"><i class="fa fa-users"></i></strong> <span style="float: right; margin-right: 10px;">${cafe.members}</span></li>
-	                                    
+	                                    <li class="mb-1">
+	                                    	<strong class="text-dark mr-4" style="margin-left: 10px;"><i class="icon-grid gradient-9-text"></i></strong>
+	                                    	<span style="float: right; margin-right: 10px;">카페멤버등급확인</span>
+	                                    </li>
 	                                    <c:if test="${!empty cafeMember && cafeMember.userNo == cafe.manageUserNo}">
+	                                    	<br/>
 	                                    	<li class="mb-1"><strong class="text-dark mr-4 manage cursor" style="margin-left: 10px;"><i class="icon-settings"></i>카페설정</strong></li>
 	                                    </c:if>
+	                                    
 	                                </ul>
 	                                <c:if test="${empty cafeMember}">
 										<div class="media align-items-center mb-4">

@@ -6,7 +6,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.phoenix.mvc.common.Event;
 import com.phoenix.mvc.common.Search;
+import com.phoenix.mvc.service.cafe.CafeManageDao;
 import com.phoenix.mvc.service.cafe.CafeManageService;
 import com.phoenix.mvc.service.cafe.CafeMemberService;
 import com.phoenix.mvc.service.cafe.CafePostService;
@@ -89,8 +91,13 @@ public class CafeInterceptor extends HandlerInterceptorAdapter {
 				if(cafeMember != null) {
 					//출석체크
 					//-출석체크 후 정보변경되면 cafeMember객체의 정보 변경할것
-					
-					
+					////////////////////////////////////예림시작////////////////////////
+					Event event = new Event();
+					event.setEventUserNo(user.getUserNo());
+					event.setCafeNo(cafe.getCafeNo());
+					event.setEventType("et100");				
+					cafeManageService.checkAttendance(cafeMember, event);
+					////////////////////////////////////예림끝/////////////////////////
 					//등업체크
 					//-등업체크 후 정보변경되면 cafeMember객체의 정보 변경할것
 				}
