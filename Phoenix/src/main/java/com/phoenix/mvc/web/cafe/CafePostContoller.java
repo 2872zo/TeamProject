@@ -367,12 +367,8 @@ public class CafePostContoller {
 		Page page = new Page(search.getCurrentPage(), (int) queryResultMap.get("replyTotalCount"), replyPageUnit, replyPageSize);
 
 		List<Reply> replyList = (List<Reply>) queryResultMap.get("replyList");
-		for (Reply reply : replyList) {
-			if (reply.isReplyStatusFlag()) {
-				reply.setReplyContent("삭제된 댓글입니다.");
-			}
-		}
 
+		map.put("bestReplyList", queryResultMap.get("bestReplyList"));
 		map.put("replyList", replyList);
 		map.put("replyTotalCount", queryResultMap.get("replyTotalCount"));
 		map.put("page", page);

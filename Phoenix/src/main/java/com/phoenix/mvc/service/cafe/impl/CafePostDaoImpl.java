@@ -174,4 +174,9 @@ public class CafePostDaoImpl implements CafePostDao{
 	public boolean updateNoticeFlag(String deleteNoticeList) {
 		return (sqlSession.update("CafePostMapper.updateNoticeFlag", deleteNoticeList) != 0 ? true : false);
 	}
+
+	@Override
+	public List<Reply> getBestReplyList(Search search) {
+		return sqlSession.selectList("CafePostMapper.getBestReplyList", search);
+	}
 }

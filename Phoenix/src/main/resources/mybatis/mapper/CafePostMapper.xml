@@ -688,4 +688,23 @@
 		WHERE 
 			post_no IN (${value})
 	</update>
+	
+	<select id="getBestReplyList" parameterType="Search" resultMap="reReplyResultMap">
+	SELECT
+		 inner_table.*, ROWNUM AS row_seq
+	 FROM 
+		 (SELECT
+				*
+			FROM
+				reply
+			WHERE
+				like_count &gt; 0
+				AND reply_status_flag = '0'
+				AND post_no = #{postNo}
+			ORDER BY like_count DESC) inner_table
+	 <where>
+	 	AND ROWNUM &lt;= 5
+	 </where>
+		
+	</select>
 </mapper>

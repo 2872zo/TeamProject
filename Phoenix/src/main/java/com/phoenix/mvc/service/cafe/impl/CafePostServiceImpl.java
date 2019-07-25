@@ -112,6 +112,9 @@ public class CafePostServiceImpl implements CafePostService {
 		}
 		
 		map.put("replyList", cafePostDao.getReplyList(search));
+		if(search.getCurrentPage() == 1) {
+			map.put("bestReplyList", cafePostDao.getBestReplyList(search));
+		}
 		
 		return map;
 	}
