@@ -138,64 +138,64 @@
 	<script src="/js/custom/scroll-top.js"></script>
 	<script src="/plugins/sweetalert/js/sweetalert.min.js"></script>
 	
-	<script src="/plugins/sweetalert/js/sweetalert.min.js"></script>
+	
 	<script type="text/javascript">
 	
 		//============= "로그인"  Event 연결 =============
 	$( function() {
+		
+		$("#userId").focus();
+		
+		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		$("#logon").on("click" , function() {
 			
-			$("#userId").focus();
+			var id=$("input[id='userId']").val();
+			var pw=$("input[id='password']").val();
 			
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$("#logon").on("click" , function() {
+			if(id == null || id.length <1) {
 				
-				var id=$("input[id='userId']").val();
-				var pw=$("input[id='password']").val();
+				sweetAlert("아이디를 입력하세요","","error");
+				$("input[id='userId']").focus();
 				
-				if(id == null || id.length <1) {
+				return false;
+			}else if(pw == null || pw.length <1) {
+				sweetAlert("비밀번호를 입력하세요","","error");
+				$("input[id='password']").focus();
+				return false;
+			}else{
+				//alert("입력  : "+id);
+				//alert("입력  : "+pw);
+				//alert("입력  : "password);
+				$.ajax({
+					url : "/user/json/login",
+					method : "POST",
+					dataType : "json",
+					headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					},										
+					data : JSON.stringify({											
+					userId : id,
+					password : pw,
+					}),
 					
-					sweetAlert("아이디를 입력하세요","","error");
-					$("input[id='userId']").focus();
-					
-					return false;
-				}else if(pw == null || pw.length <1) {
-					sweetAlert("비밀번호를 입력하세요","","error");
-					$("input[id='password']").focus();
-					return false;
-				}else{
-					//alert("입력  : "+id);
-					//alert("입력  : "+pw);
-					//alert("입력  : "password);
-					$.ajax({
-						url : "/user/json/login",
-						method : "POST",
-						dataType : "json",
-						headers : {
-							"Accept" : "application/json",
-							"Content-Type" : "application/json"
-						},										
-						data : JSON.stringify({											
-						userId : id,
-						password : pw,
-						}),
+					success : function(JSONData) {
+						//alert(JSONData); 
+						//alert(typeof(JSONData));
 						
-						success : function(JSONData) {
-							//alert(JSONData); 
-							//alert(typeof(JSONData));
+						if(JSONData == false){
 							
-							if(JSONData == false){
-								
-								sweetAlert("아이디 또는 비밀번호가 일치하지 않습니다.","","error");
-								return false;
-							}else{								
-							self.location = "/";							
-							}							
-						}
-					});//ajax
-					return false;
-				}//else
-			}); 
-		});	
+							sweetAlert("아이디 또는 비밀번호가 일치하지 않습니다.","","error");
+							return false;
+						}else{								
+						self.location = "/";							
+						}							
+					}
+				});//ajax
+				return false;
+			}//else
+		}); 
+	});
 
 
 

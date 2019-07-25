@@ -74,7 +74,7 @@
 							<hr style="border: solid 1px gray;">		
 								<div class="basic-form">			
 								<br>
-									<form>
+									<form id="adduser">
 
 								<input type="hidden" name="userNo" value="${user.userNo }"/>
 
@@ -214,11 +214,16 @@
 		var name = $("input[name='userName']").val();
 		var email = $("input[name='email']").val();
 		var phone = $("input[name='phone']").val();
+		var userNickname = $("input[name='userNickname']").val();
 
 		if (userId == null || userId.length < 1) {
 			sweetAlert("아이디를 입력하세요","","error");
 			return;
 		}
+		if((userId < "0" || userId > "9") && (userId < "A" || userId > "Z") && (userId < "a" || userId > "z")){ 
+             alert("한글 및 특수문자는 아이디로 사용하실 수 없습니다.");
+             return false;
+         }
 		if(name == null || name.length <1){
 			sweetAlert("이름을 입력하세요.","","error");
 			return;
@@ -240,6 +245,10 @@
 			$("input:text[name='password2']").focus();
 			return;
 		}
+		if(userNickname == null || userNickname.length <1){			
+			sweetAlert("닉네임은 입력하셔야 합니다.","","error");
+			return;
+		}
 		if (phone == null || phone.length < 1) {
 			sweetAlert("전화번호를 입력하세요.","","error");
 			return;
@@ -247,13 +256,44 @@
 		if (email == null || email.length < 1) {
 			sweetAlert("이메일을 입력하세요.","","error");
 			return;
-		}
-		
-	   
-		sweetAlert(userName+"님 환영합니다~","");
+		}else{
+			//alert("입력  : "+userId);
+			//alert("입력  : "+pw);
+			//alert("입력  : "password);
+			$.ajax({
+				url : "/user/json/checkUserIdDuplication",
+				method : "POST",
+				dataType : "json",
+				headers : {
+					"Accept" : "application/json",
+					"Content-Type" : "application/json"
+				},										
+				data : JSON.stringify({											
+				userId : userId,		
+				}),
+				
+				success : function(JSONData) {
+					//alert(JSONData); 
+					//alert(typeof(JSONData));
+					
+					if(JSONData == false){
+						
+						sweetAlert("아이디가 중복되었습니다.","","error");
+						return false;
+					}else{								
+						$("#adduser").attr("method", "POST").attr("action","/user/addUser").submit();						
+					}							
+				}
+			});//ajax
+			//return false;
+		}//else
+
+
+		//sweetAlert(userName+"님 환영합니다~","");
 		
 		//alert(userName+"님 환영합니다~");
-		$("form").attr("method", "POST").attr("action","/user/addUser").submit();
+		
+		//$("#adduser").attr("method", "POST").attr("action","/user/addUser").submit();
 		
 	}
 
@@ -299,13 +339,21 @@
 														.remove();
 												$("#check")
 														.append(
-																"<strong class=\"text-success\">사용 가능합니다.</strong>");
-											} else {
+																"<strong class=\"text-success\">사용 가능합니다.</strong>");	
+																							
+											}else {
 												$("#check").children("strong")
 														.remove();
 												$("#check")
 														.append(
 																"<strong  class=\"text-danger\">사용 불가능합니다.</strong>");
+											}
+											if ((inputed < "0" || inputed > "9") && (inputed < "A" || inputed > "Z") && (inputed < "a" || inputed > "z")) {
+												$("#check").children("strong")
+														.remove();
+												$("#check")
+														.append(
+																"<strong class=\"text-danger\">사용 불가능합니다.</strong>");
 											}
 											if (inputed == "") {
 												$("#check").children("strong")
@@ -313,15 +361,13 @@
 												$("#check")
 														.append(
 																"<strong class=\"text-muted\">아이디를 입력해주세요.</strong>");
-											}
+	
+											}											
 										}
-
 									});
 		  						  });
 								});
-
 	
-
 	
 </script>
 	<script src="/js/custom/cafeCommon.js"></script>
