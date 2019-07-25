@@ -67,6 +67,8 @@ public boolean dropCafe(Cafe cafe, String cafeURL);
 	public Cafe getCafeInfo(String cafeURL) throws Exception;
 	
 	public List getCafeMemberAutocomplete(String cafeURL) throws Exception;
+	
+	public boolean checkAttendance(CafeMember cafeMember, Event event) throws Exception;
 /////////////////////////////예림끝///////////////////////////////////////////
 
 ///////////////////////////////준호시작///////////////////////////////////////

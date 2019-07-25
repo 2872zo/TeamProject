@@ -298,6 +298,21 @@ public class CafeManageServiceImpl implements CafeManageService {
 
 		return memberList;
 	}
+	
+	//만들고있어!
+	
+	@Override
+	public boolean checkAttendance(CafeMember cafeMember, Event event) throws Exception {
+		
+		boolean result = false;
+		if(!cafeManageDao.checkCafeTodayVisitLog(event)) { //true 오늘방문 false 안방문
+		
+			cafeManageDao.addEventLog(event); //add되면 true래
+			cafeMemberDao.updateVisitCountIncrease(cafeMember.getMemberNo());
+		}
+		
+		return result; //의미없다구
+	}
 
 ///////////////////////////////////////////////////예림끝//////////////////////////////////////////////
 
@@ -404,6 +419,7 @@ public class CafeManageServiceImpl implements CafeManageService {
 		return cafeManageDao.getCafeNoNo(cafeName);
 
 	}
+
 
 	/////////////////////////////// 준호끝///////////////////////////////////////
 

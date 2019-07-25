@@ -300,8 +300,7 @@ public class CafePostContoller {
 	}
 
 	@PostMapping("/cafe/{cafeURL}/addReply")
-	public String addReply(@PathVariable String cafeURL, @ModelAttribute Reply reply, HttpServletRequest req)
-			throws Exception {
+	public String addReply(@PathVariable String cafeURL, @ModelAttribute Reply reply, HttpServletRequest req) throws Exception {
 
 		CafeMember cafeMember = (CafeMember) req.getAttribute("cafeMember");
 		reply.setMemberNo(cafeMember.getMemberNo());
@@ -310,12 +309,13 @@ public class CafePostContoller {
 		System.out.println("[addReply] : " + reply);
 
 		System.out.println("[addReply 결과] : " + cafePostService.addReply(reply));
+		
+		req.setAttribute("searchCondition", "1");
 		return "forward:/cafe/" + cafeURL + "/getReplyList/" + reply.getPostNo();
 	}
 
 	@PostMapping("/cafe/{cafeURL}/addReReply")
-	public String addReReply(@PathVariable String cafeURL, @ModelAttribute Reply reply, HttpServletRequest req,
-			@ModelAttribute Search search) throws Exception {
+	public String addReReply(@PathVariable String cafeURL, @ModelAttribute Reply reply, HttpServletRequest req,	@ModelAttribute Search search) throws Exception {
 		CafeMember cafeMember = (CafeMember) req.getAttribute("cafeMember");
 		reply.setMemberNo(cafeMember.getMemberNo());
 		reply.setMemberNickname(cafeMember.getMemberNickname());
@@ -323,7 +323,9 @@ public class CafePostContoller {
 		System.out.println("[addReply] : " + reply);
 
 		System.out.println("[addReply 결과] : " + cafePostService.addReReply(reply));
-		return "redirect:/cafe/" + cafeURL + "/getReplyList/" + reply.getPostNo();
+		
+		req.setAttribute("currentPage", search.getCurrentPage());
+		return "forward:/cafe/" + cafeURL + "/getReplyList/" + reply.getPostNo();
 	}
 
 	@RequestMapping("/cafe/{cafeURL}/getReply")
@@ -336,14 +338,16 @@ public class CafePostContoller {
 	}
 
 	@RequestMapping("/cafe/{cafeURL}/getReplyList/{postNo}")
-	public String getReplyList(@PathVariable String cafeURL, @ModelAttribute Search search, Map<String, Object> map) {
-		System.out.println("[getReplyList] search : " + search);
-
+	public String getReplyList(@PathVariable String cafeURL, @ModelAttribute Search search, Map<String, Object> map, HttpServletRequest req) {
+		search.setSearchCondition((String)req.getAttribute("searchCondition"));
+		
 		search.setPageSize(pageSize);
 		if (search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
 		}
-
+		
+		System.out.println("[getReplyList] search : " + search);
+		
 		Map<String, Object> queryResultMap = cafePostService.getReplyList(search);
 		Page page = new Page(search.getCurrentPage(), (int) queryResultMap.get("replyTotalCount"), pageUnit, pageSize);
 

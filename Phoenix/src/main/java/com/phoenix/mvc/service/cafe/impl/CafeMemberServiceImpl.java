@@ -71,7 +71,7 @@ public class CafeMemberServiceImpl implements CafeMemberService {
 	}
 
 	@Override
-	public boolean updateCafeMember(CafeMember cafeMember) {// 탈퇴
+	public boolean updateCafeMember(CafeMember cafeMember) throws Exception {// 탈퇴
 
 		boolean result = false;
 
@@ -85,7 +85,12 @@ public class CafeMemberServiceImpl implements CafeMemberService {
 		event.setEventType("et107");// 탈퇴코드
 		cafeManageDao.addEventLog(event);
 
-		CafeMember member = cafeMemberDao.getCafeMember(cafeMember.getCafeNo(), cafeMember.getUserNo());
+		Search search = new Search();
+
+		int memberNo = cafeMember.getMemberNo();
+		search.setMemberNo(memberNo);
+
+		CafeMember member = cafeMemberDao.getCafeMember(search);
 
 		if (member.getMemberStatusCode().equals("cs102")) {
 			result = true;

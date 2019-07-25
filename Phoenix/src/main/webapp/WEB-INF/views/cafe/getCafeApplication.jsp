@@ -28,7 +28,7 @@
 	<!--*******************
         Preloader start
     ********************-->
-	<div id="preloader" style="display: none;">
+	<div id="preloader" >
 		<div class="loader">
 			<svg class="circular" viewBox="25 25 50 50">
                 <circle class="path" cx="50" cy="50" r="20" fill="none"
@@ -84,11 +84,14 @@
 							<div class="card-body">
 								<h4 class="card-title">>가입신청상세조회</h4>
 								<div align="right">
-
+								
+								<c:if test="${cafeApplication.acceptStatusCode eq 'ca100' }">
 									<button type="button" id="accept"
 										class="btn btn-outline-secondary">가입승인</button>
 									<button type="button" id="reject"
 										class="btn btn-outline-secondary">가입거절</button>
+								</c:if>
+								
 								</div>
 								<br> <br>
 								<form id="whether">
@@ -198,7 +201,12 @@
 									<div class="col-xs-4 col-md-2">
 										<strong>가입승인상태</strong>
 									</div>
-									<div class="col-xs-8 col-md-4">${cafeApplication.acceptStatusCode}</div>
+									<div class="col-xs-8 col-md-4">
+									<c:if test="${cafeApplication.acceptStatusCode eq 'ca100' }">가입대기</c:if>
+									<c:if test="${cafeApplication.acceptStatusCode eq 'ca101' }">가입승인</c:if>
+									<c:if test="${cafeApplication.acceptStatusCode eq 'ca102' }">가입거절</c:if>
+									<c:if test="${cafeApplication.acceptStatusCode eq 'ca103' }">자동가입</c:if>
+									</div>
 								</div>
 
 								<hr />
