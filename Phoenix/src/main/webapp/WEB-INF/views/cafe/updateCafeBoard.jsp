@@ -184,7 +184,7 @@
 					//board_no,cafe_URL을 보내서 board_no를 가지고있는 post가 있는지 post table에서 검사 
 					$.ajax({
 
-						url : "/cafe/json/no1cafe/checkCafePost",
+						url : "/cafe/json/${cafeURL}/checkCafePost",
 						method : "POST",
 						headers : {
 							"Accept" : "application/json",
@@ -247,14 +247,14 @@
 			$("#save").on("click",function(){
 
 				AllSelect();
-				$("form").attr("method","POST").attr("action","/cafe/no1cafe/manage/updateCafeBoard").submit();
+				$("form").attr("method","POST").attr("action","/cafe/${cafeURL}/manage/updateCafeBoard").submit();
 				
 			});
 
 			$("#cancel").on("click",function(){
 				
 					alert("지금까지 편집한 내용을 취소합니다.");
-					self.location = "/cafe/no1cafe/manage/updateCafeBoardView";
+					self.location = "/cafe/${cafeURL}/manage/updateCafeBoardView";
 			});
 
 		});
@@ -276,13 +276,7 @@
     <!--*******************
         Preloader start
     ********************-->
-    <div id="preloader" style="display: none;">
-        <div class="loader">
-            <svg class="circular" viewBox="25 25 50 50">
-                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"></circle>
-            </svg>
-        </div>
-    </div>
+
     <!--*******************
         Preloader end
     ********************-->

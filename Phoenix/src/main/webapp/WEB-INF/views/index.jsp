@@ -127,7 +127,7 @@ var checkSessionUser = ${empty sessionScope.user};
 		
 		$("#explore").on("click", function() {
 			var keyword = $("#searchKeyword").val()
-			$(self.location).attr("href", "/explore/" + keyword);
+			$(self.location).attr("href", "/explore/getUnifiedList?searchKeyword="+ keyword);
 		});
 
 		$("#searchKeyword").focus(function() {

@@ -38,7 +38,7 @@ public class UserContoller {
 
 		return "user/loginView";
 	}
-	
+	//레스트컨트롤러탐
 	@RequestMapping( value="login", method=RequestMethod.POST )
 	public String login(@ModelAttribute("user") User user , HttpSession session ) throws Exception{
 		
@@ -52,7 +52,7 @@ public class UserContoller {
 		if( user.getPassword().equals(dbUser.getPassword())){
 			session.setAttribute("user", dbUser);
 		}
-		
+			
 		return "redirect:/";
 	}
 	
@@ -75,7 +75,7 @@ public class UserContoller {
 
 		user = user2;
 
-		System.out.println("유저인서트다다아아아앙@@@" + user);
+		System.out.println("유저인서트다다아아아앙@@@@@" + user);
 
 		model.addAttribute("user", user);
 		

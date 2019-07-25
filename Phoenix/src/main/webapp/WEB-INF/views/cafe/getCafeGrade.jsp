@@ -31,13 +31,15 @@
 
 <script type="text/javascript">
 	$(function() {
-		$(".btn-outline-warning").on("click",function() {
+		$(".btn-outline-warning").on(
+				"click",
+				function() {
 					var cafeURL = '${search.cafeURL}';
 					//alert(cafeURL)
-					$("form").attr("method", "POST").attr("action","/cafe/" + cafeURL + "/updateCafeMemberProfile").submit();
-					opener.parent.location.reload();
+					$("form").attr("method", "POST").attr("action",
+							"/cafe/" + cafeURL + "/updateCafeMemberProfile")
+							.submit();
 					window.close();
-					
 				});
 	});
 

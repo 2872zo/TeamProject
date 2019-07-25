@@ -447,7 +447,7 @@ public class CafeManageController {
 
 		return "cafe/addCafeReport";
 	}
-	
+
 //	@RequestMapping(value = "/test")
 //	public String test() throws Exception {
 //		
@@ -634,8 +634,8 @@ public class CafeManageController {
 
 		model.addAttribute("cafeGradeList", cafeGrade);
 		model.addAttribute("cafeURL", cafeURL);
-
-		return "cafe/updateCafeGrade";
+		
+			return "cafe/updateCafeGrade";
 
 	}
 

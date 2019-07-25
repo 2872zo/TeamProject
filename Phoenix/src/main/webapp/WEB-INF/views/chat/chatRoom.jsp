@@ -63,6 +63,9 @@
 		<div class="content-body" style="min-height: 600px;">
 	<div class="row">
         <div class="col-lg-8">
+        <div class='container-fluid'>
+        <div class='card'>
+        <div class='card-body'>
         
 	<input type='hidden' id = 'chatRoomNo' value = '${chatRoom.chatRoomNo}'>
 	<input type='hidden' id = 'userNo' value = '${user.userNo}'>
@@ -79,23 +82,34 @@
 				</div>
 			</div>
 
-    <div class="row">
-    <div class="col-lg-9">
-  		<input type="text" class="form-control" placeholder="채팅을 입력해주세요" aria-describedby="basic-addon2" id="msg">
-  	</div>       				
-  	 <div class="col-lg-3">
-	  	 <i class="mdi mdi-message-text-outline" id='msg_process' style='font-size: 15pt'>
-	  	 </i>
-  	 </div>
-        
-  	</div>
+
+
+
+<div class="input-group mb-3">
+  <input type="text" class="form-control" placeholder="채팅을 입력해주세요" id="msg">
+  <div class="input-group-append">
+    <button type="button" class="btn btn-primary" id='msg_process'><i class="mdi mdi-message-text-outline"  style='font-size: 15pt'>
+	  	 </i></button>
+  </div>
+</div>
+
+
 	
      <div id='multibox'></div>
 
-</div>
+
 	<!--  화면구성 div Start /////////////////////////////////////-->
 </div>
+
 </div>
+
+</div>
+        </div>
+
+
+</div>
+
+
 </div>
 
 
@@ -118,7 +132,10 @@
 
 	<!-- 메뉴바 이용을 위한 스크립트 -->
 	<script src="/js/custom/scroll-top.js"></script>
-	<script src="http://localhost:82/socket.io/socket.io.js"></script>
+	
+	<!-- 소켓용 스크립트 -->
+<!-- <script src="http://localhost:82/socket.io/socket.io.js"></script>  -->
+<script src="http://192.168.0.78:82/socket.io/socket.io.js"></script>
 
 	<!--**********************************
         Scripts
@@ -130,8 +147,8 @@
 //툴바 스크립트용 세션체커
 var checkSessionUser = ${empty sessionScope.user};
 $(function() {
-	//var socket = io("http://192.168.0.78:82");
-	var socket = io("http://localhost:82");
+	var socket = io("http://192.168.0.78:82");
+	//var socket = io("http://localhost:82");
 	socket.emit("identify", $("#userId").text());
 	socket.emit("joiner", $("#chatRoomNo").val());
 	

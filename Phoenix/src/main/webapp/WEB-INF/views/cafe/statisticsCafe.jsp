@@ -123,7 +123,7 @@
 					var endDate = $("#endDate").val();
 					$.ajax({
 
-						url : "/cafe/json/no1cafe/manage/getCafeStatistics",
+						url : "/cafe/json/${cafeURL}/manage/getCafeStatistics",
 						method : "POST",
 						headers : {
 							"Accept" : "application/json",
@@ -184,7 +184,7 @@
     <!--*******************
         Preloader start
     ********************-->
-   
+
     <!--*******************
         Preloader end
     ********************-->

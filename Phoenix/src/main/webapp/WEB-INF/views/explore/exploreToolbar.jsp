@@ -11,7 +11,7 @@
 
 <style type="text/css">
 
-i:hover {
+#icon-key:hover {
 	cursor: pointer;
 	color: #f5a142;
 }
@@ -150,46 +150,32 @@ input[type="checkbox"] {
 		<div class="header">
 			<div class="form-inline">
 
-				<div class="header-left d-flex align-items-center">
-				<ul class="clearfix d-flex align-items-center">
-				
-				<i class="mdi mdi-coffee" style='font-size: 30pt;' id="cafeHomeButton"></i> 
-				<i class="mdi mdi-home-variant" style='font-size: 30pt;' id="thisCafeHome"></i>
-				<div id='cafeMainTools'>
-				<i class="mdi mdi-clipboard-outline" id='newsFeeding'
-				style='font-size: 30pt' data-toggle="tooltip" data-placement="bottom" title="카페 뉴스피드 보기"></i>
-				<i class="mdi mdi-library-books" id='myApplications'
-				style='font-size: 30pt' data-toggle="tooltip" data-placement="bottom" title="가입신청내역 보기"></i>
-				</div>			
-				</ul>
-				</div>
-				
-				<div class="input-group" style='width: 50%;'>
-					<input type="text" class="form-control form-control-lg"
-						placeholder="검색어를 입력해주세요" id='searchKeyword'>
+				<div class="input-group col-lg-8" style='width: 50%; margin :15px'>
+					<input type="text" class="form-control form-control-lg" id='searchKeyword' value="${search.searchKeyword}" placeholder="검색어를 입력해주세요">
 					<div class="input-group-append">
-						<button class="btn btn-lg btn-outline-primary" type="button"
-							id="explore">
+						<button class="btn btn-lg btn-outline-primary" type="button" id="explore">
 							<i class="mdi mdi-magnify" style='font-size: 18pt;'></i>
 						</button>
 					</div>
 				</div>
 				
-				<div class="text-right">
-					<ul class="clearfix d-flex align-items-center">
-
-						<i class="mdi mdi-comment-processing-outline" id='goChat' style='font-size: 30pt'></i>
-
-
+				<c:if test="${empty user.userNo}"> <!-- 로그인 안되어있을때 -->
+					<div class="input-group col-lg-2"  style='margin-top :0px; margin-left:40px; padding-left: 150px;'>
 						<button type="button" class="btn btn-primary login" data-toggle="modal" data-target="#exampleModalCenter">
 							<i class="icon-key">Login</i>
 						</button>
-
+					</div>
+				</c:if>
+				
+				<c:if test="${!empty user.userNo}"> <!-- 로그인이 되어있을때 -->
+					<div class="input-group"> <!-- 로그인된 후에 class col-lg 잡기 -->
+						<i class="mdi mdi-comment-processing-outline" id='goChat' style='font-size: 30pt'></i>
 						<button type="button" class="btn btn-primary logout">
 							<i class="icon-key">Logout</i>
 						</button>
-					</ul>
-				</div>
+					</div>
+				</c:if>
+					
 				
 				
 			
@@ -250,8 +236,6 @@ input[type="checkbox"] {
 	<!--**********************************
         Main wrapper end
     ***********************************-->
-    
-    
    
   
 </body>

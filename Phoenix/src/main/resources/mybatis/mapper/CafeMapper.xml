@@ -27,7 +27,7 @@
 		<result property="memberNicknameFlag" 			column="member_nickname_flag" 			jdbcType="CHAR" />
 		<result property="autoApplicationAcceptFlag" 	column="auto_application_accept_flag" 	jdbcType="CHAR" />
 		<result property="closedFlag" 					column="closed_flag" 					jdbcType="CHAR" />
-		<result property="members" 						column="members" 						jdbcType="NUMERIC" />
+		<result property="members" 						column="members" 						jdbcType="NUMERIC" />		
 	</resultMap>
 	
 	<insert 	id="addCafe"		parameterType="com.phoenix.mvc.service.domain.Cafe" >
@@ -41,61 +41,61 @@
 	 
 	 	 <insert id="addMemberGrade" parameterType="com.phoenix.mvc.service.domain.CafeGrade">	 
 	  	
-	  	INSERT ALL
-
-INTO CAFE_MEMBER_GRADE(cafe_member_grade_no, cafe_no, grade_name, member_grade_code, required_visit_count, required_reply_count, required_post_count, cafe_grade_active_flag)	
-
-VALUES(GET_SEQ_CAFE_MEMBER_GRADE_NO(), #{cafeNo:NUMERIC}, '매니저', 'cg100', '0', '0', '0','1')
-
-INTO CAFE_MEMBER_GRADE(cafe_member_grade_no, cafe_no, grade_name, member_grade_code, required_visit_count, required_reply_count, required_post_count, cafe_grade_active_flag)
-
-VALUES(GET_SEQ_CAFE_MEMBER_GRADE_NO(), #{cafeNo:NUMERIC}, '스탭', 'cg101', '0', '0','0','1')
-
-INTO CAFE_MEMBER_GRADE(cafe_member_grade_no, cafe_no, grade_name, member_grade_code, required_visit_count, required_reply_count, required_post_count, cafe_grade_active_flag)
-
-VALUES(GET_SEQ_CAFE_MEMBER_GRADE_NO(), #{cafeNo:NUMERIC}, '새싹', 'cg102', '0', '0','0','1')
-
-INTO CAFE_MEMBER_GRADE(cafe_member_grade_no, cafe_no, grade_name, member_grade_code, required_visit_count, required_reply_count, required_post_count)
-
-VALUES(GET_SEQ_CAFE_MEMBER_GRADE_NO(), #{cafeNo:NUMERIC}, '일반', 'cg103', '0', '0', '0')
-
-INTO CAFE_MEMBER_GRADE(cafe_member_grade_no, cafe_no, grade_name, member_grade_code, required_visit_count, required_reply_count, required_post_count)
-
-VALUES(GET_SEQ_CAFE_MEMBER_GRADE_NO(), #{cafeNo:NUMERIC}, '성실', 'cg104', '0', '0', '0')
-
-INTO CAFE_MEMBER_GRADE(cafe_member_grade_no, cafe_no, grade_name, member_grade_code, required_visit_count, required_reply_count, required_post_count)
-
-VALUES(GET_SEQ_CAFE_MEMBER_GRADE_NO(), #{cafeNo:NUMERIC}, '열심', 'cg105', '0', '0', '0')
-
-INTO CAFE_MEMBER_GRADE(cafe_member_grade_no, cafe_no, grade_name, member_grade_code, required_visit_count, required_reply_count, required_post_count)
-
-VALUES(GET_SEQ_CAFE_MEMBER_GRADE_NO(), #{cafeNo:NUMERIC}, '우수', 'cg106', '0', '0', '0')
-
-SELECT * FROM DUAL
+			  	INSERT ALL
+		
+		INTO CAFE_MEMBER_GRADE(cafe_member_grade_no, cafe_no, grade_name, member_grade_code, required_visit_count, required_reply_count, required_post_count, cafe_grade_active_flag)	
+		
+		VALUES(GET_SEQ_CAFE_MEMBER_GRADE_NO(), #{cafeNo:NUMERIC}, '매니저', 'cg100', '0', '0', '0','1')
+		
+		INTO CAFE_MEMBER_GRADE(cafe_member_grade_no, cafe_no, grade_name, member_grade_code, required_visit_count, required_reply_count, required_post_count, cafe_grade_active_flag)
+		
+		VALUES(GET_SEQ_CAFE_MEMBER_GRADE_NO(), #{cafeNo:NUMERIC}, '스탭', 'cg101', '0', '0','0','1')
+		
+		INTO CAFE_MEMBER_GRADE(cafe_member_grade_no, cafe_no, grade_name, member_grade_code, required_visit_count, required_reply_count, required_post_count, cafe_grade_active_flag)
+		
+		VALUES(GET_SEQ_CAFE_MEMBER_GRADE_NO(), #{cafeNo:NUMERIC}, '새싹', 'cg102', '0', '0','0','1')
+		
+		INTO CAFE_MEMBER_GRADE(cafe_member_grade_no, cafe_no, grade_name, member_grade_code, required_visit_count, required_reply_count, required_post_count)
+		
+		VALUES(GET_SEQ_CAFE_MEMBER_GRADE_NO(), #{cafeNo:NUMERIC}, '일반', 'cg103', '0', '0', '0')
+		
+		INTO CAFE_MEMBER_GRADE(cafe_member_grade_no, cafe_no, grade_name, member_grade_code, required_visit_count, required_reply_count, required_post_count)
+		
+		VALUES(GET_SEQ_CAFE_MEMBER_GRADE_NO(), #{cafeNo:NUMERIC}, '성실', 'cg104', '0', '0', '0')
+		
+		INTO CAFE_MEMBER_GRADE(cafe_member_grade_no, cafe_no, grade_name, member_grade_code, required_visit_count, required_reply_count, required_post_count)
+		
+		VALUES(GET_SEQ_CAFE_MEMBER_GRADE_NO(), #{cafeNo:NUMERIC}, '열심', 'cg105', '0', '0', '0')
+		
+		INTO CAFE_MEMBER_GRADE(cafe_member_grade_no, cafe_no, grade_name, member_grade_code, required_visit_count, required_reply_count, required_post_count)
+		
+		VALUES(GET_SEQ_CAFE_MEMBER_GRADE_NO(), #{cafeNo:NUMERIC}, '우수', 'cg106', '0', '0', '0')
+		
+		SELECT * FROM DUAL
 
 	</insert>
 	
 		 	 <insert id="addBoard" parameterType="com.phoenix.mvc.service.domain.Board">	 
 	  	
-	  	INSERT ALL
-
-INTO BOARD(board_no, cafe_no, cafe_url, board_name, access_grade, board_index, board_type, board_detail)	
-
-VALUES(GET_SEQ_BOARD_NO(), #{cafeNo:NUMERIC}, #{cafeURL:VARCHAR}, '공지게시판', 'cg102', '1', 'cb100', '공지게시판입니다')
-
-INTO BOARD(board_no, cafe_no, cafe_url, board_name, access_grade, board_index, board_type, board_detail)	
-
-VALUES(GET_SEQ_BOARD_NO(), #{cafeNo:NUMERIC}, #{cafeURL:VARCHAR}, '신고게시판', 'cg102', '2', 'cb101', '신고게시판입니다')
-
-INTO BOARD(board_no, cafe_no, cafe_url, board_name, access_grade, board_index, board_type, board_detail)	
-
-VALUES(GET_SEQ_BOARD_NO(), #{cafeNo:NUMERIC}, #{cafeURL:VARCHAR}, '-------', 'cg102', '3', 'cb102', '구분선입니다')
-
-INTO BOARD(board_no, cafe_no, cafe_url, board_name, access_grade, board_index, board_type, board_detail)	
-
-VALUES(GET_SEQ_BOARD_NO(), #{cafeNo:NUMERIC}, #{cafeURL:VARCHAR}, '자유게시판', 'cg102', '4', 'cb103', '자유게시판입니다')
-
-SELECT * FROM DUAL
+			  	INSERT ALL
+		
+		INTO BOARD(board_no, cafe_no, cafe_url, board_name, access_grade, board_index, board_type, board_detail)	
+		
+		VALUES(GET_SEQ_BOARD_NO(), #{cafeNo:NUMERIC}, #{cafeURL:VARCHAR}, '공지게시판', 'cg102', '1', 'cb100', '공지게시판입니다')
+		
+		INTO BOARD(board_no, cafe_no, cafe_url, board_name, access_grade, board_index, board_type, board_detail)	
+		
+		VALUES(GET_SEQ_BOARD_NO(), #{cafeNo:NUMERIC}, #{cafeURL:VARCHAR}, '신고게시판', 'cg102', '2', 'cb101', '신고게시판입니다')
+		
+		INTO BOARD(board_no, cafe_no, cafe_url, board_name, access_grade, board_index, board_type, board_detail)	
+		
+		VALUES(GET_SEQ_BOARD_NO(), #{cafeNo:NUMERIC}, #{cafeURL:VARCHAR}, '-------', 'cg102', '3', 'cb102', '구분선입니다')
+		
+		INTO BOARD(board_no, cafe_no, cafe_url, board_name, access_grade, board_index, board_type, board_detail)	
+		
+		VALUES(GET_SEQ_BOARD_NO(), #{cafeNo:NUMERIC}, #{cafeURL:VARCHAR}, '자유게시판', 'cg102', '4', 'cb103', '자유게시판입니다')
+		
+		SELECT * FROM DUAL
 
 	</insert>
 	
@@ -108,11 +108,12 @@ SELECT * FROM DUAL
 
 	 <select 	id="getCafeInfo"	parameterType= "int"	resultMap="cafeSelectMap">
 		SELECT
-		cafe_no , cafe_Name ,cafe_icon, manage_user_no , url , cafe_detail, banner_img, main_img, cafe_type, application_detail, reg_date,
-		close_reason, application_question1, application_question2, application_question3, member_nickname_flag, auto_application_accept_flag,
-		closed_flag, members 		
-		FROM cafe 
-		WHERE cafe_No = #{value}
+		c.cafe_no, c.cafe_Name, c.cafe_icon, c.manage_user_no, c.url, c.cafe_detail, c.banner_img, c.main_img, c.cafe_type, c.application_detail, c.reg_date,
+		c.close_reason, c.application_question1, c.application_question2, c.application_question3, c.member_nickname_flag, c.auto_application_accept_flag,
+		c.closed_flag, members, m.member_nickname		
+		FROM cafe c, cafe_member m
+		WHERE c.manage_user_no = m.user_no 
+		and c.cafe_no = #{value}
 	 </select>
 	 
 	 <select id="getCafeInfoByURL" parameterType="String" resultMap="cafeSelectMap">

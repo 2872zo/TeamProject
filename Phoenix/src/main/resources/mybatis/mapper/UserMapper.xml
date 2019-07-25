@@ -38,7 +38,7 @@
 		user_no, user_id, user_name, user_nickname, password, email, phone, profile_img, reg_date, user_role_code, user_status_code 		
 		FROM users 
 		WHERE user_id = #{value}
-	 </select>	 
+	 </select>
 	 
 	 <select 	id="getUserInfo"	parameterType="int"	resultMap="userSelectMap">
 		SELECT

@@ -9,13 +9,20 @@
 
 <html lang="ko">
 <head>
-    
-    <meta charset="utf-8">
-    <title>Quixlab - Bootstrap Admin Dashboard Template by Themefisher.com</title>
-    
-    <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="images/quixlab/favicon.png">
-    <!-- Custom Stylesheet -->
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Favicon icon -->
+<link rel="icon" type="image/png" sizes="16x16"
+	href="/images/favicon.png">
+<!-- Custom Stylesheet -->
+<link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
+<link href="/css/style.css" rel="stylesheet">
+
+<link rel="stylesheet" href="/css/custom/scroll-top.css">
+
+<!-- ToolBar Start /////////////////////////////////////-->
+<jsp:include page="/WEB-INF/views/explore/exploreToolbar.jsp" />
+<!-- ToolBar End /////////////////////////////////////-->
+<!--  ///////////////////////// CSS ////////////////////////// -->
     <style>
     	li{
     		
@@ -29,13 +36,20 @@
     	}
     
     </style>
-    
-    <link href="/css/style.css" rel="stylesheet">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-   	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  	<script src="https://kit.fontawesome.com/e589319d43.js"></script>
-	
+  <!--**********************************
+        Scripts
+    ***********************************-->
+	<script src="/plugins/common/common.min.js"></script>
+	<script src="/js/custom.min.js"></script>
+	<script src="/js/settings.js"></script>
+	<script src="/js/gleek.js"></script>
+	<script src="/js/styleSwitcher.js"></script>
+
+	<script src="/plugins/sweetalert/js/sweetalert.min.js"></script>
+	<script src="/plugins/sweetalert/js/sweetalert.init.js"></script>
+
+	<!-- 메뉴바 이용을 위한 스크립트 -->
+	<script src="/js/custom/scroll-top.js"></script>
 	
 	<script type="text/javascript">
 
@@ -72,9 +86,7 @@
         <!--**********************************
             Nav header start
         ***********************************-->	
-     	<!-- ToolBar Start /////////////////////////////////////-->
-		<jsp:include page="exploreToolbar.jsp" />
-		<!-- ToolBar End /////////////////////////////////////-->
+
        
         <!--**********************************
             Nav header end
@@ -197,6 +209,11 @@
            		
    	 </form>
    	 
-   	<script src="/js/custom/cafeCommon.js"></script> 
+   	<!-- 검색 엔터용 스크립트같은데 -->
+   		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+   	<!-- 공통 툴바용 스크립트 -->	
+		<script src="/js/custom/toolbarScript.js"></script>
+   	<!-- 검색 공통 스크립트 -->
+   		<script src="/js/custom/exploreCommon.js"></script>
 	</body>
 </html>

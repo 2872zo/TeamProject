@@ -58,23 +58,25 @@ public class ExploreDaoImpl implements ExploreDao{
 		JSONObject jsonObject = (JSONObject) JSONValue.parse(jsonResult.toString());
 		List items = (List) jsonObject.get("documents");
 		
-		for(int i=0; i<items.size(); i++)
+		if(items!=null) //검색 결과가 없을때
 		{
-			Map item = (Map)items.get(i); 
-			
-			Blog blog = new Blog();
-			//blog 값set하고
-			blog.setBlogName(item.get("blogname").toString());
-			blog.setDateTime(item.get("datetime").toString());
-			blog.setThumbnail(item.get("thumbnail").toString());
-			blog.setContents(item.get("contents").toString());
-			blog.setTitle(item.get("title").toString());
-			blog.setResultLink(item.get("url").toString());
-			
-			blogList.add(blog);
+			for(int i=0; i<items.size(); i++)
+			{
+				Map item = (Map)items.get(i); 
+				
+				Blog blog = new Blog();
+				//blog 값set하고
+				blog.setBlogName(item.get("blogname").toString());
+				blog.setDateTime(item.get("datetime").toString());
+				blog.setThumbnail(item.get("thumbnail").toString());
+				blog.setContents(item.get("contents").toString());
+				blog.setTitle(item.get("title").toString());
+				blog.setResultLink(item.get("url").toString());
+				
+				blogList.add(blog);
+			}
+		
 		}
-		
-		
 		return blogList;// meta data는 어떻게 할건지?? 총 검색결과 등등.. Search에 넣을건가??
 	}
 
@@ -99,23 +101,29 @@ public class ExploreDaoImpl implements ExploreDao{
 		JSONObject jsonObject = (JSONObject) JSONValue.parse(jsonResult.toString());
 		List items = (List) jsonObject.get("items");
 		
-		for(int i=0; i<items.size(); i++)
+		if(items!=null) //검색 결과가 없을때
 		{
-			Map item = (Map)items.get(i); 
-			
-			Blog blog = new Blog();
-			//blog 값set하고
-			blog.setBlogName(item.get("bloggername").toString());//0
-			blog.setDateTime(item.get("postdate").toString());//0
-			blog.setContents(item.get("description").toString());//0
-			blog.setTitle(item.get("title").toString());//0
-			blog.setResultLink(item.get("link").toString());//0
-			blog.setBlogLink(item.get("bloggerlink").toString());//0
-			
-			blogList.add(blog);
+			for(int i=0; i<items.size(); i++)
+			{
+				Map item = (Map)items.get(i); 
+				
+				Blog blog = new Blog();
+				//blog 값set하고
+				blog.setBlogName(item.get("bloggername").toString());//0
+				blog.setDateTime(item.get("postdate").toString());//0
+				blog.setContents(item.get("description").toString());//0
+				blog.setTitle(item.get("title").toString());//0
+				blog.setResultLink(item.get("link").toString());//0
+				blog.setBlogLink(item.get("bloggerlink").toString());//0
+				
+				blogList.add(blog);
+			}
 		}
 		
 		
+		//System.out.println(blogList.size());
+		//if(blogList==null)
+			//System.out.println("널임");
 		return blogList;// meta data는 어떻게 할건지?? 총 검색결과 등등.. Search에 넣을건가??
 	}
 	
@@ -140,19 +148,22 @@ public class ExploreDaoImpl implements ExploreDao{
 		JSONObject jsonObject = (JSONObject) JSONValue.parse(jsonResult.toString());
 		List items = (List) jsonObject.get("documents");
 		
-		for(int i=0; i<items.size(); i++)
+		if(items!=null) //검색 결과가 없을때
 		{
-			Map item = (Map)items.get(i); 
-			
-			CafeExplore cafe = new CafeExplore();
-			cafe.setTitle(item.get("title").toString());
-			cafe.setContents(item.get("contents").toString());
-			cafe.setResultLink(item.get("url").toString());
-			cafe.setThumbnail(item.get("thumbnail").toString());
-			cafe.setCafeName(item.get("cafename").toString());
-			cafe.setDateTime(item.get("datetime").toString());
-			
-			cafeList.add(cafe);
+			for(int i=0; i<items.size(); i++)
+			{
+				Map item = (Map)items.get(i); 
+				
+				CafeExplore cafe = new CafeExplore();
+				cafe.setTitle(item.get("title").toString());
+				cafe.setContents(item.get("contents").toString());
+				cafe.setResultLink(item.get("url").toString());
+				cafe.setThumbnail(item.get("thumbnail").toString());
+				cafe.setCafeName(item.get("cafename").toString());
+				cafe.setDateTime(item.get("datetime").toString());
+				
+				cafeList.add(cafe);
+			}
 		}
 		
 		
@@ -180,18 +191,21 @@ public class ExploreDaoImpl implements ExploreDao{
 		JSONObject jsonObject = (JSONObject) JSONValue.parse(jsonResult.toString());
 		List items = (List) jsonObject.get("items");
 		
-		for(int i=0; i<items.size(); i++)
+		if(items!=null) //검색 결과가 없을때
 		{
-			Map item = (Map)items.get(i);
-			
-			CafeExplore cafeExplore = new CafeExplore();
-			cafeExplore.setTitle(item.get("title").toString());
-			cafeExplore.setResultLink(item.get("link").toString());
-			cafeExplore.setContents(item.get("description").toString());
-			cafeExplore.setCafeName(item.get("cafename").toString());
-			cafeExplore.setCafeLink(item.get("cafeurl").toString());
-			
-			cafeList.add(cafeExplore);
+			for(int i=0; i<items.size(); i++)
+			{
+				Map item = (Map)items.get(i);
+				
+				CafeExplore cafeExplore = new CafeExplore();
+				cafeExplore.setTitle(item.get("title").toString());
+				cafeExplore.setResultLink(item.get("link").toString());
+				cafeExplore.setContents(item.get("description").toString());
+				cafeExplore.setCafeName(item.get("cafename").toString());
+				cafeExplore.setCafeLink(item.get("cafeurl").toString());
+				
+				cafeList.add(cafeExplore);
+			}
 		}
 		
 		return cafeList;
@@ -207,28 +221,34 @@ public class ExploreDaoImpl implements ExploreDao{
 		
 		
 		List<Post> postResult = cafePostDao.getPostListBySearch(search);
-		for(int i=0; i<postResult.size();i++)
-		{
-			CafeExplore cafeExplore = new CafeExplore(); //나는 영혼이 없다 왜 ? 영혼이 없으니까ㅁ니ㅏㅇ럼;다지
-			cafeExplore.setTitle(postResult.get(i).getPostTitle());
-			cafeExplore.setResultLink("http://localhost:8080/cafe/"+postResult.get(i).getCafeURL()+"/getPost/"+postResult.get(i).getPostNo());//설정해주세여
-			if(postResult.get(i).getPostContent().length()<50) //자르려는 길이보다 작을때
-			{
-				cafeExplore.setContents(postResult.get(i).getPostContent().substring(0,postResult.get(i).getPostContent().length()-1));
-			}
-			else//클때
-			{
-				cafeExplore.setContents(postResult.get(i).getPostContent().substring(0, 49)); //검색어가 포함된지점 x
-			}
-			cafeExplore.setContents(postResult.get(i).getPostContent());//잘라주세요
-			cafeExplore.setCafeName(postResult.get(i).getCafeName()) ;
-			//cafeExplore.setThumbnail(postResult.get(i));//음 썸네일없네
-			cafeExplore.setDateTime(postResult.get(i).getRegDate());
-			cafeExplore.setCafeLink("http://localhost:8080/cafe/"+postResult.get(i).getCafeURL());
-			
-			cafeList.add(cafeExplore);
-		}
 		
+		if(postResult!=null) //검색 결과가 없을때
+		{	
+			for(int i=0; i<postResult.size();i++)
+			{
+				CafeExplore cafeExplore = new CafeExplore(); //나는 영혼이 없다 왜 ? 영혼이 없으니까ㅁ니ㅏㅇ럼;다지
+				cafeExplore.setTitle(postResult.get(i).getPostTitle());
+				cafeExplore.setResultLink("http://localhost:8080/cafe/"+postResult.get(i).getCafeURL()+"/getPost/"+postResult.get(i).getPostNo());//설정해주세여
+				if(postResult.get(i).getPostContent()!=null && postResult.get(i).getPostContent().length()<50) //자르려는 길이보다 작을때
+				{
+					cafeExplore.setContents(postResult.get(i).getPostContent().substring(0,postResult.get(i).getPostContent().length()-1));
+				}
+				else if(postResult.get(i).getPostContent()!=null)//클때
+				{
+					cafeExplore.setContents(postResult.get(i).getPostContent().substring(0, 49)); //검색어가 포함된지점 x
+				}
+				else // null 일때.. 하.
+				{
+					cafeExplore.setContents("");//내용 없음.
+				}
+				cafeExplore.setCafeName(postResult.get(i).getCafeName()) ;
+				//cafeExplore.setThumbnail(postResult.get(i));//음 썸네일없네
+				cafeExplore.setDateTime(postResult.get(i).getRegDate());
+				cafeExplore.setCafeLink("http://localhost:8080/cafe/"+postResult.get(i).getCafeURL());
+				
+				cafeList.add(cafeExplore);
+			}
+		}
 		return cafeList;
 	}
 	
@@ -252,17 +272,20 @@ public class ExploreDaoImpl implements ExploreDao{
 		JSONObject jsonObject = (JSONObject) JSONValue.parse(jsonResult.toString());
 		List items = (List) jsonObject.get("documents");
 		
-		for(int i=0; i<items.size(); i++)
+		if(items!=null) //검색 결과가 없을때
 		{
-			Map item = (Map)items.get(i); 
-			
-			WebExplore web = new WebExplore();
-			web.setTitle(item.get("title").toString());
-			web.setContents(item.get("contents").toString());
-			web.setResultLink(item.get("url").toString());
-			web.setDateTime(item.get("datetime").toString());
-			
-			webList.add(web);
+			for(int i=0; i<items.size(); i++)
+			{
+				Map item = (Map)items.get(i); 
+				
+				WebExplore web = new WebExplore();
+				web.setTitle(item.get("title").toString());
+				web.setContents(item.get("contents").toString());
+				web.setResultLink(item.get("url").toString());
+				web.setDateTime(item.get("datetime").toString());
+				
+				webList.add(web);
+			}
 		}
 		
 		
@@ -290,16 +313,19 @@ public class ExploreDaoImpl implements ExploreDao{
 		JSONObject jsonObject = (JSONObject) JSONValue.parse(jsonResult.toString());
 		List items = (List) jsonObject.get("items");
 		
-		for(int i=0; i<items.size(); i++)
+		if(items!=null) //검색 결과가 없을때
 		{
-			Map item = (Map)items.get(i);
-			
-			WebExplore webExplore = new WebExplore();
-			webExplore.setTitle(item.get("title").toString());
-			webExplore.setResultLink(item.get("link").toString());
-			webExplore.setContents(item.get("description").toString());
-			
-			webList.add(webExplore);
+			for(int i=0; i<items.size(); i++)
+			{
+				Map item = (Map)items.get(i);
+				
+				WebExplore webExplore = new WebExplore();
+				webExplore.setTitle(item.get("title").toString());
+				webExplore.setResultLink(item.get("link").toString());
+				webExplore.setContents(item.get("description").toString());
+				
+				webList.add(webExplore);
+			}
 		}
 		
 		return webList;
@@ -325,21 +351,24 @@ public class ExploreDaoImpl implements ExploreDao{
 		JSONObject jsonObject = (JSONObject) JSONValue.parse(jsonResult.toString());
 		List items = (List) jsonObject.get("documents");
 		
-		for(int i=0; i<items.size(); i++)
+		if(items!=null) //검색 결과가 없을때
 		{
-			Map item = (Map)items.get(i); 
-			
-			Image image = new Image();
-			image.setCollection(item.get("collection").toString());
-			image.setThumbnail(item.get("thumbnail_url").toString());
-			image.setImage(item.get("image_url").toString());
-			image.setSizeWidth(item.get("width").toString());
-			image.setSizeHeight(item.get("height").toString());
-			image.setSiteName(item.get("display_sitename").toString());
-			image.setDateTime(item.get("datetime").toString());
-			image.setResultLink(item.get("doc_url").toString());
-	
-			imageList.add(image);
+			for(int i=0; i<items.size(); i++)
+			{
+				Map item = (Map)items.get(i); 
+				
+				Image image = new Image();
+				image.setCollection(item.get("collection").toString());
+				image.setThumbnail(item.get("thumbnail_url").toString());
+				image.setImage(item.get("image_url").toString());
+				image.setSizeWidth(item.get("width").toString());
+				image.setSizeHeight(item.get("height").toString());
+				image.setSiteName(item.get("display_sitename").toString());
+				image.setDateTime(item.get("datetime").toString());
+				image.setResultLink(item.get("doc_url").toString());
+		
+				imageList.add(image);
+			}
 		}
 		
 		
@@ -367,18 +396,21 @@ public class ExploreDaoImpl implements ExploreDao{
 		JSONObject jsonObject = (JSONObject) JSONValue.parse(jsonResult.toString());
 		List items = (List) jsonObject.get("items");
 		
-		for(int i=0; i<items.size(); i++)
+		if(items!=null) //검색 결과가 없을때
 		{
-			Map item = (Map)items.get(i);
-			
-			Image image = new Image();
-			image.setTitle(item.get("title").toString());
-			image.setResultLink(item.get("link").toString());
-			image.setThumbnail(item.get("thumbnail").toString());
-			image.setSizeHeight(item.get("sizeheight").toString());
-			image.setSizeWidth(item.get("sizewidth").toString());
-			
-			imageList.add(image);
+			for(int i=0; i<items.size(); i++)
+			{
+				Map item = (Map)items.get(i);
+				
+				Image image = new Image();
+				image.setTitle(item.get("title").toString());
+				image.setResultLink(item.get("link").toString());
+				image.setThumbnail(item.get("thumbnail").toString());
+				image.setSizeHeight(item.get("sizeheight").toString());
+				image.setSizeWidth(item.get("sizewidth").toString());
+				
+				imageList.add(image);
+			}
 		}
 		
 		return imageList;

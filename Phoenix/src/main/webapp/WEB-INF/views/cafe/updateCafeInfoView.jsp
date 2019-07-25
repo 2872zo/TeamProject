@@ -33,7 +33,7 @@ code {
 <!--*******************
         Preloader start
     ********************-->
-	<div id="preloader" style="display: none;">
+	<div id="preloader">
 		<div class="loader">
 			<svg class="circular" viewBox="25 25 50 50">
                 <circle class="path" cx="50" cy="50" r="20" fill="none"
@@ -211,7 +211,7 @@ code {
 									var inputed = $("input[name='cafeName']").val();
 									 //alert("입력  : "+inputed);
 											$.ajax({
-												url : "/cafe/json/checkCafeNameDuplication",
+												url : "/cafe/${cafeURL}/json/checkCafeNameDuplication",
 												method : "POST",
 												dataType : "json",
 												headers : {
@@ -223,8 +223,8 @@ code {
 												}),
 
 												success : function(JSONData) {
-													alert(JSONData); 
-													alert(typeof(JSONData));
+													//alert(JSONData); 
+													//alert(typeof(JSONData));
 									
 													if (JSONData && inputed != "") {
 														$("#check").children("strong")
