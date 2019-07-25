@@ -36,10 +36,12 @@ public class ExploreContoller {
 	{
 		System.out.println("/explore/getUnifiedExploreList 실행");
 		
+		if(search.getSearchKeyword()==null) //URL 치고 들어오는경우
+			search.setSearchKeyword("");
 		
 		
 		
-	
+		
 		return "explore/listUnifiedExplore";
 	}
 	
@@ -48,10 +50,14 @@ public class ExploreContoller {
 	{
 		System.out.println("/explore/getBlogExploreList 실행");
 		
+		if(search.getSearchKeyword()==null) //URL 치고 들어오는경우
+			search.setSearchKeyword("");
+		if(search.getSearchTheme()==0)
+			search.setSearchTheme(1);
+		
 		//가짜데이터
 		search.setEngineAll(true);//전체(네이버+다음)
 		search.setOrderState(0);//정확도
-		search.setSearchKeyword("이소라");
 		search.setCurrentPage(1);
 		search.setPageSize(5);
 		/////////////////////////////////////////////////
@@ -61,9 +67,14 @@ public class ExploreContoller {
 		System.out.println(blogList);
 		System.out.println(blogList.size());
 		
+		//여기서 blogList의 사이즈를 구해야한다 size가 0이면 다른 jsp 로 return 한다.
+		
 		model.addAttribute("blogList", blogList);
 		
-		return "explore/listBlogExplore";
+		if(blogList.size()==0)
+			return "explore/noSearchResultPage";
+		else
+			return "explore/listBlogExplore";
 	}
 	
 	@RequestMapping("getCafeList")
@@ -71,10 +82,15 @@ public class ExploreContoller {
 	{
 		System.out.println("/explore/getCafeExploreList 실행");
 		
+		if(search.getSearchKeyword()==null)
+			search.setSearchKeyword("");
+		if(search.getSearchTheme()==0)
+			search.setSearchTheme(2);
+		
+		
 		//가짜데이터
 		search.setEngineAll(true);//전체(네이버+다음+피닉스)
 		search.setOrderState(0);//정확도
-		search.setSearchKeyword("게시글");
 		search.setCurrentPage(1);
 		search.setPageSize(5);
 		/////////////////////////////////////////////////
@@ -82,7 +98,11 @@ public class ExploreContoller {
 		List<CafeExplore> cafeList = exploreService.getCafeExploreList(search);
 		
 		model.addAttribute("cafeList", cafeList);
-		return "explore/listCafeExplore";
+		
+		if(cafeList.size()==0)
+			return "explore/noSearchResultPage";
+		else
+			return "explore/listCafeExplore";
 	}
 	
 	@RequestMapping("getWebsiteList")
@@ -90,10 +110,14 @@ public class ExploreContoller {
 	{
 		System.out.println("/explore/getWebsiteList 실행");
 		
+		if(search.getSearchKeyword()==null)
+			search.setSearchKeyword("");
+		if(search.getSearchTheme()==0)
+			search.setSearchTheme(4);
+		
 		//가짜데이터
 		search.setEngineAll(true);//전체(네이버+다음+피닉스)
 		search.setOrderState(0);//정확도
-		search.setSearchKeyword("게시글");
 		search.setCurrentPage(1);
 		search.setPageSize(5);
 		/////////////////////////////////////////////////
@@ -102,7 +126,11 @@ public class ExploreContoller {
 		
 		
 		model.addAttribute("webList", websiteList);
-		return "explore/listWebsiteExplore";
+		
+		if(websiteList.size()==0)
+			return "explore/noSearchResultPage";
+		else
+			return "explore/listWebsiteExplore";
 	}
 	
 	@RequestMapping("getImageList")
@@ -110,10 +138,14 @@ public class ExploreContoller {
 	{
 		System.out.println("/explore/getImageList");
 		
+		if(search.getSearchKeyword()==null)
+			search.setSearchKeyword("");
+		if(search.getSearchTheme()==0)
+			search.setSearchTheme(3);
+		
 		//가짜데이터
 		search.setEngineAll(true);//전체(네이버+다음+피닉스)
 		search.setOrderState(0);//정확도
-		search.setSearchKeyword("태양");
 		search.setCurrentPage(1);
 		search.setPageSize(5);
 		/////////////////////////////////////////////////
@@ -122,7 +154,10 @@ public class ExploreContoller {
 		List<Image> imageList = exploreService.getImageExploreList(search);
 		
 		model.addAttribute("imageList", imageList);
-		return "explore/listImageExplore";
+		if(imageList.size()==0)
+			return "explore/noSearchResultPage";
+		else
+			return "explore/listImageExplore";
 	}
 	
 	@RequestMapping("test")

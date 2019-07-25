@@ -22,6 +22,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addInterceptor(interceptor)
                 .addPathPatterns("/cafe/**")
                 .excludePathPatterns("/cafe/main/**")
+                .excludePathPatterns("/cafe/*/getCafeGrade")
                 .excludePathPatterns("/user/login")
                 .excludePathPatterns("/user/logout"); //로그인 쪽은 예외처리를 한다.
         

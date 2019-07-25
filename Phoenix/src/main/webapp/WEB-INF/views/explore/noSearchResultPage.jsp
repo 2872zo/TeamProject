@@ -9,7 +9,6 @@
 
 <html lang="ko">
 <head>
-
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <!-- Favicon icon -->
 <link rel="icon" type="image/png" sizes="16x16"
@@ -29,11 +28,6 @@
     		
     		padding : 10px;
     		
-    	}
-    	
-    	.blogSearch{
-    	
-    		color:#f5a142;
     	}
     
     </style>
@@ -66,6 +60,8 @@
 		});
 			
 		
+
+	
 	</script>
 	
 	
@@ -103,15 +99,15 @@
            				<ul class="form-inline">
            					<li></li>
            					<li></li>
-           					<li id="uniSearch" value="0"><h4 class="uniSearch">통합검색</h4></li>
+           					<li id="uniSearch" value="0"><h4 class="uniSearch" ${search.searchTheme==0? "style='color: #f5a142;'" : "" }>통합검색</h4></li>
            					<li></li>
-           					<li id="blogSearch" value="1"><h4 class="blogSearch">블로그</h4></li>
+           					<li id="blogSearch" value="1"><h4 class="blogSearch" ${search.searchTheme==1? "style='color: #f5a142;'" : "" }>블로그</h4></li>
            					<li></li>
-           					<li id="cafeSearch" value="2"><h4 class="cafeSearch">카페</h4></li>
+           					<li id="cafeSearch" value="2"><h4 class="cafeSearch" ${search.searchTheme==2? "style='color: #f5a142;'" : "" }>카페</h4></li>
            					<li></li>
-           					<li id="imageSearch" value="3"><h4 class="imageSearch">이미지</h4></li>
+           					<li id="imageSearch" value="3"><h4 class="imageSearch" ${search.searchTheme==3? "style='color: #f5a142;'" : "" }>이미지</h4></li>
            					<li></li>
-           					<li id="webSearch" value="4"><h4 class="webSearch">웹사이트</h4></li>
+           					<li id="webSearch" value="4"><h4 class="webSearch" ${search.searchTheme==4? "style='color: #f5a142;'" : "" }>웹사이트</h4></li>
            					<li></li>
            					<li></li>
            					<li></li>
@@ -126,45 +122,53 @@
            						<div class="form-group">
                                      <div class="form-check form-check-inline">
                                          <label class="form-check-label">
-                                             <input type="checkbox" class="form-check-input check-all" name="engineAll" value="" checked>전체검색</label>
+                                             <input type="checkbox" class="form-check-input check-all" name="engineAll" value="">전체검색</label>
                                      </div>
                                      <div class="form-check form-check-inline">
                                          <label class="form-check-label">
-                                             <input type="checkbox" class="form-check-input singleCheck" name="engineNaver" value="" checked>네이버</label>
+                                             <input type="checkbox" class="form-check-input singleCheck" name="engineNaver" value="">네이버</label>
                                      </div>
                                      <div class="form-check form-check-inline disabled">
                                          <label class="form-check-label">
-                                             <input type="checkbox" class="form-check-input singleCheck" name="engineDaum" value="" checked>다음</label>
+                                             <input type="checkbox" class="form-check-input singleCheck" name="engineDaum" value="">다음</label>
                                      </div>
                                  </div>
            					</li>
            				</ul>
            			<hr/>
-           			<input type="hidden" name="searchTheme" id="searchTheme" value="1">
+           			<input type="hidden" name="searchTheme" id="searchTheme" value="${search.searchTheme}">
            			</div>
            			
            			<div class="col-md-1">
            			</div>
            			
-           			<div class="card-body col-md-7">
+           			<div class="card-body col-md-12" style="margin-left:30px">
            				<div class="bootstrap-media">
-           					<ul class="list-unstyled">
-	           				
-	           				<c:set var="i" value="0"/>
-	           				<c:forEach var="blog" items="${blogList}">
-	           					<c:set var="i" value="${i+1}"/>
-	           					<li class="media">
-	           						<img alt="이미지없음" src="${blog.thumbnail}">
-									<div class="media-body">
-										<a href="${blog.resultLink}">${blog.title}</a>${blog.dateTime}
-										<br/>
-										${blog.contents}
-										<br/>
-										<a href="${blog.blogLink}">${blog.blogName}</a>
-									</div>           					
-	           					</li>
-	           				</c:forEach>
-	           			
+           					<div class="form-inline" >
+           						<h3><strong style="color:#f5a142;">'${search.searchKeyword}'</strong></h3>
+           						<h3><strong>에 대한 검색결과가 없습니다.</strong></h3>
+           					</div>
+           					<ul class="list-icons">
+           							<li>
+           								<i class="fa fa-chevron-right"></i>
+           								단어의 철자가 정확한지 확인해 보세요.
+           							</li>
+           							<li>
+           								<i class="fa fa-chevron-right"></i>
+           								한글을 영어로 혹은 영어를 한글로 입력했는지 확인해 보세요.
+           							</li>
+           							<li>
+           								<i class="fa fa-chevron-right"></i>
+           								검색어의 단어 수를 줄이거나, 보다 일반적인 검색어로 다시 검색해 보세요.
+           							</li>
+           							<li>
+           								<i class="fa fa-chevron-right"></i>
+           								두 단어 이상의 검색어인 경우, 띄어쓰기를 확인해 보세요.
+           							</li>
+           							<li>
+           								<i class="fa fa-chevron-right"></i>
+           								검색 옵션을 변경해서 다시 검색해 보세요.
+           							</li>
            					</ul>
            				</div>
            			</div>
