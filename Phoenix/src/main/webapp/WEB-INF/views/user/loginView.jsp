@@ -172,7 +172,7 @@ input[type="checkbox"] {
 	$(function() {
 
 		$("input[id='password']").on('keyup',function() {
-					debugger;
+					
 							inputed = $("input[id='password']").val();
 							//alert("입력  : "+inputed);
 
@@ -223,7 +223,7 @@ input[type="checkbox"] {
 	$(function() {
 
 		$("#logon").on('click',function() {
-					debugger;
+					
 							var id = $("input[id='userId']").val();
 							var pw = $("input[id='password']").val();
 							//alert("입력  : "id);
