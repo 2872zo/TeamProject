@@ -50,6 +50,8 @@
 		<result property="regDate" 				column="reg_date" 				jdbcType="DATE" />
 		<result property="visitCount" 			column="visit_count" 			jdbcType="NUMERIC" />
 		<result property="gradeName"			column="grade_name"  			jdbcType="VARCHAR"/>
+		<result property="postCount" 			column="post_count" 			jdbcType="NUMERIC" />
+		<result property="replyCount" 			column="reply_count" 			jdbcType="NUMERIC" />
 	</resultMap>
 	
 	<resultMap id="eventSelectMap" type="com.phoenix.mvc.common.Event">
@@ -104,7 +106,9 @@
 			me.member_status_code, 
 			me.favorite_flag, 
 			me.visit_count, 
-			me.reg_date
+			me.reg_date,
+			me.post_count,
+			me.reply_count
 		FROM 
 			cafe_member me,
 			cafe_member_grade mg
@@ -112,6 +116,7 @@
 			(me.cafe_member_grade_no = mg.cafe_member_grade_no ) 
 			AND me.user_no = #{userNo} 
 			AND me.cafe_no = #{cafeNo}
+			AND me.member_status_code not in('cs102')
 		
 	</select>
 	

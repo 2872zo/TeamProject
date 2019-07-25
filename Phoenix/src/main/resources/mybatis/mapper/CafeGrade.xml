@@ -8,15 +8,15 @@
 <mapper namespace="CafeGradeMapper"> 
 	
 	<resultMap id="cafeGradeSelectMap" type="CafeGrade">
-		<result property="cafeGradeNo" 						column="cafe_member_grade_no" 							jdbcType="NUMERIC"/>
-		<result property="cafeNo" 						column="cafe_no" 							jdbcType="NUMERIC"/>
-		<result property="memberGradeCode" 						column="member_grade_code" 							jdbcType="VARCHAR"/>
-		<result property="gradeName" 						column="grade_name" 							jdbcType="VARCHAR"/>
-		<result property="requiredVisitCount" 						column="required_visit_count" 							jdbcType="NUMERIC"/>
-		<result property="requiredReplyCount" 						column="required_reply_count" 							jdbcType="NUMERIC"/>
-		<result property="requiredPostCount" 						column="required_post_count" 							jdbcType="NUMERIC"/>
-		<result property="gradeFlag" 						column="cafe_grade_active_flag" 							jdbcType="CHAR"/>
-		<result property="autoUpgradeFlag" 						column="auto_upgrade_flag" 							jdbcType="CHAR"/>
+		<result property="cafeGradeNo" 						column="cafe_member_grade_no" 				jdbcType="NUMERIC"/>
+		<result property="cafeNo" 							column="cafe_no" 							jdbcType="NUMERIC"/>
+		<result property="memberGradeCode" 					column="member_grade_code" 					jdbcType="VARCHAR"/>
+		<result property="gradeName" 						column="grade_name" 						jdbcType="VARCHAR"/>
+		<result property="requiredVisitCount" 				column="required_visit_count" 				jdbcType="NUMERIC"/>
+		<result property="requiredReplyCount" 				column="required_reply_count" 				jdbcType="NUMERIC"/>
+		<result property="requiredPostCount" 				column="required_post_count" 				jdbcType="NUMERIC"/>
+		<result property="gradeFlag" 						column="cafe_grade_active_flag" 			jdbcType="CHAR"/>
+		<result property="autoUpgradeFlag" 					column="auto_upgrade_flag" 					jdbcType="CHAR"/>
 	</resultMap>
 	
 	<insert 	id="addCafeGrade"		parameterType="CafeGrade" >
