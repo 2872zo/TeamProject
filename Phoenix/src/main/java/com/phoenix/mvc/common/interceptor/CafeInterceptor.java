@@ -96,16 +96,16 @@ public class CafeInterceptor extends HandlerInterceptorAdapter {
 				search.setUserNo(user.getUserNo());
 				cafeMember = cafeMemberService.getCafeMemberByURL(search);
 
-				if (cafeMember != null ) {
+				if (cafeMember != null) {
 					// 출석체크
 					// -출석체크 후 정보변경되면 cafeMember객체의 정보 변경할것
-				////////////////////////////////////예림시작////////////////////////
+					//////////////////////////////////// 예림시작////////////////////////
 					Event event = new Event();
 					event.setEventUserNo(user.getUserNo());
 					event.setCafeNo(cafe.getCafeNo());
-					event.setEventType("et100");				
+					event.setEventType("et100");
 					cafeManageService.checkAttendance(cafeMember, event);
-					////////////////////////////////////예림끝/////////////////////////
+					//////////////////////////////////// 예림끝/////////////////////////
 					// 등업체크 지니지니지니
 					// -등업체크 후 정보변경되면 cafeMember객체의 정보 변경할것
 					int myGradeNo = cafeMember.getCafeMemberGradeNo();
@@ -164,23 +164,36 @@ public class CafeInterceptor extends HandlerInterceptorAdapter {
 							request.getContextPath() + "/user/loginView?targetURL=" + request.getRequestURI());
 					return false;
 				}
-				// 카페 멤버 여부 확인
-				else if (cafeMember == null ) {
-					
+				// 카페 멤버 여부 확인//지니
+				else if (cafeMember == null || cafeMember.getMemberStatusCode().equals("cs102")) {
+
 					if (request.getRequestURI().contains("addCafeApplication")) {
 						System.out.println(">>> 카페 회원가입 접근");
 						return true;
 					}
 					System.out.println(">>> 카페 멤버 아님");
-					response.sendRedirect("/WEB-INF/views/common/needAply.jsp");
+					response.sendRedirect(request.getContextPath() + "/WEB-INF/views/common/needAply.jsp");// 이거 수정 ㅠ.ㅠ
 					return false;
 
 				}
 				// 정지 회원 접근 확인
 				else if (cafeMember.getMemberStatusCode().equals("cs101")) {
 					System.out.println(">>> 정지 회원접근");
-					response.sendRedirect(request.getContextPath() + "/cafe/" + cafeURL + "/memberBlock");
-					return false;
+					////////////////////////////// 기황시작//////////////////////////////
+					// 정지가 만료되었는지 체크하는 부분
+					boolean expired = cafeManageService.checkBlockExpired(cafeMember.getMemberNo());
+
+					if (expired) {
+						System.out.println("정지기간 만료로 해제되었음");
+					}
+
+					else if (!expired) {
+						System.out.println("정지기간 진행중임");
+						response.sendRedirect(request.getContextPath() + "/cafe/" + cafeURL + "/memberBlock");
+						return false;
+					}
+					////////////////////////////// 기황끝//////////////////////////////
+
 				}
 				// 세부 권한 확인
 				else {

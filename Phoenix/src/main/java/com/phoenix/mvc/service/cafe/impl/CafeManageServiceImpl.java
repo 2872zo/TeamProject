@@ -1,6 +1,7 @@
 package com.phoenix.mvc.service.cafe.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.phoenix.mvc.common.Event;
 import com.phoenix.mvc.common.Search;
@@ -22,6 +24,7 @@ import com.phoenix.mvc.service.domain.CafeMemberBlock;
 import com.phoenix.mvc.service.domain.Cafe;
 
 @Service("cafeManageServiceImpl")
+@Transactional
 public class CafeManageServiceImpl implements CafeManageService {
 
 	@Autowired
@@ -103,7 +106,29 @@ public class CafeManageServiceImpl implements CafeManageService {
 
 		return updateCheck;
 	}
+	
+	@Override
+	public boolean checkBlockExpired(int memberNo) throws Exception {
 
+		boolean checkResult = false;
+			
+		CafeMemberBlock latestBlock = cafeManageDao.getLatestBlock(memberNo);
+		Date dDay = latestBlock.getBlockEndDate();
+		long endTime = dDay.getTime();
+		long rightNow = new Date().getTime();
+		if (endTime <= rightNow) {
+			cafeManageDao.updateBlockExpired(latestBlock.getBlockNo());
+			//멤버도 업데이트 해야됨.
+			CafeMember freeMan = new CafeMember();
+			freeMan.setMemberNo(memberNo);
+			freeMan.setMemberStatusCode("cs100");
+			cafeMemberDao.updateCafeMember(freeMan);
+			checkResult = true;
+		}
+		
+		return checkResult;
+	}
+	
 	@Override
 	public int updateCafeMemeberGrade(CafeMember cafeMember) throws Exception {
 		return cafeManageDao.updateCafeMemeberGrade(cafeMember);

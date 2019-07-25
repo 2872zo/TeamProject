@@ -15,11 +15,12 @@
 <link rel="icon" type="image/png" sizes="16x16"
 	href="/images/favicon.png">
 <!-- Custom Stylesheet -->
-<link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
 <link href="/css/style.css" rel="stylesheet">
 
 <link rel="stylesheet" href="/css/custom/scroll-top.css">
-
+<!-- 토스터 css -->
+<link rel="stylesheet" href="/plugins/toastr/css/toastr.min.css">
+<!-- 토스터 css -->
 <!-- ToolBar Start /////////////////////////////////////-->
 <jsp:include page="../common/toolbar.jsp" />
 <!-- ToolBar End /////////////////////////////////////-->
@@ -84,32 +85,8 @@
 	<div class="card">
 	
 	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	
-
-
-
-
-
-
-
-
-		
-		
 			</div>
 	
 
@@ -159,9 +136,13 @@
 									<div class="card-body">
 										<h5 class="card-title">${myCafe.cafeName}</h5>
 										<p class="card-text">${myCafe.cafeDetail}</p>
-										<input type='hidden' class='memberNo'
-											value='${myCafe.memberNo}'> <a href="#"
-											class="btn btn-primary favorited">${myCafe.favorited}</a>
+										<input type='hidden' class='memberNo' value='${myCafe.memberNo}'>
+										<c:if test="${myCafe.favorited}">
+										<i class="favorited d-flex justify-content-end mdi mdi-bookmark-check ${myCafe.favorited}" style='font-size: 35pt;'></i> 
+										</c:if>
+										<c:if test="${!myCafe.favorited}">
+										<i class="favorited d-flex justify-content-end mdi mdi-bookmark-outline ${myCafe.favorited}" style='font-size: 35pt;'></i> 
+										</c:if>
 									</div>
 								</div>
 							</div>
@@ -245,11 +226,12 @@
 	<script src="/js/gleek.js"></script>
 	<script src="/js/styleSwitcher.js"></script>
 
-	<script src="/plugins/sweetalert/js/sweetalert.min.js"></script>
-	<script src="/plugins/sweetalert/js/sweetalert.init.js"></script>
 
 	<!-- 메뉴바 이용을 위한 스크립트 -->
 	<script src="/js/custom/scroll-top.js"></script>
+	<!-- 토스트기 -->
+	<script src="/plugins/toastr/js/toastr.min.js"></script>
+    	
 	
 	<!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
@@ -289,14 +271,22 @@ $(function() {
 
 
 $(function() {
-
+		
+	
 		$($(".cafeListing")[$("#status").val()]).attr("class",
 				"btn btn-primary col-lg-3 cafeListing");
 		$($(".cafeCategory")[$("#cafeType").val()]).attr("class",
 				"btn btn-success col-lg-2 cafeCategory");
 
-		
+		//$("#test1").on("click", function() {
+		//	alert("++");
+		//});
 
+		//$("#test2").on("click", function() {
+		//	alert("--");
+		//	$(this).attr("class","favorited d-flex justify-content-end mdi mdi-star-outline true");
+		//});
+		
 		$("#addCafe").on("click", function() {
 			$(self.location).attr("href", "/cafe/addCafeView");
 		});
@@ -332,20 +322,16 @@ $(function() {
 				"click",
 				function() {
 					var targetTag = $(this);
-					var checker = $(this).text();
-
-					if (checker == "true") {
-						checker = "false";
-					} else if (checker == "false") {
-						checker = "true";
-					}
-
+					var checker = $(this).hasClass("true");
+					var reChecker = !checker;
+					//alert(reChecker);
+			
 					var memberJson = $(
 							$(".memberNo")[$(".favorited").index(this)]).val();
 
 					var jsoned = {
 						memberNo : memberJson,
-						favoriteFlag : checker
+						favoriteFlag : reChecker
 					};
 					jsoned = JSON.stringify(jsoned);
 					$.ajax({
@@ -355,8 +341,48 @@ $(function() {
 						contentType : "application/json", //보내는 컨텐츠의 타입
 						//dataType : "json",      //받아올 데이터의 타입 필요없음
 						success : function(serverData, status) {
+							if(reChecker==false){
+								targetTag.attr("class","favorited d-flex justify-content-end mdi mdi-bookmark-outline "+reChecker);
 
-							targetTag.text(checker);
+								toastr.error(
+										"즐겨찾기메뉴에서 확인 가능합니다.",
+										"즐겨찾기에서 삭제되었습니다.",
+										{positionClass:"toast-bottom-right",
+										timeOut:3e3,closeButton:!0,debug:!1,
+										newestOnTop:!0,
+										progressBar:!0,
+										preventDuplicates:!1,
+										onclick:null,
+										showDuration:"300",hideDuration:"1000",
+										extendedTimeOut:"1000",
+										showEasing:"swing",hideEasing:"linear",
+										showMethod:"fadeIn",
+										hideMethod:"fadeOut",
+										tapToDismiss:!1}
+										);
+								}
+							if(reChecker==true){
+								targetTag.attr("class","favorited d-flex justify-content-end mdi mdi-bookmark-check "+reChecker);
+
+								toastr.success(
+										"즐겨찾기메뉴에서 확인 가능합니다.",
+										"즐겨찾기에 추가되었습니다.",
+										{positionClass:"toast-bottom-right",
+										timeOut:3e3,closeButton:!0,debug:!1,
+										newestOnTop:!0,
+										progressBar:!0,
+										preventDuplicates:!1,
+										onclick:null,
+										showDuration:"300",hideDuration:"1000",
+										extendedTimeOut:"1000",
+										showEasing:"swing",hideEasing:"linear",
+										showMethod:"fadeIn",
+										hideMethod:"fadeOut",
+										tapToDismiss:!1}
+										);
+								
+								}
+							
 						},
 						error : function(request, status, error) {
 							alert("에러남 : " + error);

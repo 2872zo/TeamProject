@@ -27,6 +27,10 @@ public interface CafeManageDao {
 	public List getCafeMemberBlocks(Search search) throws Exception;
 
 	public int updateCafeMemberBlock(CafeMemberBlock cafeMemberBlock) throws Exception;
+	
+	public CafeMemberBlock getLatestBlock(int memberNo) throws Exception;
+	
+	public int updateBlockExpired(int blockNo) throws Exception;
 
 	public int updateCafeMemeberGrade(CafeMember cafeMember) throws Exception;
 

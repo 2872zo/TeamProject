@@ -20,42 +20,46 @@
 
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <style type="text/css">
-.friends{ border: 1px solid red;}
+.friends {
+	border: 1px solid red;
+}
+
 img {
-    max-width: 100%; /* 이미지의 최대사이즈 */
-    height: auto;
-    vertical-align: center;
+	max-width: 100%; /* 이미지의 최대사이즈 */
+	height: auto;
+	vertical-align: center;
 }
 </style>
 
 </head>
 <body>
 
-    <!--*******************
+	<!--*******************
         Preloader start
     ********************-->
-    <div id="preloader">
-        <div class="loader">
-            <svg class="circular" viewBox="25 25 50 50">
-                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+	<div id="preloader">
+		<div class="loader">
+			<svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none"
+					stroke-width="3" stroke-miterlimit="10" />
             </svg>
-        </div>
-    </div>
-    <!--*******************
+		</div>
+	</div>
+	<!--*******************
         Preloader end
     ********************-->
 
-    
-    <!--**********************************
+
+	<!--**********************************
         Main wrapper start
     ***********************************-->
-    <div id="main-wrapper">
+	<div id="main-wrapper">
 
-     		<!-- ToolBar Start /////////////////////////////////////-->
+		<!-- ToolBar Start /////////////////////////////////////-->
 		<jsp:include page="/WEB-INF/views/common/toolbar.jsp" />
 		<!-- ToolBar End /////////////////////////////////////-->
 
-       	<!--**********************************
+		<!--**********************************
             Sidebar start
         ***********************************-->
 		<div class="nk-sidebar">
@@ -64,156 +68,187 @@ img {
 		<!--**********************************
             Sidebar end
         ***********************************-->
-	<!--**********************************
+		<!--**********************************
             Content body start
         ***********************************-->
-        
-        
+
+
 		<div class="content-body" style="min-height: 600px;">
-	<div class="row">
-        <div class="col-lg-8">
-        
-        
-        
-        
-        <!--  
-        
-			<div class="row page-titles mx-0">
-				<div class="col p-md-0">
-					<ol class="breadcrumb">
-					
-					 
-						<li class="breadcrumb-item"><a href="javascript:void(0)">manage</a></li>
-						<li class="breadcrumb-item active"><a href="javascript:void(0)">application</a></li>
-						
-						
-					</ol>
-				</div>
-			</div>
-			
-		-->
-		
-			<div class='container-fluid'>
-			
-			
+			<div class="row">
+				<div class="col-lg-8">
+					<div class='container-fluid'>
 
-				<div class='card'>
-					<div class='card-body'>
-						
-					<div class="d-flex justify-content-around">
-					
-					<i class="mdi mdi-account-multiple-outline" style='font-size: 30pt;'></i>
-					<i class="mdi mdi-account-check" style='font-size: 30pt;'></i>
-					<i class="mdi mdi-account-search" style='font-size: 30pt;'></i>
-					<i class="mdi mdi-sleep-off" style='font-size: 30pt;'></i>
-					
-					
+						<div class='card'>
+							<div class='card-body'>
+								<!-- 상단 친구 종류 선택 버튼 메뉴 -->
+								<div class="d-flex justify-content-around">
+
+									<i class="mdi mdi-account-multiple-outline" style='font-size: 30pt;'>
+									</i>
+									<i class="mdi mdi-account-check" id='wannaBeFriend' style='font-size: 30pt;'>
+									</i>
+									<i class="mdi mdi-account-search" style='font-size: 30pt;'>
+									</i>
+									 <i class="mdi mdi-sleep-off" style='font-size: 30pt;'>
+									 </i>
+
+								</div>
+
+								<!-- 상단 친구 종류 선택 버튼 메뉴 -->
+								<form>
+
+									<div class='d-flex justify-content-center'>
+										<div class="input-group mb-3 " style='width: 50%;'>
+											<input type="text" class="form-control form-control-lg"
+												placeholder="검색어를 입력해주세요" name='searchKeyword'
+												id='searchKeyword'>
+											<div class="input-group-append">
+												<button class="btn btn-lg btn-outline-primary" type="button"
+													id="explore">
+													<i class="mdi mdi-magnify" style='font-size: 18pt;'></i>
+												</button>
+											</div>
+										</div>
+									</div>
+								</form>
+								<!-- 기본 친구목록화면 시작 -->
+								<c:if test="${!empty friendsList}">
+									<c:forEach items='${friendsList}' var='chatFriend'>
+
+										<div class="card friends">
+											<div class="card-body">
+												<div class='row'>
+													<div class='col-lg-4'>
+														<img alt="" src="/images/avatar/1.jpg"
+															class='rounded img-fluid' alt="Responsive image">
+													</div>
+													<div class='col-lg-8'>
+														<h5 class="card-title">${chatFriend.chatFriendNo}</h5>
+														<p class="card-text">기존친구임 With supporting text below
+															as a natural lead-in to additional content.</p>
+														<a href="#" class="btn btn-primary">${chatFriend.userNickname}</a>
+													</div>
+												</div>
+											</div>
+										</div>
+
+									</c:forEach>
+
+								</c:if>
+								<!-- 기본 친구목록화면 끝-->
+
+
+
+
+
+<!-- 친구되고싶어하는 사람들 나오는 화면 시작 -->
+								<c:if test="${!empty wannaBeFreindList}">
+
+									<c:forEach items='${wannaBeFreindList}' var='chatFriend'>
+
+										<div class="card friends">
+											<div class="card-body">
+												<div class='row'>
+													<div class='col-lg-4'>
+														<img alt="" src="/images/avatar/1.jpg"
+															class='rounded img-fluid' alt="Responsive image">
+													</div>
+													<div class='col-lg-8'>
+														<h5 class="card-title">${chatFriend.userNickname}</h5>
+														<p class="card-text">With supporting text below as a
+															natural lead-in to additional content.</p>
+														<a href="#" class="btn btn-primary">${chatFriend.userNo}</a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</c:forEach>
+								</c:if>
+								<!-- 친구되고싶어하는 사람들 나오는 화면 끝-->
+
+
+
+
+								<!-- 친구검색시 나오는 화면 시작 -->
+								<c:if test="${!empty searchList}">
+
+									<c:forEach items='${searchList}' var='chatFriend'>
+
+										<div class="card friends">
+											<div class="card-body">
+												<div class='row'>
+													<div class='col-lg-4'>
+														<img alt="" src="/images/avatar/1.jpg"
+															class='rounded img-fluid' alt="Responsive image">
+													</div>
+													<div class='col-lg-8'>
+														<h5 class="card-title">${chatFriend.userNickname}</h5>
+														<p class="card-text">With supporting text below as a
+															natural lead-in to additional content.</p>
+														<a href="#" class="btn btn-primary">${chatFriend.userNo}</a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</c:forEach>
+								</c:if>
+								<!-- 친구검색시 나오는 화면 끝-->
+							</div>
+
+							<!-- card body -->
+						</div>
+						<!-- card -->
 					</div>
-						<form>
-	
-					<div class='d-flex justify-content-center'>
-				<div class="input-group mb-3 " style='width: 50%;'>
-					<input type="text" class="form-control form-control-lg"
-						placeholder="검색어를 입력해주세요" id='searchKeyword'>
-					<div class="input-group-append">
-						<button class="btn btn-lg btn-outline-primary" type="button"
-							id="explore">
-							<i class="mdi mdi-magnify" style='font-size: 18pt;'></i>
-						</button>
-					</div>
+
+					<!-- #/ container -->
+
 				</div>
-			</div>
-						</form>
-						
-	<div class="card friends">
-      <div class="card-body">
-      <div class ='row'>
-      <div class='col-lg-4'>
-      <img alt="" src="/images/avatar/1.jpg" class='rounded img-fluid' alt="Responsive image" >
-      </div>
-      <div class='col-lg-8'>
-        <h5 class="card-title">Special title treatment</h5>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
-      </div>
-      </div>
-      </div>
-    </div>
+				<!-- 왼쪽 컬럼 엔드 -->
 
+				<!-- 오른컬럼이야 -->
 
-<c:forEach items='${searchList}' var = 'searchedChatFriend'>
+				<div class="col-lg-4">
 
-<div class="card friends">
-      <div class="card-body">
-      <div class ='row'>
-      <div class='col-lg-4'>
-      <img alt="" src="/images/avatar/1.jpg" class='rounded img-fluid' alt="Responsive image" >
-      </div>
-      <div class='col-lg-8'>
-        <h5 class="card-title">Special title treatment</h5>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
-      </div>
-      </div>
-      </div>
-    </div>
-</c:forEach>
+					<div class='container-fluid'>
 
-
+						<div class='card'>
+							<div class='card-body'>8888주ㅡㄹㅇ야</div>
+						</div>
 					</div>
 
-					<!-- card body -->
 				</div>
-				<!-- card -->
+
+				<!-- 오른쪽컬럼끝야 -->
+
+
 			</div>
+			<!-- row 엔드 -->
 
-			<!-- #/ container -->
-		
-		 </div>
-        <!-- 왼쪽 컬럼 엔드 -->
-        
-        <!-- 오른컬럼이야 -->
-         
-        <div class="col-lg-4">
-        
-	        <div class='container-fluid'>
-	
-					<div class='card'>
-						<div class='card-body'>
-	        				8888주ㅡㄹㅇ야
-	        			</div>
-	        		</div>
-	        </div>
-        
-        </div>
-        
-        <!-- 오른쪽컬럼끝야 -->
-		
-		
-		</div>   <!-- row 엔드 -->
-        
 
-		
-       
-        </div>
-        <!--**********************************
+
+
+		</div>
+		<!--**********************************
             Content body end
         
         ***********************************-->
-      
-        <!--**********************************
+
+		<!--**********************************
             Footer start
         ***********************************-->
-        <div class="footer">
-            <div class="copyright">
-                <p>Copyright &copy; Designed & Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2018</p>
-            </div>
-        </div>
-        <!--**********************************
+		<div class="footer">
+			<div class="copyright">
+				<p>
+					Copyright &copy; Designed & Developed by <a
+						href="https://themeforest.net/user/quixlab">Quixlab</a> 2018
+				</p>
+			</div>
+		</div>
+		<!--**********************************
             Footer end
         ***********************************-->
-    </div>
-    <!--**********************************
+	</div>
+	<!--**********************************
         Main wrapper end
     ***********************************-->
 
@@ -252,15 +287,24 @@ var checkSessionUser = ${empty sessionScope.user};
 			$(this).attr("style", "");
 		});
 		
-			//$("#explore").on))
+		$("#explore").on("click", function() {
+		var keyword = $("#searchKeyword").val()
+		$("form").attr("method", "POST").attr("action",
+		"/chat/searchChatFriend").submit();
+		});
 		
+		$("#wannaBeFriend").on("click", function() {
+			alert("친구가 되줘요");
+			$("form").attr("method", "POST").attr("action",
+			"/chat/wannaBeFriend").submit();
+			});
 
 	});
 </script>
 
 	<!-- 공통 툴바용 스크립트 -->
 	<script src="/js/custom/toolbarScript.js"></script>
-	
+
 	<!-- 채팅 사이드 툴바 스크립트 -->
 	<script src="/js/custom/chatSideBar.js"></script>
 

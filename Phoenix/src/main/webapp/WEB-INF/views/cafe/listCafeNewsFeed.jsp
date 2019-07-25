@@ -28,11 +28,25 @@
 </head>
 
 <body>
-
+<br/>
 	<div class='container'>
 
+<div class='card'>
+<div class='card-body'>
 		<c:forEach var = 'post' items='${newsFeed}'>
-		<div class="card border-primary w-85">
+		<input type='hidden' class='cafeURL' value='${post.cafeURL}'>
+		<input type='hidden' class='postNo'  value='${post.postNo}'>
+		<div class="card w-85 goToPost" style=" border: 1px solid #F7790A; ">
+			<div class='row'>
+			<div class='col-lg-2'>
+			<div class="card-body">
+			<img src="/images/common/16by9.png" class="card-img" alt="..."
+			style="background: url('/images/uploadFiles/cafeicon/${post.cafeIcon}');
+      no-repeat center center; background-size:cover; height:100px; width:auto;">
+			${post.cafeName} 
+			</div>
+			</div>
+			<div class='col-lg-8'>
 			<div class="card-body">
 				<h5 class="card-title">${post.postTitle}</h5>
 				<p class="card-text">
@@ -45,10 +59,22 @@
 				${modifiedContent}
 				</c:if>
 				</p>
-				${post.regDate}
+				
+				</div>
+			</div>
+			<div class='col-lg-2'>
+			 작성자 : ${post.memberNickname}
+			 <br/>
+			 ${post.regDate}
+			</div>
 			</div>
 		</div>
 		</c:forEach>
+		
+		
+		</div>
+		</div>
+	
 	</div>
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	
@@ -71,6 +97,26 @@
 	<!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
 var checkSessionUser = ${empty sessionScope.user};
+
+
+$(".goToPost").on(
+		"click",
+		function() {
+			var countNo=$(".goToPost").index(this);
+			var cafeURL = $($(".cafeURL")[countNo]).val();
+			var postNo = $($(".postNo")[countNo]).val();
+			//alert(cafeURL);
+			//alert(postNo);
+			$(self.location).attr("href", "/cafe/"+cafeURL+"/getPost/"+postNo);
+
+			// /cafe/cafeURL/getPost/postNo
+			//var count = $(".cafeCategory").index(this);
+			//$("#cafeType").val(count);
+			//$("#cafeHomeForm").attr("method", "POST").attr("action",
+				//	"/cafe/main").submit();
+		});
+
+
 </script>
 
 <!-- 공통 툴바용 스크립트 -->	
