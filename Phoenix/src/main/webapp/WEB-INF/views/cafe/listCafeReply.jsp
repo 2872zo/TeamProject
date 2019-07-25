@@ -79,6 +79,7 @@
 													<i class="mdi mdi-delete" name="deleteReplyButton"></i>
 												</c:if>
 												<i class="mdi mdi-reply" name="addReReplyForm"></i>
+												<i class="mdi mdi-alert" name="addReport"></i>
 						                    </div>
 						                    <!-- 아이콘 끝 -->
 						                    
@@ -103,6 +104,7 @@
 											<input type="hidden" name="targetReplyNo" value="${reply.replyNo }">
 											<input type="hidden" name="targetReplyMember" value="${reply.memberNickname }">
 											<input type="hidden" name="postNo" value="${reply.postNo }">
+											<input type="hidden" name="currentPage" value="${search.currentPage }">
 										</form>
 						            </div>
 						        </div>
@@ -127,11 +129,12 @@
 							                    
 							                    <!-- 아이콘 부분 -->
 							                    <div class="media-reply__link">
-													<c:if test="${cafeMember.memberNo eq reply.memberNo }">
+													<c:if test="${cafeMember.memberNo eq reReply.memberNo }">
 														<i class="mdi mdi-border-color" name="updateReplyButton" style="position: relative; top:3px;"></i>
 														<i class="mdi mdi-delete" name="deleteReplyButton"></i>
 													</c:if>
 													<i class="mdi mdi-reply" name="addReReplyForm"></i>
+													<i class="mdi mdi-alert" name="addReport"></i>
 							                    </div>
 							                    <!-- 아이콘 끝 -->
 							                    
@@ -155,6 +158,7 @@
 												<input type="hidden" name="targetReplyNo" value="${reReply.targetReplyNo }">
 												<input type="hidden" name="targetReplyMember" value="${reReply.memberNickname }">
 												<input type="hidden" name="postNo" value="${reReply.postNo }">
+												<input type="hidden" name="currentPage" value="${search.currentPage }">
 											</form>
 							            </div>
 							        </div>

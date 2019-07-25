@@ -39,6 +39,19 @@
 		<result property="replyStatusFlag"	  column="reply_status_flag"	jdbcType="CHAR"		/>
 		<collection property="reReplyList"	  column="reply_no"				javaType="java.util.ArrayList"	ofType="Reply"	select="getReReplyList" />
 	</resultMap>
+	
+	<resultMap id="reReplyResultMap" type="Reply">
+		<result property="replyNo"        	  column="reply_no"				jdbcType="NUMERIC"	/>
+		<result property="postNo"			  column="post_no"				jdbcType="NUMERIC"	/>
+		<result property="targetReplyNo"	  column="target_reply_no"		jdbcType="NUMERIC"	/>
+		<result property="targetReplyMember"  column="target_reply_member" 	jdbcType="NUMERIC"	/>
+		<result property="memberNo"       	  column="member_no"			jdbcType="NUMERIC"	/>
+		<result property="memberNickname" 	  column="member_nickname"		jdbcType="VARCHAR"	/>
+		<result property="replyContent"  	  column="reply_content"		jdbcType="VARCHAR"	/>
+		<result property="regDate"  		  column="reg_date"				jdbcType="VARCHAR"	/>
+		<result property="likeCount"     	  column="like_count"			jdbcType="NUMERIC"	/>
+		<result property="replyStatusFlag"	  column="reply_status_flag"	jdbcType="CHAR"		/>
+	</resultMap>
 
 	<sql id="select-post-list">
 		SELECT 
@@ -503,7 +516,7 @@
 		</where>
 	</select>
 	
-	<select id="getReReplyList" parameterType="int" resultMap="replyResultMap">
+	<select id="getReReplyList" parameterType="int" resultMap="reReplyResultMap">
 		SELECT
 			reply_no,			
 			post_no,			

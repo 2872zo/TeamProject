@@ -101,8 +101,18 @@ public class CafePostServiceImpl implements CafePostService {
 	public Map<String, Object> getReplyList(Search search) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		map.put("replyList", cafePostDao.getReplyList(search));
 		map.put("replyTotalCount", cafePostDao.replyTotalCount(search));
+		
+		while(search.getSearchCondition() != null && search.getSearchCondition().equals("1")) {
+			System.out.println(">>>>>>>>pageUp!");
+			if(search.getEndRowNum() > (int)map.get("replyTotalCount")){
+				search.setCurrentPage(search.getCurrentPage() - 1);
+				break;
+			}
+			search.setCurrentPage(search.getCurrentPage() + 1);
+		}
+		
+		map.put("replyList", cafePostDao.getReplyList(search));
 		
 		return map;
 	}
