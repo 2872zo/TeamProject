@@ -304,7 +304,8 @@
 			m.reply_count, 
 			g.member_grade_code, 
 			g.grade_name,
-			m.member_status_code
+			m.member_status_code,
+			m.cafe_member_grade_no
 		FROM 
 			cafe_member m, cafe c, cafe_member_grade g
 		WHERE 
