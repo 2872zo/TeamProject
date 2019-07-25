@@ -247,7 +247,7 @@
 		SET
 		reply_count = reply_count-1
 		WHERE member_no = (SELECT
-								m.member_no, m.reply_count, p.post_no, r.reply_no 
+								m.member_no
 						 	FROM
 						 		cafe_member m, reply r, post p
 						 	WHERE 

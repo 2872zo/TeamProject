@@ -45,6 +45,12 @@ public class CafePostContoller {
 
 	@Value("${pageUnit}")
 	private int pageUnit;
+	
+	@Value("${replyPageSize}")
+	private int replyPageSize;
+
+	@Value("${replyPageUnit}")
+	private int replyPageUnit;	
 
 	@Value("${uploadDir}")
 	private String uploadDir;
@@ -90,7 +96,7 @@ public class CafePostContoller {
 		// 구분선 모두 처리
 		Predicate<Board> condition = board -> board.getBoardType().equals("cb102");
 		boardOption.removeIf(condition);
-
+		
 		map.put("boardOption", boardOption);
 		map.put("postList", queryResultMap.get("postList"));
 		map.put("postTotalCount", postTotalCount);
@@ -141,10 +147,19 @@ public class CafePostContoller {
 		List<Board> boardList = (List<Board>) req.getAttribute("boardList");
 		List<Board> boardOption = new ArrayList<Board>();
 		boardOption.addAll(boardList);
+		
 		// 구분선 모두 처리
 		Predicate<Board> condition = board -> board.getBoardType().equals("cb102");
 		boardOption.removeIf(condition);
 
+		//작성할수있는 게시판 등급 처리
+		CafeMember cafeMember = (CafeMember)req.getAttribute("cafeMember");
+		int cafeMemberGrade = Integer.parseInt(cafeMember.getMemberGrade().substring(2));
+		if(cafeMemberGrade > 101) {
+			Predicate<Board> gradeCondition = board -> Integer.parseInt(board.getAccessGrade().substring(2)) > cafeMemberGrade;
+			boardOption.removeIf(gradeCondition);
+		}
+		
 		map.put("boardOption", boardOption);
 
 		return "/cafe/addCafePost";
@@ -305,7 +320,7 @@ public class CafePostContoller {
 		CafeMember cafeMember = (CafeMember) req.getAttribute("cafeMember");
 		reply.setMemberNo(cafeMember.getMemberNo());
 		reply.setMemberNickname(cafeMember.getMemberNickname());
-
+		
 		System.out.println("[addReply] : " + reply);
 
 		System.out.println("[addReply 결과] : " + cafePostService.addReply(reply));
@@ -341,7 +356,7 @@ public class CafePostContoller {
 	public String getReplyList(@PathVariable String cafeURL, @ModelAttribute Search search, Map<String, Object> map, HttpServletRequest req) {
 		search.setSearchCondition((String)req.getAttribute("searchCondition"));
 		
-		search.setPageSize(pageSize);
+		search.setPageSize(replyPageSize);
 		if (search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
 		}
@@ -349,7 +364,7 @@ public class CafePostContoller {
 		System.out.println("[getReplyList] search : " + search);
 		
 		Map<String, Object> queryResultMap = cafePostService.getReplyList(search);
-		Page page = new Page(search.getCurrentPage(), (int) queryResultMap.get("replyTotalCount"), pageUnit, pageSize);
+		Page page = new Page(search.getCurrentPage(), (int) queryResultMap.get("replyTotalCount"), replyPageUnit, replyPageSize);
 
 		List<Reply> replyList = (List<Reply>) queryResultMap.get("replyList");
 		for (Reply reply : replyList) {

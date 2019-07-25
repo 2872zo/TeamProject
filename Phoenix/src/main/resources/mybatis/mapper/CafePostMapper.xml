@@ -336,13 +336,13 @@
 		    <where>
 		    	p.board_no = b.board_no
 		    	AND p.board_no = #{boardNo}
-		    	AND p.reg_date &gt; SYSDATE - b.best_Term
+		    	AND p.reg_date &gt; SYSDATE - 10
 		    	AND p.like_count &gt; b.best_like_count
 		    </where>
 		    ORDER BY p.like_count DESC
 		) inner_table
 		 <where>
-		 	AND ROWNUM &lt;= inner_table.best-post_count
+		 	AND ROWNUM &lt;= inner_table.best_post_count
 		 </where>
 	
 		</select>
@@ -679,4 +679,13 @@
 		FROM
 		(<include refid="select-post-list-member"/>)
 	</select>
+	
+	<update id="updateNoticeFlag" parameterType="String">
+		UPDATE 
+			post
+		SET 
+			post_notice_flag  = '0'
+		WHERE 
+			post_no IN (${value})
+	</update>
 </mapper>

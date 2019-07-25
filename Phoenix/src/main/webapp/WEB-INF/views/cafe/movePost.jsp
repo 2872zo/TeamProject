@@ -68,16 +68,30 @@
 	</header>
 	
 	<body>
-		<input type="hidden" id="targetPostList" name="targetPostList">
-		<select name="targetBoardNo" id="targetBoardNo">
-			<c:forEach items="${boardList }" var="board">
-				<c:if test="${board.boardType != 'cb102' }">
-					<option value="${board.boardNo }">${board.boardName }</option>
-				</c:if>
-			</c:forEach>
-		</select>
-		<button id="movePost">이동</button>
-		<button id="close">닫기</button>
+		
+		
+		
+		
+		<div id="wrap" style="width:280px">
+	        <div id="header" style="background: #FFAF00; text-align: center; padding-top:5px; padding-bottom:5px;">
+	                <h4>게시글 이동</h1>
+	        </div>
+	        <div id="content" style="text-align: center; margin-top:10px; margin-bottom:10px;">
+	                <input type="hidden" id="targetPostList" name="targetPostList">
+	                <span>게시판 선택</span>
+					<select name="targetBoardNo" id="targetBoardNo">
+						<c:forEach items="${boardList }" var="board">
+							<c:if test="${board.boardType != 'cb102' }">
+								<option value="${board.boardNo }">${board.boardName }</option>
+							</c:if>
+						</c:forEach>
+					</select>
+	        </div>
+			<div style="text-align: center; margin-top:10px; margin-bottom:10px;">
+				<button id="movePost">이동</button>
+				<button id="close">닫기</button>
+    		</div>
+		</div>
 	</body>
 
 </html>

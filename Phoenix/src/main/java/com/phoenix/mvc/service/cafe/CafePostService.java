@@ -33,13 +33,13 @@ public interface CafePostService {
 
 	public Reply getReply(int replyNo);
 
-	public boolean addReReply(Reply reply);
+	public boolean addReReply(Reply reply) throws Exception;
 
 	public boolean movePost(Map map);
 	
 	public Map<String, Object> addLike(Search search);
 
-	public boolean updateNoticeOrder(List<Post> postList);
+	public boolean updateNoticeOrder(Map<String, Object> reqMap);
 
 	public List<Post> getAllNoticePost(Search search);
 

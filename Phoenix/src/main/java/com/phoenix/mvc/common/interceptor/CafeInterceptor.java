@@ -53,25 +53,26 @@ public class CafeInterceptor extends HandlerInterceptorAdapter {
 	}
 
 	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-			throws Exception {
-		System.out.println(
-				"\n\n================================ Interceptor > preHandle START ================================");
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)	throws Exception {
+		System.out.println("\n\n================================ Interceptor > preHandle START ================================");
 		String requestURI = request.getRequestURI();
 		System.out.println(">>>>>>>>>>> 요청URL : " + requestURI);
 
 		// pathVariables 사용하기 위한 선언
-		Map<String, String> pathVariables = (Map<String, String>) request
-				.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
+		Map<String, String> pathVariables = (Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
 
 		// 세션의 로그인 정보
 		User user = (User) request.getSession().getAttribute("user");
 
 		// 카페 생성
-		if (requestURI.contains("/cafe/addCafe") && user == null) {
-			System.out.println("CafeInterceptor >>> addCafe");
-			response.sendRedirect("/user/loginView");
-			return false;
+		if (requestURI.contains("/cafe/addCafe")) {
+			if(user != null) {
+				return true;				
+			}else {
+				System.out.println("CafeInterceptor >>> addCafe");
+				response.sendRedirect("/user/loginView");
+				return false;
+			}
 		} else {
 			// cafeURL 추가 - controller에 PathVariable 처리 되있어야함
 			String cafeURL = pathVariables.get("cafeURL");
@@ -218,8 +219,7 @@ public class CafeInterceptor extends HandlerInterceptorAdapter {
 						int boardGrade = Integer.parseInt(board.getAccessGrade().substring(2));
 
 						// 게시판 접근권한이 모자랄 경우
-						if (!user.getUserRoleCode().equals("ur100") && cafeMemberGrade > 101
-								&& cafeMemberGrade < boardGrade) {
+						if (!user.getUserRoleCode().equals("ur100") && cafeMemberGrade > 101 && cafeMemberGrade < boardGrade) {
 							System.out.println("CafeInterceptor >>> 권한 부족");
 							response.sendRedirect(request.getContextPath() + "/cafe/" + cafeURL + "/accessDenied");
 							return false;
@@ -227,7 +227,7 @@ public class CafeInterceptor extends HandlerInterceptorAdapter {
 					}
 
 					// 게시글 조회
-					if (request.getRequestURI().contains("getPost")) {
+					if (request.getRequestURI().contains("/getPost/")) {
 						System.out.println("CafeInterceptor >>> 카페 메뉴 접근 >>> getPost");
 
 						// 게시글 정보 가져옴
@@ -256,8 +256,7 @@ public class CafeInterceptor extends HandlerInterceptorAdapter {
 						}
 
 						// 해당 게시글이 있는 게시판의 접근권한이 모자랄 경우
-						if (!user.getUserRoleCode().equals("ur100") && cafeMemberGrade > 101
-								&& cafeMemberGrade < boardGrade) {
+						if (!user.getUserRoleCode().equals("ur100") && cafeMemberGrade > 101 && cafeMemberGrade < boardGrade) {
 							System.out.println("CafeInterceptor >>>>>>>>>> 권한 부족");
 							response.sendRedirect(request.getContextPath() + "/cafe/" + cafeURL + "/accessDenied");
 							return false;
@@ -270,8 +269,7 @@ public class CafeInterceptor extends HandlerInterceptorAdapter {
 		} // preHandler 끝
 
 		// 모든 경우가 만족
-		System.out.println(
-				"================================ Interceptor > preHandle END ================================\n\n");
+		System.out.println("================================ Interceptor > preHandle END ================================\n\n");
 		return true;
 	}
 

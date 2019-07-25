@@ -169,4 +169,9 @@ public class CafePostDaoImpl implements CafePostDao{
 	public Board getBoardByPostNo(int postNo) {
 		return sqlSession.selectOne("BoardMapper.getBoardByPostNo", postNo);
 	}
+
+	@Override
+	public boolean updateNoticeFlag(String deleteNoticeList) {
+		return (sqlSession.update("CafePostMapper.updateNoticeFlag", deleteNoticeList) != 0 ? true : false);
+	}
 }

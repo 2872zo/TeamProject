@@ -66,4 +66,6 @@ public interface CafePostDao {
 	public Board getBoard(int boardNo);
 
 	public Board getBoardByPostNo(int postNo);
+
+	public boolean updateNoticeFlag(String deleteNoticeList);
 }

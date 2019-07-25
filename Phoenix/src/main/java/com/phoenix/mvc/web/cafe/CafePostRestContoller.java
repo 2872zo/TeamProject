@@ -63,9 +63,9 @@ public class CafePostRestContoller {
 	
 
 	@PostMapping("/cafe/{cafeURL}/json/updateNoticeOrder")
-	public boolean updateNoticeOrder(@RequestBody List<Post> postList) {
-		System.out.println("[updateNoticeOrderView] postList : " + postList);
+	public boolean updateNoticeOrder(@RequestBody Map<String, Object> reqMap) {
+		System.out.println("[updateNoticeOrderView] reqMap : " + reqMap);
 		
-		return cafePostService.updateNoticeOrder(postList);
+		return cafePostService.updateNoticeOrder(reqMap);
 	}
 }

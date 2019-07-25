@@ -55,7 +55,7 @@ public class CafePostServiceImpl implements CafePostService {
 
 		if(search.getCurrentPage() == 1) {
 			map.put("noticePostList", cafePostDao.getNoticePostList(search));
-//			map.put("bestPostList", cafePostDao.getBestPostList(search.getBoardNo()));
+			map.put("bestPostList", cafePostDao.getBestPostList(search.getBoardNo()));
 		}
 		map.put("postList", cafePostDao.getPostListByBoard(search));
 		map.put("postTotalCount", cafePostDao.postTotalCount(search));
@@ -105,8 +105,7 @@ public class CafePostServiceImpl implements CafePostService {
 		
 		while(search.getSearchCondition() != null && search.getSearchCondition().equals("1")) {
 			System.out.println(">>>>>>>>pageUp!");
-			if(search.getEndRowNum() > (int)map.get("replyTotalCount")){
-				search.setCurrentPage(search.getCurrentPage() - 1);
+			if(search.getEndRowNum() >= (int)map.get("replyTotalCount")){
 				break;
 			}
 			search.setCurrentPage(search.getCurrentPage() + 1);
@@ -124,7 +123,7 @@ public class CafePostServiceImpl implements CafePostService {
 
 	@Override
 	public boolean deleteReply(int replyNo) throws Exception {
-//		cafeMemberDao.updateReplyCountDecrease(replyNo);
+		cafeMemberDao.updateReplyCountDecrease(replyNo);
 		return cafePostDao.deleteReply(replyNo);
 	}
 
@@ -134,7 +133,8 @@ public class CafePostServiceImpl implements CafePostService {
 	}
 
 	@Override
-	public boolean addReReply(Reply reply) {
+	public boolean addReReply(Reply reply) throws Exception {
+		cafeMemberDao.updateReplyCountIncrease(reply.getMemberNo());
 		return cafePostDao.addReReply(reply);
 	}
 
@@ -183,8 +183,21 @@ public class CafePostServiceImpl implements CafePostService {
 	}
 
 	@Override
-	public boolean updateNoticeOrder(List<Post> postList) {
-		return cafePostDao.updateNoticeOrder(postList);
+	public boolean updateNoticeOrder(Map<String, Object> reqMap) {
+		String deleteNoticeList = (String) reqMap.get("deleteNoticeList");
+		List<Post> postList = (List<Post>) reqMap.get("postList");
+		
+		boolean result = true;
+		
+		if(deleteNoticeList != null && !deleteNoticeList.equals("")) {
+			result = cafePostDao.updateNoticeFlag(deleteNoticeList);
+		}
+		
+		if(postList != null && postList.size() > 0) {
+			result = cafePostDao.updateNoticeOrder(postList);
+		}
+		
+		return result;
 	}
 
 	@Override
@@ -210,5 +223,4 @@ public class CafePostServiceImpl implements CafePostService {
 	public Board getBoardByPostNo(int postNo) {
 		return cafePostDao.getBoardByPostNo(postNo);
 	}
-	
 }

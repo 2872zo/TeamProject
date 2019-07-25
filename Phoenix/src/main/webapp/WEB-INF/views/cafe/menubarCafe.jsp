@@ -117,7 +117,7 @@
 			<c:forEach var="board" items="${boardList}">
 				<li style="text-align: center;">
 					<c:if test="${board.boardType != 'cb102'}">
-		         		<a href="javascript:fncGetBoardPostList('${board.boardNo}','no1cafe')" aria-expanded="false">
+		         		<a href="javascript:fncGetBoardPostList('${board.boardNo}','${cafeURL }')" aria-expanded="false">
 			            	<i class="icon-note menu-icon"></i>
 			            	<span class="nav-text">
 								${board.boardName}

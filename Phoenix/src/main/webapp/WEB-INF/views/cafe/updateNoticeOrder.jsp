@@ -1,53 +1,182 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<html>
+
+<html lang="ko">
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>공지관리</title>
+
+<link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
+<link href="/css/style.css" rel="stylesheet">
+<link rel="stylesheet" href="/css/custom/scroll-top.css">
+<style>
+	#layerPopup{
+	  padding:20px; 
+	  border:4px solid #ddd; 
+	  position:absolute; 
+	  left:100px; 
+	  top:100px; 
+	  background:#fff;
+	}
 	
-	<header>
-		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-		<script src="https://kit.fontawesome.com/e589319d43.js"></script>
-		<script src="/js/cafeCommon.js"></script>
-		
-		<style>
-			.postTitle:hover{
-				text-decoration: underline;
-			}
-			
-			#layerPopup{
-			  padding:20px; 
-			  border:4px solid #ddd; 
-			  position:absolute; 
-			  left:100px; 
-			  top:100px; 
-			  background:#fff;
-			}
-			
-			#layerPopup button{
-			  cursor:pointer;
-			}
-			
-			.table th, .table td{
-				text-align: center;
-				vertical-align: middle;
-			}
-			
-			.table-hover > tbody > tr.hidden-table:hover > td {
-			     background-color: white;
-			 }
-		</style>
-		
-		<script>
-			var cafeURL = '${search.cafeURL}';
+	#layerPopup button{
+	  cursor:pointer;
+	}
+	
+	.table th, .table td{
+		text-align: center;
+		vertical-align: middle;
+	}
+	
+	.postTitle:hover{
+		cursor:pointer;
+		text-decoration: underline;
+	}
+	
+	.btn[disabled]:hover{
+		background-color: #F3F3F9;
+		color: black;
+	}
+	
+</style>
+
+</head>
+
+<body>
+
+	<!--*******************
+        Preloader start
+    ********************-->
+	<div id="preloader">
+		<div class="loader">
+			<svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none"
+					stroke-width="3" stroke-miterlimit="10"></circle>
+            </svg>
+		</div>
+	</div>
+	<!--*******************
+        Preloader end
+    ********************-->
+
+	<!--**********************************
+        Main wrapper start
+    ***********************************-->
+
+	<div id="main-wrapper">
+
+		<!-- ToolBar Start /////////////////////////////////////-->
+		<jsp:include page="../common/cafeManageTollbar.jsp" />
+		<!-- ToolBar End /////////////////////////////////////-->
+
+
+
+		<!--**********************************
+            Sidebar start
+        ***********************************-->
+		<div class="nk-sidebar">
+			<c:import url="/WEB-INF/views/common/cafeManageMenubar.jsp"></c:import>
+		</div>
+		<!--**********************************
+            Sidebar end
+        ***********************************-->
+
+		<!--**********************************
+            Content body start
+        ***********************************-->
+
+
+		<div class="content-body" style="min-height: 743px;">
+
+			<div class="row page-titles mx-0">
+				<div class="col p-md-0">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="javascript:void(0)">manage</a></li>
+						<li class="breadcrumb-item active"><a
+							href="javascript:void(0)">application</a></li>
+					</ol>
+				</div>
+			</div>
+
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="card">
+							<div class="card-body">
+								<h4 class="card-title">>&nbsp;공지 목록</h4>
+
+								
+
+								<!--  table Start /////////////////////////////////////-->
+								<table class="table table-hover .hidden-table">
+									<thead class="thead-light">
+										<tr>
+											<th scope="col">게시판</th>
+											<th scope="col">제목</th>
+											<th scope="col"></th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach items="${postList }" var="post" varStatus="status">
+											<c:if test="${!status.first and postList[status.index - 1].boardName ne post.boardName}">
+												<tr class="contour"><td colspan="3"><hr/></td></tr>
+											</c:if>
+											
+											<tr class="postItem">
+												<input type="hidden" class="postNo" value="${post.postNo }"/>
+												<td class="boardName">${post.boardName }</td>
+												<td class="postTitle">${post.postTitle }</td>
+												<td>
+													<button name="up"   class="btn btn-outline-dark" style="padding-left:8px; padding-right:8px; padding-top: 5px;"><i class="mdi mdi-chevron-up"></i></button> 
+													<button name="down" class="btn btn-outline-dark" style="padding-left:8px; padding-right:8px; padding-top: 5px;"><i class="mdi mdi-chevron-down"></i></button>
+													<button name="delete" class="btn btn-outline-dark" style="padding:3px; padding-left:5px; padding-right:5px; font-size:20px;"><i class="mdi mdi-delete"></i></button>
+												</td>
+											</tr>
+										</c:forEach>
+										<tr class="hidden-table">
+											<td colspan="3">
+												<button class="btn btn-outline-dark" id="saveNoticeOrder">저장</button>
+												<button class="btn btn-outline-dark" id="cancelNoticeOrder">취소</button>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<!--  table END /////////////////////////////////////-->
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+		<!--  table End /////////////////////////////////////-->
+	</div>
+	
+	<!--**********************************
+        Scripts
+    ***********************************-->
+	<script src="/plugins/common/common.min.js"></script>
+	<script src="/js/custom.min.js"></script>
+	<script src="/js/settings.js"></script>
+	<script src="/js/gleek.js"></script>
+	<script src="/js/styleSwitcher.js"></script>
+
+	<!-- 메뉴바 이용을 위한 스크립트 -->
+	<script src="/js/custom/scroll-top.js"></script>
+	<script src="/js/custom/cafeCommon.js"></script>
+
+
+	<!-- 이 페이지에서 사용하는 스크립트 -->
+	<script src="/plugins/sweetalert/js/sweetalert.min.js"></script>
+	<script>
+			var cafeURL = '${cafeURL}';
+			var deleteNoticeList = "";
 
 			//페이지 초기화
 			$(function(){
-				$("[name=currentPage]").val(${search.currentPage });	
-
 				disabled();
 			});
 			
@@ -67,6 +196,8 @@
 						postList.push({postNo : $(this).find(".postNo").val(), noticeIndex : index});
 					});
 
+					var jsonData = {postList : postList, deleteNoticeList : deleteNoticeList};
+					
 					console.log(postList);
 
 					$.ajax({
@@ -74,7 +205,7 @@
 						contentType: "application/json",
 						url : "/cafe/" + cafeURL + "/json/updateNoticeOrder",
 						dataType : "JSON",
-						data: JSON.stringify(postList),
+						data: JSON.stringify(jsonData),
 						xhr: function() {
 					        var xhr = $.ajaxSettings.xhr();
 					        xhr.upload.onprogress = function(e) {
@@ -83,7 +214,7 @@
 					        return xhr;
 					    },
 						success : function(data) {
-							alert("success!");
+							swal("공지 순서 저장 성공","","success");
 							console.log(data);
 						},
 						error : function(data) {
@@ -95,22 +226,13 @@
 				});
 			});
 
-// 			$(function(){
-// 				var mergeItem;
-// 				var mergeCount;
-// 				$("tr").each(function(row){
-// 					if(row > 0){
-// 						if(mergeItem != null && mergeItem.text() == $(this).find(".boardName").text()){
-// 							console.log("합쳐짐!");
-// 							mergeItem.attr("rowspan", mergeCount += 1);
-// 							$(this).find(".boardName").remove();
-// 						}else{
-// 							mergeItem = $(this).find(".boardName");
-// 							mergeCount = 1;
-// 						}
-// 					}
-// 				});	
-// 			});			
+
+			//취소
+			$(function(){
+				$("#cancelNoticeOrder").on("click", function(){
+					location.reload(); 
+				});	
+			});
 
 			//위로 올림
 			$(function(){
@@ -130,6 +252,20 @@
 						$(this).parent().parent().next().after($(this).parent().parent());
 					}
 
+					disabled();
+				});	
+			});
+
+			//공지 삭제
+			$(function(){
+				$("[name=delete]").on("click", function(){
+					if(deleteNoticeList == ""){
+						deleteNoticeList = $(this).parent().parent().find(".postNo").val();
+					}else{
+						deleteNoticeList = deleteNoticeList + "," + $(this).parent().parent().find(".postNo").val();
+					}
+			
+					$(this).parent().parent().remove();
 					disabled();
 				});	
 			});
@@ -156,60 +292,6 @@
 			}
 
 		</script>
-		<title>${search.cafeURL}</title>
-	</header>
-	
-	<body>
-		<div class="container">
-			<form id="boardPage">
-				<input type="hidden" name="currentPage">
-			</form>
-			<h1>updateNoticeOrder</h1>
-			
-			<div class="row">
-				<div class="col-2">
-					<c:import url="/WEB-INF/views/common/cafeManageMenubar.jsp"></c:import>
-				</div>
-				
-				<div class="col-10">
-					<div id="mainContent">
-					
-						<table class="table table-hover .hidden-table">
-							<thead class="thead-light">
-								<tr>
-									<th scope="col">게시판</th>
-									<th scope="col" colspan="2">제목</th>
-								</tr>
-							</thead>
-							<tbody>
-								<c:forEach items="${postList }" var="post" varStatus="status">
-									<c:if test="${!status.first and postList[status.index - 1].boardName ne post.boardName}">
-										<tr class="contour bg-dark" style="height:3px;"><td colspan="3" style="height:1px;"></td></tr>
-									</c:if>
-									
-									<tr class="postItem">
-										<input type="hidden" class="postNo" value="${post.postNo }"/>
-										<td class="boardName" style="">${post.boardName }</td>
-										<td>
-											<button name="up"   class="btn btn-outline-dark" style="padding-left:8px; padding-right:8px; padding-top: 5px;"><i class="fas fa-long-arrow-alt-up"></i></button> 
-											<button name="down" class="btn btn-outline-dark" style="padding-left:8px; padding-right:8px; padding-top: 5px;"><i class="fas fa-long-arrow-alt-down"></i></button></td>
-										<td class="postTitle">${post.postTitle }</td>
-									</tr>
-								</c:forEach>
-								<tr class="hidden-table">
-									<td colspan="3">
-										<button class="btn btn-outline-dark" id="saveNoticeOrder">저장</button>
-										<button class="btn btn-outline-dark" id="cancelNoticeOrder">취소</button>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-						
-					</div><!-- Main Content End -->
-				</div><!-- col-10 End -->
-				
-			</div><!-- row End -->
-			
-		</div>
-	</body>
+</body>
+
 </html>

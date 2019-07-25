@@ -214,7 +214,7 @@
 
 				console.log(formObj);
 				console.log(typeof(formObj));
-				var obj = { replyContent : $("[name=addReplyContent]").val(), postNo : ${search.postNo} };
+				var obj = { replyContent : $("[name=addReplyContent]").val().replace(/(?:\r\n|\r|\n)/g, '<br />'), postNo : ${search.postNo} };
 
 				$(".replyItems").unbind();
 				$(this).parent().parent().parent().parent(".replyItems").load("/cafe/${cafeURL}/addReply", obj);
@@ -232,7 +232,7 @@
 				formObj = $(this).parent().parent().parent().find("form").serializeArray();
 
 // 				alert($(this).parent().find("[name=reReplyContnet]").val());
-				formObj.push({ name : "replyContent", value : $(this).parent().parent().find("[name=reReplyContent]").val()});
+				formObj.push({ name : "replyContent", value : $(this).parent().parent().find("[name=reReplyContent]").val().replace(/(?:\r\n|\r|\n)/g, '<br />')});
 
 				$("[name=addReReplyButton]").unbind("click");
 				$("[name=addReReplyButton]").click(function(){
