@@ -14,6 +14,7 @@ public class Board {
 	private int bestLikeCount;
 	private char bestTerm;
 	private int bestPostCount;
+	private String accessGradeName; //이예림추가
 	
 	
 	public int getBestLikeCount() {
@@ -141,12 +142,23 @@ public class Board {
 	}
 
 
+	public String getAccessGradeName() {
+		return accessGradeName;
+	}
+
+
+	public void setAccessGradeName(String accessGradeName) {
+		this.accessGradeName = accessGradeName;
+	}
+
+
 	@Override
 	public String toString() {
 		return "Board [boardNo=" + boardNo + ", cafeNo=" + cafeNo + ", cafeURL=" + cafeURL + ", boardName=" + boardName
 				+ ", accessGrade=" + accessGrade + ", boardIndex=" + boardIndex + ", privateFlag=" + privateFlag
 				+ ", boardType=" + boardType + ", boardDetail=" + boardDetail + ", bestLikeCount=" + bestLikeCount
-				+ ", bestTerm=" + bestTerm + ", bestPostCount=" + bestPostCount + "]";
+				+ ", bestTerm=" + bestTerm + ", bestPostCount=" + bestPostCount + ", accessGradeName=" + accessGradeName
+				+ "]";
 	}
-	
+
 }
