@@ -112,6 +112,9 @@ public class CafePostServiceImpl implements CafePostService {
 		}
 		
 		map.put("replyList", cafePostDao.getReplyList(search));
+		if(search.getCurrentPage() == 1) {
+			map.put("bestReplyList", cafePostDao.getBestReplyList(search));
+		}
 		
 		return map;
 	}
@@ -222,5 +225,33 @@ public class CafePostServiceImpl implements CafePostService {
 	@Override
 	public Board getBoardByPostNo(int postNo) {
 		return cafePostDao.getBoardByPostNo(postNo);
+	}
+
+	@Override
+	public Map<String, Object> getMyPostList(Search search) {
+		Map<String, Object>	map = new HashMap<>();
+		
+		int postCurrentPage = 1;
+		int replyCurrentPage = 1;
+		
+		if(search.getStatus() == 0) {
+			postCurrentPage = search.getCurrentPage();
+			replyCurrentPage = 1;
+		}
+		
+		if(search.getStatus() == 1) {
+			postCurrentPage = 1;
+			replyCurrentPage = search.getCurrentPage();
+		}
+		
+		search.setCurrentPage(postCurrentPage);
+		map.put("postList", cafePostDao.getPostListByMember(search));
+		map.put("postTotalCount", cafePostDao.memberPostTotalCount(search));
+		
+		search.setCurrentPage(replyCurrentPage);
+		map.put("replyList", cafePostDao.getReplyListByMember(search));
+		map.put("replyTotalCount", cafePostDao.memberReplyTotalCount(search));
+		
+		return map;
 	}
 }

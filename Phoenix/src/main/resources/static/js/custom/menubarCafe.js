@@ -81,3 +81,15 @@
 	    		});
 	    		
 	    	});
+	    	
+	    	$(function(){ //내글
+	    		$(".myPost").on("click",function(){
+	    			location.href = "/cafe/" + cafeURL + "/getMyPostList";
+	    		});
+	    	});
+	    	
+	    	$(function(){ //내글
+	    		$(".myReply").on("click",function(){
+	    			location.href = "/cafe/" + cafeURL + "/getMyPostList";
+	    		});
+	    	});

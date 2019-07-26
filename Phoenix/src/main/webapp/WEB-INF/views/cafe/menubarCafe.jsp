@@ -46,13 +46,12 @@
 	                                    	<h6 style="float: right; margin-right: 10px;">멤버등급안내</h6>
 	                                    </li>
 	                                    <c:if test="${!empty cafeMember && cafeMember.userNo == cafe.manageUserNo}">
-	                                    	<br/>
-	                                    	<li class="mb-1"><strong class="text-dark mr-4 manage cursor" style="margin-left: 10px;"><i class="icon-settings"></i>카페설정</strong></li>
+	                                    	<li class="mb-1"><strong class="text-dark mr-4 manage cursor" style="margin-left: 10px;"><i class="icon-settings"></i>&nbsp;카페설정</strong></li>
 	                                    </c:if>
 	                                    
 	                                </ul>
 	                                <c:if test="${empty cafeMember}">
-										<div class="media align-items-center mb-4" style= "margin:auto;">
+										<div class="media align-items-center mb-4" style= "margin:auto; text-align: center;">
 											<button class="btn mb-1 btn-rounded btn-outline-dark addMember">카페가입</button>
 										</div>
 									</c:if>
@@ -78,12 +77,6 @@
 	                                    		프로필수정
 	                                    	</button>
 	                                    </li>
-	                                    
-										<c:if test="${cafeMember.memberGrade eq 'cg100' }">
-											<li style="text-align: center;">
-												<button class="btn mb-1 btn-rounded btn-outline-dark" name="toManage">내 카페 관리</button>
-											</li>
-										</c:if> 
 										
 	                                </ul>
                                 </c:if>
