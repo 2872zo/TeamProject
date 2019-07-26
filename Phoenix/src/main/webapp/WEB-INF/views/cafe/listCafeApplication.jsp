@@ -15,6 +15,9 @@
 <link href="/css/style.css" rel="stylesheet">
 <link rel="stylesheet" href="/css/custom/scroll-top.css">
 
+<stlye>
+
+</stlye>
 
 </head>
 
@@ -97,29 +100,22 @@
 										</div>
 										&nbsp;&nbsp;
 										<div class="form-group">
-											<label class="sr-only" for="searchKeyword">검색어</label> <input
-												type="text" class="form-control" id="searchKeyword"
-												name="searchKeyword" placeholder="검색어">
+											<label class="sr-only" for="searchKeyword">검색어</label> 
+												<input type="text" class="form-control" id="searchKeyword"name="searchKeyword" placeholder="검색어">
 										</div>
 										&nbsp;&nbsp;
-										<button type="button" id="search"
-											class="btn btn-outline-success">검색</button>
-										<input type="hidden" id="currentPage" name="currentPage"
-											value="" /> &nbsp;&nbsp; 필터: &nbsp;&nbsp;
-										<button type="button" value="100" id="ing"
-											class="btn mb-1 btn-outline-warning btn-xs">처리중</button>
+										<button type="button" id="search"class="btn btn-outline-success">검색</button>
+										<input type="hidden" id="currentPage" name="currentPage"value="" /> &nbsp;&nbsp; 필터: &nbsp;&nbsp;
+										<button type="button" value="100" id="ing"class="btn mb-1 btn-outline-warning btn-xs">처리중</button>
 										&nbsp;&nbsp;&nbsp;
-										<button type="button" value="101" id="end"
-											class="btn mb-1 btn-outline-warning btn-xs">처리완료</button>
+										<button type="button" value="101" id="end"class="btn mb-1 btn-outline-warning btn-xs">처리완료</button>
 
 									</form>
 								</div>
 								<br> &nbsp;&nbsp;&nbsp;
-								<button type="button" id="accept"
-									class="btn btn-outline-secondary">가입승인</button>
+								<button type="button" id="accept"class="btn btn-outline-secondary">가입승인</button>
 								&nbsp;&nbsp;&nbsp;
-								<button type="button" id="reject"
-									class="btn btn-outline-secondary">가입거절</button>
+								<button type="button" id="reject"class="btn btn-outline-secondary">가입거절</button>
 
 
 								<br> <br>
@@ -147,9 +143,14 @@
 
 										<c:set var="i" value="0" />
 										<c:forEach var="cafeApplication" items="${list}">
-
+										
 											<tr>
-												<td><input type="checkbox" class="applicationCheck"></td>
+											<c:if test="${cafeApplication.acceptStatusCode eq 'ca100' }">
+												<td><input type="checkbox" name ="each" class="applicationCheck" ></td>
+											</c:if>	
+											<c:if test="${cafeApplication.acceptStatusCode ne 'ca100' }">
+												<td><!--  <input type="checkbox"  class="applicationCheck" disabled="disabled">--></td>
+											</c:if>	
 												<td align="left" class="applicationNo"value="${cafeApplication.applicationNo}">${cafeApplication.applicationNo}</td>
 												<td align="left">${cafeApplication.userId}</td>
 												<td align="left" class="nickname"value="${cafeApplication.memberNickname}">${cafeApplication.memberNickname}</td>
@@ -161,6 +162,7 @@
 												<c:if test="${cafeApplication.acceptStatusCode eq 'ca103' }">자동가입</c:if>
 													<input type="hidden" class="userNo"value="${cafeApplication.userNo}" /> 
 													<input type="hidden"class="cafeNo" value="${cafeApplication.cafeNo}" /></td>
+											
 											</tr>
 										</c:forEach>
 
@@ -250,21 +252,19 @@
 						//클릭되었으면
 						if ($("#allCheck").not(":disabled").prop("checked")) {
 							//input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
-							$(".applicationCheck").not(":disabled").prop(
-									"checked", true);
+							$(".applicationCheck").not(":disabled").prop("checked", true);
 							//클릭이 안되있으면
 						} else {
 							//input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
-							$(".applicationCheck").not(":disabled").prop(
-									"checked", false);
+							$(".applicationCheck").not(":disabled").prop("checked", false);
 						}
 					});
 			$("#accept").on("click",function() {//승인
 						var application = "";
 
-						$("input[type=checkbox]:checked").each(
+						$("input[type=checkbox]:checked").not("input[type=checkbox]:first").each(
 								function() {
-									//alert($(".applicationCheck").index(this));
+									alert($(".applicationCheck").index(this));
 									var count = $(".applicationCheck").index(
 											this);
 									application += $($(".nickname")[count])
@@ -279,7 +279,7 @@
 									application += ",";
 
 								});
-						//alert(application);
+						alert(application);
 						var cafeURL = '${search.cafeURL}'
 						$("#boardName").val(application);
 						$("#checkBox").attr("method", "POST").attr(
@@ -294,7 +294,7 @@
 					"click",
 					function() {//거절
 						var reject = '';
-						$("input[type=checkbox]:checked").each(function() {
+						$("input[type=checkbox]:checked").not("input[type=checkbox]:first").each(function() {
 							var count = $(".applicationCheck").index(this);
 							reject += $($(".applicationNo")[count]).text();
 							reject += ",";

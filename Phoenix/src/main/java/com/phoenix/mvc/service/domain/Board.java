@@ -12,8 +12,10 @@ public class Board {
 	private String boardType;
 	private String boardDetail;
 	private int bestLikeCount;
-	private char bestTerm;
+	//private char bestTerm; 
+	private int bestTerm; //이예림 수정
 	private int bestPostCount;
+	private String memberGradeCode; //이예림추가
 	
 	
 	public int getBestLikeCount() {
@@ -26,12 +28,12 @@ public class Board {
 	}
 
 
-	public char getBestTerm() {
+	public int getBestTerm() {
 		return bestTerm;
 	}
 
 
-	public void setBestTerm(char bestTerm) {
+	public void setBestTerm(int bestTerm) {
 		this.bestTerm = bestTerm;
 	}
 
@@ -141,12 +143,26 @@ public class Board {
 	}
 
 
+	public String getMemberGradeCode() {
+		return memberGradeCode;
+	}
+
+
+	public void setMemberGradeCode(String memberGradeCode) {
+		this.memberGradeCode = memberGradeCode;
+	}
+
+
 	@Override
 	public String toString() {
 		return "Board [boardNo=" + boardNo + ", cafeNo=" + cafeNo + ", cafeURL=" + cafeURL + ", boardName=" + boardName
 				+ ", accessGrade=" + accessGrade + ", boardIndex=" + boardIndex + ", privateFlag=" + privateFlag
 				+ ", boardType=" + boardType + ", boardDetail=" + boardDetail + ", bestLikeCount=" + bestLikeCount
-				+ ", bestTerm=" + bestTerm + ", bestPostCount=" + bestPostCount + "]";
+				+ ", bestTerm=" + bestTerm + ", bestPostCount=" + bestPostCount + ", memberGradeCode=" + memberGradeCode
+				+ "]";
 	}
+
+
 	
+
 }
