@@ -13,7 +13,6 @@
 <link rel="icon" type="image/png" sizes="16x16"
 	href="/images/favicon.png">
 <!-- Custom Stylesheet -->
-<link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
 <link href="/css/style.css" rel="stylesheet">
 
 <link rel="stylesheet" href="/css/custom/scroll-top.css">

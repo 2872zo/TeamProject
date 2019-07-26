@@ -12,16 +12,19 @@
 		<result property="targetUserNo" 	column="target_user_no" 	jdbcType="NUMERIC" />
 		<result property="friendNickname" 	column="friend_nickname" 	jdbcType="VARCHAR" />
 		<result property="userNickname" 	column="user_nickname" 		jdbcType="VARCHAR" />
+		<result property="userImg" 			column="profile_img" 		jdbcType="VARCHAR" />
 		<result property="friendStatus" 	column="friend_status" 		jdbcType="VARCHAR" />
 	</resultMap>
 	
 	<select id="getMyFriendList" parameterType="Search" resultMap="chatFriendSelectMap">
 		SELECT
-		cf.chat_friends_no, cf.friend_nickname, cf.target_user_no, cf.friend_status, u.user_nickname
+			cf.chat_friends_no, cf.friend_nickname, 
+			cf.target_user_no, cf.friend_status, 
+			u.user_nickname, u.profile_img
 		FROM
-		chat_friends cf, users u
+			chat_friends cf, users u
 		WHERE
-		cf.target_user_no = u.user_no
+			cf.target_user_no = u.user_no
 		AND cf.friend_status = #{status}
 		AND cf.user_no = #{userNo}
 	</select>
@@ -78,7 +81,7 @@
 	</select>
 	
 	<insert id="addFriend" parameterType="ChatFriend">
-	<selectKey keyProperty="chatFriendNo" resultType="int" order="BEFORE">
+		<selectKey keyProperty="chatFriendNo" resultType="int" order="BEFORE">
 	 		SELECT seq_chat_friends_no.NEXTVAL FROM DUAL
 	 	</selectKey>
 	INSERT INTO 
@@ -90,7 +93,7 @@
 	
 	<delete id="deleteFriend" parameterType="ChatFriend">
 	DELETE FROM 
-	chat_friends 
+		chat_friends 
 	WHERE 
 		chat_friend_no = #{chatFriendNo}
 	</delete>

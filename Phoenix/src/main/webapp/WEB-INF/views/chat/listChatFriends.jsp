@@ -12,10 +12,13 @@
 <link rel="icon" type="image/png" sizes="16x16"
 	href="/images/favicon.png">
 <!-- Custom Stylesheet -->
-<link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
 <link href="/css/style.css" rel="stylesheet">
 
 <link rel="stylesheet" href="/css/custom/scroll-top.css">
+
+<!-- 토스터 css -->
+<link rel="stylesheet" href="/plugins/toastr/css/toastr.min.css">
+<!-- 토스터 css -->
 
 
 <!--  ///////////////////////// CSS ////////////////////////// -->
@@ -71,9 +74,9 @@ img {
 		<!--**********************************
             Content body start
         ***********************************-->
+	<input type='hidden' name='positionIndex' id='positionIndex' value='${search.positionIndex}'>
 
-
-		<div class="content-body" style="min-height: 600px;">
+		<div class="content-body" style="min-height: 400px;">
 			<div class="row">
 				<div class="col-lg-8">
 					<div class='container-fluid'>
@@ -83,18 +86,21 @@ img {
 								<!-- 상단 친구 종류 선택 버튼 메뉴 -->
 								<div class="d-flex justify-content-around">
 
-									<i class="mdi mdi-account-multiple-outline" style='font-size: 30pt;'>
+									<i class="chatButtons mdi mdi-account-multiple-outline" id='chatFriendsListing'style='font-size: 30pt;'>
 									</i>
-									<i class="mdi mdi-account-check" id='wannaBeFriend' style='font-size: 30pt;'>
+									<i class="chatButtons mdi mdi-account-check" id='wannaBeFriend' style='font-size: 30pt;'>
 									</i>
-									<i class="mdi mdi-account-search" style='font-size: 30pt;'>
+									<i class="chatButtons mdi mdi-account-search" id='friendSearching' style='font-size: 30pt;'>
 									</i>
-									 <i class="mdi mdi-sleep-off" style='font-size: 30pt;'>
-									 </i>
+									<i class="chatButtons mdi mdi-sleep-off" style='font-size: 30pt;'>
+									</i>
 
 								</div>
 
 								<!-- 상단 친구 종류 선택 버튼 메뉴 -->
+								
+								<!-- 친구검색창임 -->
+								<c:if test="${search.positionIndex==2}">
 								<form>
 
 									<div class='d-flex justify-content-center'>
@@ -111,6 +117,9 @@ img {
 										</div>
 									</div>
 								</form>
+								</c:if>
+								<!-- 친구검색창임 -->
+								
 								<!-- 기본 친구목록화면 시작 -->
 								<c:if test="${!empty friendsList}">
 									<c:forEach items='${friendsList}' var='chatFriend'>
@@ -119,14 +128,17 @@ img {
 											<div class="card-body">
 												<div class='row'>
 													<div class='col-lg-4'>
-														<img alt="" src="/images/avatar/1.jpg"
-															class='rounded img-fluid' alt="Responsive image">
+														<img alt="" src="/images/uploadfiles/profileimg/${chatFriend.userImg}"
+															class='rounded img-fluid' alt="Responsive image" style='width: inherit;'>
 													</div>
-													<div class='col-lg-8'>
+													<div class='col-lg-7'>
 														<h5 class="card-title">${chatFriend.chatFriendNo}</h5>
 														<p class="card-text">기존친구임 With supporting text below
 															as a natural lead-in to additional content.</p>
 														<a href="#" class="btn btn-primary">${chatFriend.userNickname}</a>
+													</div>
+													<div class='col-lg-1'>
+													<i class="mdi mdi-account-minus friendAlready" name='${chatFriend.chatFriendNo}' style='font-size: 25pt;'></i>
 													</div>
 												</div>
 											</div>
@@ -146,11 +158,11 @@ img {
 
 									<c:forEach items='${wannaBeFreindList}' var='chatFriend'>
 
-										<div class="card friends">
+										<div class="card friends" name='${chatFriend.userNo}'>
 											<div class="card-body">
 												<div class='row'>
-													<div class='col-lg-4'>
-														<img alt="" src="/images/avatar/1.jpg"
+													<div class='col-lg-3'>
+														<img alt="" src="/images/uploadfiles/profileimg/${chatFriend.userImg}"
 															class='rounded img-fluid' alt="Responsive image">
 													</div>
 													<div class='col-lg-8'>
@@ -158,6 +170,9 @@ img {
 														<p class="card-text">With supporting text below as a
 															natural lead-in to additional content.</p>
 														<a href="#" class="btn btn-primary">${chatFriend.userNo}</a>
+													</div>
+													<div class='col-lg-1'>
+													<i class="mdi mdi-account-plus friendYet" name='${chatFriend.userNo}' style='font-size: 25pt;'></i>
 													</div>
 												</div>
 											</div>
@@ -174,18 +189,21 @@ img {
 
 									<c:forEach items='${searchList}' var='chatFriend'>
 
-										<div class="card friends">
+										<div class="card friends" name='${chatFriend.userNo}'>
 											<div class="card-body">
 												<div class='row'>
 													<div class='col-lg-4'>
-														<img alt="" src="/images/avatar/1.jpg"
+														<img alt="" src="/images/uploadfiles/profileimg/${chatFriend.userImg}"
 															class='rounded img-fluid' alt="Responsive image">
 													</div>
-													<div class='col-lg-8'>
+													<div class='col-lg-7'>
 														<h5 class="card-title">${chatFriend.userNickname}</h5>
 														<p class="card-text">With supporting text below as a
 															natural lead-in to additional content.</p>
 														<a href="#" class="btn btn-primary">${chatFriend.userNo}</a>
+													</div>
+													<div class='col-lg-1'>
+													<i class="mdi mdi-account-plus friendYet" name='${chatFriend.userNo}' style='font-size: 25pt;'></i>
 													</div>
 												</div>
 											</div>
@@ -225,8 +243,6 @@ img {
 			<!-- row 엔드 -->
 
 
-
-
 		</div>
 		<!--**********************************
             Content body end
@@ -263,6 +279,8 @@ img {
 	<!-- 메뉴바 이용을 위한 스크립트 -->
 	<script src="/js/custom/scroll-top.js"></script>
 
+	<!-- 토스트기 -->
+	<script src="/plugins/toastr/js/toastr.min.js"></script>
 
 	<!--**********************************
         Scripts
@@ -273,12 +291,33 @@ img {
 
 //툴바 스크립트용 세션체커
 var checkSessionUser = ${empty sessionScope.user};
-		
+
+	//alert($("#positionIndex").val());
+	var tempNumber = $("#positionIndex").val();
+	//alert(tempNumber);
+	//alert($($(".chatButtons")[tempNumber]).attr("style"));
+	var beforeStyle=$($(".chatButtons")[tempNumber]).attr("style");
+	$($(".chatButtons")[tempNumber]).attr("style", beforeStyle+" color : #f5a142;")
 	
 		
 	$(function() {
-		var checkSessionUser = ${empty sessionScope.user};
 
+		$("#chatFriendsListing").on("click", function() {
+			//alert("친구찾아라");
+			$(self.location).attr("href", "/chat/chatFriendsList");
+			});
+		
+		$("#wannaBeFriend").on("click", function() {
+			//alert("친구가 되줘요");
+			$("form").attr("method", "POST").attr("action",
+			"/chat/wannaBeFriend").submit();
+			});
+
+		$("#friendSearching").on("click", function() {
+			//alert("친구찾아라");
+			$(self.location).attr("href", "/chat/searchChatFriend");
+			});
+		
 		$("#searchKeyword").focus(function() {
 			$(this).attr("style", "border: 2px solid #f5a142");
 		});
@@ -288,16 +327,73 @@ var checkSessionUser = ${empty sessionScope.user};
 		});
 		
 		$("#explore").on("click", function() {
-		var keyword = $("#searchKeyword").val()
-		$("form").attr("method", "POST").attr("action",
-		"/chat/searchChatFriend").submit();
-		});
-		
-		$("#wannaBeFriend").on("click", function() {
-			alert("친구가 되줘요");
+			var keyword = $("#searchKeyword").val()
 			$("form").attr("method", "POST").attr("action",
-			"/chat/wannaBeFriend").submit();
+			"/chat/searchChatFriend").submit();
+		});
+
+		$(".friendYet").on("click", function() {
+			//alert($(this).attr("name"));
+			var targetUser = $(this).attr("name");
+			//var targetTag = $(this);
+			//var checker = $(this).hasClass("true");
+			//var reChecker = !checker;
+			//alert(reChecker);
+			var jsoned = 	{
+							targetUserNo : targetUser,
+							friendStatus : 0
+							};
+			jsoned = JSON.stringify(jsoned);
+			
+			$.ajax({
+				type : "POST",
+				url : "/chat/json/addChatFriend",
+				data : jsoned,
+				contentType : "application/json", //보내는 컨텐츠의 타입
+				//dataType : "json",      //받아올 데이터의 타입 필요없음
+				success : function(serverData, status) {
+					
+									if(serverData == -1){
+													alert("에러나서 등록안됨")
+									}
+									
+									else{
+							
+											toastr.success(
+														"친구목록에서 확인 가능합니다.",
+														"친구목록에 추가 되었습니다.",
+														{positionClass:"toast-bottom-right",
+														timeOut:3e3,closeButton:!0,debug:!1,
+														newestOnTop:!0,
+														progressBar:!0,
+														preventDuplicates:!1,
+														onclick:null,
+														showDuration:"300",hideDuration:"1000",
+														extendedTimeOut:"1000",
+														showEasing:"swing",hideEasing:"linear",
+														showMethod:"fadeIn",
+														hideMethod:"fadeOut",
+														tapToDismiss:!1}
+														);
+							
+											}
+									/**/
+				},
+									
+				
+				error : function(request, status, error) {
+					alert("에러남 : " + error);
+				}
 			});
+
+
+
+
+
+
+			
+
+		});
 
 	});
 </script>

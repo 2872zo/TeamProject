@@ -8,6 +8,7 @@ public class ChatFriend {
 	private int userNo;
 	private int targetUserNo;
 	private String userNickname;
+	private String userImg;
 	private String friendNickname;
 	private String friendStatus;
 	
@@ -45,6 +46,14 @@ public class ChatFriend {
 		this.userNickname = userNickname;
 	}
 
+	public String getUserImg() {
+		return userImg;
+	}
+
+	public void setUserImg(String userImg) {
+		this.userImg = userImg;
+	}
+
 	public String getFriendNickname() {
 		return friendNickname;
 	}
@@ -71,9 +80,9 @@ public class ChatFriend {
 
 	@Override
 	public String toString() {
-		return "ChatFriend [chatFriendNo=" + chatFriendNo + ", userNo=" + userNo + ", targetUserNo="
-				+ targetUserNo + ", friendNickname=" + friendNickname + ", friendStatus=" + friendStatus
-				+ ", chatFriendsList=" + chatFriendsList + "]";
+		return "ChatFriend [chatFriendNo=" + chatFriendNo + ", userNo=" + userNo + ", targetUserNo=" + targetUserNo
+				+ ", userNickname=" + userNickname + ", userImg=" + userImg + ", friendNickname=" + friendNickname
+				+ ", friendStatus=" + friendStatus + ", chatFriendsList=" + chatFriendsList + "]";
 	}
 	
 }

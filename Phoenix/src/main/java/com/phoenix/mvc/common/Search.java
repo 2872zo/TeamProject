@@ -33,6 +33,8 @@ public class Search{
 	private int chatRoomNo;
 	private int friendStatus;
 	
+	private int positionIndex;
+	
 	//---------------------------explore 추가
 	private boolean engineAll;
 	private boolean engineNaver;
@@ -248,6 +250,14 @@ public class Search{
 		this.friendStatus = friendStatus;
 	}
 
+	public int getPositionIndex() {
+		return positionIndex;
+	}
+
+	public void setPositionIndex(int positionIndex) {
+		this.positionIndex = positionIndex;
+	}
+
 	public boolean isEngineAll() {
 		return engineAll;
 	}
@@ -337,12 +347,11 @@ public class Search{
 				+ ", currentPage=" + currentPage + ", pageSize=" + pageSize + ", endRowNum=" + endRowNum
 				+ ", startRowNum=" + startRowNum + ", termStart=" + termStart + ", termEnd=" + termEnd
 				+ ", targetUserNo=" + targetUserNo + ", chatNo=" + chatNo + ", chatRoomNo=" + chatRoomNo
-				+ ", friendStatus=" + friendStatus + ", engineAll=" + engineAll + ", engineNaver=" + engineNaver
-				+ ", engineDaum=" + engineDaum + ", engineGoogle=" + engineGoogle + ", enginePhoenix=" + enginePhoenix
-				+ ", orderState=" + orderState + ", orderStateSort=" + orderStateSort + ", searchTheme=" + searchTheme
-				+ ", searchThemeSort=" + searchThemeSort + ", filter=" + filter + ", searchEngine=" + searchEngine
-				+ "]";
+				+ ", friendStatus=" + friendStatus + ", positionIndex=" + positionIndex + ", engineAll=" + engineAll
+				+ ", engineNaver=" + engineNaver + ", engineDaum=" + engineDaum + ", engineGoogle=" + engineGoogle
+				+ ", enginePhoenix=" + enginePhoenix + ", orderState=" + orderState + ", orderStateSort="
+				+ orderStateSort + ", searchTheme=" + searchTheme + ", searchThemeSort=" + searchThemeSort + ", filter="
+				+ filter + ", searchEngine=" + searchEngine + "]";
 	}
 
-	
 }//end of class

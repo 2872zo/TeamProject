@@ -13,7 +13,6 @@
 <link rel="icon" type="image/png" sizes="16x16"
 	href="/images/favicon.png">
 <!-- Custom Stylesheet -->
-<link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
 <link href="/css/style.css" rel="stylesheet">
 
 <link rel="stylesheet" href="/css/custom/scroll-top.css">
@@ -50,14 +49,7 @@
 			<div class="card-body">
 				<h5 class="card-title">${post.postTitle}</h5>
 				<p class="card-text">
-				<c:set var="modifiedContent" value='${fn:replace(post.postContent,"<img alt=","")}'/>
-				
-				<c:if test="${fn:length(modifiedContent)>53}">
-				${fn:substring(modifiedContent,0,50)}...
-				</c:if>
-				<c:if test="${fn:length(modifiedContent)<54}">
-				${modifiedContent}
-				</c:if>
+			
 				</p>
 				
 				</div>
