@@ -76,8 +76,20 @@
 	    	$(function(){ //카페등급확인
 	    		$(".getCafeGrade").on("click",function(){
 	    			//alert("등급확인이여!");
-	    			window.open("/cafe/" + cafeURL + "/updateCafeGradeView?modal='modal'","width=600,height=700");
+	    			window.open("/cafe/" + cafeURL + "/getCafeGrade", 'width=100,height=100' ,"location=no");
 
 	    		});
 	    		
+	    	});
+	    	
+	    	$(function(){ //내글
+	    		$(".myPost").on("click",function(){
+	    			location.href = "/cafe/" + cafeURL + "/getMyPostList";
+	    		});
+	    	});
+	    	
+	    	$(function(){ //내글
+	    		$(".myReply").on("click",function(){
+	    			location.href = "/cafe/" + cafeURL + "/getMyPostList";
+	    		});
 	    	});

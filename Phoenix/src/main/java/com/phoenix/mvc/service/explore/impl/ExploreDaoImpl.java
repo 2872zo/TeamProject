@@ -5,7 +5,10 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -67,7 +70,7 @@ public class ExploreDaoImpl implements ExploreDao{
 				Blog blog = new Blog();
 				//blog 값set하고
 				blog.setBlogName(item.get("blogname").toString());
-				blog.setDateTime(item.get("datetime").toString());
+				blog.setDateTime(item.get("datetime").toString().split("T")[0]);
 				blog.setThumbnail(item.get("thumbnail").toString());
 				blog.setContents(item.get("contents").toString());
 				blog.setTitle(item.get("title").toString());
@@ -81,7 +84,7 @@ public class ExploreDaoImpl implements ExploreDao{
 	}
 
 	@Override
-	public List<Blog> getNaverBlogExploreList(Search search) {
+	public List<Blog> getNaverBlogExploreList(Search search) throws Exception {
 		
 		//search 설정 
 		//1.정렬기준 설정 
@@ -110,7 +113,7 @@ public class ExploreDaoImpl implements ExploreDao{
 				Blog blog = new Blog();
 				//blog 값set하고
 				blog.setBlogName(item.get("bloggername").toString());//0
-				blog.setDateTime(item.get("postdate").toString());//0
+				blog.setDateTime(this.dateFormatting(item.get("postdate").toString()));//0
 				blog.setContents(item.get("description").toString());//0
 				blog.setTitle(item.get("title").toString());//0
 				blog.setResultLink(item.get("link").toString());//0
@@ -499,5 +502,14 @@ public class ExploreDaoImpl implements ExploreDao{
 		return jsonResult;
 		
 	}//end Method
+	
+	public String dateFormatting(String naverDate) throws Exception
+	{
+		Date date = new SimpleDateFormat("yyyyMMdd").parse(naverDate);
+		
+		String formattedDate = new SimpleDateFormat("yyyy-MM-dd").format(date);
+		
+		return formattedDate;
+	}
 
 }

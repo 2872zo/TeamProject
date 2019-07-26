@@ -46,7 +46,7 @@ public class ExploreContoller {
 	}
 	
 	@RequestMapping("getBlogList")
-	public String getBlogExploreList(@ModelAttribute Search search, Model model)
+	public String getBlogExploreList(@ModelAttribute Search search, Model model) throws Exception
 	{
 		System.out.println("/explore/getBlogExploreList 실행");
 		
@@ -78,7 +78,7 @@ public class ExploreContoller {
 	}
 	
 	@RequestMapping("getCafeList")
-	public String getCafeExploreList(@ModelAttribute Search search, Model model)
+	public String getCafeExploreList(@ModelAttribute Search search, Model model) throws Exception
 	{
 		System.out.println("/explore/getCafeExploreList 실행");
 		
@@ -106,7 +106,7 @@ public class ExploreContoller {
 	}
 	
 	@RequestMapping("getWebsiteList")
-	public String getWebsiteExploreList(@ModelAttribute Search search, Model model)
+	public String getWebsiteExploreList(@ModelAttribute Search search, Model model) throws Exception
 	{
 		System.out.println("/explore/getWebsiteList 실행");
 		
@@ -134,7 +134,7 @@ public class ExploreContoller {
 	}
 	
 	@RequestMapping("getImageList")
-	public String getImageExploreList(@ModelAttribute Search search, Model model)
+	public String getImageExploreList(@ModelAttribute Search search, Model model) throws Exception
 	{
 		System.out.println("/explore/getImageList");
 		

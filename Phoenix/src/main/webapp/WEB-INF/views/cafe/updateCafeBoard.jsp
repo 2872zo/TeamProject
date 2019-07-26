@@ -12,10 +12,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Quixlab - Bootstrap Admin Dashboard Template by Themefisher.com</title>
+   
     
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="images/quixlab/favicon.png">
+   
     <!-- Custom Stylesheet -->
     
  
@@ -128,12 +128,15 @@
 						+"</select> 개의 추천게시글을 게시글 상단에 고정</div><br/><div class='form-inline'>"
 						+"추천 개수<select class='form-control' name='bestLikeCount'>"
 						+"<c:forEach var='i' begin='5' end='100' step='1'>"
-						+"<option value='${i}/new"+count+"'>${i}</option></c:forEach></select>개 이상"
+						+"<option value='${i}/new"+count+"'>${i}</option></c:forEach></select>개 이상, "
 						+"<select class='form-control' name='bestTerm'>"
-						+"<option value='0/new"+count+"'>당일</option>"
-						+"<option value='1/new"+count+"'>7일</option>"
-						+"<option value='2/new"+count+"'>10일</option>"
-						+"<option value='3/new"+count+"'>전체</option></select> 게시물 기준</div>"
+						+"<option value='1/new"+count+"'}>당일</option>"
+						+"<option value='3/new"+count+"'}>3일</option>"
+						+"<option value='7/new"+count+"'}>7일</option>"
+						+"<option value='30/new"+count+"'}>한달</option>"
+						+"<option value='180/new"+count+"'}>6개월</option>"
+						+"<option value='365/new"+count+"'}>1년</option>"
+						+"</select> 게시물 기준</div>"
 						//$(".boardDetail").hide();
 				}
 				else{
@@ -473,14 +476,16 @@
 																<c:forEach var="i" begin="5" end="100" step="1">
 																	<option value="${i}/${board.boardNo}" ${board.bestLikeCount==i? "selected" : ""}>${i}</option>
 																</c:forEach>
-															</select>개 이상
+															</select>개 이상, &nbsp;
 															
 															
 															<select class="form-control" name="bestTerm">
-																<option value="0/${board.boardNo}" ${board.bestTerm eq '0'.charAt(0) ? "selected" : ""}>당일</option>
-																<option value="1/${board.boardNo}" ${board.bestTerm eq '1'.charAt(0)? "selected" : ""}>7일</option>
-																<option value="2/${board.boardNo}" ${board.bestTerm eq '2'.charAt(0) ? "selected" : ""}>10일</option>
-																<option value="3/${board.boardNo}" ${board.bestTerm eq '3'.charAt(0) ? "selected" : ""}>전체</option>
+																<option value="1/${board.boardNo}" ${board.bestTerm==1 ? "selected" : ""}>당일</option>
+																<option value="3/${board.boardNo}" ${board.bestTerm==3 ? "selected" : ""}>3일</option>
+																<option value="7/${board.boardNo}" ${board.bestTerm==7 ? "selected" : ""}>7일</option>
+																<option value="30/${board.boardNo}" ${board.bestTerm==30 ? "selected" : ""}>한달</option>
+																<option value="180/${board.boardNo}" ${board.bestTerm==180 ? "selected" : ""}>6개월</option>
+																<option value="365/${board.boardNo}" ${board.bestTerm==365 ? "selected" : ""}>1년</option>
 															</select> 게시물 기준
 															
 														</div>

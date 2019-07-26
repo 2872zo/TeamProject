@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.phoenix.mvc.service.cafe.CafeManageService;
 import com.phoenix.mvc.service.cafe.CafeMemberService;
 import com.phoenix.mvc.service.cafe.CafeTabService;
+import com.phoenix.mvc.service.domain.Cafe;
 import com.phoenix.mvc.service.domain.User;
 
 @Controller
@@ -59,14 +60,21 @@ public class CafeContoller {
 	
 	///////////////////////////////예림시작///////////////////////////////////
 	@RequestMapping("/{cafeURL}/getCafeGrade")
-	public String getCafeGrade(@PathVariable String cafeURL, Model model)
+	public String getCafeGrade(@PathVariable String cafeURL, Model model, HttpSession session) throws Exception
 	{
 		System.out.println("/{cafeURL}/manage/updateCafeGradeView : GET");
 
-		int cafeNo = cafeMemberService.getCafeNo(cafeURL);
-
-		List cafeGrade = cafeManageService.checkCafeGrade(cafeNo);
-
+		//int cafeNo = cafeMemberService.getCafeNo(cafeURL);
+		List cafeGrade = cafeManageService.getCafeGrade(cafeURL) ;
+		
+		if(session.getAttribute("user")!=null)
+		{
+			User user = (User) session.getAttribute("user");
+			Map map = cafeTabService.getCafeMain(user, cafeURL); //getCafemember랑 비교 해서 cafeMember정보 심으세여
+			model.addAttribute("cafe",map.get("cafe"));
+			model.addAttribute("cafeMember", map.get("cafeMember"));// 내정보
+		}
+		
 		model.addAttribute("cafeGradeList", cafeGrade);
 		model.addAttribute("cafeURL", cafeURL);
 		
