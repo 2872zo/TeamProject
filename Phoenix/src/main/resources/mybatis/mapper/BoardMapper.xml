@@ -20,6 +20,7 @@
 		<result property="bestLikeCount" 	column="best_like_count" 				jdbcType="NUMERIC"  />
 		<result property="bestTerm" 		column="best_term" 						jdbcType="CHAR"  />
 		<result property="bestPostCount" 	column="best_post_count" 				jdbcType="NUMERIC"  />
+		<result property="accessGradeName"  column="grade_name"					jdbcType="VARCHAR"/>
 	</resultMap>
 	
 	<resultMap id="postSelectMap" type="com.phoenix.mvc.service.domain.Post">
@@ -65,19 +66,23 @@
 
 	<select  id="getBoardList"   parameterType="int"  resultMap="boardSelectMap">
 		SELECT *
-		FROM board
-		WHERE cafe_no = #{value}
-		ORDER BY board_index
+		FROM board b, cafe_member_grade g
+		WHERE b.cafe_no = #{value}
+		AND b.cafe_no = g.cafe_no
+		AND g.cafe_member_grade_no = b.access_grade
+		ORDER BY b.board_index
 	</select>
 	
 	<select  id="getBoardListBySearch"   parameterType="search"  resultMap="boardSelectMap">
 		SELECT *
-		FROM board
+		FROM board b, cafe_member_grade g
 		WHERE cafe_url = #{cafeURL}
+		AND b.cafe_no = g.cafe_no
+		AND g.cafe_member_grade_no = b.access_grade
 		<if test="searchCondition==1">
-			AND board_type !='cb102'
+			AND b.board_type !='cb102'
 		</if>
-		ORDER BY board_index
+		ORDER BY b.board_index
 	</select>
 	
 	
@@ -203,18 +208,22 @@
 			SELECT
 				*
 			FROM 
-				board
+				board b, cafe_member_grade g
 			WHERE
 				board_no = #{value}
+				AND b.cafe_no = g.cafe_no
+				AND b.access_grade = g.cafe_member_grade_no
 		</select>
 		
 		<select id="getBoardByPostNo" parameterType="int" resultMap="boardSelectMap">
 			SELECT
-				b.*
+				b.*, g.grade_name
 			FROM 
-				board b, post p
+				board b, post p, cafe_member_grade g
 			WHERE
 				b.board_no = p.board_no
+				AND b.cafe_no = g.cafe_no
+				AND b.access_grade = g.cafe_member_grade_no
 				AND post_no = #{value}
 		</select>
 </mapper>
