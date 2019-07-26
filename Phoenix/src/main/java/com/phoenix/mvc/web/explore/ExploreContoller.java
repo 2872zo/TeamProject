@@ -4,11 +4,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.phoenix.mvc.common.Page;
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.domain.Blog;
 import com.phoenix.mvc.service.domain.CafeExplore;
@@ -24,6 +26,11 @@ public class ExploreContoller {
 	@Qualifier("exploreServiceImpl")
 	private ExploreService exploreService;
 	
+	@Value("${explorePageSize}")
+	private int explorePageSize;
+	
+	@Value("${explorePageUnit}")
+	private int explorePageUnit;
 	
 	public ExploreContoller() {
 		System.out.println(getClass().getName() + "default Constuctor");
@@ -57,12 +64,15 @@ public class ExploreContoller {
 		
 		//가짜데이터
 		search.setEngineAll(true);//전체(네이버+다음)
-		search.setOrderState(0);//정확도
+		//search.setOrderState(0);//정확도 ->설정했는딩
 		search.setCurrentPage(1);
 		search.setPageSize(5);
+		
 		/////////////////////////////////////////////////
 		
 		List<Blog> blogList = exploreService.getBlogExploreList(search);
+		
+		//Page page = new Page(search.getCurrentPage(),explorePageUnit,explorePageSize); 갔다와서 리턴에  total값 줘야함 ㅠ 
 		
 		System.out.println(blogList);
 		System.out.println(blogList.size());

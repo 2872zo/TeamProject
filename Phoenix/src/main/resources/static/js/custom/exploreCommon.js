@@ -39,7 +39,7 @@ $(function(){
 		
 	});
 	
-	$(function(){
+	$(function(){  //통합검색 블로그 카페 ... 등등 눌렀을때 searchKeyword가지고 초기화 검색
 		
 		var searchKeyword = $("#searchKeyword").val();
 		
@@ -63,6 +63,22 @@ $(function(){
 			$(self.location).attr("href", "/explore/getWebsiteList?searchKeyword="+searchKeyword);
 		});
 		
+		
+	});
+	
+	$(function(){
+		
+		$("#orderState").change(function(){
+			
+			var searchTheme = $("#searchTheme").val();
+			
+			if(searchTheme==1){
+				
+				$("form").attr("method","POST").attr("action","/explore/getBlogList").submit();
+			}
+			
+			
+		});
 		
 	});
 		

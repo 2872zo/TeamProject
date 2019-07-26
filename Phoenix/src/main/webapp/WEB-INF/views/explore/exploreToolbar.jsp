@@ -4,141 +4,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<!DOCTYPE html>
-<html lang="ko">
 
-<head>
-
-<style type="text/css">
-
-#icon-key:hover {
-	cursor: pointer;
-	color: #f5a142;
-}
-
-#div_menu {
-	width: 20%;
-	height: 500px;
-	float: left;
-	background-color: #82FA58;
-}
-
-#div_con {
-	width: 80%;
-}
-
-.cursor {
-	cursor: pointer;
-}
-
-.cursor:hover {
-	text-decoration: underline;
-}
-
-.member {
-	font-size: 50px;
-	text-shadow: 0 0 10px #666;
-	color: #fff;
-	margin: 0 auto;
-	text-align: left;
-	text-transform: capitalize;
-	font-family: "맑은 고딕";
-	font-style: italic;
-}
-
-body {
-	font-family: "맑은 고딕";
-	font-size: 12px;
-}
-
-.form {
-	max-width: 100%;
-	width: auto;
-	display: table;
-	border-radius: 25px;
-	border: 5px double #999;
-	margin: center;
-}
-
-.form2 {
-	width: 380px;
-	min-width: 320px;
-	height: 200px;
-	margin: 60px auto;
-	margin-left: 20px;
-}
-
-.form3 {
-	float: left;
-	/*   background:#f00;  */
-}
-
-.form3 label {
-	width: 100px;
-	height: 20px;
-	/*  display: block; */
-	float: left;
-}
-
-.form4 {
-	padding: 0px 0px 0px 70px;
-}
-
-#wrap {
-	width: 600px;
-	height: 500px;
-	margin: 0 auto;
-}
-
-.clear {
-	clear: both;
-}
-
-input[type="submit"] {
-	float: left;
-	/*  display:block; */
-	height: 50px;
-	background: #FFBB00;
-	border-radius: 5px;
-	border: none;
-	font-family: "맑은 고딕";
-}
-
-input[type="button"] {
-	height: 30px;
-	background: gray;
-	border-radius: 5px;
-	/*  width: 140px; */
-	font-family: "맑은 고딕";
-	margin-top: 10px;
-	margin-right: 20px;
-}
-
-input[type="checkbox"] {
-	margin-top: 20px;
-}
-</style>
-
-
-
-</head>
-
-<body>
-
-
-
-
-	<!--**********************************
-        Main wrapper start
-    ***********************************-->
-	<div id="main-wrapper">
 
 	      <!--**********************************
             Nav header start
         ***********************************-->
            <div class="nav-header">
             <c:import url="/WEB-INF/views/common/brand-logo.jsp"/>
-        </div>
+       		 </div>
         <!--**********************************
             Nav header end
         ***********************************-->
@@ -226,18 +99,4 @@ input[type="checkbox"] {
 			</div>
 		</div>
 
-		<!-- Modal 내용 끝 -->
-		<!--**********************************
-            Header end ti-comment-alt
-        ***********************************-->
 
-	</div>
-
-	<!--**********************************
-        Main wrapper end
-    ***********************************-->
-   
-  
-</body>
-
-</html>

@@ -19,10 +19,6 @@
 
 <link rel="stylesheet" href="/css/custom/scroll-top.css">
 
-<!-- ToolBar Start /////////////////////////////////////-->
-<jsp:include page="/WEB-INF/views/explore/exploreToolbar.jsp" />
-<!-- ToolBar End /////////////////////////////////////-->
-
 <!--  ///////////////////////// CSS ////////////////////////// -->
     <style>
     	li{
@@ -47,6 +43,24 @@
     		color:#f5a142; 
     		
     	}
+    	#blogName{
+    		
+    		display: inline-block;
+    		width: 160px; 
+    		white-space: nowrap; 
+    		overflow: hidden; 
+    		text-overflow: ellipsis;
+    	}
+    	
+    	#blogLink{
+    	
+    		display: inline-block;
+    		width: 160px; 
+    		white-space: nowrap; 
+    		overflow: hidden; 
+    		text-overflow: ellipsis;
+    		color:#f5a142; 
+    	}
     	
     	#blogContent{
     	
@@ -57,13 +71,14 @@
     		text-overflow: ellipsis;
     		
     		white-space: normal; 
-    		line-height: 1.2; 
-    		height: 2.6em; 
+    		line-height: 1.5; 
     		text-align: left; 
     		word-wrap: break-word; 
     		display: -webkit-box; 
     		-webkit-line-clamp: 3; 
     		-webkit-box-orient: vertical;
+    		color : black;
+    		margin-bottom : 10px;
     	}
     
     </style>
@@ -115,7 +130,9 @@
         <!--**********************************
             Nav header start
         ***********************************-->	
-     	
+     	<!-- ToolBar Start /////////////////////////////////////-->
+		<jsp:include page="/WEB-INF/views/explore/exploreToolbar.jsp" />
+		<!-- ToolBar End /////////////////////////////////////-->
        
         <!--**********************************
             Nav header end
@@ -127,7 +144,7 @@
      	<br/>
             <!-- row -->
             <div class="container-fluid">
-           		<div class="card">
+           		<div class="card text-center">
            			<div class="card-header">
            			<hr/>
            				<ul class="form-inline">
@@ -146,7 +163,7 @@
            					<li></li>
            					<li></li>
            					<li>
-           						<select class="form-control" name="orderState">
+           						<select class="form-control" name="orderState" id="orderState">
 									<option value="0">관련도순</option>
 									<option value="1">최신순</option>
 								</select>
@@ -156,15 +173,15 @@
            						<div class="form-group">
                                      <div class="form-check form-check-inline">
                                          <label class="form-check-label">
-                                             <input type="checkbox" class="form-check-input check-all" name="engineAll" value="" checked>전체검색</label>
+                                             <input type="checkbox" class="form-check-input check-all" name="all" value="" checked>전체검색</label>
                                      </div>
                                      <div class="form-check form-check-inline">
                                          <label class="form-check-label">
-                                             <input type="checkbox" class="form-check-input singleCheck" name="engineNaver" value="" checked>네이버</label>
+                                             <input type="checkbox" class="form-check-input singleCheck" name="naver" value="" checked>네이버</label>
                                      </div>
                                      <div class="form-check form-check-inline disabled">
                                          <label class="form-check-label">
-                                             <input type="checkbox" class="form-check-input singleCheck" name="engineDaum" value="" checked>다음</label>
+                                             <input type="checkbox" class="form-check-input singleCheck" name="daum" value="" checked>다음</label>
                                      </div>
                                  </div>
            					</li>
@@ -188,25 +205,35 @@
 	           							<img alt="" src="/images/no_Image.jpg" width="130" height="130" style="margin-left:20px;">
 	           						</c:if>
 	           						<c:if test="${!empty blog.thumbnail}"> <!-- 검색 이미지있을때 -->
-	           							<img alt="" src="${blog.thumbnail}" style="margin-left:20px; margin-top: 20px">
+	           							<a href="${blog.resultLink}"><img alt="" src="${blog.thumbnail}" style="margin-left:20px; margin-top: 10px"></a>
 	           						</c:if>
 									<div class="media-body" style="margin-left:50px; margin-top:8px;">
 										<div class="form-inline">
 											<h6>
 												<a href="${blog.resultLink}" id="blogTitle" >${blog.title}</a>
 											</h6> &nbsp;&nbsp;&nbsp; 
-											<p>${blog.dateTime}</p>
+											<p id="blogDateTime">${blog.dateTime}</p>
 										</div>
 										
 										<div class="form-group" id="blogContent">${blog.contents}</div>
 										
-										<a href="${blog.blogLink}">${blog.blogName}</a>
+										<div class="form-inline">
+											<a href="${blog.blogLink}" id="blogName">${blog.blogName}</a>
+											<a href="${blog.blogLink}" id="blogLink">${blog.blogLink}</a>
+										</div>
+										
 									</div>           					
 	           					</li>
 	           				</c:forEach>
 	           			
            					</ul>
            				</div>
+           			</div>
+           			
+           			<div>
+           				<!-- ToolBar Start /////////////////////////////////////-->
+						<jsp:include page="/WEB-INF/views/common/pageNavigator.jsp" />
+						<!-- ToolBar End /////////////////////////////////////-->
            			</div>
            		</div>
             </div>
