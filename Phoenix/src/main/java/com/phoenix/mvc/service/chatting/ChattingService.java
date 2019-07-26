@@ -1,5 +1,6 @@
 package com.phoenix.mvc.service.chatting;
 
+import java.util.List;
 import java.util.Map;
 
 import com.phoenix.mvc.common.Search;
@@ -7,6 +8,7 @@ import com.phoenix.mvc.service.domain.Chat;
 import com.phoenix.mvc.service.domain.ChatFriend;
 import com.phoenix.mvc.service.domain.ChatRoom;
 import com.phoenix.mvc.service.domain.ChatRoomForMongo;
+import com.phoenix.mvc.service.domain.ChatRoomInfo;
 
 public interface ChattingService {
 	
@@ -40,5 +42,15 @@ public interface ChattingService {
 	
 	public Map getChatList(Search search) throws Exception;
 	//겟 챗룸으로 합치고 서비스에서 없애야 됨 DAO는 필요... 한줄 알았는데 무한 스크롤 업 하려면 혹시모름
+	
+	public void addMyChatRoom(ChatRoomInfo chatRoomInfo) throws Exception;
+	
+	public List getMyChatRoomList(ChatRoomInfo chatRoomInfo) throws Exception;
+	
+	public void updateMyChatRoom(ChatRoomInfo chatRoomInfo) throws Exception;
+	
+	public void deleteMyChatRoom(ChatRoomInfo chatRoomInfo) throws Exception;
+	
+	
 	
 }

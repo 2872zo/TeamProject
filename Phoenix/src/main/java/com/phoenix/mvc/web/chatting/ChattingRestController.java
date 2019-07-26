@@ -73,8 +73,13 @@ public class ChattingRestController {
 	@PostMapping("deleteChatFriend")
 	public boolean deleteChatFriend(@RequestBody ChatFriend chatFriend) throws Exception {
 		
-		chattingService.deleteFriend(chatFriend);
-		return true;
+		int resultChecker = chattingService.deleteFriend(chatFriend);
+		if (resultChecker==1) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
 	@PostMapping("updateChatFriend")

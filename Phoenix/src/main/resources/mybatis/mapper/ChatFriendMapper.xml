@@ -20,7 +20,7 @@
 		SELECT
 			cf.chat_friends_no, cf.friend_nickname, 
 			cf.target_user_no, cf.friend_status, 
-			u.user_nickname, u.profile_img
+			u.user_no, u.user_nickname, u.profile_img
 		FROM
 			chat_friends cf, users u
 		WHERE
@@ -95,7 +95,7 @@
 	DELETE FROM 
 		chat_friends 
 	WHERE 
-		chat_friend_no = #{chatFriendNo}
+		chat_friends_no = #{chatFriendNo}
 	</delete>
 
 	<update id="updateFriend" parameterType="ChatFriend">

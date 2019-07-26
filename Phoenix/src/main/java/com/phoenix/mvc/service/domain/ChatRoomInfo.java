@@ -2,6 +2,9 @@ package com.phoenix.mvc.service.domain;
 
 import java.util.Date;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document
 public class ChatRoomInfo {
 	
 	String id;

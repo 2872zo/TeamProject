@@ -16,6 +16,7 @@ import com.phoenix.mvc.service.domain.Chat;
 import com.phoenix.mvc.service.domain.ChatFriend;
 import com.phoenix.mvc.service.domain.ChatRoom;
 import com.phoenix.mvc.service.domain.ChatRoomForMongo;
+import com.phoenix.mvc.service.domain.ChatRoomInfo;
 
 @Service
 @Transactional
@@ -25,14 +26,12 @@ public class ChattingServiceImpl implements ChattingService{
 	@Qualifier("chattingDaoImpl")	
 	private ChattingDao chattingDao;
 	
-	
 	public ChattingServiceImpl() {
 		System.out.println(getClass().getName() + "default Constuctor");
 	}
 
 	@Override
 	public Map getMyChatRoomList(Search search) throws Exception {
-		// TODO Auto-generated method stub
 		Map map = new HashMap();
 		
 		List chatRoomList = chattingDao.getMyChatRoomList(search);
@@ -130,6 +129,28 @@ public class ChattingServiceImpl implements ChattingService{
 		
 	}
 
-	
+	@Override
+	public void addMyChatRoom(ChatRoomInfo chatRoomInfo) throws Exception {
+		// TODO Auto-generated method stub
+		chattingDao.addMyChatRoom(chatRoomInfo);
+	}
+
+	@Override
+	public List getMyChatRoomList(ChatRoomInfo chatRoomInfo) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateMyChatRoom(ChatRoomInfo chatRoomInfo) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteMyChatRoom(ChatRoomInfo chatRoomInfo) throws Exception {
+		// TODO Auto-generated method stub
+		chattingDao.deleteMyChatRoom(chatRoomInfo);
+	}
 
 }

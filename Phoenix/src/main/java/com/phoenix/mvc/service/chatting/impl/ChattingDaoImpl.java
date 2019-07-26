@@ -17,6 +17,7 @@ import com.phoenix.mvc.service.domain.Chat;
 import com.phoenix.mvc.service.domain.ChatFriend;
 import com.phoenix.mvc.service.domain.ChatRoom;
 import com.phoenix.mvc.service.domain.ChatRoomForMongo;
+import com.phoenix.mvc.service.domain.ChatRoomInfo;
 
 @Repository
 public class ChattingDaoImpl implements ChattingDao{
@@ -130,8 +131,23 @@ public class ChattingDaoImpl implements ChattingDao{
 		return sqlSession.selectList("ChatFriendMapper.getWannaBeFriendList", search);
 	}
 
-	
+	@Override
+	public void addMyChatRoom(ChatRoomInfo chatRoomInfo) throws Exception {
+		mongoTemplate.insert(chatRoomInfo);
+	}
 
-	
+	@Override
+	public List getMyChatRoomList(ChatRoomInfo chatRoomInfo) throws Exception {
+		return null;
+	}
+
+	@Override
+	public void updateMyChatRoom(ChatRoomInfo chatRoomInfo) throws Exception {
+	}
+
+	@Override
+	public void deleteMyChatRoom(ChatRoomInfo chatRoomInfo) throws Exception {
+		mongoTemplate.remove(chatRoomInfo);
+	}
 	
 }

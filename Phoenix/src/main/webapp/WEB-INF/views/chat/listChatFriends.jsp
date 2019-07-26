@@ -137,8 +137,8 @@ img {
 															as a natural lead-in to additional content.</p>
 														<a href="#" class="btn btn-primary">${chatFriend.userNickname}</a>
 													</div>
-													<div class='col-lg-1'>
-													<i class="mdi mdi-account-minus friendAlready" name='${chatFriend.chatFriendNo}' style='font-size: 25pt;'></i>
+													<div class='col-lg-1' name='${chatFriend.userNo}'>
+													<i class="mdi mdi-account-minus friendAlready friending" name='${chatFriend.chatFriendNo}' style='font-size: 25pt;'></i>
 													</div>
 												</div>
 											</div>
@@ -171,8 +171,8 @@ img {
 															natural lead-in to additional content.</p>
 														<a href="#" class="btn btn-primary">${chatFriend.userNo}</a>
 													</div>
-													<div class='col-lg-1'>
-													<i class="mdi mdi-account-plus friendYet" name='${chatFriend.userNo}' style='font-size: 25pt;'></i>
+													<div class='col-lg-1' name='${chatFriend.userNo}'>
+													<i class="mdi mdi-account-plus friendYet friending" name='${chatFriend.userNo}' style='font-size: 25pt;'></i>
 													</div>
 												</div>
 											</div>
@@ -202,8 +202,8 @@ img {
 															natural lead-in to additional content.</p>
 														<a href="#" class="btn btn-primary">${chatFriend.userNo}</a>
 													</div>
-													<div class='col-lg-1'>
-													<i class="mdi mdi-account-plus friendYet" name='${chatFriend.userNo}' style='font-size: 25pt;'></i>
+													<div class='col-lg-1' name='${chatFriend.userNo}'>
+													<i class="mdi mdi-account-plus friendYet friending" name='${chatFriend.userNo}' style='font-size: 25pt;'></i>
 													</div>
 												</div>
 											</div>
@@ -332,13 +332,19 @@ var checkSessionUser = ${empty sessionScope.user};
 			"/chat/searchChatFriend").submit();
 		});
 
-		$(".friendYet").on("click", function() {
-			//alert($(this).attr("name"));
-			var targetUser = $(this).attr("name");
-			//var targetTag = $(this);
-			//var checker = $(this).hasClass("true");
-			//var reChecker = !checker;
-			//alert(reChecker);
+		$(".friending").on("click", function() {
+			var inputTarget=$(this);
+			if($(this).hasClass("friendYet")){
+				friendYet(inputTarget);
+				}
+			if($(this).hasClass("friendAlready")){
+				friendAlready(inputTarget);
+				}
+				
+			});
+		function friendYet(sourceTag){
+			var targetTag = sourceTag;
+			var targetUser = sourceTag.closest('div').attr('name');
 			var jsoned = 	{
 							targetUserNo : targetUser,
 							friendStatus : 0
@@ -354,14 +360,71 @@ var checkSessionUser = ${empty sessionScope.user};
 				success : function(serverData, status) {
 					
 									if(serverData == -1){
+										alert("에러나서 등록안됨")
+									}
+									
+									else{
+										targetTag.attr("class", "mdi mdi-account-minus friendAlready friending").attr("name", serverData);
+										toastr.success(
+													"친구목록에서 확인 가능합니다.",
+													"친구목록에 추가 되었습니다.",
+													{positionClass:"toast-bottom-right",
+													timeOut:3e3,closeButton:!0,debug:!1,
+													newestOnTop:!0,
+													progressBar:!0,
+													preventDuplicates:!1,
+													onclick:null,
+													showDuration:"300",hideDuration:"1000",
+													extendedTimeOut:"1000",
+													showEasing:"swing",hideEasing:"linear",
+													showMethod:"fadeIn",
+													hideMethod:"fadeOut",
+													tapToDismiss:!1}
+														);
+							
+										}
+									
+						},
+									
+				
+				error : function(request, status, error) {
+					alert("에러남 : " + error);
+					}
+			});//ajax 끝
+			
+
+		}
+
+
+		function friendAlready(sourceTag){
+			var targetTag = sourceTag;
+			var friendNumber = targetTag.attr('name');
+
+			var targetUserNo = targetTag.closest('div').attr('name');
+
+			var jsoned = 	{
+							chatFriendNo : friendNumber
+							};
+
+			jsoned = JSON.stringify(jsoned);
+			
+			$.ajax({
+				type : "POST",
+				url : "/chat/json/deleteChatFriend",
+				data : jsoned,
+				contentType : "application/json", //보내는 컨텐츠의 타입
+				//dataType : "json",      //받아올 데이터의 타입 필요없음
+				success : function(serverData, status) {
+					
+									if(serverData == false){
 													alert("에러나서 등록안됨")
 									}
 									
 									else{
-							
-											toastr.success(
+											targetTag.attr("class", "mdi mdi-account-plus friendYet friending").attr("name", targetUserNo);
+											toastr.error(
 														"친구목록에서 확인 가능합니다.",
-														"친구목록에 추가 되었습니다.",
+														"친구목록에서 삭제 되었습니다.",
 														{positionClass:"toast-bottom-right",
 														timeOut:3e3,closeButton:!0,debug:!1,
 														newestOnTop:!0,
@@ -377,29 +440,18 @@ var checkSessionUser = ${empty sessionScope.user};
 														);
 							
 											}
-									/**/
+								
 				},
 									
 				
 				error : function(request, status, error) {
 					alert("에러남 : " + error);
 				}
-			});
-
-
-
-
-
+			});//ajax 끝
 
 			
-
-		});
-
-		$(".friendAlready").on("click", function() {
-			alert("친구친구");
-
-			});
-
+			}
+		
 	});
 </script>
 
