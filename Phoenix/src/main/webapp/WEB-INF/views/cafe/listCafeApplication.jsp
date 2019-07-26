@@ -149,7 +149,7 @@
 												<td><input type="checkbox" name ="each" class="applicationCheck" ></td>
 											</c:if>	
 											<c:if test="${cafeApplication.acceptStatusCode ne 'ca100' }">
-												<td><!--  <input type="checkbox"  class="applicationCheck" disabled="disabled">--></td>
+												<td><input type="checkbox"  class="applicationCheck" disabled="disabled"></td>
 											</c:if>	
 												<td align="left" class="applicationNo"value="${cafeApplication.applicationNo}">${cafeApplication.applicationNo}</td>
 												<td align="left">${cafeApplication.userId}</td>
@@ -200,15 +200,13 @@
 		function fncGetList(currentPage) {
 			var cafeURL = '${search.cafeURL}'
 			$("#currentPage").val(currentPage)
-			$("#detailFrom").attr("method", "POST").attr("action",
-					"/cafe/" + cafeURL + "/manage/getCafeApplicationList")
-					.submit();
+			$("#detailFrom").attr("method", "POST").attr("action","/cafe/" + cafeURL + "/manage/getCafeApplicationList").submit();
 		}
 
 		$(function() {
 			var cafeURL = '${search.cafeURL}'
 			$("#ing").on("click",function() {//처리중
-						alert("!0")
+						//alert("!0")
 						$("#status").val(100);
 						$("#currentPage").val(1)
 						$("#detailFrom").attr("method", "POST").attr(
@@ -218,7 +216,7 @@
 								.submit();
 					});
 			$("#end").on("click",function() {//처리완료
-						alert("?1")
+						//alert("?1")
 						$("#status").val(101)
 						$("#currentPage").val(1)
 						$("#detailFrom").attr("method", "POST").attr(
@@ -239,7 +237,7 @@
 
 		$(function() {
 			$(".applicationNo").on("click",function() {
-						alert($(this).text());
+						//alert($(this).text());
 						var cafeURL = '${search.cafeURL}'
 						self.location = "/cafe/" + cafeURL
 								+ "/manage/getCafeApplication?applicationNo="
@@ -264,7 +262,7 @@
 
 						$("input[type=checkbox]:checked").not("input[type=checkbox]:first").each(
 								function() {
-									alert($(".applicationCheck").index(this));
+									//alert($(".applicationCheck").index(this));
 									var count = $(".applicationCheck").index(
 											this);
 									application += $($(".nickname")[count])
@@ -279,7 +277,7 @@
 									application += ",";
 
 								});
-						alert(application);
+						//alert(application);
 						var cafeURL = '${search.cafeURL}'
 						$("#boardName").val(application);
 						$("#checkBox").attr("method", "POST").attr(
@@ -300,7 +298,7 @@
 							reject += ",";
 
 						});
-						alert(reject);
+						//alert(reject);
 						var cafeURL = '${search.cafeURL}'
 						$("#boardName").val(reject);
 						$("#checkBox").attr("method", "POST").attr(

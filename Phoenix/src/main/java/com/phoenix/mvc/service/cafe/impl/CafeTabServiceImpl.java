@@ -156,14 +156,6 @@ public class CafeTabServiceImpl implements CafeTabService {
 	/////// 카페정보
 		Cafe cafe = cafeManageDao.getCafeInfo(cafeNo);
 		map.put("cafe", cafe);
-		
-		//가입신청정보
-		search.setCafeNo(cafeNo);
-		search.setUserNo(user.getUserNo());
-		CafeApplication cafeApplication = cafeManageDao.getCafeApplicationForMember(search);
-		map.put("cafeApplication", cafeApplication);
-
-		
 
 		return map;
 	}
