@@ -14,6 +14,7 @@ import com.phoenix.mvc.service.cafe.CafeMemberService;
 import com.phoenix.mvc.service.cafe.CafePostService;
 import com.phoenix.mvc.service.domain.Board;
 import com.phoenix.mvc.service.domain.Cafe;
+import com.phoenix.mvc.service.domain.CafeApplication;
 import com.phoenix.mvc.service.domain.CafeGrade;
 import com.phoenix.mvc.service.domain.CafeMember;
 import com.phoenix.mvc.service.domain.Post;
@@ -148,9 +149,18 @@ public class CafeInterceptor extends HandlerInterceptorAdapter {
 							}
 						}
 					}
+					//멤버가 아닐때 가입신청확인 여기에 하기
+				}else {
+					//가입신청정보
+					search.setCafeNo(cafe.getCafeNo());
+					search.setUserNo(user.getUserNo());
+					CafeApplication cafeApplication = cafeManageDao.getCafeApplicationForMember(search);
+					request.getSession().setAttribute("cafeApplication", cafeApplication);
+					
 				}
 
 				// 출석체크 등업체크 이후의 멤버정보를 심음
+				
 				request.setAttribute("cafeMember", cafeMember);
 			}
 
@@ -166,6 +176,7 @@ public class CafeInterceptor extends HandlerInterceptorAdapter {
 							request.getContextPath() + "/user/loginView?targetURL=" + request.getRequestURI());
 					return false;
 				}
+				
 				// 카페 멤버 여부 확인//지니
 				else if (cafeMember == null || cafeMember.getMemberStatusCode().equals("cs102") ) {
 

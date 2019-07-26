@@ -75,7 +75,7 @@
 							<hr style="border: solid 1px gray;">		
 								<div class="basic-form">			
 								<br>
-									<form>
+									<form id="addCafe">
 
 								<input type="hidden" name="cafeNo" value="${cafe.cafeNo }"/>
 
@@ -252,8 +252,8 @@
 					
 					return false;
 				}else{			
-										
-					$("#adduser").attr("method", "POST").attr("action","/user/addUser").submit();						
+					$("form").attr("method", "POST").attr("action","/cafe/addCafe").submit();				
+					//$("#addCafe").attr("method", "POST").attr("action","/cafe/addCafe").submit();						
 				}							
 			}
 		});//ajax		
