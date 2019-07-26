@@ -35,6 +35,17 @@
     	
     		color:#f5a142;
     	}
+    	
+    	#blogTitle{
+    	
+    		display: inline-block;
+    		width: 350px; 
+    		white-space: nowrap; 
+    		overflow: hidden; 
+    		text-overflow: ellipsis;
+    		text-decoration:underline; 
+    		color:#f5a142; 
+    	}
     
     </style>
 <!--**********************************
@@ -163,7 +174,7 @@
 									<div class="media-body" style="margin-left:50px; margin-top:8px;">
 										<div class="form-inline">
 											<h6>
-												<a href="${blog.resultLink}" style="text-decoration:underline; color:#f5a142;">${blog.title}</a>
+												<a href="${blog.resultLink}" id="blogTitle" >${blog.title}</a>
 											</h6> &nbsp;&nbsp;&nbsp; 
 											<p>${blog.dateTime}</p>
 											
