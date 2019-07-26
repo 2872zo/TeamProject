@@ -6,6 +6,7 @@ import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.domain.Chat;
 import com.phoenix.mvc.service.domain.ChatFriend;
 import com.phoenix.mvc.service.domain.ChatRoom;
+import com.phoenix.mvc.service.domain.ChatRoomForMongo;
 
 public interface ChattingService {
 	
@@ -24,6 +25,8 @@ public interface ChattingService {
 	public Map getMyChatRoomList(Search search) throws Exception;
 	
 	public Map getChatRoom(Search search) throws Exception;
+	
+	public void addChatRoom(ChatRoomForMongo chatRoomForMongo) throws Exception;
 	
 	public void addChatRoom(ChatRoom chatRoom) throws Exception;
 	

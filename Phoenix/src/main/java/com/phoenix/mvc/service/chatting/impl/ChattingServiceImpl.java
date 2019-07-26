@@ -15,6 +15,7 @@ import com.phoenix.mvc.service.chatting.ChattingService;
 import com.phoenix.mvc.service.domain.Chat;
 import com.phoenix.mvc.service.domain.ChatFriend;
 import com.phoenix.mvc.service.domain.ChatRoom;
+import com.phoenix.mvc.service.domain.ChatRoomForMongo;
 
 @Service
 @Transactional
@@ -106,8 +107,11 @@ public class ChattingServiceImpl implements ChattingService{
 		map.put("chatList", chatList);
 		return map;
 	}
-
 	
+	@Override
+	public void addChatRoom(ChatRoomForMongo chatRoomForMongo) throws Exception {
+		chattingDao.addChatRoom(chatRoomForMongo);
+	}
 
 	@Override
 	public void addChatRoom(ChatRoom chatRoom) throws Exception {
@@ -125,5 +129,7 @@ public class ChattingServiceImpl implements ChattingService{
 		// TODO Auto-generated method stub
 		
 	}
+
+	
 
 }

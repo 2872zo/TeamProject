@@ -9,12 +9,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.chatting.ChattingService;
 import com.phoenix.mvc.service.domain.Chat;
 import com.phoenix.mvc.service.domain.ChatFriend;
 import com.phoenix.mvc.service.domain.ChatRoom;
+import com.phoenix.mvc.service.domain.User;
 
 @RestController
 @RequestMapping("/chat/json/*")
@@ -56,7 +58,22 @@ public class ChattingRestController {
 	}
 	
 	@PostMapping("addChatFriend")
-	public boolean addChatFriend(@RequestBody Search search){
+	public int addChatFriend(@SessionAttribute("user") User user, @RequestBody ChatFriend chatFriend) throws Exception{
+		chatFriend.setUserNo(user.getUserNo());
+		int added = chattingService.addFriend(chatFriend);
+		
+		if (added==1) {
+			return chatFriend.getChatFriendNo();
+		}
+		else {
+			return -1;
+		}
+	}
+	
+	@PostMapping("deleteChatFriend")
+	public boolean deleteChatFriend(@RequestBody ChatFriend chatFriend) throws Exception {
+		
+		chattingService.deleteFriend(chatFriend);
 		return true;
 	}
 	

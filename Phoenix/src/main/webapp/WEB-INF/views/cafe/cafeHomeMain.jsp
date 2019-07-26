@@ -37,11 +37,25 @@
 
 <body>
 
+<!--*******************
+        Preloader start
+    ********************-->
+	<div id="preloader">
+		<div class="loader">
+			<svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none"
+					stroke-width="3" stroke-miterlimit="10"></circle>
+            </svg>
+		</div>
+	</div>
+	<!--*******************
+        Preloader end
+    ********************-->
+
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<br/>
 	<div class="container">
-	
 
 		<form class="form-inline justify-content-center" id='cafeSearch'>
 			<input type="hidden" id="currentPage" name="currentPage" value="0" />
@@ -80,10 +94,11 @@
 				value="${search.status}" /> 
 			<input type="hidden" id="cafeType" name="cafeType" 
 				value="${search.cafeType}" />
+			<input type="hidden" id="boardNo" name="boardNo" 
+				value="0" />
 		</form>
 		
 	<div class="card">
-	
 	
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	
@@ -99,8 +114,9 @@
 				id='addCafe'>카페 만들기</button>
 			</div>
 			</div>
-<div class="card">
-<div class="card-body">
+			
+			<div class="card" id='myCafePosition' style='min-height: 300px;'>
+			<div class="card-body">
 
 			<div class="btn-group d-flex justify-content-center" role="group">
 				<button type="button" role="group"
@@ -113,9 +129,6 @@
 					class='btn btn-outline-primary col-lg-3 cafeListing'>정지당한 카페</button>
 			</div>
 			
-				
-
-
 			<br/>
 
 			<c:if test="${!empty myCafelist}">
@@ -129,25 +142,24 @@
 							<div class="row no-gutters d-flex align-items-center">
 								<div class="col-md-4">
 									<img src="/images/common/16by9.png" class="card-img" alt="..."
-										style="background: url('/images/uploadFiles/cafeicon/${myCafe.cafeIcon}');
-      no-repeat center center; background-size:cover;">
+										style="background: url('/images/uploadfiles/cafeicon/${myCafe.cafeIcon}');
+      									no-repeat center center; background-size:cover;">
 								</div>
-								<div class="col-md-8">
-									<div class="card-body">
+								<input type='hidden' class='memberNo' value='${myCafe.memberNo}'>
+								<div class="col-md-7">
 										<h5 class="card-title">${myCafe.cafeName}</h5>
-										<p class="card-text">${myCafe.cafeDetail}</p>
-										<input type='hidden' class='memberNo' value='${myCafe.memberNo}'>
-										<c:if test="${myCafe.favorited}">
+										<p class="card-text">${myCafe.cafeDetail}</p>	
+								</div>
+								<div class="col-md-1">
+								<c:if test="${myCafe.favorited}">
 										<i class="favorited d-flex justify-content-end mdi mdi-bookmark-check ${myCafe.favorited}" style='font-size: 35pt;'></i> 
 										</c:if>
 										<c:if test="${!myCafe.favorited}">
 										<i class="favorited d-flex justify-content-end mdi mdi-bookmark-outline ${myCafe.favorited}" style='font-size: 35pt;'></i> 
 										</c:if>
-									</div>
 								</div>
 							</div>
 						</div>
-
 
 					</c:forEach>
 
@@ -158,9 +170,9 @@
 </div>
 		</c:if>
 
-		<br /> <br /> <br />
-<div class="card">
-<div class="card-body">
+		<br />
+<div class="card" style='min-height: 300px;'>
+<div class="card-body" id='cafeCategoryPosition'>
 
 		<div class="btn-group d-flex justify-content-center" role="group">
 			<button type="button" role="group"
@@ -178,7 +190,6 @@
 		</div>
 		
 		<br/>
-	
 
 		<c:if test="${!empty categorizedCafeList}">
 
@@ -189,17 +200,18 @@
 					<div class="card myCafe col-lg-6" name='${categoryCafe.cafeURL}' style=" border: 1px solid #F7790A; ">
 						<div class="row no-gutters">
 							<div class="col-md-4 d-flex align-items-center">
-								<img src="/images/common/16by9.png" class="card-img" alt="..."
-									style=" border:thin; border-color=red; background: url('/images/uploadFiles/cafeicon/${categoryCafe.cafeIcon}');
-      										no-repeat center center; background-size:cover;">
+							<img src="/images/common/16by9.png" class="card-img" alt="..."
+								style=" border:thin; border-color=red; 
+										background: url('/images/uploadFiles/cafeicon/${categoryCafe.cafeIcon}');
+ 										no-repeat center center; background-size:cover;">
 							</div>
 							<div class="col-md-8">
 								<div class="card-body">
-									<h5 class="card-title">${categoryCafe.cafeName}</h5>
-									<p class="card-text">${categoryCafe.cafeDetail}</p>
-									<p class="card-text">
-										<small class="text-muted">${categoryCafe.regDate}</small>
-									</p>
+								<h5 class="card-title">${categoryCafe.cafeName}</h5>
+								<p class="card-text">${categoryCafe.cafeDetail}</p>
+								<p class="card-text">
+								<small class="text-muted">${categoryCafe.regDate}</small>
+								</p>
 								</div>
 							</div>
 						</div>
@@ -271,21 +283,22 @@ $(function() {
 
 
 $(function() {
-		
 	
 		$($(".cafeListing")[$("#status").val()]).attr("class",
 				"btn btn-primary col-lg-3 cafeListing");
+
 		$($(".cafeCategory")[$("#cafeType").val()]).attr("class",
 				"btn btn-success col-lg-2 cafeCategory");
-
-		//$("#test1").on("click", function() {
-		//	alert("++");
-		//});
-
-		//$("#test2").on("click", function() {
-		//	alert("--");
-		//	$(this).attr("class","favorited d-flex justify-content-end mdi mdi-star-outline true");
-		//});
+		
+		if(${search.boardNo != 0}){
+			if(${search.boardNo == 1}){
+				var goTo = $('#myCafePosition').offset(); 
+				}
+			if(${search.boardNo == 2}){
+				var goTo = $('#cafeCategoryPosition').offset(); 
+			}
+       		$('html').animate({scrollTop : goTo.top}, 0);
+		}
 		
 		$("#addCafe").on("click", function() {
 			$(self.location).attr("href", "/cafe/addCafeView");
@@ -294,6 +307,7 @@ $(function() {
 		$(".cafeListing").on(
 				"click",
 				function() {
+					$("#boardNo").val("1");
 					var count = $(".cafeListing").index(this);
 					$("#status").val(count);
 					$("#cafeHomeForm").attr("method", "POST").attr("action",
@@ -303,6 +317,7 @@ $(function() {
 		$(".cafeCategory").on(
 				"click",
 				function() {
+					$("#boardNo").val("2");
 					var count = $(".cafeCategory").index(this);
 					$("#cafeType").val(count);
 					$("#cafeHomeForm").attr("method", "POST").attr("action",

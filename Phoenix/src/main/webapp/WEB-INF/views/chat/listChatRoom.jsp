@@ -73,36 +73,35 @@ img {
         ***********************************-->
 
 
-		<div class="content-body" style="min-height: 600px;">
-			<div class="row">
-				<div class="col-lg-8">
+		<div class="content-body">
+			
+				
 					<div class='container-fluid'>
-
+					<div class="row">
+<div class="col-lg-8">
 
 
 <form id='rooming'>
 <input type='hidden' name = 'chatRoomNo' id='roomNo' >
 </form>
-<br/>
+
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	
 	<div class='card'>
 	<div class='card-body'>
 
 	
-	<br/>
-	<br/>
 
 	<input type='hidden' id='roomNos' value ='${roomNos}'>
 
 	<c:forEach items="${chatRoomList}" var ='chatRoom'>
 	
-	<div class="card mb-3  xxxxx "  style="max-width: 540px;" name='${chatRoom.chatRoomNo}'>
-  <div class="row no-gutters">
-    <div class="col-md-4">
+	<div class="card mb-3  enterTheRoom " name='${chatRoom.chatRoomNo}'>
+  <div class="row">
+    <div class="col-lg-4">
       <img src="..." class="card-img" alt="...">
     </div>
-    <div class="col-md-8">
+    <div class="col-lg-8">
       <div class="card-body">
         <h5 class="card-title chatRoom">${chatRoom.chatRoomName}</h5>
         <p class="card-text">${chatRoom.chatRoomNo} </p>
@@ -113,17 +112,21 @@ img {
 </div>
 	</c:forEach>
 	
-	<div class="panel panel-default" >
-				<div class="panel-body">
-					<p class="text-left" id="chat_box"></p>
-				</div>
-			</div>
 	
 	
 		</div><!-- 카드바디 -->
 	</div><!-- 카드 -->
 	</div><!-- 컨테이너 -->
+
+	<div class='col-lg-4'>
+	<div class='card'>
+	<div class='card-body'>
+		<i class="mdi mdi-comment-plus-outline" style='font-size: 30pt' id='addingChatRoom'></i>
 	</div>
+	</div>
+
+	</div>
+		</div>
 	</div>
 	</div>
 	</div>
@@ -183,7 +186,11 @@ $(function() {
 	//	};
 	//
 	//	
-	$(".xxxxx").on("click" , function() {
+	$("#addingChatRoom").on("click" , function() {
+		alert("채팅방 만들기 버튼입니다.");
+		$(self.location).attr("href", "/chat/addChatRoom");
+	});
+	$(".enterTheRoom").on("click" , function() {
 		//alert("실행됨!");
 		var roomNumber =  parseInt($(this).attr('name'));
 		//alert(parseInt($(this).attr('name')));
