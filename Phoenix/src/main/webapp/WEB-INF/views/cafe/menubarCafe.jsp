@@ -42,8 +42,8 @@
 	                                    </li>
 	                                    <li class="mb-1"><strong class="text-dark mr-4" style="margin-left: 10px;"><i class="fa fa-users"></i></strong> <span style="float: right; margin-right: 10px;">${cafe.members}</span></li>
 	                                    <li class="mb-1 getCafeGrade">
-	                                    	<strong class="text-dark mr-4" style="margin-left: 10px;"><i class="icon-grid gradient-9-text"></i></strong>
-	                                    	<span style="float: right; margin-right: 10px;">카페멤버등급확인</span>
+	                                    	<strong class="text-dark mr-4" style="margin-left: 10px;"><i class="icon-grid"></i></strong>
+	                                    	<h6 style="float: right; margin-right: 10px;">멤버등급안내</h6>
 	                                    </li>
 	                                    
 	                                </ul>
