@@ -303,7 +303,7 @@ public class CafeManageController {
 			{
 				for (int j = 0; j < newBoard.size(); j++) {
 					if (newBoard.get(j).getBoardNo() == Integer.parseInt(bestTermValue[1].split("w")[1])) {
-						newBoard.get(j).setBestTerm(bestTermValue[0].charAt(0));
+						newBoard.get(j).setBestTerm(Integer.parseInt(bestTermValue[0]));
 					}
 					
 				}
@@ -312,7 +312,7 @@ public class CafeManageController {
 			{
 				for (int j = 0; j < existBoard.size(); j++) {
 					if (existBoard.get(j).getBoardNo() == Integer.parseInt(bestTermValue[1])) {
-						existBoard.get(j).setBestTerm(bestTermValue[0].charAt(0));
+						existBoard.get(j).setBestTerm(Integer.parseInt(bestTermValue[0]));
 					}
 				}
 			}

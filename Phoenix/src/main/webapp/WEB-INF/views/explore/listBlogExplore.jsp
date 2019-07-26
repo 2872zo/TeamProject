@@ -50,7 +50,7 @@
 	<script src="/plugins/sweetalert/js/sweetalert.init.js"></script>
 
 	<!-- 메뉴바 이용을 위한 스크립트 -->
-	<script src="/js/custom/scroll-top.js"></script>
+	
 	<script type="text/javascript">
 
 	var checkSessionUser = ${empty sessionScope.user};
@@ -204,7 +204,7 @@
    	<!-- 검색 엔터용 스크립트같은데 -->
    		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
    	<!-- 공통 툴바용 스크립트 -->	
-		<script src="/js/custom/toolbarScript.js"></script>
+		
    	<!-- 검색 공통 스크립트 -->
    		<script src="/js/custom/exploreCommon.js"></script>
 	</body>
