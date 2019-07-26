@@ -55,6 +55,8 @@ public interface CafeManageDao {
 	public boolean dropCafe(Cafe cafe);
 	
 	public CafeGrade getNextGrade(int cafeGradeNo);
+	
+	public CafeApplication getCafeApplicationForMember(Search search);
 
 ////////////////////////////////지니끝//////////////////////////////////
 

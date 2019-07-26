@@ -21,6 +21,7 @@ import com.phoenix.mvc.service.cafe.CafeTabDao;
 import com.phoenix.mvc.service.cafe.CafeTabService;
 import com.phoenix.mvc.service.domain.Board;
 import com.phoenix.mvc.service.domain.Cafe;
+import com.phoenix.mvc.service.domain.CafeApplication;
 import com.phoenix.mvc.service.domain.CafeGrade;
 import com.phoenix.mvc.service.domain.CafeMember;
 import com.phoenix.mvc.service.domain.Post;
@@ -152,12 +153,17 @@ public class CafeTabServiceImpl implements CafeTabService {
 		List boardList = cafeManageDao.getCafeBoard(cafeNo);
 		map.put("boardList", boardList);
 
-//// !!!!!!!!지니 자동등업 추가!!!!!!!!/////
-
+	/////// 카페정보
 		Cafe cafe = cafeManageDao.getCafeInfo(cafeNo);
 		map.put("cafe", cafe);
+		
+		//가입신청정보
+		search.setCafeNo(cafeNo);
+		search.setUserNo(user.getUserNo());
+		CafeApplication cafeApplication = cafeManageDao.getCafeApplicationForMember(search);
+		map.put("cafeApplication", cafeApplication);
 
-		/////// 카페정보
+		
 
 		return map;
 	}

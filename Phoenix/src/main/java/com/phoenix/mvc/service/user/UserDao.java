@@ -19,6 +19,8 @@ public interface UserDao {
 	
 	public User getUserInfo(int userNo) throws Exception;
 
-
+	public List<User>getUserList(Search search) throws Exception;
+	
+	public int getUserTotalCount(Search search) throws Exception;
 	
 }

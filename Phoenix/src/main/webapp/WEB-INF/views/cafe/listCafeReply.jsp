@@ -58,6 +58,61 @@
 
 
 	<div class="container">
+		<c:forEach	items="${bestReplyList }" var="bestReply">
+			<div class="media media-reply"  style="background: rgba(255, 203, 92, 0.3);">
+				<div class="media-body">
+				
+					<!-- 삭제 댓글 확인 -->
+					<c:if test="${bestReply.replyStatusFlag == '0' }">
+						<div class="replyItem bestReplyItem">
+				            <div style="margin-left:20px; margin-top:5px;"><span class="badge" style="background:rgba(235, 223, 61, 1);">Best</span></div>
+				            <div class="media mt-3" style="margin-left:20px; margin-top:3px !important;">
+					            <img class="mr-3 circle-rounded circle-rounded" src="/images/uploadfiles/userIcon.jpg" width="40" height="40" alt="댓글아이콘" onerror="this.src='/images/default-profile.jpg'">
+					            <div class="media-body"  style="padding:0px;">
+					                <div class="d-sm-flex justify-content-between mb-2">
+					                    <h5 class="mb-sm-0">${bestReply.memberNickname } <small class="text-muted ml-3">${bestReply.regDate }</small></h5>
+					                    
+					                    <!-- 아이콘 부분 -->
+					                    <div class="media-reply__link">
+											<i class="mdi mdi-alert" name="addReport"></i>
+					                    </div>
+					                    <!-- 아이콘 끝 -->
+					                    
+					                </div>
+					                
+					                <div style="color:black; overflow:hidden;" class="replyContent flex-row">
+					                	<span class="d-flex justify-content-start">
+					                		${bestReply.replyContent }
+					                	</span>
+					                	<span class="d-flex justify-content-end" style="vertical-align:baseline;">
+							                <button type="button" class="btn mb-1 btn-outline-primary btn-xs replyLikeButton" >
+												<i class="far fa-thumbs-up" style="font-size:15px;"></i>
+												<i class="count" style="font-size:15px;">${bestReply.likeCount }</i>
+											</button>
+										</span>
+					                </div>
+					                
+					                <form name="replyItem">
+										<input type="hidden" name="replyNo" value="${bestReply.replyNo }">
+										<input type="hidden" name="postNo" value="${bestReply.postNo }">
+										<input type="hidden" name="targetReplyNo" value="${bestReply.targetReplyNo }">
+										<input type="hidden" name="targetReplyMember" value="${bestReply.memberNickname }">
+										<input type="hidden" name="postNo" value="${bestReply.postNo }">
+										<input type="hidden" name="currentPage" value="${search.currentPage }">
+									</form>
+					            </div>
+					        </div>
+				            <div class="bestReplyForm" style="margin:0px;padding-bottom:10px;"></div>
+						</div>
+					</c:if>
+					<c:if test="${bestReply.replyStatusFlag != '0' }">
+						<c:import url="/WEB-INF/views/cafe/deleteReplyView.jsp"></c:import>
+					</c:if>
+					
+				</div>
+			</div>
+		</c:forEach>
+	
 	
 		<c:forEach	items="${replyList }" var="reply">
 			<div class="replyItem">

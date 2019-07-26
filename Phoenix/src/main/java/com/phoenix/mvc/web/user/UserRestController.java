@@ -87,8 +87,6 @@ public class UserRestController {
 		boolean result = false;
 		//= userService.checkUserPwDuplication(user.getUserId());
 		
-		
-		
 		if( dbUser != null && user.getPassword().equals(dbUser.getPassword())){
 			session.setAttribute("user", dbUser);
 			

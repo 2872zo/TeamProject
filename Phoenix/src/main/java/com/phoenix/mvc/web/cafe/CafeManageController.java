@@ -59,6 +59,7 @@ public class CafeManageController {
 	@Qualifier("cafeMemberServiceImpl")
 	private CafeMemberService cafeMemberService;
 
+
 	@Value("${pageSize}")
 	private int pageSize;
 
@@ -69,8 +70,6 @@ public class CafeManageController {
 		System.out.println(this.getClass().getName() + "생성자 start");
 	}
 
-	@Value("${uploadPath}")
-	String uploadPath;
 	@Value("${uploadPath2}")
 	String uploadPath2;
 	@Value("${uploadPath3}")
@@ -191,24 +190,24 @@ public class CafeManageController {
 		model.addAttribute("cafeURL", cafeURL);
 //모델에 cafeURL의 cafe 객체도 같이 넘겨줌
 
-		//return "/cafe/menuTest";
+		// return "/cafe/menuTest";
 		return "/cafe/updateCafeBoard";
 	}
 
 	@RequestMapping(value = "/{cafeURL}/manage/updateCafeBoard", method = RequestMethod.POST) // 예림예림
 	public String updateCafeBoard(HttpServletRequest request, @PathVariable String cafeURL) {
 
-		//System.out.println(request.getParameter("board")); 첫번째값만 받아옴
+		// System.out.println(request.getParameter("board")); 첫번째값만 받아옴
 		List<Board> existBoard = new ArrayList<Board>();
 		List<Board> newBoard = new ArrayList<Board>();
 
 		String[] boards = request.getParameterValues("board");
-		//int a = request.getParameterValues("board").length;
+		// int a = request.getParameterValues("board").length;
 		int boardIndex = 1;
 
-		String[] grades = request.getParameterValues("grade"); //등급
-		//System.out.println("grades!!"+grades.length);//구분선빼고 다나옴
-		
+		String[] grades = request.getParameterValues("grade"); // 등급
+		// System.out.println("grades!!"+grades.length);//구분선빼고 다나옴
+
 		String[] bestLikeCount = request.getParameterValues("bestLikeCount");
 		String[] bestTerm = request.getParameterValues("bestTerm");
 		String[] bestPostCount = request.getParameterValues("bestPostCount");
@@ -216,7 +215,7 @@ public class CafeManageController {
 		for (int i = 0; i < boards.length; i++) // board selectbox
 		{
 			System.out.println(boards[i]); // 파싱해서 / 있는애들은 board넘버.. update여러개, newBoard인애들은 add
-			//가져와서 앞에가 ----인애들은 update 안해줌
+			// 가져와서 앞에가 ----인애들은 update 안해줌
 			Board board = new Board();
 			board.setCafeURL(cafeURL);
 			board.setBoardIndex(boardIndex); // 순서이동해도 option순서대로 오나
@@ -256,7 +255,7 @@ public class CafeManageController {
 				}
 			}
 		}
-		
+
 		for (int i = 0; i < bestPostCount.length; i++) // 베스트게시글개수 설정
 		{
 			String[] bestPostCountValue = bestPostCount[i].split("/");
@@ -269,10 +268,9 @@ public class CafeManageController {
 					if (newBoard.get(j).getBoardNo() == Integer.parseInt(bestPostCountValue[1].split("w")[1])) {
 						newBoard.get(j).setBestPostCount(Integer.parseInt(bestPostCountValue[0]));
 					}
-					
+
 				}
-			} 
-			else// 원래있던애일때
+			} else// 원래있던애일때
 			{
 				for (int j = 0; j < existBoard.size(); j++) {
 					if (existBoard.get(j).getBoardNo() == Integer.parseInt(bestPostCountValue[1])) {
@@ -280,17 +278,16 @@ public class CafeManageController {
 					}
 				}
 			}
-			
+
 			if (bestLikeCountValue[1].contains("new"))// bestLikeCountValue새로만들어진애일때
 			{
 				for (int j = 0; j < newBoard.size(); j++) {
 					if (newBoard.get(j).getBoardNo() == Integer.parseInt(bestLikeCountValue[1].split("w")[1])) {
 						newBoard.get(j).setBestLikeCount(Integer.parseInt(bestLikeCountValue[0]));
 					}
-					
+
 				}
-			} 
-			else// 원래있던애일때
+			} else// 원래있던애일때
 			{
 				for (int j = 0; j < existBoard.size(); j++) {
 					if (existBoard.get(j).getBoardNo() == Integer.parseInt(bestLikeCountValue[1])) {
@@ -298,31 +295,25 @@ public class CafeManageController {
 					}
 				}
 			}
-			
+
 			if (bestTermValue[1].contains("new"))// 새로만들어진애일때
 			{
 				for (int j = 0; j < newBoard.size(); j++) {
 					if (newBoard.get(j).getBoardNo() == Integer.parseInt(bestTermValue[1].split("w")[1])) {
-						newBoard.get(j).setBestTerm(bestTermValue[0].charAt(0));
+						newBoard.get(j).setBestTerm(Integer.parseInt(bestTermValue[0]));
 					}
-					
+
 				}
-			} 
-			else// 원래있던애일때
+			} else// 원래있던애일때
 			{
 				for (int j = 0; j < existBoard.size(); j++) {
 					if (existBoard.get(j).getBoardNo() == Integer.parseInt(bestTermValue[1])) {
-						existBoard.get(j).setBestTerm(bestTermValue[0].charAt(0));
+						existBoard.get(j).setBestTerm(Integer.parseInt(bestTermValue[0]));
 					}
 				}
 			}
-			
-			
-			
-			
+
 		}
-		
-		
 
 //일단 따로따로 담는다/
 		Enumeration<String> e = request.getParameterNames();
@@ -438,7 +429,7 @@ public class CafeManageController {
 		model.addAttribute("cafeURL", cafeURL);
 
 		return "cafe/statisticsCafe";
-		//return "cafe/test";
+		// return "cafe/test";
 	}
 
 	@RequestMapping(value = "/{cafeURL}/addCafeReportView")
@@ -462,7 +453,7 @@ public class CafeManageController {
 	public String getCafeApplicationList(@ModelAttribute("search") Search search, Model model) {
 
 		System.out.println("/{cafeURL}/manage/getCafeApplicationList : GET/POST");
-		
+
 		System.out.println(search);
 
 		if (search.getCurrentPage() == 0) {
@@ -634,8 +625,8 @@ public class CafeManageController {
 
 		model.addAttribute("cafeGradeList", cafeGrade);
 		model.addAttribute("cafeURL", cafeURL);
-		
-			return "cafe/updateCafeGrade";
+
+		return "cafe/updateCafeGrade";
 
 	}
 
@@ -731,26 +722,11 @@ public class CafeManageController {
 //준호
 	@RequestMapping(value = "/{cafeURL}/manage/updateCafeInfo", method = RequestMethod.POST)
 	public String updateCafeInfo(@ModelAttribute Cafe cafe, Model model,
-			@RequestParam("uploadFile") MultipartFile uploadFile,
 			@RequestParam("uploadFile2") MultipartFile uploadFile2,
 			@RequestParam("uploadFile3") MultipartFile uploadFile3) throws Exception {
 
 		System.out.println("/updateCafeInfoView : POST");
 
-		String fileName = uploadFile.getOriginalFilename()
-				.substring(uploadFile.getOriginalFilename().lastIndexOf("\\") + 1);
-
-		File f = new File(uploadPath, fileName);
-		System.out.println("파일업로드하자~~~~~~~~~~~~~~~~~~" + fileName);
-
-		try {
-			uploadFile.transferTo(f);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		cafe.setBannerImg(fileName);
-		System.out.println("파일명좀 알려줘~11111111111"+fileName);
 		String fileName2 = uploadFile2.getOriginalFilename()
 				.substring(uploadFile2.getOriginalFilename().lastIndexOf("\\") + 1);
 
@@ -764,7 +740,7 @@ public class CafeManageController {
 		}
 
 		cafe.setMainImg(fileName2);
-		System.out.println("파일명좀 알려줘22222222222~"+fileName2);
+		System.out.println("파일명좀 알려줘22222222222~" + fileName2);
 		String fileName3 = uploadFile3.getOriginalFilename()
 				.substring(uploadFile3.getOriginalFilename().lastIndexOf("\\") + 1);
 
@@ -778,20 +754,20 @@ public class CafeManageController {
 		}
 
 		cafe.setCafeIcon(fileName3);
-		
-		System.out.println("파일명좀 알려줘~"+fileName3);
+
+		System.out.println("파일명좀 알려줘~" + fileName3);
 
 		cafeManageService.updateCafeInfo(cafe);
 
 		Cafe cafe2 = cafeManageService.getCafeInfo(cafe.getCafeNo());
 
 		cafe = cafe2;
-		
+
 		System.out.println("카페2좀 찍어줘");
 		System.out.println(cafe2);
-		
+
 		model.addAttribute("cafeURL", cafe.getCafeURL());
-		model.addAttribute("cafe",cafe2);
+		model.addAttribute("cafe", cafe2);
 		return "cafe/updateCafeInfoView";
 	}
 

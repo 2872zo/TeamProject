@@ -77,17 +77,17 @@ public class CafeTabContoller {
 	
 		  cafeTabService.addCafe(cafe);
 
-		  Cafe cafe2 = cafeManageService.getCafeInfo(cafe.getCafeNo());
+		  //Cafe cafe2 = cafeManageService.getCafeInfo(cafe.getCafeNo());
 
-		  cafe = cafe2;
+		  //cafe = cafe2;
 
 		  System.out.println("카페인서트다다아아아앙@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + cafe);
 
-		  model.addAttribute("cafe", cafe);
+		  //model.addAttribute("cafe", cafe);
 		
-		  model.addAttribute("cafeURL", cafe.getCafeURL());
+		  //model.addAttribute("cafeURL", cafe.getCafeURL());
 		
-		  System.out.println("카페유알엘@@@@"+cafe.getCafeURL());
+		  System.out.println("카페유알엘@@@@@@@@@@"+cafe.getCafeURL());
 
 		  return "redirect:/cafe/"+cafe.getCafeURL();
 	}
@@ -235,6 +235,7 @@ public class CafeTabContoller {
 		model.addAttribute("noticePostList", map.get("noticePostList"));// 공지게시글리스트
 		model.addAttribute("cafeMember", map.get("cafeMember"));// 내정보
 		model.addAttribute("boardList", map.get("boardList"));// 카페게시판리스트
+		model.addAttribute("cafeApplication",map.get("cafeApplication"));//가입신청
 
 		return "cafe/mainCafe";
 	}

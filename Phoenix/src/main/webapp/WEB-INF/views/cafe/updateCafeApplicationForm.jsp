@@ -78,7 +78,7 @@
                                             
                                             <div class="col-lg-8">
                                                 <label class="css-control css-control-primary css-checkbox" for="val-terms">
-                                                    <input type="radio" class="autoAcceptOption" name="autoApplicationAcceptFlag" value="true"> <span class="css-control-indicator" check='checked'></span>사용</label>
+                                                    <input type="radio" class="autoAcceptOption" name="autoApplicationAcceptFlag" value="true"> <span class="css-control-indicator"></span>사용</label>
                                                     <input type="radio" class="autoAcceptOption" name="autoApplicationAcceptFlag" value="false"> <span class="css-control-indicator"></span>미사용</label>
                                             </div>
                                          </div><hr>

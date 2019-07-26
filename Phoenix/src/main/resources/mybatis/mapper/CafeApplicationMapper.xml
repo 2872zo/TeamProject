@@ -136,5 +136,16 @@
   		<include refid="selectAllFromCafeApplication"/>
 		AND application_no = #{applicationNo}
   	</select>
+  	
+  	 <select id="getCafeApplication3" parameterType="search" resultMap="cafeApplicationSelectMap">
+  		SELECT 
+  		application_no,user_no,cafe_no,
+  		reg_date,question1,question2,question3,
+  		answer1,answer2,answer3,accept_status_code
+  		FROM
+  		cafe_application
+  		WHERE user_no = #{userNo}
+  		AND cafe_no = #{cafeNo}
+  	</select>
 	 
 </mapper>

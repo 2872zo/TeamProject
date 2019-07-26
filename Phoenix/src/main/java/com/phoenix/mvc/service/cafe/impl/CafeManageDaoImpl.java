@@ -169,6 +169,11 @@ public class CafeManageDaoImpl implements CafeManageDao {
 		return sqlSession.selectOne("CafeGradeMapper.nextGrade", cafeGradeNo);
 	}
 
+	@Override
+	public CafeApplication getCafeApplicationForMember(Search search) {
+		
+		return sqlSession.selectOne("CafeApplicationMapper.getCafeApplication3", search);
+	}
 ////////////////////////////////지니끝//////////////////////////////////
 
 /////////////////////////////////////예림/////////////////////////////////////
@@ -331,6 +336,8 @@ public class CafeManageDaoImpl implements CafeManageDao {
 		return sqlSession.selectOne("CafeMapper.getCafeNoNo", cafeName);
 
 	}
+
+
 
 /////////////////////////////// 준호끝///////////////////////////////////////
 

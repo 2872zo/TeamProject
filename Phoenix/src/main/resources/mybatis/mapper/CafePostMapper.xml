@@ -170,6 +170,7 @@
 		ORDER BY reply_no
 	</sql>
 	
+	
 	<sql id="select-post-list-member">
 		SELECT 
 			post_no, 
@@ -215,6 +216,24 @@
 		ORDER BY reg_date DESC
 	</sql>
 
+	<sql id="select-reply-list-member">
+		SELECT
+			reply_no,			
+			post_no,			
+			member_no,			
+			member_nickname,
+			reply_content,		
+			TO_CHAR(reg_date,'YYYY-MM-DD HH24:MI:SS') AS reg_date,			
+			like_count,		
+			reply_status_flag
+		FROM 
+			reply
+		WHERE 
+			member_no = #{memberNo}
+			AND reply_status_flag = '0'
+		ORDER BY reg_date DESC
+	</sql>
+	
 	<select id="getPostListByBoard"   parameterType="Search"  resultMap="postResultMap">
 		SELECT
 			*
@@ -688,4 +707,45 @@
 		WHERE 
 			post_no IN (${value})
 	</update>
+	
+	<select id="getBestReplyList" parameterType="Search" resultMap="reReplyResultMap">
+		SELECT
+			 inner_table.*, ROWNUM AS row_seq
+		 FROM 
+			 (SELECT
+					*
+				FROM
+					reply
+				WHERE
+					like_count &gt; 0
+					AND reply_status_flag = '0'
+					AND post_no = #{postNo}
+				ORDER BY like_count DESC) inner_table
+		 <where>
+		 	AND ROWNUM &lt;= 5
+		 </where>
+	</select>
+	
+	<select id="getReplyListByMember"   parameterType="Search"  resultMap="reReplyResultMap">
+		SELECT
+			*
+		FROM
+		(SELECT
+		 inner_table.*, ROWNUM AS row_seq
+		 FROM 
+		 (<include refid="select-reply-list-member"/>) inner_table
+		 <where>
+		 	ROWNUM &lt;= #{endRowNum}
+		 </where>)
+		<where>
+			row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+		</where>
+	</select>
+	
+	<select id="memberReplyTotalCount" parameterType="Search" resultType="int">
+		SELECT
+		COUNT(*)
+		FROM
+		(<include refid="select-reply-list-member"/>)
+	</select>
 </mapper>

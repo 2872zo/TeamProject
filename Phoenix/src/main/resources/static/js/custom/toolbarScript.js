@@ -56,19 +56,19 @@ $(function() {
 		
 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 		$("#login1").on("click" , function() {
-			var id = $("input:text").val();
-			var pw = $("input:password").val();
+			var id = $("input[name='userId']").val();
+			var pw = $("input[name='password']").val();
 			
 			if(id == null || id.length <1) {
 				sweetAlert("아이디를 입력하세요","","error");
-				//alert('ID 와 비밀번호를 입력하지 않으셨습니다.');
+			//	alert('ID 와 비밀번호를 입력하지 않으셨습니다.');
 				
 				$("#userId").focus();
 				
 				return false;
 			}else if(pw == null || pw.length <1) {
 				sweetAlert("비밀번호를 입력하세요","","error");
-				//alert('패스워드를 입력하지 않으셨습니다.');
+			//	alert('패스워드를 입력하지 않으셨습니다.');
 				
 				$("#password").focus();
 				return false;
@@ -94,7 +94,7 @@ $(function() {
 						//alert(typeof(JSONData));
 						
 						if(JSONData == false){
-							
+						//	alert("아디비번일치x");
 							sweetAlert("아이디 또는 비밀번호가 일치하지 않습니다.","","error");
 							return false;
 						}else{
@@ -112,50 +112,4 @@ $(function() {
 
 });
 	
-	$(function(){
-		
-		$("#explore").on("click",function(){ //이예림만 씀//exploreToolbar.jsp의 검색 버튼 누르면
-											 //searchKeyword 제외 다른애들은 초기화 그냥 get방식으로 가야하나.
-											 //pageNavigation 할때만 Search 살린다.
-			var searchTheme = $("#searchTheme").val();
-			var searchKeyword = $("#searchKeyword").val();
-			
-			if(searchTheme==0){
-				$(self.location).attr("href", "/explore/getUnifiedList?searchKeyword="+searchKeyword);
-				//$("form").attr("method","POST").attr("action","/explore/getUnifiedList").submit();
-			}
-			else if(searchTheme==1){
-				$(self.location).attr("href", "/explore/getBlogList?searchKeyword="+searchKeyword);
-				//$("form").attr("method","POST").attr("action","/explore/getBlogList").submit();
-			}
-			else if(searchTheme==2){
-				$(self.location).attr("href", "/explore/getCafeList?searchKeyword="+searchKeyword);
-				//$("form").attr("method","POST").attr("action","/explore/getCafeList").submit();
-			}
-			else if(searchTheme==3){
-				$(self.location).attr("href", "/explore/getImageList?searchKeyword="+searchKeyword);
-				//$("form").attr("method","POST").attr("action","/explore/getImageList").submit();
-			}
-			else if(searchTheme==4){
-				$(self.location).attr("href", "/explore/getWebsiteList?searchKeyword="+searchKeyword);
-				//$("form").attr("method","POST").attr("action","/explore/getWebsiteList").submit();
-			}
-			
-		});
-		
-	});
 	
-	$(function(){
-		
-		$("#searchKeyword").keypress(function(event){
-			
-			if(event.which==13){ //event가 엔터키를 누른경우
-				$("#explore").click(); //클릭한경우랑 같은거
-				//return false; 
-			}
-		});
-		
-	});
-		
-		
-		

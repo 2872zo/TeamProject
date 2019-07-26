@@ -80,13 +80,14 @@ code {
 								<br>
 									<form>
 
+
 								<input type="hidden" name="cafeNo" value="${cafe.cafeNo }"/>
 
                                         <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="val-cafeURL"><h5>카페 URL</h5>
                                             </label>
                                             <div class="col-lg-6">
-                                                <h3>http://localhost:8080/<code>${cafe.cafeURL}</code></h3>
+                                                <h3>http://localhost:8080/<span style="color:orange">${cafe.cafeURL}</span></h3>
                                             </div>
                                         </div> <hr>
 
@@ -113,15 +114,6 @@ code {
                                         </div> <hr>
                                         
                                         <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="val-bannerImg"><h5>배너 이미지 </h5>
-                                            </label>                                           
-                                            <div class="col-lg-6">
-                                               <div><img src="/images/uploadFiles/bannerImg/${cafe.bannerImg}" width="300"; height="200px";/>
-                                               </div>
-                                                <input type="file" class="form-control-file" id="uploadFile" name="uploadFile">
-                                               </div>
-                                        </div> <hr>
-                                        <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="val-bannerImg"><h5>메인 이미지 </h5>
                                             </label>                                           
                                             <div class="col-lg-6">
@@ -143,21 +135,21 @@ code {
 			 							 <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="exampleFormControlSelect1"> <h5>카페 카테고리<span class="text-danger">*</span></h5>
                                             </label>
-                                            <div class="col-lg-6">
+                                            <div class="col-lg-2">
                                                 <select class="form-control aaa" id="exampleFormControlSelect1"	name="cafeType">								
-													<option value="cc100">친목/모임</option>
-													<option value="cc101">스포츠/레저</option>
-													<option value="cc102">영화</option>
-													<option value="cc103">게임</option>
-													<option value="cc104">음악</option>
-													<option value="cc105">여행</option>
+													<option class="cafetype" value="cc100">친목/모임</option>
+													<option class="cafetype" value="cc101">스포츠/레저</option>
+													<option class="cafetype" value="cc102">영화</option>
+													<option class="cafetype" value="cc103">게임</option>
+													<option class="cafetype" value="cc104">음악</option>
+													<option class="cafetype" value="cc105">여행</option>
 												</select>
                                             </div>
                                         </div><hr>
 
 				  				<div class="form-group row">
                                 	<div class="col-lg-8 ml-auto">
-                                  		<button type="submit" class="btn btn-primary">수정</button>
+                                  		<button type="submit" class="btn btn-primary" id="updateCafeInfo">수정</button>
                                   		<a class="btn btn-success btn" href="#" role="button">취&nbsp;소</a>
                                     </div>
                                    </div>
@@ -187,20 +179,23 @@ code {
 	
 	<script type="text/javascript">
 
+
+	//유효성 검사
+	
+		
+	
+			$(".cafetype").each(function(){
+			    if($(this).val()=="${cafe.cafeType}"){
+			      $(this).attr("selected","seleceted");
+			    }
+		 });
 		//============= "가입"  Event 연결 =============
 		 $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$( "button.btn.btn-primary" ).on("click" , function() {
 				alert("수정");
-
-				$("#exampleFormControlSelect1 option:selected").text();
-	            $("option:selected").text();
-	            $(":selected").text();
-
-	
-		
-				$("form").attr("method" , "POST").attr("action" , "/cafe/${cafe.cafeURL}/manage/updateCafeInfo")
-				.attr("enctype","multipart/form-data").submit();
+				//fncUpdateCafe();		
+				$("form").attr("method" , "POST").attr("action" , "/cafe/${cafe.cafeURL}/manage/updateCafeInfo").attr("enctype","multipart/form-data").submit();
 			});
 		});	
 

@@ -68,4 +68,10 @@ public interface CafePostDao {
 	public Board getBoardByPostNo(int postNo);
 
 	public boolean updateNoticeFlag(String deleteNoticeList);
+
+	public List<Reply> getBestReplyList(Search search);
+
+	public List<Reply> getReplyListByMember(Search search);
+
+	public int memberReplyTotalCount(Search search);
 }

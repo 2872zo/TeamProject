@@ -5,6 +5,10 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!DOCTYPE html>
+
+
+
+
 <html lang="ko">
 
 <style type="text/css">
@@ -282,7 +286,6 @@ input[type="checkbox"] {
     ***********************************-->
     
     
-   
-  
-
+<link rel="stylesheet" href="/plugins/sweetalert/css/sweetalert.css">  
+<script src="/plugins/sweetalert/js/sweetalert.min.js"></script>
 </html>

@@ -31,7 +31,7 @@ public class CafeTabRestContoller {
 		System.out.println(getClass().getName() + "default Constuctor");
 	}
 ///////////////////////////////준호시작///////////////////////////////////////
-	@RequestMapping(value = "/{cafeURL}/json/checkCafeNameDuplication", method=RequestMethod.POST)
+	@RequestMapping(value = "/json/checkCafeNameDuplication", method=RequestMethod.POST)
 	public boolean checkCafeNameDuplication(@RequestBody Cafe cafe)throws Exception{
 		
 		System.out.println("/cafe/json/checkCafeNameDuplication : POST");
@@ -44,7 +44,7 @@ public class CafeTabRestContoller {
 		
 	}
 	
-	@RequestMapping(value = "/{cafeURL}/json/checkCafeURLDuplication", method=RequestMethod.POST)
+	@RequestMapping(value = "/json/checkCafeURLDuplication", method=RequestMethod.POST)
 	public boolean checkCafeURLDuplication(@RequestBody Cafe cafe)throws Exception{
 		
 		System.out.println("/cafe/json/checkCafeNameDuplication : POST");

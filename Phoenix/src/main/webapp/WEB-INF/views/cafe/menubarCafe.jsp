@@ -42,20 +42,21 @@
 	                                    </li>
 	                                    <li class="mb-1"><strong class="text-dark mr-4" style="margin-left: 10px;"><i class="fa fa-users"></i></strong> <span style="float: right; margin-right: 10px;">${cafe.members}</span></li>
 	                                    <li class="mb-1 getCafeGrade">
-	                                    	<strong class="text-dark mr-4" style="margin-left: 10px;"><i class="icon-grid gradient-9-text"></i></strong>
-	                                    	<span style="float: right; margin-right: 10px;">카페멤버등급확인</span>
+	                                    	<strong class="text-dark mr-4" style="margin-left: 10px;"><i class="icon-grid"></i></strong>
+	                                    	<h6 style="float: right; margin-right: 10px;">멤버등급안내</h6>
 	                                    </li>
 	                                    <c:if test="${!empty cafeMember && cafeMember.userNo == cafe.manageUserNo}">
-	                                    	<br/>
-	                                    	<li class="mb-1"><strong class="text-dark mr-4 manage cursor" style="margin-left: 10px;"><i class="icon-settings"></i>카페설정</strong></li>
+	                                    	<li class="mb-1"><strong class="text-dark mr-4 manage cursor" style="margin-left: 10px;"><i class="icon-settings"></i>&nbsp;카페설정</strong></li>
 	                                    </c:if>
 	                                    
 	                                </ul>
-	                                <c:if test="${empty cafeMember}">
+	                                <c:if test="${empty cafeMember && cafeApplication.acceptStatusCode ne 'ca100' }">
 										<div class="media align-items-center mb-4" style= "margin:auto;">
 											<button class="btn mb-1 btn-rounded btn-outline-dark addMember">카페가입</button>
 										</div>
 									</c:if>
+									
+								
 	                                
 					           
 					        </div>
@@ -88,10 +89,15 @@
 	                                </ul>
                                 </c:if>
 													        
-								<c:if test="${empty cafeMember}">
+								<c:if test="${empty cafeMember && cafeApplication.acceptStatusCode ne 'ca100'}">
 									<div class="media align-items-center mb-4">
 										<button class="btn mb-1 btn-rounded btn-outline-dark addMember">카페가입</button>
 									</div>
+								</c:if>
+								
+								<c:if test="${empty cafeMember && cafeApplication.acceptStatusCode eq 'ca100' }">
+								<i class="mdi mdi-tumblr-reblog" style="font-size: 19px;" ></i>
+								<strong class="text-dark mr-4" style="margin-left: 10px;">가입 승인 대기중입니다 </strong>
 								</c:if>
 					        
 					        </div>
