@@ -21,6 +21,7 @@
 <link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
 <link href="/css/style.css" rel="stylesheet">
 <link rel="stylesheet" href="/css/custom/scroll-top.css">
+
 <link rel="stylesheet" href="/plugins/sweetalert/css/sweetalert.css">
 	
 	<style>
@@ -98,10 +99,10 @@
         
                                 <form class="mt-5 mb-5 login-input">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="ID" id="userId" name="userId">
+                                        <input type="text" class="form-control" placeholder="ID" id="userid" name="userId">
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" class="form-control" placeholder="Password" id="password" name="password">
+                                        <input type="password" class="form-control" placeholder="Password" id="passWord" name="password">
                                     </div>
                                     <button class="btn login-form__btn submit w-100" id = "logon">로그인</button>
                                     
@@ -149,18 +150,18 @@
 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 		$("#logon").on("click" , function() {
 			
-			var id=$("input[id='userId']").val();
-			var pw=$("input[id='password']").val();
+			var id=$("input[id='userid']").val();
+			var pw=$("input[id='passWord']").val();
 			
 			if(id == null || id.length <1) {
 				
 				sweetAlert("아이디를 입력하세요","","error");
-				$("input[id='userId']").focus();
+				$("input[id='userid']").focus();
 				
 				return false;
 			}else if(pw == null || pw.length <1) {
 				sweetAlert("비밀번호를 입력하세요","","error");
-				$("input[id='password']").focus();
+				$("input[id='passWord']").focus();
 				return false;
 			}else{
 				//alert("입력  : "+id);
@@ -199,7 +200,8 @@
 
 
 
-	</script>		
+	</script>
+	<script src="/js/custom/toolbarScript.js"></script>		
 </body>
 
 </html>

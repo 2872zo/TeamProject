@@ -21,4 +21,7 @@ public interface UserService {
 	public boolean checkUserIdDuplication(String userId) throws Exception;
 	
 	public boolean checkUserPwDuplication(String userId) throws Exception;
+	
+	public Map<String, Object>getUserList(Search search) throws Exception;
+	
 }

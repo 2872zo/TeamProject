@@ -11,10 +11,10 @@
 <head>
     
     <meta charset="utf-8">
-    <title>Quixlab - Bootstrap Admin Dashboard Template by Themefisher.com</title>
+    <title>카페통계</title>
     
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="images/quixlab/favicon.png">
+    <!--  <link rel="icon" type="image/png" sizes="16x16" href="images/quixlab/favicon.png">-->
     <!-- Custom Stylesheet -->
     
     <link href="/css/style.css" rel="stylesheet">

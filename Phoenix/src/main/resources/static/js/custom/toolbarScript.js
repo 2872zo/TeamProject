@@ -56,19 +56,19 @@ $(function() {
 		
 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 		$("#login1").on("click" , function() {
-			var id = $("input:text").val();
-			var pw = $("input:password").val();
+			var id = $("input[name='userId']").val();
+			var pw = $("input[name='password']").val();
 			
 			if(id == null || id.length <1) {
 				sweetAlert("아이디를 입력하세요","","error");
-				//alert('ID 와 비밀번호를 입력하지 않으셨습니다.');
+			//	alert('ID 와 비밀번호를 입력하지 않으셨습니다.');
 				
 				$("#userId").focus();
 				
 				return false;
 			}else if(pw == null || pw.length <1) {
 				sweetAlert("비밀번호를 입력하세요","","error");
-				//alert('패스워드를 입력하지 않으셨습니다.');
+			//	alert('패스워드를 입력하지 않으셨습니다.');
 				
 				$("#password").focus();
 				return false;
@@ -94,7 +94,7 @@ $(function() {
 						//alert(typeof(JSONData));
 						
 						if(JSONData == false){
-							
+						//	alert("아디비번일치x");
 							sweetAlert("아이디 또는 비밀번호가 일치하지 않습니다.","","error");
 							return false;
 						}else{

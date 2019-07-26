@@ -74,6 +74,16 @@ public class UserServiceImpl implements UserService{
 		return result;
 	}	
 	
+	public Map<String, Object>getUserList(Search search)throws Exception{
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("userList", userDao.getUserList(search));
+		map.put("userTotalCount", userDao.getUserTotalCount(search));
+		
+		return map;
+	}
+	
 
 	
 	

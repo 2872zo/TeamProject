@@ -215,23 +215,54 @@
 		var cafeURL = $("input[name='cafeURL']").val();
 
 		if (cafeName == null || cafeName.length < 1) {
-			alert("카페이름은 반드시 입력하셔야 합니다.");
+			sweetAlert("카페이름은 반드시 입력하셔야 합니다.","","error");
+		//	alert("카페이름은 반드시 입력하셔야 합니다.");
 			return;
 		}
 		if (cafeURL == null || cafeURL.length < 1) {
-			alert("카페URL은  반드시 입력하셔야 합니다.");
+			sweetAlert("카페URL은 반드시 입력하셔야 합니다.","","error");
+			//alert("카페URL은  반드시 입력하셔야 합니다.");
 			return;
 		}
+		if((cafeURL < "0" || cafeURL > "9") && (cafeURL < "A" || cafeURL > "Z") && (cafeURL < "a" || cafeURL > "z")){
+			sweetAlert("한글 및 특수문자는 카페URL로 사용하실 수 없습니다.","","error");
+           // alert("한글 및 특수문자는 카페이름으로 사용하실 수 없습니다.");
+            return false;
+        }else if($("input[name='cafeURL']").on('keyup')){
 
-		
-	
-		alert("만들기");
-		$("form").attr("method", "POST").attr("action","/cafe/addCafe").submit();
+		$.ajax({
+			url : "/cafe/json/checkCafeURLDuplication",
+			method : "POST",
+			dataType : "json",
+			headers : {
+				"Accept" : "application/json",
+				"Content-Type" : "application/json"
+			},										
+			data : JSON.stringify({											
+			cafeURL : cafeURL,		
+			}),
+			
+			success : function(JSONData) {
+				//alert(JSONData); 
+				//alert(typeof(JSONData));
+				
+				if(JSONData == false){
+					
+					sweetAlert("카페URL이 중복되었습니다.","","error");
+					
+					return false;
+				}else{			
+										
+					$("#adduser").attr("method", "POST").attr("action","/user/addUser").submit();						
+				}							
+			}
+		});//ajax		
+		}
+	//	alert("만들기");
+	//	$("form").attr("method", "POST").attr("action","/cafe/addCafe").submit();
 	}
 	//카페이름 중복확인 
 	
-
-	//==>"URL중복확인" 
 	
 	//============= "만들기"  Event 연결 =============
 	$(function() {
@@ -282,8 +313,9 @@
 													.remove();
 											$("#check")
 													.append(
-													"<strong  class=\"text-danger\">사용 불가능합니다.</strong>");
+													"<strong  class=\"text-danger\">사용 불가능합니다.</strong>");											
 										}
+								  
 									if (inputed == "") {
 											$("#check").children("strong")
 													.remove();
@@ -298,45 +330,53 @@
 
 	$(function() {
 
-	$("input[name='cafeURL']").on('keyup',function() {
+		$("input[name='cafeURL']").on('keyup',function() {
 
-						var inputed = JSON.stringify({cafeURL : $("input[name='cafeURL']").val()});
-		
-						// alert("입력  : "+inputed);
+				var inputed = $("input[name='cafeURL']").val();
+				// alert("입력  : "+inputed);
 
-								$.ajax({
-									url : "/cafe/json/checkCafeURLDuplication",
-									method : "POST",
-									dataType : "json",
-									contentType : "application/json",
-									data : inputed,
-									error:function(request,status,error){
-								        alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
-								       },
-									success : function(JSONData) {
-									//	alert(JSONData); 
-									//	alert(typeof(JSONData));
+					$.ajax({
+							url : "/cafe/json/checkCafeURLDuplication",
+							method : "POST",
+							dataType : "json",
+							headers : {
+										"Accept" : "application/json",
+										"Content-Type" : "application/json"
+								},
+							data : JSON.stringify({
+							cafeURL : inputed,
+							}),
 
-										if (JSONData && inputed != "") {
-											$("#check1").children("strong")
-													.remove();
-											$("#check1")
-													.append(
-															"<strong class=\"text-success\">사용 가능합니다.</strong>");
+							success : function(JSONData) {
+							//alert(JSONData); 
+							//alert(typeof(JSONData));								
+								   if (JSONData && inputed != "") {
+									$("#check1").children("strong")
+												.remove();
+									$("#check1")
+												.append(
+													"<strong class=\"text-success\">사용 가능합니다.</strong>");
 										} else {
 											$("#check1").children("strong")
 													.remove();
 											$("#check1")
 													.append(
-															"<strong  class=\"text-danger\">사용 불가능합니다.</strong>");
+													"<strong  class=\"text-danger\">사용 불가능합니다.</strong>");
 										}
-										if (inputed == "") {
+								   if ((inputed < "0" || inputed > "9") && (inputed < "A" || inputed > "Z") && (inputed < "a" || inputed > "z")) {
+										$("#check1").children("strong")
+												.remove();
+										$("#check1")
+												.append(
+														"<strong class=\"text-danger\">사용 불가능합니다.</strong>");
+									}
+									if (inputed == "") {
 											$("#check1").children("strong")
 													.remove();
 											$("#check1")
 													.append(
-															"<strong class=\"text-muted\">URL을 입력해주세요.</strong>");
-									 }
+													"<strong class=\"text-muted\">카페이름을 입력해주세요.</strong>");
+										}
 									}
 								});
 							});

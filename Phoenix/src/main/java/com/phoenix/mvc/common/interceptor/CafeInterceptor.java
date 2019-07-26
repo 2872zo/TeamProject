@@ -65,9 +65,10 @@ public class CafeInterceptor extends HandlerInterceptorAdapter {
 		User user = (User) request.getSession().getAttribute("user");
 
 		// 카페 생성
-		if (requestURI.contains("/cafe/addCafe")) {
+		if (requestURI.contains("/cafe/addCafe") || requestURI.contains("/cafe/json/checkCafeNameDuplication") || requestURI.contains("/cafe/json/checkCafeURLDuplication")) {
 			if(user != null) {
-				return true;				
+				
+				//return true;				
 			}else {
 				System.out.println("CafeInterceptor >>> addCafe");
 				response.sendRedirect("/user/loginView");
