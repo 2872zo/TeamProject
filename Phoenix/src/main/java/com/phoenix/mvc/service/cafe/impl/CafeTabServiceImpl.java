@@ -84,12 +84,7 @@ public class CafeTabServiceImpl implements CafeTabService {
 		CafeGrade cafeGrade = new CafeGrade();// 카페 생성시 멤버등급 레코드 추가
 		cafeGrade.setCafeNo(cafe.getCafeNo());
 		cafeTabDao.addMemberGrade(cafeGrade);
-
-		Board board = new Board();// 카페 생성시 게시판 레코드 추가
-		board.setCafeNo(cafe.getCafeNo());
-		board.setCafeURL(cafe.getCafeURL());
-		cafeTabDao.addBoard(board);
-
+		
 		CafeMember cafeMember = new CafeMember();// 카페 생성시 멤버추가(매니저)
 		cafeMember.setCafeNo(cafe.getCafeNo());
 		int i = cafeTabDao.getChangeGrade(cafeMember.getCafeNo());
@@ -97,6 +92,12 @@ public class CafeTabServiceImpl implements CafeTabService {
 		cafeMember.setUserNo(cafe.getManageUserNo());
 		cafeMember.setMemberNickname("매니저");
 		cafeMemberDao.addCafeMember(cafeMember);
+
+		Board board = new Board();// 카페 생성시 게시판 레코드 추가
+		board.setAccessGrade(String.valueOf(i));
+		board.setCafeNo(cafe.getCafeNo());
+		board.setCafeURL(cafe.getCafeURL());
+		cafeTabDao.addBoard(board);
 	}
 
 	public boolean checkCafeNameDuplication(String cafeName) throws Exception {
