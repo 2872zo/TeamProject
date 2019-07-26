@@ -395,6 +395,11 @@ var checkSessionUser = ${empty sessionScope.user};
 
 		});
 
+		$(".friendAlready").on("click", function() {
+			alert("친구친구");
+
+			});
+
 	});
 </script>
 

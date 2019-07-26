@@ -81,19 +81,19 @@
 		
 		INTO BOARD(board_no, cafe_no, cafe_url, board_name, access_grade, board_index, board_type, board_detail)	
 		
-		VALUES(GET_SEQ_BOARD_NO(), #{cafeNo:NUMERIC}, #{cafeURL:VARCHAR}, '공지게시판', 'cg102', '1', 'cb100', '공지게시판입니다')
+		VALUES(GET_SEQ_BOARD_NO(), #{cafeNo:NUMERIC}, #{cafeURL:VARCHAR}, '공지게시판', #{accessGrade:VARCHAR}, '1', 'cb100', '공지게시판입니다')
 		
 		INTO BOARD(board_no, cafe_no, cafe_url, board_name, access_grade, board_index, board_type, board_detail)	
 		
-		VALUES(GET_SEQ_BOARD_NO(), #{cafeNo:NUMERIC}, #{cafeURL:VARCHAR}, '신고게시판', 'cg102', '2', 'cb101', '신고게시판입니다')
+		VALUES(GET_SEQ_BOARD_NO(), #{cafeNo:NUMERIC}, #{cafeURL:VARCHAR}, '신고게시판', #{accessGrade:VARCHAR}, '2', 'cb101', '신고게시판입니다')
 		
 		INTO BOARD(board_no, cafe_no, cafe_url, board_name, access_grade, board_index, board_type, board_detail)	
 		
-		VALUES(GET_SEQ_BOARD_NO(), #{cafeNo:NUMERIC}, #{cafeURL:VARCHAR}, '-------', 'cg102', '3', 'cb102', '구분선입니다')
+		VALUES(GET_SEQ_BOARD_NO(), #{cafeNo:NUMERIC}, #{cafeURL:VARCHAR}, '-------', #{accessGrade:VARCHAR}, '3', 'cb102', '구분선입니다')
 		
 		INTO BOARD(board_no, cafe_no, cafe_url, board_name, access_grade, board_index, board_type, board_detail)	
 		
-		VALUES(GET_SEQ_BOARD_NO(), #{cafeNo:NUMERIC}, #{cafeURL:VARCHAR}, '자유게시판', 'cg102', '4', 'cb103', '자유게시판입니다')
+		VALUES(GET_SEQ_BOARD_NO(), #{cafeNo:NUMERIC}, #{cafeURL:VARCHAR}, '자유게시판', #{accessGrade:VARCHAR}, '4', 'cb103', '자유게시판입니다')
 		
 		SELECT * FROM DUAL
 
@@ -103,7 +103,7 @@
 	<select id = "changeGrade" parameterType="int"   resultType="int">
   		SELECT cafe_member_grade_no
 		FROM cafe_member_grade
-		WHERE cafe_no = #{cafeNo} and member_grade_code ='cg100'
+		WHERE cafe_no = #{cafeNo} and member_grade_code ='cg102'
   	</select>
 
 	 <select 	id="getCafeInfo"	parameterType= "int"	resultMap="cafeSelectMap">
