@@ -12,8 +12,7 @@
 
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <!-- Favicon icon -->
-<link rel="icon" type="image/png" sizes="16x16"
-	href="/images/favicon.png">
+
 <!-- Custom Stylesheet -->
 <link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
 <link href="/css/style.css" rel="stylesheet">
@@ -23,6 +22,7 @@
 <!-- ToolBar Start /////////////////////////////////////-->
 <jsp:include page="/WEB-INF/views/explore/exploreToolbar.jsp" />
 <!-- ToolBar End /////////////////////////////////////-->
+
 <!--  ///////////////////////// CSS ////////////////////////// -->
     <style>
     	li{
@@ -154,9 +154,22 @@
 	           				<c:forEach var="blog" items="${blogList}">
 	           					<c:set var="i" value="${i+1}"/>
 	           					<li class="media">
-	           						<img alt="이미지없음" src="${blog.thumbnail}">
-									<div class="media-body">
-										<a href="${blog.resultLink}">${blog.title}</a>${blog.dateTime}
+	           						<c:if test="${empty blog.thumbnail}"> <!-- 검색 이미지없을때  -->
+	           							<img alt="" src="/images/no_Image.jpg" width="130" height="130" style="margin-left:20px;">
+	           						</c:if>
+	           						<c:if test="${!empty blog.thumbnail}"> <!-- 검색 이미지있을때 -->
+	           							<img alt="" src="${blog.thumbnail}" style="margin-left:20px;">
+	           						</c:if>
+									<div class="media-body" style="margin-left:50px; margin-top:8px;">
+										<div class="form-inline">
+											<h6>
+												<a href="${blog.resultLink}" style="text-decoration:underline; color:#f5a142;">${blog.title}</a>
+											</h6> &nbsp;&nbsp;&nbsp; 
+											<p>${blog.dateTime}</p>
+											
+											
+										</div>
+										
 										<br/>
 										${blog.contents}
 										<br/>
@@ -203,8 +216,6 @@
    	 
    	<!-- 검색 엔터용 스크립트같은데 -->
    		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-   	<!-- 공통 툴바용 스크립트 -->	
-		
    	<!-- 검색 공통 스크립트 -->
    		<script src="/js/custom/exploreCommon.js"></script>
 	</body>

@@ -36,7 +36,7 @@ public class ExploreServiceImpl implements ExploreService{
 	
 
 	@Override
-	public List<Blog> getBlogExploreList(Search search) {
+	public List<Blog> getBlogExploreList(Search search) throws Exception {
 		// TODO Auto-generated method stub
 		
 		List<Blog> blogList = new ArrayList<Blog>(); //어떻게 담을까??
@@ -70,7 +70,7 @@ public class ExploreServiceImpl implements ExploreService{
 	}
 
 	@Override
-	public List<CafeExplore> getCafeExploreList(Search search) {
+	public List<CafeExplore> getCafeExploreList(Search search) throws Exception{
 		
 		
 		List<CafeExplore> cafeList = new ArrayList<CafeExplore>(); //어떻게 담을까??
@@ -107,7 +107,7 @@ public class ExploreServiceImpl implements ExploreService{
 	}
 
 	@Override
-	public List<WebExplore> getWebsiteExploreList(Search search) {
+	public List<WebExplore> getWebsiteExploreList(Search search) throws Exception{
 		
 		List<WebExplore> webList = new ArrayList<WebExplore>(); //어떻게 담을까??
 		
@@ -139,7 +139,7 @@ public class ExploreServiceImpl implements ExploreService{
 	
 
 	@Override
-	public List<Image> getImageExploreList(Search search) {
+	public List<Image> getImageExploreList(Search search) throws Exception{
 		
 		List<Image> imageList = new ArrayList<Image>(); //어떻게 담을까??
 		
