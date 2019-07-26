@@ -63,6 +63,9 @@
         ***********************************-->
 
 		<div class="content-body" style="min-height: 743px;">
+		<form id='memberDetailForm'>
+<input type="hidden" name='memberNo' id='memberNo' value='0'>
+</form>
 		
 		<div class="row page-titles mx-0">
 				<div class="col p-md-0">
@@ -87,18 +90,16 @@
   
 
 <form id='memberListingForm'>
-<input type="hidden" name='currentPage' value='0' id='memberCurrentPage' >
-<input type="hidden" name='cafeNo' 		value='${search.cafeNo}'>
-<input type="hidden" name='memberGrade' value='${search.memberGrade}' id='memberGrade'>		
-<input type="hidden" name='status' 		value='${search.status}' id='status'>
-<input type="hidden" name='sortCode' 	value='${search.sortCode}' id='sortCode'>
+<input type="hidden" name='currentPage' 	value='0' id='memberCurrentPage' >
+<input type="hidden" name='cafeNo' 			value='${search.cafeNo}'>
+<input type="hidden" name='memberGrade' 	value='${search.memberGrade}' id='memberGrade'>		
+<input type="hidden" name='status' 			value='${search.status}' id='status'>
+<input type="hidden" name='sortCode' 		value='${search.sortCode}' id='sortCode'>
+
 	
 	
-	
-</form>	
-<form id='memberDetailForm'>
-<input type="hidden" name='memberNo' id='memberNo' value='0'>
-</form>
+
+
 	    
 <br/>
 
@@ -127,7 +128,7 @@
 	</div>
 	
 	</div>
-
+</form>	
    <button type="button" class='memberGrade btn btn-${ (empty search.memberGrade||search.memberGrade==0) ? "" : "outline-" }info'>전체</button>
    <c:set var="i" value="0" />
    <c:forEach var="cafeGrade" items="${gradeList}">
