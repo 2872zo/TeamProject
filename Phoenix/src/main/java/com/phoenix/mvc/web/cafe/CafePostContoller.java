@@ -427,7 +427,7 @@ public class CafePostContoller {
 		if (search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
 		}
-		System.out.println("[CafeInnerSearchList] Search : " + search);
+		System.out.println("[getPostByMember] Search : " + search);
 
 		Map<String, Object> queryResultMap = cafePostService.getPostListByMember(search);
 		int postTotalCount = (int) queryResultMap.get("postTotalCount");
@@ -450,5 +450,70 @@ public class CafePostContoller {
 		map.put("postTotalCount", postTotalCount);
 
 		return "/cafe/listCafePostByMember";
+	}
+	
+	@RequestMapping("/cafe/{cafeURL}/getMyPostList")
+	public String getMyPostList(HttpServletRequest req, @ModelAttribute Search search, Map<String, Object> map){
+		CafeMember cafeMember =  (CafeMember) req.getAttribute("cafeMember");
+		
+		search.setMemberNo(cafeMember.getMemberNo());
+		
+		if (search.getSearchCondition() == null) {
+			search.setSearchCondition("0");
+		}
+		search.setPageSize(pageSize);
+		
+		if (search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+		
+		System.out.println("[getMyPostList] Search : " + search);
+		
+		int postCurrentPage = 1;
+		int replyCurrentPage = 1;
+		
+		if(search.getStatus() == 0) {
+			postCurrentPage = search.getCurrentPage();
+			replyCurrentPage = 1;
+		}
+		
+		if(search.getStatus() == 1) {
+			postCurrentPage = 1;
+			replyCurrentPage = search.getCurrentPage();
+		}
+		
+		
+		Map<String, Object> queryResultMap = cafePostService.getMyPostList(search);
+		int postTotalCount = (int) queryResultMap.get("postTotalCount");
+		Page postPage = new Page(postCurrentPage, postTotalCount, pageUnit, pageSize);
+		
+		int replyTotalCount = (int) queryResultMap.get("replyTotalCount");
+		Page replyPage = new Page(replyCurrentPage, replyTotalCount, pageUnit, pageSize);
+		
+
+		System.out.println("[getMyPostList] search : " + search);
+
+		// 검색옵션의 게시판목록을 위한 작업
+		List<Board> boardList = (List<Board>) req.getAttribute("boardList");
+		List<Board> boardOption = new ArrayList<Board>();
+		boardOption.addAll(boardList);
+		// 구분선 모두 처리
+		Predicate<Board> condition = board -> board.getBoardType().equals("cb102");
+		boardOption.removeIf(condition);
+
+		
+		System.out.println(replyPage);
+		System.out.println(postPage);
+		
+		map.put("boardOption", boardOption);
+		map.put("postPage", postPage);
+		map.put("replyPage", replyPage);
+		map.put("search", search);
+		map.put("postList", queryResultMap.get("postList"));
+		map.put("postTotalCount", postTotalCount);
+		map.put("replyList", queryResultMap.get("replyList"));
+		map.put("replyTotalCount", replyTotalCount);
+		
+		return "/cafe/listMyCafePost";
 	}
 }

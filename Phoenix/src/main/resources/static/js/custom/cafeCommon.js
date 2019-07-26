@@ -66,3 +66,11 @@ function fncGoChat(){
 function fncAddCafeApplication(cafeURL){
 	location.href= "/cafe/"+ cafeURL +"/addCafeApplicationView";
 }
+
+function fncGetMyPostList(idx){
+	location.href = "/cafe/" + cafeURL + "/getMyPostList?currentPage=" + idx + "&status=0";
+}
+
+function fncGetMyReplyList(idx){
+	location.href = "/cafe/" + cafeURL + "/getMyPostList?currentPage=" + idx + "&status=1";
+}

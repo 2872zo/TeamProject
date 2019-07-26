@@ -48,4 +48,6 @@ public interface CafePostService {
 	public Board getBoard(int boardNo);
 	
 	public Board getBoardByPostNo(int postNo);
+
+	public Map<String, Object> getMyPostList(Search search);
 }

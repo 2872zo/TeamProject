@@ -192,10 +192,8 @@ checkbox
 											<label for="searchCondition">구분</label> <select
 												class="form-control hideOption" name="searchCondition">
 												<option value="0" class="searchOption">전체</option>
-												<option value="1" class="searchOption">호칭</option>
-												<option value="2" class="searchOption">제목</option>
-												<option value="3" class="searchOption">내용</option>
-												<option value="4" class="searchOption">댓글</option>
+												<option value="1" class="searchOption">제목</option>
+												<option value="2" class="searchOption">내용</option>
 											</select>
 										</div>
 									</div>
@@ -214,7 +212,7 @@ checkbox
                                             </div>
 										</div>
 									</div>
-								
+								<input type="hidden" name="memberNo" value="${search.memberNo }">
 								</div><!-- form-row end -->
 							</form><!-- form end -->
 							

@@ -70,4 +70,8 @@ public interface CafePostDao {
 	public boolean updateNoticeFlag(String deleteNoticeList);
 
 	public List<Reply> getBestReplyList(Search search);
+
+	public List<Reply> getReplyListByMember(Search search);
+
+	public int memberReplyTotalCount(Search search);
 }

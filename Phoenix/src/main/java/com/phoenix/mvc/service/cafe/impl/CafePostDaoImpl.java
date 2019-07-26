@@ -179,4 +179,14 @@ public class CafePostDaoImpl implements CafePostDao{
 	public List<Reply> getBestReplyList(Search search) {
 		return sqlSession.selectList("CafePostMapper.getBestReplyList", search);
 	}
+
+	@Override
+	public List<Reply> getReplyListByMember(Search search) {
+		return sqlSession.selectList("CafePostMapper.getReplyListByMember", search);
+	}
+
+	@Override
+	public int memberReplyTotalCount(Search search) {
+		return sqlSession.selectOne("CafePostMapper.memberReplyTotalCount", search);
+	}
 }

@@ -141,106 +141,19 @@ checkbox
 				<div class="col-lg-12">
 					<div class="card">
 						<div class="card-body">
-							<form class="form-horizontal" role="form" id="searchForm">
-								<div class="form-row">
-									<input type="hidden" name="currentPage">
-									
-									<div class="col">
-										<div class="form-group">
-											<label for="termStart">기간 시작</label> 
-											<div class="input-group">
-												<span class="input-group-prepend">
-													<span class="input-group-text">
-														<i class="mdi mdi-calendar-check"></i>
-													</span>
-												</span>
-												<input class="form-control" type="text" id="termStart" name="termStart" readonly="readonly" style="text-align:center;">
-											</div>
-										</div>
-									</div>
-									
-									<div class="col">
-										<div class="form-group">
-											<label for="termEnd">기간 끝</label>
-											<div class="input-group"> 
-												<span class="input-group-prepend">
-													<span class="input-group-text">
-														<i class="mdi mdi-calendar-check"></i>
-													</span>
-												</span>
-												<input class="form-control" type="text" id="termEnd" name="termEnd" readonly="readonly" style="text-align:center;">
-											</div>
-										</div>
-									</div>
-		
-									<div class="col">
-										<div class="form-group">
-											<label for="boardNo">게시판</label> 
-											<select	class="form-control hideOption" name="boardNo">
-												<option value="0" class="boardOption">전체</option>
-												<c:forEach var="board" items="${boardOption }">
-													<option value="${board.boardNo }" class="boardOption">${board.boardName }</option>
-												</c:forEach>
-											</select>
-										</div>
-									</div>
-								</div>
-								
-								<div class="form-row">
-									<div class="col">	
-										<div class="form-group">
-											<label for="searchCondition">구분</label> <select
-												class="form-control hideOption" name="searchCondition">
-												<option value="0" class="searchOption">전체</option>
-												<option value="1" class="searchOption">호칭</option>
-												<option value="2" class="searchOption">제목</option>
-												<option value="3" class="searchOption">내용</option>
-												<option value="4" class="searchOption">댓글</option>
-											</select>
-										</div>
-									</div>
-									
-									
-									<div class="col">
-										<div class="form-group">
-											<label for="searchKeyword">키워드</label> 
-											<div class="input-group">
-												<input type="text" class="form-control" name="searchKeyword" id="advSearchKeyword">
-												<div class="input-group-append">
-	                                                <button type="submit" class="btn btn-primary" style="margin:0px; padding:7px;" id="advSubmitButton">
-														<span class="searchIcon" aria-hidden="true" style="vertical-align:middle;"></span>
-													</button>
-	                                            </div>
-                                            </div>
-										</div>
-									</div>
-								
-								</div><!-- form-row end -->
-							</form><!-- form end -->
-							
-						</div><!-- row end -->
-					</div><!-- card-body end -->
-				</div><!-- card end -->
-			
-			
-			
-			
-				<div class="col-lg-12">
-					<div class="card">
-						<div class="card-body">
 							<h4 class="card-title">작성글 검색</h4>
 							
 							<!-- tap start --> 
 							<div class="default-tab">
                                     <ul class="nav nav-tabs mb-3" role="tablist">
-                                        <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#home">게시글</a>
+                                        <li class="nav-item"><a class="nav-link <c:if test='${search.status eq 0 }'>active</c:if>" data-toggle="tab" href="#post">게시글</a>
                                         </li>
-                                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#profile">댓글</a>
+                                        <li class="nav-item"><a class="nav-link <c:if test='${search.status eq 1 }'>active</c:if>" data-toggle="tab" href="#reply">댓글</a>
                                         </li>
                                     </ul>
                                     <div class="tab-content">
-                                    /
-                                        <div class="tab-pane fade show active" id="home" role="tabpanel">
+                                    
+                                        <div class="tab-pane fade <c:if test='${search.status eq 0 }'>show active</c:if>" id="post" role="tabpanel">
                                             <div class="table-responsive">
 												<form id="boardPage">
 													<input type="hidden" name="currentPage">
@@ -252,7 +165,6 @@ checkbox
 															<tr>
 																<td>게시판</td>
 																<td>제목</td>
-																<td>작성자</td>
 																<td>작성일</td>
 																<td>조회수</td>
 																<td>추천수</td>
@@ -267,7 +179,6 @@ checkbox
 																<input type="hidden" class="memberNo" value="${post.memberNo }"/>
 																<td class="boardName">${post.boardName }</td>
 																<td class="postTitle">${post.postTitle }</td>
-																<td>${post.memberNickname }</td>
 																<td>${post.regDate }</td>
 																<td>${post.viewCount }</td>
 																<td>${post.likeCount }</td>
@@ -276,9 +187,65 @@ checkbox
 				
 														<tr>
 															<td colspan="6">
-																<c:import url="/WEB-INF/views/common/pageNavigator.jsp">
-																	<c:param name="subject" value="InnerSearch" />
-																</c:import>
+																<div class="container d-flex justify-content-center">
+																	 <nav>
+																	  <!-- 크기조절 :  pagination-lg pagination-sm-->
+																	  <ul class="pagination" style="align-content:  center;">
+																	    
+																	    <!--  <<== 좌측 nav -->
+																	  	<c:if test="${ postPage.currentPage <= postPage.pageUnit }">
+																	 		<li class="page-item disabled">
+																	 			<span class="page-link">&laquo;</span>
+																	 		</li>
+																		</c:if>
+																		<c:if test="${ postPage.currentPage > postPage.pageUnit }">
+																			<li class="page-item">
+																				<a class="page-link" href="javascript:fncGetMyPostList('${ postPage.beginUnitPage-1}')">
+																					<span style='color:#f5a142;'>&laquo;</span>
+																				</a>
+																			</li>
+																		</c:if>
+																	    
+																	    <!--  중앙  -->
+																		<c:forEach var="i"  begin="${postPage.beginUnitPage}" end="${postPage.endUnitPage}" step="1">
+																			
+																			<!--  현재 page 가르킬경우 : active -->
+																			<c:if test="${ postPage.currentPage == i }">
+																			    <li class="page-item active " aria-current="page" 
+																			    >
+																			    	<span class="page-link" style='background-color:#f5a142; border: 1px solid #f5a142'>
+																			    		${ i }
+																			    		<span class="sr-only">(current)</span>
+																			    	</span>
+																			    </li>
+																			</c:if>	
+																			
+																			<!-- 현재 page가 아닐 경우 -->				
+																			<c:if test="${ postPage.currentPage != i}">	
+																				<li class="page-item">
+																					<a class="page-link" href="javascript:fncGetMyPostList('${ i }');" style='color:#f5a142;'>${ i }</a>
+																				</li>
+																			</c:if>
+																		</c:forEach>
+																	    
+																	     <!--  우측 nav==>> -->
+																	     <c:if test="${ postPage.endUnitPage >= postPage.maxPage }">
+																	  		<li class="page-item disabled">
+																	  			<span class="page-link">
+																	  				<span>&raquo;</span>
+																	  			</span>
+																	  		</li>
+																		</c:if>
+																		<c:if test="${ postPage.endUnitPage < postPage.maxPage }">
+																			<li class="page-item">
+																				<a class="page-link"  href="javascript:fncGetMyPostList('${postPage.endUnitPage+1}')">
+																		        	<span style='color:#f5a142;'>&raquo;</span>
+																		      	</a>
+																		    </li>
+																		</c:if>
+																	  </ul>
+																	</nav>
+															</div>
 															</td>
 														</tr>
 				
@@ -287,12 +254,100 @@ checkbox
 											</div>
                                         </div>
                                         
-                                        <div class="tab-pane fade" id="profile">
-                                            <div class="p-t-15">
-                                                <h4>This is profile title</h4>
-                                                <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor.</p>
-                                                <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor.</p>
-                                            </div>
+                                        <div class="tab-pane fade <c:if test='${search.status eq 1 }'>show active</c:if>" id="reply">
+                                            <div class="table-responsive">
+												<form id="boardPage">
+													<input type="hidden" name="currentPage">
+												</form>
+												<p>총 ${postTotalCount }개 중 ${search.startRowNum} - ${search.endRowNum }</p>
+												<table class="table header-border">
+													<thead class="thead-light">
+														<tr>
+															<tr>
+																<td>내용</td>
+																<td>작성일</td>
+																<td>추천수</td>
+															</tr>
+														</tr>
+													</thead>
+													<tbody>
+														<c:forEach items="${replyList }" var="reply">
+															<tr>
+																<input type="hidden" class="postNo" value="${reply.postNo }"/>
+																<input type="hidden" class="memberNo" value="${reply.memberNo }"/>
+																<td class="postTitle">${reply.replyContent }</td>
+																<td>${reply.regDate }</td>
+																<td>${reply.likeCount }</td>
+															</tr>
+														</c:forEach>
+				
+														<tr>
+															<td colspan="6">
+																<div class="container d-flex justify-content-center">
+																	 <nav>
+																	  <!-- 크기조절 :  pagination-lg pagination-sm-->
+																	  <ul class="pagination" style="align-content:  center;">
+																	    
+																	    <!--  <<== 좌측 nav -->
+																	  	<c:if test="${ replyPage.currentPage <= replyPage.pageUnit }">
+																	 		<li class="page-item disabled">
+																	 			<span class="page-link">&laquo;</span>
+																	 		</li>
+																		</c:if>
+																		<c:if test="${ replyPage.currentPage > replyPage.pageUnit }">
+																			<li class="page-item">
+																				<a class="page-link" href="javascript:fncGetMyReplyList('${ replyPage.beginUnitPage-1}')">
+																					<span style='color:#f5a142;'>&laquo;</span>
+																				</a>
+																			</li>
+																		</c:if>
+																	    
+																	    <!--  중앙  -->
+																		<c:forEach var="i"  begin="${replyPage.beginUnitPage}" end="${replyPage.endUnitPage}" step="1">
+																			
+																			<!--  현재 page 가르킬경우 : active -->
+																			<c:if test="${ replyPage.currentPage == i }">
+																			    <li class="page-item active " aria-current="page" 
+																			    >
+																			    	<span class="page-link" style='background-color:#f5a142; border: 1px solid #f5a142'>
+																			    		${ i }
+																			    		<span class="sr-only">(current)</span>
+																			    	</span>
+																			    </li>
+																			</c:if>	
+																			
+																			<!-- 현재 page가 아닐 경우 -->				
+																			<c:if test="${ replyPage.currentPage != i}">	
+																				<li class="page-item">
+																					<a class="page-link" href="javascript:fncGetMyReplyList('${ i }');" style='color:#f5a142;'>${ i }</a>
+																				</li>
+																			</c:if>
+																		</c:forEach>
+																	    
+																	     <!--  우측 nav==>> -->
+																	     <c:if test="${ replyPage.endUnitPage >= replyPage.maxPage }">
+																	  		<li class="page-item disabled">
+																	  			<span class="page-link">
+																	  				<span>&raquo;</span>
+																	  			</span>
+																	  		</li>
+																		</c:if>
+																		<c:if test="${ replyPage.endUnitPage < replyPage.maxPage }">
+																			<li class="page-item">
+																				<a class="page-link"  href="javascript:fncGetMyReplyList('${replyPage.endUnitPage+1}')">
+																		        	<span style='color:#f5a142;'>&raquo;</span>
+																		      	</a>
+																		    </li>
+																		</c:if>
+																	  </ul>
+																	</nav>
+															</div>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+											
                                         </div>
                                         
                                     </div>
