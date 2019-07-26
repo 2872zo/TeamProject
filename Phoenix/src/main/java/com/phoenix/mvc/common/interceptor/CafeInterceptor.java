@@ -229,11 +229,11 @@ public class CafeInterceptor extends HandlerInterceptorAdapter {
 
 						// 접근 권한을 확인하기위한 데이터 정제
 						int cafeMemberGrade = Integer.parseInt(cafeMember.getMemberGrade().substring(2));
-						int boardGrade = Integer.parseInt(board.getAccessGradeName().substring(2));
+						int boardGrade = Integer.parseInt(board.getMemberGradeCode().substring(2));
 
 						// 게시판 접근권한이 모자랄 경우
-						System.out.println("\n\n\n\n\n\n\n권한 체크 \n" + cafeMemberGrade + "  \n boardGrade : " +board.getAccessGradeName() + "\n" + boardGrade + "\n\n\n\n\n\n\n");
-						if (!user.getUserRoleCode().equals("ur100") && cafeMemberGrade > 101 && cafeMemberGrade < boardGrade) {
+						if (!user.getUserRoleCode().equals("ur100") && ( (cafeMemberGrade > 101 && cafeMemberGrade < boardGrade) || (cafeMemberGrade < 102 && cafeMemberGrade > boardGrade)) ) {
+							
 							System.out.println("CafeInterceptor >>> 권한 부족");
 							response.sendRedirect(request.getContextPath() + "/cafe/" + cafeURL + "/accessDenied");
 							return false;
@@ -260,7 +260,7 @@ public class CafeInterceptor extends HandlerInterceptorAdapter {
 
 						// 접근 권한을 확인하기위한 데이터 정제
 						int cafeMemberGrade = Integer.parseInt(cafeMember.getMemberGrade().substring(2));
-						int boardGrade = Integer.parseInt(board.getAccessGradeName().substring(2));
+						int boardGrade = Integer.parseInt(board.getMemberGradeCode().substring(2));
 
 						// 게시글이 삭제된 경우
 						if (post.isPostStatusFlag()) {
@@ -270,7 +270,7 @@ public class CafeInterceptor extends HandlerInterceptorAdapter {
 						}
 
 						// 해당 게시글이 있는 게시판의 접근권한이 모자랄 경우
-						if (!user.getUserRoleCode().equals("ur100") && cafeMemberGrade > 101 && cafeMemberGrade < boardGrade) {
+						if (!user.getUserRoleCode().equals("ur100") && ( (cafeMemberGrade > 101 && cafeMemberGrade < boardGrade) || (cafeMemberGrade < 102 && cafeMemberGrade > boardGrade)) ) {
 							System.out.println("CafeInterceptor >>>>>>>>>> 권한 부족");
 							response.sendRedirect(request.getContextPath() + "/cafe/" + cafeURL + "/accessDenied");
 							return false;
