@@ -45,6 +45,25 @@
     		text-overflow: ellipsis;
     		text-decoration:underline; 
     		color:#f5a142; 
+    		
+    	}
+    	
+    	#blogContent{
+    	
+    		display: inline-block;
+    		width: 450px; 
+    		white-space: nowrap; 
+    		overflow: hidden; 
+    		text-overflow: ellipsis;
+    		
+    		white-space: normal; 
+    		line-height: 1.2; 
+    		height: 2.6em; 
+    		text-align: left; 
+    		word-wrap: break-word; 
+    		display: -webkit-box; 
+    		-webkit-line-clamp: 3; 
+    		-webkit-box-orient: vertical;
     	}
     
     </style>
@@ -169,7 +188,7 @@
 	           							<img alt="" src="/images/no_Image.jpg" width="130" height="130" style="margin-left:20px;">
 	           						</c:if>
 	           						<c:if test="${!empty blog.thumbnail}"> <!-- 검색 이미지있을때 -->
-	           							<img alt="" src="${blog.thumbnail}" style="margin-left:20px;">
+	           							<img alt="" src="${blog.thumbnail}" style="margin-left:20px; margin-top: 20px">
 	           						</c:if>
 									<div class="media-body" style="margin-left:50px; margin-top:8px;">
 										<div class="form-inline">
@@ -177,13 +196,10 @@
 												<a href="${blog.resultLink}" id="blogTitle" >${blog.title}</a>
 											</h6> &nbsp;&nbsp;&nbsp; 
 											<p>${blog.dateTime}</p>
-											
-											
 										</div>
 										
-										<br/>
-										${blog.contents}
-										<br/>
+										<div class="form-group" id="blogContent">${blog.contents}</div>
+										
 										<a href="${blog.blogLink}">${blog.blogName}</a>
 									</div>           					
 	           					</li>
