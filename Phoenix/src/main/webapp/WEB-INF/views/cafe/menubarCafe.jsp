@@ -51,11 +51,13 @@
 	                                    </c:if>
 	                                    
 	                                </ul>
-	                                <c:if test="${empty cafeMember}">
+	                                <c:if test="${empty cafeMember && cafeApplication.acceptStatusCode ne 'ca100' }">
 										<div class="media align-items-center mb-4" style= "margin:auto;">
 											<button class="btn mb-1 btn-rounded btn-outline-dark addMember">카페가입</button>
 										</div>
 									</c:if>
+									
+								
 	                                
 					           
 					        </div>
@@ -88,10 +90,15 @@
 	                                </ul>
                                 </c:if>
 													        
-								<c:if test="${empty cafeMember}">
+								<c:if test="${empty cafeMember && cafeApplication.acceptStatusCode ne 'ca100'}">
 									<div class="media align-items-center mb-4">
 										<button class="btn mb-1 btn-rounded btn-outline-dark addMember">카페가입</button>
 									</div>
+								</c:if>
+								
+								<c:if test="${empty cafeMember && cafeApplication.acceptStatusCode eq 'ca100' }">
+								<i class="mdi mdi-tumblr-reblog" style="font-size: 19px;" ></i>
+								<strong class="text-dark mr-4" style="margin-left: 10px;">가입 승인 대기중입니다 </strong>
 								</c:if>
 					        
 					        </div>

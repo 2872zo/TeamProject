@@ -59,6 +59,7 @@ public class CafeManageController {
 	@Qualifier("cafeMemberServiceImpl")
 	private CafeMemberService cafeMemberService;
 
+
 	@Value("${pageSize}")
 	private int pageSize;
 

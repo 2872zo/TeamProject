@@ -166,7 +166,7 @@ public class CafeInterceptor extends HandlerInterceptorAdapter {
 					return false;
 				}
 				// 카페 멤버 여부 확인//지니
-				else if (cafeMember == null || cafeMember.getMemberStatusCode().equals("cs102")) {
+				else if (cafeMember == null || cafeMember.getMemberStatusCode().equals("cs102") ) {
 
 					if (request.getRequestURI().contains("addCafeApplication")) {
 						System.out.println(">>> 카페 회원가입 접근");

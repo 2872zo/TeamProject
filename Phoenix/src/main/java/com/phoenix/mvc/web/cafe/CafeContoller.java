@@ -52,6 +52,7 @@ public class CafeContoller {
 		model.addAttribute("noticePostList", map.get("noticePostList"));//공지게시글리스트
 		model.addAttribute("cafeMember", map.get("cafeMember"));//내정보
 		model.addAttribute("boardList", map.get("boardList"));//카페게시판리스트
+		model.addAttribute("cafeApplication",map.get("cafeApplication"));//가입신청
 		
 		return "cafe/mainCafe";
 	}
