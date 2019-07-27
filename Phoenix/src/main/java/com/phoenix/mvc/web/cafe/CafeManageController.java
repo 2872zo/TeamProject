@@ -59,7 +59,6 @@ public class CafeManageController {
 	@Qualifier("cafeMemberServiceImpl")
 	private CafeMemberService cafeMemberService;
 
-
 	@Value("${pageSize}")
 	private int pageSize;
 
@@ -632,7 +631,8 @@ public class CafeManageController {
 	}
 
 	@PostMapping(value = "/{cafeURL}/manage/updateCafeGrade")
-	public String updateCafeGrade(@ModelAttribute("CafeGrade") CafeGrade grades, @RequestParam("CafeNo") int cafeNo) {
+	public String updateCafeGrade(@ModelAttribute("CafeGrade") CafeGrade grades, @RequestParam("CafeNo") int cafeNo,
+			@PathVariable String cafeURL) {
 
 		System.out.println("/{cafeURL}/manage/updateCafeGrade : POST");
 		System.out.println(cafeNo);
@@ -698,7 +698,7 @@ public class CafeManageController {
 
 		}
 
-		return "redirect:/cafe/no1cafe/manage/updateCafeGradeView"; // cafeURL 수정
+		return "redirect:/cafe/" + cafeURL + "/manage/updateCafeGradeView"; // cafeURL 수정
 
 	}
 
