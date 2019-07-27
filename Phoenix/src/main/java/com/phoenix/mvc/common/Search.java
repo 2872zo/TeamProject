@@ -29,8 +29,8 @@ public class Search{
 	private String termEnd;
 	
 	private int targetUserNo;
-	private int chatNo;
-	private int chatRoomNo;
+	private String chatId;
+	private String chatRoomId;
 	private int friendStatus;
 	
 	private int positionIndex;
@@ -226,20 +226,22 @@ public class Search{
 		this.targetUserNo = targetUserNo;
 	}
 
-	public int getChatNo() {
-		return chatNo;
+
+
+	public String getChatId() {
+		return chatId;
 	}
 
-	public void setChatNo(int chatNo) {
-		this.chatNo = chatNo;
+	public void setChatId(String chatId) {
+		this.chatId = chatId;
 	}
 
-	public int getChatRoomNo() {
-		return chatRoomNo;
+	public String getChatRoomId() {
+		return chatRoomId;
 	}
 
-	public void setChatRoomNo(int chatRoomNo) {
-		this.chatRoomNo = chatRoomNo;
+	public void setChatRoomId(String chatRoomId) {
+		this.chatRoomId = chatRoomId;
 	}
 
 	public int getFriendStatus() {
@@ -346,7 +348,7 @@ public class Search{
 				+ sortCode + ", searchCondition=" + searchCondition + ", searchKeyword=" + searchKeyword
 				+ ", currentPage=" + currentPage + ", pageSize=" + pageSize + ", endRowNum=" + endRowNum
 				+ ", startRowNum=" + startRowNum + ", termStart=" + termStart + ", termEnd=" + termEnd
-				+ ", targetUserNo=" + targetUserNo + ", chatNo=" + chatNo + ", chatRoomNo=" + chatRoomNo
+				+ ", targetUserNo=" + targetUserNo + ", chatId=" + chatId + ", chatRoomId=" + chatRoomId
 				+ ", friendStatus=" + friendStatus + ", positionIndex=" + positionIndex + ", engineAll=" + engineAll
 				+ ", engineNaver=" + engineNaver + ", engineDaum=" + engineDaum + ", engineGoogle=" + engineGoogle
 				+ ", enginePhoenix=" + enginePhoenix + ", orderState=" + orderState + ", orderStateSort="

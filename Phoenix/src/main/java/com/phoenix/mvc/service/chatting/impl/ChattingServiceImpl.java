@@ -1,5 +1,6 @@
 package com.phoenix.mvc.service.chatting.impl;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -92,24 +93,36 @@ public class ChattingServiceImpl implements ChattingService{
 
 	@Override
 	public Map getChatList(Search search) throws Exception {
-		// TODO Auto-generated method stub
+		
 		Map map = new HashMap();
 		List chatList = chattingDao.getChatList(search);
 		return map;
+	
 	}
 
 	@Override
 	public Map getChatRoom(Search search) throws Exception {
-		// TODO Auto-generated method stub
+		
 		Map map = new HashMap();
 		List chatList = chattingDao.getChatList(search);
+		List userList = chattingDao.getChatRoomUserList(search);
 		map.put("chatList", chatList);
+		map.put("userList", userList);
 		return map;
+		
 	}
 	
 	@Override
-	public void addChatRoom(ChatRoomForMongo chatRoomForMongo) throws Exception {
+	public ChatRoomInfo addChatRoom(ChatRoomForMongo chatRoomForMongo) throws Exception {
 		chattingDao.addChatRoom(chatRoomForMongo);
+		ChatRoomInfo chatRoomInfo = new ChatRoomInfo();
+		chatRoomInfo.setChatRoomId(chatRoomForMongo.getId());
+		chatRoomInfo.setUserNo(chatRoomForMongo.getOpenUserNo());
+		chatRoomInfo.setRegDate(new Date());
+		chatRoomInfo.setLatestEnter(new Date());
+		chattingDao.addMyChatRoom(chatRoomInfo);
+		System.out.println(chatRoomInfo);
+		return chatRoomInfo;
 	}
 
 	@Override

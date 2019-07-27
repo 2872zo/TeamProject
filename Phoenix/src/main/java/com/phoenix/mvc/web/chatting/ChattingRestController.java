@@ -35,9 +35,9 @@ public class ChattingRestController {
 		System.out.println ("/chat/json/addChat");
 		System.out.println (chat);
 		chat.setRegDate(new Date());
-		System.out.println ("시간찍힘"+chat);
-		chat.setChatNickname("대충");
-		chat.setChatProfileImg("abc");
+		//System.out.println ("시간찍힘"+chat);
+		//chat.setChatNickname("대충");
+		//chat.setChatProfileImg("abc");
 		chattingService.addChat(chat);
 		
 		System.out.println ("제대로들어가면호출됨"+chat);

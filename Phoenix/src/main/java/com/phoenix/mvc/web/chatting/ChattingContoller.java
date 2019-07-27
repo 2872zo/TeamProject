@@ -24,6 +24,7 @@ import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.chatting.ChattingService;
 import com.phoenix.mvc.service.domain.ChatRoom;
 import com.phoenix.mvc.service.domain.ChatRoomForMongo;
+import com.phoenix.mvc.service.domain.ChatRoomInfo;
 import com.phoenix.mvc.service.domain.User;
 
 @Controller
@@ -94,29 +95,37 @@ public class ChattingContoller {
 		Search search = new Search();
 		search.setUserNo(user.getUserNo());
 		Map map = chattingService.getMyChatRoomList(search);
-		List<ChatRoom> chatRoomList = (List) map.get("chatRoomList");
-		List<Integer> roomNoList = new ArrayList<Integer>();
+		List<ChatRoomInfo> chatRoomList = (List) map.get("chatRoomList");
+		List<String> roomNoList = new ArrayList<String>();
 		String roomNos = "";
-		for (int i =0; i<chatRoomList.size() ;i++) {
-			int a = chatRoomList.get(i).getChatRoomNo();
+		for (int i=0; i<chatRoomList.size(); i++) {
+			String a = chatRoomList.get(i).getChatRoomId();
 			roomNoList.add(a);
 			roomNos += a+",";
 		}
-		session.setAttribute("roomNos",roomNos);
-		session.setAttribute("roomNoList",roomNoList);
+		System.out.println("방목록 스트링 찍어주라 : "+roomNos);
+		//session.setAttribute("roomNos",roomNos);
+		//session.setAttribute("roomNoList",roomNoList);
 		model.addAttribute("chatRoomList",chatRoomList);
 		model.addAttribute("roomNos",roomNos);
 		return "chat/listChatRoom";
 	}
 	
 	@RequestMapping("chatRoom")
-	public String getChatRoom(@SessionAttribute("user") User user, @ModelAttribute ChatRoom chatRoom, Model model) throws Exception {
-		System.out.println(chatRoom.getChatRoomNo());
+	public String getChatRoom(@SessionAttribute("user") User user, @ModelAttribute Search search, Model model) throws Exception {
+		
+		Map map = chattingService.getChatRoom(search);
+		List chatList = (List) map.get("chatList");
+		List userList = (List) map.get("userList");
+		String chatRoomId=search.getChatRoomId();
+		//System.out.println(chatRoom.getChatRoomNo());
 		//Search search = new Search();
 		//search.setUserNo(user.getUserNo());
 		//Map map = chattingService.getMyChatRoomList(search);
 		//List chatRoomList = (List) map.get("chatRoomList");
-		model.addAttribute("chatRoom", chatRoom);
+		model.addAttribute("chatList", chatList);
+		model.addAttribute("userList", userList);
+		model.addAttribute("chatRoomId", chatRoomId);
 		return "chat/chatRoom";
 	}
 	
