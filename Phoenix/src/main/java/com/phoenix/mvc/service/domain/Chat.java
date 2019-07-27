@@ -9,19 +9,17 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Chat {
 	
 	private String id;
-	private int chatRoomNo;
-	private int chatNo;
-	private int UserNo;
-	private String chatNickname;
-	private String chatProfileImg;
+	private String chatRoomId;
+	private int userNo;
+	private String userNickname;
+	private String profileImg;
 	private int chatType;
 	private String chatMsg;
 	private Date regDate;
 	
-	public Chat() {
-		
+	public Chat() {	
 	}
-	
+
 	public String getId() {
 		return id;
 	}
@@ -30,62 +28,69 @@ public class Chat {
 		this.id = id;
 	}
 
-	public int getChatRoomNo() {
-		return chatRoomNo;
+	public String getChatRoomId() {
+		return chatRoomId;
 	}
-	public void setChatRoomNo(int chatRoomNo) {
-		this.chatRoomNo = chatRoomNo;
+
+	public void setChatRoomId(String chatRoomId) {
+		this.chatRoomId = chatRoomId;
 	}
-	public int getChatNo() {
-		return chatNo;
-	}
-	public void setChatNo(int chatNo) {
-		this.chatNo = chatNo;
-	}
+
 	public int getUserNo() {
-		return UserNo;
+		return userNo;
 	}
+
 	public void setUserNo(int userNo) {
-		UserNo = userNo;
+		this.userNo = userNo;
 	}
+
 	public String getChatNickname() {
-		return chatNickname;
+		return userNickname;
 	}
+
 	public void setChatNickname(String chatNickname) {
-		this.chatNickname = chatNickname;
+		this.userNickname = chatNickname;
 	}
+
 	public String getChatProfileImg() {
-		return chatProfileImg;
+		return profileImg;
 	}
+
 	public void setChatProfileImg(String chatProfileImg) {
-		this.chatProfileImg = chatProfileImg;
+		this.profileImg = chatProfileImg;
 	}
+
 	public int getChatType() {
 		return chatType;
 	}
+
 	public void setChatType(int chatType) {
 		this.chatType = chatType;
 	}
+
 	public String getChatMsg() {
 		return chatMsg;
 	}
+
 	public void setChatMsg(String chatMsg) {
 		this.chatMsg = chatMsg;
 	}
+
 	public String getRegDate() {
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd HH:mm");
 		
 		return format.format(regDate);
 	}
+
 	public void setRegDate(Date regDate) {
 		this.regDate = regDate;
 	}
 
 	@Override
 	public String toString() {
-		return "Chat [id=" + id + ", chatRoomNo=" + chatRoomNo + ", chatNo=" + chatNo + ", UserNo=" + UserNo
-				+ ", chatNickname=" + chatNickname + ", chatProfileImg=" + chatProfileImg + ", chatType=" + chatType
-				+ ", chatMsg=" + chatMsg + ", regDate=" + regDate + "]";
+		return "Chat [id=" + id + ", chatRoomId=" + chatRoomId + ", UserNo=" + userNo + ", userNickname=" + userNickname
+				+ ", profileImg=" + profileImg + ", chatType=" + chatType + ", chatMsg=" + chatMsg + ", regDate="
+				+ regDate + "]";
 	}
 	
 }

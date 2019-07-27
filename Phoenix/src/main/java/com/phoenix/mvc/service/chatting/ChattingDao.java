@@ -7,6 +7,7 @@ import com.phoenix.mvc.service.domain.Chat;
 import com.phoenix.mvc.service.domain.ChatFriend;
 import com.phoenix.mvc.service.domain.ChatRoom;
 import com.phoenix.mvc.service.domain.ChatRoomForMongo;
+import com.phoenix.mvc.service.domain.ChatRoomInfo;
 
 
 public interface ChattingDao {
@@ -30,6 +31,16 @@ public interface ChattingDao {
 	public int deleteFriend(ChatFriend chatFriend) throws Exception;
 	
 	public void addChatRoom(ChatRoomForMongo chatRoomForMongo) throws Exception;
+	
+	public void addMyChatRoom(ChatRoomInfo chatRoomInfo) throws Exception;
+	
+	public List getMyChatRoomList(ChatRoomInfo chatRoomInfo) throws Exception;
+	
+	public void updateMyChatRoom(ChatRoomInfo chatRoomInfo) throws Exception;
+	
+	public void deleteMyChatRoom(ChatRoomInfo chatRoomInfo) throws Exception;
+	
+	
 	
 	public void addChatRoom(ChatRoom chatRoom) throws Exception;
 	

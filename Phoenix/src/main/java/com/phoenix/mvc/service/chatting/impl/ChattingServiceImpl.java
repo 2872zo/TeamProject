@@ -1,5 +1,6 @@
 package com.phoenix.mvc.service.chatting.impl;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,7 @@ import com.phoenix.mvc.service.domain.Chat;
 import com.phoenix.mvc.service.domain.ChatFriend;
 import com.phoenix.mvc.service.domain.ChatRoom;
 import com.phoenix.mvc.service.domain.ChatRoomForMongo;
+import com.phoenix.mvc.service.domain.ChatRoomInfo;
 
 @Service
 @Transactional
@@ -25,14 +27,12 @@ public class ChattingServiceImpl implements ChattingService{
 	@Qualifier("chattingDaoImpl")	
 	private ChattingDao chattingDao;
 	
-	
 	public ChattingServiceImpl() {
 		System.out.println(getClass().getName() + "default Constuctor");
 	}
 
 	@Override
 	public Map getMyChatRoomList(Search search) throws Exception {
-		// TODO Auto-generated method stub
 		Map map = new HashMap();
 		
 		List chatRoomList = chattingDao.getMyChatRoomList(search);
@@ -93,24 +93,36 @@ public class ChattingServiceImpl implements ChattingService{
 
 	@Override
 	public Map getChatList(Search search) throws Exception {
-		// TODO Auto-generated method stub
+		
 		Map map = new HashMap();
 		List chatList = chattingDao.getChatList(search);
 		return map;
+	
 	}
 
 	@Override
 	public Map getChatRoom(Search search) throws Exception {
-		// TODO Auto-generated method stub
+		
 		Map map = new HashMap();
 		List chatList = chattingDao.getChatList(search);
+		List userList = chattingDao.getChatRoomUserList(search);
 		map.put("chatList", chatList);
+		map.put("userList", userList);
 		return map;
+		
 	}
 	
 	@Override
-	public void addChatRoom(ChatRoomForMongo chatRoomForMongo) throws Exception {
+	public ChatRoomInfo addChatRoom(ChatRoomForMongo chatRoomForMongo) throws Exception {
 		chattingDao.addChatRoom(chatRoomForMongo);
+		ChatRoomInfo chatRoomInfo = new ChatRoomInfo();
+		chatRoomInfo.setChatRoomId(chatRoomForMongo.getId());
+		chatRoomInfo.setUserNo(chatRoomForMongo.getOpenUserNo());
+		chatRoomInfo.setRegDate(new Date());
+		chatRoomInfo.setLatestEnter(new Date());
+		chattingDao.addMyChatRoom(chatRoomInfo);
+		System.out.println(chatRoomInfo);
+		return chatRoomInfo;
 	}
 
 	@Override
@@ -130,6 +142,28 @@ public class ChattingServiceImpl implements ChattingService{
 		
 	}
 
-	
+	@Override
+	public void addMyChatRoom(ChatRoomInfo chatRoomInfo) throws Exception {
+		// TODO Auto-generated method stub
+		chattingDao.addMyChatRoom(chatRoomInfo);
+	}
+
+	@Override
+	public List getMyChatRoomList(ChatRoomInfo chatRoomInfo) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateMyChatRoom(ChatRoomInfo chatRoomInfo) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteMyChatRoom(ChatRoomInfo chatRoomInfo) throws Exception {
+		// TODO Auto-generated method stub
+		chattingDao.deleteMyChatRoom(chatRoomInfo);
+	}
 
 }

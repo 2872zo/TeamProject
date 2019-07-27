@@ -17,6 +17,7 @@ import com.phoenix.mvc.service.domain.Chat;
 import com.phoenix.mvc.service.domain.ChatFriend;
 import com.phoenix.mvc.service.domain.ChatRoom;
 import com.phoenix.mvc.service.domain.ChatRoomForMongo;
+import com.phoenix.mvc.service.domain.ChatRoomInfo;
 
 @Repository
 public class ChattingDaoImpl implements ChattingDao{
@@ -29,13 +30,30 @@ public class ChattingDaoImpl implements ChattingDao{
 	@Qualifier("mongoTemplate")
 	private MongoTemplate mongoTemplate;
 	
+	private MongoMapper mongoMapper;
+	private Query query;
+	private Criteria criteria;
+	
+	
 	public ChattingDaoImpl() {
 		System.out.println(getClass().getName() + "default Constuctor");
 	}
 
 	@Override
 	public List getMyChatRoomList(Search search) throws Exception {
-		return sqlSession.selectList("ChatRoomMapper.getMyRoomList", search);
+		//return sqlSession.selectList("ChatRoomMapper.getMyRoomList", search);
+		//query = mongoMapper.getMyChatRoomList(search);
+		//정렬
+		
+		query = new Query();
+		criteria = new Criteria();
+		query.with(new Sort(Sort.Direction.DESC, "latestMessagingDate"));
+		criteria.andOperator(Criteria.where("userNo").is(search.getUserNo()));
+		query.addCriteria(criteria);
+		
+		
+		System.out.println(query);
+		return mongoTemplate.find(query, ChatRoomInfo.class);
 	}
 
 	@Override
@@ -59,18 +77,22 @@ public class ChattingDaoImpl implements ChattingDao{
 	
 	public List getChatList(Search search) throws Exception {
 		
-		Query query = new Query();
+		//query = mongoMapper.getChatList(search);
 		//정렬
+		query = new Query();
+		criteria = new Criteria();
 		query.with(new Sort(Sort.Direction.ASC, "regDate"));
 		//갯수제한
 		//query.limit(2);
-		Criteria criteria = new Criteria();
+		criteria = new Criteria();
 		//검색조건
 		//criteria.where("chatRoomNo").is(10007);
 		//query.addCriteria(criteria);
 		//criteria.andOperator(Criteria.where("chatProfileImg").is("abc"), Criteria.where("chatRoomNo").is(search.getChatRoomNo()));
-		criteria.andOperator(Criteria.where("chatRoomNo").is(search.getChatRoomNo()));
+		criteria.andOperator(Criteria.where("chatRoomId").is(search.getChatRoomId()));
 		query.addCriteria(criteria);
+		
+		
 		return mongoTemplate.find(query, Chat.class);
 		
 	}
@@ -122,7 +144,14 @@ public class ChattingDaoImpl implements ChattingDao{
 
 	@Override
 	public List getChatRoomUserList(Search search) throws Exception {
-		return null;
+
+		query = new Query();
+		criteria = new Criteria();
+		query.with(new Sort(Sort.Direction.ASC, "regDate"));
+		criteria.andOperator(Criteria.where("chatRoomId").is(search.getChatRoomId()));
+		query.addCriteria(criteria);
+		
+		return mongoTemplate.find(query, ChatRoomInfo.class);
 	}
 
 	@Override
@@ -130,8 +159,23 @@ public class ChattingDaoImpl implements ChattingDao{
 		return sqlSession.selectList("ChatFriendMapper.getWannaBeFriendList", search);
 	}
 
-	
+	@Override
+	public void addMyChatRoom(ChatRoomInfo chatRoomInfo) throws Exception {
+		mongoTemplate.insert(chatRoomInfo);
+	}
 
-	
+	@Override
+	public List getMyChatRoomList(ChatRoomInfo chatRoomInfo) throws Exception {
+		return null;
+	}
+
+	@Override
+	public void updateMyChatRoom(ChatRoomInfo chatRoomInfo) throws Exception {
+	}
+
+	@Override
+	public void deleteMyChatRoom(ChatRoomInfo chatRoomInfo) throws Exception {
+		mongoTemplate.remove(chatRoomInfo);
+	}
 	
 }
