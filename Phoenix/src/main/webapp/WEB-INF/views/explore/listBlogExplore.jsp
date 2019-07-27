@@ -100,13 +100,34 @@
 
 	var checkSessionUser = ${empty sessionScope.user};
 	
-		$(function(){
+		$(function(){  //전체검색, 네이버, 다음 체크문제.
 
 			$(".check-all").on("click",function(){
 				
-				$(".singleCheck").prop("checked",this.checked);
-			})
+				$(".singleCheck").prop("checked",this.checked); //전체선택에 따라서 변경하도록
 
+				if($(".check-all").is(":checked")){ //전체 선택 체크되었을때만! 체크안되면  action안일어남
+
+					var searchTheme = $("#searchTheme").val();
+
+					if(searchTheme==0){
+						$("form").attr("method","POST").attr("action","/explore/getUnifiedList").submit();
+					}
+					if(searchTheme==1){	
+						$("form").attr("method","POST").attr("action","/explore/getBlogList").submit();
+					}
+					if(searchTheme==2){	
+						$("form").attr("method","POST").attr("action","/explore/getCafeList").submit();
+					}
+					if(searchTheme==3){	
+						$("form").attr("method","POST").attr("action","/explore/getImageList").submit();
+					}
+					if(searchTheme==4){	
+						$("form").attr("method","POST").attr("action","/explore/getWebsiteList").submit();
+					}
+									
+				}
+			});
 
 		});
 			
@@ -144,7 +165,7 @@
      	<br/>
             <!-- row -->
             <div class="container-fluid">
-           		<div class="card text-center">
+           		<div class="card">
            			<div class="card-header">
            			<hr/>
            				<ul class="form-inline">
@@ -164,24 +185,24 @@
            					<li></li>
            					<li>
            						<select class="form-control" name="orderState" id="orderState">
-									<option value="0">관련도순</option>
-									<option value="1">최신순</option>
+									<option value="0" ${search.orderState==0 ? "selected" : "" }>관련도순</option>
+									<option value="1" ${search.orderState==1 ? "selected" : "" }>최신순</option>
 								</select>
            					</li>
            					<li></li>
            					<li>
-           						<div class="form-group">
+           						<div class="form-inline">
                                      <div class="form-check form-check-inline">
                                          <label class="form-check-label">
-                                             <input type="checkbox" class="form-check-input check-all" name="all" value="" checked>전체검색</label>
+                                             <input type="checkbox" class="form-check-input check-all" name="engineAll" value="true" ${search.engineAll ? "checked" : "" }>전체검색</label>
                                      </div>
                                      <div class="form-check form-check-inline">
                                          <label class="form-check-label">
-                                             <input type="checkbox" class="form-check-input singleCheck" name="naver" value="" checked>네이버</label>
+                                             <input type="checkbox" class="form-check-input singleCheck" name="engineNaver" value="true" ${search.engineNaver ? "checked" : "" }>네이버</label>
                                      </div>
                                      <div class="form-check form-check-inline disabled">
                                          <label class="form-check-label">
-                                             <input type="checkbox" class="form-check-input singleCheck" name="daum" value="" checked>다음</label>
+                                             <input type="checkbox" class="form-check-input singleCheck" name="engineDaum" value="true" ${search.engineDaum ? "checked" : "" }>다음</label>
                                      </div>
                                  </div>
            					</li>
@@ -207,6 +228,7 @@
 	           						<c:if test="${!empty blog.thumbnail}"> <!-- 검색 이미지있을때 -->
 	           							<a href="${blog.resultLink}"><img alt="" src="${blog.thumbnail}" style="margin-left:20px; margin-top: 10px"></a>
 	           						</c:if>
+	           						
 									<div class="media-body" style="margin-left:50px; margin-top:8px;">
 										<div class="form-inline">
 											<h6>
@@ -232,9 +254,12 @@
            			
            			<div>
            				<!-- ToolBar Start /////////////////////////////////////-->
-						<jsp:include page="/WEB-INF/views/common/pageNavigator.jsp" />
+						<c:import url="/WEB-INF/views/common/pageNavigator.jsp">
+							<c:param name="subject" value="Blog" />
+						</c:import>
 						<!-- ToolBar End /////////////////////////////////////-->
            			</div>
+           			
            		</div>
             </div>
       

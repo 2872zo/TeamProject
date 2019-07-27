@@ -9,6 +9,7 @@ public class Blog {
 	private String blogLink;
 	private String thumbnail;
 	private String dateTime;
+	private String engineFrom;
 	
 	public Blog() {
 		// TODO Auto-generated constructor stub
@@ -71,6 +72,14 @@ public class Blog {
 	}
 
 	
+	public String getEngineFrom() {
+		return engineFrom;
+	}
+
+	public void setEngineFrom(String engineFrom) {
+		this.engineFrom = engineFrom;
+	}
+
 	@Override
 	public String toString() {
 		return "Blog [title=" + title + ", resultLink=" + resultLink + ", contents=" + contents + ", blogName="

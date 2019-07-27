@@ -24,7 +24,7 @@
 			<div class="form-inline">
 
 				<div class="input-group col-lg-8" style='width: 50%; margin :15px'>
-					<input type="text" class="form-control form-control-lg" id='searchKeyword' value="${search.searchKeyword}" placeholder="검색어를 입력해주세요">
+					<input type="text" class="form-control form-control-lg" id='searchKeyword' name="searchKeyword" value="${search.searchKeyword}" placeholder="검색어를 입력해주세요">
 					<div class="input-group-append">
 						<button class="btn btn-lg btn-outline-primary" type="button" id="explore">
 							<i class="mdi mdi-magnify" style='font-size: 18pt;'></i>
