@@ -103,6 +103,12 @@
 	<select id = "changeGrade" parameterType="int"   resultType="int">
   		SELECT cafe_member_grade_no
 		FROM cafe_member_grade
+		WHERE cafe_no = #{cafeNo} and member_grade_code ='cg100'
+  	</select>
+  	
+  	<select id = "changeBoard" parameterType="int"   resultType="int">
+  		SELECT cafe_member_grade_no
+		FROM cafe_member_grade
 		WHERE cafe_no = #{cafeNo} and member_grade_code ='cg102'
   	</select>
 

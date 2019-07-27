@@ -92,9 +92,10 @@ public class CafeTabServiceImpl implements CafeTabService {
 		cafeMember.setUserNo(cafe.getManageUserNo());
 		cafeMember.setMemberNickname("매니저");
 		cafeMemberDao.addCafeMember(cafeMember);
-
-		Board board = new Board();// 카페 생성시 게시판 레코드 추가
-		board.setAccessGrade(String.valueOf(i));
+		
+		Board board = new Board();// 카페 생성시 게시판 추가
+		int j = cafeTabDao.getChangeBoard(cafeMember.getCafeNo());
+		board.setAccessGrade(String.valueOf(j));
 		board.setCafeNo(cafe.getCafeNo());
 		board.setCafeURL(cafe.getCafeURL());
 		cafeTabDao.addBoard(board);
@@ -247,16 +248,16 @@ public class CafeTabServiceImpl implements CafeTabService {
 
 		List newsFeed = cafePostDao.getMyPostList(userNo);
 		map.put("newsFeed", newsFeed);
-
+		
 		return map;
 	}
-
+	
 	@Override
 	public int updateFavorite(CafeMember cafeMember) throws Exception {
 // TODO Auto-generated method stub
 		return cafeMemberDao.updateFavorite(cafeMember);
 	}
-
+	
 ////////////////////////////// 기황끝//////////////////////////////
-
+	
 }
