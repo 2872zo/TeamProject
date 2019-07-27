@@ -25,8 +25,6 @@
 	width: 110px;
 	text-align: center
 }
-
-
 </style>
 
 </head>
@@ -96,7 +94,7 @@
 								멤버 등급
 								<code>사용안함</code>
 								선택시 해당 등급에 해당하는 모든 멤버는 한단계 아래등급으로 내려갑니다 <br /> <br /> <br />
-						
+
 								<c:set var="i" value="0" />
 								<c:set var="j" value="0" />
 
@@ -105,43 +103,71 @@
 										<form id="submit">
 											<c:forEach var="cafeGrade" items="${cafeGradeList}">
 												<c:set var="i" value="${ i+1 }" />
-												<input type="hidden" class="cafeNo"value="${cafeGrade.cafeNo}" />
+												<input type="hidden" class="cafeNo"
+													value="${cafeGrade.cafeNo}" />
 												<br>
-												
+
 												<div class="form-inline">
-													<c:if test="${i eq 1}"><h6>${i}번째 등급명</h6>&nbsp;&nbsp;&nbsp;&nbsp;
-													<input type="text" class="form-control input-default tbox"name="gradeList[${j}].gradeName"value="${cafeGrade.gradeName}" />	
-													<br>
-													<input type="hidden" class="cafeGradeNo"name="gradeList[${j}].cafeGradeNo"value="${cafeGrade.cafeGradeNo }" />
+													<c:if test="${i eq 1}">
+														<h6>${i}번째등급명</h6>&nbsp;&nbsp;&nbsp;&nbsp;
+													<input type="text" class="form-control input-default tbox"
+															name="gradeList[${j}].gradeName"
+															value="${cafeGrade.gradeName}" />
+														<br>
+														<input type="hidden" class="cafeGradeNo"
+															name="gradeList[${j}].cafeGradeNo"
+															value="${cafeGrade.cafeGradeNo }" />
 													</c:if>
 												</div>
-												
-												<div class="form-inline">
-												<c:if test="${i ne 1}"><h6>${i} 번째 등급명</h6>&nbsp;&nbsp;&nbsp;&nbsp;
-												<input type="text" class="form-control input-default tbox"name="gradeList[${j}].gradeName"value="${cafeGrade.gradeName}" />
-												&nbsp;&nbsp;&nbsp;&nbsp;
-												출석&nbsp;&nbsp;&nbsp;&nbsp; <input type="text"  class="form-control input-default abox"name="gradeList[${j}].requiredVisitCount" value="${cafeGrade.requiredVisitCount }" />&nbsp;&nbsp;&nbsp;&nbsp;이상,&nbsp;&nbsp;&nbsp;&nbsp;
-												게시글 &nbsp;&nbsp;&nbsp;&nbsp;<input type="text"  class="form-control input-default bbox"name="gradeList[${j}].requiredPostCount"value="${cafeGrade.requiredPostCount }" />&nbsp;&nbsp;&nbsp;&nbsp;이상,&nbsp;&nbsp;&nbsp;&nbsp;
-												댓글&nbsp;&nbsp;&nbsp;&nbsp; <input type="text"  class="form-control input-default cbox"name="gradeList[${j}].requiredReplyCount"value="${cafeGrade.requiredReplyCount }" />&nbsp;&nbsp;&nbsp;&nbsp;이상&nbsp;&nbsp;&nbsp;&nbsp;
-												<input type="hidden" class="cafeGradeNo"name="gradeList[${j}].cafeGradeNo"value="${cafeGrade.cafeGradeNo }" />
-												<input type="hidden" class="memberGradeCode"name="gradeList[${j}].memberGradeCode"value="${cafeGrade.memberGradeCode }" />
 
-													
-														<label class="radio-inline mr-3"> 
-														<input type="radio" name="gradeList[${j}].gradeFlag" value="1"<c:if test="${cafeGrade.gradeFlag eq true}">checked</c:if> />사용
-														</label> 
-														<label class="radio-inline mr-3"> 
-														<input type="radio" name="gradeList[${j}].gradeFlag" value="0"<c:if test="${cafeGrade.gradeFlag eq false}">checked</c:if> />사용안함
+												<div class="form-inline">
+													<c:if test="${i ne 1}">
+														<h6>${i}번째등급명</h6>&nbsp;&nbsp;&nbsp;&nbsp;
+												<input type="text" class="form-control input-default tbox"
+															name="gradeList[${j}].gradeName"
+															value="${cafeGrade.gradeName}" />
+												&nbsp;&nbsp;&nbsp;&nbsp;
+												출석&nbsp;&nbsp;&nbsp;&nbsp; <input type="text"
+															class="form-control input-default abox"
+															name="gradeList[${j}].requiredVisitCount"
+															value="${cafeGrade.requiredVisitCount }" />&nbsp;&nbsp;&nbsp;&nbsp;이상,&nbsp;&nbsp;&nbsp;&nbsp;
+												게시글 &nbsp;&nbsp;&nbsp;&nbsp;<input type="text"
+															class="form-control input-default bbox"
+															name="gradeList[${j}].requiredPostCount"
+															value="${cafeGrade.requiredPostCount }" />&nbsp;&nbsp;&nbsp;&nbsp;이상,&nbsp;&nbsp;&nbsp;&nbsp;
+												댓글&nbsp;&nbsp;&nbsp;&nbsp; <input type="text"
+															class="form-control input-default cbox"
+															name="gradeList[${j}].requiredReplyCount"
+															value="${cafeGrade.requiredReplyCount }" />&nbsp;&nbsp;&nbsp;&nbsp;이상&nbsp;&nbsp;&nbsp;&nbsp;
+												<input type="hidden" class="cafeGradeNo"
+															name="gradeList[${j}].cafeGradeNo"
+															value="${cafeGrade.cafeGradeNo }" />
+														<input type="hidden" class="memberGradeCode"
+															name="gradeList[${j}].memberGradeCode"
+															value="${cafeGrade.memberGradeCode }" />
+
+
+														<label class="radio-inline mr-3"> <input
+															type="radio" class="dbox"
+															name="gradeList[${j}].gradeFlag" value="1"
+															<c:if test="${cafeGrade.gradeFlag eq true}">checked</c:if> />사용
+														</label>
+														<label class="radio-inline mr-3"> <input
+															type="radio" name="gradeList[${j}].gradeFlag" value="0"
+															<c:if test="${cafeGrade.gradeFlag eq false}">checked</c:if> />사용안함
 														</label>
 
-												
-														<select class="form-control" style=width:12%; name="gradeList[${j}].autoUpgradeFlag">
-															<option value="1"${cafeGrade.autoUpgradeFlag== "1" ? "selected" : "" }>자동등업승인</option>
-															<option value="0"${cafeGrade.autoUpgradeFlag== "0" ? "selected" : "" }>자동등업거부</option>
+
+														<select class="form-control" style="width: 12%;"
+															name="gradeList[${j}].autoUpgradeFlag">
+															<option value="1"
+																${cafeGrade.autoUpgradeFlag== "1" ? "selected" : "" }>자동등업승인</option>
+															<option value="0"
+																${cafeGrade.autoUpgradeFlag== "0" ? "selected" : "" }>자동등업거부</option>
 														</select>
-												
-											
-												</c:if>
+
+
+													</c:if>
 												</div>
 												<br>
 												<hr>
@@ -154,9 +180,10 @@
 
 							<br /> <br />
 							<div align="center">
-								<button type="button" name="button" id="save" class="btn mb-1 btn-outline-warning">저장</button>
+								<button type="button" name="button" id="save"
+									class="btn mb-1 btn-outline-warning">저장</button>
 							</div>
-							<br /> 
+							<br />
 						</div>
 					</div>
 				</div>
@@ -185,42 +212,69 @@
 	<script type="text/javascript">
 		$(function() {
 
-			//alert($(".cafeNo").val())
-			$("#save").on("click",function() {//update
-						//alert($(".gradeFlag1").text())
-					for(var i =0; i<3; i++){
-						//alert("i"+i);
-						var visit = $($(".abox")[i]).val();
-						var nextV = $($(".abox")[i+1]).val();
-						//alert("visit "+visit)
-						//alert("nextV "+nextV)
-						var post = $($(".bbox")[i]).val();
-						var nextP = $($(".bbox")[i+1]).val();
-						//alert("post "+post)
-						//alert("nextP "+nextP)
-						var reply = $($(".cbox")[i]).val();
-						var nextR = $($(".cbox")[i+1]).val();
-						//alert("reply "+reply)
-						//alert("nextR "+nextR)
+			$("#save").on("click", function() {//update
 
-							if(visit>nextV || post>nextP || reply>nextR){
-								alert((i+3)+"번째의 등업 조건이 낮은 등급보다 높아야 합니다.")
-								break;
-							}else if(i==2 &&visit<nextV && post<nextP && reply<nextR){
-								//alert("ok")
-								$("form").attr("method", "POST").attr("action","/cafe/" + '${cafeURL}'+ "/manage/updateCafeGrade?CafeNo="+ $(".cafeNo").val()).submit();	
-							}else if(visit==nextV || post==nextP || reply==nextR){
-								alert("등업 조건이 같을 수는 없습니다.")
-								break;
-							}
-					}
+				var count;
+				var num = $('.dbox:checked').length;
+
+				//alert("check된 길이"+num)
+				var array = new Array(num);
+				//alert("길이만큼 배열만듬"+array)
+				var index = 0;
+
+				$(".dbox:checked").each(function() {
+
+					count = $(".dbox").index(this);
+					//alert("체크된인덱스"+count)
+					array[index] = count;
+					index += 1
+					//alert("어레이에 값 담음"+array)
+
 					
+				});
+				for(var i =0; i<array.length-1; i++){
+					//alert("어레이의 길이만큼 돌릴거에요~i "+i);
+
+					var front = array[i]
+					var afer = array[i+1]
+
+					//alert("front"+front)
+					//alert("afer"+afer)
+
+					var visit = $($(".abox")[front]).val();
+					var nextV = $($(".abox")[afer]).val();
+					//alert("visit "+visit)
+					//alert("nextV "+nextV)
+					var post = $($(".bbox")[front]).val();
+					var nextP = $($(".bbox")[afer]).val();
+					//alert("post "+post)
+					//alert("nextP "+nextP)
+					var reply = $($(".cbox")[front]).val();
+					var nextR = $($(".cbox")[afer]).val();
+					//alert("reply "+reply)
+					//alert("nextR "+nextR)
+
+						if(visit>nextV || post>nextP || reply>nextR){
+							alert("다음 등업 조건은 낮은 등급보다 높아야 합니다.")
+							
+							
+						}else if(visit==nextV || post==nextP || reply==nextR){
+							alert("등업 조건이 같을 수는 없습니다.")
+							
+						}else if(visit<nextV && post<nextP && reply<nextR){
+							//alert("ok")
+							$("form").attr("method", "POST").attr("action","/cafe/" + '${cafeURL}'+ "/manage/updateCafeGrade?CafeNo="+ $(".cafeNo").val()).submit();
+						}
+		
 					
+		
+		
+				}
+			
+
 			});
 
 		});
-		
-	
 	</script>
 
 	<script src="/js/custom/cafeCommon.js"></script>

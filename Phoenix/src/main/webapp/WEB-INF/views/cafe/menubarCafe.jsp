@@ -140,7 +140,7 @@
 			</c:forEach>
 
 			
-			<c:if test="${!empty cafeMember.memberNo}">
+			<c:if test="${!empty cafeMember.memberNo && user.userNo!= cafe.manageUserNo }">
 				<!-- /# column -->
 				<li>
 					<span class="nav-text">

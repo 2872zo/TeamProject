@@ -1,6 +1,7 @@
 package com.phoenix.mvc.service.explore;
 
 import java.util.List;
+import java.util.Map;
 
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.domain.Blog;
@@ -10,15 +11,15 @@ import com.phoenix.mvc.service.domain.WebExplore;
 
 public interface ExploreDao {
 	
-	public List<Blog> getDaumBlogExploreList(Search search) ;
+	public Map getDaumBlogExploreList(Search search) ;
 	
-	public List<Blog> getNaverBlogExploreList(Search search) throws Exception ;
+	public Map getNaverBlogExploreList(Search search) throws Exception ;
 	
-	public List<CafeExplore> getDaumCafeExploreList(Search search);
+	public Map getDaumCafeExploreList(Search search);
 	
-	public List<CafeExplore> getNaverCafeExploreList(Search search) throws Exception;
+	public Map getNaverCafeExploreList(Search search) throws Exception;
 	
-	public List<CafeExplore> getPhoenixCafeExploreList(Search search);
+	public Map getPhoenixCafeExploreList(Search search);
 	
 	public List<WebExplore> getDaumWebExploreList(Search search);
 	

@@ -1,14 +1,17 @@
 package com.phoenix.mvc.web.explore;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.phoenix.mvc.common.Page;
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.domain.Blog;
 import com.phoenix.mvc.service.domain.CafeExplore;
@@ -24,6 +27,11 @@ public class ExploreContoller {
 	@Qualifier("exploreServiceImpl")
 	private ExploreService exploreService;
 	
+	@Value("${explorePageSize}")
+	private int explorePageSize;
+	
+	@Value("${explorePageUnit}")
+	private int explorePageUnit;
 	
 	public ExploreContoller() {
 		System.out.println(getClass().getName() + "default Constuctor");
@@ -50,28 +58,51 @@ public class ExploreContoller {
 	{
 		System.out.println("/explore/getBlogExploreList 실행");
 		
-		if(search.getSearchKeyword()==null) //URL 치고 들어오는경우
+		if(search.getSearchKeyword()==null) { //URL 치고 들어오는경우 1.검색어
 			search.setSearchKeyword("");
-		if(search.getSearchTheme()==0)
+		}
+		if(search.getSearchTheme()==0) { //검색종류 블로그 이 컨트롤러 탔으면 일단 무조건 1이지
 			search.setSearchTheme(1);
+		}
+		if(search.getOrderState()==0) { // 처음 치고 들어오는경우 관련도 순으로 뽑음
+			search.setOrderState(0);
+		}
+		if(!search.isEngineAll() && !search.isEngineDaum() && !search.isEngineNaver()) { //다 false면 
+			search.setEngineAll(true);
+		}
+		if(search.isEngineDaum() && search.isEngineNaver()) { //둘다 true면 전체선택체크되도록
+			search.setEngineAll(true);
+		}
+		if(search.getCurrentPage()==0) { //page설정
+			search.setCurrentPage(1);
+		}
 		
+		search.setPageSize(explorePageSize);
+		
+		//System.out.println("search OrderState : "+search.getOrderState());
+		//System.out.println("all "+search.isEngineAll());
+		//System.out.println("daum "+search.isEngineDaum());
+		//System.out.println("naver "+search.isEngineNaver());
 		//가짜데이터
-		search.setEngineAll(true);//전체(네이버+다음)
-		search.setOrderState(0);//정확도
-		search.setCurrentPage(1);
-		search.setPageSize(5);
+		//search.setEngineAll(true);//전체(네이버+다음)
+		//search.setOrderState(0);//정확도 ->설정했는딩
+		//search.setCurrentPage(1);
+		
 		/////////////////////////////////////////////////
 		
-		List<Blog> blogList = exploreService.getBlogExploreList(search);
+		Map returnMap = exploreService.getBlogExploreList(search); //-->total이랑 가져와서 밑에 page Set해줘야함
 		
-		System.out.println(blogList);
-		System.out.println(blogList.size());
+		Page page = new Page(search.getCurrentPage(),(int)returnMap.get("totalCount"),explorePageUnit,explorePageSize); //갔다와서 리턴에  total값 줘야함 ㅠ 
+		
+		//System.out.println(blogList);
+		//System.out.println(blogList.size());
 		
 		//여기서 blogList의 사이즈를 구해야한다 size가 0이면 다른 jsp 로 return 한다.
 		
-		model.addAttribute("blogList", blogList);
+		model.addAttribute("blogList", returnMap.get("blogList"));
+		model.addAttribute("page", page);
 		
-		if(blogList.size()==0)
+		if(((List<Blog>)returnMap.get("blogList")).size()==0)
 			return "explore/noSearchResultPage";
 		else
 			return "explore/listBlogExplore";
@@ -82,24 +113,42 @@ public class ExploreContoller {
 	{
 		System.out.println("/explore/getCafeExploreList 실행");
 		
-		if(search.getSearchKeyword()==null)
+		if(search.getSearchKeyword()==null) { //URL 치고 들어오는경우 1.검색어
 			search.setSearchKeyword("");
-		if(search.getSearchTheme()==0)
+		}
+		if(search.getSearchTheme()==0) { //검색종류 블로그 이 컨트롤러 탔으면 일단 무조건 1이지
 			search.setSearchTheme(2);
+		}
+		if(search.getOrderState()==0) { // 처음 치고 들어오는경우 관련도 순으로 뽑음
+			search.setOrderState(0);
+		}
+		if(!search.isEngineAll() && !search.isEngineDaum() && !search.isEngineNaver()) { //다 false면 
+			search.setEngineAll(true);
+		}
+		if(search.isEngineDaum() && search.isEngineNaver()) { //둘다 true면 전체선택체크되도록
+			search.setEngineAll(true);
+		}
+		if(search.getCurrentPage()==0) { //page설정
+			search.setCurrentPage(1);
+		}
+		
+		search.setPageSize(explorePageSize);
 		
 		
 		//가짜데이터
-		search.setEngineAll(true);//전체(네이버+다음+피닉스)
-		search.setOrderState(0);//정확도
-		search.setCurrentPage(1);
-		search.setPageSize(5);
+		//search.setEngineAll(true);//전체(네이버+다음+피닉스)
+		//search.setOrderState(0);//정확도
+		//search.setCurrentPage(1);
+		//search.setPageSize(5);
 		/////////////////////////////////////////////////
 		
-		List<CafeExplore> cafeList = exploreService.getCafeExploreList(search);
+		Map returnMap = exploreService.getCafeExploreList(search);
 		
-		model.addAttribute("cafeList", cafeList);
+		Page page = new Page(search.getCurrentPage(),(int)returnMap.get("totalCount"),explorePageUnit,explorePageSize); //갔다와서 리턴에  total값 줘야함 ㅠ 
 		
-		if(cafeList.size()==0)
+		model.addAttribute("cafeList", returnMap.get("cafeList"));
+		
+		if(((List<CafeExplore>)returnMap.get("cafeList")).size()==0)
 			return "explore/noSearchResultPage";
 		else
 			return "explore/listCafeExplore";

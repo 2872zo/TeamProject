@@ -9,6 +9,7 @@ public class CafeExplore {
 	private String cafeLink;
 	private String thumbnail;
 	private String dateTime;
+	private String engineFrom;
 	
 	public CafeExplore() {
 		// TODO Auto-generated constructor stub
@@ -68,6 +69,14 @@ public class CafeExplore {
 
 	public void setDateTime(String dateTime) {
 		this.dateTime = dateTime;
+	}
+
+	public String getEngineFrom() {
+		return engineFrom;
+	}
+
+	public void setEngineFrom(String engineFrom) {
+		this.engineFrom = engineFrom;
 	}
 
 	@Override

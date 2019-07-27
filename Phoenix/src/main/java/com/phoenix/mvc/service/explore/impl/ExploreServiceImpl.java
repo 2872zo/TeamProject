@@ -1,7 +1,10 @@
 package com.phoenix.mvc.service.explore.impl;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -36,44 +39,67 @@ public class ExploreServiceImpl implements ExploreService{
 	
 
 	@Override
-	public List<Blog> getBlogExploreList(Search search) throws Exception {
+	public Map getBlogExploreList(Search search) throws Exception {
 		// TODO Auto-generated method stub
 		
-		List<Blog> blogList = new ArrayList<Blog>(); //어떻게 담을까??
+		List<Blog> blogList = new ArrayList<Blog>(); //어떻게 담을까?? ->담
+		Map naverMap = new HashMap();
+		Map daumMap = new HashMap();
+		int totalCount = 0; //->담
+		Map returnMap = new HashMap();
 		
 		//append는 할수있는데 . 내가 여기서 정렬을 해줘야하는거 아닌가??????
 		//일단 append 한다음에 list의 a에 따라서 정렬을 해줄 수 있는 method를 찾아보기
-		
-		
+
 		if(search.isEngineAll()) //전체엔진
 		{
-			blogList.addAll(exploreDao.getNaverBlogExploreList(search));
-			blogList.addAll(exploreDao.getDaumBlogExploreList(search));
+			naverMap = exploreDao.getNaverBlogExploreList(search);
+			daumMap = exploreDao.getDaumBlogExploreList(search);
+			
+			blogList.addAll((List<Blog>)naverMap.get("blogList"));
+			blogList.addAll((List<Blog>)daumMap.get("blogList"));
+			totalCount += (int)naverMap.get("totalCount");
+			totalCount += (int)daumMap.get("totalCount");
 		}
 		else//엔진부분선택
 		{
 			if(search.isEngineDaum()) //다음엔진선택됐으면
 			{
-				blogList.addAll(exploreDao.getDaumBlogExploreList(search));
+				daumMap = exploreDao.getDaumBlogExploreList(search);
+				
+				blogList.addAll((List<Blog>)daumMap.get("blogList"));
+				totalCount += (int)daumMap.get("totalCount");
 			}
 
 			if(search.isEngineNaver()) //네이버엔진선택됐으면
 			{
-				blogList.addAll(exploreDao.getNaverBlogExploreList(search));
+				naverMap = exploreDao.getNaverBlogExploreList(search);
+				
+				blogList.addAll((List<Blog>)naverMap.get("blogList"));
+				totalCount += (int)naverMap.get("totalCount");
 			}
 		}
 		
 		//그다음 몇개의 엔진 들어있는지 판별해서 정렬? 아니면 add하자마자 각각정렬할지.
 		//정확도순 :?? 시간순은 정렬가능할 듯
+		returnMap.put("totalCount", totalCount);
+		returnMap.put("blogList", blogList);
 		
-		return blogList;
+		System.out.println("서비스에서"+totalCount);
+		
+		return returnMap;
 	}
 
 	@Override
-	public List<CafeExplore> getCafeExploreList(Search search) throws Exception{
+	public Map getCafeExploreList(Search search) throws Exception{
 		
 		
 		List<CafeExplore> cafeList = new ArrayList<CafeExplore>(); //어떻게 담을까??
+		Map naverMap = new HashMap();
+		Map daumMap = new HashMap();
+		Map phoenixMap = new HashMap();
+		int totalCount = 0; //->담
+		Map returnMap = new HashMap();
 		
 		//append는 할수있는데 . 내가 여기서 정렬을 해줘야하는거 아닌가??????
 		//일단 append 한다음에 list의 a에 따라서 정렬을 해줄 수 있는 method를 찾아보기
@@ -81,29 +107,46 @@ public class ExploreServiceImpl implements ExploreService{
 		
 		if(search.isEngineAll()) //전체엔진
 		{
-			cafeList.addAll(exploreDao.getNaverCafeExploreList(search));
-			cafeList.addAll(exploreDao.getDaumCafeExploreList(search));
-			cafeList.addAll(exploreDao.getPhoenixCafeExploreList(search));
+			naverMap = exploreDao.getNaverCafeExploreList(search);
+			daumMap = exploreDao.getDaumCafeExploreList(search);
+			phoenixMap = exploreDao.getPhoenixCafeExploreList(search);
+			
+			cafeList.addAll((List<CafeExplore>) naverMap.get("cafeList"));
+			cafeList.addAll((List<CafeExplore>)daumMap.get("cafeList"));
+			cafeList.addAll((List<CafeExplore>)phoenixMap.get("cafeList"));
+			totalCount += (int)naverMap.get("totalCount");
+			totalCount += (int)daumMap.get("totalCount");
+			totalCount += (int)phoenixMap.get("totalCount");
+			
 		}
 		else//엔진부분선택
 		{
 			if(search.isEngineDaum()) //다음엔진선택됐으면
 			{
-				cafeList.addAll(exploreDao.getDaumCafeExploreList(search));
+				daumMap = exploreDao.getDaumCafeExploreList(search);
+				
+				cafeList.addAll((List<CafeExplore>)daumMap.get("cafeList"));
+				totalCount += (int)daumMap.get("totalCount");
 			}
 
 			if(search.isEngineNaver()) //네이버엔진선택됐으면
 			{
-				cafeList.addAll(exploreDao.getNaverCafeExploreList(search));
+				naverMap = exploreDao.getNaverCafeExploreList(search);
+				
+				cafeList.addAll((List<CafeExplore>)naverMap.get("cafeList"));
+				totalCount += (int)naverMap.get("totalCount");
 			}
 			if(search.isEnginePhoenix())
 			{
-				cafeList.addAll(exploreDao.getPhoenixCafeExploreList(search));
+				phoenixMap = exploreDao.getPhoenixCafeExploreList(search);
+				
+				cafeList.addAll((List<CafeExplore>)phoenixMap.get("cafeList"));
+				totalCount += (int)phoenixMap.get("totalCount");
 			}
 		}
 		
 		
-		return cafeList;
+		return returnMap;
 	}
 
 	@Override

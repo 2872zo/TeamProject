@@ -452,12 +452,12 @@
 
 								if (JSONData.result == true
 										&& JSONData.memberNickname != "") {
-									$("#here").html("<h7>사용가능</h7>")
+									$("#here").html("<h7 style='color:green;'>사용가능</h7>")
 								} else if (JSONData.result == false) {
 									$("#here").html("<h7>사용불가능</h7>")
 								} else if ((JSONData.memberNickname == "")
 										&& JSONData.result == true) {
-									$("#here").html("<h7>중복확인하세요</h7>")
+									$("#here").html("<h7 style='color:blue;'>중복확인하세요</h7>")
 								}
 
 							},

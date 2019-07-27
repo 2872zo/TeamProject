@@ -126,11 +126,11 @@
 								<table class="table header-border">
 
 									<form id="checkBox">
-										<input type="hidden" name="boardName" id="boardName" value="" />
+										<input type="hidden" name="boardName" id="boardName"  value="" />
 									</form>
 									<thead class="thead-light">
 										<tr>
-											<th><input type="checkbox" id="allCheck" /></th>
+											<th><input type="checkbox" id="allCheck"/></th>
 											<th align="center">가입신청번호</th>
 											<th align="left">회원아이디</th>
 											<th align="left">별명</th>
@@ -259,32 +259,54 @@
 					});
 			$("#accept").on("click",function() {//승인
 						var application = "";
+						var num = $('#allCheck:checked').length;
+						//alert(num)
+						
+						
+						if(num>0){
+								//alert("1")
+							$("input[type=checkbox]:checked").not("input[type=checkbox]:first").each(
+									function() {
+										//alert($(".applicationCheck").index(this));
+										var count = $(".applicationCheck").index(
+												this);
+										application += $($(".nickname")[count])
+												.text()
+												+ "&"
+												+ $($(".userNo")[count]).val()
+												+ "&"
+												+ $($(".cafeNo")[count]).val()
+												+ "&"
+												+ $($(".applicationNo")[count])
+														.text();
+										application += ",";
+	
+									});
+						}else if(num==0){
+							//alert("2")
+							$("input[type=checkbox]:checked").each(
+									function() {
+										//alert($(".applicationCheck").index(this));
+										var count = $(".applicationCheck").index(
+												this);
+										application += $($(".nickname")[count])
+												.text()
+												+ "&"
+												+ $($(".userNo")[count]).val()
+												+ "&"
+												+ $($(".cafeNo")[count]).val()
+												+ "&"
+												+ $($(".applicationNo")[count])
+														.text();
+										application += ",";
 
-						$("input[type=checkbox]:checked").not("input[type=checkbox]:first").each(
-								function() {
-									//alert($(".applicationCheck").index(this));
-									var count = $(".applicationCheck").index(
-											this);
-									application += $($(".nickname")[count])
-											.text()
-											+ "&"
-											+ $($(".userNo")[count]).val()
-											+ "&"
-											+ $($(".cafeNo")[count]).val()
-											+ "&"
-											+ $($(".applicationNo")[count])
-													.text();
-									application += ",";
+									});
 
-								});
+							}
 						//alert(application);
 						var cafeURL = '${search.cafeURL}'
 						$("#boardName").val(application);
-						$("#checkBox").attr("method", "POST").attr(
-								"action",
-								"/cafe/" + cafeURL
-										+ "/manage/updateCafeApplication")
-								.submit();
+						$("#checkBox").attr("method", "POST").attr("action","/cafe/" + cafeURL+ "/manage/updateCafeApplication").submit();
 
 					});
 
@@ -292,20 +314,26 @@
 					"click",
 					function() {//거절
 						var reject = '';
-						$("input[type=checkbox]:checked").not("input[type=checkbox]:first").each(function() {
-							var count = $(".applicationCheck").index(this);
-							reject += $($(".applicationNo")[count]).text();
-							reject += ",";
+						var num = $('#allCheck:checked').length;
+						if(num>0){
+							$("input[type=checkbox]:checked").not("input[type=checkbox]:first").each(function() {
+								var count = $(".applicationCheck").index(this);
+								reject += $($(".applicationNo")[count]).text();
+								reject += ",";
+	
+							});
+						}else if(num==0){
+							$("input[type=checkbox]:checked").each(function() {
+								var count = $(".applicationCheck").index(this);
+								reject += $($(".applicationNo")[count]).text();
+								reject += ",";
 
-						});
+							});
+						}
 						//alert(reject);
 						var cafeURL = '${search.cafeURL}'
 						$("#boardName").val(reject);
-						$("#checkBox").attr("method", "POST").attr(
-								"action",
-								"/cafe/" + cafeURL
-										+ "/manage/updateCafeApplication")
-								.submit();
+						$("#checkBox").attr("method", "POST").attr("action","/cafe/" + cafeURL+ "/manage/updateCafeApplication").submit();
 
 					});//거절
 

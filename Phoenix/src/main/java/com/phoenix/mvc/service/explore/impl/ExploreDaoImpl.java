@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -42,7 +43,12 @@ public class ExploreDaoImpl implements ExploreDao{
 	}
 
 	@Override
-	public List<Blog> getDaumBlogExploreList(Search search) {
+	public Map getDaumBlogExploreList(Search search) {
+		
+		List<Blog> blogList = new ArrayList<Blog>();
+		Map map = new HashMap();
+		int totalCount = 0;
+		boolean isEnd = false;
 		
 		//search 설정 
 		//1.정렬기준 설정 
@@ -56,10 +62,19 @@ public class ExploreDaoImpl implements ExploreDao{
 		search.setSearchThemeSort("blog");
 		
 		String jsonResult= this.APISearch(search); // API 통신
-		List<Blog> blogList = new ArrayList<Blog>();
 		
 		JSONObject jsonObject = (JSONObject) JSONValue.parse(jsonResult.toString());
 		List items = (List) jsonObject.get("documents");
+		Map meta = (Map) jsonObject.get("meta");
+		if(meta.get("total_count")!=null)
+		{
+			totalCount += ((Long)meta.get("total_count")).intValue();
+			System.out.println("다음 토탈카운트 : "+totalCount);
+		}
+		if(meta.get("is_end")!=null)
+		{
+			isEnd = (boolean) meta.get("is_end");
+		}
 		
 		if(items!=null) //검색 결과가 없을때
 		{
@@ -75,16 +90,26 @@ public class ExploreDaoImpl implements ExploreDao{
 				blog.setContents(item.get("contents").toString());
 				blog.setTitle(item.get("title").toString());
 				blog.setResultLink(item.get("url").toString());
+				blog.setEngineFrom("daum");
 				
 				blogList.add(blog);
 			}
 		
 		}
-		return blogList;// meta data는 어떻게 할건지?? 총 검색결과 등등.. Search에 넣을건가??
+		
+		map.put("blogList", blogList);
+		map.put("totalCount", totalCount);
+		map.put("daumIsEnd", isEnd);
+		
+		return map;// meta data는 어떻게 할건지?? 총 검색결과 등등.. Search에 넣을건가??
 	}
 
 	@Override
-	public List<Blog> getNaverBlogExploreList(Search search) throws Exception {
+	public Map getNaverBlogExploreList(Search search) throws Exception {
+		
+		List<Blog> blogList = new ArrayList<Blog>();
+		Map map = new HashMap();
+		int totalCount =0;
 		
 		//search 설정 
 		//1.정렬기준 설정 
@@ -95,14 +120,16 @@ public class ExploreDaoImpl implements ExploreDao{
 		//2.검색엔진설정
 		search.setSearchEngine(1);
 		//3.검색Theme 설정
-		search.setSearchThemeSort("blog");
-				
+		search.setSearchThemeSort("blog");			
 		String jsonResult= this.APISearch(search); // API 실행
-		
-		List<Blog> blogList = new ArrayList<Blog>();
 		
 		JSONObject jsonObject = (JSONObject) JSONValue.parse(jsonResult.toString());
 		List items = (List) jsonObject.get("items");
+		if(jsonObject.get("total")!=null) {
+			totalCount += ((Long)jsonObject.get("total")).intValue();
+			
+		}
+		
 		
 		if(items!=null) //검색 결과가 없을때
 		{
@@ -118,21 +145,29 @@ public class ExploreDaoImpl implements ExploreDao{
 				blog.setTitle(item.get("title").toString());//0
 				blog.setResultLink(item.get("link").toString());//0
 				blog.setBlogLink(item.get("bloggerlink").toString());//0
+				blog.setEngineFrom("naver");
 				
 				blogList.add(blog);
 			}
 		}
 		
+		map.put("totalCount", totalCount);
+		map.put("blogList", blogList);
 		
 		//System.out.println(blogList.size());
 		//if(blogList==null)
 			//System.out.println("널임");
-		return blogList;// meta data는 어떻게 할건지?? 총 검색결과 등등.. Search에 넣을건가??
+		return map;// meta data는 어떻게 할건지?? 총 검색결과 등등.. Search에 넣을건가??
 	}
 	
 	
 	@Override
-	public List<CafeExplore> getDaumCafeExploreList(Search search) {
+	public Map getDaumCafeExploreList(Search search) {
+		
+		List<CafeExplore> cafeList = new ArrayList<CafeExplore>();
+		Map map = new HashMap();
+		int totalCount =0;
+		boolean isEnd = false;
 		
 		//search 설정 
 		//1.정렬기준 설정 
@@ -146,10 +181,20 @@ public class ExploreDaoImpl implements ExploreDao{
 		search.setSearchThemeSort("cafe");
 		
 		String jsonResult= this.APISearch(search); // API 통신
-		List<CafeExplore> cafeList = new ArrayList<CafeExplore>();
 		
 		JSONObject jsonObject = (JSONObject) JSONValue.parse(jsonResult.toString());
 		List items = (List) jsonObject.get("documents");
+		Map meta = (Map) jsonObject.get("meta");
+		
+		if(meta.get("total_count")!=null)
+		{
+			totalCount += ((Long)meta.get("total_count")).intValue();
+			System.out.println("다음 토탈카운트 : "+totalCount);
+		}
+		if(meta.get("is_end")!=null)
+		{
+			isEnd = (boolean) meta.get("is_end");
+		}
 		
 		if(items!=null) //검색 결과가 없을때
 		{
@@ -157,24 +202,33 @@ public class ExploreDaoImpl implements ExploreDao{
 			{
 				Map item = (Map)items.get(i); 
 				
-				CafeExplore cafe = new CafeExplore();
-				cafe.setTitle(item.get("title").toString());
-				cafe.setContents(item.get("contents").toString());
-				cafe.setResultLink(item.get("url").toString());
-				cafe.setThumbnail(item.get("thumbnail").toString());
-				cafe.setCafeName(item.get("cafename").toString());
-				cafe.setDateTime(item.get("datetime").toString());
+				CafeExplore cafeExplore = new CafeExplore();
+				cafeExplore.setTitle(item.get("title").toString());
+				cafeExplore.setContents(item.get("contents").toString());
+				cafeExplore.setResultLink(item.get("url").toString());
+				cafeExplore.setThumbnail(item.get("thumbnail").toString());
+				cafeExplore.setCafeName(item.get("cafename").toString());
+				cafeExplore.setDateTime(item.get("datetime").toString());
+				cafeExplore.setEngineFrom("daum");
 				
-				cafeList.add(cafe);
+				cafeList.add(cafeExplore);
 			}
 		}
 		
+		map.put("cafeList", cafeList);
+		map.put("totalCount", totalCount);
+		map.put("isEnd", isEnd);
 		
-		return cafeList;
+		return map;
 	}
 
 	@Override
-	public List<CafeExplore> getNaverCafeExploreList(Search search) {
+	public Map getNaverCafeExploreList(Search search) {
+		
+		
+		List<CafeExplore> cafeList = new ArrayList<CafeExplore>();
+		Map map = new HashMap();
+		int totalCount =0;
 		
 		//search 설정 
 		//1.정렬기준 설정 
@@ -188,11 +242,13 @@ public class ExploreDaoImpl implements ExploreDao{
 		search.setSearchThemeSort("cafearticle");
 				
 		String jsonResult= this.APISearch(search); // API 실행
-		
-		List<CafeExplore> cafeList = new ArrayList<CafeExplore>();
-		
+			
 		JSONObject jsonObject = (JSONObject) JSONValue.parse(jsonResult.toString());
 		List items = (List) jsonObject.get("items");
+		if(jsonObject.get("total")!=null) {
+			totalCount += ((Long)jsonObject.get("total")).intValue();
+			
+		}
 		
 		if(items!=null) //검색 결과가 없을때
 		{
@@ -206,18 +262,24 @@ public class ExploreDaoImpl implements ExploreDao{
 				cafeExplore.setContents(item.get("description").toString());
 				cafeExplore.setCafeName(item.get("cafename").toString());
 				cafeExplore.setCafeLink(item.get("cafeurl").toString());
+				cafeExplore.setEngineFrom("naver");
 				
 				cafeList.add(cafeExplore);
 			}
 		}
 		
-		return cafeList;
+		map.put("cafeList", cafeList);
+		map.put("totalCount", totalCount);
+		
+		return map;
 	}
 
 	@Override
-	public List<CafeExplore> getPhoenixCafeExploreList(Search search) {
+	public Map getPhoenixCafeExploreList(Search search) {
 		
 		List<CafeExplore> cafeList = new ArrayList<CafeExplore>();
+		Map map = new HashMap();
+		int totalCount =0;
 		
 		//설정해줄것 searchCondition , // 얘네는 controller에서 다 세팅되어있음 -키워드, currentPage, pageSize;
 		search.setSearchCondition("0"); //글+카페
@@ -252,7 +314,11 @@ public class ExploreDaoImpl implements ExploreDao{
 				cafeList.add(cafeExplore);
 			}
 		}
-		return cafeList;
+		
+		map.put("cafeList", cafeList);
+		map.put("totalCount", totalCount);
+		
+		return map;
 	}
 	
 	@Override
