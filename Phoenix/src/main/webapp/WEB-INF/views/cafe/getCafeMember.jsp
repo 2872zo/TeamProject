@@ -62,9 +62,9 @@
 		<div class="row page-titles mx-0">
 				<div class="col p-md-0">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="javascript:void(0)">manage</a></li>
+						<li class="breadcrumb-item"><a href="javascript:void(0)">카페관리</a></li>
 						<li class="breadcrumb-item active"><a
-							href="javascript:void(0)">application</a></li>
+							href="javascript:void(0)">멤버상세조회</a></li>
 					</ol>
 				</div>
 			</div>
@@ -83,7 +83,6 @@
       <th scope="col">카페번호</th>
       <th scope="col">닉네임</th>
       <th scope="col">등급명</th>
-      <th scope="col">등급명</th>
       <th scope="col">방문횟수</th>
       <th scope="col">멤버상태</th>
     </tr>
@@ -94,9 +93,12 @@
 	<td>${member.cafeNo}</td>
 	<td>${member.memberNickname}</td>
 	<td>${member.gradeName}</td>
-	<td>${member.gradeName}</td>
 	<td>${member.visitCount}</td>
-	<td>${member.memberStatusCode}</td>
+	<td>
+      <c:if test='${cafeMember.memberStatusCode=="cs100"}'>활동</c:if>
+      <c:if test='${cafeMember.memberStatusCode=="cs101"}'>정지</c:if>
+      <c:if test='${cafeMember.memberStatusCode=="cs102"}'>탈퇴</c:if>
+      </td>
   </tr>
 	</tbody>
 </table>

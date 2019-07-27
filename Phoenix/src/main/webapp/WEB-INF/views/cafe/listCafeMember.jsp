@@ -70,9 +70,9 @@
 		<div class="row page-titles mx-0">
 				<div class="col p-md-0">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="javascript:void(0)">manage</a></li>
+						<li class="breadcrumb-item"><a href="javascript:void(0)">카페관리</a></li>
 						<li class="breadcrumb-item active"><a
-							href="javascript:void(0)">application</a></li>
+							href="javascript:void(0)">멤버목록조회</a></li>
 					</ol>
 				</div>
 			</div>
@@ -154,7 +154,6 @@
  
       <th scope="col">닉네임</th>
       
-      <th scope="col">등급</th>
       <th scope="col">등급명</th>
       <th scope="col">멤버상태</th>
       <th scope="col">가입일</th>
@@ -175,9 +174,12 @@
       
      <th scope="row">${cafeMember.memberNickname}</th>
       
-      <td>${cafeMember.memberGrade}</td>
       <td>${cafeMember.gradeName}</td>
-      <td class='memberStatusCode'>${cafeMember.memberStatusCode}</td>
+      <td>
+      <c:if test='${cafeMember.memberStatusCode=="cs100"}'>활동</c:if>
+      <c:if test='${cafeMember.memberStatusCode=="cs101"}'>정지</c:if>
+      <c:if test='${cafeMember.memberStatusCode=="cs102"}'>탈퇴</c:if>
+      </td>
       <td>${cafeMember.regDate}</td> 
       <td>${cafeMember.visitCount}</td>
       <td>${cafeMember.postCount}</td>
@@ -263,16 +265,12 @@ $(function() {
 		//$("#memberNo").val($($(".memberNo")[count]).text());
 		//$("#memberDetailForm").attr("method" , "POST").attr("action" , "/cafe/"+"${cafeURL}"+"/manage/getCafeMember").submit();
 	});
+	
 	$(".goToMember").on("click" , function() {
 			//alert($(this).attr("id"));
 			$("#memberNo").val($(this).attr("id"));
 			$("#memberDetailForm").attr("method" , "POST").attr("action" , "/cafe/"+"${cafeURL}"+"/manage/getCafeMember").submit();
 		});
-	
-	$(".memberStatusCode").on("click" , function() {
-		var count = $(".memberStatusCode").index(this);
-		alert($($(".memberNo")[count]).text());
-	});
 
 });
 </script>
