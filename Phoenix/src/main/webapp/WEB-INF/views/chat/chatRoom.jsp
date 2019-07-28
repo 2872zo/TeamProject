@@ -76,9 +76,30 @@
           
 		<div class="content-body" style="min-height: 600px;">
 		<div class='container-fluid'>
-	<div class="row">
+		<div class="row">
+       
         <div class="col-lg-8">
         <div class='card'>
+        <div class='card-body'>
+        방제목이랑 번호같은 거 넣자
+        </div>
+        </div>
+	    </div>
+	    
+	    <div class="col-lg-4">
+        <div class='card'>
+        <div class='card-body'>
+        접속한 당사자 정보를 넣자
+        </div>
+        </div>
+	    </div>
+	    
+	    
+        </div>
+       
+	<div class="row" style='height:600px'>
+        <div class="col-lg-8">
+        <div class='card' style='height:100%'>
         <div class='card-body'>
         
 	<input type='hidden' id = 'chatRoomId' value = '${chatRoomId}'>
@@ -89,32 +110,62 @@
 	<!--  화면구성 div Start /////////////////////////////////////-->
 
  <div id='userId'>${user.userId}<br/></div>
- 			<div class="panel panel-default" >
-				<div class="panel-body" id='chat_box2' style="overflow:auto; width:auto; height: 400px;">
+				<div class="panel-body" id='chat_box2' style=" overflow-x:hidden; overflow-y:auto; width:100%;">
 					<!-- <p class="text-left" id="chat_box" > -->
-					<div id='chat_box'>
+					<div id='chat_box' wrap="hard" style='height:600px;'>
 					<c:forEach items='${chatList}' var='chat'>
-					${chat.id}<br/>
-					${chat.userNo}<br/>
-					${chat.chatMsg}<br/>
-					${chat.regDate}<br/>
+					<div class='row d-flex justify-content-start'>
+						<div class='col-lg-1'>
+							<img src="/images/uploadfiles/profileimg/${chat.profileImg}"
+								 class='rounded' style='width: 32px; height: 32px'>
+						</div>
+						<div class='col-lg-6' style='padding-left: 5px;'>
+							${chat.userNickname}
+							<div class="alert" name='${chat.id}' 
+							style='padding:5px; width: 100%;
+							margin-top:5px; 
+							border: 2px solid #f5a142; color: black;' >
+							${chat.chatMsg}
+							</div>
+						</div>
+						<div class='col-lg-2' style='padding-left: 0px; margin-top:5px;'>
+							<br/>${chat.regDate}
+						</div>
+					</div>
+					
+					<div class='row d-flex justify-content-end'>
+						
+						<div class='col-lg-2 text-right' style='padding-right: 0px;'>
+							${chat.regDate}
+						</div>
+						<div class='col-lg-6' style='padding-right: 20px;'>
+							<div class="alert" 
+							name='${chat.id}' style='padding:5px; width: 100%; 
+							border: 2px solid #f5a142; color: black;
+							background-color:#f5a142; ' >
+							${chat.chatMsg}
+							</div>
+						</div>
+							
+					</div>
+
 					</c:forEach>
 					
 					
 					</div>
 					<!--  </p>-->
 				</div>
-			</div>
-
-<div class="input-group mb-3">
+<br/>
+<i class="mdi mdi-file-image" style='font-size:25pt;'></i>
+<i class="mdi mdi-emoticon" style='font-size:25pt;'></i>
+<div class="input-group d-flex">
   <input type="text" class="form-control" placeholder="채팅을 입력해주세요" id="msg">
   <div class="input-group-append">
     <button type="button" class="btn btn-primary" id='msg_process'><i class="mdi mdi-message-text-outline"  style='font-size: 15pt'>
 	  	 </i></button>
   </div>
 </div>
-	
-     <div id='multibox'></div>
+
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
 </div>
@@ -124,7 +175,7 @@
         </div>
         
         <div class="col-lg-4">
-         	<div class='card'>
+         	<div class='card' style="width:auto; height: 50%;">
         	<div class='card-body'>
         참가자 목록 띄워놓을 창이야
         <c:forEach items='${userList}' var='chatRoomInfo'>
@@ -133,8 +184,50 @@
 					${chatRoomInfo.userNo}
 					
 					</c:forEach>
+					<br/>
+					<i class="mdi mdi-playlist-plus" style='font-size: 40pt'></i>
         	</div>
         	</div>
+    	
+        	<div class="accordion" id="accordionExample">
+  <div class="card">
+    <div class="card-header" id="headingOne">
+      <h2 class="mb-0">
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          	채팅에 초대하기
+        </button>
+      </h2>
+    </div>
+
+    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+      <div class="card-body" style="overflow-x:hidden; overflow-y:auto; height: 200px;">
+      <c:forEach items='${inviteList}' var='chatFriend'>
+      <div class='row d-flex justify-content-start' name='${chatFriend.userNo}' style='border: 1px solid #f5a142; margin-bottom: 1%;'>
+	      <div class='col-lg-2'>
+	      <img src="/images/uploadfiles/profileimg/${chatFriend.userImg}"
+								 class='rounded' style='width: 32px; height: 32px'>
+	      </div>
+	      <div class='col-lg-8'>
+	      ${chatFriend.userNickname}
+	      </div>
+      </div>
+      
+      
+      </c:forEach>
+      
+     
+      </div>
+    </div>
+  </div>
+  </div>
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        	
         </div>
 
 </div>
@@ -173,6 +266,7 @@
 //툴바 스크립트용 세션체커
 var checkSessionUser = ${empty sessionScope.user};
 $(function() {
+	//alert($("#userNickname").val());
 	//var socket = io("http://192.168.0.78:82");
 	var socket = io("http://localhost:82");
 	socket.emit("identify", $("#userNo").text());
@@ -235,13 +329,13 @@ $(function() {
      });
      
      socket.on('send_msg', function(msg) {
-         
+         //로그아웃 체크 : 레스트 컨트롤러로 서버한번 태워서 세션에 유저Number 체크해서 날려야 될듯
     	//var scrollT = $("#chat_box2").scrollTop(); //스크롤바의 상단위치
         //var contentH = $('#chat_box').height();
 		//alert(scrollT);
 		//alert(contentH);
-			
-     $('<div></div>').text(msg.userNo+" : "+msg.chatMsg+" 입력한 시간 : "+msg.regDate).appendTo("#chat_box");
+		
+     $('<div></div>').text(msg.userNickname+" : "+msg.chatMsg+" 입력한 시간 : "+msg.regDate).appendTo("#chat_box");
      });
 
 });

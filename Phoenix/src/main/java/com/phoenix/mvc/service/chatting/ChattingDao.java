@@ -40,7 +40,7 @@ public interface ChattingDao {
 	
 	public void deleteMyChatRoom(ChatRoomInfo chatRoomInfo) throws Exception;
 	
-	
+	public List getFriendsListForInvite(Search search) throws Exception;
 	
 	public void addChatRoom(ChatRoom chatRoom) throws Exception;
 	

@@ -177,5 +177,10 @@ public class ChattingDaoImpl implements ChattingDao{
 	public void deleteMyChatRoom(ChatRoomInfo chatRoomInfo) throws Exception {
 		mongoTemplate.remove(chatRoomInfo);
 	}
+
+	@Override
+	public List getFriendsListForInvite(Search search) throws Exception {
+		return sqlSession.selectList("ChatFriendMapper.getFriendsListForInvite", search);
+	}
 	
 }

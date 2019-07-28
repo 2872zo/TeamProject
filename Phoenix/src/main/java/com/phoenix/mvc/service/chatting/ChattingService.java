@@ -28,7 +28,7 @@ public interface ChattingService {
 	
 	public Map getChatRoom(Search search) throws Exception;
 	
-	public ChatRoomInfo addChatRoom(ChatRoomForMongo chatRoomForMongo) throws Exception;
+	public ChatRoomInfo addChatRoom(Map map) throws Exception;
 	
 	public void addChatRoom(ChatRoom chatRoom) throws Exception;
 	
@@ -50,5 +50,7 @@ public interface ChattingService {
 	public void updateMyChatRoom(ChatRoomInfo chatRoomInfo) throws Exception;
 	
 	public void deleteMyChatRoom(ChatRoomInfo chatRoomInfo) throws Exception;
+	
+	public Map getFriendsListForInvite(Search search) throws Exception;
 	
 }

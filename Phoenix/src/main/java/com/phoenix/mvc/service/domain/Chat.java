@@ -19,78 +19,62 @@ public class Chat {
 	
 	public Chat() {	
 	}
-
 	public String getId() {
 		return id;
 	}
-
 	public void setId(String id) {
 		this.id = id;
 	}
-
 	public String getChatRoomId() {
 		return chatRoomId;
 	}
-
 	public void setChatRoomId(String chatRoomId) {
 		this.chatRoomId = chatRoomId;
 	}
-
 	public int getUserNo() {
 		return userNo;
 	}
-
 	public void setUserNo(int userNo) {
 		this.userNo = userNo;
 	}
-
-	public String getChatNickname() {
+	public String getUserNickname() {
 		return userNickname;
 	}
-
-	public void setChatNickname(String chatNickname) {
-		this.userNickname = chatNickname;
+	public void setUserNickname(String userNickname) {
+		this.userNickname = userNickname;
 	}
-
-	public String getChatProfileImg() {
+	public String getProfileImg() {
 		return profileImg;
 	}
-
-	public void setChatProfileImg(String chatProfileImg) {
-		this.profileImg = chatProfileImg;
+	public void setProfileImg(String profileImg) {
+		this.profileImg = profileImg;
 	}
-
 	public int getChatType() {
 		return chatType;
 	}
-
 	public void setChatType(int chatType) {
 		this.chatType = chatType;
 	}
-
 	public String getChatMsg() {
 		return chatMsg;
 	}
-
 	public void setChatMsg(String chatMsg) {
 		this.chatMsg = chatMsg;
 	}
-
 	public String getRegDate() {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd HH:mm");
-		
 		return format.format(regDate);
 	}
-
 	public void setRegDate(Date regDate) {
 		this.regDate = regDate;
 	}
-
+	
 	@Override
 	public String toString() {
-		return "Chat [id=" + id + ", chatRoomId=" + chatRoomId + ", UserNo=" + userNo + ", userNickname=" + userNickname
+		return "Chat [id=" + id + ", chatRoomId=" + chatRoomId + ", userNo=" + userNo + ", userNickname=" + userNickname
 				+ ", profileImg=" + profileImg + ", chatType=" + chatType + ", chatMsg=" + chatMsg + ", regDate="
 				+ regDate + "]";
 	}
+	
 	
 }

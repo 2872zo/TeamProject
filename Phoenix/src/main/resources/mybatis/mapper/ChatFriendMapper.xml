@@ -30,29 +30,28 @@
 	</select>
 	
 	<select id="getWannaBeFriendList" parameterType="Search" resultMap="chatFriendSelectMap">
-	
-	SELECT
-		user_no, user_nickname, profile_img
-	FROM
-		users
-	WHERE
-		user_role_code='ur101'
-	AND 
-		user_status_code not in ('cs102')
-	AND 
-		user_no not in (SELECT
-							target_user_no 
-						FROM
+		SELECT
+			user_no, user_nickname, profile_img
+		FROM
+			users
+		WHERE
+			user_role_code='ur101'
+		AND 
+			user_status_code not in ('cs102')
+		AND 
+			user_no not in (SELECT
+								target_user_no 
+							FROM
+								chat_friends
+							WHERE 
+								user_no = #{userNo})
+		AND 
+			user_no IN (SELECT 
+							user_no
+						FROM 
 							chat_friends
 						WHERE 
-							user_no = #{userNo})
-	AND 
-		user_no IN (SELECT 
-						user_no
-					FROM 
-						chat_friends
-					WHERE 
-						target_user_no = #{userNo})
+							target_user_no = #{userNo})
 	</select>
 	
 	
@@ -77,35 +76,52 @@
 							chat_friends
 							WHERE user_no=#{userNo}
 							)
-				
+
 	</select>
 	
 	<insert id="addFriend" parameterType="ChatFriend">
 		<selectKey keyProperty="chatFriendNo" resultType="int" order="BEFORE">
 	 		SELECT seq_chat_friends_no.NEXTVAL FROM DUAL
 	 	</selectKey>
-	INSERT INTO 
-	chat_friends 
-		(chat_friends_no, user_no, target_user_no, friend_status) 
-	VALUES 
-		(#{chatFriendNo}, #{userNo}, #{targetUserNo}, #{friendStatus}) 
+		INSERT INTO 
+		chat_friends 
+			(chat_friends_no, user_no, target_user_no, friend_status) 
+		VALUES 
+			(#{chatFriendNo}, #{userNo}, #{targetUserNo}, #{friendStatus}) 
 	</insert> 
 	
 	<delete id="deleteFriend" parameterType="ChatFriend">
-	DELETE FROM 
-		chat_friends 
-	WHERE 
-		chat_friends_no = #{chatFriendNo}
-	</delete>
-
-	<update id="updateFriend" parameterType="ChatFriend">
-	UPDATE
-	chat_friends
-	<set>
-		friend_status = #{friendStatus:VARCHAR}, 
-		friend_nickname = #{friendNickname:VARCHAR}
-	</set>
-	WHERE chat_friends_no = #{chatFriendNo}
+		DELETE FROM 
+			chat_friends 
+		WHERE 
+			chat_friends_no = #{chatFriendNo}
+		</delete>
+	
+		<update id="updateFriend" parameterType="ChatFriend">
+		UPDATE
+		chat_friends
+		<set>
+			friend_status = #{friendStatus:VARCHAR}, 
+			friend_nickname = #{friendNickname:VARCHAR}
+		</set>
+		WHERE chat_friends_no = #{chatFriendNo}
 	</update>
+	
+	<select id="getFriendsListForInvite" parameterType="Search" resultMap="chatFriendSelectMap">
+		SELECT 
+			c.target_user_no AS user_no, u.user_nickname, u.profile_img
+		FROM 
+			chat_friends c, users u
+		WHERE 
+			c.target_user_no = u.user_no
+		AND
+			c.user_no = #{userNo}
+		AND 
+			c.target_user_no not in  
+			<foreach item="targetUserNo" index="index" collection="targetUserNos" 
+			open="(" separator=", " close=")">
+	        #{targetUserNo}
+	  		</foreach>
+	</select>
 	
 </mapper>

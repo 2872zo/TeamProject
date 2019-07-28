@@ -40,8 +40,20 @@ public class ChattingContoller {
 	}
 	
 	@RequestMapping("main")
-	public String getChatMain() {
-		
+	public String getChatMain() throws Exception {
+		int a = 10006;
+		int b = 10002;
+		int c = 10004;
+		Search search = new Search();
+		List<Integer> list= new ArrayList<Integer>();
+		list.add(a);
+		list.add(b);
+		list.add(c);
+		search.setUserNo(10000);
+		search.setTargetUserNos(list);
+		Map map = chattingService.getFriendsListForInvite(search);
+		List listing = (List)map.get("FriendsForInvite");
+		System.out.println(listing);
 		return "chat/chatMain";
 	}
 	
@@ -113,10 +125,11 @@ public class ChattingContoller {
 	
 	@RequestMapping("chatRoom")
 	public String getChatRoom(@SessionAttribute("user") User user, @ModelAttribute Search search, Model model) throws Exception {
-		
+		search.setUserNo(user.getUserNo());
 		Map map = chattingService.getChatRoom(search);
 		List chatList = (List) map.get("chatList");
 		List userList = (List) map.get("userList");
+		List inviteList = (List) map.get("inviteList");
 		String chatRoomId=search.getChatRoomId();
 		//System.out.println(chatRoom.getChatRoomNo());
 		//Search search = new Search();
@@ -125,6 +138,7 @@ public class ChattingContoller {
 		//List chatRoomList = (List) map.get("chatRoomList");
 		model.addAttribute("chatList", chatList);
 		model.addAttribute("userList", userList);
+		model.addAttribute("inviteList", inviteList);
 		model.addAttribute("chatRoomId", chatRoomId);
 		return "chat/chatRoom";
 	}
@@ -135,7 +149,10 @@ public class ChattingContoller {
 		ChatRoomForMongo chatRoomForMongo = new ChatRoomForMongo();
 		chatRoomForMongo.setOpenUserNo(user.getUserNo());
 		chatRoomForMongo.setRegDate(new Date());
-		chattingService.addChatRoom(chatRoomForMongo);
+		Map map = new HashMap();
+		map.put("chatRoomForMongo",chatRoomForMongo);
+		map.put("user",user);
+		chattingService.addChatRoom(map);
 		System.out.println(chatRoomForMongo);
 		model.addAttribute("chatRoom", chatRoomForMongo);
 		return "chat/chatRoom";

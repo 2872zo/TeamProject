@@ -1,5 +1,6 @@
 package com.phoenix.mvc.service.chatting.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +19,7 @@ import com.phoenix.mvc.service.domain.ChatFriend;
 import com.phoenix.mvc.service.domain.ChatRoom;
 import com.phoenix.mvc.service.domain.ChatRoomForMongo;
 import com.phoenix.mvc.service.domain.ChatRoomInfo;
+import com.phoenix.mvc.service.domain.User;
 
 @Service
 @Transactional
@@ -102,22 +104,34 @@ public class ChattingServiceImpl implements ChattingService{
 
 	@Override
 	public Map getChatRoom(Search search) throws Exception {
-		
+	
 		Map map = new HashMap();
 		List chatList = chattingDao.getChatList(search);
 		List userList = chattingDao.getChatRoomUserList(search);
+		List<Integer> targetUserNos = new ArrayList<Integer>();
+		for(int i =0;i<userList.size() ;i++) {
+			ChatRoomInfo chatRoomInfo = (ChatRoomInfo) userList.get(i);
+			targetUserNos.add(chatRoomInfo.getUserNo());
+		}
+		search.setTargetUserNos(targetUserNos);
+		List inviteList = chattingDao.getFriendsListForInvite(search);
 		map.put("chatList", chatList);
 		map.put("userList", userList);
+		map.put("inviteList", inviteList);
 		return map;
 		
 	}
 	
 	@Override
-	public ChatRoomInfo addChatRoom(ChatRoomForMongo chatRoomForMongo) throws Exception {
+	public ChatRoomInfo addChatRoom(Map map) throws Exception {
+		ChatRoomForMongo chatRoomForMongo = (ChatRoomForMongo)map.get("chatRoomForMongo");
 		chattingDao.addChatRoom(chatRoomForMongo);
-		ChatRoomInfo chatRoomInfo = new ChatRoomInfo();
+		User user = (User)map.get("user");
+		ChatRoomInfo chatRoomInfo = new ChatRoomInfo();		
 		chatRoomInfo.setChatRoomId(chatRoomForMongo.getId());
 		chatRoomInfo.setUserNo(chatRoomForMongo.getOpenUserNo());
+		chatRoomInfo.setProfileImg(user.getProfileImg());
+		chatRoomInfo.setUserNickname(user.getUserNickname());
 		chatRoomInfo.setRegDate(new Date());
 		chatRoomInfo.setLatestEnter(new Date());
 		chattingDao.addMyChatRoom(chatRoomInfo);
@@ -156,14 +170,20 @@ public class ChattingServiceImpl implements ChattingService{
 
 	@Override
 	public void updateMyChatRoom(ChatRoomInfo chatRoomInfo) throws Exception {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void deleteMyChatRoom(ChatRoomInfo chatRoomInfo) throws Exception {
-		// TODO Auto-generated method stub
 		chattingDao.deleteMyChatRoom(chatRoomInfo);
+	}
+
+	@Override
+	public Map getFriendsListForInvite(Search search) throws Exception {
+		Map map = new HashMap();
+		List FriendsForInvite = chattingDao.getFriendsListForInvite(search);
+		map.put("FriendsForInvite", FriendsForInvite);
+		return map;
 	}
 
 }

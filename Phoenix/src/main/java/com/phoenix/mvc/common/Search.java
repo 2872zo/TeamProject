@@ -1,5 +1,7 @@
 package com.phoenix.mvc.common;
 
+import java.util.List;
+
 public class Search{
 	///Field
 	private int userNo;
@@ -29,6 +31,7 @@ public class Search{
 	private String termEnd;
 	
 	private int targetUserNo;
+	private List targetUserNos;
 	private String chatId;
 	private String chatRoomId;
 	private int friendStatus;
@@ -228,6 +231,14 @@ public class Search{
 
 
 
+	public List getTargetUserNos() {
+		return targetUserNos;
+	}
+
+	public void setTargetUserNos(List targetUserNos) {
+		this.targetUserNos = targetUserNos;
+	}
+
 	public String getChatId() {
 		return chatId;
 	}
@@ -348,12 +359,12 @@ public class Search{
 				+ sortCode + ", searchCondition=" + searchCondition + ", searchKeyword=" + searchKeyword
 				+ ", currentPage=" + currentPage + ", pageSize=" + pageSize + ", endRowNum=" + endRowNum
 				+ ", startRowNum=" + startRowNum + ", termStart=" + termStart + ", termEnd=" + termEnd
-				+ ", targetUserNo=" + targetUserNo + ", chatId=" + chatId + ", chatRoomId=" + chatRoomId
-				+ ", friendStatus=" + friendStatus + ", positionIndex=" + positionIndex + ", engineAll=" + engineAll
-				+ ", engineNaver=" + engineNaver + ", engineDaum=" + engineDaum + ", engineGoogle=" + engineGoogle
-				+ ", enginePhoenix=" + enginePhoenix + ", orderState=" + orderState + ", orderStateSort="
-				+ orderStateSort + ", searchTheme=" + searchTheme + ", searchThemeSort=" + searchThemeSort + ", filter="
-				+ filter + ", searchEngine=" + searchEngine + "]";
+				+ ", targetUserNo=" + targetUserNo + ", targetUserNos=" + targetUserNos + ", chatId=" + chatId
+				+ ", chatRoomId=" + chatRoomId + ", friendStatus=" + friendStatus + ", positionIndex=" + positionIndex
+				+ ", engineAll=" + engineAll + ", engineNaver=" + engineNaver + ", engineDaum=" + engineDaum
+				+ ", engineGoogle=" + engineGoogle + ", enginePhoenix=" + enginePhoenix + ", orderState=" + orderState
+				+ ", orderStateSort=" + orderStateSort + ", searchTheme=" + searchTheme + ", searchThemeSort="
+				+ searchThemeSort + ", filter=" + filter + ", searchEngine=" + searchEngine + "]";
 	}
 
 }//end of class
