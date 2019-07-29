@@ -51,6 +51,12 @@ public class Search{
 	private int searchEngine; //dao API method에서 사용할애 어떤 engine인지 0:다음, 1:네이버, 2:구글
 	//-----------------------------
 	
+	//sns추가욤
+	private String fbId;
+	private String fbPw;
+	private String igId;
+	private String igPw;
+	
 	///Constructor
 	public Search() {
 	}
@@ -338,6 +344,38 @@ public class Search{
 		this.searchTheme = searchTheme;
 	}
 
+	public String getFbId() {
+		return fbId;
+	}
+
+	public void setFbId(String fbId) {
+		this.fbId = fbId;
+	}
+
+	public String getFbPw() {
+		return fbPw;
+	}
+
+	public void setFbPw(String fbPw) {
+		this.fbPw = fbPw;
+	}
+
+	public String getIgId() {
+		return igId;
+	}
+
+	public void setIgId(String igId) {
+		this.igId = igId;
+	}
+
+	public String getIgPw() {
+		return igPw;
+	}
+
+	public void setIgPw(String igPw) {
+		this.igPw = igPw;
+	}
+
 	@Override
 	public String toString() {
 		return "Search [userNo=" + userNo + ", memberNo=" + memberNo + ", memberGrade=" + memberGrade + ", cafeNo="
@@ -351,7 +389,10 @@ public class Search{
 				+ ", engineNaver=" + engineNaver + ", engineDaum=" + engineDaum + ", engineGoogle=" + engineGoogle
 				+ ", enginePhoenix=" + enginePhoenix + ", orderState=" + orderState + ", orderStateSort="
 				+ orderStateSort + ", searchTheme=" + searchTheme + ", searchThemeSort=" + searchThemeSort + ", filter="
-				+ filter + ", searchEngine=" + searchEngine + "]";
+				+ filter + ", searchEngine=" + searchEngine + ", fbId=" + fbId + ", fbPw=" + fbPw + ", igId=" + igId
+				+ ", igPw=" + igPw + "]";
 	}
+
+
 
 }//end of class
