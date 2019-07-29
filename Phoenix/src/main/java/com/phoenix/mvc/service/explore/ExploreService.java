@@ -17,7 +17,7 @@ public interface ExploreService {
 	
 	public List getUnifiedExploreList(Search search) throws Exception;
 	
-	public List<Image> getImageExploreList(Search search)throws Exception;
+	public Map getImageExploreList(Search search)throws Exception;
 	
 	public List<WebExplore> getWebsiteExploreList(Search search)throws Exception;
 	

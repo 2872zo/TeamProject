@@ -209,6 +209,7 @@
            				</ul>
            			<hr/>
            			<input type="hidden" name="searchTheme" id="searchTheme" value="1">
+           			
            			</div>
            			
            			<div class="col-md-1">
