@@ -9,13 +9,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.chatting.ChattingDao;
 import com.phoenix.mvc.service.domain.Chat;
 import com.phoenix.mvc.service.domain.ChatFriend;
-import com.phoenix.mvc.service.domain.ChatRoom;
 import com.phoenix.mvc.service.domain.ChatRoomForMongo;
 import com.phoenix.mvc.service.domain.ChatRoomInfo;
 
@@ -30,9 +30,9 @@ public class ChattingDaoImpl implements ChattingDao{
 	@Qualifier("mongoTemplate")
 	private MongoTemplate mongoTemplate;
 	
-	private MongoMapper mongoMapper;
 	private Query query;
 	private Criteria criteria;
+	private Update update;
 	
 	
 	public ChattingDaoImpl() {
@@ -54,6 +54,16 @@ public class ChattingDaoImpl implements ChattingDao{
 		
 		System.out.println(query);
 		return mongoTemplate.find(query, ChatRoomInfo.class);
+	}
+	
+	@Override
+	public ChatRoomInfo getMyChatRoomInfo(ChatRoomInfo chatRoomInfo) throws Exception {
+		query = new Query();
+		criteria = new Criteria();
+		//query.with(new Sort(Sort.Direction.DESC, "latestMessagingDate"));
+		criteria.andOperator(Criteria.where("userNo").is(chatRoomInfo.getUserNo()), Criteria.where("chatRoomId").is(chatRoomInfo.getChatRoomId()));
+		query.addCriteria(criteria);
+		return mongoTemplate.findOne(query, ChatRoomInfo.class);
 	}
 
 	@Override
@@ -100,16 +110,6 @@ public class ChattingDaoImpl implements ChattingDao{
 	@Override
 	public void addChatRoom(ChatRoomForMongo chatRoomForMongo) throws Exception {
 		mongoTemplate.insert(chatRoomForMongo);
-	}
-
-	@Override
-	public void addChatRoom(ChatRoom chatRoom) throws Exception {
-		//mongoTemplate.insert(chatRoom);
-	}
-
-	@Override
-	public void deleteChatRoomFromList(ChatRoom chatRoom) throws Exception {
-		
 	}
 
 	@Override
@@ -171,6 +171,13 @@ public class ChattingDaoImpl implements ChattingDao{
 
 	@Override
 	public void updateMyChatRoom(ChatRoomInfo chatRoomInfo) throws Exception {
+		query = new Query();
+		criteria = new Criteria();
+		criteria.andOperator(Criteria.where("id").is(chatRoomInfo.getId()));
+		query.addCriteria(criteria);
+		update = new Update();
+		update.set("chatRoomName", chatRoomInfo.getChatRoomName());
+		mongoTemplate.updateFirst(query, update, ChatRoomInfo.class);
 	}
 
 	@Override
@@ -182,5 +189,6 @@ public class ChattingDaoImpl implements ChattingDao{
 	public List getFriendsListForInvite(Search search) throws Exception {
 		return sqlSession.selectList("ChatFriendMapper.getFriendsListForInvite", search);
 	}
-	
+
+
 }

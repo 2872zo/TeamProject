@@ -1,5 +1,6 @@
 package com.phoenix.mvc.service.domain;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -12,7 +13,7 @@ public class ChatRoomInfo {
 	int userNo;
 	String userNickname;
 	String profileImg;
-	String ChatRoomName;
+	String chatRoomName;
 	Date regDate;
 	Date latestMessagingDate;
 	Date latestEnter;
@@ -49,13 +50,14 @@ public class ChatRoomInfo {
 		this.profileImg = profileImg;
 	}
 	public String getChatRoomName() {
-		return ChatRoomName;
+		return chatRoomName;
 	}
 	public void setChatRoomName(String chatRoomName) {
-		ChatRoomName = chatRoomName;
+		this.chatRoomName = chatRoomName;
 	}
-	public Date getRegDate() {
-		return regDate;
+	public String getRegDate() {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd HH:mm");
+		return format.format(regDate);
 	}
 	public void setRegDate(Date regDate) {
 		this.regDate = regDate;
@@ -82,7 +84,7 @@ public class ChatRoomInfo {
 	@Override
 	public String toString() {
 		return "ChatRoomInfo [id=" + id + ", chatRoomId=" + chatRoomId + ", userNo=" + userNo + ", userNickname="
-				+ userNickname + ", profileImg=" + profileImg + ", ChatRoomName=" + ChatRoomName + ", regDate="
+				+ userNickname + ", profileImg=" + profileImg + ", chatRoomName=" + chatRoomName + ", regDate="
 				+ regDate + ", latestMessagingDate=" + latestMessagingDate + ", latestEnter=" + latestEnter
 				+ ", latestLeave=" + latestLeave + "]";
 	}

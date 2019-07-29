@@ -5,7 +5,6 @@ import java.util.List;
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.domain.Chat;
 import com.phoenix.mvc.service.domain.ChatFriend;
-import com.phoenix.mvc.service.domain.ChatRoom;
 import com.phoenix.mvc.service.domain.ChatRoomForMongo;
 import com.phoenix.mvc.service.domain.ChatRoomInfo;
 
@@ -13,6 +12,8 @@ import com.phoenix.mvc.service.domain.ChatRoomInfo;
 public interface ChattingDao {
 	
 	public List getMyChatRoomList(Search search) throws Exception;
+	
+	public ChatRoomInfo getMyChatRoomInfo(ChatRoomInfo chatRoomInfo) throws Exception;
 	
 	public int getMyChatRoomCount(Search search) throws Exception;
 	
@@ -41,10 +42,6 @@ public interface ChattingDao {
 	public void deleteMyChatRoom(ChatRoomInfo chatRoomInfo) throws Exception;
 	
 	public List getFriendsListForInvite(Search search) throws Exception;
-	
-	public void addChatRoom(ChatRoom chatRoom) throws Exception;
-	
-	public void deleteChatRoomFromList (ChatRoom chatRoom) throws Exception;
 	
 	public void testMethod (Chat chat) throws Exception;
 	

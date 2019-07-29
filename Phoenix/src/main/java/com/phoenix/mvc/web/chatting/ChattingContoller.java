@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.chatting.ChattingService;
-import com.phoenix.mvc.service.domain.ChatRoom;
 import com.phoenix.mvc.service.domain.ChatRoomForMongo;
 import com.phoenix.mvc.service.domain.ChatRoomInfo;
 import com.phoenix.mvc.service.domain.User;
@@ -123,14 +122,14 @@ public class ChattingContoller {
 		return "chat/listChatRoom";
 	}
 	
-	@RequestMapping("chatRoom")
+	@RequestMapping("enterChatRoom")
 	public String getChatRoom(@SessionAttribute("user") User user, @ModelAttribute Search search, Model model) throws Exception {
 		search.setUserNo(user.getUserNo());
 		Map map = chattingService.getChatRoom(search);
 		List chatList = (List) map.get("chatList");
 		List userList = (List) map.get("userList");
 		List inviteList = (List) map.get("inviteList");
-		String chatRoomId=search.getChatRoomId();
+		ChatRoomInfo chatRoomInfo= (ChatRoomInfo)map.get("chatRoomInfo");
 		//System.out.println(chatRoom.getChatRoomNo());
 		//Search search = new Search();
 		//search.setUserNo(user.getUserNo());
@@ -139,23 +138,49 @@ public class ChattingContoller {
 		model.addAttribute("chatList", chatList);
 		model.addAttribute("userList", userList);
 		model.addAttribute("inviteList", inviteList);
-		model.addAttribute("chatRoomId", chatRoomId);
+		model.addAttribute("chatRoomInfo", chatRoomInfo);
 		return "chat/chatRoom";
 	}
-	
+
 	@RequestMapping("addChatRoom")
 	public String addChatRoom(@SessionAttribute("user") User user, Model model) throws Exception {
 		System.out.println("/chat/addChatRoom 입니다.");
+		
 		ChatRoomForMongo chatRoomForMongo = new ChatRoomForMongo();
 		chatRoomForMongo.setOpenUserNo(user.getUserNo());
 		chatRoomForMongo.setRegDate(new Date());
 		Map map = new HashMap();
 		map.put("chatRoomForMongo",chatRoomForMongo);
 		map.put("user",user);
-		chattingService.addChatRoom(map);
-		System.out.println(chatRoomForMongo);
-		model.addAttribute("chatRoom", chatRoomForMongo);
+		Map returnMap = chattingService.addChatRoom(map);
+		List chatList = (List) returnMap.get("chatList");
+		List userList = (List) returnMap.get("userList");
+		List inviteList = (List) returnMap.get("inviteList");
+		
+		ChatRoomInfo chatRoomInfo= (ChatRoomInfo)returnMap.get("chatRoomInfo");
+			
+		model.addAttribute("chatList", chatList);
+		model.addAttribute("userList", userList);
+		model.addAttribute("inviteList", inviteList);
+		model.addAttribute("chatRoomInfo", chatRoomInfo);
 		return "chat/chatRoom";
+	}
+	
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	@RequestMapping("leaveChatRoom")
+	public String deleteChatRoom(@ModelAttribute ChatRoomInfo chatRoomInfo) throws Exception {
+		System.out.println(chatRoomInfo);
+		chattingService.deleteMyChatRoom(chatRoomInfo);
+		return "redirect:/chat/chatRoomList";
 	}
 	
 	@RequestMapping("config")

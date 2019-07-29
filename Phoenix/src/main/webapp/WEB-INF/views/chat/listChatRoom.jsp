@@ -96,7 +96,7 @@ img {
 
 	<c:forEach items="${chatRoomList}" var ='chatRoomInfo'>
 	
-	<div class="card mb-3  enterTheRoom " name='${chatRoomInfo.chatRoomId}'>
+	<div class="card mb-3  enterTheRoom" name='${chatRoomInfo.chatRoomId}' id='${chatRoomInfo.id}'>
   <div class="row">
     <div class="col-lg-4">
       <img src="..." class="card-img" alt="...">
@@ -104,7 +104,8 @@ img {
     <div class="col-lg-8">
       <div class="card-body">
         <h5 class="card-title chatRoom">${chatRoomInfo.chatRoomId}</h5>
-        <p class="card-text">${chatRoomInfo.userNo} </p>
+        <p class="card-text">${chatRoomInfo.chatRoomName}</p>
+        <p class="card-text">${chatRoomInfo.userNo}</p>
         <p class="card-text">${chatRoomInfo.id} </p>
         <p class="card-text">${chatRoomInfo.userNickname} </p>
                 <p class="card-text">${chatRoomInfo.profileImg} </p>
@@ -174,7 +175,8 @@ $(function() {
 	//alert("1");
 	//var roomNumbers = ${sessionScope.roomNos};
 	//alert(${sessionScope.roomNos});
-	
+	//노드쪽에 유저번호 전송
+	socket.emit("identify", ${sessionScope.user.userNo});
 	socket.emit("joiner", $("#roomNos").val());
 
 	socket.on('send_msg', function(msg) {
@@ -193,7 +195,7 @@ $(function() {
 	//
 	//	
 	$("#addingChatRoom").on("click" , function() {
-		alert("채팅방 만들기 버튼입니다.");
+		//alert("채팅방 만들기 버튼입니다.");
 		$(self.location).attr("href", "/chat/addChatRoom");
 	});
 	$(".enterTheRoom").on("click" , function() {
@@ -203,7 +205,7 @@ $(function() {
 		$("#chatRoomId").val($(this).attr('name'));
 		//alert(isNan(roomNumber));
 		//alert($("#rooming").serialize());
-		$("#rooming").attr("method" , "POST").attr("action" , "/chat/chatRoom").submit();
+		$("#rooming").attr("method" , "POST").attr("action" , "/chat/enterChatRoom").submit();
 		
 	});
 		//alert(${roomNos});

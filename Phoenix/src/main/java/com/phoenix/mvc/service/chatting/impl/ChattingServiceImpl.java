@@ -16,7 +16,6 @@ import com.phoenix.mvc.service.chatting.ChattingDao;
 import com.phoenix.mvc.service.chatting.ChattingService;
 import com.phoenix.mvc.service.domain.Chat;
 import com.phoenix.mvc.service.domain.ChatFriend;
-import com.phoenix.mvc.service.domain.ChatRoom;
 import com.phoenix.mvc.service.domain.ChatRoomForMongo;
 import com.phoenix.mvc.service.domain.ChatRoomInfo;
 import com.phoenix.mvc.service.domain.User;
@@ -115,6 +114,11 @@ public class ChattingServiceImpl implements ChattingService{
 		}
 		search.setTargetUserNos(targetUserNos);
 		List inviteList = chattingDao.getFriendsListForInvite(search);
+		ChatRoomInfo chatRoomInfo = new ChatRoomInfo();
+		chatRoomInfo.setUserNo(search.getUserNo());
+		chatRoomInfo.setChatRoomId(search.getChatRoomId());
+		chatRoomInfo = chattingDao.getMyChatRoomInfo(chatRoomInfo);
+		map.put("chatRoomInfo", chatRoomInfo);
 		map.put("chatList", chatList);
 		map.put("userList", userList);
 		map.put("inviteList", inviteList);
@@ -123,7 +127,7 @@ public class ChattingServiceImpl implements ChattingService{
 	}
 	
 	@Override
-	public ChatRoomInfo addChatRoom(Map map) throws Exception {
+	public Map addChatRoom(Map map) throws Exception {
 		ChatRoomForMongo chatRoomForMongo = (ChatRoomForMongo)map.get("chatRoomForMongo");
 		chattingDao.addChatRoom(chatRoomForMongo);
 		User user = (User)map.get("user");
@@ -132,28 +136,17 @@ public class ChattingServiceImpl implements ChattingService{
 		chatRoomInfo.setUserNo(chatRoomForMongo.getOpenUserNo());
 		chatRoomInfo.setProfileImg(user.getProfileImg());
 		chatRoomInfo.setUserNickname(user.getUserNickname());
+		chatRoomInfo.setChatRoomName(new Date()+"에 "+user.getUserNickname()+" 님이 개설한 채팅방");
 		chatRoomInfo.setRegDate(new Date());
 		chatRoomInfo.setLatestEnter(new Date());
 		chattingDao.addMyChatRoom(chatRoomInfo);
-		System.out.println(chatRoomInfo);
-		return chatRoomInfo;
-	}
-
-	@Override
-	public void addChatRoom(ChatRoom chatRoom) throws Exception {
-		chattingDao.addChatRoom(chatRoom);
-	}
-
-	@Override
-	public void updateChatRoom(ChatRoom chatRoom) throws Exception {
-		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public void removeChatRoom(ChatRoom chatRoom) throws Exception {
-		// TODO Auto-generated method stub
-		
+		Search search = new Search();
+		search.setUserNo(user.getUserNo());
+		search.setChatRoomId(chatRoomInfo.getChatRoomId());
+		String chatRoomId = chatRoomInfo.getChatRoomId();
+		map = this.getChatRoom(search);
+		return map;
 	}
 
 	@Override
@@ -175,7 +168,8 @@ public class ChattingServiceImpl implements ChattingService{
 
 	@Override
 	public void deleteMyChatRoom(ChatRoomInfo chatRoomInfo) throws Exception {
-		chattingDao.deleteMyChatRoom(chatRoomInfo);
+		ChatRoomInfo chatRoomInfoRe = chattingDao.getMyChatRoomInfo(chatRoomInfo);
+		chattingDao.deleteMyChatRoom(chatRoomInfoRe);
 	}
 
 	@Override

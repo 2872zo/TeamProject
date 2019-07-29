@@ -15,7 +15,7 @@ import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.chatting.ChattingService;
 import com.phoenix.mvc.service.domain.Chat;
 import com.phoenix.mvc.service.domain.ChatFriend;
-import com.phoenix.mvc.service.domain.ChatRoom;
+import com.phoenix.mvc.service.domain.ChatRoomInfo;
 import com.phoenix.mvc.service.domain.User;
 
 @RestController
@@ -33,28 +33,24 @@ public class ChattingRestController {
 	@PostMapping("addChat")
 	public Chat addChat(@RequestBody Chat chat) throws Exception{
 		System.out.println ("/chat/json/addChat");
-		System.out.println (chat);
+
 		chat.setRegDate(new Date());
-		//System.out.println ("시간찍힘"+chat);
-		//chat.setChatNickname("대충");
-		//chat.setChatProfileImg("abc");
 		chattingService.addChat(chat);
-		
-		System.out.println ("제대로들어가면호출됨"+chat);
-		
-		//List list = chattingService.getChatList(chat);
-		
-		//System.out.println(list);
 		
 		return chat;
 	}
 	
-	
 	@PostMapping("inviteFriend")
-	public ChatFriend inviteFriend(@RequestBody ChatFriend chatFriend) throws Exception{
+	public boolean inviteFriend(@RequestBody List<ChatRoomInfo> chatRoomInfoList) throws Exception{
+
+		for (ChatRoomInfo chatRoomInfo : chatRoomInfoList) {
+			chatRoomInfo.setChatRoomName(new Date()+"에 초대받은 채팅방");
+			chatRoomInfo.setRegDate(new Date());
+			chattingService.addMyChatRoom(chatRoomInfo);
+		}
 		
+		return true;
 		
-		return new ChatFriend();
 	}
 	
 	@PostMapping("addChatFriend")
@@ -82,6 +78,15 @@ public class ChattingRestController {
 		}
 	}
 	
+	@PostMapping("updateChatRoomInfo")
+	public String updateChatRoomInfo(@RequestBody ChatRoomInfo chatRoomInfo) throws Exception {
+		
+		chattingService.updateMyChatRoom(chatRoomInfo);
+		
+		return chatRoomInfo.getChatRoomName();
+		
+	}
+	
 	@PostMapping("updateChatFriend")
 	public boolean updateChatFriend(@RequestBody Search search){
 		return true;
@@ -92,11 +97,7 @@ public class ChattingRestController {
 		return true;
 	}
 	
-	@PostMapping("updateChatRoomName")
-	public Chat updateChatRoomName(@RequestBody ChatRoom chatRoom){
-		return null;
-		
-	}
+
 	
 	
 }
