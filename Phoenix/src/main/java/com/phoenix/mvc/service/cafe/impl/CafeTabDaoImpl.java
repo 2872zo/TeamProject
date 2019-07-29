@@ -47,6 +47,9 @@ public class CafeTabDaoImpl implements CafeTabDao {
 	public int getChangeGrade(int cafeNo) throws Exception {		
 		return sqlSession.selectOne("CafeMapper.changeGrade", cafeNo);
 	}
+	public int getChangeBoard(int cafeNo) throws Exception {		
+		return sqlSession.selectOne("CafeMapper.changeBoard", cafeNo);
+	}
 	
 
 

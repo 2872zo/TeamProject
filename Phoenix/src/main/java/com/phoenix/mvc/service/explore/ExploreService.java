@@ -1,6 +1,7 @@
 package com.phoenix.mvc.service.explore;
 
 import java.util.List;
+import java.util.Map;
 
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.domain.Blog;
@@ -10,13 +11,13 @@ import com.phoenix.mvc.service.domain.WebExplore;
 
 public interface ExploreService {
 	
-	public List<Blog> getBlogExploreList(Search search) throws Exception;
+	public Map getBlogExploreList(Search search) throws Exception;
 	
-	public List<CafeExplore> getCafeExploreList(Search search) throws Exception ;
+	public Map getCafeExploreList(Search search) throws Exception ;
 	
 	public List getUnifiedExploreList(Search search) throws Exception;
 	
-	public List<Image> getImageExploreList(Search search)throws Exception;
+	public Map getImageExploreList(Search search)throws Exception;
 	
 	public List<WebExplore> getWebsiteExploreList(Search search)throws Exception;
 	

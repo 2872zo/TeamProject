@@ -19,6 +19,8 @@ public interface CafeTabDao {
 	public void addBoard(Board board)throws Exception;
 	
 	public int getChangeGrade(int cafeNo)throws Exception;
+	
+	public int getChangeBoard(int cafeNo)throws Exception;
 	///////////////////////////////준호끝///////////////////////////////////////	
 	
 	///////////////////////////////////기황시작//////////////////////////////////

@@ -16,6 +16,7 @@ public class Board {
 	private int bestTerm; //이예림 수정
 	private int bestPostCount;
 	private String memberGradeCode; //이예림추가
+	private String memberGradeName;
 	
 	
 	public int getBestLikeCount() {
@@ -150,6 +151,16 @@ public class Board {
 
 	public void setMemberGradeCode(String memberGradeCode) {
 		this.memberGradeCode = memberGradeCode;
+	}
+
+
+	public String getMemberGradeName() {
+		return memberGradeName;
+	}
+
+
+	public void setMemberGradeName(String memberGradeName) {
+		this.memberGradeName = memberGradeName;
 	}
 
 
