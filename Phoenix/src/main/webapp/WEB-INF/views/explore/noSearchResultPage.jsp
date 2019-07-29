@@ -113,8 +113,8 @@
            					<li></li>
            					<li>
            						<select class="form-control" name="orderState">
-									<option value="0">관련도순</option>
-									<option value="1">최신순</option>
+									<option value="0" ${search.orderState==0 ? "selected" : "" }>관련도순</option>
+									<option value="1" ${search.orderState==1 ? "selected" : "" }>최신순</option>
 								</select>
            					</li>
            					<li></li>
@@ -122,15 +122,15 @@
            						<div class="form-group">
                                      <div class="form-check form-check-inline">
                                          <label class="form-check-label">
-                                             <input type="checkbox" class="form-check-input check-all" name="engineAll" value="">전체검색</label>
+                                             <input type="checkbox" class="form-check-input check-all" name="engineAll" value="true" ${search.engineAll ? "checked" : "" }>전체검색</label>
                                      </div>
                                      <div class="form-check form-check-inline">
                                          <label class="form-check-label">
-                                             <input type="checkbox" class="form-check-input singleCheck" name="engineNaver" value="">네이버</label>
+                                             <input type="checkbox" class="form-check-input singleCheck" name="engineNaver" value="true" ${search.engineNaver ? "checked" : "" }>네이버</label>
                                      </div>
                                      <div class="form-check form-check-inline disabled">
                                          <label class="form-check-label">
-                                             <input type="checkbox" class="form-check-input singleCheck" name="engineDaum" value="">다음</label>
+                                             <input type="checkbox" class="form-check-input singleCheck" name="engineDaum" value="true" ${search.engineDaum ? "checked" : "" }>다음</label>
                                      </div>
                                  </div>
            					</li>

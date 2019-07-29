@@ -11,11 +11,11 @@ import com.phoenix.mvc.service.domain.WebExplore;
 
 public interface ExploreDao {
 	
-	public Map getDaumBlogExploreList(Search search) ;
+	public Map getDaumBlogExploreList(Search search) throws Exception;
 	
 	public Map getNaverBlogExploreList(Search search) throws Exception ;
 	
-	public Map getDaumCafeExploreList(Search search);
+	public Map getDaumCafeExploreList(Search search) throws Exception;
 	
 	public Map getNaverCafeExploreList(Search search) throws Exception;
 	
@@ -25,8 +25,8 @@ public interface ExploreDao {
 	
 	public List<WebExplore> getNaverWebExploreList(Search search) throws Exception;
 	
-	public List<Image> getDaumImageExploreList(Search search);
+	public Map getDaumImageExploreList(Search search);
 	
-	public List<Image> getNaverImageExploreList(Search search) throws Exception;
+	public Map getNaverImageExploreList(Search search) throws Exception;
 
 }

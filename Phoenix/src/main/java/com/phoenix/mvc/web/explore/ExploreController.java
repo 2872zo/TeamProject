@@ -21,7 +21,7 @@ import com.phoenix.mvc.service.explore.ExploreService;
 
 @Controller
 @RequestMapping("/explore/*")
-public class ExploreContoller {
+public class ExploreController {
 	
 	@Autowired
 	@Qualifier("exploreServiceImpl")
@@ -33,7 +33,10 @@ public class ExploreContoller {
 	@Value("${explorePageUnit}")
 	private int explorePageUnit;
 	
-	public ExploreContoller() {
+	@Value("${imagePageSize}")
+	private int imagePageSize;
+	
+	public ExploreController() {
 		System.out.println(getClass().getName() + "default Constuctor");
 	}
 	
@@ -124,6 +127,9 @@ public class ExploreContoller {
 		}
 		if(!search.isEngineAll() && !search.isEngineDaum() && !search.isEngineNaver()) { //다 false면 
 			search.setEngineAll(true);
+			search.setEngineDaum(true);
+			search.setEngineNaver(true);
+			search.setEnginePhoenix(true);
 		}
 		if(search.isEngineDaum() && search.isEngineNaver()) { //둘다 true면 전체선택체크되도록
 			search.setEngineAll(true);
@@ -147,6 +153,7 @@ public class ExploreContoller {
 		Page page = new Page(search.getCurrentPage(),(int)returnMap.get("totalCount"),explorePageUnit,explorePageSize); //갔다와서 리턴에  total값 줘야함 ㅠ 
 		
 		model.addAttribute("cafeList", returnMap.get("cafeList"));
+		model.addAttribute("page",page);
 		
 		if(((List<CafeExplore>)returnMap.get("cafeList")).size()==0)
 			return "explore/noSearchResultPage";
@@ -187,23 +194,44 @@ public class ExploreContoller {
 	{
 		System.out.println("/explore/getImageList");
 		
-		if(search.getSearchKeyword()==null)
+		
+		if(search.getSearchKeyword()==null) { //URL 치고 들어오는경우 1.검색어
 			search.setSearchKeyword("");
-		if(search.getSearchTheme()==0)
+		}
+		if(search.getSearchTheme()==0) { 
 			search.setSearchTheme(3);
+		}
+		if(search.getOrderState()==0) { // 처음 치고 들어오는경우 관련도 순으로 뽑음
+			search.setOrderState(0);
+		}
+		if(!search.isEngineAll() && !search.isEngineDaum() && !search.isEngineNaver()) { //다 false면 
+			System.out.println("dmd~");
+			search.setEngineAll(true);
+			search.setEngineDaum(true);
+			search.setEngineNaver(true);
+		}
+		if(search.isEngineDaum() && search.isEngineNaver()) { //둘다 true면 전체선택체크되도록
+			search.setEngineAll(true);
+		}
+		if(search.getCurrentPage()==0) { //page설정
+			search.setCurrentPage(1);
+		}
 		
-		//가짜데이터
-		search.setEngineAll(true);//전체(네이버+다음+피닉스)
-		search.setOrderState(0);//정확도
-		search.setCurrentPage(1);
-		search.setPageSize(5);
-		/////////////////////////////////////////////////
+		search.setPageSize(imagePageSize);
 		
+		Map returnMap = exploreService.getImageExploreList(search);
 		
-		List<Image> imageList = exploreService.getImageExploreList(search);
+		Page page = new Page(search.getCurrentPage(),(int)returnMap.get("totalCount"),explorePageUnit,imagePageSize); //갔다와서 리턴에  total값 줘야함 ㅠ 
 		
-		model.addAttribute("imageList", imageList);
-		if(imageList.size()==0)
+		Search returnSearch = search;
+		System.out.println(returnSearch);
+		
+		model.addAttribute("imageList", returnMap.get("imageList"));
+		model.addAttribute("page",page);
+		model.addAttribute("returnSearch", returnSearch);
+		
+		System.out.println("컨트롤러에서 maxPage : "+page.getMaxPage());
+		if(((List<CafeExplore>)returnMap.get("imageList")).size()==0)
 			return "explore/noSearchResultPage";
 		else
 			return "explore/listImageExplore";

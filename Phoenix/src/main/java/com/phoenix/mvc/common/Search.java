@@ -2,8 +2,8 @@ package com.phoenix.mvc.common;
 
 import java.util.List;
 
-public class Search{
-	///Field
+public class Search {
+	/// Field
 	private int userNo;
 	private int memberNo;
 
@@ -12,7 +12,7 @@ public class Search{
 	private int cafeNo;
 	private String cafeURL;
 	private int cafeType;
-	
+
 	private int boardNo;
 	private String boardName;
 	private int postNo;
@@ -29,32 +29,38 @@ public class Search{
 	private int startRowNum;
 	private String termStart;
 	private String termEnd;
-	
+
 	private int targetUserNo;
 	private List targetUserNos;
 	private String chatId;
 	private String chatRoomId;
 	private int friendStatus;
-	
+
 	private int positionIndex;
-	
-	//---------------------------explore 추가
+
+	// ---------------------------explore 추가
 	private boolean engineAll;
 	private boolean engineNaver;
 	private boolean engineDaum;
 	private boolean engineGoogle;
 	private boolean enginePhoenix;
-	
-	private int orderState; //정렬종류 0:정확도 1:시간
+
+	private int orderState; // 정렬종류 0:정확도 1:시간
 	private String orderStateSort; // API method에 넣을 String
-	private int searchTheme; //검색 종류 //0:통합 1:블로그  2:카페 3:이미지 4:웹
+	private int searchTheme; // 검색 종류 //0:통합 1:블로그 2:카페 3:이미지 4:웹
 	private String searchThemeSort; // searchThemeType에 따라 담길 string
 	private String filter;// naverImageAPI 에서만 사용하는 검색조건
-	
-	private int searchEngine; //dao API method에서 사용할애 어떤 engine인지 0:다음, 1:네이버, 2:구글
-	//-----------------------------
-	
-	///Constructor
+
+	private int searchEngine; // dao API method에서 사용할애 어떤 engine인지 0:다음, 1:네이버, 2:구글
+	// -----------------------------
+
+	// sns추가욤
+	private String fbId;
+	private String fbPw;
+	private String igId;
+	private String igPw;
+
+	/// Constructor
 	public Search() {
 	}
 
@@ -73,7 +79,6 @@ public class Search{
 	public void setMemberNo(int memberNo) {
 		this.memberNo = memberNo;
 	}
-
 
 	public int getMemberGrade() {
 		return memberGrade;
@@ -187,7 +192,7 @@ public class Search{
 		this.pageSize = pageSize;
 	}
 
-	//==> Select Query 시 ROWNUM 마지막 값 
+	// ==> Select Query 시 ROWNUM 마지막 값
 	public int getEndRowNum() {
 		return getCurrentPage() * getPageSize();
 	}
@@ -228,8 +233,6 @@ public class Search{
 	public void setTargetUserNo(int targetUserNo) {
 		this.targetUserNo = targetUserNo;
 	}
-
-
 
 	public List getTargetUserNos() {
 		return targetUserNos;
@@ -351,6 +354,38 @@ public class Search{
 		this.searchTheme = searchTheme;
 	}
 
+	public String getFbId() {
+		return fbId;
+	}
+
+	public void setFbId(String fbId) {
+		this.fbId = fbId;
+	}
+
+	public String getFbPw() {
+		return fbPw;
+	}
+
+	public void setFbPw(String fbPw) {
+		this.fbPw = fbPw;
+	}
+
+	public String getIgId() {
+		return igId;
+	}
+
+	public void setIgId(String igId) {
+		this.igId = igId;
+	}
+
+	public String getIgPw() {
+		return igPw;
+	}
+
+	public void setIgPw(String igPw) {
+		this.igPw = igPw;
+	}
+
 	@Override
 	public String toString() {
 		return "Search [userNo=" + userNo + ", memberNo=" + memberNo + ", memberGrade=" + memberGrade + ", cafeNo="
@@ -364,7 +399,8 @@ public class Search{
 				+ ", engineAll=" + engineAll + ", engineNaver=" + engineNaver + ", engineDaum=" + engineDaum
 				+ ", engineGoogle=" + engineGoogle + ", enginePhoenix=" + enginePhoenix + ", orderState=" + orderState
 				+ ", orderStateSort=" + orderStateSort + ", searchTheme=" + searchTheme + ", searchThemeSort="
-				+ searchThemeSort + ", filter=" + filter + ", searchEngine=" + searchEngine + "]";
+				+ searchThemeSort + ", filter=" + filter + ", searchEngine=" + searchEngine + ", fbId=" + fbId
+				+ ", fbPw=" + fbPw + ", igId=" + igId + ", igPw=" + igPw + "]";
 	}
 
-}//end of class
+}// end of class
