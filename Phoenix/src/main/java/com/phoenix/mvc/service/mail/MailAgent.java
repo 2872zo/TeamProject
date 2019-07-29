@@ -1,4 +1,4 @@
-package com.phoenix.mvc.web.mail;
+package com.phoenix.mvc.service.mail;
 
 import javax.mail.Folder;
 import javax.mail.Message;
@@ -6,6 +6,7 @@ import javax.mail.MessagingException;
 import javax.mail.Store;
 
 //MailProto가 IMAP과 POP중 어느 프로토콜을 사용하더라도 공통적으로 이용가능
+//메일서버와 연결을 한뒤 기본적인 작동을 추상화 해놓은것
 public class MailAgent {
 	protected MailProto mailProto;
 	protected String host;
@@ -15,6 +16,7 @@ public class MailAgent {
 	
 	public MailAgent() {
 	}
+	
 	public MailAgent(MailProto mailProto, String host, String port, String id, String passwd) {
 		if(mailProto == null || host == null || port == null || id == null || passwd == null) {
 			throw new IllegalArgumentException();
@@ -71,15 +73,4 @@ public class MailAgent {
         this.mailProto = mailProto;  
     }  
     
-    public void getPersonalFolders() throws MessagingException {
-			mailProto.getPersonalFolders();
-    }
-	
-	public void getSharedFolders() throws MessagingException {
-		mailProto.getSharedFolders();
-	}
-
-	public void getUserFolders(String user) throws MessagingException {
-		mailProto.getUserFolders(user);
-	}
 }

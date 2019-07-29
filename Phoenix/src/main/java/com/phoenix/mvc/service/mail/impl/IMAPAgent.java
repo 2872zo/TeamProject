@@ -1,4 +1,4 @@
-package com.phoenix.mvc.web.mail;
+package com.phoenix.mvc.service.mail.impl;
 
 import javax.mail.Flags;
 import javax.mail.Flags.Flag;
@@ -7,7 +7,10 @@ import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.search.FlagTerm;
 
-//MailAgent를 상속하여 IMAP 고유기능을 지원하는 클래스
+import com.phoenix.mvc.service.mail.MailAgent;
+
+//MailAgent를 상속하여 pop과 imap의 공통기능을 사용하고
+//IMAP만의 고유기능을 구현해 놓은 클래스
 public class IMAPAgent extends MailAgent{
 	public IMAPAgent(String host, String port, String id, String passwd) {  
         super(new IMAP(), host, port, id, passwd);  

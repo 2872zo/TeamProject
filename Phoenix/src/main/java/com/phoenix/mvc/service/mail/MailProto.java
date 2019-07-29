@@ -1,4 +1,4 @@
-package com.phoenix.mvc.web.mail;
+package com.phoenix.mvc.service.mail;
 
 import javax.mail.MessagingException;
 import javax.mail.Store;
@@ -21,12 +21,6 @@ public interface MailProto {
 	public String getUID(Message msg) throws MessagingException;
 	
 	public Folder getFolder() throws MessagingException;
-	
-	public Folder[] getPersonalFolders() throws MessagingException;
-	
-	public Folder[] getSharedFolders() throws MessagingException;
-	
-	public Folder[] getUserFolders(String user) throws MessagingException;
 	
 	public Store getStore() throws MessagingException;
 }

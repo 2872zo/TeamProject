@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.phoenix.mvc.service.domain.Mail;
+import com.phoenix.mvc.service.mail.impl.IMAPAgent;
 import com.sun.mail.util.BASE64DecoderStream;
 
 @Controller
@@ -41,27 +42,6 @@ public class MailContoller {
 		IMAPAgent mailAgent = new IMAPAgent("imap.daum.net", "993", "2872zo@daum.net", "lkj6322*");
 
 		mailAgent.open();
-//      mailagent.createFolder("newFolder");  
-//      Message[] msg = mailagent.getRecentMessages(5);  
-//      for(Message m : msg) {  
-//          System.out.println("subject: "+m.getSubject());  
-//          System.out.println("MsgNum: "+m.getMessageNumber());  
-//          System.out.println("UID: "+mailagent.getUID(m));  
-//          System.out.println("Sent Date: "+m.getSentDate());  
-////          mailagent.setUnSeenFlag(m);  
-//      }  
-//      mailagent.moveMessage(msg, mailagent.getDefaultFolder(), mailagent.getFolder("newFolder"));  
-
-//      mailagent.getPersonalFolders();
-//      mailagent.getSharedFolders();
-//      mailagent.getUserFolders("newFolder");
-
-//      System.out.println("Count : " + mailagent.getFolder("플스").getMessageCount());
-//      Store store = mailagent.getStore();
-//      
-//      Folder[] f = store.getDefaultFolder().list(); 
-//      for(Folder fd:f) 
-//          System.out.println(">> "+fd.getName()); 
 
 		Message[] messageList = mailAgent.getDefaultFolder().getMessages();
 

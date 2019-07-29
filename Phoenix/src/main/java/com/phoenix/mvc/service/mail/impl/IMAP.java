@@ -1,4 +1,4 @@
-package com.phoenix.mvc.web.mail;
+package com.phoenix.mvc.service.mail.impl;
 
 import java.util.Properties;
 
@@ -9,9 +9,12 @@ import javax.mail.Session;
 import javax.mail.Store;
 import javax.mail.URLName;
 
+import com.phoenix.mvc.service.mail.MailProto;
 import com.sun.mail.imap.IMAPFolder;
 import com.sun.mail.imap.IMAPStore;
 
+
+//pop이나 imap방식을 추상화해놓은 mailProto를 imap방식에 맞게 구체화한 클래스
 public class IMAP implements MailProto {
 	protected Session session;
 	protected Store store;
@@ -116,50 +119,4 @@ public class IMAP implements MailProto {
 		
 		return store;
 	}
-
-	@Override
-	public Folder[] getPersonalFolders() throws MessagingException {
-		if(!store.isConnected()) {
-			throw new MessagingException("Already closed store");
-		}
-		
-		Folder[] folders = store.getPersonalNamespaces();
-		
-		System.out.println("PersonalFolder ����");
-		System.out.println("folder �� : " + folders.length);
-		
-		for(Folder f : folders) {
-			
-			System.out.println("aaaaa" + f.getMessageCount());
-		}
-		return null;
-	}
-
-	@Override
-	public Folder[] getSharedFolders() throws MessagingException {
-		
-		Folder[] folders = store.getSharedNamespaces();
-		
-		System.out.println("SharedFolder ����");
-		System.out.println("folder �� : " + folders.length);
-		
-		for(Folder f : folders) {
-			System.out.println(f.getFullName());
-		}
-		return null;
-	}
-
-	@Override
-	public Folder[] getUserFolders(String user) throws MessagingException {
-		Folder[] folders = store.getUserNamespaces(user);
-		
-		System.out.println("UserFolder ����");
-		System.out.println("folder �� : " + folders.length);
-		
-		for(Folder f : folders) {
-			System.out.println(f.getFullName());
-		}
-		return null;
-	}
-
 }
