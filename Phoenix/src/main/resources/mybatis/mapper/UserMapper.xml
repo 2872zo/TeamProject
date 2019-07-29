@@ -18,7 +18,8 @@
 		<result property="profileImg" 			column="profile_img" 			jdbcType="VARCHAR" />		
 		<result property="regDate" 				column="reg_date" 				jdbcType="DATE" />
 		<result property="userRoleCode" 		column="user_role_code" 		jdbcType="VARCHAR" />
-		<result property="userStatusCode" 		column="user_status_code" 		jdbcType="VARCHAR" />		
+		<result property="userStatusCode" 		column="user_status_code" 		jdbcType="VARCHAR" />
+		<result property="kakaoId" 				column="kakao_id" 				jdbcType="VARCHAR" />		
 	</resultMap>
 	
 	<insert 	id="addUser"		parameterType="com.phoenix.mvc.service.domain.User" >
@@ -64,35 +65,36 @@
 	 <select  id="getUserList"  parameterType="search"	resultMap="userSelectMap">
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-				FROM		(	SELECT user_id , user_name , email
+				FROM		(	SELECT user_no, user_id, user_nickname, reg_date, email, user_status_code
 							FROM users
 							<if test="searchCondition != null">
 								<where>
 									<if test="searchCondition == 0 and searchKeyword !='' ">
-						 				user_id = #{searchKeyword}
+						 				user_id like '%'|| #{searchKeyword} || '%'
 									</if>
 									<if test="searchCondition == 1 and searchKeyword !='' ">
-						 				user_name = #{searchKeyword}
-									</if>
+						 				user_nickname like '%'|| #{searchKeyword} || '%'
+									</if>													
 								</where>
 							</if>
-							ORDER BY user_id ) inner_table
+							ORDER BY user_no ) inner_table
 						WHERE ROWNUM &lt;= #{endRowNum} )
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
 	 </select>
 	 
 	 <select  id="getUserTotalCount"  parameterType="search"	 resultType="int">
 	  	SELECT COUNT(*)
-	  	FROM(	SELECT user_id , user_name , email
+	  	FROM(	SELECT user_no, user_id, user_nickname, reg_date, email, user_status_code
 						FROM users
 						<if test="searchCondition != null">
 							<where>
 								<if test="searchCondition == 0 and searchKeyword !='' ">
-						 			user_id = #{searchKeyword}
+						 			
+						 		user_id like '%'|| #{searchKeyword} || '%'
 								</if>
 								<if test="searchCondition == 1 and searchKeyword !='' ">
-						 		user_name = #{searchKeyword}
-								</if>
+						 		user_nickname like '%'|| #{searchKeyword} || '%'
+								</if>								
 							</where>
 						</if> ) countTable						
 	 </select>
