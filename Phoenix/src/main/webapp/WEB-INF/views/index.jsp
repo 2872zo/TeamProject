@@ -149,7 +149,7 @@ var checkSessionUser = ${empty sessionScope.user};
 		});
 		
 		$("#mail").on("click", function() {
-			$(self.location).attr("href", "/mail/main");
+			$(self.location).attr("href", "/mail/getMailList");
 		});
 		
 		$("#sns").on("click", function() {

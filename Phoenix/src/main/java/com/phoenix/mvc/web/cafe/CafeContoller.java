@@ -3,6 +3,7 @@ package com.phoenix.mvc.web.cafe;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +12,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.phoenix.mvc.service.cafe.CafeManageService;
 import com.phoenix.mvc.service.cafe.CafeMemberService;
 import com.phoenix.mvc.service.cafe.CafeTabService;
+import com.phoenix.mvc.service.domain.Board;
 import com.phoenix.mvc.service.domain.Cafe;
 import com.phoenix.mvc.service.domain.User;
 
@@ -82,4 +85,42 @@ public class CafeContoller {
 	}
 	
 	//////////////////////////////예림끝/////////////////////////////////////
+	
+	@RequestMapping("/{cafeURL}/closedCafe")
+	public String ClosedCafe() {
+		return "/cafe/common/closedCafe";
+	}
+	
+	@RequestMapping("/{cafeURL}/needApply")
+	public String NeedApply() {
+		return "/cafe/common/needApply";
+	}
+	
+	@RequestMapping("/{cafeURL}/memberBlock")
+	public String MemberBlock() {
+		return "/cafe/common/memberBlock";
+	}
+	
+	@RequestMapping("/{cafeURL}/accessDenied")
+	public String AccessDenied(HttpServletRequest req, @RequestParam int boardNo, Map<String, Object> map) {
+		List<Board> boardList = (List<Board>) req.getAttribute("boardList");
+		
+		Board targetBoard = null;
+		
+		for(Board board : boardList) {
+			if(board.getBoardNo() == boardNo) {
+				targetBoard = board;
+				break;
+			}
+		}
+		
+		map.put("board", targetBoard);
+		
+		return "/cafe/common/accessDenied";
+	}
+	
+	@RequestMapping("/{cafeURL}/deletedPost")
+	public String DeletedPost() {
+		return "/cafe/common/deletedPost";
+	}
 }

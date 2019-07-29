@@ -84,6 +84,13 @@ public class CafeInterceptor extends HandlerInterceptorAdapter {
 			Cafe cafe = cafeManageService.getCafeInfo(cafeURL);
 			request.setAttribute("cafe", cafe);
 
+			if(cafe.isClosedFlag()) {
+				System.out.println(">>> 폐쇄된 카페");
+				response.sendRedirect("/cafe/" + cafeURL + "/closedCafe");
+				return false;
+			}
+			
+			
 			// 메뉴바용 게시판 목록 - 컨디션 "0"(구분선 가져옴 / 1일때 구분선 안가져옴), 카페URL 사용
 			Search search = new Search();
 			search.setSearchCondition("0");
@@ -185,7 +192,7 @@ public class CafeInterceptor extends HandlerInterceptorAdapter {
 						return true;
 					}
 					System.out.println(">>> 카페 멤버 아님");
-					response.sendRedirect(request.getContextPath() + "/WEB-INF/views/common/needAply.jsp");// 이거 수정 ㅠ.ㅠ
+					response.sendRedirect("/cafe/" + cafeURL + "/needApply");// 이거 수정 ㅠ.ㅠ
 					return false;
 
 				}
@@ -202,7 +209,7 @@ public class CafeInterceptor extends HandlerInterceptorAdapter {
 
 					else if (!expired) {
 						System.out.println("정지기간 진행중임");
-						response.sendRedirect(request.getContextPath() + "/cafe/" + cafeURL + "/memberBlock");
+						response.sendRedirect("/cafe/" + cafeURL + "/memberBlock");
 						return false;
 					}
 					////////////////////////////// 기황끝//////////////////////////////
@@ -218,7 +225,7 @@ public class CafeInterceptor extends HandlerInterceptorAdapter {
 						if (cafe.getManageUserNo() == user.getUserNo()) {
 
 						} else {
-							response.sendRedirect(request.getContextPath() + "/cafe/" + cafeURL + "/");
+							response.sendRedirect("/cafe/" + cafeURL + "/accessDenied");
 							return false;
 						}
 
@@ -247,7 +254,7 @@ public class CafeInterceptor extends HandlerInterceptorAdapter {
 						if (!user.getUserRoleCode().equals("ur100") && ( (cafeMemberGrade > 101 && cafeMemberGrade < boardGrade) || (cafeMemberGrade < 102 && cafeMemberGrade > boardGrade)) ) {
 							
 							System.out.println("CafeInterceptor >>> 권한 부족");
-							response.sendRedirect(request.getContextPath() + "/cafe/" + cafeURL + "/accessDenied");
+							response.sendRedirect("/cafe/" + cafeURL + "/accessDenied?boardNo=" + board.getBoardNo());
 							return false;
 						}
 					}
@@ -277,14 +284,14 @@ public class CafeInterceptor extends HandlerInterceptorAdapter {
 						// 게시글이 삭제된 경우
 						if (post.isPostStatusFlag()) {
 							System.out.println("CafeInterceptor >>>>>>>>>> 게시글 삭제됨!");
-							response.sendRedirect(request.getContextPath() + "/cafe/" + cafeURL + "/deletedPost");
+							response.sendRedirect("/cafe/" + cafeURL + "/deletedPost");
 							return false;
 						}
 
 						// 해당 게시글이 있는 게시판의 접근권한이 모자랄 경우
 						if (!user.getUserRoleCode().equals("ur100") && ( (cafeMemberGrade > 101 && cafeMemberGrade < boardGrade) || (cafeMemberGrade < 102 && cafeMemberGrade > boardGrade)) ) {
 							System.out.println("CafeInterceptor >>>>>>>>>> 권한 부족");
-							response.sendRedirect(request.getContextPath() + "/cafe/" + cafeURL + "/accessDenied");
+							response.sendRedirect("/cafe/" + cafeURL + "/accessDenied&boardNo=" + board.getBoardNo());
 							return false;
 						}
 					}

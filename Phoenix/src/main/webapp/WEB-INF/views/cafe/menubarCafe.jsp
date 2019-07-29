@@ -56,8 +56,6 @@
 										</div>
 									</c:if>
 									
-								
-	                                
 					           
 					        </div>
 					        <div class="tab-pane fade" id="profile8" role="tabpanel">
@@ -80,12 +78,6 @@
 	                                    	</button>
 	                                    </li>
 	                                    
-										<c:if test="${cafeMember.memberGrade eq 'cg100' }">
-											<li style="text-align: center;">
-												<button class="btn mb-1 btn-rounded btn-outline-dark" name="toManage">내 카페 관리</button>
-											</li>
-										</c:if> 
-										
 	                                </ul>
                                 </c:if>
 													        
