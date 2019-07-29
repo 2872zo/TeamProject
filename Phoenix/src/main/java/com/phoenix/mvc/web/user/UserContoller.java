@@ -113,16 +113,16 @@ public class UserContoller {
 		return "redirect:/cafe/main";
 	}
 	
-	@RequestMapping(value = "getUserInfo", method = RequestMethod.POST)
+	@RequestMapping(value = "getUserInfo")
 	public String getUserInfo(@RequestParam("userNo") int userNo, Model model) throws Exception {
 		
 		User user = userService.getUserInfo(userNo);
 		
 		System.out.println("카페정보들오니"+user);
 		
-		model.addAttribute("cafe", user);
+		model.addAttribute("user", user);
 
-		return "cafe/getUser";
+		return "user/getUser";
 
 	}
 	
@@ -166,11 +166,11 @@ public class UserContoller {
 		
 		Map<String, Object> map=userService.getUserList(search);
 		
-		Page resutlPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
-				pageSize);
+		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,	pageSize);
+		System.out.println(resultPage);
 		
 		model.addAttribute("list",map.get("list"));
-		model.addAttribute("resultPage", resutlPage);
+		model.addAttribute("page", resultPage);
 		model.addAttribute("search",search);
 		
 		return "/user/listUser";

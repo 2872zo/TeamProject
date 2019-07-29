@@ -47,8 +47,7 @@ $(function() {
 
 	$("#goChat").on("click", function() {
 		$(self.location).attr("href", "/chat/chatRoomList");
-	});
-
+	});	
 	//로그인시작
 	$( function() {
 		

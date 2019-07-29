@@ -13,6 +13,7 @@
 		<result property="cafeName" 					column="cafe_name" 						jdbcType="VARCHAR"/>
 		<result property="cafeIcon"						column="cafe_icon" 						jdbcType="VARCHAR" />
 		<result property="manageUserNo" 				column="manage_user_no" 				jdbcType="NUMERIC" />
+		<result property="managerNickname"				column="member_nickname" 				jdbcType="VARCHAR" />		
 		<result property="cafeURL" 						column="url" 							jdbcType="VARCHAR" />
 		<result property="cafeDetail" 					column="cafe_detail" 					jdbcType="VARCHAR" />
 		<result property="regDate" 						column="reg_date" 						jdbcType="DATE" />
@@ -27,7 +28,7 @@
 		<result property="memberNicknameFlag" 			column="member_nickname_flag" 			jdbcType="CHAR" />
 		<result property="autoApplicationAcceptFlag" 	column="auto_application_accept_flag" 	jdbcType="CHAR" />
 		<result property="closedFlag" 					column="closed_flag" 					jdbcType="CHAR" />
-		<result property="members" 						column="members" 						jdbcType="NUMERIC" />		
+		<result property="members" 						column="members" 						jdbcType="NUMERIC" />				
 	</resultMap>
 	
 	<insert 	id="addCafe"		parameterType="com.phoenix.mvc.service.domain.Cafe" >

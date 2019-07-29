@@ -1,5 +1,7 @@
 package com.phoenix.mvc.service.chatting.impl;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,8 +16,9 @@ import com.phoenix.mvc.service.chatting.ChattingDao;
 import com.phoenix.mvc.service.chatting.ChattingService;
 import com.phoenix.mvc.service.domain.Chat;
 import com.phoenix.mvc.service.domain.ChatFriend;
-import com.phoenix.mvc.service.domain.ChatRoom;
 import com.phoenix.mvc.service.domain.ChatRoomForMongo;
+import com.phoenix.mvc.service.domain.ChatRoomInfo;
+import com.phoenix.mvc.service.domain.User;
 
 @Service
 @Transactional
@@ -25,14 +28,12 @@ public class ChattingServiceImpl implements ChattingService{
 	@Qualifier("chattingDaoImpl")	
 	private ChattingDao chattingDao;
 	
-	
 	public ChattingServiceImpl() {
 		System.out.println(getClass().getName() + "default Constuctor");
 	}
 
 	@Override
 	public Map getMyChatRoomList(Search search) throws Exception {
-		// TODO Auto-generated method stub
 		Map map = new HashMap();
 		
 		List chatRoomList = chattingDao.getMyChatRoomList(search);
@@ -93,43 +94,90 @@ public class ChattingServiceImpl implements ChattingService{
 
 	@Override
 	public Map getChatList(Search search) throws Exception {
-		// TODO Auto-generated method stub
+		
 		Map map = new HashMap();
 		List chatList = chattingDao.getChatList(search);
 		return map;
+	
 	}
 
 	@Override
 	public Map getChatRoom(Search search) throws Exception {
-		// TODO Auto-generated method stub
+	
 		Map map = new HashMap();
 		List chatList = chattingDao.getChatList(search);
+		List userList = chattingDao.getChatRoomUserList(search);
+		List<Integer> targetUserNos = new ArrayList<Integer>();
+		for(int i =0;i<userList.size() ;i++) {
+			ChatRoomInfo chatRoomInfo = (ChatRoomInfo) userList.get(i);
+			targetUserNos.add(chatRoomInfo.getUserNo());
+		}
+		search.setTargetUserNos(targetUserNos);
+		List inviteList = chattingDao.getFriendsListForInvite(search);
+		ChatRoomInfo chatRoomInfo = new ChatRoomInfo();
+		chatRoomInfo.setUserNo(search.getUserNo());
+		chatRoomInfo.setChatRoomId(search.getChatRoomId());
+		chatRoomInfo = chattingDao.getMyChatRoomInfo(chatRoomInfo);
+		map.put("chatRoomInfo", chatRoomInfo);
 		map.put("chatList", chatList);
+		map.put("userList", userList);
+		map.put("inviteList", inviteList);
+		return map;
+		
+	}
+	
+	@Override
+	public Map addChatRoom(Map map) throws Exception {
+		ChatRoomForMongo chatRoomForMongo = (ChatRoomForMongo)map.get("chatRoomForMongo");
+		chattingDao.addChatRoom(chatRoomForMongo);
+		User user = (User)map.get("user");
+		ChatRoomInfo chatRoomInfo = new ChatRoomInfo();		
+		chatRoomInfo.setChatRoomId(chatRoomForMongo.getId());
+		chatRoomInfo.setUserNo(chatRoomForMongo.getOpenUserNo());
+		chatRoomInfo.setProfileImg(user.getProfileImg());
+		chatRoomInfo.setUserNickname(user.getUserNickname());
+		chatRoomInfo.setChatRoomName(new Date()+"에 "+user.getUserNickname()+" 님이 개설한 채팅방");
+		chatRoomInfo.setRegDate(new Date());
+		chatRoomInfo.setLatestEnter(new Date());
+		chattingDao.addMyChatRoom(chatRoomInfo);
+		
+		Search search = new Search();
+		search.setUserNo(user.getUserNo());
+		search.setChatRoomId(chatRoomInfo.getChatRoomId());
+		String chatRoomId = chatRoomInfo.getChatRoomId();
+		map = this.getChatRoom(search);
 		return map;
 	}
-	
-	@Override
-	public void addChatRoom(ChatRoomForMongo chatRoomForMongo) throws Exception {
-		chattingDao.addChatRoom(chatRoomForMongo);
-	}
 
 	@Override
-	public void addChatRoom(ChatRoom chatRoom) throws Exception {
-		chattingDao.addChatRoom(chatRoom);
-	}
-
-	@Override
-	public void updateChatRoom(ChatRoom chatRoom) throws Exception {
+	public void addMyChatRoom(ChatRoomInfo chatRoomInfo) throws Exception {
 		// TODO Auto-generated method stub
+		chattingDao.addMyChatRoom(chatRoomInfo);
+	}
+
+	@Override
+	public List getMyChatRoomList(ChatRoomInfo chatRoomInfo) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateMyChatRoom(ChatRoomInfo chatRoomInfo) throws Exception {
 		
 	}
 
 	@Override
-	public void removeChatRoom(ChatRoom chatRoom) throws Exception {
-		// TODO Auto-generated method stub
-		
+	public void deleteMyChatRoom(ChatRoomInfo chatRoomInfo) throws Exception {
+		ChatRoomInfo chatRoomInfoRe = chattingDao.getMyChatRoomInfo(chatRoomInfo);
+		chattingDao.deleteMyChatRoom(chatRoomInfoRe);
 	}
 
-	
+	@Override
+	public Map getFriendsListForInvite(Search search) throws Exception {
+		Map map = new HashMap();
+		List FriendsForInvite = chattingDao.getFriendsListForInvite(search);
+		map.put("FriendsForInvite", FriendsForInvite);
+		return map;
+	}
 
 }

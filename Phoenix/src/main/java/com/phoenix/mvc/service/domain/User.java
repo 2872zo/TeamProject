@@ -16,6 +16,7 @@ public class User {
 	private Date regDate;
 	private String userRoleCode;
 	private String userStatusCode;
+	private String kakaoId;
 
 
 	////////////////////////////////////////////////////////////////////userNo추가
@@ -135,13 +136,26 @@ public class User {
 	}
 
 
+	public String getKakaoId() {
+		return kakaoId;
+	}
+
+
+	public void setKakaoId(String kakaoId) {
+		this.kakaoId = kakaoId;
+	}
+
+
 	@Override
 	public String toString() {
 		return "User [userNo=" + userNo + ", userId=" + userId + ", userName=" + userName + ", userNickname="
 				+ userNickname + ", password=" + password + ", email=" + email + ", phone=" + phone + ", profileImg="
 				+ profileImg + ", regDate=" + regDate + ", userRoleCode=" + userRoleCode + ", userStatusCode="
-				+ userStatusCode + "]";
+				+ userStatusCode + ", kakaoId=" + kakaoId + "]";
 	}
+
+
+	
 	
 	///Method 
 	

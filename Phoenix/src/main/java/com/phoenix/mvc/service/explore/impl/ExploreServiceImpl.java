@@ -109,14 +109,14 @@ public class ExploreServiceImpl implements ExploreService{
 		{
 			naverMap = exploreDao.getNaverCafeExploreList(search);
 			daumMap = exploreDao.getDaumCafeExploreList(search);
-			phoenixMap = exploreDao.getPhoenixCafeExploreList(search);
+			//phoenixMap = exploreDao.getPhoenixCafeExploreList(search);
 			
 			cafeList.addAll((List<CafeExplore>) naverMap.get("cafeList"));
 			cafeList.addAll((List<CafeExplore>)daumMap.get("cafeList"));
-			cafeList.addAll((List<CafeExplore>)phoenixMap.get("cafeList"));
+			//cafeList.addAll((List<CafeExplore>)phoenixMap.get("cafeList"));
 			totalCount += (int)naverMap.get("totalCount");
 			totalCount += (int)daumMap.get("totalCount");
-			totalCount += (int)phoenixMap.get("totalCount");
+			//totalCount += (int)phoenixMap.get("totalCount");
 			
 		}
 		else//엔진부분선택
@@ -138,13 +138,16 @@ public class ExploreServiceImpl implements ExploreService{
 			}
 			if(search.isEnginePhoenix())
 			{
-				phoenixMap = exploreDao.getPhoenixCafeExploreList(search);
+				//phoenixMap = exploreDao.getPhoenixCafeExploreList(search);
 				
-				cafeList.addAll((List<CafeExplore>)phoenixMap.get("cafeList"));
-				totalCount += (int)phoenixMap.get("totalCount");
+				//cafeList.addAll((List<CafeExplore>)phoenixMap.get("cafeList"));
+				//totalCount += (int)phoenixMap.get("totalCount");
 			}
 		}
 		
+		
+		returnMap.put("cafeList", cafeList);
+		returnMap.put("totalCount", totalCount);
 		
 		return returnMap;
 	}
@@ -161,11 +164,14 @@ public class ExploreServiceImpl implements ExploreService{
 		if(search.isEngineAll()) //전체엔진
 		{
 			webList.addAll(exploreDao.getNaverWebExploreList(search));
-			webList.addAll(exploreDao.getDaumWebExploreList(search));
+			if(search.getCurrentPage()<=50) {
+				webList.addAll(exploreDao.getDaumWebExploreList(search));
+			}
+			
 		}
 		else//엔진부분선택
 		{
-			if(search.isEngineDaum()) //다음엔진선택됐으면
+			if(search.isEngineDaum()&& search.getCurrentPage()<=50) //다음엔진선택됐으면
 			{
 				webList.addAll(exploreDao.getDaumWebExploreList(search));
 			}
@@ -182,33 +188,50 @@ public class ExploreServiceImpl implements ExploreService{
 	
 
 	@Override
-	public List<Image> getImageExploreList(Search search) throws Exception{
+	public Map getImageExploreList(Search search) throws Exception{
 		
 		List<Image> imageList = new ArrayList<Image>(); //어떻게 담을까??
+		Map naverMap = new HashMap();
+		Map daumMap = new HashMap();
+		int totalCount = 0; //->담
+		Map returnMap = new HashMap();
 		
 		//append는 할수있는데 . 내가 여기서 정렬을 해줘야하는거 아닌가??????
 		//일단 append 한다음에 list의 a에 따라서 정렬을 해줄 수 있는 method를 찾아보기
 
 		if(search.isEngineAll()) //전체엔진
 		{
-			imageList.addAll(exploreDao.getDaumImageExploreList(search));
-			imageList.addAll(exploreDao.getNaverImageExploreList(search) );
+			if(search.getCurrentPage()<=50) {
+				daumMap = exploreDao.getDaumImageExploreList(search);
+				imageList.addAll((List<Image>)daumMap.get("imageList"));
+				totalCount += (int)daumMap.get("totalCount");
+			}
+			naverMap = exploreDao.getNaverImageExploreList(search);
+			imageList.addAll((List<Image>)naverMap.get("imageList"));
+			totalCount += (int)naverMap.get("totalCount");
+			
 		}
 		else//엔진부분선택
 		{
-			if(search.isEngineDaum()) //다음엔진선택됐으면
+			if(search.isEngineDaum() && search.getCurrentPage()<=50) //다음엔진선택됐으면
 			{
-				imageList.addAll(exploreDao.getDaumImageExploreList(search));
+				daumMap = exploreDao.getDaumImageExploreList(search);
+				imageList.addAll((List<Image>)daumMap.get("imageList"));
+				totalCount += (int)daumMap.get("totalCount");
 			}
 
 			if(search.isEngineNaver()) //네이버엔진선택됐으면
 			{
-				imageList.addAll(exploreDao.getNaverImageExploreList(search));
+				naverMap = exploreDao.getNaverImageExploreList(search);
+				imageList.addAll((List<Image>)naverMap.get("imageList"));
+				totalCount += (int)naverMap.get("totalCount");
 			}
 		}
 		
+		returnMap.put("imageList", imageList);
+		returnMap.put("totalCount", totalCount);
 		
-		return imageList;
+		return returnMap;
 	}
 
 

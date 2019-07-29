@@ -1,8 +1,6 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
-
-<!--  ///////////////////////// JSTL  ////////////////////////// -->
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
 <!DOCTYPE html>
@@ -19,7 +17,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>È¸¿ø¸ñ·Ï</title>
+<title>íšŒì›ëª©ë¡</title>
 
 
 <link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
@@ -50,7 +48,9 @@
 	<!--*******************
         Preloader end
     ********************-->
-
+		<div class="nk-sidebar">
+			<c:import url="/WEB-INF/views/common/userAdminMenubar.jsp"></c:import>
+		</div>
 	<!--**********************************
         Main wrapper start
     ***********************************-->
@@ -62,7 +62,7 @@
 			<div class="row page-titles mx-0">
 				<div class="col p-md-0">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="javascript:void(0)">manage</a></li>
+						<li class="breadcrumb-item"><a href="javascript:void(0)">admin</a></li>
 						<li class="breadcrumb-item active"><a
 							href="javascript:void(0)">application</a></li>
 					</ol>
@@ -74,38 +74,38 @@
 					<div class="col-lg-12">
 						<div class="card">
 							<div class="card-body">
-								<h4 class="card-title">>°¡ÀÔ½ÅÃ»¸ñ·Ï</h4>
+								<h4 class="card-title">>íšŒì›ëª©ë¡</h4>
 
-								¿ì¸® Ä«Æä¿¡ °¡ÀÔÀ» ½ÅÃ»ÇÑ ¸ñ·ÏÀÔ´Ï´Ù. °¡ÀÔÀ» ½ÂÀÎÇÏ°Å³ª, °ÅÀıÇÒ ¼ö ÀÖ½À´Ï´Ù. <br> <br>
+								ìš°ë¦¬ í¬í„¸ì— ê°€ì…í•œ íšŒì›ëª©ë¡ì…ë‹ˆë‹¤.<br> <br>
 
 
 								<div class="col-md-6 text-right">
-									<form class="form-inline" name="detailForm" id="detailFrom">
+									<form class="form-inline" name="detailForm" id="detailFrom">									
 										<input type="hidden" id="status" name="status"
 											value="${search.status }" />
 										<div class="form-group">
-											<select class="form-control" name="searchCondition">
-												<option value="0">È¸¿ø¾ÆÀÌµğ</option>
-												<option value="1">È¸¿ø´Ğ³×ÀÓ</option>
-												<option value="2">È¸¿ø¹øÈ£</option>
+											<select class="form-control" name="searchCondition" value='${ !empty search.searchCondition ? search.searchCondition : "" }'>
+												
+											<c:if test=""></c:if>	
+												<option value="0" >íšŒì›ì•„ì´ë””</option>
+												<option value="1" >íšŒì›ë‹‰ë„¤ì„</option>
+												
 												
 
 											</select>
 										</div>
 										&nbsp;&nbsp;
 										<div class="form-group">
-											<label class="sr-only" for="searchKeyword">°Ë»ö¾î</label> 
-												<input type="text" class="form-control" id="searchKeyword"name="searchKeyword" placeholder="°Ë»ö¾î">
+											<label class="sr-only" for="searchKeyword" >ê²€ìƒ‰ì–´</label> 
+												<input type="text" class="form-control" id="searchKeyword"name="searchKeyword" placeholder="ê²€ìƒ‰ì–´" value='${ !empty search.searchKeyword ? search.searchKeyword : "" }'>
 										</div>
 										&nbsp;&nbsp;
-										<button type="button" id="search"class="btn btn-outline-success">°Ë»ö</button>
-										<input type="hidden" id="currentPage" name="currentPage"value="" /> &nbsp;&nbsp; ÇÊÅÍ: &nbsp;&nbsp;
-										<button type="button" value="100" id="ing"class="btn mb-1 btn-outline-warning btn-xs">Ã³¸®Áß</button>
-										&nbsp;&nbsp;&nbsp;
+										<button type="button" id="search"class="btn btn-outline-success">ê²€ìƒ‰</button>
+										<input type="hidden" id="currentPage" name="currentPage"value="" /> 
 										
 
-									</form>
 									
+									</form>
 								</div>
 								<br>
 
@@ -116,15 +116,15 @@
 									
 									<thead class="thead-light">
 										<tr>
-											<th><input type="checkbox" id="allCheck" /></th>
-											<th align="center">È¸¿ø¹øÈ£</th>
-											<th align="left">È¸¿ø¾ÆÀÌµğ</th>
-											<th align="left">È¸¿ø´Ğ³×ÀÓ</th>
-											<th align="left">°¡ÀÔÀÏÀÚ</th>
-											<th align="left">È¸¿ø»óÅÂ</th>
+											<th></th>
+											<th align="center">íšŒì›ë²ˆí˜¸</th>
+											<th align="left">íšŒì›ì•„ì´ë””</th>
+											<th align="left">íšŒì›ë‹‰ë„¤ì„</th>
+											<th align="left">ê°€ì…ì¼ì</th>
+											<th align="left">íšŒì›ìƒíƒœ</th>
 										</tr>
 									</thead>
-
+									
 									<tbody>
 
 										<c:set var="i" value="0" />
@@ -133,24 +133,35 @@
 										
 											<tr>
 												
-												<td align="left" class="applicationNo" name="userNo" value="${user.userNo}"></td>
-												<td align="left">${user.userNo}</td>
+												<td align="left" class="userNo" name="userNo" value="${user.userNo}"></td>
+												<td align="left" class="userNo">${user.userNo}</td>
 												<td align="left">${user.userId}</td>
 												<td align="left">${user.userNickname}</td>
 												<td align="left">${user.regDate }</td>
-												<td align="left"></td>
-																												
+												<c:if test="${user.userStatusCode=='us100'}">
+												<td align="left">íšŒì›</td>
+												</c:if>
+												<c:if test="${user.userStatusCode=='us101'}">
+												<td align="left">ì •ì§€</td>
+												</c:if>
+												<c:if test="${user.userStatusCode=='us102'}">
+												<td align="left">íƒˆí‡´</td>
+												</c:if>																	
 													<td>
-													<input type="hidden" class="userNo"value="${cafeApplication.userNo}" /> 
-													<input type="hidden"class="cafeNo" value="${cafeApplication.cafeNo}" /></td>
+													<input type="hidden" class="userNo"value="${user.userNo}" /> 
+													</td>
 											
 											</tr>
 										</c:forEach>
 
 									</tbody>
-
-								</table>
 								
+								</table>
+								<!-- í…Œì´ë¸” ë -->
+								<jsp:include page="../common/pageNavigator.jsp" >
+									<jsp:param value="User" name="subject"/>
+								</jsp:include>
+								<!-- í˜ì´ì§€ ë -->
 							</div>
 						</div>
 
@@ -165,93 +176,68 @@
  	<!-- PageNavigation Start... -->
 	
 	<!-- PageNavigation End... -->
-	<!--  È­¸é±¸¼º div end /////////////////////////////////////-->
+	<!--  í™”ë©´êµ¬ì„± div end /////////////////////////////////////-->
 	<script src="/plugins/common/common.min.js"></script>
 	<script src="/js/custom.min.js"></script>
 	<script src="/js/settings.js"></script>
 	<script src="/js/gleek.js"></script>
 	<script src="/js/styleSwitcher.js"></script>
-	<!-- ¸Ş´º¹Ù ÀÌ¿ëÀ» À§ÇÑ ½ºÅ©¸³Æ® -->
+	<!-- ë©”ë‰´ë°” ì´ìš©ì„ ìœ„í•œ ìŠ¤í¬ë¦½íŠ¸ -->
 	<script src="/js/custom/scroll-top.js"></script>
 	<script src="/plugins/sweetalert/js/sweetalert.min.js"></script>
 	<script type="text/javascript">
 
+	 var checkSessionUser = ${empty sessionScope.user};
 
 
-	//=============    °Ë»ö / page µÎ°¡Áö °æ¿ì ¸ğµÎ  Event  Ã³¸® =============	
+
+	//=============    ê²€ìƒ‰ / page ë‘ê°€ì§€ ê²½ìš° ëª¨ë‘  Event  ì²˜ë¦¬ =============	
 	function fncGetUserList(currentPage) {
+
 		$("#currentPage").val(currentPage)
 		$("form").attr("method" , "POST").attr("action" , "/user/listUser").submit();
 	}
 	
 	
-	//============= "°Ë»ö"  Event  Ã³¸® =============	
-	 $(function() {
-		 //==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-		 //$( "button.btn.btn-default" ).on("click" , function() {
-		//	fncGetUserList(1);
-		//});
-	 });
-	
-	
-	//============= userId ¿¡ È¸¿øÁ¤º¸º¸±â  Event  Ã³¸®(Click) =============	
-	 $(function() {
-	
-		//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-		$( "td:nth-child(2)" ).on("click" , function() {
-			 self.location ="/user/getUser?userId="+$(this).text().trim();
+	$(function() {
+
+		$("#search").on("click", function() {
+			//alert("ê²€ìƒ‰");
+			fncGetUserList(1);
 		});
-					
-		//==> userId LINK Event End User ¿¡°Ô º¸ÀÏ¼ö ÀÖµµ·Ï 
+	});//ê²€ìƒ‰
+	
+	
+	//============= userId ì— íšŒì›ì •ë³´ë³´ê¸°  Event  ì²˜ë¦¬(Click) =============	
+	 $(function() {
+
+			$('#searchKeyword').on("keydown" , function(event){
+				
+				if(event.keyCode == '13'){
+					fncGetUserList(1);
+				}
+				
+			});
+	
+		//==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		$(".userNo").on("click" , function() {
+			//alert("11");
+			 self.location ="/user/getUserInfo?userNo="+ $(this).text().trim();
+			//$("td:nth-child(2)").attr("method" , "POST").attr("action" , "/user/getUserInfo").submit();
+		});
+
+		//==> userId LINK Event End User ì—ê²Œ ë³´ì¼ìˆ˜ ìˆë„ë¡ 
 		$( "td:nth-child(2)" ).css("color" , "red");
 		
 	});	
+		
 	
 	
-	//============= userId ¿¡ È¸¿øÁ¤º¸º¸±â  Event  Ã³¸® (double Click)=============
-	 $(function() {
-		 
-		//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-		$(  "td:nth-child(5) > i" ).on("click" , function() {
 
-				var userId = $(this).next().val();
-			
-				$.ajax( 
-						{
-							url : "/user/json/getUser/"+userId ,
-							method : "GET" ,
-							dataType : "json" ,
-							headers : {
-								"Accept" : "application/json",
-								"Content-Type" : "application/json"
-							},
-							success : function(JSONData , status) {
-
-								var displayValue = "<h6>"
-															+"¾ÆÀÌµğ : "+JSONData.userId+"<br/>"
-															+"ÀÌ  ¸§ : "+JSONData.userName+"<br/>"
-															+"ÀÌ¸ŞÀÏ : "+JSONData.email+"<br/>"
-															+"ROLE : "+JSONData.role+"<br/>"
-															+"µî·ÏÀÏ : "+JSONData.regDate+"<br/>"
-															+"</h6>";
-								$("h6").remove();
-								$( "#"+userId+"" ).html(displayValue);
-							}
-					});
-					////////////////////////////////////////////////////////////////////////////////////////////
-				
-		});
-		
-		//==> userId LINK Event End User ¿¡°Ô º¸ÀÏ¼ö ÀÖµµ·Ï 
-		$( ".ct_list_pop td:nth-child(3)" ).css("color" , "red");
-		$("h7").css("color" , "red");
-		
-		//==> ¾Æ·¡¿Í °°ÀÌ Á¤ÀÇÇÑ ÀÌÀ¯´Â ??
-		$(".ct_list_pop:nth-child(4n+6)" ).css("background-color" , "whitesmoke");
-	});	
 
 	</script>
-	<script src="/js/custom/cafeCommon.js"></script>
+	<script src="/js/custom/userCommon.js"></script>
+	<script src="/js/custom/toolbarScript.js"></script>
 </body>
 
 </html>

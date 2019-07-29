@@ -7,8 +7,7 @@
 	
 	    		$("[name=toManage]").on("click", function(){
 	    			location.href = "/cafe/" + cafeURL + "/manage/getCafeStatistics";
-	    		});
-	    		
+	    		});	    		
 	    	});
 	
 	    	$(function(){//카페탈퇴

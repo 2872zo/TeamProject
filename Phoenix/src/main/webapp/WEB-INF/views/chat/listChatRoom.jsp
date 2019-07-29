@@ -82,7 +82,7 @@ img {
 
 
 <form id='rooming'>
-<input type='hidden' name = 'chatRoomNo' id='roomNo' >
+<input type='hidden' name = 'chatRoomId' id='chatRoomId' >
 </form>
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
@@ -94,18 +94,25 @@ img {
 
 	<input type='hidden' id='roomNos' value ='${roomNos}'>
 
-	<c:forEach items="${chatRoomList}" var ='chatRoom'>
+	<c:forEach items="${chatRoomList}" var ='chatRoomInfo'>
 	
-	<div class="card mb-3  enterTheRoom " name='${chatRoom.chatRoomNo}'>
+	<div class="card mb-3  enterTheRoom" name='${chatRoomInfo.chatRoomId}' id='${chatRoomInfo.id}'>
   <div class="row">
     <div class="col-lg-4">
       <img src="..." class="card-img" alt="...">
     </div>
     <div class="col-lg-8">
       <div class="card-body">
-        <h5 class="card-title chatRoom">${chatRoom.chatRoomName}</h5>
-        <p class="card-text">${chatRoom.chatRoomNo} </p>
-        <p class="card-text"><small class="text-muted" id='${chatRoom.chatRoomNo}'>Last updated 3 mins ago</small></p>
+        <h5 class="card-title chatRoom">${chatRoomInfo.chatRoomId}</h5>
+        <p class="card-text">${chatRoomInfo.chatRoomName}</p>
+        <p class="card-text">${chatRoomInfo.userNo}</p>
+        <p class="card-text">${chatRoomInfo.id} </p>
+        <p class="card-text">${chatRoomInfo.userNickname} </p>
+                <p class="card-text">${chatRoomInfo.profileImg} </p>
+                <p class="card-text">${chatRoomInfo.regDate} </p>
+        
+        <p class="card-text">${chatRoomInfo.profileImg} </p>
+        <p class="card-text"><small class="text-muted" id='${chatRoomInfo.chatRoomId}'>Last updated 3 mins ago</small></p>
       </div>
     </div>
   </div>
@@ -145,8 +152,8 @@ img {
 
 
 <!-- 소켓용 스크립트 -->
-<!-- <script src="http://localhost:82/socket.io/socket.io.js"></script>  -->
-<script src="http://192.168.0.78:82/socket.io/socket.io.js"></script>
+<!-- <script src="http://localhost:82/socket.io/socket.io.js"></script> -->
+ <script src="http://192.168.0.78:82/socket.io/socket.io.js"></script> 
 
 
 	<!--**********************************
@@ -159,7 +166,7 @@ img {
 <script type="text/javascript">
 
 $(function() {
-
+	
 	var checkSessionUser = ${empty sessionScope.user};
 	var socket = io("http://192.168.0.78:82");
 	//var socket = io("http://localhost:82");
@@ -168,7 +175,8 @@ $(function() {
 	//alert("1");
 	//var roomNumbers = ${sessionScope.roomNos};
 	//alert(${sessionScope.roomNos});
-	
+	//노드쪽에 유저번호 전송
+	socket.emit("identify", ${sessionScope.user.userNo});
 	socket.emit("joiner", $("#roomNos").val());
 
 	socket.on('send_msg', function(msg) {
@@ -187,25 +195,25 @@ $(function() {
 	//
 	//	
 	$("#addingChatRoom").on("click" , function() {
-		alert("채팅방 만들기 버튼입니다.");
+		//alert("채팅방 만들기 버튼입니다.");
 		$(self.location).attr("href", "/chat/addChatRoom");
 	});
 	$(".enterTheRoom").on("click" , function() {
 		//alert("실행됨!");
-		var roomNumber =  parseInt($(this).attr('name'));
+		//var roomNumber =  parseInt($(this).attr('name'));
 		//alert(parseInt($(this).attr('name')));
-		$("#roomNo").val(parseInt($(this).attr('name')));
+		$("#chatRoomId").val($(this).attr('name'));
 		//alert(isNan(roomNumber));
 		//alert($("#rooming").serialize());
-		$("#rooming").attr("method" , "POST").attr("action" , "/chat/chatRoom").submit();
+		$("#rooming").attr("method" , "POST").attr("action" , "/chat/enterChatRoom").submit();
 		
 	});
 		//alert(${roomNos});
 	//var roomNumbers = ${roomNos};
 	//socket.emit("joiner", "1515156");
-	$("#addChatRoom").on("click" , function() {
-		socket.emit("joiner", "1515156");
-	});
+	//$("#addChatRoom").on("click" , function() {
+	//	socket.emit("joiner", "1515156");
+	//});
 
 });
 </script>

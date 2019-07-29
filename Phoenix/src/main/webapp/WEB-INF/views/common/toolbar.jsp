@@ -184,6 +184,35 @@ input[type="checkbox"] {
 				
 
 				<div class="header-right">
+				<c:if test="${!empty sessionScope.user}">
+				 <li class="icons dropdown">
+                            <div class="user-img c-pointer position-relative" data-toggle="dropdown" aria-expanded="false">
+                                <span class="activity active"></span>
+                                <img src="/images/uploadFiles/profileimg/${user.profileImg}" height="40" width="40" alt="">
+                            </div>
+                            <div class="drop-down dropdown-profile animated fadeIn dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-132px, 57px, 0px);">
+                                <div class="dropdown-content-body">
+                                    <ul>
+                                        <li>
+                                            <a href=/user/getUserInfo?userNo=${user.userNo }><i class="icon-user"></i> <span>회원정보상세</span></a>
+                                        </li>
+                                        <li>
+                                            <a href=/user/listUser><i class="icon-list"></i> <span>개인활동내역</span> 
+                                            <div class="badge gradient-3 badge-pill gradient-1"></div>
+                                            </a>
+                                        </li>
+                                        
+                                        <hr class="my-2">
+                                        <li>
+                                            <a href=/user/listUser><i class="icon-list"></i> <span>회원목록</span></a>
+                                        </li>
+                                        <li><a href="page-login.html"><i class="icon-list"></i> <span>신고목록</span></a></li>
+                                        <li><a href="page-login.html"><i class="icon-list"></i> <span>문의목록</span></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                         </c:if>
 					<ul class="clearfix d-flex align-items-center">
 						<c:if test="${!empty sessionScope.user}">
 							<i class="mdi mdi-comment-processing-outline" id='goChat'
