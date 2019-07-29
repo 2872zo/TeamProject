@@ -233,17 +233,17 @@
 	           							<img alt="" src="/images/no_Image.jpg" width="130" height="130" style="margin-left:20px;">
 	           						</c:if>
 	           						<c:if test="${!empty cafe.thumbnail}"> <!-- 검색 이미지있을때 -->
-	           							<a href="${cafe.resultLink}"><img alt="" src="${cafe.thumbnail}" style="margin-left:20px; margin-top: 10px"></a>
+	           							<a href="${cafe.resultLink}"><img alt="" src="${cafe.thumbnail}" width="130" height="130" style="margin-left:20px; margin-top: 10px"></a>
 	           						</c:if>
 	           						
-									<div class="media-body">
+									<div class="media-body" style="margin-left:50px; margin-top:8px;">
 										<div class="form-inline">
 											<h6>
 												<a href="${cafe.resultLink}" id="cafeTitle" >${cafe.title}</a>
 											</h6> &nbsp;&nbsp;&nbsp; 
 											<p id="cafeDateTime">${cafe.dateTime}</p>
 										</div>
-										<div class="form-group" id="blogContent">${blog.contents}</div>
+										<div class="form-group" id="cafeContent">${cafe.contents}</div>
 										
 										<div class="form-inline">
 											<a href="${cafe.cafeLink}" id="cafeName">${cafe.cafeName}</a>

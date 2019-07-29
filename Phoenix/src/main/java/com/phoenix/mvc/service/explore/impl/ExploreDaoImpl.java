@@ -66,14 +66,18 @@ public class ExploreDaoImpl implements ExploreDao{
 		JSONObject jsonObject = (JSONObject) JSONValue.parse(jsonResult.toString());
 		List items = (List) jsonObject.get("documents");
 		Map meta = (Map) jsonObject.get("meta");
-		if(meta.get("total_count")!=null)
+		
+		if(meta != null)
 		{
-			totalCount += ((Long)meta.get("total_count")).intValue();
-			System.out.println("다음 토탈카운트 : "+totalCount);
-		}
-		if(meta.get("is_end")!=null)
-		{
-			isEnd = (boolean) meta.get("is_end");
+			if(meta.get("total_count")!=null)
+			{
+				totalCount += ((Long)meta.get("total_count")).intValue();
+				System.out.println("다음 토탈카운트 : "+totalCount);
+			}
+			if(meta.get("is_end")!=null)
+			{
+				isEnd = (boolean) meta.get("is_end");
+			}
 		}
 		
 		if(items!=null) //검색 결과가 없을때
@@ -162,7 +166,7 @@ public class ExploreDaoImpl implements ExploreDao{
 	
 	
 	@Override
-	public Map getDaumCafeExploreList(Search search) {
+	public Map getDaumCafeExploreList(Search search) throws Exception {
 		
 		List<CafeExplore> cafeList = new ArrayList<CafeExplore>();
 		Map map = new HashMap();
@@ -186,16 +190,19 @@ public class ExploreDaoImpl implements ExploreDao{
 		List items = (List) jsonObject.get("documents");
 		Map meta = (Map) jsonObject.get("meta");
 		
-		if(meta.get("total_count")!=null)
-		{
-			totalCount += ((Long)meta.get("total_count")).intValue();
-			System.out.println("다음 토탈카운트 : "+totalCount);
-		}
-		if(meta.get("is_end")!=null)
-		{
-			isEnd = (boolean) meta.get("is_end");
-		}
 		
+		if(meta!=null)
+		{
+			if(meta.get("total_count")!=null)
+			{
+				totalCount += ((Long)meta.get("total_count")).intValue();
+				System.out.println("다음 토탈카운트 : "+totalCount);
+			}
+			if(meta.get("is_end")!=null)
+			{
+				isEnd = (boolean) meta.get("is_end");
+			}
+		}
 		if(items!=null) //검색 결과가 없을때
 		{
 			for(int i=0; i<items.size(); i++)
@@ -208,7 +215,7 @@ public class ExploreDaoImpl implements ExploreDao{
 				cafeExplore.setResultLink(item.get("url").toString());
 				cafeExplore.setThumbnail(item.get("thumbnail").toString());
 				cafeExplore.setCafeName(item.get("cafename").toString());
-				cafeExplore.setDateTime(item.get("datetime").toString());
+				cafeExplore.setDateTime(this.dateFormatting(item.get("datetime").toString()));
 				cafeExplore.setEngineFrom("daum");
 				
 				cafeList.add(cafeExplore);
@@ -287,7 +294,7 @@ public class ExploreDaoImpl implements ExploreDao{
 		
 		List<Post> postResult = cafePostDao.getPostListBySearch(search);
 		
-		if(postResult!=null) //검색 결과가 없을때
+		if(postResult!=null) //검색 결과가 있을때 없으면
 		{	
 			for(int i=0; i<postResult.size();i++)
 			{
@@ -382,6 +389,7 @@ public class ExploreDaoImpl implements ExploreDao{
 		JSONObject jsonObject = (JSONObject) JSONValue.parse(jsonResult.toString());
 		List items = (List) jsonObject.get("items");
 		
+		
 		if(items!=null) //검색 결과가 없을때
 		{
 			for(int i=0; i<items.size(); i++)
@@ -401,8 +409,11 @@ public class ExploreDaoImpl implements ExploreDao{
 	}
 	
 	@Override
-	public List<Image> getDaumImageExploreList(Search search) {
+	public Map getDaumImageExploreList(Search search) {
 	
+		Map returnMap = new HashMap();
+		int totalCount =0;
+		boolean isEnd =false; 
 		//search 설정 
 		//1.정렬기준 설정 
 		if(search.getOrderState()==0)
@@ -419,6 +430,20 @@ public class ExploreDaoImpl implements ExploreDao{
 		
 		JSONObject jsonObject = (JSONObject) JSONValue.parse(jsonResult.toString());
 		List items = (List) jsonObject.get("documents");
+		Map meta = (Map) jsonObject.get("meta");
+		
+		if(meta!=null)
+		{
+			if(meta.get("total_count")!=null)
+			{
+				totalCount += ((Long)meta.get("total_count")).intValue();
+				System.out.println("다음 토탈카운트 : "+totalCount);
+			}
+			if(meta.get("is_end")!=null)
+			{
+				isEnd = (boolean) meta.get("is_end"); 
+			}
+		}
 		
 		if(items!=null) //검색 결과가 없을때
 		{
@@ -440,13 +465,18 @@ public class ExploreDaoImpl implements ExploreDao{
 			}
 		}
 		
+		returnMap.put("imageList", imageList);
+		returnMap.put("totalCount", totalCount);
 		
-		return imageList;
+		return returnMap;
 	}
 
 	@Override
-	public List<Image> getNaverImageExploreList(Search search) {
+	public Map getNaverImageExploreList(Search search) {
 		
+		List<Image> imageList = new ArrayList<Image>();
+		Map returnMap = new HashMap();
+		int totalCount =0;
 		//search 설정 
 		//1.정렬기준 설정 
 		if(search.getOrderState()==0)//정확도
@@ -459,11 +489,12 @@ public class ExploreDaoImpl implements ExploreDao{
 		search.setSearchThemeSort("image");
 				
 		String jsonResult= this.APISearch(search); // API 실행
-		
-		List<Image> imageList = new ArrayList<Image>();
-		
+
 		JSONObject jsonObject = (JSONObject) JSONValue.parse(jsonResult.toString());
 		List items = (List) jsonObject.get("items");
+		if(jsonObject.get("total")!=null) {
+			totalCount += ((Long)jsonObject.get("total")).intValue();	
+		}
 		
 		if(items!=null) //검색 결과가 없을때
 		{
@@ -482,7 +513,10 @@ public class ExploreDaoImpl implements ExploreDao{
 			}
 		}
 		
-		return imageList;
+		returnMap.put("imageList", imageList);
+		returnMap.put("totalCount", totalCount);
+		
+		return returnMap;
 	}
 
 	

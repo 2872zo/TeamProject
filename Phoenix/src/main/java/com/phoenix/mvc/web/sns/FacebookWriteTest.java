@@ -18,16 +18,16 @@ import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.phoenix.mvc.service.domain.FaceBook;
+import com.phoenix.mvc.service.domain.TimeLine;
 
 public class FacebookWriteTest {
 
 	public static void main(String[] args) throws InterruptedException, IOException {
 		FacebookWriteTest selTest = new FacebookWriteTest();
-		//selTest.login();
+		// selTest.login();
 		// selTest.write();
 		// selTest.update();
-		//selTest.timeLine();
+		// selTest.timeLine();
 	}
 
 	private WebDriver driver;
@@ -112,45 +112,44 @@ public class FacebookWriteTest {
 		List<WebElement> sImg = feed.findElements(By.xpath("//a[@class='_4-eo _2t9n']"));// 이미지
 		// List<WebElement> post = driver.findElements(By.xpath("//div[@class='_1dwg
 		// _1w_m _q7o']"));// 포스트 수
-		
+
 		jse.executeScript("scroll(0,1000)");
 		wait.until(ExpectedConditions.visibilityOfAllElements(feed));
 		System.out.println("포스트 개수 알려줘!" + postId.size());
-		
-		
 
 		for (int i = 0; i < postId.size(); i++) {// 포스트내용,작성자아이디,작성일,좋아요수,이미지
-				
-			FaceBook faceBook = new FaceBook();
-				
-				faceBook.setPost(each.get(i).findElement(By.cssSelector("[data-testid='post_message']")).getText());
-				faceBook.setPostId(each.get(i).findElement(By.xpath("//h5[@class='_7tae _14f3 _14f5 _5pbw _5vra']")).getText());
-				faceBook.setRegDate(each.get(i).findElement(By.xpath("//span[@class='fsm fwn fcg']")).getText());
-				faceBook.setLikeCount(each.get(i).findElement(By.cssSelector("[data-testid='UFI2ReactionsCount/sentenceWithSocialContext']"))
-						.getText());
-				
-				
-				wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector("a[class='_4-eo _2t9n _50z9']")));
-				wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//a[@class='_5dec _xcx']")));
-				
-				if (each.get(i).findElements(By.cssSelector("a[class='_4-eo _2t9n _50z9']")).size()!=0) {//이미지태그 두개중 첫번째
-					faceBook.setThumbnail(each.get(i).findElement(By.cssSelector("a[class='_4-eo _2t9n _50z9']")).getAttribute("data-ploi"));
-					faceBook.setLink(each.get(i).findElement(By.cssSelector("a[class='_4-eo _2t9n _50z9']")).getAttribute("href"));
 
-				} else if (each.get(i).findElements(By.xpath("//a[@class='_5dec _xcx']")).size()!=0) {//이미지태그 두개중 두번째
-					faceBook.setThumbnail( each.get(i).findElement(By.xpath("//a[@class='_5dec _xcx']")).getAttribute("data-ploi"));
+			TimeLine timeLine = new TimeLine();
 
-				}
-				System.out.println(faceBook);
-				
-				if(faceBook != null) {
-					System.out.println(i+"번 성공!");
-					jse.executeScript("scroll(0,1300)");
-					wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector("[data-testid='UFI2ReactionsCount/sentenceWithSocialContext']")));
-				}
-			
+			timeLine.setPost(each.get(i).findElement(By.cssSelector("[data-testid='post_message']")).getText());
+			timeLine.setPostId(
+					each.get(i).findElement(By.xpath("//h5[@class='_7tae _14f3 _14f5 _5pbw _5vra']")).getText());
+			timeLine.setRegDate(each.get(i).findElement(By.xpath("//span[@class='fsm fwn fcg']")).getText());
+			timeLine.setLikeCount(each.get(i)
+					.findElement(By.cssSelector("[data-testid='UFI2ReactionsCount/sentenceWithSocialContext']"))
+					.getText());
 
-			
+			wait.until(
+					ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector("a[class='_4-eo _2t9n _50z9']")));
+			wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//a[@class='_5dec _xcx']")));
+
+			if (each.get(i).findElements(By.cssSelector("a[class='_4-eo _2t9n _50z9']")).size() != 0) {// 이미지태그 두개중 첫번째
+				//timeLine.setThumbnail(each.get(i).findElement(By.cssSelector("a[class='_4-eo _2t9n _50z9']")).getAttribute("data-ploi"));
+				//timeLine.setLink(each.get(i).findElement(By.cssSelector("a[class='_4-eo _2t9n _50z9']")).getAttribute("href"));
+
+			} else if (each.get(i).findElements(By.xpath("//a[@class='_5dec _xcx']")).size() != 0) {// 이미지태그 두개중 두번째
+				//timeLine.setThumbnaileach.get(i).findElement(By.xpath("//a[@class='_5dec _xcx']")).getAttribute("data-ploi"));
+
+			}
+			System.out.println(timeLine);
+
+			if (timeLine != null) {
+				System.out.println(i + "번 성공!");
+				jse.executeScript("scroll(0,1300)");
+				wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(
+						By.cssSelector("[data-testid='UFI2ReactionsCount/sentenceWithSocialContext']")));
+			}
+
 		}
 
 	}

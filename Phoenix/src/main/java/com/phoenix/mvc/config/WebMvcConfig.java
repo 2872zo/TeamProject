@@ -16,7 +16,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	@Autowired
 	@Qualifier(value = "cafeInterceptor")
 	private HandlerInterceptor interceptor;
-	
+		
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(interceptor)
@@ -27,4 +27,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/user/logout"); //로그인 쪽은 예외처리를 한다.
         
     }
+    
+    
 }

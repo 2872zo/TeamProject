@@ -11,6 +11,7 @@
 			$("form").attr("method","POST").attr("action","/explore/getCafeList").submit();
 		}
 		if(searchTheme==3){	
+			//alert("이미지!");
 			$("form").attr("method","POST").attr("action","/explore/getImageList").submit();
 		}
 		if(searchTheme==4){	
@@ -43,6 +44,12 @@
 		$("form").attr("method","POST").attr("action","/explore/getBlogList?currentPage="+idx).submit();
 		//location.href = "/cafe/" + cafeURL + "/getMyPostList?currentPage=" + idx ;
 	}
+	function fncGetCafeList(idx){
+		
+		$("form").attr("method","POST").attr("action","/explore/getCafeList?currentPage="+idx).submit();
+		//location.href = "/cafe/" + cafeURL + "/getMyPostList?currentPage=" + idx ;
+	}
+	
 
 	$(function(){
 		
