@@ -107,7 +107,7 @@ public class MailContoller {
 
 	@RequestMapping("getMail")
 	public String getMail(Map<String, Object> map, @RequestParam int mailNo) throws Exception {
-		IMAPAgent mailAgent = new IMAPAgent("imap.daum.net", "993", "2872zo@daum.net", "password");
+		IMAPAgent mailAgent = new IMAPAgent("imap.daum.net", "993", "2872zo@daum.net", "lkj6322*");
 
 		mailAgent.open();
 
@@ -127,7 +127,25 @@ public class MailContoller {
 			mail.setSender(fullAddr.substring(0, fullAddr.indexOf("<") - 1));
 			mail.setSenderAddr(fullAddr.substring(fullAddr.indexOf("<"), fullAddr.length()));
 		}
-
+		
+		
+		List<Map<String, String>> recipients = new ArrayList<Map<String,String>>();
+		for(Address addr : message.getAllRecipients()) {
+			String fullAddr = MimeUtility.decodeText(addr.toString());
+			System.out.println("Address : " + fullAddr);
+			
+			Map<String, String> recipientMap = new HashMap<String, String>(); 
+			System.out.println("fullAddr : " + fullAddr);
+			if(!fullAddr.contains("<")) {
+				recipientMap.put("recipient", fullAddr);
+			}else {
+				recipientMap.put("recipient", fullAddr.substring(0, fullAddr.indexOf("<") - 1));
+				recipientMap.put("recipientAddr", fullAddr.substring(fullAddr.indexOf("<"), fullAddr.length()));
+			}
+			recipients.add(recipientMap);
+		}
+		mail.setRecipients(recipients);
+		
 		// 제목
 		System.out.println("Subject : " + message.getSubject());
 		mail.setSubject(message.getSubject());
@@ -136,14 +154,16 @@ public class MailContoller {
 		System.out.println("Content : " + message.getContent());
 		mail.setContent(message.getContent().toString());
 		
-		Map<String, Object> resultMap = printMessage(message);
+		if(!(message.getContent() instanceof String)) {
+			Map<String, Object> resultMap = printMessage(message);
+			map.put("resultMap", resultMap);
+		}
 
 		System.out.println(mail);
 
 		mailAgent.close();
 
 		map.put("mail", mail);
-		map.put("resultMap", resultMap);
 		return "/mail/getMail";
 	}
 
@@ -222,7 +242,7 @@ public class MailContoller {
                 
                 System.out.println(i + "번째 MimeBodyPart.ContentType : " + bp.getContentType());
                 
-                if(bp.getContentType().equals("text/html")) {
+                if(bp.getContentType().contains("TEXT/HTML")) {
                 	System.out.println();
                 	String body = (String)bp.getContent(); 
                 	
@@ -235,8 +255,12 @@ public class MailContoller {
 	                
 	                Object obj = bp.getContent();
 	                
-	                if (obj instanceof BASE64DecoderStream) {
+	                if (obj instanceof BASE64DecoderStream || bp.getContentType().contains("TEXT/PLAIN")) {
 	                	System.out.println("AttachMent Content!");
+	                	if(bp.getFileName() == null) {
+	                		System.out.println("파일 비어있음!");
+	                		continue;
+	                	}
 	                	
 	                    String body = MimeUtility.decodeText(bp.getFileName());
 	                    UUID uid = UUID.randomUUID();

@@ -183,33 +183,52 @@
                                         <div class="media pt-5">
                                             <div class="media-body">
                                                 <h5 class="m-b-3">${mail.sender }</h5>
-                                                <p class="m-b-2">${mail.sentDate } 날짜</p>
+                                                <p class="m-b-2"><fmt:formatDate value="${mail.sentDate }" pattern="yyyy.MM.dd"/></p>
                                             </div>
                                             
                                         </div>
                                         <hr>
                                         <div class="media mb-4 mt-1">
-                                            <div class="media-body"><span class="float-right">${mail.sentDate } 시간</span>
-                                                <h4 class="m-0 text-primary">${mail.subject }</h4><small class="text-muted">To:Me,invernessmckenzie@example.com</small>
+                                            <div class="media-body"><span class="float-right"><fmt:formatDate value="${mail.sentDate }" pattern="HH:mm"/></span>
+                                                <h4 class="m-0 text-primary">${mail.subject }</h4>
+                                                <small class="text-muted">To:
+                                                
+                                                	<c:forEach items="${mail.recipients }" var="recipient">
+						                                <span class="bootstrap-popover">
+						                                    <span data-toggle="tooltip" data-placement="bottom" title data-original-title="${recipient.recipientAddr }">
+						                                    	${recipient.recipient }
+						                                    </span>
+						                                </span>
+                                                		
+                                                	</c:forEach>
+                                                	
+                                                </small>
                                             </div>
                                         </div>
                                         <div class="mail-content">
-                                        	${resultMap.mailContent }
+                                        	<c:if test="${!empty resultMap }">
+	                                        	${resultMap.mailContent }
+                                        	</c:if>
+                                        	<c:if test="${empty resultMap }">
+	                                        	${mail.content }
+                                        	</c:if>
                                         </div>
                                         <hr>
                                         
+                                       <c:if test="${!empty resultMap.fileList }">
+	                                        <h6 class="p-t-15"><i class="fa fa-download mb-2"></i> Attachments <span>(${fn:length(resultMap.fileList) })</span></h6>
+	                                        <div class="row m-b-30">
+	                                        	<c:forEach items="${resultMap.fileList }" var="file">
+	                                        		<div class="col-auto">
+	                                        			<a href="${file.filePath }" class="text-muted" download>${file.fileName }</a>
+	                                            	</div>
+	                                        	</c:forEach>
+	                                        </div>
+                                        	<hr>
+                                        </c:if>
                                         
-                                        <h6 class="p-t-15"><i class="fa fa-download mb-2"></i> Attachments <span>(${fn:length(resultMap.fileList) })</span></h6>
-                                        <div class="row m-b-30">
-                                        	<c:forEach items="${resultMap.fileList }" var="file">
-                                        		<div class="col-auto">
-                                        			<a href="${file.filePath }" class="text-muted" download>${file.fileName }</a>
-                                            	</div>
-                                        	</c:forEach>
-                                        </div>
-                                        <hr>
                                         <div class="form-group p-t-15">
-                                            <textarea class="w-100 p-20 l-border-1" name="" id="" cols="30" rows="5" placeholder="It's really an amazing.I want to know more about it..!"></textarea>
+                                            <textarea class="w-100 p-20 l-border-1" name="" id="" cols="30" rows="5" placeholder="빠른 답장"></textarea>
                                         </div>
                                     </div>
                                     <div class="text-right">

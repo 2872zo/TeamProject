@@ -1,7 +1,10 @@
 package com.phoenix.mvc.service.domain;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
+import javax.mail.Address;
 import javax.mail.Folder;
 
 public class Mail {
@@ -11,8 +14,10 @@ public class Mail {
 	private Date sentDate;
 	private String sender;
 	private String senderAddr;
+	private List<Map<String, String>> recipients;
 	private String subject;
 	private String content;
+	
 	
 	public int getMailNo() {
 		return mailNo;
@@ -56,10 +61,17 @@ public class Mail {
 	public void setContent(String content) {
 		this.content = content;
 	}
+	public List<Map<String, String>> getRecipients() {
+		return recipients;
+	}
+	public void setRecipients(List<Map<String, String>> recipients) {
+		this.recipients = recipients;
+	}
 	
 	@Override
 	public String toString() {
 		return "Mail [mailNo=" + mailNo + ", folder=" + folder + ", sentDate=" + sentDate + ", sender=" + sender
-				+ ", senderAddr=" + senderAddr + ", subject=" + subject + ", content=" + content + "]";
+				+ ", senderAddr=" + senderAddr + ", recipients=" + recipients + ", subject=" + subject + ", content="
+				+ content + "]";
 	}
 }
