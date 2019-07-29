@@ -253,8 +253,8 @@
 	<script src="/js/custom/scroll-top.js"></script>
 	
 	<!-- 소켓용 스크립트 -->
-<script src="http://localhost:82/socket.io/socket.io.js"></script>
-<!-- <script src="http://192.168.0.78:82/socket.io/socket.io.js"></script> -->
+<!-- <script src="http://localhost:82/socket.io/socket.io.js"></script> -->
+ <script src="http://192.168.0.78:82/socket.io/socket.io.js"></script>
 
 	<!--**********************************
         Scripts
@@ -267,8 +267,8 @@
 var checkSessionUser = ${empty sessionScope.user};
 $(function() {
 	//alert($("#userNickname").val());
-	//var socket = io("http://192.168.0.78:82");
-	var socket = io("http://localhost:82");
+	var socket = io("http://192.168.0.78:82");
+	//var socket = io("http://localhost:82");
 	socket.emit("identify", $("#userNo").text());
 	socket.emit("joiner", $("#chatRoomId").val());
 	
