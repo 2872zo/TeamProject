@@ -11,6 +11,7 @@ public class Image {
 	private String Image; //daum only 더 큰애
 	private String siteName; //daum only
 	private String dateTime; //daum only
+	private String engineFrom;
 	
 	public Image() {
 		// TODO Auto-generated constructor stub
@@ -88,11 +89,19 @@ public class Image {
 		this.dateTime = dateTime;
 	}
 
+	public String getEngineFrom() {
+		return engineFrom;
+	}
+
+	public void setEngineFrom(String engineFrom) {
+		this.engineFrom = engineFrom;
+	}
+
 	@Override
 	public String toString() {
 		return "Image [title=" + title + ", resultLink=" + resultLink + ", thumbnail=" + thumbnail + ", sizeHeight="
 				+ sizeHeight + ", sizeWidth=" + sizeWidth + ", collection=" + collection + ", Image=" + Image
-				+ ", siteName=" + siteName + ", dateTime=" + dateTime + "]";
+				+ ", siteName=" + siteName + ", dateTime=" + dateTime + ", engineFrom=" + engineFrom + "]";
 	}
 
 }

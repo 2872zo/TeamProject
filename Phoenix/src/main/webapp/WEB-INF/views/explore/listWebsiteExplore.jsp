@@ -9,13 +9,17 @@
 
 <html lang="ko">
 <head>
-    
-    <meta charset="utf-8">
-    <title>Quixlab - Bootstrap Admin Dashboard Template by Themefisher.com</title>
-    
-    <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="images/quixlab/favicon.png">
-    <!-- Custom Stylesheet -->
+
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Favicon icon -->
+
+<!-- Custom Stylesheet -->
+<link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
+<link href="/css/style.css" rel="stylesheet">
+
+<link rel="stylesheet" href="/css/custom/scroll-top.css">
+
+<!--  ///////////////////////// CSS ////////////////////////// -->
     <style>
     	li{
     		
@@ -27,32 +31,99 @@
     	
     		color:#f5a142;
     	}
+    	
+    	#webTitle{
+    	
+    		display: inline-block;
+    		width: 350px; 
+    		white-space: nowrap; 
+    		overflow: hidden; 
+    		text-overflow: ellipsis;
+    		text-decoration:underline; 
+    		color:blue; 
+    		
+    	}
+    	
+    	#webLink{
+    	
+    		display: inline-block;
+    		width: 350px; 
+    		white-space: nowrap; 
+    		overflow: hidden; 
+    		text-overflow: ellipsis;
+    		color:#f5a142; 
+    	}
+    	
+    	#webContent{
+    	
+    		display: inline-block;
+    		white-space: nowrap; 
+    		overflow: hidden; 
+    		width:600px;
+    		text-overflow: ellipsis;
+    		
+    		white-space: normal; 
+    		line-height: 1.5; 
+    		text-align: left; 
+    		word-wrap: break-word; 
+    		display: -webkit-box; 
+    		-webkit-line-clamp: 3; 
+    		-webkit-box-orient: vertical;
+    		color : black;
+    		margin-bottom : 10px;
+    	}
     
     </style>
-    
-    <link href="/css/style.css" rel="stylesheet">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-   	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  	<script src="https://kit.fontawesome.com/e589319d43.js"></script>
-	
+<!--**********************************
+        Scripts
+    ***********************************-->
+	<script src="/plugins/common/common.min.js"></script>
+	<script src="/js/custom.min.js"></script>
+	<script src="/js/settings.js"></script>
+	<script src="/js/gleek.js"></script>
+	<script src="/js/styleSwitcher.js"></script>
+
+	<script src="/plugins/sweetalert/js/sweetalert.min.js"></script>
+	<script src="/plugins/sweetalert/js/sweetalert.init.js"></script>
+
+	<!-- 메뉴바 이용을 위한 스크립트 -->
 	
 	<script type="text/javascript">
 
-
-		$(function(){
+	var checkSessionUser = ${empty sessionScope.user};
+	
+		$(function(){  //전체검색, 네이버, 다음 체크문제.
 
 			$(".check-all").on("click",function(){
 				
-				$(".singleCheck").prop("checked",this.checked);
-			})
+				$(".singleCheck").prop("checked",this.checked); //전체선택에 따라서 변경하도록
 
+				if($(".check-all").is(":checked")){ //전체 선택 체크되었을때만! 체크안되면  action안일어남
+
+					var searchTheme = $("#searchTheme").val();
+
+					if(searchTheme==0){
+						$("form").attr("method","POST").attr("action","/explore/getUnifiedList").submit();
+					}
+					if(searchTheme==1){	
+						$("form").attr("method","POST").attr("action","/explore/getBlogList").submit();
+					}
+					if(searchTheme==2){	
+						$("form").attr("method","POST").attr("action","/explore/getCafeList").submit();
+					}
+					if(searchTheme==3){	
+						$("form").attr("method","POST").attr("action","/explore/getImageList").submit();
+					}
+					if(searchTheme==4){	
+						$("form").attr("method","POST").attr("action","/explore/getWebsiteList").submit();
+					}
+									
+				}
+			});
 
 		});
 			
 		
-
-	
 	</script>
 	
 	
@@ -73,15 +144,12 @@
             Nav header start
         ***********************************-->	
      	<!-- ToolBar Start /////////////////////////////////////-->
-		<jsp:include page="./exploreToolbar.jsp" />
+		<jsp:include page="/WEB-INF/views/explore/exploreToolbar.jsp" />
 		<!-- ToolBar End /////////////////////////////////////-->
        
         <!--**********************************
             Nav header end
         ***********************************-->
-
-      
-
 
         <!--**********************************
             Content body start
@@ -95,44 +163,45 @@
            				<ul class="form-inline">
            					<li></li>
            					<li></li>
-           					<li id="uniSearch" value="0"><h4 class="uniSearch">통합검색</h4></li>
+           					<li id="uniSearch" value="0" style="cursor:pointer;"><h4 class="uniSearch">통합검색</h4></li>
            					<li></li>
-           					<li id="blogSearch" value="1"><h4 class="blogSearch">블로그</h4></li>
+           					<li id="blogSearch" value="1" style="cursor:pointer;"><h4 class="blogSearch">블로그</h4></li>
            					<li></li>
-           					<li id="cafeSearch" value="2"><h4 class="cafeSearch">카페</h4></li>
+           					<li id="cafeSearch" value="2" style="cursor:pointer;"><h4 class="cafeSearch">카페</h4></li>
            					<li></li>
-           					<li id="imageSearch" value="3"><h4 class="imageSearch">이미지</h4></li>
+           					<li id="imageSearch" value="3" style="cursor:pointer;"><h4 class="imageSearch">이미지</h4></li>
            					<li></li>
-           					<li id="webSearch" value="4"><h4 class="webSearch">웹사이트</h4></li>
+           					<li id="webSearch" value="4" style="cursor:pointer;"><h4 class="webSearch">웹사이트</h4></li>
            					<li></li>
            					<li></li>
            					<li></li>
            					<li>
-           						<select class="form-control" name="orderState">
-									<option value="0">관련도순</option>
-									<option value="1">최신순</option>
+           						<select class="form-control" name="orderState" id="orderState">
+									<option value="0" ${search.orderState==0 ? "selected" : "" }>관련도순</option>
+									<option value="1" ${search.orderState==1 ? "selected" : "" }>최신순</option>
 								</select>
            					</li>
            					<li></li>
            					<li>
-           						<div class="form-group">
+           						<div class="form-inline">
                                      <div class="form-check form-check-inline">
                                          <label class="form-check-label">
-                                             <input type="checkbox" class="form-check-input check-all" name="engineAll" value="">전체검색</label>
+                                             <input type="checkbox" class="form-check-input check-all" name="engineAll" value="true" ${search.engineAll ? "checked" : "" }>전체검색</label>
                                      </div>
                                      <div class="form-check form-check-inline">
                                          <label class="form-check-label">
-                                             <input type="checkbox" class="form-check-input singleCheck" name="engineNaver" value="">네이버</label>
+                                             <input type="checkbox" class="form-check-input singleCheck" name="engineNaver" value="true" ${search.engineNaver ? "checked" : "" }>네이버</label>
                                      </div>
                                      <div class="form-check form-check-inline disabled">
                                          <label class="form-check-label">
-                                             <input type="checkbox" class="form-check-input singleCheck" name="engineDaum" value="">다음</label>
+                                             <input type="checkbox" class="form-check-input singleCheck" name="engineDaum" value="true" ${search.engineDaum ? "checked" : "" }>다음</label>
                                      </div>
                                  </div>
            					</li>
            				</ul>
            			<hr/>
-           			<input type="hidden" name="searchTheme" id="searchTheme" value="1">
+           			<input type="hidden" name="searchTheme" id="searchTheme" value="4">
+           			
            			</div>
            			
            			<div class="col-md-1">
@@ -146,13 +215,20 @@
 	           				<c:forEach var="web" items="${webList}">
 	           					<c:set var="i" value="${i+1}"/>
 	           					<li class="media">
-									<div class="media-body">
-										<a href="${web.resultLink}">${web.title}</a>${web.dateTime}
-										<br/>
-										<a href="${web.resultLink}">${web.resultLink}</a>
-										<br/>
-										${web.contents}
-										<br/>
+	           						
+									<div class="media-body" style="margin-left:50px; margin-top:8px;">
+										<div class="form-inline">
+											<h6>
+												<a href="${web.resultLink}" target="_blank" id="webTitle" >${web.title}</a>
+											</h6> &nbsp;&nbsp;&nbsp; 
+										</div>
+										<a href="${web.resultLink}" id="webLink" target="_blank" >${web.resultLink}</a>
+										
+										<div class="form-group" id="webContent">${web.contents}</div>
+										
+										<div class="form-inline">
+											<p id="webDateTime">${web.dateTime}</p>
+										</div>
 										
 									</div>           					
 	           					</li>
@@ -161,6 +237,15 @@
            					</ul>
            				</div>
            			</div>
+           			
+           			<div>
+           				<!-- ToolBar Start /////////////////////////////////////-->
+						<c:import url="/WEB-INF/views/common/pageNavigator.jsp">
+							<c:param name="subject" value="Web" />
+						</c:import>
+						<!-- ToolBar End /////////////////////////////////////-->
+           			</div>
+           			
            		</div>
             </div>
       
@@ -196,8 +281,6 @@
    	 
    	<!-- 검색 엔터용 스크립트같은데 -->
    		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-   	<!-- 공통 툴바용 스크립트 -->	
-		<script src="/js/custom/toolbarScript.js"></script>
    	<!-- 검색 공통 스크립트 -->
    		<script src="/js/custom/exploreCommon.js"></script>
 	</body>

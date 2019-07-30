@@ -153,9 +153,13 @@ public class ExploreServiceImpl implements ExploreService{
 	}
 
 	@Override
-	public List<WebExplore> getWebsiteExploreList(Search search) throws Exception{
+	public Map getWebsiteExploreList(Search search) throws Exception{
 		
 		List<WebExplore> webList = new ArrayList<WebExplore>(); //어떻게 담을까??
+		Map naverMap = new HashMap();
+		Map daumMap = new HashMap();
+		int totalCount = 0; //->담
+		Map returnMap = new HashMap();
 		
 		//append는 할수있는데 . 내가 여기서 정렬을 해줘야하는거 아닌가??????
 		//일단 append 한다음에 list의 a에 따라서 정렬을 해줄 수 있는 method를 찾아보기
@@ -163,9 +167,16 @@ public class ExploreServiceImpl implements ExploreService{
 		
 		if(search.isEngineAll()) //전체엔진
 		{
-			webList.addAll(exploreDao.getNaverWebExploreList(search));
+			naverMap = exploreDao.getNaverWebExploreList(search);
+			webList.addAll((List<WebExplore>) naverMap.get("webList"));
+			totalCount+= (int) naverMap.get("totalCount");
+			
+			
 			if(search.getCurrentPage()<=50) {
-				webList.addAll(exploreDao.getDaumWebExploreList(search));
+				
+				daumMap = exploreDao.getDaumWebExploreList(search);
+				webList.addAll((List<WebExplore>) daumMap.get("webList"));
+				totalCount+=(int)daumMap.get("totalCount");
 			}
 			
 		}
@@ -173,17 +184,23 @@ public class ExploreServiceImpl implements ExploreService{
 		{
 			if(search.isEngineDaum()&& search.getCurrentPage()<=50) //다음엔진선택됐으면
 			{
-				webList.addAll(exploreDao.getDaumWebExploreList(search));
+				daumMap = exploreDao.getDaumWebExploreList(search);
+				webList.addAll((List<WebExplore>) daumMap.get("webList"));
+				totalCount+=(int)daumMap.get("totalCount");
 			}
 
 			if(search.isEngineNaver()) //네이버엔진선택됐으면
 			{
-				webList.addAll(exploreDao.getNaverWebExploreList(search));
+				naverMap = exploreDao.getNaverWebExploreList(search);
+				webList.addAll((List<WebExplore>) naverMap.get("webList"));
+				totalCount+= (int) naverMap.get("totalCount");
 			}
 		}
 		
+		returnMap.put("webList", webList);
+		returnMap.put("totalCount", totalCount);
 		
-		return webList;
+		return returnMap;
 	}
 	
 
@@ -235,10 +252,5 @@ public class ExploreServiceImpl implements ExploreService{
 	}
 
 
-	@Override
-	public List getInfiniteImageList(Search search) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 }
