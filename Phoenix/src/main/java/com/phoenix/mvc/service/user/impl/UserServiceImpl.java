@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService{
 	
 	///Method
 	public void addUser(User user) throws Exception {
-		userDao.addUser(user);
+		userDao.addUser(user);	
 	}
 /////////////////////////////준호시작///////////////////////////////////
 	public User getUser(String userId) throws Exception {
@@ -86,6 +86,15 @@ public class UserServiceImpl implements UserService{
 		return map;
 	}
 	
+	public User getKakao(String kakaoId) throws Exception{		
+		return userDao.selectKakao(kakaoId);
+	}
+	
+	@Override
+	public User getNaver(String naverId) throws Exception {
+
+		return userDao.selectNaver(naverId);
+	}
 
 	
 	

@@ -24,4 +24,8 @@ public interface UserService {
 	
 	public Map<String, Object>getUserList(Search search) throws Exception;
 	
+	public User getKakao(String kakaoId) throws Exception;
+	
+	public User getNaver(String naverId) throws Exception;
+	
 }

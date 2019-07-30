@@ -2,6 +2,7 @@ package com.phoenix.mvc.web.user;
 
 import java.util.Map;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -18,10 +19,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.phoenix.mvc.common.Page;
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.domain.Cafe;
 import com.phoenix.mvc.service.domain.User;
+import com.phoenix.mvc.service.user.UserDao;
 import com.phoenix.mvc.service.user.UserService;
 
 @Controller
@@ -39,6 +42,10 @@ public class UserContoller {
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
+	
+	@Autowired
+	@Qualifier("userDaoImpl")
+	private UserDao userDao;
 	
 	
 	public UserContoller() {
@@ -83,6 +90,16 @@ public class UserContoller {
 	public String addUser(@ModelAttribute User user, Model model, HttpSession session) throws Exception {
 
 		System.out.println("/addUser : POST");
+		
+		if (session.getAttribute("kakaoId") != null) {
+			System.out.println("카카오 계정 회원가입 들옴");
+			user.setKakaoId((String) session.getAttribute("kakaoId"));
+		}
+		
+		if (session.getAttribute("naverId") != null) {
+			System.out.println("네이버 계정 회원가입 들옴");
+			user.setNaverId((String) session.getAttribute("naverId"));
+		}
 
 		userService.addUser(user);
 
@@ -176,6 +193,115 @@ public class UserContoller {
 		return "/user/listUser";
 	}
 	
+	@RequestMapping(value = "oauth")
+	public String kakaoLogin(@RequestParam("code") String code, Model model, HttpSession session) throws Exception {
+		System.out.println("로그인 할때 임시 코드값");
+		// 카카오 홈페이지에서 받은 결과 코드
+		System.out.println(code);
+		System.out.println("로그인 후 결과값");
+
+		// 카카오 rest api 객체 선언
+		KakaoRestapi kr = new KakaoRestapi();
+		// 결과값을 node에 담아줌
+		JsonNode node = kr.getAccessToken(code);
+		// 결과값 출력
+		System.out.println(node);
+
+		JsonNode userInfo = KakaoUserInfo.getKakaoUserInfo(node.get("access_token"));
+
+		JsonNode kakao_account = userInfo.path("kakao_account");
+
+		String kakaoId = userInfo.path("id").asText();
+
+		String token = node.path("access_token").asText();		
+
+		String email = null;
+
+		email = kakao_account.path("email").asText();
+
+		System.out.println("토큰 나와라 얍" + token);
+
+		String userId = userInfo.path("kakao_account").asText();
+
+		System.out.println("id : " + kakaoId);
+
+		System.out.println("userId" + userId + "dsada" + email + "이메일ㅇ느?");
+
+		User user = userService.getKakao(kakaoId);
+
+		if (user != null) {
+
+			user = userService.getUser(user.getUserId());
+
+			System.out.println("기존 카카오 계정이네" + user);
+
+			session.setAttribute("user", user);
+
+			return "/user/kakaoResult";
+		}
+
+		else {
+
+			session.setAttribute("kakaoId", kakaoId);
+			
+			System.out.println("신규 카카오 계정이네 회원가입으로 보내자");
+
+			return "/user/kakaoResult";
+		}
+	}
+	
+	@RequestMapping(value = "callback")
+	public String naverLogin(@RequestParam("code") String code, Model model, ServletRequest request,
+			HttpSession session) throws Exception {
+
+		System.out.println("코드 값 주냐? 안주지?시벌ㄹ?" + code);
+
+		NaverRestapi kr = new NaverRestapi();
+		// 결과값을 node에 담아줌
+		JsonNode node = kr.getAccessToken(code);
+		// 결과값 출력
+		System.out.println("코드있냐?" + code);
+
+		System.out.println("노드들감?" + node);
+
+		JsonNode userInfo = NaverUserInfo.getNaverUserInfo(node.get("access_token"));
+
+		String naver = userInfo.toString();
+
+		String naverId = userInfo.path("response").path("id").asText();
+
+		String token = node.path("access_token").asText();
+
+		System.out.println("토큰 나와라 얍" + token);
+
+		System.out.println("뭐 담겺냐?" + naver);
+
+		System.out.println("id : " + naverId);
+
+		User user = userService.getNaver(naverId);
+
+		System.out.println(user + "네이버 유저정보");
+
+		if (user != null) {
+
+			user = userService.getUser(user.getUserId());
+
+			System.out.println("기존 네이버 계정이네" + user);
+
+			session.setAttribute("user", user);
+
+			return "/user/kakaoResult";
+		}
+
+		else {
+
+			session.setAttribute("naverId", naverId);
+
+			System.out.println("신규 네이버 계정이네 회원가입으로~!");
+
+			return "/user/kakaoResult";
+		}
+	}
 	
 	////////////////////////////////////준호끝///////////////////////////////////
 }

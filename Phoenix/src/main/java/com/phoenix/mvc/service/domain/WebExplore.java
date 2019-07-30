@@ -5,7 +5,8 @@ public class WebExplore {
 	private String title;
 	private String contents;
 	private String resultLink;
-	private String dateTime;
+	private String dateTime; //daum only
+	private String engineFrom;
 	
 	
 	public WebExplore() {
@@ -53,10 +54,23 @@ public class WebExplore {
 	}
 
 
+	public String getEngineFrom() {
+		return engineFrom;
+	}
+
+
+	public void setEngineFrom(String engineFrom) {
+		this.engineFrom = engineFrom;
+	}
+
+
 	@Override
 	public String toString() {
 		return "WebExplore [title=" + title + ", contents=" + contents + ", resultLink=" + resultLink + ", dateTime="
-				+ dateTime + "]";
+				+ dateTime + ", engineFrom=" + engineFrom + "]";
 	}
+
+
+	
 
 }

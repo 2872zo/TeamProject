@@ -49,6 +49,11 @@
 		$("form").attr("method","POST").attr("action","/explore/getCafeList?currentPage="+idx).submit();
 		//location.href = "/cafe/" + cafeURL + "/getMyPostList?currentPage=" + idx ;
 	}
+	function fncGetWebList(idx){
+		
+		$("form").attr("method","POST").attr("action","/explore/getWebsiteList?currentPage="+idx).submit();
+		//location.href = "/cafe/" + cafeURL + "/getMyPostList?currentPage=" + idx ;
+	}
 	
 
 	$(function(){

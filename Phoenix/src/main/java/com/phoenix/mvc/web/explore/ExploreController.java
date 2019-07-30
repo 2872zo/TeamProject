@@ -72,6 +72,8 @@ public class ExploreController {
 		}
 		if(!search.isEngineAll() && !search.isEngineDaum() && !search.isEngineNaver()) { //다 false면 
 			search.setEngineAll(true);
+			search.setEngineDaum(true);
+			search.setEngineNaver(true);
 		}
 		if(search.isEngineDaum() && search.isEngineNaver()) { //둘다 true면 전체선택체크되도록
 			search.setEngineAll(true);
@@ -141,13 +143,6 @@ public class ExploreController {
 		search.setPageSize(explorePageSize);
 		
 		
-		//가짜데이터
-		//search.setEngineAll(true);//전체(네이버+다음+피닉스)
-		//search.setOrderState(0);//정확도
-		//search.setCurrentPage(1);
-		//search.setPageSize(5);
-		/////////////////////////////////////////////////
-		
 		Map returnMap = exploreService.getCafeExploreList(search);
 		
 		Page page = new Page(search.getCurrentPage(),(int)returnMap.get("totalCount"),explorePageUnit,explorePageSize); //갔다와서 리턴에  total값 줘야함 ㅠ 
@@ -166,24 +161,40 @@ public class ExploreController {
 	{
 		System.out.println("/explore/getWebsiteList 실행");
 		
-		if(search.getSearchKeyword()==null)
+		if(search.getSearchKeyword()==null) { //URL 치고 들어오는경우 1.검색어
 			search.setSearchKeyword("");
-		if(search.getSearchTheme()==0)
+		}
+		if(search.getSearchTheme()==0) {
 			search.setSearchTheme(4);
+		}
+		if(search.getOrderState()==0) { // 처음 치고 들어오는경우 관련도 순으로 뽑음
+			search.setOrderState(0);
+		}
+		if(!search.isEngineAll() && !search.isEngineDaum() && !search.isEngineNaver()) { //다 false면 
+			search.setEngineAll(true);
+			search.setEngineDaum(true);
+			search.setEngineNaver(true);
+			search.setEnginePhoenix(true);
+		}
+		if(search.isEngineDaum() && search.isEngineNaver()) { //둘다 true면 전체선택체크되도록
+			search.setEngineAll(true);
+		}
+		if(search.getCurrentPage()==0) { //page설정
+			search.setCurrentPage(1);
+		}
 		
-		//가짜데이터
-		search.setEngineAll(true);//전체(네이버+다음+피닉스)
-		search.setOrderState(0);//정확도
-		search.setCurrentPage(1);
-		search.setPageSize(5);
-		/////////////////////////////////////////////////
+		search.setPageSize(explorePageSize);
+
+		Map returnMap = exploreService.getWebsiteExploreList(search);
 		
-		List<WebExplore> websiteList = exploreService.getWebsiteExploreList(search);
+		Page page = new Page(search.getCurrentPage(),(int)returnMap.get("totalCount"),explorePageUnit,explorePageSize); //갔다와서 리턴에  total값 줘야함 ㅠ 
+
 		
+		model.addAttribute("webList", returnMap.get("webList"));
+		model.addAttribute("totalCount",returnMap.get("totalCount"));
+		model.addAttribute("page",page);
 		
-		model.addAttribute("webList", websiteList);
-		
-		if(websiteList.size()==0)
+		if(((List<WebExplore>)returnMap.get("webList")).size()==0)
 			return "explore/noSearchResultPage";
 		else
 			return "explore/listWebsiteExplore";

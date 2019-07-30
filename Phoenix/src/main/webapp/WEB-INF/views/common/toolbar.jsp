@@ -214,6 +214,7 @@ input[type="checkbox"] {
                         </li>
                          </c:if>
 					<ul class="clearfix d-flex align-items-center">
+
 						<c:if test="${!empty sessionScope.user}">
 							<i class="mdi mdi-comment-processing-outline" id='goChat'
 								style='font-size: 30pt'></i>
