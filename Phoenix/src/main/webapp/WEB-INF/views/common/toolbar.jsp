@@ -7,8 +7,6 @@
 <!DOCTYPE html>
 
 
-
-
 <html lang="ko">
 
 <style type="text/css">
@@ -123,10 +121,6 @@ input[type="checkbox"] {
 
 
 
-
-
-
-
 	<!--**********************************
         Main wrapper start
     ***********************************-->
@@ -175,11 +169,6 @@ input[type="checkbox"] {
 					</div>
 						 
 						
-						
-						
-					
-					
-				
 				
 				
 
@@ -213,15 +202,14 @@ input[type="checkbox"] {
                                 </div>
                             </div>
                         </li>
-<<<<<<< HEAD
+
                         <!-- 회원관리부분 -->
                         <!-- 채팅부분 -->
-=======
                          </c:if>
 					<ul class="clearfix d-flex align-items-center">
 
 						<c:if test="${!empty sessionScope.user}">
->>>>>>> refs/remotes/origin/master
+
 							<i class="mdi mdi-comment-processing-outline" id='goChat'
 								style='font-size: 35pt; position: relative; right: 5%;'></i>
 								 <div style='margin-left: 2%;margin-right: 2%;'></div>
@@ -247,28 +235,6 @@ input[type="checkbox"] {
 		<!--**********************************
             Header end ti-comment-alt
         ***********************************-->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
