@@ -19,8 +19,8 @@ public interface ExploreService {
 	
 	public Map getImageExploreList(Search search)throws Exception;
 	
-	public List<WebExplore> getWebsiteExploreList(Search search)throws Exception;
+	public Map getWebsiteExploreList(Search search)throws Exception;
 	
-	public List getInfiniteImageList(Search search) throws Exception; //->를 꼭만들어야하나?? ImageExploreList를 사용하면되잖아.
+	//public List getInfiniteImageList(Search search) throws Exception; //->를 꼭만들어야하나?? ImageExploreList를 사용하면되잖아.
 	
 }

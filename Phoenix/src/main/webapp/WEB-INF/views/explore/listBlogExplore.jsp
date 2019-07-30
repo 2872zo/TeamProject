@@ -171,15 +171,15 @@
            				<ul class="form-inline">
            					<li></li>
            					<li></li>
-           					<li id="uniSearch" value="0"><h4 class="uniSearch">통합검색</h4></li>
+           					<li id="uniSearch" value="0" style="cursor:pointer;"><h4 class="uniSearch">통합검색</h4></li>
            					<li></li>
-           					<li id="blogSearch" value="1"><h4 class="blogSearch">블로그</h4></li>
+           					<li id="blogSearch" value="1" style="cursor:pointer;"><h4 class="blogSearch">블로그</h4></li>
            					<li></li>
-           					<li id="cafeSearch" value="2"><h4 class="cafeSearch">카페</h4></li>
+           					<li id="cafeSearch" value="2" style="cursor:pointer;"><h4 class="cafeSearch">카페</h4></li>
            					<li></li>
-           					<li id="imageSearch" value="3"><h4 class="imageSearch">이미지</h4></li>
+           					<li id="imageSearch" value="3" style="cursor:pointer;"><h4 class="imageSearch">이미지</h4></li>
            					<li></li>
-           					<li id="webSearch" value="4"><h4 class="webSearch">웹사이트</h4></li>
+           					<li id="webSearch" value="4" style="cursor:pointer;"><h4 class="webSearch">웹사이트</h4></li>
            					<li></li>
            					<li></li>
            					<li></li>

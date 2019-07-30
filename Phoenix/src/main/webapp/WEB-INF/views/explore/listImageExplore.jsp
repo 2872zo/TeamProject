@@ -30,56 +30,62 @@
     	.imageSearch{
     	
     		color:#f5a142;
-    	}
-    	
-    	#blogTitle{
-    	
-    		display: inline-block;
-    		width: 350px; 
-    		white-space: nowrap; 
-    		overflow: hidden; 
-    		text-overflow: ellipsis;
-    		text-decoration:underline; 
-    		color:#f5a142; 
     		
     	}
-    	#blogName{
+    	
+    	.imageGroup{
+    		height : 167px;
+    		width : 185px;
+    		margin:3px;
+    		position : relative; 
+    	}
+    	
+    	img{
     		
-    		display: inline-block;
-    		width: 160px; 
-    		white-space: nowrap; 
-    		overflow: hidden; 
-    		text-overflow: ellipsis;
+    		position :absolute;
+    		width:100%;
+    		height :100%;
     	}
     	
-    	#blogLink{
+    	.imageTitle{
     	
-    		display: inline-block;
-    		width: 160px; 
-    		white-space: nowrap; 
-    		overflow: hidden; 
-    		text-overflow: ellipsis;
-    		color:#f5a142; 
-    	}
-    	
-    	#blogContent{
-    	
-    		display: inline-block;
-    		width: 450px; 
-    		white-space: nowrap; 
-    		overflow: hidden; 
-    		text-overflow: ellipsis;
+    		display: block;
+    		z-index :100;
+    		position:absolute;
+    		color : white;
+    		background-color : #000000ad;
+    		width: 185px;
+    		height : 35px;
+    		overflow : hidden;
+    		text-overflow :ellipsis;
+    		line-height :4;
+    		top : 79%;
+    		font-family:"굴림";
+    		font-size:11px;
+    		text-align : center;
     		
-    		white-space: normal; 
-    		line-height: 1.5; 
-    		text-align: left; 
-    		word-wrap: break-word; 
-    		display: -webkit-box; 
-    		-webkit-line-clamp: 3; 
-    		-webkit-box-orient: vertical;
-    		color : black;
-    		margin-bottom : 10px;
     	}
+    	
+    	.imageViewer{
+    		
+    		background-color : black;
+    		width : 1175px;
+    		height : 350px;
+    	}
+    	
+    	.viewerImage{
+    	
+    		width: 300px;
+    		height: 300px;
+    		margin-left : 450px;
+    		margin-top : 25px;
+    	}
+    	.viewerTitle{
+    		
+    		
+    	}
+    	
+    	
     
     </style>
 <!--**********************************
@@ -99,7 +105,13 @@
 	<script type="text/javascript">
 
 	var checkSessionUser = ${empty sessionScope.user};
+
+		$(function(){ //이미지 호버 , 클릭
+
+			$(".imageTitle").hide(); //기본으로 hide
+			imageTitleHide();
 	
+		});
 		$(function(){  //전체검색, 네이버, 다음 체크박스
 
 			$(".check-all").on("click",function(){
@@ -171,11 +183,11 @@
 			//var currentPage = $("#currentPage").val();
 			maxPage = $("#maxPage").val();
 			//currentPage++;
-			alert("currentPage"+currentPage);
-			alert("maxPage"+maxPage);
-			debugger;
+			//alert("currentPage"+currentPage);
+			//alert("maxPage"+maxPage);
+			
 			if(currentPage < maxPage){ //이해할수 없어 왜 안되냐고 첫번째는 되고 왜 안돼??으시바아아아아아아아아아아아아아아아아알1~!~!~!~!
-				alert("들어옴");
+				//alert("들어옴");
 				
 				currentPage++;
 			
@@ -217,29 +229,37 @@
 				
 					if(list != ""){ //한번 불러올때마다 inline이랑 시켜줘야한다.
 
-							str +="<div class ='photo-grid-box'>"; //메모장에있는거 그냥 가져다 붙이면 되지않나. ->이거 안댐 왜냐면 js(jquery)보다 jstl이 먼저 실행되기때문이다
-						
+							str +="<div class ='photo-grid-box'>" //메모장에있는거 그냥 가져다 붙이면 되지않나. ->이거 안댐 왜냐면 js(jquery)보다 jstl이 먼저 실행되기때문이다
+								+"<div class='form-inline'>";
 						$(list).each( //말고 jstl 해도된잔하아.
 								
 							function(){
 							
 								console.log(this);
 								c++;
-								str += "<img alt='' src='"+this.thumbnail+"' width='190' height='167' data-row='"+r+"' data-col='"+c+"'>"
+								if(this.title==null)
+								{
+									this.title ="";
+								}
+								str +="<div class='imageGroup'>" 
+									+"<img alt='' class='imageThumbnail' src='"+this.thumbnail+"' width='190' height='167' data-row='"+r+"' data-col='"+c+"'>"
+									+"<p class='imageTitle'>"+this.title+"</p></div>";
 								i++;
 
 								if(i%6==0){ //6개씩 줄바꿈
+									str +="</div>";
 									r++;
 									c=0;
+									str+="<div class='form-inline'>";
 								}
 								
 						});
 
-						str+="</div>"
+						str+="</div></div>"
 					}//end list 반복문
 					
 					$(".card-body.col-md-12").append(str);
-					
+					imageTitleHide();//다시 하이드 시켜준다.
 				}//end success
 				
 				
@@ -248,11 +268,73 @@
 			}
 		}
 
-		$(function(){ //이미지 호버
+		function imageTitleHide()
+		{
 
-			$("img").hover(function(){기술},function(){기술})
+			//var startViewStr ="<div class='imageViewer'></div> ";
+			//var endViewStr 음 얠 그냥 
+			var firstThis = null;
+			var secondThis = null;
+			
+			$(".imageTitle").hide(); //기본으로 hide
+			
+			$(".imageGroup").hover(function(){ // hover
+				$(this).find(".imageTitle").show(); },
+				function(){ $(this).find(".imageTitle").hide() });
 
-		});
+			$(".imageGroup").unbind('click'); //액션한번만
+			$(".imageGroup").on("click",function(){ //click
+				//하면 선택한 그림 그 한줄 밑에 str을 더한다.
+			
+				
+				secondThis= this;
+				//debugger;
+				if(firstThis==secondThis && firstThis != null) //같은걸 두번 클릭하면
+				{
+					//alert("같은거 클릭");
+					$(".imageViewer").fadeOut(300,function(){
+						$(this).remove();
+						});
+					firstThis=null;
+					secondThis=null;
+					//viewer접기
+				}
+				else if(firstThis!=null && firstThis!=secondThis){ //다른 이미지를 클릭하면 /그냥 else맞다 이미 위에서 .imageGroup으로 걸렀기때문에
+
+					//alert("다른거 클릭");
+					$(".imageViewer").remove();//지우고 다시 append
+
+					var str="<div class='imageViewer' height='350px' style='background-color:black;'>"
+						  +"<a href='"+$(this).find("[name=imageLink]").attr("value")+"' target='_black'><img class='viewerImage' src='"+$(this).find("img").attr("src")+"' width='400px' height='300px'></a>"
+						  +"<p class='viewerTitle'>"+$(this).find(".imageTitle").text().trim()+"</p>"	
+						  +"</div>";
+						  
+					$(this).parent().after(str);
+					
+					//view 새로 img 세팅  .after();
+				}
+				else if(firstThis==null) //처음 열었을때
+				{
+					//alert("처음클릭");
+					//if($(this).find("[name=]"))
+					//if($(this).find(".imageViewer").get().length === 0){ //음 없을때만.
+						
+						var str="<div class='imageViewer' height='350px' style='background-color:black;'>"
+							  +"<a href='"+$(this).find("[name=imageLink]").attr("value")+"' target='_black'><img class='viewerImage' src='"+$(this).find("img").attr("src")+"' width='400px' height='300px'></a>"
+							  +"</div>";
+							  
+						$(this).parent().after(str);
+						//alert($(this).find("img").attr("src"));
+						//view연듸
+					//}
+				}
+				
+				firstThis = secondThis;
+				
+			});
+		}
+
+		
 		
 	</script>
 	
@@ -293,15 +375,15 @@
            				<ul class="form-inline">
            					<li></li>
            					<li></li>
-           					<li id="uniSearch" value="0"><h4 class="uniSearch">통합검색</h4></li>
+           					<li id="uniSearch" value="0" style="cursor:pointer;"><h4 class="uniSearch">통합검색</h4></li>
            					<li></li>
-           					<li id="blogSearch" value="1"><h4 class="blogSearch">블로그</h4></li>
+           					<li id="blogSearch" value="1" style="cursor:pointer;"><h4 class="blogSearch" >블로그</h4></li>
            					<li></li>
-           					<li id="cafeSearch" value="2"><h4 class="cafeSearch">카페</h4></li>
+           					<li id="cafeSearch" value="2" style="cursor:pointer;"><h4 class="cafeSearch">카페</h4></li>
            					<li></li>
-           					<li id="imageSearch" value="3"><h4 class="imageSearch">이미지</h4></li>
+           					<li id="imageSearch" value="3" style="cursor:pointer;"><h4 class="imageSearch">이미지</h4></li>
            					<li></li>
-           					<li id="webSearch" value="4"><h4 class="webSearch">웹사이트</h4></li>
+           					<li id="webSearch" value="4" style="cursor:pointer;"><h4 class="webSearch">웹사이트</h4></li>
            					<li></li>
            					<li></li>
            					<li></li>
@@ -342,18 +424,34 @@
            					<c:set var="i" value="0"/>
            					<c:set var="r" value="1"/>
            					<c:set var="c" value="0"/>
+           					<div class="form-inline">
            						<c:forEach var="image" items="${imageList}">
            							<c:set var="c" value="${c+1}"/>
            							
-           							<img alt="" src="${image.thumbnail}" width="190" height="167" data-row="${r}" data-col="${c}">
-           							
+           							<div class="imageGroup">
+           								<img class="imageThumbnail" alt="" src="${image.thumbnail}" data-row="${r}" data-col="${c}">
+           								<p class="imageTitle">${image.title}</p>
+           								<input type="hidden" name="imageLink" value="${image.resultLink}"/>
+           								<input type="hidden" name="sizeHeight" value="${image.sizeHeight}"/>
+           								<input type="hidden" name="sizeWidth" value="${image.sizeWidth}"/>
+           								<input type="hidden" name="dateTime" value="${image.dateTime}"/>
+           								<input type="hidden" name="siteName" value="${image.siteName}"/>
+           								<input type="hidden" name="collection" value="${image.collection}"/>
+           								<input type="hidden" name="image" value="${image.image}"/>
+           								<input type="hidden" name="engineFrom" value="${image.engineFrom}"/>
+           								
+           							 </div>
+           							 
            							<c:set var="i" value="${i+1}"> </c:set>
            							<c:if test="${i%6==0}">
-           								<br/>
+           								</div>
+           
            								<c:set var="r" value="${r+1}"/>
            								<c:set var="c" value="0"/>
+           								<div class="form-inline">
            							</c:if>
            						</c:forEach>
+           						</div>
            				</div>
            				
            			</div>

@@ -329,8 +329,12 @@ public class ExploreDaoImpl implements ExploreDao{
 	}
 	
 	@Override
-	public List<WebExplore> getDaumWebExploreList(Search search) {
+	public Map getDaumWebExploreList(Search search) throws Exception {
 		
+		List<WebExplore> webList = new ArrayList<WebExplore>();
+		Map map = new HashMap();
+		int totalCount =0;
+		boolean isEnd = false;
 		//search 설정 
 		//1.정렬기준 설정 
 		if(search.getOrderState()==0)
@@ -343,11 +347,23 @@ public class ExploreDaoImpl implements ExploreDao{
 		search.setSearchThemeSort("web");
 		
 		String jsonResult= this.APISearch(search); // API 통신
-		List<WebExplore> webList = new ArrayList<WebExplore>();
 		
 		JSONObject jsonObject = (JSONObject) JSONValue.parse(jsonResult.toString());
 		List items = (List) jsonObject.get("documents");
+		Map meta = (Map) jsonObject.get("meta");
 		
+		if(meta!=null)
+		{
+			if(meta.get("total_count")!=null)
+			{
+				totalCount += ((Long)meta.get("total_count")).intValue();
+				System.out.println("다음 토탈카운트 : "+totalCount);
+			}
+			if(meta.get("is_end")!=null)
+			{
+				isEnd = (boolean) meta.get("is_end");
+			}
+		}
 		if(items!=null) //검색 결과가 없을때
 		{
 			for(int i=0; i<items.size(); i++)
@@ -358,19 +374,28 @@ public class ExploreDaoImpl implements ExploreDao{
 				web.setTitle(item.get("title").toString());
 				web.setContents(item.get("contents").toString());
 				web.setResultLink(item.get("url").toString());
-				web.setDateTime(item.get("datetime").toString());
+				web.setDateTime(this.dateFormatting(item.get("datetime").toString()));
+				web.setEngineFrom("daum");
 				
 				webList.add(web);
 			}
 		}
 		
+		map.put("webList", webList);
+		map.put("totalCount", totalCount);
+		map.put("isEnd", isEnd);
 		
-		return webList;
+		return map;
 	}
 
 	@Override
-	public List<WebExplore> getNaverWebExploreList(Search search) {
+	public Map getNaverWebExploreList(Search search) {
 			
+		List<WebExplore> webList = new ArrayList<WebExplore>();
+		Map map = new HashMap();
+		int totalCount =0;
+		
+		
 		//search 설정 
 		//1.정렬기준 설정 
 		if(search.getOrderState()==0)//정확도
@@ -383,12 +408,14 @@ public class ExploreDaoImpl implements ExploreDao{
 		search.setSearchThemeSort("webkr");
 				
 		String jsonResult= this.APISearch(search); // API 실행
-		
-		List<WebExplore> webList = new ArrayList<WebExplore>();
-		
+			
 		JSONObject jsonObject = (JSONObject) JSONValue.parse(jsonResult.toString());
 		List items = (List) jsonObject.get("items");
 		
+		if(jsonObject.get("total")!=null) {
+			totalCount += ((Long)jsonObject.get("total")).intValue();
+			
+		}
 		
 		if(items!=null) //검색 결과가 없을때
 		{
@@ -405,7 +432,10 @@ public class ExploreDaoImpl implements ExploreDao{
 			}
 		}
 		
-		return webList;
+		map.put("webList", webList);
+		map.put("totalCount", totalCount);
+		
+		return map;
 	}
 	
 	@Override
@@ -427,6 +457,8 @@ public class ExploreDaoImpl implements ExploreDao{
 		
 		String jsonResult= this.APISearch(search); // API 통신
 		List<Image> imageList = new ArrayList<Image>();
+		
+		System.out.println("jsonResult in Daum DAO : "+jsonResult);
 		
 		JSONObject jsonObject = (JSONObject) JSONValue.parse(jsonResult.toString());
 		List items = (List) jsonObject.get("documents");
@@ -460,6 +492,7 @@ public class ExploreDaoImpl implements ExploreDao{
 				image.setSiteName(item.get("display_sitename").toString());
 				image.setDateTime(item.get("datetime").toString());
 				image.setResultLink(item.get("doc_url").toString());
+				image.setEngineFrom("daum");
 		
 				imageList.add(image);
 			}
@@ -508,6 +541,7 @@ public class ExploreDaoImpl implements ExploreDao{
 				image.setThumbnail(item.get("thumbnail").toString());
 				image.setSizeHeight(item.get("sizeheight").toString());
 				image.setSizeWidth(item.get("sizewidth").toString());
+				image.setEngineFrom("naver");
 				
 				imageList.add(image);
 			}

@@ -23,4 +23,7 @@ public interface UserDao {
 	
 	public int getUserTotalCount(Search search) throws Exception;
 	
+	public User selectKakao(String kakaoId) throws Exception;
+	
+	public User selectNaver(String naverId)throws Exception;
 }

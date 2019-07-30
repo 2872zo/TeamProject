@@ -19,15 +19,16 @@
 		<result property="regDate" 				column="reg_date" 				jdbcType="DATE" />
 		<result property="userRoleCode" 		column="user_role_code" 		jdbcType="VARCHAR" />
 		<result property="userStatusCode" 		column="user_status_code" 		jdbcType="VARCHAR" />
-		<result property="kakaoId" 				column="kakao_id" 				jdbcType="VARCHAR" />		
+		<result property="kakaoId" 				column="kakao_id" 				jdbcType="VARCHAR" />
+		<result property="naverId" 				column="naver_id" 				jdbcType="VARCHAR" />				
 	</resultMap>
 	
 	<insert 	id="addUser"		parameterType="com.phoenix.mvc.service.domain.User" >
 	 	<selectKey keyProperty="userNo" resultType="int" order="BEFORE">
 	 		SELECT SEQ_USERS_USER_NO.NEXTVAL FROM DUAL
 	 	</selectKey>
-		INSERT INTO USERS (user_no, user_id, user_name, user_nickname, password, email, phone, profile_img, reg_date) 
-		VALUES ( #{userNo}, #{userId:VARCHAR}, #{userName:VARCHAR}, #{userNickname:VARCHAR}, #{password:VARCHAR}, #{email:VARCHAR}, #{phone:NUMERIC}, #{profileImg:VARCHAR}, SYSDATE)
+		INSERT INTO USERS (user_no, user_id, user_name, user_nickname, password, email, phone, profile_img, reg_date, kakao_id, naver_id) 
+		VALUES ( #{userNo}, #{userId:VARCHAR}, #{userName:VARCHAR}, #{userNickname:VARCHAR}, #{password:VARCHAR}, #{email:VARCHAR}, #{phone:NUMERIC}, #{profileImg:VARCHAR}, SYSDATE, #{kakaoId:VARCHAR}, #{naverId:VARCHAR})
 
 	 </insert>
 	
@@ -97,5 +98,22 @@
 								</if>								
 							</where>
 						</if> ) countTable						
-	 </select>
+	 </select>	 
+	 
+	 <select id="selectKakao" parameterType="string" resultMap="userSelectMap">
+		SELECT *
+		FROM
+		users			
+		where kakao_Id = #{value}
+
+	 </select> 
+	 
+	 <select id="selectNaver" parameterType="string" resultMap="userSelectMap">
+		SELECT *
+		FROM
+		users			
+		where naver_Id = #{value}
+
+	 </select> 
+	 
 </mapper>
