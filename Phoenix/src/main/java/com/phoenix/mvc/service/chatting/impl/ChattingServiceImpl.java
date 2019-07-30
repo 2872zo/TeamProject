@@ -36,7 +36,17 @@ public class ChattingServiceImpl implements ChattingService{
 	public Map getMyChatRoomList(Search search) throws Exception {
 		Map map = new HashMap();
 		
-		List chatRoomList = chattingDao.getMyChatRoomList(search);
+		List<ChatRoomInfo> chatRoomList = chattingDao.getMyChatRoomList(search);
+		
+		for (ChatRoomInfo chatRoomInfo : chatRoomList) {
+			List<String> stringList = new ArrayList();
+			List<ChatRoomInfo> imgList = chattingDao.getFourImgForChatRoomList(chatRoomInfo);
+			for (ChatRoomInfo imgChatRoomInfo : chatRoomList) {
+				stringList.add(imgChatRoomInfo.getProfileImg());
+			}
+			System.out.println("네개 나오니???"+stringList);
+			chatRoomInfo.setImgs(stringList);
+		}
 		
 		map.put("chatRoomList",chatRoomList);
 		

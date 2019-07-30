@@ -41,19 +41,7 @@ public class ChattingContoller {
 	
 	@RequestMapping("main")
 	public String getChatMain() throws Exception {
-		int a = 10006;
-		int b = 10002;
-		int c = 10004;
-		Search search = new Search();
-		List<Integer> list= new ArrayList<Integer>();
-		list.add(a);
-		list.add(b);
-		list.add(c);
-		search.setUserNo(10000);
-		search.setTargetUserNos(list);
-		Map map = chattingService.getFriendsListForInvite(search);
-		List listing = (List)map.get("FriendsForInvite");
-		System.out.println(listing);
+		
 		return "chat/chatMain";
 	}
 	
@@ -116,8 +104,6 @@ public class ChattingContoller {
 			roomNos += a+",";
 		}
 		System.out.println("방목록 스트링 찍어주라 : "+roomNos);
-		//session.setAttribute("roomNos",roomNos);
-		//session.setAttribute("roomNoList",roomNoList);
 		model.addAttribute("chatRoomList",chatRoomList);
 		model.addAttribute("roomNos",roomNos);
 		return "chat/listChatRoom";
@@ -125,25 +111,23 @@ public class ChattingContoller {
 	
 	@RequestMapping("enterChatRoom")
 	public String getChatRoom(@SessionAttribute("user") User user, @ModelAttribute Search search, Model model) throws Exception {
+	
 		search.setUserNo(user.getUserNo());
+		
 		Map map = chattingService.getChatRoom(search);
+		
 		List chatList = (List) map.get("chatList");
 		List userList = (List) map.get("userList");
 		List inviteList = (List) map.get("inviteList");
 		List nickNameList = (List) map.get("nickNameList");
 		ChatRoomInfo chatRoomInfo= (ChatRoomInfo)map.get("chatRoomInfo");
 
-		//System.out.println(chatRoom.getChatRoomNo());
-		//Search search = new Search();
-		//search.setUserNo(user.getUserNo());
-		//Map map = chattingService.getMyChatRoomList(search);
-		//List chatRoomList = (List) map.get("chatRoomList");
-
 		model.addAttribute("nickNameList", nickNameList);
 		model.addAttribute("chatList", chatList);
 		model.addAttribute("userList", userList);
 		model.addAttribute("inviteList", inviteList);
 		model.addAttribute("chatRoomInfo", chatRoomInfo);
+		
 		return "chat/chatRoom";
 	}
 

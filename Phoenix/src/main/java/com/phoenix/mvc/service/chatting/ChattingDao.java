@@ -58,4 +58,6 @@ public interface ChattingDao {
 	public List getChatRoomUserList(Search search) throws Exception;
 	
 	public List getFriendNickNameList(Search search) throws Exception;
+	
+	public List getFourImgForChatRoomList(ChatRoomInfo chatRoomInfo) throws Exception;
 }

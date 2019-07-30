@@ -51,7 +51,6 @@ public class ChattingDaoImpl implements ChattingDao{
 		criteria.andOperator(Criteria.where("userNo").is(search.getUserNo()));
 		query.addCriteria(criteria);
 		
-		
 		System.out.println(query);
 		return mongoTemplate.find(query, ChatRoomInfo.class);
 	}
@@ -60,9 +59,10 @@ public class ChattingDaoImpl implements ChattingDao{
 	public ChatRoomInfo getMyChatRoomInfo(Search search) throws Exception {
 		query = new Query();
 		criteria = new Criteria();
-		//query.with(new Sort(Sort.Direction.DESC, "latestMessagingDate"));
 		criteria.andOperator(Criteria.where("userNo").is(search.getUserNo()), Criteria.where("chatRoomId").is(search.getChatRoomId()));
 		query.addCriteria(criteria);
+		
+		System.out.println(query);
 		return mongoTemplate.findOne(query, ChatRoomInfo.class);
 	}
 
@@ -101,7 +101,6 @@ public class ChattingDaoImpl implements ChattingDao{
 		//criteria.andOperator(Criteria.where("chatProfileImg").is("abc"), Criteria.where("chatRoomNo").is(search.getChatRoomNo()));
 		criteria.andOperator(Criteria.where("chatRoomId").is(search.getChatRoomId()));
 		query.addCriteria(criteria);
-		
 		
 		return mongoTemplate.find(query, Chat.class);
 		
@@ -217,6 +216,26 @@ public class ChattingDaoImpl implements ChattingDao{
 		update.set("latestMessagingDate", new Date());
 		mongoTemplate.updateMulti(query, update, ChatRoomInfo.class);
 		
+	}
+
+	@Override
+	public List getFourImgForChatRoomList(ChatRoomInfo chatRoomInfo) throws Exception {
+
+		//query = mongoMapper.getChatList(search);
+		//정렬
+		query = new Query();
+		criteria = new Criteria();
+		query.with(new Sort(Sort.Direction.ASC, "regDate"));
+		//갯수제한
+		query.limit(4);
+		criteria = new Criteria();
+		//검색조건
+		//query.addCriteria(criteria);
+		//criteria.andOperator(Criteria.where("chatProfileImg").is("abc"), Criteria.where("chatRoomNo").is(search.getChatRoomNo()));
+		criteria.andOperator(Criteria.where("chatRoomId").is(chatRoomInfo.getChatRoomId()));
+		query.addCriteria(criteria);
+		
+		return mongoTemplate.find(query, ChatRoomInfo.class);
 	}
 
 }

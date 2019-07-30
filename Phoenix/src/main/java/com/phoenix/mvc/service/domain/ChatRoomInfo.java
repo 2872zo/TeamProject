@@ -2,6 +2,7 @@ package com.phoenix.mvc.service.domain;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -19,6 +20,8 @@ public class ChatRoomInfo {
 	Date latestMessagingDate;
 	Date latestEnter;
 	Date latestLeave;
+	
+	List<String> imgs;
 	
 	public String getId() {
 		return id;
@@ -69,8 +72,9 @@ public class ChatRoomInfo {
 	public void setLatestMessage(String latestMessage) {
 		this.latestMessage = latestMessage;
 	}
-	public Date getLatestMessagingDate() {
-		return latestMessagingDate;
+	public String getLatestMessagingDate() {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd HH:mm");
+		return format.format(latestMessagingDate);
 	}
 	public void setLatestMessagingDate(Date latestMessagingDate) {
 		this.latestMessagingDate = latestMessagingDate;
@@ -89,13 +93,19 @@ public class ChatRoomInfo {
 	public void setLatestLeave(Date latestLeave) {
 		this.latestLeave = latestLeave;
 	}
+	public List<String> getImgs() {
+		return imgs;
+	}
+	public void setImgs(List<String> imgs) {
+		this.imgs = imgs;
+	}
 	
 	@Override
 	public String toString() {
 		return "ChatRoomInfo [id=" + id + ", chatRoomId=" + chatRoomId + ", userNo=" + userNo + ", userNickname="
 				+ userNickname + ", profileImg=" + profileImg + ", chatRoomName=" + chatRoomName + ", regDate="
 				+ regDate + ", latestMessage=" + latestMessage + ", latestMessagingDate=" + latestMessagingDate
-				+ ", latestEnter=" + latestEnter + ", latestLeave=" + latestLeave + "]";
+				+ ", latestEnter=" + latestEnter + ", latestLeave=" + latestLeave + ", imgs=" + imgs + "]";
 	}
 	
 }
