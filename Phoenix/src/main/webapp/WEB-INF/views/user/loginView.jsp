@@ -21,8 +21,8 @@
 <link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
 <link href="/css/style.css" rel="stylesheet">
 <link rel="stylesheet" href="/css/custom/scroll-top.css">
-
-<link rel="stylesheet" href="/plugins/sweetalert/css/sweetalert.css">
+	
+<link rel="stylesheet" href="/plugins/sweetalert/css/sweetalert.css">	
 	
 	<style>
 	input[type="submit"] {
@@ -105,7 +105,11 @@
                                         <input type="password" class="form-control" placeholder="Password" id="passWord" name="password">
                                     </div>
                                     <button class="btn login-form__btn submit w-100" id = "logon">로그인</button>
-                                    
+                                    <div class="text-center">
+				     <a id="kakao"><img src="/images/uploadFiles/kakao/kakaos.jpg" /></a>
+     				<a id="naver"><img src="/images/uploadFiles/naver/navers.jpg" /></a>
+		
+		</div>
                                 </form>
                                 <a href="/user/addUserView" class="text-primary" id="addUser1">회원가입</a>
                             </div>
@@ -141,7 +145,28 @@
 	
 	
 	<script type="text/javascript">
-	
+
+
+	$( function() {
+		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		$("a[id='kakao' ]").on("click" , function() {
+				
+				var popOption = "left=500, top=100, width=600, height=600, resizable=no, location=no;"		
+				window.open("https://kauth.kakao.com/oauth/authorize?client_id=44d5aabe2b56604fedd6b0bfe3098f1a&redirect_uri=http://localhost:8080/user/oauth&response_type=code","Kakao login",popOption);
+				
+		});
+	});
+
+	$( function() {
+		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		$("a[id='naver' ]").on("click" , function() {
+				
+				var popOption = "left=500, top=100, width=600, height=600, resizable=no, location=no;"		
+				window.open("https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=erD_7BcDM8OWYHtTr5kn&state=STATE_STRING&redirect_uri=http://localhost:8080/user/callback","Naver login",popOption);
+				
+				
+		});
+	});
 		//============= "로그인"  Event 연결 =============
 	$( function() {
 		
