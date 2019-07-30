@@ -11,6 +11,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,11 +77,12 @@ public class SnsServiceImpl implements SnsService {
 			WebElement end = driver.findElement(By.id("pageFooter"));
 					
 			((JavascriptExecutor)driver).executeScript("window.scrollTo(0,document.body.scrollHeight)");
-			WebDriverWait wait = new WebDriverWait(driver, 100);
+			WebDriverWait wait = new WebDriverWait(driver, 250);
 			wait.until(ExpectedConditions.invisibilityOf(end));
 			
 			System.out.println(" 페이스북 포스트수 : " + each.size()); // 포스트 수
 			
+			int count=0;
 			
 				for (int i = 0; i < each.size(); i++) {
 					
@@ -93,6 +95,12 @@ public class SnsServiceImpl implements SnsService {
 					List<String> img2LinkList = new ArrayList<String>();
 					List<String> img3List = new ArrayList<String>();
 					List<String> img3LinkList = new ArrayList<String>();
+					List<String> img4List = new ArrayList<String>();
+					List<String> img4LinkList = new ArrayList<String>();
+					List<String> videoList  = new ArrayList<String>();
+					List<String> videoLinkList = new ArrayList<String>();
+					
+					newTimeLine.setPostSize(each.size());
 		
 					System.out.println(i + " 번째 포스트 "); // 포스트 수
 					List<WebElement> postId = each.get(i).findElements(By.cssSelector("h5[class='_7tae _14f3 _14f5 _5pbw _5vra']"));
@@ -101,18 +109,28 @@ public class SnsServiceImpl implements SnsService {
 						System.out.println("작성자ID "+ (each.get(i).findElement(By.cssSelector("h5[class='_7tae _14f3 _14f5 _5pbw _5vra']")).getText()));
 						newTimeLine.setPostId(each.get(i).findElement(By.cssSelector("h5[class='_7tae _14f3 _14f5 _5pbw _5vra']")).getText());
 					}
+					
 					List<WebElement> reactionId = each.get(i).findElements(By.cssSelector("h6[class='_7tae _14f3 _14f5 _5pbw _5vra']"));
 					
 					if(reactionId.size() != 0) {//공유한경우의아이디
 						System.out.println("작성자ID "+ (each.get(i).findElement(By.cssSelector("h6[class='_7tae _14f3 _14f5 _5pbw _5vra']")).getText()));
 						newTimeLine.setPostId(each.get(i).findElement(By.cssSelector("h6[class='_7tae _14f3 _14f5 _5pbw _5vra']")).getText());
 					}
+					
 					List<WebElement> post = each.get(i).findElements(By.cssSelector("[data-testid='post_message']"));
 					
 					if(post.size()!=0) {//포스트가 없는경우도 존재
 						System.out.println("내용 " + (each.get(i).findElement(By.cssSelector("[data-testid='post_message']")).getText()));
 						newTimeLine.setPost(each.get(i).findElement(By.cssSelector("[data-testid='post_message']")).getText());
+						
+						List<WebElement> morePost = ( each.get(i).findElement(By.cssSelector("[data-testid='post_message']") ).findElements(By.className("see_more_link_inner")));
+						
+						if(morePost.size() != 0) {//더보기 있는경우
+							( each.get(i).findElement(By.cssSelector("[data-testid='post_message']") ).findElement(By.className("see_more_link")) ).sendKeys("\n");
+							newTimeLine.setPost(each.get(i).findElement(By.cssSelector("[data-testid='post_message']")).getText());
+						}
 					}
+					
 					System.out.println("작성일 " + (each.get(i).findElement(By.cssSelector("span[class='fsm fwn fcg']")).getText()));
 					newTimeLine.setRegDate(each.get(i).findElement(By.cssSelector("span[class='fsm fwn fcg']")).getText());
 					List<WebElement> likeCount = each.get(i).findElements(By.cssSelector("[data-testid='UFI2ReactionsCount/sentenceWithSocialContext']"));
@@ -141,13 +159,35 @@ public class SnsServiceImpl implements SnsService {
 					List<WebElement> img3 = common.findElements(By.cssSelector("a[class='_5dec _xcx _487t']"));
 					System.out.println("해당피드사진3: " + img3.size());
 					newTimeLine.setImg3Size(img3.size());
-			
+					
+					List<WebElement> img4 = common.findElements(By.cssSelector("a[class='_4-eo _2t9n']"));
+					System.out.println("해당피드사진4: " + img4.size());
+					newTimeLine.setImg4Size(img4.size());
+					
+					
+					
 						if (newTimeLine.getVideo1Size() != 0) {
 							System.out.println("동영상");
-							for (int j = 0; j < newTimeLine.getVideo1Size(); j++) {
+							
+							for (int j = count; j < newTimeLine.getVideo1Size(); j++) {
 								System.out.println(j + " 동영상 내부 for문");
-								System.out.println(video.get(j).getAttribute("src"));
-								newTimeLine.setVideo1(video.get(j).getAttribute("src"));
+
+								Actions action = new Actions(driver);
+								WebElement right = video.get(j);
+								action.contextClick(right).perform();
+								
+								WebElement page = driver.findElement(By.id("globalContainer"));//페이지바닥
+								List<WebElement> linkWrap = page.findElements(By.className("_54nf"));//비디오용공동바닥	
+								List<WebElement> link = linkWrap.get(j).findElements(By.className("_54nh"));
+								WebElement videoLink = link.get(3).findElement(By.className("_xd6"));
+								System.out.println(videoLink.getAttribute("value"));
+								
+								videoList.add(video.get(j).getAttribute("src"));
+								videoLinkList.add(videoLink.getAttribute("value"));
+								newTimeLine.setVideoList(videoList);
+								newTimeLine.setVideoLinkList(videoLinkList);
+								count += newTimeLine.getVideo1Size();
+								
 							}
 							System.out.println("--------------------------");
 			
@@ -177,10 +217,21 @@ public class SnsServiceImpl implements SnsService {
 								System.out.println(j + " 이미지3 내부 for문");
 								System.out.println(img3.get(j).getAttribute("data-ploi"));
 								System.out.println(img3.get(j).getAttribute("href"));
-								img3List.add(img1.get(j).getAttribute("data-ploi"));
-								img3LinkList.add(img1.get(j).getAttribute("href"));
+								img3List.add(img3.get(j).getAttribute("data-ploi"));
+								img3LinkList.add(img3.get(j).getAttribute("href"));
 								newTimeLine.setImg1List(img3List);
 								newTimeLine.setImg1LinkList(img3LinkList);
+			
+							}
+							System.out.println("4");
+							for (int j = 0; j < newTimeLine.getImg4Size(); j++) {
+								System.out.println(j + " 이미지4 내부 for문");
+								System.out.println(img4.get(j).getAttribute("data-ploi"));
+								System.out.println(img4.get(j).getAttribute("href"));
+								img4List.add(img4.get(j).getAttribute("data-ploi"));
+								img4LinkList.add(img4.get(j).getAttribute("href"));
+								newTimeLine.setImg1List(img4List);
+								newTimeLine.setImg1LinkList(img4LinkList);
 			
 							}
 							System.out.println("--------------------------");
@@ -188,8 +239,21 @@ public class SnsServiceImpl implements SnsService {
 						}else if((newTimeLine.getVideo1Size() != 0) && (newTimeLine.getImg1Size() != 0 || newTimeLine.getImg2Size() != 0 || newTimeLine.getImg3Size() != 0) ) {
 							for (int j = 0; j < newTimeLine.getVideo1Size(); j++) {
 								System.out.println(j + " 동영상+이미지 내부 for문");
-								System.out.println(video.get(j).getAttribute("src"));
-								newTimeLine.setVideo1(video.get(j).getAttribute("src"));
+								
+								Actions action = new Actions(driver);
+								WebElement right = video.get(j);
+								action.contextClick(right).perform();
+								
+								WebElement page = driver.findElement(By.id("globalContainer"));//페이지바닥
+								List<WebElement> linkWrap = page.findElements(By.className("_54nf"));//비디오용공동바닥	
+								List<WebElement> link = linkWrap.get(j).findElements(By.className("_54nh"));
+								WebElement videoLink = link.get(3).findElement(By.className("_xd6"));
+								System.out.println(videoLink.getAttribute("value"));
+								
+								videoList.add(video.get(j).getAttribute("src"));
+								videoLinkList.add(videoLink.getAttribute("value"));
+								newTimeLine.setVideoList(videoList);
+								newTimeLine.setVideoLinkList(videoLinkList);
 
 								img1List.add(img1.get(j).getAttribute("data-ploi"));
 								img1LinkList.add(img1.get(j).getAttribute("href"));
@@ -201,10 +265,15 @@ public class SnsServiceImpl implements SnsService {
 								newTimeLine.setImg1List(img2List);
 								newTimeLine.setImg1LinkList(img2LinkList);
 
-								img3List.add(img1.get(j).getAttribute("data-ploi"));
-								img3LinkList.add(img1.get(j).getAttribute("href"));
+								img3List.add(img3.get(j).getAttribute("data-ploi"));
+								img3LinkList.add(img3.get(j).getAttribute("href"));
 								newTimeLine.setImg1List(img3List);
 								newTimeLine.setImg1LinkList(img3LinkList);
+								
+								img4List.add(img4.get(j).getAttribute("data-ploi"));
+								img4LinkList.add(img4.get(j).getAttribute("href"));
+								newTimeLine.setImg1List(img4List);
+								newTimeLine.setImg1LinkList(img4LinkList);
 								
 								
 								
@@ -219,11 +288,12 @@ public class SnsServiceImpl implements SnsService {
 						
 					}
 				
-				
+		search.setSubject(100);//페이스북100	
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		map.put("timeLine",list);
 		map.put("count", each.size());
+		map.put("search", search);
 		
 
 		return map;

@@ -153,7 +153,7 @@ var checkSessionUser = ${empty sessionScope.user};
 		});
 		
 		$("#sns").on("click", function() {
-			$(self.location).attr("href", "/sns/main");
+			$(self.location).attr("href", "/sns/getTimeLine");
 		});
 		
 		$("#shop").on("click", function() {

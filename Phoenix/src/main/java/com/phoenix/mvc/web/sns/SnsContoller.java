@@ -31,7 +31,7 @@ public class SnsContoller {
 
 		System.out.println("sns/getTimeLine");
 		
-		search.setFbId("wlsgml1416@naver.com");
+		search.setFbId("wlsgml1416@nvaer.com");
 		search.setFbPw("011!wlslgogo");
 		
 		Map<String, Object> map = snsService.getFaceBookTimeLineList(search);
@@ -40,6 +40,7 @@ public class SnsContoller {
 		
 		model.addAttribute("timeLine", map.get("timeLine"));
 		model.addAttribute("count", map.get("count"));
+		model.addAttribute("search", map.get("search"));
 		
 		System.out.println("model이욤: "+model);
 	
