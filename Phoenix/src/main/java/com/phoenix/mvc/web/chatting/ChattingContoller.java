@@ -168,15 +168,6 @@ public class ChattingContoller {
 		return "redirect:/chat/enterChatRoom";
 	}
 
-
-	
-	
-	
-	
-	
-	
-	
-	
 	@RequestMapping("leaveChatRoom")
 	public String deleteChatRoom(@ModelAttribute ChatRoomInfo chatRoomInfo) throws Exception {
 		System.out.println(chatRoomInfo);

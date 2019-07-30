@@ -1,5 +1,6 @@
 package com.phoenix.mvc.service.chatting.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -202,6 +203,20 @@ public class ChattingDaoImpl implements ChattingDao{
 		criteria.andOperator(Criteria.where("userNo").is(chatRoomInfo.getUserNo()), Criteria.where("chatRoomId").is(chatRoomInfo.getChatRoomId()));
 		query.addCriteria(criteria);
 		return mongoTemplate.findOne(query, ChatRoomInfo.class);
+	}
+
+	@Override
+	public void updateChatRoomRecentMsg(Chat chat) throws Exception {
+		
+		query = new Query();
+		criteria = new Criteria();
+		criteria.andOperator(Criteria.where("chatRoomId").is(chat.getChatRoomId()));
+		query.addCriteria(criteria);
+		update = new Update();
+		update.set("latestMessage", chat.getChatMsg());
+		update.set("latestMessagingDate", new Date());
+		mongoTemplate.updateMulti(query, update, ChatRoomInfo.class);
+		
 	}
 
 }

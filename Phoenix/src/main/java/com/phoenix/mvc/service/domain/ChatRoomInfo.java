@@ -69,9 +69,8 @@ public class ChatRoomInfo {
 	public void setLatestMessage(String latestMessage) {
 		this.latestMessage = latestMessage;
 	}
-	public String getLatestMessagingDate() {
-		SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd HH:mm");
-		return format.format(latestMessagingDate);
+	public Date getLatestMessagingDate() {
+		return latestMessagingDate;
 	}
 	public void setLatestMessagingDate(Date latestMessagingDate) {
 		this.latestMessagingDate = latestMessagingDate;

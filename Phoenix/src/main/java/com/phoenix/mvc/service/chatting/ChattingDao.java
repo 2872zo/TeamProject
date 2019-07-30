@@ -45,6 +45,8 @@ public interface ChattingDao {
 	
 	public ChatRoomInfo getMyChatRoomInfoByChatRoomInfo(ChatRoomInfo chatRoomInfo) throws Exception;
 	
+	public void updateChatRoomRecentMsg(Chat chat) throws Exception;
+	
 	public void testMethod (Chat chat) throws Exception;
 	
 	public void addChat (Chat chat) throws Exception;

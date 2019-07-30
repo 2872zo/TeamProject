@@ -85,6 +85,7 @@ public class ChattingServiceImpl implements ChattingService{
 	@Override
 	public void addChat(Chat chat) throws Exception {
 		chattingDao.addChat(chat);
+		chattingDao.updateChatRoomRecentMsg(chat);
 	}
 	
 	@Override
@@ -100,7 +101,7 @@ public class ChattingServiceImpl implements ChattingService{
 		return map;
 	
 	}
-
+	
 	@Override
 	public Map getChatRoom(Search search) throws Exception {
 	
@@ -142,30 +143,6 @@ public class ChattingServiceImpl implements ChattingService{
 		return map;
 		
 	}
-	/*
-	@Override
-	public Map addChatRoom(Map map) throws Exception {
-		ChatRoomForMongo chatRoomForMongo = (ChatRoomForMongo)map.get("chatRoomForMongo");
-		chattingDao.addChatRoom(chatRoomForMongo);
-		User user = (User)map.get("user");
-		ChatRoomInfo chatRoomInfo = new ChatRoomInfo();		
-		chatRoomInfo.setChatRoomId(chatRoomForMongo.getId());
-		chatRoomInfo.setUserNo(chatRoomForMongo.getOpenUserNo());
-		chatRoomInfo.setProfileImg(user.getProfileImg());
-		chatRoomInfo.setUserNickname(user.getUserNickname());
-		chatRoomInfo.setRegDate(new Date());
-		chatRoomInfo.setChatRoomName(chatRoomInfo.getRegDate()+"에 "+user.getUserNickname()+" 님이 개설한 채팅방");
-		chatRoomInfo.setLatestEnter(new Date());
-		chattingDao.addMyChatRoom(chatRoomInfo);
-		
-		Search search = new Search();
-		search.setUserNo(user.getUserNo());
-		search.setChatRoomId(chatRoomInfo.getChatRoomId());
-		String chatRoomId = chatRoomInfo.getChatRoomId();
-		map = this.getChatRoom(search);
-		return map;
-	}
-	*/
 	
 	@Override
 	public String addChatRoom(Map map) throws Exception {
@@ -181,21 +158,21 @@ public class ChattingServiceImpl implements ChattingService{
 		chatRoomInfo.setRegDate(new Date());
 		chatRoomInfo.setChatRoomName(chatRoomInfo.getRegDate()+"에 "+user.getUserNickname()+" 님이 개설한 채팅방");
 		chatRoomInfo.setLatestEnter(new Date());
+		chatRoomInfo.setLatestLeave(new Date());
+		chatRoomInfo.setLatestMessage("");
+		chatRoomInfo.setLatestMessagingDate(new Date());
 		chattingDao.addMyChatRoom(chatRoomInfo);
 		
-		String chatRoomId = chatRoomInfo.getChatRoomId();
-		return chatRoomId;
+		return chatRoomInfo.getChatRoomId();
 	}
 
 	@Override
 	public void addMyChatRoom(ChatRoomInfo chatRoomInfo) throws Exception {
-		// TODO Auto-generated method stub
 		chattingDao.addMyChatRoom(chatRoomInfo);
 	}
 
 	@Override
 	public List getMyChatRoomList(ChatRoomInfo chatRoomInfo) throws Exception {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

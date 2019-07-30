@@ -108,6 +108,9 @@ img {
         <p class="card-text">정보id${chatRoomInfo.id} </p>
         <p class="card-text">${chatRoomInfo.profileImg} </p>
         <p class="card-text">참가된시간${chatRoomInfo.regDate} </p>
+          <p class="card-text">${chatRoomInfo.latestMessage}메시지임 </p>
+            <p class="card-text">${chatRoomInfo.latestMessagingDate}메시지입력시간임 </p>
+        
         
         <p class="card-text">${chatRoomInfo.profileImg} </p>
         <p class="card-text"><small class="text-muted" id='${chatRoomInfo.chatRoomId}'>Last updated 3 mins ago</small></p>
