@@ -27,11 +27,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import com.phoenix.mvc.common.Search;
-import com.phoenix.mvc.service.cafe.CafePostDao;
-import com.phoenix.mvc.service.domain.Board;
 import com.phoenix.mvc.service.domain.Mail;
-import com.phoenix.mvc.service.domain.Post;
-import com.phoenix.mvc.service.domain.Reply;
 import com.phoenix.mvc.service.mail.MailDao;
 import com.sun.mail.util.BASE64DecoderStream;
 

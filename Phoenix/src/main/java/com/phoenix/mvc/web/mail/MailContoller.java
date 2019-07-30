@@ -61,6 +61,13 @@ public class MailContoller {
 		
 		return "/mail/getMail";
 	}
+	
+	@RequestMapping("moveMail")
+	public String moveMail(@ModelAttribute Search search) {
+		
+		
+		return "/mail/getMailList";
+	}
 
 //	mailAgent.open();  
 //  mailagent.createFolder("newFolder");  
