@@ -1,5 +1,7 @@
 package com.phoenix.mvc.service.mail.impl;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Properties;
 
 import javax.mail.Folder;
@@ -8,6 +10,7 @@ import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Store;
 import javax.mail.URLName;
+import javax.mail.internet.MimeMessage;
 
 import com.phoenix.mvc.service.mail.MailProto;
 import com.sun.mail.imap.IMAPFolder;
@@ -24,17 +27,16 @@ public class IMAP implements MailProto {
 	private String mailPort;
 	
 	@Override
-	public void open(String host, String port, String id, String passwd) throws MessagingException {
-		//session 생성을 위한 propertie 생성 및 설정
+	public void open(String host, String id, String passwd) throws MessagingException {
 		Properties props = new Properties();
 		props.setProperty("mail.imap.socketFactory.class", SSL_FACTORY);
 		props.setProperty("mail.imap.socketFactory.fallback", "false");
-		props.setProperty("mail.imap.port", port);
-		props.setProperty("mail.imap.socketFactory.port", port);
+		props.setProperty("mail.imap.port", "993");
+		props.setProperty("mail.imap.socketFactory.port", "993");
 		
 		//session생성
 		session = Session.getInstance(props, null);
-		URLName urlName = new URLName("imap", host, Integer.parseInt(port), "", id, passwd);
+		URLName urlName = new URLName("imap", host, 993, "", id, passwd);
 		
 		//메일 서버와 연결
 		store = new IMAPStore(session,urlName);
@@ -60,6 +62,7 @@ public class IMAP implements MailProto {
 		if(!folder.isOpen()) {
 			throw new MessagingException("Already closed folder");
 		}
+		
 		
 		return folder.getMessage(msgNum);
 	}

@@ -178,7 +178,7 @@
                                         </div>
                                     </div>
                                     
-                                    
+                                    <!-- 메일 본문 시작 -->
                                     <div class="read-content">
                                         <div class="media pt-5">
                                             <div class="media-body">
@@ -206,19 +206,16 @@
                                             </div>
                                         </div>
                                         <div class="mail-content">
-                                        	<c:if test="${!empty resultMap }">
-	                                        	${resultMap.mailContent }
-                                        	</c:if>
-                                        	<c:if test="${empty resultMap }">
-	                                        	${mail.content }
-                                        	</c:if>
+	                                        ${mail.content }
                                         </div>
                                         <hr>
+                                        <!-- 메일 본문 끝 -->
                                         
-                                       <c:if test="${!empty resultMap.fileList }">
-	                                        <h6 class="p-t-15"><i class="fa fa-download mb-2"></i> Attachments <span>(${fn:length(resultMap.fileList) })</span></h6>
+                                        <!-- 메일 첨부파일 시작 -->
+                                       <c:if test="${!empty fileList }">
+	                                        <h6 class="p-t-15"><i class="fa fa-download mb-2"></i> Attachments <span>(${fn:length(fileList) })</span></h6>
 	                                        <div class="row m-b-30">
-	                                        	<c:forEach items="${resultMap.fileList }" var="file">
+	                                        	<c:forEach items="${fileList }" var="file">
 	                                        		<div class="col-auto">
 	                                        			<a href="${file.filePath }" class="text-muted" download>${file.fileName }</a>
 	                                            	</div>
@@ -226,7 +223,10 @@
 	                                        </div>
                                         	<hr>
                                         </c:if>
+                                        <!-- 메일 첨부파일 끝 -->
                                         
+                                        
+                                        <!-- 빠른 답장 기능을 위한 textarea -->
                                         <div class="form-group p-t-15">
                                             <textarea class="w-100 p-20 l-border-1" name="" id="" cols="30" rows="5" placeholder="빠른 답장"></textarea>
                                         </div>
@@ -234,6 +234,7 @@
                                     <div class="text-right">
                                         <button class="btn btn-primaryw-md m-b-30" type="button">Send</button>
                                     </div>
+                                    <!-- 빠른 답장 기능 끝 -->
 							
 							</div>
 						</div>

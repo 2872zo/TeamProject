@@ -2,11 +2,15 @@ package com.phoenix.mvc.service.mail;
 
 import javax.mail.MessagingException;
 import javax.mail.Store;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import javax.mail.Folder;
 import javax.mail.Message;
 
 public interface MailProto {
-	public void open(String host, String port, String id, String passwd) throws MessagingException;
+	public void open(String host, String id, String passwd) throws MessagingException, FileNotFoundException, IOException;
 	
 	public void close() throws MessagingException;
 	

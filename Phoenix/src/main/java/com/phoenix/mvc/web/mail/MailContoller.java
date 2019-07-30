@@ -16,134 +16,49 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.domain.Mail;
+import com.phoenix.mvc.service.mail.MailService;
 import com.phoenix.mvc.service.mail.impl.IMAPAgent;
 import com.sun.mail.util.BASE64DecoderStream;
 
 @Controller
 @RequestMapping("/mail/")
 public class MailContoller {
-	
 	@Value("${tmpUploadDir}")
 	private String tmpUploadDir;
+	
+	@Autowired
+	@Qualifier("mailServiceImpl")
+	private MailService mailService;
 	
 	public MailContoller() {
 		System.out.println(getClass().getName() + "default Constuctor");
 	}
 
 	@RequestMapping("getMailList")
-	public String getMailList(Map<String, Object> map) throws Exception {
-//      IMAPAgent mailagent = new IMAPAgent("IMAPSeverUrl", "port", "emailAddress", "password");
-		IMAPAgent mailAgent = new IMAPAgent("imap.daum.net", "993", "2872zo@daum.net", "lkj6322*");
-
-		mailAgent.open();
-
-		Message[] messageList = mailAgent.getDefaultFolder().getMessages();
-
-		List<Mail> mailList = new ArrayList<Mail>();
-
-		for (Message m : messageList) {
-			Mail mail = new Mail();
-			System.out.println("MessageNumber : " + m.getMessageNumber());
-			mail.setMailNo(m.getMessageNumber());
-			System.out.println("Folder : " + m.getFolder().getFullName());
-			mail.setFolder(m.getFolder());
-			System.out.println("SentDate : " + m.getSentDate());
-			mail.setSentDate(m.getSentDate());
-
-			for (Address addr : m.getFrom()) {
-				System.out.println("Address : " + MimeUtility.decodeText(addr.toString()));
-				String fullAddr = MimeUtility.decodeText(addr.toString());
-				mail.setSender(fullAddr.substring(0, fullAddr.indexOf("<") - 1));
-				mail.setSenderAddr(fullAddr.substring(fullAddr.indexOf("<"), fullAddr.length()));
-			}
-
-			// 제목
-			System.out.println("Subject : " + m.getSubject());
-			mail.setSubject(m.getSubject());
-
-			// 전체 컨텐츠
-//    	  System.out.println("Content : " + m.getContent());
-
-//    	  System.out.println(" : " + m.);
-
-			mailList.add(mail);
-			System.out.println(mail);
-			System.out.println(
-					"=======================================================================================================");
-		}
-
-		mailAgent.close();
-
-		map.put("mailList", mailList);
-
+	public String getMailList(@ModelAttribute Search search, Map<String, Object> map) throws Exception {
+		
+		map.put("mailList", mailService.getMailList(search));
+		
 		return "/mail/listMail";
 	}
 
 	@RequestMapping("getMail")
 	public String getMail(Map<String, Object> map, @RequestParam int mailNo) throws Exception {
-		IMAPAgent mailAgent = new IMAPAgent("imap.daum.net", "993", "2872zo@daum.net", "lkj6322*");
-
-		mailAgent.open();
-
-		Message message = mailAgent.getDefaultFolder().getMessage(mailNo);
-
-		Mail mail = new Mail();
-		System.out.println("MessageNumber : " + message.getMessageNumber());
-		mail.setMailNo(message.getMessageNumber());
-		System.out.println("Folder : " + message.getFolder().getFullName());
-		mail.setFolder(message.getFolder());
-		System.out.println("SentDate : " + message.getSentDate());
-		mail.setSentDate(message.getSentDate());
-
-		for (Address addr : message.getFrom()) {
-			String fullAddr = MimeUtility.decodeText(addr.toString());
-			System.out.println("Address : " + fullAddr);
-			mail.setSender(fullAddr.substring(0, fullAddr.indexOf("<") - 1));
-			mail.setSenderAddr(fullAddr.substring(fullAddr.indexOf("<"), fullAddr.length()));
-		}
+		Map<String, Object> resultMap = mailService.getMail(mailNo);
 		
+		map.put("mail", resultMap.get("mail"));
+		map.put("fileList", resultMap.get("fileList"));
 		
-		List<Map<String, String>> recipients = new ArrayList<Map<String,String>>();
-		for(Address addr : message.getAllRecipients()) {
-			String fullAddr = MimeUtility.decodeText(addr.toString());
-			System.out.println("Address : " + fullAddr);
-			
-			Map<String, String> recipientMap = new HashMap<String, String>(); 
-			System.out.println("fullAddr : " + fullAddr);
-			if(!fullAddr.contains("<")) {
-				recipientMap.put("recipient", fullAddr);
-			}else {
-				recipientMap.put("recipient", fullAddr.substring(0, fullAddr.indexOf("<") - 1));
-				recipientMap.put("recipientAddr", fullAddr.substring(fullAddr.indexOf("<"), fullAddr.length()));
-			}
-			recipients.add(recipientMap);
-		}
-		mail.setRecipients(recipients);
-		
-		// 제목
-		System.out.println("Subject : " + message.getSubject());
-		mail.setSubject(message.getSubject());
-
-		// 전체 컨텐츠
-		System.out.println("Content : " + message.getContent());
-		mail.setContent(message.getContent().toString());
-		
-		if(!(message.getContent() instanceof String)) {
-			Map<String, Object> resultMap = printMessage(message);
-			map.put("resultMap", resultMap);
-		}
-
-		System.out.println(mail);
-
-		mailAgent.close();
-
-		map.put("mail", mail);
 		return "/mail/getMail";
 	}
 
@@ -173,104 +88,9 @@ public class MailContoller {
 //  Message[] messageList = mailAgent.getDefaultFolder().getMessages();
 //  
 //  List<Mail> mailList = new ArrayList<Mail>();
-//  
-//  for(Message m : messageList ) {
-//	  Mail mail = new Mail();
-//	  System.out.println("MessageNumber : " + m.getMessageNumber());
-//	  mail.setMailNo(m.getMessageNumber());
-//	  System.out.println("Folder : " + m.getFolder().getFullName());
-//	  mail.setFolder(m.getFolder());
-//	  System.out.println("SentDate : " + m.getSentDate());
-//	  mail.setSentDate(m.getSentDate());
-//	  
-//	  for(Address addr : m.getFrom()) {
-//		  System.out.println("Address : " + MimeUtility.decodeText(addr.toString()));
-//		  String fullAddr = MimeUtility.decodeText(addr.toString());
-//		  mail.setSender(fullAddr.substring(0, fullAddr.indexOf("<")-1));
-//		  mail.setSenderAddr(fullAddr.substring(fullAddr.indexOf("<"), fullAddr.length()));
-//	  }
-//
-//	  //제목
-//	  System.out.println("Subject : " + m.getSubject());
-//	  mail.setSubject(m.getSubject());
-// 전체 컨텐츠
-//	  System.out.println("Content : " + m.getContent());
 	
 	
-	//파일을 제외한 모든 내용을 가져옴
-	private Map<String, Object> printMessage(Message message) throws Exception {
-
-		Map<String, Object> contentResultMap = new HashMap<String, Object>();
-		List<Map<String, String>> fileList = new ArrayList<Map<String,String>>();
-		
-        Object content = message.getContent();
-
-        MimeMultipart multiPart = null;
-
-        if (content instanceof Multipart) {
-
-            multiPart = (MimeMultipart)content;
-
-            int bodyCount = multiPart.getCount();
-
-            System.out.println("Multipart Count : " + multiPart.getCount());
-
-            System.out.println("Body : ");
-
-            for (int i = 0; i < bodyCount; i++) {
-                MimeBodyPart bp = (MimeBodyPart) multiPart.getBodyPart(i);
-                
-                System.out.println(i + "번째 MimeBodyPart.ContentType : " + bp.getContentType());
-                
-                if(bp.getContentType().contains("TEXT/HTML")) {
-                	System.out.println();
-                	String body = (String)bp.getContent(); 
-                	
-                	System.out.println("본문 : " + body);
-                	
-                	contentResultMap.put("mailContent", body);
-	                     
-                }else {
-	                
-	                
-	                Object obj = bp.getContent();
-	                
-	                if (obj instanceof BASE64DecoderStream || bp.getContentType().contains("TEXT/PLAIN")) {
-	                	System.out.println("AttachMent Content!");
-	                	if(bp.getFileName() == null) {
-	                		System.out.println("파일 비어있음!");
-	                		continue;
-	                	}
-	                	
-	                    String body = MimeUtility.decodeText(bp.getFileName());
-	                    UUID uid = UUID.randomUUID();
-	                    File file = new File(tmpUploadDir + "/" +  uid + "_" +body);
-	                    
-	                    bp.saveFile(file);
-	                    
-	                    System.out.println("Content-Disposition : " + body);
-	                    Map<String, String> fileContent = new HashMap<String, String>();
-	                    fileContent.put("filePath", "/tmpfiles/" + uid + "_" + body);
-	                    fileContent.put("fileName", body);
-	                    
-	                    fileList.add(fileContent);
-	                } else if(obj instanceof MimeMultipart) {
-	                	String body = ((MimeMultipart)obj).getBodyPart(0).getContent().toString(); 
-	                	
-	                	System.out.println("multipart 본문 : " + body);
-	                	
-	                	contentResultMap.put("mailContent", body);
-	                } 
-                }
-            }
-        } else {
-            System.out.println(content);
-        }
-        
-        contentResultMap.put("fileList", fileList);
-        
-        return contentResultMap;
-    }
+	
 	
 	@PreDestroy
     public void onDestroy() throws Exception {

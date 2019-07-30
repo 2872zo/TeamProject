@@ -21,57 +21,9 @@
 
 
 <style>
-#div_menu {
-	width: 20%;
-	height: 500px;
-	float: left;
-	background-color: #82FA58;
-}
-
-#div_con {
-	width: 80%;
-}
-
-.cursor {
-	cursor: pointer;
-}
-
-.cursor:hover {
-	text-decoration: underline;
-}
-</style>
-
-<style>
-
-.postTitle:hover, .boardName:hover {
-	cursor : pointer;
-	text-decoration: underline;
-}
-
-#layerPopup {
-	padding: 20px;
-	border: 4px solid #ddd;
-	position: absolute;
-	left: 100px;
-	top: 100px;
-	background: #fff;
-}
-
-#layerPopup button {
-	cursor: pointer;
-}
-
-.noticeIcon {
-	height: 28px;
-	margin: 0px;
-	padding-top: 0px;
-	padding-bottom: 0px;
-}
-
-.thisNotice {
-	background: #F1795E;
-	border-color: #F1795E;
-}
+	tr:hover{
+		cursor:pointer;
+	}
 </style>
 
 <title>${search.cafeURL}</title>
@@ -113,7 +65,7 @@
             Header start
         ***********************************-->
 		<div class="header">
-			<c:import url="/WEB-INF/views/mail/common/mailToolbar.jsp"></c:import>
+			<c:import url="/WEB-INF/views/mail/common/mailListToolbar.jsp"></c:import>
 		</div>
 		<!--**********************************
             Header end ti-comment-alt
@@ -223,25 +175,26 @@
 									<input type="hidden" name="currentPage">
 								</form>
 								<p>총 ${postTotalCount }개 중 ${search.startRowNum} - ${search.endRowNum }</p>
-								<table class="table header-border zero-configuration">
-									<thead class="thead-light">
-										<tr>
-											<td>#</td>
-											<td>메일함</td>
-											<td>보낸사람</td>
-											<td>제목</td>
-											<td>보낸시간</td>
-										</tr>
-									</thead>
+								<table class="table table-hover">
 									<tbody>
 										<c:forEach items="${mailList }" var="mail">
 											<tr>
 												<input type="hidden" class="mailNo" value="${mail.mailNo }">
 												<td><input type="checkbox"></td>
+												<td>
+													<c:if test="${mail.seen}">
+														<i class="mdi mdi-email-open"></i>
+													</c:if>
+													<c:if test="${!mail.seen}">
+														<i class="mdi mdi-email"></i>
+													</c:if>
+												</td>
 												<td>${mail.folder.fullName }</td>
 												<td>${mail.sender }&nbsp;<xmp>${mail.senderAddr }</xmp></td>
 												<td>${mail.subject }</td>
-												<td>${mail.sentDate }</td>
+												<td>
+													<fmt:formatDate value="${mail.sentDate }" pattern="yyyy.MM.dd HH:mm:ss"/>
+												</td>
 											</tr>
 										</c:forEach>
 
@@ -297,7 +250,13 @@
 	<script src="/js/custom/mailCommon.js"></script>
 
 	<!-- 이 페이지 전용 script -->
-	
+	<script>
+		$(function(){
+			$("tr").on("click", function(){
+				location.href = "/mail/getMail?mailNo=" + $(this).find(".mailNo").val();
+			});
+		});
+	</script>
 
 </body>
 

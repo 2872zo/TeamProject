@@ -1,5 +1,8 @@
 package com.phoenix.mvc.service.mail;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -10,27 +13,25 @@ import javax.mail.Store;
 public class MailAgent {
 	protected MailProto mailProto;
 	protected String host;
-	protected String port;
 	protected String id;
 	protected String passwd;
 	
 	public MailAgent() {
 	}
 	
-	public MailAgent(MailProto mailProto, String host, String port, String id, String passwd) {
-		if(mailProto == null || host == null || port == null || id == null || passwd == null) {
+	public MailAgent(MailProto mailProto, String host, String id, String passwd) {
+		if(mailProto == null || host == null || id == null || passwd == null) {
 			throw new IllegalArgumentException();
 		}
 		
 		this.mailProto = mailProto;
 		this.host = host;
-		this.port = port;
 		this.id = id;
 		this.passwd = passwd;
 	}
 	
-	public void open() throws MessagingException{
-		mailProto.open(host, port, id, passwd);
+	public void open() throws MessagingException, FileNotFoundException, IOException{
+		mailProto.open(host, id, passwd);
 	}
 	
 	public void close() throws MessagingException{
