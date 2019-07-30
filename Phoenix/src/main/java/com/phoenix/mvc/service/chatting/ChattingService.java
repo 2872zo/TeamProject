@@ -27,7 +27,7 @@ public interface ChattingService {
 	
 	public Map getChatRoom(Search search) throws Exception;
 	
-	public Map addChatRoom(Map map) throws Exception;
+	public String addChatRoom(Map map) throws Exception;
 	
 	public void testMethod(Chat chat) throws Exception;
 	
@@ -40,7 +40,7 @@ public interface ChattingService {
 	
 	public List getMyChatRoomList(ChatRoomInfo chatRoomInfo) throws Exception;
 	
-	public void updateMyChatRoom(ChatRoomInfo chatRoomInfo) throws Exception;
+	public void updateMyChatRoomName(ChatRoomInfo chatRoomInfo) throws Exception;
 	
 	public void deleteMyChatRoom(ChatRoomInfo chatRoomInfo) throws Exception;
 	

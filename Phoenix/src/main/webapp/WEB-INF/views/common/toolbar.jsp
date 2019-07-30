@@ -184,8 +184,10 @@ input[type="checkbox"] {
 				
 
 				<div class="header-right">
-				<c:if test="${!empty sessionScope.user}">
-				 <li class="icons dropdown">
+					<ul class="clearfix d-flex align-items-center justify-content-around">
+					<!-- 로그인상태시 표시되는 부분 -->
+					<c:if test="${!empty sessionScope.user}">
+						<li class="icons dropdown" style='position: relative;right: 15%;'>
                             <div class="user-img c-pointer position-relative" data-toggle="dropdown" aria-expanded="false">
                                 <span class="activity active"></span>
                                 <img src="/images/uploadFiles/profileimg/${user.profileImg}" height="40" width="40" alt="">
@@ -201,7 +203,6 @@ input[type="checkbox"] {
                                             <div class="badge gradient-3 badge-pill gradient-1"></div>
                                             </a>
                                         </li>
-                                        
                                         <hr class="my-2">
                                         <li>
                                             <a href=/user/listUser><i class="icon-list"></i> <span>회원목록</span></a>
@@ -212,16 +213,19 @@ input[type="checkbox"] {
                                 </div>
                             </div>
                         </li>
-                         </c:if>
-					<ul class="clearfix d-flex align-items-center">
-						<c:if test="${!empty sessionScope.user}">
+                        <!-- 회원관리부분 -->
+                        <!-- 채팅부분 -->
 							<i class="mdi mdi-comment-processing-outline" id='goChat'
-								style='font-size: 30pt'></i>
+								style='font-size: 35pt; position: relative; right: 5%;'></i>
+								 <div style='margin-left: 2%;margin-right: 2%;'></div>
+							<!-- 채팅 -->
+							<!-- 로그아웃버튼 -->
 							<button type="button" class="btn btn-primary logout">
 								<i class="icon-key">Logout</i>
 							</button>
+							<!-- 로그아웃버튼 -->
 						</c:if>
-
+						<!-- 로그인상태시 표시되는 부분 -->
 						<c:if test="${empty sessionScope.user}">
 							<button type="button" class="btn btn-primary login"
 								data-toggle="modal" data-target="#exampleModalCenter">

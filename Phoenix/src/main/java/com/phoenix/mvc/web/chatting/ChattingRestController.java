@@ -44,8 +44,8 @@ public class ChattingRestController {
 	public boolean inviteFriend(@RequestBody List<ChatRoomInfo> chatRoomInfoList) throws Exception{
 
 		for (ChatRoomInfo chatRoomInfo : chatRoomInfoList) {
-			chatRoomInfo.setChatRoomName(new Date()+"에 초대받은 채팅방");
 			chatRoomInfo.setRegDate(new Date());
+			chatRoomInfo.setChatRoomName(chatRoomInfo.getRegDate()+"에 초대받은 채팅방");
 			chattingService.addMyChatRoom(chatRoomInfo);
 		}
 		
@@ -81,15 +81,23 @@ public class ChattingRestController {
 	@PostMapping("updateChatRoomInfo")
 	public String updateChatRoomInfo(@RequestBody ChatRoomInfo chatRoomInfo) throws Exception {
 		
-		chattingService.updateMyChatRoom(chatRoomInfo);
+		chattingService.updateMyChatRoomName(chatRoomInfo);
 		
 		return chatRoomInfo.getChatRoomName();
 		
 	}
 	
 	@PostMapping("updateChatFriend")
-	public boolean updateChatFriend(@RequestBody Search search){
-		return true;
+	public boolean updateChatFriend(@RequestBody ChatFriend chatFriend) throws Exception{
+		int checker = chattingService.updateFriend(chatFriend);
+		boolean responseBoolean = false;
+		
+		if (checker==1) {
+			responseBoolean = true;
+		}
+		
+		return responseBoolean;
+		
 	}
 	
 	@PostMapping("cancelChatFriend")

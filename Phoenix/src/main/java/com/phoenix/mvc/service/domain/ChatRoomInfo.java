@@ -15,6 +15,7 @@ public class ChatRoomInfo {
 	String profileImg;
 	String chatRoomName;
 	Date regDate;
+	String latestMessage;
 	Date latestMessagingDate;
 	Date latestEnter;
 	Date latestLeave;
@@ -62,20 +63,29 @@ public class ChatRoomInfo {
 	public void setRegDate(Date regDate) {
 		this.regDate = regDate;
 	}
-	public Date getLatestMessagingDate() {
-		return latestMessagingDate;
+	public String getLatestMessage() {
+		return latestMessage;
+	}
+	public void setLatestMessage(String latestMessage) {
+		this.latestMessage = latestMessage;
+	}
+	public String getLatestMessagingDate() {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd HH:mm");
+		return format.format(latestMessagingDate);
 	}
 	public void setLatestMessagingDate(Date latestMessagingDate) {
 		this.latestMessagingDate = latestMessagingDate;
 	}
-	public Date getLatestEnter() {
-		return latestEnter;
+	public String getLatestEnter() {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd HH:mm");
+		return format.format(latestEnter);
 	}
 	public void setLatestEnter(Date latestEnter) {
 		this.latestEnter = latestEnter;
 	}
-	public Date getLatestLeave() {
-		return latestLeave;
+	public String getLatestLeave() {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd HH:mm");
+		return format.format(latestLeave);
 	}
 	public void setLatestLeave(Date latestLeave) {
 		this.latestLeave = latestLeave;
@@ -85,8 +95,8 @@ public class ChatRoomInfo {
 	public String toString() {
 		return "ChatRoomInfo [id=" + id + ", chatRoomId=" + chatRoomId + ", userNo=" + userNo + ", userNickname="
 				+ userNickname + ", profileImg=" + profileImg + ", chatRoomName=" + chatRoomName + ", regDate="
-				+ regDate + ", latestMessagingDate=" + latestMessagingDate + ", latestEnter=" + latestEnter
-				+ ", latestLeave=" + latestLeave + "]";
+				+ regDate + ", latestMessage=" + latestMessage + ", latestMessagingDate=" + latestMessagingDate
+				+ ", latestEnter=" + latestEnter + ", latestLeave=" + latestLeave + "]";
 	}
 	
 }

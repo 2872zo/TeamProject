@@ -101,7 +101,7 @@
 		UPDATE
 		chat_friends
 		<set>
-			friend_status = #{friendStatus:VARCHAR}, 
+			<if test="friendStatus !=null">friend_status = #{friendStatus},</if>
 			friend_nickname = #{friendNickname:VARCHAR}
 		</set>
 		WHERE chat_friends_no = #{chatFriendNo}
@@ -109,7 +109,9 @@
 	
 	<select id="getFriendsListForInvite" parameterType="Search" resultMap="chatFriendSelectMap">
 		SELECT 
-			c.target_user_no AS user_no, u.user_nickname, u.profile_img
+			c.target_user_no AS user_no, 
+			c.friend_nickname, 
+			u.user_nickname, u.profile_img
 		FROM 
 			chat_friends c, users u
 		WHERE 
@@ -122,6 +124,20 @@
 			open="(" separator=", " close=")">
 	        #{targetUserNo}
 	  		</foreach>
+	</select>
+	
+	<select id="getFriendNickNameList" parameterType="Search" resultMap="chatFriendSelectMap">
+		SELECT 
+			c.target_user_no AS user_no, 
+			c.friend_nickname
+		FROM 
+			chat_friends c, users u
+		WHERE 
+			c.target_user_no = u.user_no
+		AND 
+			c.friend_nickname IS NOT NULL
+		AND
+			c.user_no = #{userNo}
 	</select>
 	
 </mapper>
