@@ -13,7 +13,7 @@ public interface ChattingDao {
 	
 	public List getMyChatRoomList(Search search) throws Exception;
 	
-	public ChatRoomInfo getMyChatRoomInfo(ChatRoomInfo chatRoomInfo) throws Exception;
+	public ChatRoomInfo getMyChatRoomInfo(Search search) throws Exception;
 	
 	public int getMyChatRoomCount(Search search) throws Exception;
 	
@@ -37,11 +37,13 @@ public interface ChattingDao {
 	
 	public List getMyChatRoomList(ChatRoomInfo chatRoomInfo) throws Exception;
 	
-	public void updateMyChatRoom(ChatRoomInfo chatRoomInfo) throws Exception;
+	public void updateMyChatRoomName(ChatRoomInfo chatRoomInfo) throws Exception;
 	
 	public void deleteMyChatRoom(ChatRoomInfo chatRoomInfo) throws Exception;
 	
 	public List getFriendsListForInvite(Search search) throws Exception;
+	
+	public ChatRoomInfo getMyChatRoomInfoByChatRoomInfo(ChatRoomInfo chatRoomInfo) throws Exception;
 	
 	public void testMethod (Chat chat) throws Exception;
 	
@@ -52,4 +54,6 @@ public interface ChattingDao {
 	public int getMyChatCount(Search search) throws Exception;
 	
 	public List getChatRoomUserList(Search search) throws Exception;
+	
+	public List getFriendNickNameList(Search search) throws Exception;
 }

@@ -21,11 +21,11 @@ public interface ExploreDao {
 	
 	public Map getPhoenixCafeExploreList(Search search);
 	
-	public List<WebExplore> getDaumWebExploreList(Search search);
+	public Map getDaumWebExploreList(Search search)throws Exception;
 	
-	public List<WebExplore> getNaverWebExploreList(Search search) throws Exception;
+	public Map getNaverWebExploreList(Search search) throws Exception;
 	
-	public Map getDaumImageExploreList(Search search);
+	public Map getDaumImageExploreList(Search search) throws Exception;
 	
 	public Map getNaverImageExploreList(Search search) throws Exception;
 

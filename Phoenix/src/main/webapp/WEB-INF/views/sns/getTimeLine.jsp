@@ -24,6 +24,11 @@
 	line-height: 5rem;
 	color: #FFAF00;
 }
+img {
+    vertical-align: middle;
+    border-style: none;
+    width: 150px;
+}
 </style>
 <title>SNS TIMELINE</title>
 <!--셀렉터 사이즈 조절-->
@@ -96,39 +101,82 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<!-- 피드시작 -->
 			<div class="col-lg-8 col-xl-9">
 				<div class="card">
 					<div class="card-body">
-						<div class="media media-reply">
-							<img class="mr-3 circle-rounded" src="images/avatar/2.jpg"
-								width="50" height="50" alt="faceBook or instagram">
-							<div class="media-body">
-								<div class="d-sm-flex justify-content-between mb-2">
-									<h5 class="mb-sm-0">
-										Milan Gbah <small class="text-muted ml-3">about 3 days
-											ago</small>
-									</h5>
-									<div class="media-reply__link">
-										<button class="btn btn-transparent p-0 mr-3">
-											<i class="fa fa-thumbs-up"></i>
-										</button>
-
-										<button
-											class="btn btn-transparent text-dark font-weight-bold p-0 ml-2">Reply</button>
+						<c:set var="i" value="0" />
+						<c:forEach var="timeLine" items="${timeLine}">
+							<c:set var="i" value="${i+1}" />
+							<div class="media media-reply">
+								<c:if test="${search.subject eq 100 }">
+									<i class="mdi mdi-facebook-box"></i>
+								</c:if>
+								<c:if test="${search.subject eq 200 }">
+									<i class="mdi mdi-instagram"></i>
+								</c:if>
+								<div class="media-body">
+									<div class="d-sm-flex justify-content-between mb-2">
+										<h5 class="mb-sm-0">
+											${timeLine.postId} 
+											<small class="text-muted ml-3">${timeLine.regDate }</small>
+										</h5>
+										<div class="media-reply__link">
+											<button class="btn btn-transparent p-0 mr-3">
+												<i class="fa fa-thumbs-up"></i>
+											</button>
+											${timeLine.likeCount }
+											<button
+												class="btn btn-transparent text-dark font-weight-bold p-0 ml-2">Reply</button>
+										</div>
 									</div>
+
+									<p>${timeLine.post }</p>
+									
+									<c:set var = "j" value = "0"/>
+									
+									<c:if test="${!empty timeLine.img1List}"> <!-- 이미지1 -->
+									<c:forEach var ="img1List" items="${timeLine.img1List }" varStatus="status">
+									<c:set var="j" value="${j+1}" />
+	           							<a href="${timeLine.img1LinkList[status.index] }"><img alt="" src="${img1List}" style="margin-left:20px; margin-top: 10px"></a>
+	           						</c:forEach>
+	           						</c:if>
+	           						
+	           						
+	           						<c:if test="${!empty timeLine.img2List}"> <!-- 이미지2 -->
+	           						<c:forEach var ="img2List" items="${timeLine.img2List }"  varStatus="status">
+	           						<c:set var="j" value="${j+1}" />
+	           							<a href="${timeLine.img2LinkList[status.index] }"><img alt="" src="${img2List}" style="margin-left:20px; margin-top: 10px"></a>
+	           						</c:forEach>	
+	           						</c:if>
+	           						
+	           						
+									<c:if test="${!empty timeLine.img3List}"> <!-- 이미지3 -->
+									<c:forEach var ="img3List" items="${timeLine.img3List }"  varStatus="status" >
+									<c:set var="j" value="${j+1}" />
+	           							<a href="${timeLine.img3LinkList[status.index] }"><img alt="" src="${img3List}" style="margin-left:20px; margin-top: 10px"></a>
+	           						</c:forEach>
+	           						</c:if>
+	           						
+	           						<c:if test="${!empty timeLine.img4List}"> <!-- 이미지4 -->
+									<c:forEach var ="img4List" items="${timeLine.img4List }"  varStatus="status" >
+									<c:set var="j" value="${j+1}" />
+	           							<a href="${timeLine.img4LinkList[status.index] }"><img alt="" src="${img4List}" style="margin-left:20px; margin-top: 10px"></a>
+	           						</c:forEach>
+	           						</c:if>
+	           						
+									<c:if test="${!empty timeLine.videoList}"> <!-- 동영상 -->
+									<c:forEach var ="videoList" items="${timeLine.videoList }"  varStatus="status" >
+									<c:set var="j" value="${j+1}" />
+	           							<a href="${timeLine.videoLinkList[status.index] }"><video src="${videoList }"></video>blob!!!!</a>
+	           						</c:forEach>
+										
+	           						</c:if>	           						
+									
 								</div>
-
-								<p>Cras sit amet nibh libero, in gravida nulla. Nulla vel
-									metus scelerisque ante sollicitudin. Cras purus odio,
-									vestibulum in vulputate at, tempus viverra turpis. Fusce
-									condimentum nunc ac nisi vulputate fringilla. Donec lacinia
-									congue felis in faucibus.</p>
-
-
 							</div>
-						</div>
+						</c:forEach>
 					</div>
 				</div>
 			</div>
@@ -152,6 +200,18 @@
 	<script src="/plugins/sweetalert/js/sweetalert.init.js"></script>
 	<script src="/js/custom/scroll-top.js"></script>
 	<script src="/js/custom/menubarCafe.js"></script>
+	
+	<script type="text/javascript">
+
+		$(window).scroll(function(){
+
+			if($(window).scrollTop()>=$(document).height()- $(window).height()){
+
+				
+				}
+
+		});
+	</script>
 	<script src="/js/custom/cafeCommon.js"></script>
 </body>
 </html>

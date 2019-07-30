@@ -59,6 +59,7 @@ public class Search {
 	private String fbPw;
 	private String igId;
 	private String igPw;
+	private int subject;
 
 	/// Constructor
 	public Search() {
@@ -386,6 +387,14 @@ public class Search {
 		this.igPw = igPw;
 	}
 
+	public int getSubject() {
+		return subject;
+	}
+
+	public void setSubject(int subject) {
+		this.subject = subject;
+	}
+
 	@Override
 	public String toString() {
 		return "Search [userNo=" + userNo + ", memberNo=" + memberNo + ", memberGrade=" + memberGrade + ", cafeNo="
@@ -400,7 +409,7 @@ public class Search {
 				+ ", engineGoogle=" + engineGoogle + ", enginePhoenix=" + enginePhoenix + ", orderState=" + orderState
 				+ ", orderStateSort=" + orderStateSort + ", searchTheme=" + searchTheme + ", searchThemeSort="
 				+ searchThemeSort + ", filter=" + filter + ", searchEngine=" + searchEngine + ", fbId=" + fbId
-				+ ", fbPw=" + fbPw + ", igId=" + igId + ", igPw=" + igPw + "]";
+				+ ", fbPw=" + fbPw + ", igId=" + igId + ", igPw=" + igPw + ", subject=" + subject + "]";
 	}
 
 }// end of class

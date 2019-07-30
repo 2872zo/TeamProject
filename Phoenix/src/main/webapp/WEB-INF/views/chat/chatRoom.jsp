@@ -47,7 +47,8 @@
     <div id="preloader">
         <div class="loader">
             <svg class="circular" viewBox="25 25 50 50">
-                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+                <circle class="path" cx="50" cy="50" r="20" 
+                fill="none" stroke-width="3" stroke-miterlimit="10" />
             </svg>
         </div>
     </div>
@@ -59,7 +60,10 @@
         Main wrapper start
     ***********************************-->
     <div id="main-wrapper">
-
+<c:forEach items='${nickNameList}' var='chatFriend'>
+<input type='hidden' class='friendNickname' value='${chatFriend.friendNickname}'>
+<input type='hidden' class='friendUserNo' value='${chatFriend.userNo}'>
+</c:forEach>
      		<!-- ToolBar Start /////////////////////////////////////-->
 		<jsp:include page="/WEB-INF/views/common/toolbar.jsp" />
 		<!-- ToolBar End /////////////////////////////////////-->
@@ -84,9 +88,11 @@
         <div class='card-body'>
 	        <div class='row d-flex justify-content-between'>
 		        <div class='col-lg-9 d-flex align-items-center'>
-		        ${chatRoomInfo.chatRoomName}<i class="mdi mdi-pencil" style='font-size: 15pt'></i>
+		       	<h4><strong id='recentChatRoomName'>${chatRoomInfo.chatRoomName}</strong></h4>
 		        </div>
-		        <div class='col-lg-3 d-flex align-items-center'>
+		     
+		        <div class='col-lg-3 d-flex align-items-center justify-content-around'>
+		        <i class="mdi mdi-pencil" style='font-size: 20pt' id='updateChatRoomName'></i>
 		        ${chatRoomInfo.regDate}
 		        </div>
 	        </div>
@@ -98,13 +104,13 @@
         <div class='card'>
         <div class='card-body'>
         
-        <div class='row d-flex justify-content-start' name='${sessionScope.user.userNo}' style='border: 1px solid #f5a142; margin-bottom: 1%;'>
+        <div class='row d-flex justify-content-start' name='${sessionScope.user.userNo}' style='padding-bottom: 1%;'>
 	      <div class='col-lg-2'>
 	      <img src="/images/uploadfiles/profileimg/${sessionScope.user.profileImg}"
 								 class='rounded' style='width: 32px; height: 32px'>
 	      </div>
-	      <div class='col-lg-8'>
-	      ${sessionScope.user.userNickname}
+	      <div class='col-lg-8 d-flex align-items-center'>
+	      <h4><strong>${sessionScope.user.userNickname}</strong></h4>
 	      </div>
       </div>
 
@@ -120,18 +126,19 @@
         <div class='card' style='height:100%'>
         <div class='card-body'>
         <form id='thisChatRoomInfo'>
-	<input type='hidden' id='chatRoomId' 	name='chatRoomId' 	value='${chatRoomInfo.chatRoomId}'>
-	<input type='hidden' id='userNo' 	 	name='userNo' 		value='${sessionScope.user.userNo}'>
-	<input type='hidden' id='userNickname'	name='userNickname' value='${sessionScope.user.userNickname}'>
-	<input type='hidden' id='profileImg'	name='profileImg' 	value='${sessionScope.user.profileImg}'>
+    <input type='hidden' id='chatRoomInfoId' name='id' 			 value='${chatRoomInfo.id}'>
+	<input type='hidden' id='chatRoomId' 	 name='chatRoomId' 	 value='${chatRoomInfo.chatRoomId}'>
+	<input type='hidden' id='userNo' 	 	 name='userNo' 		 value='${sessionScope.user.userNo}'>
+	<input type='hidden' id='userNickname'	 name='userNickname' value='${sessionScope.user.userNickname}'>
+	<input type='hidden' id='profileImg'	 name='profileImg' 	 value='${sessionScope.user.profileImg}'>
 </form>
 	<!--  화면구성 div Start /////////////////////////////////////-->
 
 
 	<div class="panel-body" id='chat_box2' 
-	style=" overflow-x:hidden; overflow-y:auto; width:100%;">
+	style="width:100%; overflow-x:hidden; overflow-y:auto;">
 		<!-- <p class="text-left" id="chat_box" > -->
-		<div id='chat_box' wrap="hard" style='height:400px;'>
+		<div id='chat_box' wrap="hard" style='height:500px;'>
 		<c:forEach items='${chatList}' var='chat'>
 		
 			<!-- 다른사람이 입력한 채팅인 경우 -->
@@ -185,7 +192,8 @@
 	</div>
 <br/>
 <i class="mdi mdi-file-image" style='font-size:25pt;'></i>
-<i class="mdi mdi-emoticon" style='font-size:25pt;'></i>
+<i class="mdi mdi-emoticon" style='font-size:25pt;' id='emoticon' data-toggle="popover" data-placement="top" data-content='Vivamus
+sagittis lacus vel augue laoreet rutrum faucibus.'></i>
 <div class="input-group d-flex">
   <input type="text" class="form-control" placeholder="채팅을 입력해주세요" id="msg">
   <div class="input-group-append">
@@ -204,12 +212,15 @@
         </div>
         
         <div class="col-lg-4">
-         	<div class='card' style="overflow-x:hidden; overflow-y:auto; width:auto; height: 50%;">
-        	<div class='card-body'>
-        참가자 목록 띄워놓을 창이야
+         	<div class='card' 
+         	style="overflow-x:hidden; overflow-y:auto; width:auto; height: 50%;">
+        	<div class='card-body' id ='joinerList'>
+       	채팅 참가자들
 		<c:forEach items='${userList}' var='chatRoomInfo'>
         
-	        <div class='row d-flex justify-content-start' name='${chatRoomInfo.userNo}' style='border: 1px solid #f5a142; margin-bottom: 1%;'>
+	        <div class='row d-flex justify-content-start' 
+	        name='${chatRoomInfo.userNo}' style='border: 1px solid #f5a142; 
+	        margin-bottom: 1%;'>
 		      <div class='col-lg-2'>
 		      <img src="/images/uploadfiles/profileimg/${chatRoomInfo.profileImg}"
 					class='rounded' style='width: 32px; height: 32px'>
@@ -220,7 +231,7 @@
 	      	</div>
       	
 		</c:forEach>
-					<br/>
+					
 					
         	</div>
         	</div>
@@ -231,13 +242,15 @@
       <h2 class="mb-0">
         <div class='row'>
         <div class='col-lg-9'>
-        
-        <button class="btn btn-primary btn-block d-flex align-items-center" type="button" data-toggle="collapse" data-target="#invitationList" aria-expanded="true" aria-controls="collapseOne">
-          	초대가능한 친구목록
-        </button>
+	        <button class="btn btn-primary btn-block d-flex align-items-center" 
+	        type="button" data-toggle="collapse" data-target="#invitationList" 
+	        aria-expanded="true" aria-controls="collapseOne">
+	          	초대가능한 친구목록
+	        </button>
         </div>
         <div class='col-lg-2'>
-		<i class="mdi mdi-playlist-plus d-flex align-items-center" style='height: 100%;width: auto;' id = 'doInviting'></i>
+			<i class="mdi mdi-playlist-plus d-flex align-items-center" 
+			style='height: 100%;width: auto;' id = 'doInviting'></i>
       	</div>
       </div>
       </h2>
@@ -248,31 +261,29 @@
       
       <c:forEach items='${inviteList}' var='chatFriend'>
      
-   <div class='row inviteList' id='${chatFriend.userNo}' name='${chatFriend.userNickname}' value='${chatFriend.userImg}' style='border:1px solid #f5a142; margin-bottom: 1%; background-color: white;'>
+   <div class='row inviteList' id='${chatFriend.userNo}' name='${chatFriend.userNickname}' 
+   value='${chatFriend.userImg}' 
+   style='border:1px solid #f5a142; margin-bottom: 1%; background-color: white;'>
 		      <div class='col-lg-2'>
 		      <img src="/images/uploadfiles/profileimg/${chatFriend.userImg}"
 									 class='rounded' style='width: 32px; height: 32px'>
 		      </div>
 		      <div class='col-lg-8 d-flex align-items-center'>
+		      <c:if test="${empty chatFriend.friendNickname}">
 		      ${chatFriend.userNickname}
+		      </c:if>
+		      <c:if test="${!empty chatFriend.friendNickname}">
+		      ${chatFriend.friendNickname}
+		      </c:if>
 		      </div>
 	      </div>
 	      
-	      
-     
       </c:forEach>
-      
      
       </div>
     </div>
   </div>
   </div>
-        	
-        	
-        	
-        	
-        	
-        	
         	
         	
         </div>
@@ -295,7 +306,6 @@
 	<script src="/js/gleek.js"></script>
 	<script src="/js/styleSwitcher.js"></script>
 
-
 	<!-- 메뉴바 이용을 위한 스크립트 -->
 	<script src="/js/custom/scroll-top.js"></script>
 	
@@ -312,6 +322,20 @@
 
 //툴바 스크립트용 세션체커
 var checkSessionUser = ${empty sessionScope.user};
+
+
+var nickNames = new Array();
+var userNos = new Array();
+
+for(var i =0;i<$(".friendNickname").length;i++){
+	nickNames[i]=$($(".friendNickname")[i]).val();
+	userNos[i]=Number($($(".friendUserNo")[i]).val());
+}
+
+function tagRemover(inputText){
+	inputText = inputText.replace(/(<([^>]+)>)/ig,"");
+}
+
 $(function() {
 	//alert($("#userNickname").val());
 	var socket = io("http://192.168.0.78:82");
@@ -325,7 +349,7 @@ $(function() {
 	});
 
 	$("#doInviting").on("click" , function() {
-	
+
 		var jsonList = new Array();
 	
 		var i = 0;
@@ -349,14 +373,16 @@ $(function() {
 				//imgFileList[i]=$(this).attr("value");
 				
 				i+=1;
-	//			alert($(this).attr("name"));
-		//		alert($(this).attr("value"));
-		//		alert($(this).attr("id"));
-				$(this).remove();
+				$(this).attr("class","row d-flex justify-content-start");
+				$(this).css( "background-color","white");
+				$(this).attr("name","");
+				$(this).attr("value","");
+				$(this).attr("id","");
+				$("#joinerList").append($(this));
 			}
 		});
 		jsonList = JSON.stringify(jsonList);
-		alert(jsonList);
+		//alert(jsonList);
 		//alert(nickNameList);
 		//alert(userNoList);
 		//alert(imgFileList);
@@ -369,7 +395,7 @@ $(function() {
 				contentType: "application/json", //보내는 컨텐츠의 타입
 				//dataType : "json",      //받아올 데이터의 타입 필요없음
 				success : function(serverData, status) {
-									alert(status);
+									//alert(status);
 									//alert("server에서 온 Data : \n" + serverData);
 									//alert(serverData.regDate);
 									//targetTag.text(checker);	
@@ -379,29 +405,17 @@ $(function() {
 									// $("#msg").val("");
 								},
 				error : function(request,status,error){
-									//alert(request);
 									alert(status);
 							        alert("에러남 : "+error);
-
-							       // socket.emit("send_who", $("#userId").text()+"콘솔에찍히는메시지임");
-					
 							       }
 				}
 			);
-		
 
-	});
-	
-
-	
+});
+	//초대하기 전에 색상 바꾸는 부분
 	$(".inviteList").on("click" , function() {
-		//$(self.location).attr("href","/chat/leaveChatRoom");
-		//$("#thisChatRoomInfo").attr("method" , "POST").attr("action" , "/chat/leaveChatRoom").submit();
-		//alert($(".inviteList").index(this));
-		//alert($(this).css( "background-color" ));
-		//245 161 66
+
 		if($(this).css( "background-color" )=="rgb(255, 255, 255)"){
-			//alert("흰색이야");
 			$(this).css("background-color","#f5a142");
 			}
 		
@@ -410,7 +424,17 @@ $(function() {
 			}
 		
 	});
-	
+
+	$("#chat_box").on('scroll', function(){
+		var top = $(this).scrollTop();
+		//alert(top);
+		var contentH = $('#chat_box').height();
+		//alert(contentH);
+		if((2*top)>contentH){
+			alert(top+"반이 넘어갔어요"+contentH);
+			
+			}
+	});
 
 	 $("#msg").keydown(function(key) {
          //해당하는 키가 엔터키(13) 일떄
@@ -420,17 +444,72 @@ $(function() {
          }
      });
 
+
+	$("#updateChatRoomName").click(function() {
+
+		swal({
+			  title: "방 제목 변경하기",
+			  text: "사용하실 방 제목을 입력해주세요",
+			  type: "input",
+			  showCancelButton: true,
+			  closeOnConfirm: false,
+			  inputPlaceholder: $("#recentChatRoomName").text()
+				}, function (inputValue) {
+			  if (inputValue === false) return false;
+			  if (inputValue === "") {
+			    swal.showInputError("공백은 입력할 수 없습니다.");
+			    return false
+			  }
+
+			  var infoId = $("#chatRoomInfoId").val();
+
+				var jsoned = { id : infoId,
+						chatRoomName : inputValue,		
+						};
+				jsoned = JSON.stringify(jsoned);
+
+				$.ajax(
+						{
+						type : "POST",
+						url : "/chat/json/updateChatRoomInfo",
+						data : jsoned,
+						contentType: "application/json", //보내는 컨텐츠의 타입
+						//dataType : "json",      //받아올 데이터의 타입 필요없음
+						success : function(serverData, status) {
+							$("#recentChatRoomName").text(inputValue);
+							swal("성공적으로 변경되었습니다", 
+									"방 제목이 " + inputValue+" 로 변경되었습니다.", "success");
+										},
+						error : function(request,status,error){
+											alert(request);
+											alert(status);
+									        alert("에러남 : "+error);
+									       }
+						}
+					);
+			  
+		});
+
+	});
+		
      //msg_process를 클릭할 때
      $("#msg_process").click(function() {
          //소켓에 send_msg라는 이벤트로 input에 #msg의 벨류를 담고 보내준다.
-         	
+         var msgVar = $("#msg").val();
+         //태그 삭제
+         msgVar = msgVar.replace(/(<([^>]+)>)/ig,"");
+         var emptyOnly = /^\s*\s*$/;
+         if(emptyOnly.test(msgVar)){
+			msgVar = "<br/>";
+             } 
+         
 		var jsoned = {
 				chatRoomId : $("#chatRoomId").val(), 
 				userNo : $("#userNo").val(), 
 				userNickname : $("#userNickname").val(),
 				profileImg : $("#profileImg").val(),
 				chatType : 0,
-				chatMsg : $("#msg").val()
+				chatMsg : msgVar
 				};
 		jsoned = JSON.stringify(jsoned);
 	
@@ -442,22 +521,12 @@ $(function() {
 					contentType: "application/json", //보내는 컨텐츠의 타입
 					//dataType : "json",      //받아올 데이터의 타입 필요없음
 					success : function(serverData, status) {
-										//alert(status);
-										//alert("server에서 온 Data : \n" + serverData);
-										//alert(serverData.regDate);
-										//targetTag.text(checker);	
-										//socket.emit("send_msg", $("#chatRoomNo").val()+":"+$("#msg").val()+serverData.regDate);
-										//socket.emit("send_msg", $("#chatRoomNo").val()+"-"+JSON.stringify(serverData));
 										socket.emit("send_msg", serverData); 
 										 $("#msg").val("");
 									},
 					error : function(request,status,error){
-										alert(request);
-										alert(status);
 								        alert("에러남 : "+error);
-
-								        socket.emit("send_who", $("#userId").text()+"콘솔에찍히는메시지임");
-						
+								        //socket.emit("send_who", $("#userId").text()+"콘솔에찍히는메시지임");
 								       }
 					}
 				);
@@ -466,11 +535,9 @@ $(function() {
      
      socket.on('send_msg', function(msg) {
          //로그아웃 체크 : 레스트 컨트롤러로 서버한번 태워서 세션에 유저Number 체크해서 날려야 될듯
-    	//var scrollT = $("#chat_box2").scrollTop(); //스크롤바의 상단위치
-        //var contentH = $('#chat_box').height();
-		//alert(scrollT);
-		//alert(contentH);
-		var msgTagging="";
+
+         var msgTagging="";
+		
 		if (msg.userNo==$("#userNo").val()){
 			msgTagging = "<div class='row d-flex justify-content-end'>"
 				+"<div class='col-lg-2 text-right' style='padding-right: 0px;'>"
@@ -482,7 +549,13 @@ $(function() {
 				+msg.chatMsg
 				+"</div></div></div>"				
 			}
+		
 		else if (msg.userNo!=$("#userNo").val()){
+
+			if(userNos.indexOf(msg.userNo)!=-1){
+				msg.userNickname = nickNames[userNos.indexOf(msg.userNo)]
+				} 
+			
 			msgTagging = "<div class='row d-flex justify-content-start'>"
 				+"<div class='col-lg-1'>"
 				+"<img src='/images/uploadfiles/profileimg/"
@@ -513,7 +586,8 @@ $(function() {
 	
 	<!-- 채팅 사이드 툴바 스크립트 -->
 	<script src="/js/custom/chatSideBar.js"></script>
-
+	<!-- 채팅방 전용 스크립트 -->
+	<script src="/js/custom/chatRoomScript.js"></script>
 
 </body>
 </html>

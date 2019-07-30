@@ -105,19 +105,36 @@ public class ChattingServiceImpl implements ChattingService{
 	public Map getChatRoom(Search search) throws Exception {
 	
 		Map map = new HashMap();
-		List chatList = chattingDao.getChatList(search);
-		List userList = chattingDao.getChatRoomUserList(search);
+		List<ChatFriend> nickNameList = chattingDao.getFriendNickNameList(search);
+		List<Chat> chatList = chattingDao.getChatList(search);
+		List<ChatRoomInfo> userList = chattingDao.getChatRoomUserList(search);
+		
 		List<Integer> targetUserNos = new ArrayList<Integer>();
 		for(int i =0;i<userList.size() ;i++) {
 			ChatRoomInfo chatRoomInfo = (ChatRoomInfo) userList.get(i);
 			targetUserNos.add(chatRoomInfo.getUserNo());
 		}
 		search.setTargetUserNos(targetUserNos);
+		
 		List inviteList = chattingDao.getFriendsListForInvite(search);
-		ChatRoomInfo chatRoomInfo = new ChatRoomInfo();
-		chatRoomInfo.setUserNo(search.getUserNo());
-		chatRoomInfo.setChatRoomId(search.getChatRoomId());
-		chatRoomInfo = chattingDao.getMyChatRoomInfo(chatRoomInfo);
+		
+		ChatRoomInfo chatRoomInfo = chattingDao.getMyChatRoomInfo(search);
+		
+		for (Chat chat : chatList) {
+			for (ChatFriend chatFriend:nickNameList) {
+				if(chat.getUserNo()==chatFriend.getUserNo()) {
+					chat.setUserNickname(chatFriend.getFriendNickname());
+				}
+			}
+		}
+		for (ChatRoomInfo eachChatRoomInfo : userList) {
+			for (ChatFriend eachChatFriend:nickNameList) {
+				if(eachChatRoomInfo.getUserNo()==eachChatFriend.getUserNo()) {
+					eachChatRoomInfo.setUserNickname(eachChatFriend.getFriendNickname());
+				}
+			}
+		}
+		map.put("nickNameList", nickNameList);		
 		map.put("chatRoomInfo", chatRoomInfo);
 		map.put("chatList", chatList);
 		map.put("userList", userList);
@@ -125,7 +142,7 @@ public class ChattingServiceImpl implements ChattingService{
 		return map;
 		
 	}
-	
+	/*
 	@Override
 	public Map addChatRoom(Map map) throws Exception {
 		ChatRoomForMongo chatRoomForMongo = (ChatRoomForMongo)map.get("chatRoomForMongo");
@@ -136,8 +153,8 @@ public class ChattingServiceImpl implements ChattingService{
 		chatRoomInfo.setUserNo(chatRoomForMongo.getOpenUserNo());
 		chatRoomInfo.setProfileImg(user.getProfileImg());
 		chatRoomInfo.setUserNickname(user.getUserNickname());
-		chatRoomInfo.setChatRoomName(new Date()+"에 "+user.getUserNickname()+" 님이 개설한 채팅방");
 		chatRoomInfo.setRegDate(new Date());
+		chatRoomInfo.setChatRoomName(chatRoomInfo.getRegDate()+"에 "+user.getUserNickname()+" 님이 개설한 채팅방");
 		chatRoomInfo.setLatestEnter(new Date());
 		chattingDao.addMyChatRoom(chatRoomInfo);
 		
@@ -147,6 +164,27 @@ public class ChattingServiceImpl implements ChattingService{
 		String chatRoomId = chatRoomInfo.getChatRoomId();
 		map = this.getChatRoom(search);
 		return map;
+	}
+	*/
+	
+	@Override
+	public String addChatRoom(Map map) throws Exception {
+		
+		ChatRoomForMongo chatRoomForMongo = (ChatRoomForMongo)map.get("chatRoomForMongo");
+		chattingDao.addChatRoom(chatRoomForMongo);
+		User user = (User)map.get("user");
+		ChatRoomInfo chatRoomInfo = new ChatRoomInfo();		
+		chatRoomInfo.setChatRoomId(chatRoomForMongo.getId());
+		chatRoomInfo.setUserNo(chatRoomForMongo.getOpenUserNo());
+		chatRoomInfo.setProfileImg(user.getProfileImg());
+		chatRoomInfo.setUserNickname(user.getUserNickname());
+		chatRoomInfo.setRegDate(new Date());
+		chatRoomInfo.setChatRoomName(chatRoomInfo.getRegDate()+"에 "+user.getUserNickname()+" 님이 개설한 채팅방");
+		chatRoomInfo.setLatestEnter(new Date());
+		chattingDao.addMyChatRoom(chatRoomInfo);
+		
+		String chatRoomId = chatRoomInfo.getChatRoomId();
+		return chatRoomId;
 	}
 
 	@Override
@@ -162,13 +200,13 @@ public class ChattingServiceImpl implements ChattingService{
 	}
 
 	@Override
-	public void updateMyChatRoom(ChatRoomInfo chatRoomInfo) throws Exception {
-		
+	public void updateMyChatRoomName(ChatRoomInfo chatRoomInfo) throws Exception {
+		chattingDao.updateMyChatRoomName(chatRoomInfo);
 	}
 
 	@Override
 	public void deleteMyChatRoom(ChatRoomInfo chatRoomInfo) throws Exception {
-		ChatRoomInfo chatRoomInfoRe = chattingDao.getMyChatRoomInfo(chatRoomInfo);
+		ChatRoomInfo chatRoomInfoRe = chattingDao.getMyChatRoomInfoByChatRoomInfo(chatRoomInfo);
 		chattingDao.deleteMyChatRoom(chatRoomInfoRe);
 	}
 

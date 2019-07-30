@@ -17,6 +17,7 @@ public class User {
 	private String userRoleCode;
 	private String userStatusCode;
 	private String kakaoId;
+	private String naverId;
 
 
 	////////////////////////////////////////////////////////////////////userNo추가
@@ -145,16 +146,28 @@ public class User {
 		this.kakaoId = kakaoId;
 	}
 
+	public String getNaverId() {
+		return naverId;
+	}
+
+
+	public void setNaverId(String naverId) {
+		this.naverId = naverId;
+	}
+
 
 	@Override
 	public String toString() {
 		return "User [userNo=" + userNo + ", userId=" + userId + ", userName=" + userName + ", userNickname="
 				+ userNickname + ", password=" + password + ", email=" + email + ", phone=" + phone + ", profileImg="
 				+ profileImg + ", regDate=" + regDate + ", userRoleCode=" + userRoleCode + ", userStatusCode="
-				+ userStatusCode + ", kakaoId=" + kakaoId + "]";
+				+ userStatusCode + ", kakaoId=" + kakaoId + ", naverId=" + naverId + "]";
 	}
 
 
+
+
+	
 	
 	
 	///Method 

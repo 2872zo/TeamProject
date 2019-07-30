@@ -98,18 +98,16 @@ img {
 	
 	<div class="card mb-3  enterTheRoom" name='${chatRoomInfo.chatRoomId}' id='${chatRoomInfo.id}'>
   <div class="row">
-    <div class="col-lg-4">
+    <div class="col-lg-2">
       <img src="..." class="card-img" alt="...">
     </div>
     <div class="col-lg-8">
       <div class="card-body">
-        <h5 class="card-title chatRoom">${chatRoomInfo.chatRoomId}</h5>
-        <p class="card-text">${chatRoomInfo.chatRoomName}</p>
-        <p class="card-text">${chatRoomInfo.userNo}</p>
-        <p class="card-text">${chatRoomInfo.id} </p>
-        <p class="card-text">${chatRoomInfo.userNickname} </p>
-                <p class="card-text">${chatRoomInfo.profileImg} </p>
-                <p class="card-text">${chatRoomInfo.regDate} </p>
+        <h5 class="card-title chatRoom">${chatRoomInfo.chatRoomName}</h5>
+        <p class="card-text">방id${chatRoomInfo.chatRoomId}</p>
+        <p class="card-text">정보id${chatRoomInfo.id} </p>
+        <p class="card-text">${chatRoomInfo.profileImg} </p>
+        <p class="card-text">참가된시간${chatRoomInfo.regDate} </p>
         
         <p class="card-text">${chatRoomInfo.profileImg} </p>
         <p class="card-text"><small class="text-muted" id='${chatRoomInfo.chatRoomId}'>Last updated 3 mins ago</small></p>

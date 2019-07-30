@@ -41,7 +41,6 @@ public class ChattingDaoImpl implements ChattingDao{
 
 	@Override
 	public List getMyChatRoomList(Search search) throws Exception {
-		//return sqlSession.selectList("ChatRoomMapper.getMyRoomList", search);
 		//query = mongoMapper.getMyChatRoomList(search);
 		//정렬
 		
@@ -57,11 +56,11 @@ public class ChattingDaoImpl implements ChattingDao{
 	}
 	
 	@Override
-	public ChatRoomInfo getMyChatRoomInfo(ChatRoomInfo chatRoomInfo) throws Exception {
+	public ChatRoomInfo getMyChatRoomInfo(Search search) throws Exception {
 		query = new Query();
 		criteria = new Criteria();
 		//query.with(new Sort(Sort.Direction.DESC, "latestMessagingDate"));
-		criteria.andOperator(Criteria.where("userNo").is(chatRoomInfo.getUserNo()), Criteria.where("chatRoomId").is(chatRoomInfo.getChatRoomId()));
+		criteria.andOperator(Criteria.where("userNo").is(search.getUserNo()), Criteria.where("chatRoomId").is(search.getChatRoomId()));
 		query.addCriteria(criteria);
 		return mongoTemplate.findOne(query, ChatRoomInfo.class);
 	}
@@ -170,7 +169,7 @@ public class ChattingDaoImpl implements ChattingDao{
 	}
 
 	@Override
-	public void updateMyChatRoom(ChatRoomInfo chatRoomInfo) throws Exception {
+	public void updateMyChatRoomName(ChatRoomInfo chatRoomInfo) throws Exception {
 		query = new Query();
 		criteria = new Criteria();
 		criteria.andOperator(Criteria.where("id").is(chatRoomInfo.getId()));
@@ -190,5 +189,19 @@ public class ChattingDaoImpl implements ChattingDao{
 		return sqlSession.selectList("ChatFriendMapper.getFriendsListForInvite", search);
 	}
 
+	@Override
+	public List getFriendNickNameList(Search search) throws Exception {
+		return sqlSession.selectList("ChatFriendMapper.getFriendNickNameList", search);
+	}
+
+	@Override
+	public ChatRoomInfo getMyChatRoomInfoByChatRoomInfo(ChatRoomInfo chatRoomInfo) throws Exception {
+		query = new Query();
+		criteria = new Criteria();
+		//query.with(new Sort(Sort.Direction.DESC, "latestMessagingDate"));
+		criteria.andOperator(Criteria.where("userNo").is(chatRoomInfo.getUserNo()), Criteria.where("chatRoomId").is(chatRoomInfo.getChatRoomId()));
+		query.addCriteria(criteria);
+		return mongoTemplate.findOne(query, ChatRoomInfo.class);
+	}
 
 }

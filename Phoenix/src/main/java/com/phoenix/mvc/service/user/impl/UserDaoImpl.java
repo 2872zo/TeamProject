@@ -51,4 +51,13 @@ public class UserDaoImpl implements UserDao{
 	public int getUserTotalCount(Search search)throws Exception{
 		return sqlSession.selectOne("UserMapper.getUserTotalCount", search);
 	}
+	
+	public User selectKakao(String kakaoId) throws Exception{
+		return sqlSession.selectOne("UserMapper.selectKakao",kakaoId);
+	}
+	public User selectNaver(String naverId) throws Exception{
+		return sqlSession.selectOne("UserMapper.selectNaver",naverId);
+	}
+	
+	
 }

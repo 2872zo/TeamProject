@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.chatting.ChattingService;
@@ -129,12 +130,16 @@ public class ChattingContoller {
 		List chatList = (List) map.get("chatList");
 		List userList = (List) map.get("userList");
 		List inviteList = (List) map.get("inviteList");
+		List nickNameList = (List) map.get("nickNameList");
 		ChatRoomInfo chatRoomInfo= (ChatRoomInfo)map.get("chatRoomInfo");
+
 		//System.out.println(chatRoom.getChatRoomNo());
 		//Search search = new Search();
 		//search.setUserNo(user.getUserNo());
 		//Map map = chattingService.getMyChatRoomList(search);
 		//List chatRoomList = (List) map.get("chatRoomList");
+
+		model.addAttribute("nickNameList", nickNameList);
 		model.addAttribute("chatList", chatList);
 		model.addAttribute("userList", userList);
 		model.addAttribute("inviteList", inviteList);
@@ -142,8 +147,10 @@ public class ChattingContoller {
 		return "chat/chatRoom";
 	}
 
+	
+	
 	@RequestMapping("addChatRoom")
-	public String addChatRoom(@SessionAttribute("user") User user, Model model) throws Exception {
+	public String addChatRoom(@SessionAttribute("user") User user, RedirectAttributes redirectAttributes) throws Exception {
 		System.out.println("/chat/addChatRoom 입니다.");
 		
 		ChatRoomForMongo chatRoomForMongo = new ChatRoomForMongo();
@@ -152,20 +159,14 @@ public class ChattingContoller {
 		Map map = new HashMap();
 		map.put("chatRoomForMongo",chatRoomForMongo);
 		map.put("user",user);
-		Map returnMap = chattingService.addChatRoom(map);
-		List chatList = (List) returnMap.get("chatList");
-		List userList = (List) returnMap.get("userList");
-		List inviteList = (List) returnMap.get("inviteList");
 		
-		ChatRoomInfo chatRoomInfo= (ChatRoomInfo)returnMap.get("chatRoomInfo");
-			
-		model.addAttribute("chatList", chatList);
-		model.addAttribute("userList", userList);
-		model.addAttribute("inviteList", inviteList);
-		model.addAttribute("chatRoomInfo", chatRoomInfo);
-		return "chat/chatRoom";
+		Search search = new Search();
+		search.setChatRoomId(chattingService.addChatRoom(map));
+		
+		redirectAttributes.addFlashAttribute("search", search);
+
+		return "redirect:/chat/enterChatRoom";
 	}
-	
 
 
 	

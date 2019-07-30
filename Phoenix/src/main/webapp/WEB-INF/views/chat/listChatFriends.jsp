@@ -15,7 +15,9 @@
 <link href="/css/style.css" rel="stylesheet">
 
 <link rel="stylesheet" href="/css/custom/scroll-top.css">
-
+<!-- 스위트얼럿 css -->
+<link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
+<!-- 스위트얼럿 css -->
 <!-- 토스터 css -->
 <link rel="stylesheet" href="/plugins/toastr/css/toastr.min.css">
 <!-- 토스터 css -->
@@ -77,77 +79,85 @@ img {
 	<input type='hidden' name='positionIndex' id='positionIndex' value='${search.positionIndex}'>
 
 		<div class="content-body" style="min-height: 400px;">
+				<div class='container-fluid'>
 			<div class="row">
 				<div class="col-lg-8">
-					<div class='container-fluid'>
+				
 
-						<div class='card'>
-							<div class='card-body'>
-								<!-- 상단 친구 종류 선택 버튼 메뉴 -->
-								<div class="d-flex justify-content-around">
+					<div class='card'>
+					<div class='card-body'>
+						<!-- 상단 친구 종류 선택 버튼 메뉴 -->
+						<div class="d-flex justify-content-around">
 
-									<i class="chatButtons mdi mdi-account-multiple-outline" id='chatFriendsListing'style='font-size: 30pt;'>
-									</i>
-									<i class="chatButtons mdi mdi-account-check" id='wannaBeFriend' style='font-size: 30pt;'>
-									</i>
-									<i class="chatButtons mdi mdi-account-search" id='friendSearching' style='font-size: 30pt;'>
-									</i>
-									<i class="chatButtons mdi mdi-sleep-off" style='font-size: 30pt;'>
-									</i>
+							<i class="chatButtons mdi mdi-account-multiple-outline" id='chatFriendsListing'style='font-size: 30pt;'>
+							</i>
+							<i class="chatButtons mdi mdi-account-check" id='wannaBeFriend' style='font-size: 30pt;'>
+							</i>
+							<i class="chatButtons mdi mdi-account-search" id='friendSearching' style='font-size: 30pt;'>
+							</i>
+							<i class="chatButtons mdi mdi-sleep-off" style='font-size: 30pt;'>
+							</i>
 
+						</div>
+
+						<!-- 상단 친구 종류 선택 버튼 메뉴 -->
+						<br/>
+						<!-- 친구검색창임 -->
+						<c:if test="${search.positionIndex==2}">
+						<form>
+
+							<div class='d-flex justify-content-center'>
+								<div class="input-group mb-3 " style='width: 50%;'>
+									<input type="text" class="form-control form-control-lg"
+										placeholder="검색어를 입력해주세요" name='searchKeyword'
+										id='searchKeyword'>
+									<div class="input-group-append">
+										<button class="btn btn-lg btn-outline-primary" type="button"
+											id="explore">
+											<i class="mdi mdi-magnify" style='font-size: 18pt;'></i>
+										</button>
+									</div>
 								</div>
-
-								<!-- 상단 친구 종류 선택 버튼 메뉴 -->
+							</div>
+						</form>
+						</c:if>
+						<!-- 친구검색창임 -->
 								
-								<!-- 친구검색창임 -->
-								<c:if test="${search.positionIndex==2}">
-								<form>
+								
+						
+						<!-- 기본 친구목록화면 시작 -->
+						<c:if test="${!empty friendsList}">
+							<c:forEach items='${friendsList}' var='chatFriend'>
 
-									<div class='d-flex justify-content-center'>
-										<div class="input-group mb-3 " style='width: 50%;'>
-											<input type="text" class="form-control form-control-lg"
-												placeholder="검색어를 입력해주세요" name='searchKeyword'
-												id='searchKeyword'>
-											<div class="input-group-append">
-												<button class="btn btn-lg btn-outline-primary" type="button"
-													id="explore">
-													<i class="mdi mdi-magnify" style='font-size: 18pt;'></i>
-												</button>
+								<div class="card friends">
+									<div class="card-body">
+										<div class='row'>
+											<div class='col-lg-2'>
+												<img alt="" src="/images/uploadfiles/profileimg/${chatFriend.userImg}"
+													class='rounded img-fluid' alt="Responsive image" style='width: inherit;'>
+											</div>
+											<div class='col-lg-7'>
+												<h5 class="card-title" id='${chatFriend.chatFriendNo}nickName'>
+												<c:if test="${!empty chatFriend.friendNickname}">${chatFriend.friendNickname}</c:if>
+												<c:if test="${empty chatFriend.friendNickname}">${chatFriend.userNickname}</c:if>
+												</h5>
+												<p class="card-text">${chatFriend.chatFriendNo}</p>
+												<p class="card-text">원래 닉네임 : ${chatFriend.userNickname}</p>
+											</div>
+											<div class='col-lg-2'>
+											<i class="mdi mdi-tag-text-outline updateFriendName" style='font-size: 25pt;' name='${chatFriend.chatFriendNo}'></i>
+											</div>
+											<div class='col-lg-1 d-flex align-items-start' name='${chatFriend.userNo}'>
+											<i class="mdi mdi-account-minus friendAlready friending" name='${chatFriend.chatFriendNo}' style='font-size: 25pt;'></i>
 											</div>
 										</div>
 									</div>
-								</form>
-								</c:if>
-								<!-- 친구검색창임 -->
-								
-								<!-- 기본 친구목록화면 시작 -->
-								<c:if test="${!empty friendsList}">
-									<c:forEach items='${friendsList}' var='chatFriend'>
+								</div>
 
-										<div class="card friends">
-											<div class="card-body">
-												<div class='row'>
-													<div class='col-lg-4'>
-														<img alt="" src="/images/uploadfiles/profileimg/${chatFriend.userImg}"
-															class='rounded img-fluid' alt="Responsive image" style='width: inherit;'>
-													</div>
-													<div class='col-lg-7'>
-														<h5 class="card-title">${chatFriend.chatFriendNo}</h5>
-														<p class="card-text">기존친구임 With supporting text below
-															as a natural lead-in to additional content.</p>
-														<a href="#" class="btn btn-primary">${chatFriend.userNickname}</a>
-													</div>
-													<div class='col-lg-1' name='${chatFriend.userNo}'>
-													<i class="mdi mdi-account-minus friendAlready friending" name='${chatFriend.chatFriendNo}' style='font-size: 25pt;'></i>
-													</div>
-												</div>
-											</div>
-										</div>
+							</c:forEach>
 
-									</c:forEach>
-
-								</c:if>
-								<!-- 기본 친구목록화면 끝-->
+						</c:if>
+						<!-- 기본 친구목록화면 끝-->
 
 
 
@@ -161,15 +171,16 @@ img {
 										<div class="card friends" name='${chatFriend.userNo}'>
 											<div class="card-body">
 												<div class='row'>
-													<div class='col-lg-3'>
+													<div class='col-lg-2'>
 														<img alt="" src="/images/uploadfiles/profileimg/${chatFriend.userImg}"
 															class='rounded img-fluid' alt="Responsive image">
 													</div>
-													<div class='col-lg-8'>
+													<div class='col-lg-7'>
 														<h5 class="card-title">${chatFriend.userNickname}</h5>
-														<p class="card-text">With supporting text below as a
-															natural lead-in to additional content.</p>
-														<a href="#" class="btn btn-primary">${chatFriend.userNo}</a>
+														<p class="card-text">${chatFriend.friendNickname}</p>
+															<p class="card-text">${chatFriend.userNo}</p>
+													</div>
+													<div class='col-lg-2'>
 													</div>
 													<div class='col-lg-1' name='${chatFriend.userNo}'>
 													<i class="mdi mdi-account-plus friendYet friending" name='${chatFriend.userNo}' style='font-size: 25pt;'></i>
@@ -192,7 +203,7 @@ img {
 										<div class="card friends" name='${chatFriend.userNo}'>
 											<div class="card-body">
 												<div class='row'>
-													<div class='col-lg-4'>
+													<div class='col-lg-2'>
 														<img alt="" src="/images/uploadfiles/profileimg/${chatFriend.userImg}"
 															class='rounded img-fluid' alt="Responsive image">
 													</div>
@@ -200,7 +211,9 @@ img {
 														<h5 class="card-title">${chatFriend.userNickname}</h5>
 														<p class="card-text">With supporting text below as a
 															natural lead-in to additional content.</p>
-														<a href="#" class="btn btn-primary">${chatFriend.userNo}</a>
+															<p class="card-text">${chatFriend.userNo}</p>
+													</div>
+													<div class='col-lg-2'>
 													</div>
 													<div class='col-lg-1' name='${chatFriend.userNo}'>
 													<i class="mdi mdi-account-plus friendYet friending" name='${chatFriend.userNo}' style='font-size: 25pt;'></i>
@@ -220,28 +233,25 @@ img {
 
 					<!-- #/ container -->
 
-				</div>
+				
 				<!-- 왼쪽 컬럼 엔드 -->
 
 				<!-- 오른컬럼이야 -->
 
 				<div class="col-lg-4">
 
-					<div class='container-fluid'>
+					
 
 						<div class='card'>
 							<div class='card-body'>8888주ㅡㄹㅇ야</div>
 						</div>
-					</div>
+					
 
-				</div>
-
-				<!-- 오른쪽컬럼끝야 -->
-
-
-			</div>
-			<!-- row 엔드 -->
-
+				</div>	<!-- 오른쪽컬럼끝야 -->
+			
+</div><!-- row 엔드 -->
+			
+</div><!-- 컨테이너엔드 -->
 
 		</div>
 		<!--**********************************
@@ -331,6 +341,68 @@ var checkSessionUser = ${empty sessionScope.user};
 			$("form").attr("method", "POST").attr("action",
 			"/chat/searchChatFriend").submit();
 		});
+		$(".updateFriendName").on("click", function() {
+			var thisChatFriendNo = $(this).attr("name");
+			 var engkornum = /[^가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9]/gi;
+			 var emptyOnly = /^\s*\s*$/;
+			   
+			swal({
+				  title: "친구닉네임 변경",
+				  text:  "사용하실 친구닉네임을 설정해주세요",
+				  type:  "input",
+				  showCancelButton: true,
+				  closeOnConfirm: false,
+				  inputPlaceholder: "한글영문숫자만써주세요"
+					}, function (inputValue) {
+						if(inputValue.length>15){
+							swal.showInputError("15글자 이하로 써주세요");
+							   return false;
+						}
+						if(emptyOnly.test(inputValue)){
+							 swal.showInputError("공백만 넣으시면 안됩니다.");
+							   return false;
+							 }
+						if (engkornum.test(inputValue)) {
+							 swal.showInputError("영어숫자한글만사용해주세요");
+							   return false;
+						   }
+
+						var jsoned = {
+								chatFriendNo : thisChatFriendNo, 
+								friendNickname : inputValue 
+								};
+						jsoned = JSON.stringify(jsoned);
+					
+							$.ajax(
+									{
+									type : "POST",
+									url : "/chat/json/updateChatFriend",
+									data : jsoned,
+									contentType: "application/json", //보내는 컨텐츠의 타입
+									//dataType : "json",      //받아올 데이터의 타입 필요없음
+									success : function(serverData, status) {
+													if(serverData){
+														swal("성공적으로 변경되었습니다", "친구명이 " + inputValue+" 로 변경되었습니다.", "success");
+														$("#"+thisChatFriendNo+"nickName").text(inputValue);
+														
+
+														}		
+													else{
+														swal("통신과정에서 에러발생", "잠시 후 다시 시도해주세요", "error");
+													}
+												},
+									error : function(request,status,error){
+												        swal("통신과정에서 에러발생", "잠시 후 다시 시도해주세요", "error");
+												       }
+									}
+								);
+
+						},
+							
+						);
+			
+			});
+		
 
 		$(".friending").on("click", function() {
 			var inputTarget=$(this);
@@ -340,8 +412,8 @@ var checkSessionUser = ${empty sessionScope.user};
 			if($(this).hasClass("friendAlready")){
 				friendAlready(inputTarget);
 				}
-				
-			});
+		});
+		
 		function friendYet(sourceTag){
 			var targetTag = sourceTag;
 			var targetUser = sourceTag.closest('div').attr('name');
