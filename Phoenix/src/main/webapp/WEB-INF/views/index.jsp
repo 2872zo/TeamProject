@@ -14,6 +14,7 @@
 	href="/images/favicon.png">
 <!-- Custom Stylesheet -->
 <link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet">
 <link href="/css/style.css" rel="stylesheet">
 
 <link rel="stylesheet" href="/css/custom/scroll-top.css">
@@ -23,7 +24,21 @@
 <!-- ToolBar End /////////////////////////////////////-->
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <style type="text/css">
-
+	
+	p{
+		
+		font-family: 'Ubuntu', sans-serif;
+	}
+	
+	.input-group-append{
+		box-shadow : 5px 5px 5px #8080804a;
+	}
+	
+	#searchKeyword{
+		
+		box-shadow : 5px 5px 5px #8080804a;
+	}
+	
 </style>
 
 </head>
@@ -44,7 +59,7 @@
 	<!--*******************
         Preloader end
     ********************-->
-	<br />
+
 	<div class='container-fluid'>
 
 
@@ -57,29 +72,33 @@
 
 		<div class="card-body">
 		<br/>
-			<p class="text-center" style='color: #f5a142; font-size: xx-large;'>Phoenix</p>
-		<br/>
-		<br/>
+			<p class="text-center" style='color: #f5a142; font-size: 90px; '>Phoenix</p>
 			<div class='d-flex justify-content-center'>
 				<div class="input-group mb-3 " style='width: 50%;'>
-					<input type="text" class="form-control form-control-lg"
-						placeholder="검색어를 입력해주세요" id='searchKeyword'>
+					<input type="text" class="form-control input-rounded form-control-lg " id='searchKeyword'>
 					<div class="input-group-append">
-						<button class="btn btn-lg btn-outline-primary" type="button"
-							id="explore">
+						<button class="btn btn-lg btn-outline-primary" type="button" id="explore">
 							<i class="mdi mdi-magnify" style='font-size: 18pt;'></i>
 						</button>
 					</div>
 				</div>
 			</div>
 
-			<br/>
-			<br/>
-			<div class="d-flex justify-content-around align-items-center">
-				<i class="mdi mdi-coffee" style='font-size: 75pt;' id="cafe"></i> 
-				<i class="mdi mdi-email-outline" style='font-size: 75pt;' id='mail'></i>
-				<i class="mdi mdi-heart-box-outline" style='font-size: 75pt;' id='sns'></i>
-				<i class="mdi mdi-cart-outline" style='font-size: 75pt;' id="shop"></i>
+			<div class="d-flex justify-content-center align-items-center">
+				
+				<div class="cafeIcon" style='font-size: 75pt; margin:30px;' id="cafe">
+					<a title="카페 바로가기"><i class="mdi mdi-coffee"></i> </a>
+				</div>
+				<div class="mailIcon" style='font-size: 75pt; margin:30px;' id='mail'>
+					<a title="메일 바로가기"><i class="mdi mdi-email-outline"></i> </a>
+				</div>
+				<div class="snsIcon" style='font-size: 75pt; margin:30px;' id='sns'>
+					<a title="sns 바로가기"><i class="mdi mdi-heart-box-outline" ></i></a>
+				</div>
+				<div class="shopIcon" style='font-size: 75pt; margin:30px;' id="shop">
+					<a title="쇼핑 바로가기"><i class="mdi mdi-cart-outline"></i></a>
+				</div>
+			
 			</div>
 			
 			<br/>
