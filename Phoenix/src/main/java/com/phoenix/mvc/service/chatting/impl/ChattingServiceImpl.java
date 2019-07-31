@@ -2,6 +2,7 @@ package com.phoenix.mvc.service.chatting.impl;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +30,12 @@ public class ChattingServiceImpl implements ChattingService{
 	@Autowired
 	@Qualifier("chattingDaoImpl")	
 	private ChattingDao chattingDao;
+	
+	@Value("${enterChatAmount}")
+	private int enterChatAmount;
+	
+	@Value("${readChatAmount}")
+	private int readChatAmount;
 	
 	public ChattingServiceImpl() {
 		System.out.println(getClass().getName() + "default Constuctor");
@@ -99,10 +107,6 @@ public class ChattingServiceImpl implements ChattingService{
 		chattingDao.updateChatRoomRecentMsg(chat);
 	}
 	
-	@Override
-	public void testMethod(Chat chat) throws Exception {
-		chattingDao.testMethod(chat);		
-	}
 
 	@Override
 	public Map getChatList(Search search) throws Exception {
@@ -118,6 +122,13 @@ public class ChattingServiceImpl implements ChattingService{
 	
 		Map map = new HashMap();
 		List<ChatFriend> nickNameList = chattingDao.getFriendNickNameList(search);
+		long chatCount = chattingDao.getChatCount(search);
+		if (chatCount<=enterChatAmount) {
+			search.setChatIndexNow(0);
+		} else {
+			search.setChatIndexNow(chatCount-enterChatAmount);
+		}
+		
 		List<Chat> chatList = chattingDao.getChatList(search);
 		List<ChatRoomInfo> userList = chattingDao.getChatRoomUserList(search);
 		
@@ -146,6 +157,7 @@ public class ChattingServiceImpl implements ChattingService{
 				}
 			}
 		}
+		map.put("chatIndex", search.getChatIndexNow());
 		map.put("nickNameList", nickNameList);		
 		map.put("chatRoomInfo", chatRoomInfo);
 		map.put("chatList", chatList);
@@ -203,6 +215,25 @@ public class ChattingServiceImpl implements ChattingService{
 		Map map = new HashMap();
 		List FriendsForInvite = chattingDao.getFriendsListForInvite(search);
 		map.put("FriendsForInvite", FriendsForInvite);
+		return map;
+	}
+
+	@Override
+	public Map getMoreChat(Search search) throws Exception {
+		Map map = new HashMap();
+		long indexNow = search.getChatIndexNow();
+		if (readChatAmount>=indexNow) {
+			search.setChatIndexNow(0);
+			search.setReadChatAmount((int)indexNow);
+		}
+		else {
+			search.setChatIndexNow(indexNow-readChatAmount);
+			search.setReadChatAmount(readChatAmount);
+		}
+		List chatList = chattingDao.getChatList(search);
+		Collections.reverse(chatList);
+		map.put("indexNow", search.getChatIndexNow());
+		map.put("chatList", chatList);
 		return map;
 	}
 

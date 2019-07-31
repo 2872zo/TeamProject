@@ -127,7 +127,10 @@
         <div class="col-lg-8">
         <div class='card' style='height:100%'>
         <div class='card-body'>
-        <form id='thisChatRoomInfo'>
+        <form id='getChatForm'>
+        <input type='hidden' id='chatIndex' name='chatIndex' value='${chatIndex}'>
+        </form>
+<form id='thisChatRoomInfo'>
     <input type='hidden' id='chatRoomInfoId' name='id' 			 value='${chatRoomInfo.id}'>
 	<input type='hidden' id='chatRoomId' 	 name='chatRoomId' 	 value='${chatRoomInfo.chatRoomId}'>
 	<input type='hidden' id='userNo' 	 	 name='userNo' 		 value='${sessionScope.user.userNo}'>
@@ -365,9 +368,11 @@ for(var i =0;i<$(".friendNickname").length;i++){
 	userNos[i]=Number($($(".friendUserNo")[i]).val());
 }
 
-function tagRemover(inputText){
-	inputText = inputText.replace(/(<([^>]+)>)/ig,"");
-}
+
+// 페이지 열자마자 채팅 맨 밑으로...
+$("#chat_box").scrollTop($("#chat_box").prop('scrollHeight'));
+
+
 
 $(function() {
 	//alert($("#userNickname").val());
@@ -461,20 +466,99 @@ $(function() {
 	
 	$("#chat_box").on('scroll', function(){
 		//스크롤바 맨 위 위치
-		var aaa = "<div>aaaaaaaaaaa!!</div>";
-		
 		var top = $("#chat_box").scrollTop();
-		if(top===0){
+		//채팅 남은갯수
+		var pagingChecker = $("#chatIndex").val();
+		//20당 한줄 정도 잡으면 될듯 긁어오고 아래로 스크롤링할 양
+		var scrolldownsize= 100;
 		
+		if(top===0 && pagingChecker>0 ){
+
+			var jsoned = {
+				chatRoomId : $("#chatRoomId").val(), 
+				chatIndexNow : $("#chatIndex").val(), 
+				};
+			
+			jsoned = JSON.stringify(jsoned);
 	
-	
-				
+			$.ajax(
+					{
+					type : "POST",
+					url : "/chat/json/getMoreChat",
+					data : jsoned,
+					contentType: "application/json", //보내는 컨텐츠의 타입
+					//dataType : "json",      //받아올 데이터의 타입 필요없음
+					success : function(serverData, status) {
+										//alert(serverData);
+										//var aaas = JSON.parse(serverData);
+										$("#chatIndex").val(serverData.indexNow);
+										
+										//alert(serverData.chatList);
+										$.each(serverData.chatList, function (index, chat) {
+										
+											var msgTagging="";
+									        
+									         //chat.regDate = getFormatDate(chat.regDate);
+									         
+											
+											if (chat.userNo==$("#userNo").val()){
+												msgTagging = "<div class='row d-flex justify-content-end'>"
+													+"<div class='col-lg-2 text-right' style='padding-right: 0px;'>"
+													+chat.regDate
+													+"</div><div class='col-lg-6' style='padding-right: 20px;'>"
+													+"<div class='alert' name='"+chat.id+
+													"' style='padding:5px; width: 100%;border: 2px solid #f5a142;" 
+													+"color: #162CA8;background-color:#ffc68a; ' >"
+													+chat.chatMsg
+													+"</div></div></div>"				
+												}
+											
+											else if (chat.userNo!=$("#userNo").val()){
+
+												if(userNos.indexOf(chat.userNo)!=-1){
+													chat.userNickname = nickNames[userNos.indexOf(chat.userNo)]
+													} 
+												
+												msgTagging = "<div class='row d-flex justify-content-start'>"
+													+"<div class='col-lg-1'>"
+													+"<img src='/images/uploadfiles/profileimg/"
+													+chat.profileImg
+													+"'  class='rounded' style='width: 32px; height: 32px'></div>"
+													+"<div class='col-lg-6' style='padding-left: 5px;'>"
+													+chat.userNickname
+													+"<div class='alert' name='"
+													+chat.id
+													+"' style='padding:5px; width: 100%;"
+													+"margin-top:5px; border: 2px solid #f5a142; color: black;' >"
+													+chat.chatMsg
+													+"</div></div>"
+													+"<div class='col-lg-2' style='padding-left: 0px; margin-top:5px;'>"
+													+"<br/>"
+													+chat.regDate
+													+"</div></div>"
+												}
+
+											$(msgTagging).prependTo("#chat_box");
+
+											$("#chat_box").scrollTop(scrolldownsize);
+											
+											});
+
+									},
+					error : function(request,status,error){
+								        alert("에러남 : "+error);
+								        //socket.emit("send_who", $("#userId").text()+"콘솔에찍히는메시지임");
+								       }
+					}
+				);
 			}
 		//스크롤바 전체 길이
 		
 		var totalHeight= $("#chat_box").prop('scrollHeight');
-		if(top<(totalHeight*0.1)){
-			$(aaa).prependTo("#chat_box")
+		
+		if(top<(totalHeight*0.01)){
+			
+			//$(aaa).prependTo("#chat_box")
 			}
 		/*
 		*/
@@ -633,9 +717,6 @@ $(function() {
 		if(top>(totalHeight*0.50)){
 			 $("#chat_box").scrollTop(totalHeight);
 			}
-
-		
-		
 		
      });
 

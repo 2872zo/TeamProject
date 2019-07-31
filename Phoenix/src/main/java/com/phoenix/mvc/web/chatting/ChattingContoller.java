@@ -39,10 +39,8 @@ public class ChattingContoller {
 	@Value("${enterChatAmount}")
 	private int enterChatAmount;
 	
-	@Value("${readChatAtOnce}")
-	private int readChatAtOnce;
-	
-	
+	@Value("${readChatAmount}")
+	private int readChatAmount;
 	
 	public ChattingContoller() {
 		System.out.println(getClass().getName() + "default Constuctor");
@@ -122,25 +120,26 @@ public class ChattingContoller {
 	public String getChatRoom(@SessionAttribute("user") User user, @ModelAttribute Search search, Model model) throws Exception {
 	
 		search.setUserNo(user.getUserNo());
+		search.setReadChatAmount(enterChatAmount);
 		
 		Map map = chattingService.getChatRoom(search);
 		
+		long chatIndex = (long) map.get("chatIndex");
 		List chatList = (List) map.get("chatList");
 		List userList = (List) map.get("userList");
 		List inviteList = (List) map.get("inviteList");
 		List nickNameList = (List) map.get("nickNameList");
 		ChatRoomInfo chatRoomInfo= (ChatRoomInfo)map.get("chatRoomInfo");
-
-		model.addAttribute("nickNameList", nickNameList);
+		
+		model.addAttribute("chatIndex", chatIndex);
 		model.addAttribute("chatList", chatList);
 		model.addAttribute("userList", userList);
 		model.addAttribute("inviteList", inviteList);
+		model.addAttribute("nickNameList", nickNameList);
 		model.addAttribute("chatRoomInfo", chatRoomInfo);
 		
 		return "chat/chatRoom";
 	}
-
-	
 	
 	@RequestMapping("addChatRoom")
 	public String addChatRoom(@SessionAttribute("user") User user, RedirectAttributes redirectAttributes) throws Exception {

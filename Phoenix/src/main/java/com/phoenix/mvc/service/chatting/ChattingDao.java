@@ -52,7 +52,11 @@ public interface ChattingDao {
 	
 	public void addChat (Chat chat) throws Exception;
 	
+	public long getChatCount(Search search) throws Exception;
+	
 	public List getChatList(Search search) throws Exception;
+	
+	public List getMoreChat(Search search) throws Exception;
 	
 	public int getMyChatCount(Search search) throws Exception;
 	
@@ -63,4 +67,6 @@ public interface ChattingDao {
 	public List getFourImgForChatRoomList(ChatRoomInfo chatRoomInfo) throws Exception;
 	
 	public void updateChatRoomInfoByUser(User user) throws Exception;
+	
+	
 }

@@ -35,6 +35,9 @@ public class Search {
 	private String chatId;
 	private String chatRoomId;
 	private int friendStatus;
+	private int enterChatAmount;
+	private int readChatAmount;
+	private long chatIndexNow;
 
 	private int positionIndex;
 
@@ -267,6 +270,30 @@ public class Search {
 		this.friendStatus = friendStatus;
 	}
 
+	public int getEnterChatAmount() {
+		return enterChatAmount;
+	}
+
+	public void setEnterChatAmount(int enterChatAmount) {
+		this.enterChatAmount = enterChatAmount;
+	}
+
+	public int getReadChatAmount() {
+		return readChatAmount;
+	}
+
+	public void setReadChatAmount(int readChatAmount) {
+		this.readChatAmount = readChatAmount;
+	}
+
+	public long getChatIndexNow() {
+		return chatIndexNow;
+	}
+
+	public void setChatIndexNow(long chatIndexNow) {
+		this.chatIndexNow = chatIndexNow;
+	}
+
 	public int getPositionIndex() {
 		return positionIndex;
 	}
@@ -404,12 +431,14 @@ public class Search {
 				+ ", currentPage=" + currentPage + ", pageSize=" + pageSize + ", endRowNum=" + endRowNum
 				+ ", startRowNum=" + startRowNum + ", termStart=" + termStart + ", termEnd=" + termEnd
 				+ ", targetUserNo=" + targetUserNo + ", targetUserNos=" + targetUserNos + ", chatId=" + chatId
-				+ ", chatRoomId=" + chatRoomId + ", friendStatus=" + friendStatus + ", positionIndex=" + positionIndex
-				+ ", engineAll=" + engineAll + ", engineNaver=" + engineNaver + ", engineDaum=" + engineDaum
-				+ ", engineGoogle=" + engineGoogle + ", enginePhoenix=" + enginePhoenix + ", orderState=" + orderState
-				+ ", orderStateSort=" + orderStateSort + ", searchTheme=" + searchTheme + ", searchThemeSort="
-				+ searchThemeSort + ", filter=" + filter + ", searchEngine=" + searchEngine + ", fbId=" + fbId
-				+ ", fbPw=" + fbPw + ", igId=" + igId + ", igPw=" + igPw + ", subject=" + subject + "]";
+				+ ", chatRoomId=" + chatRoomId + ", friendStatus=" + friendStatus + ", enterChatAmount="
+				+ enterChatAmount + ", readChatAmount=" + readChatAmount + ", chatIndexNow=" + chatIndexNow
+				+ ", positionIndex=" + positionIndex + ", engineAll=" + engineAll + ", engineNaver=" + engineNaver
+				+ ", engineDaum=" + engineDaum + ", engineGoogle=" + engineGoogle + ", enginePhoenix=" + enginePhoenix
+				+ ", orderState=" + orderState + ", orderStateSort=" + orderStateSort + ", searchTheme=" + searchTheme
+				+ ", searchThemeSort=" + searchThemeSort + ", filter=" + filter + ", searchEngine=" + searchEngine
+				+ ", fbId=" + fbId + ", fbPw=" + fbPw + ", igId=" + igId + ", igPw=" + igPw + ", subject=" + subject
+				+ "]";
 	}
 
 }// end of class

@@ -1,6 +1,7 @@
 function getFormatDate(date){ 
-	var year = date.getFullYear();//yyyy 
-	year = String(year).substring(2,4);
+	var year = date.getYear();//yy 
+	//var year = date.getFullYear();//yyyy 
+	//year = String(year).substring(2,4);
 	var month = (1 + date.getMonth()); //M 
 	month = month >= 10 ? month : '0' + month; //month두자리로 저장 
 	var day = date.getDate(); //d 
@@ -10,6 +11,10 @@ function getFormatDate(date){
 	minute = minute >= 10 ? minute : '0' + minute; //분도 두자리로 지정
 	return year + '-' + month + '-' + day+' '+hour+':'+minute; 
 	}
+
+function tagRemover(inputText){
+	inputText = inputText.replace(/(<([^>]+)>)/ig,"");
+}
 
 //alert("일단 아무거나 넣어봄");
 

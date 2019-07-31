@@ -86,6 +86,26 @@ public class ChattingDaoImpl implements ChattingDao{
 		mongoTemplate.insert(chat);	
 	}
 	
+	@Override
+	public long getChatCount(Search search) throws Exception {
+		query = new Query();
+		criteria = new Criteria();
+		query.with(new Sort(Sort.Direction.ASC, "regDate"));
+		//갯수제한
+		//query.limit(2);
+		//query.skip(100);
+		criteria = new Criteria();
+		//검색조건
+		//criteria.where("chatRoomNo").is(10007);
+		//query.addCriteria(criteria);
+		//criteria.andOperator(Criteria.where("chatProfileImg").is("abc"), Criteria.where("chatRoomNo").is(search.getChatRoomNo()));
+		criteria.andOperator(Criteria.where("chatRoomId").is(search.getChatRoomId()));
+		query.addCriteria(criteria);
+		
+		return mongoTemplate.count(query, Chat.class);
+	}
+	
+	@Override
 	public List getChatList(Search search) throws Exception {
 		
 		//query = mongoMapper.getChatList(search);
@@ -94,7 +114,31 @@ public class ChattingDaoImpl implements ChattingDao{
 		criteria = new Criteria();
 		query.with(new Sort(Sort.Direction.ASC, "regDate"));
 		//갯수제한
-		//query.limit(2);
+		query.limit(search.getReadChatAmount());
+		query.skip(search.getChatIndexNow());
+		criteria = new Criteria();
+		//검색조건
+		//criteria.where("chatRoomNo").is(10007);
+		//query.addCriteria(criteria);
+		//criteria.andOperator(Criteria.where("chatProfileImg").is("abc"), Criteria.where("chatRoomNo").is(search.getChatRoomNo()));
+		criteria.andOperator(Criteria.where("chatRoomId").is(search.getChatRoomId()));
+		query.addCriteria(criteria);
+		
+		return mongoTemplate.find(query, Chat.class);
+		
+	}
+	
+	@Override
+	public List getMoreChat(Search search) throws Exception {
+		
+		//query = mongoMapper.getChatList(search);
+		//정렬
+		query = new Query();
+		criteria = new Criteria();
+		query.with(new Sort(Sort.Direction.ASC, "regDate"));
+		//갯수제한
+		query.limit(search.getReadChatAmount());
+		query.skip(search.getChatIndexNow());
 		criteria = new Criteria();
 		//검색조건
 		//criteria.where("chatRoomNo").is(10007);
@@ -251,5 +295,7 @@ public class ChattingDaoImpl implements ChattingDao{
 		System.out.println(query);
 		mongoTemplate.updateMulti(query, update, ChatRoomInfo.class);
 	}
+
+
 
 }

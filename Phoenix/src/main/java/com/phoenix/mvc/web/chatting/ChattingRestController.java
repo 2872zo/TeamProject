@@ -2,7 +2,9 @@ package com.phoenix.mvc.web.chatting;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -31,8 +33,8 @@ public class ChattingRestController {
 	@Value("${enterChatAmount}")
 	private int enterChatAmount;
 	
-	@Value("${readChatAtOnce}")
-	private int readChatAtOnce;
+	@Value("${readChatAmount}")
+	private int readChatAmount;
 	
 	public ChattingRestController() {
 		System.out.println(getClass().getName() + "default Constuctor");
@@ -109,5 +111,14 @@ public class ChattingRestController {
 		return responseBoolean;
 		
 	}
+	
+	@PostMapping("getMoreChat")
+	public Map getMoreChat(@RequestBody Search search) throws Exception{
+		
+		return chattingService.getMoreChat(search);
+		
+	}
+	
+		
 	
 }
