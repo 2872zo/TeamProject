@@ -41,7 +41,7 @@ public class ChattingServiceImpl implements ChattingService{
 		for (ChatRoomInfo chatRoomInfo : chatRoomList) {
 			List<String> stringList = new ArrayList();
 			List<ChatRoomInfo> imgList = chattingDao.getFourImgForChatRoomList(chatRoomInfo);
-			for (ChatRoomInfo imgChatRoomInfo : chatRoomList) {
+			for (ChatRoomInfo imgChatRoomInfo : imgList) {
 				stringList.add(imgChatRoomInfo.getProfileImg());
 			}
 			System.out.println("네개 나오니???"+stringList);

@@ -19,6 +19,7 @@ import com.phoenix.mvc.service.domain.Chat;
 import com.phoenix.mvc.service.domain.ChatFriend;
 import com.phoenix.mvc.service.domain.ChatRoomForMongo;
 import com.phoenix.mvc.service.domain.ChatRoomInfo;
+import com.phoenix.mvc.service.domain.User;
 
 @Repository
 public class ChattingDaoImpl implements ChattingDao{
@@ -236,6 +237,18 @@ public class ChattingDaoImpl implements ChattingDao{
 		query.addCriteria(criteria);
 		
 		return mongoTemplate.find(query, ChatRoomInfo.class);
+	}
+
+	@Override
+	public void updateChatRoomInfoByUser(User user) throws Exception {
+		query = new Query();
+		criteria = new Criteria();
+		criteria.andOperator(Criteria.where("userNo").is(user.getUserNo()));
+		query.addCriteria(criteria);
+		update = new Update();
+		update.set("userNickname", user.getUserNickname());
+		update.set("profileImg", user.getProfileImg());
+		mongoTemplate.updateMulti(query, update, ChatRoomInfo.class);
 	}
 
 }
