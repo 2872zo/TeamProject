@@ -1,5 +1,7 @@
 package com.phoenix.mvc.web.user;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 
 import javax.servlet.ServletRequest;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.phoenix.mvc.common.Page;
@@ -47,6 +50,8 @@ public class UserContoller {
 	@Qualifier("userDaoImpl")
 	private UserDao userDao;
 	
+	@Value("${uploadPath}")
+	String uploadPath;
 	
 	public UserContoller() {
 		System.out.println(getClass().getName() + "default Constuctor");
@@ -87,7 +92,8 @@ public class UserContoller {
 	}
 	
 	@PostMapping("addUser")
-	public String addUser(@ModelAttribute User user, Model model, HttpSession session) throws Exception {
+	public String addUser(@ModelAttribute User user, Model model, HttpSession session,
+						  @RequestParam("uploadFile") MultipartFile uploadFile) throws Exception {
 
 		System.out.println("/addUser : POST");
 		
@@ -100,7 +106,21 @@ public class UserContoller {
 			System.out.println("네이버 계정 회원가입 들옴");
 			user.setNaverId((String) session.getAttribute("naverId"));
 		}
+		
+		String fileName = uploadFile.getOriginalFilename()
+				.substring(uploadFile.getOriginalFilename().lastIndexOf("\\") + 1);
 
+		File f = new File(uploadPath, fileName);
+		System.out.println("파일업로드하자~~~~~~~~~~~~~~~~~~" + fileName);
+
+		try {
+			uploadFile.transferTo(f);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		user.setProfileImg(fileName);
+		
 		userService.addUser(user);
 
 		User user2 = userService.getUserInfo(user.getUserNo());

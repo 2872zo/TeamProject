@@ -140,14 +140,16 @@
                                              <input type="text" class="form-control" id="email1" name="email">
                                             </div>
                                        	   </div><hr>
-                                       	   
+                                       	   .
                                        	   <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="profileImg1"><h5>프로필이미지</h5>
-                                             </label>
+                                            <label class="col-lg-4 col-form-label" for="val-bannerImg"><h5>회원 프로필 </h5>
+                                            </label>                                           
                                             <div class="col-lg-6">
-                                             <input type="text" class="form-control" id="profileImg1" name="profileImg">
-                                            </div>
-                                       	   </div><hr>		   
+                                               <div><img src="/images/uploadFiles/profileimg/${user.profileImg}" width="300"; height="200px";/>
+                                               </div>
+                                                <input type="file" class=""form-control-file"" id="uploadFile" name="uploadFile">
+                                               </div>
+                                        </div> <hr>		   
                                        		   
 				  				<div class="form-group row">
                                 	<div class="col-lg-8 ml-auto">
@@ -281,7 +283,7 @@
 						sweetAlert("아이디가 중복되었습니다.","","error");
 						return false;
 					}else{								
-						$("#adduser").attr("method", "POST").attr("action","/user/addUser").submit();						
+						$("#adduser").attr("method", "POST").attr("action","/user/addUser").attr("enctype","multipart/form-data").submit();						
 					}							
 				}
 			});//ajax
