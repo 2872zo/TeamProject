@@ -1,11 +1,11 @@
 package com.phoenix.mvc.service.chatting.impl;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -165,12 +165,12 @@ public class ChattingServiceImpl implements ChattingService{
 		chatRoomInfo.setUserNo(chatRoomForMongo.getOpenUserNo());
 		chatRoomInfo.setProfileImg(user.getProfileImg());
 		chatRoomInfo.setUserNickname(user.getUserNickname());
-		chatRoomInfo.setRegDate(new Date());
+		chatRoomInfo.setRegDate(new DateTime());
 		chatRoomInfo.setChatRoomName(chatRoomInfo.getRegDate()+"에 "+user.getUserNickname()+" 님이 개설한 채팅방");
-		chatRoomInfo.setLatestEnter(new Date());
-		chatRoomInfo.setLatestLeave(new Date());
+		chatRoomInfo.setLatestEnter(new DateTime());
+		chatRoomInfo.setLatestLeave(new DateTime());
 		chatRoomInfo.setLatestMessage("");
-		chatRoomInfo.setLatestMessagingDate(new Date());
+		chatRoomInfo.setLatestMessagingDate(new DateTime());
 		chattingDao.addMyChatRoom(chatRoomInfo);
 		
 		return chatRoomInfo.getChatRoomId();

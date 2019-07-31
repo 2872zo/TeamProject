@@ -248,6 +248,7 @@ public class ChattingDaoImpl implements ChattingDao{
 		update = new Update();
 		update.set("userNickname", user.getUserNickname());
 		update.set("profileImg", user.getProfileImg());
+		System.out.println(query);
 		mongoTemplate.updateMulti(query, update, ChatRoomInfo.class);
 	}
 

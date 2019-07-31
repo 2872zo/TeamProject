@@ -1,13 +1,13 @@
 package com.phoenix.mvc.web.chatting;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -139,7 +139,7 @@ public class ChattingContoller {
 		
 		ChatRoomForMongo chatRoomForMongo = new ChatRoomForMongo();
 		chatRoomForMongo.setOpenUserNo(user.getUserNo());
-		chatRoomForMongo.setRegDate(new Date());
+		chatRoomForMongo.setRegDate(new DateTime());
 		Map map = new HashMap();
 		map.put("chatRoomForMongo",chatRoomForMongo);
 		map.put("user",user);

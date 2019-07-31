@@ -1,8 +1,6 @@
 package com.phoenix.mvc.service.domain;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
+import org.joda.time.DateTime;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection="chat")
@@ -15,10 +13,7 @@ public class Chat {
 	private String profileImg;
 	private int chatType;
 	private String chatMsg;
-	private Date regDate;
-	
-	public Chat() {	
-	}
+	private DateTime regDate;
 	public String getId() {
 		return id;
 	}
@@ -61,11 +56,10 @@ public class Chat {
 	public void setChatMsg(String chatMsg) {
 		this.chatMsg = chatMsg;
 	}
-	public String getRegDate() {
-		SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd HH:mm");
-		return format.format(regDate);
+	public DateTime getRegDate() {
+		return regDate;
 	}
-	public void setRegDate(Date regDate) {
+	public void setRegDate(DateTime regDate) {
 		this.regDate = regDate;
 	}
 	
@@ -75,6 +69,5 @@ public class Chat {
 				+ ", profileImg=" + profileImg + ", chatType=" + chatType + ", chatMsg=" + chatMsg + ", regDate="
 				+ regDate + "]";
 	}
-	
 	
 }

@@ -99,13 +99,19 @@ img {
 	<div class="card mb-3  enterTheRoom" 
 	name='${chatRoomInfo.chatRoomId}' id='${chatRoomInfo.id}'
 	style='border: 1px solid white;'>
-		<div class="row">
+		<div class="row" style='margin: 1%;'>
 	    <div class="col-lg-4 d-flex align-items-center justify-content-center">
 	    <div>
 	    <c:forEach items="${chatRoomInfo.imgs}" var="imgString">
-	    <img src="/images/uploadfiles/profileimg/${imgString}"
-	     class="rounded img-thumbnail" alt="..."
-	     style='width:45%;'>
+	    <img src="/images/common/700by700.png"
+	     class="rounded"
+	     style="background: url('/images/uploadfiles/profileimg/${imgString}'); 
+	     background-size: cover; 
+	     background-repeat: no-repeat; 
+	     background-position: center;
+	     width:45%; 
+	     margin: 1%;
+	     padding:0%;">
 	    </c:forEach>
 	      </div>
 	    </div>

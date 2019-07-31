@@ -1,8 +1,8 @@
 package com.phoenix.mvc.web.chatting;
 
-import java.util.Date;
 import java.util.List;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,7 +34,7 @@ public class ChattingRestController {
 	public Chat addChat(@RequestBody Chat chat) throws Exception{
 		System.out.println ("/chat/json/addChat");
 
-		chat.setRegDate(new Date());
+		chat.setRegDate(new DateTime());
 		chattingService.addChat(chat);
 		
 		return chat;
@@ -44,7 +44,7 @@ public class ChattingRestController {
 	public boolean inviteFriend(@RequestBody List<ChatRoomInfo> chatRoomInfoList) throws Exception{
 
 		for (ChatRoomInfo chatRoomInfo : chatRoomInfoList) {
-			chatRoomInfo.setRegDate(new Date());
+			chatRoomInfo.setRegDate(new DateTime());
 			chatRoomInfo.setChatRoomName(chatRoomInfo.getRegDate()+"에 초대받은 채팅방");
 			chattingService.addMyChatRoom(chatRoomInfo);
 		}
