@@ -251,15 +251,21 @@
 					sweetAlert("카페URL이 중복되었습니다.","","error");
 					
 					return false;
-				}else{			
-					$("form").attr("method", "POST").attr("action","/cafe/addCafe").submit();				
-					//$("#addCafe").attr("method", "POST").attr("action","/cafe/addCafe").submit();						
+				}
+			}
+		});//ajax		
+		
+				}else{
+								
+					//$("form").attr("method", "POST").attr("action","/cafe/addCafe").submit();				
+					$("#addCafe").attr("method", "POST").attr("action","/cafe/addCafe").submit();						
 				}							
 			}
 		});//ajax		
+		
 		}
 	//	alert("만들기");
-	//	$("form").attr("method", "POST").attr("action","/cafe/addCafe").submit();
+		
 	}
 	//카페이름 중복확인 
 	

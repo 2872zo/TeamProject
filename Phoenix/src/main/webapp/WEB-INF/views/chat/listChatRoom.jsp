@@ -96,25 +96,31 @@ img {
 
 	<c:forEach items="${chatRoomList}" var ='chatRoomInfo'>
 	
-	<div class="card mb-3  enterTheRoom" name='${chatRoomInfo.chatRoomId}' id='${chatRoomInfo.id}'>
-  <div class="row">
-    <div class="col-lg-2">
-      <img src="..." class="card-img" alt="...">
-    </div>
-    <div class="col-lg-8">
-      <div class="card-body">
-        <h5 class="card-title chatRoom">${chatRoomInfo.chatRoomName}</h5>
-        <p class="card-text">방id${chatRoomInfo.chatRoomId}</p>
-        <p class="card-text">정보id${chatRoomInfo.id} </p>
-        <p class="card-text">${chatRoomInfo.profileImg} </p>
-        <p class="card-text">참가된시간${chatRoomInfo.regDate} </p>
-        
-        <p class="card-text">${chatRoomInfo.profileImg} </p>
-        <p class="card-text"><small class="text-muted" id='${chatRoomInfo.chatRoomId}'>Last updated 3 mins ago</small></p>
-      </div>
-    </div>
-  </div>
-</div>
+	<div class="card mb-3  enterTheRoom" 
+	name='${chatRoomInfo.chatRoomId}' id='${chatRoomInfo.id}'
+	style='border: 1px solid white;'>
+		<div class="row">
+	    <div class="col-lg-4 d-flex align-items-center justify-content-center">
+	    <div>
+	    <c:forEach items="${chatRoomInfo.imgs}" var="imgString">
+	    <img src="/images/uploadfiles/profileimg/${imgString}"
+	     class="rounded img-thumbnail" alt="..."
+	     style='width:45%;'>
+	    </c:forEach>
+	      </div>
+	    </div>
+	    <div class="col-lg-8">
+	      <div class="card-body">
+	        <h5 class="card-title chatRoom">${chatRoomInfo.chatRoomName}</h5>
+	        <p class="card-text">방id${chatRoomInfo.chatRoomId}</p>
+	        <p class="card-text">정보id${chatRoomInfo.id} </p>
+	        <p class="card-text">참가된시간${chatRoomInfo.regDate} </p>
+	        <p class="card-text">최근 입력 메시지 : ${chatRoomInfo.latestMessage}</p>
+	        <p class="card-text">최근 메시지 입력시간 : ${chatRoomInfo.latestMessagingDate} </p>
+	      </div>
+	    </div>
+  		</div>
+	</div>
 	</c:forEach>
 	
 	
@@ -205,6 +211,16 @@ $(function() {
 		//alert($("#rooming").serialize());
 		$("#rooming").attr("method" , "POST").attr("action" , "/chat/enterChatRoom").submit();
 		
+	});
+	
+	$(".enterTheRoom").hover( function() {
+		 $(this).css("border", "1px solid #f5a142");
+		 $(this).css("background-color", "#f5a142");
+		 $(this).css("color", "white");
+	}, function(){
+	  $(this).css("border", "1px solid white");
+	  $(this).css("background-color", "white");
+	  $(this).css("color", "black");
 	});
 		//alert(${roomNos});
 	//var roomNumbers = ${roomNos};

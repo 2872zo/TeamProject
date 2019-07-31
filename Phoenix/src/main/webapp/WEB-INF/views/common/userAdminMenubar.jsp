@@ -9,6 +9,7 @@
 
 
 <div class="nk-nav-scroll">
+
 	<ul class="metismenu" id="menu">
 	<br>
 		<li><a id="statistics"
@@ -29,5 +30,6 @@
 
 		
 	</ul>
+	
 </div>
 

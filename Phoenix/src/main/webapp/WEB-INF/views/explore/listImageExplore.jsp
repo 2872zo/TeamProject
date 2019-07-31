@@ -15,6 +15,7 @@
 
 <!-- Custom Stylesheet -->
 <link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet">
 <link href="/css/style.css" rel="stylesheet">
 
 <link rel="stylesheet" href="/css/custom/scroll-top.css">
@@ -31,6 +32,14 @@
     	
     		color:#f5a142;
     		
+    	}
+    	.brand-title{
+    		
+    		color:#f5a142;
+    		background-color : white;
+    		font-family: 'Ubuntu', sans-serif;
+    		font-size:30px;
+    		margin-left:15px;
     	}
     	
     	.imageGroup{
@@ -50,7 +59,7 @@
     	.imageTitle{
     	
     		display: block;
-    		z-index :100;
+    		z-index :2;
     		position:absolute;
     		color : white;
     		background-color : #000000ad;
@@ -82,6 +91,17 @@
     	}
     	.viewerTitle{
     		
+    		
+    	}
+    	.fa{
+    		
+    		display :block;
+    		z-index: 3;
+    		color : black !important;
+    		position : absolute;
+    		font-size: 3em;
+    		top : 85%;
+    		margin-left : 45%;
     		
     	}
     	
@@ -275,7 +295,7 @@
 			//var endViewStr 음 얠 그냥 
 			var firstThis = null;
 			var secondThis = null;
-			
+			var triangleIcon = "<i class='fa fa-caret-up text-success'></i>"
 			$(".imageTitle").hide(); //기본으로 hide
 			
 			$(".imageGroup").hover(function(){ // hover
@@ -283,53 +303,61 @@
 				function(){ $(this).find(".imageTitle").hide() });
 
 			$(".imageGroup").unbind('click'); //액션한번만
+
 			$(".imageGroup").on("click",function(){ //click
 				//하면 선택한 그림 그 한줄 밑에 str을 더한다.
 			
 				
 				secondThis= this;
 				//debugger;
-				if(firstThis==secondThis && firstThis != null) //같은걸 두번 클릭하면
+				
+				if(firstThis==null) //처음 열었을때
 				{
-					//alert("같은거 클릭");
-					$(".imageViewer").fadeOut(300,function(){
-						$(this).remove();
-						});
-					firstThis=null;
-					secondThis=null;
-					//viewer접기
-				}
-				else if(firstThis!=null && firstThis!=secondThis){ //다른 이미지를 클릭하면 /그냥 else맞다 이미 위에서 .imageGroup으로 걸렀기때문에
-
-					//alert("다른거 클릭");
 					$(".imageViewer").remove();//지우고 다시 append
-
+					$(".fa").remove();
+						
 					var str="<div class='imageViewer' height='350px' style='background-color:black;'>"
 						  +"<a href='"+$(this).find("[name=imageLink]").attr("value")+"' target='_black'><img class='viewerImage' src='"+$(this).find("img").attr("src")+"' width='400px' height='300px'></a>"
-						  +"<p class='viewerTitle'>"+$(this).find(".imageTitle").text().trim()+"</p>"	
 						  +"</div>";
 						  
 					$(this).parent().after(str);
-					
-					//view 새로 img 세팅  .after();
-				}
-				else if(firstThis==null) //처음 열었을때
-				{
-					//alert("처음클릭");
-					//if($(this).find("[name=]"))
-					//if($(this).find(".imageViewer").get().length === 0){ //음 없을때만.
-						
-						var str="<div class='imageViewer' height='350px' style='background-color:black;'>"
-							  +"<a href='"+$(this).find("[name=imageLink]").attr("value")+"' target='_black'><img class='viewerImage' src='"+$(this).find("img").attr("src")+"' width='400px' height='300px'></a>"
-							  +"</div>";
-							  
-						$(this).parent().after(str);
-						//alert($(this).find("img").attr("src"));
-						//view연듸
-					//}
+					$(this).append(triangleIcon);
+
+					var offset = $(".fa").offset();
+					$('html, body').animate({scrollTop : offset.top}, 400);
+
+					firstThis = secondThis;
 				}
 				
-				firstThis = secondThis;
+				else if(firstThis==secondThis && firstThis != null) //같은걸 두번 클릭하면
+				{
+					//alert("같은거 클릭");
+					$(".imageViewer").fadeOut(90,function(){
+							$(".fa").remove();
+							$(this).remove();
+						});
+
+					firstThis=null;
+				}
+				else if(firstThis!=null && firstThis!=secondThis){ //다른 이미지를 클릭하면 /그냥 else맞다 이미 위에서 .imageGroup으로 걸렀기때문에
+
+					$(".imageViewer").remove();//지우고 다시 append
+					$(".fa").remove();
+
+					var str="<div class='imageViewer' height='350px' style='background-color:black;'>"
+						  +"<a href='"+$(this).find("[name=imageLink]").attr("value")+"' target='_black'><img class='viewerImage' src='"+$(this).find("img").attr("src")+"' width='400px' height='300px'></a>"
+						  +"</div>";
+						  
+					$(this).parent().after(str);
+					$(this).append(triangleIcon);
+
+					var offset = $(".fa").offset();
+					$('html, body').animate({scrollTop : offset.top}, 400);
+					//view 새로 img 세팅  .after();
+
+					firstThis = secondThis;
+				}
+				
 				
 			});
 		}
@@ -418,7 +446,7 @@
            			</div>
            			
            			
-           			<div class="card-body col-md-12">
+           			<div class="card-body col-md-12" >
            				
            				<div class ="photo-grid-box"> <!-- 54개 한 뭉텅이  x반복 -->
            					<c:set var="i" value="0"/>

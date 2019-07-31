@@ -89,9 +89,11 @@ public class ChattingRestController {
 	
 	@PostMapping("updateChatFriend")
 	public boolean updateChatFriend(@RequestBody ChatFriend chatFriend) throws Exception{
-		int checker = chattingService.updateFriend(chatFriend);
+		
 		boolean responseBoolean = false;
 		
+		int checker = chattingService.updateFriend(chatFriend);
+
 		if (checker==1) {
 			responseBoolean = true;
 		}
@@ -99,13 +101,5 @@ public class ChattingRestController {
 		return responseBoolean;
 		
 	}
-	
-	@PostMapping("cancelChatFriend")
-	public boolean cancelChatFriend(@RequestBody Search search) {
-		return true;
-	}
-	
-
-	
 	
 }

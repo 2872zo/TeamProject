@@ -34,6 +34,9 @@
 	border: none;
 	font-family: "맑은 고딕";
 }
+#logon{
+	margin-bottom: 2%
+}
 	</style>
 	
 	
@@ -106,10 +109,9 @@
                                     </div>
                                     <button class="btn login-form__btn submit w-100" id = "logon">로그인</button>
                                     <div class="text-center">
-				     <a id="kakao"><img src="/images/uploadFiles/kakao/kakaos.jpg" /></a>
-     				<a id="naver"><img src="/images/uploadFiles/naver/navers.jpg" /></a>
-		
-		</div>
+				     <a id="kakao"><img src="/images/uploadFiles/kakao/kakaos.jpg" width=238; height=45; /></a>
+     				<a id="naver"><img src="/images/uploadFiles/naver/navers.jpg"  width=238; height=45; /></a>		
+									</div>
                                 </form>
                                 <a href="/user/addUserView" class="text-primary" id="addUser1">회원가입</a>
                             </div>
@@ -213,7 +215,8 @@
 							
 							sweetAlert("아이디 또는 비밀번호가 일치하지 않습니다.","","error");
 							return false;
-						}else{								
+						}else{
+														
 						self.location = "/";							
 						}							
 					}
