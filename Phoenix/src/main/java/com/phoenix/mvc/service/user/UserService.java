@@ -1,8 +1,10 @@
 package com.phoenix.mvc.service.user;
 
+import java.util.List;
 import java.util.Map;
 
 import com.phoenix.mvc.common.Search;
+import com.phoenix.mvc.service.domain.Account;
 import com.phoenix.mvc.service.domain.User;
 
 
@@ -28,4 +30,5 @@ public interface UserService {
 	
 	public User getNaver(String naverId) throws Exception;
 	
+	public List<Account> getMailAccount(int userNo);
 }

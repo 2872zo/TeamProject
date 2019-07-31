@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.phoenix.mvc.common.Search;
+import com.phoenix.mvc.service.domain.Account;
 import com.phoenix.mvc.service.domain.Cafe;
 import com.phoenix.mvc.service.domain.User;
 import com.phoenix.mvc.service.user.UserDao;
@@ -97,10 +98,14 @@ public class UserServiceImpl implements UserService{
 	}
 
 	
-	
 /////////////////////////////준호끝///////////////////////////////////
 	
-
+	////////////////////////////승규시작///////////////////////////////////
+	@Override
+	public List<Account> getMailAccount(int userNo) {
+		return userDao.getMailAccount(userNo);
+	}
+	//////////////////////////////승규 끝/////////////////////////////////
 
 
 }

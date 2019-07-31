@@ -26,7 +26,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
-import com.phoenix.mvc.common.Search;
+import com.phoenix.mvc.service.domain.Account;
 import com.phoenix.mvc.service.domain.Mail;
 import com.phoenix.mvc.service.mail.MailDao;
 import com.sun.mail.util.BASE64DecoderStream;
@@ -42,25 +42,17 @@ public class MailDaoImpl implements MailDao {
 	private SqlSession sqlSession;
 
 	@Override
-	public List<Mail> getMailList(Search search) throws Exception {
-		IMAPAgent mailAgent = new IMAPAgent("imap.daum.net", "2872zo@daum.net", "lkj6322*");
-//		IMAPAgent mailAgent = new IMAPAgent("imap.naver.com", "dbstmdrb000@naver.com", "poii6322!@");
-//		IMAPAgent mailAgent = new IMAPAgent("imap.gmail.com", "yunsg3023@gmail.com", "lkjh6322");
+	public List<Mail> getMailList(Account account) throws Exception {
+		IMAPAgent mailAgent = new IMAPAgent("imap." + account.getAccountDomain(), account.getAccountId(), account.getAccountPw());
 
 		mailAgent.open();
-
-		Message[] messageList = new Message[mailAgent.getMessageCount()];
-		
-		System.arraycopy(mailAgent.getMessage(), 0, messageList, 0, mailAgent.getMessageCount());
-		
-//		Message[] messageList = mailAgent.getMessage();
-
-		
 		
 		List<Mail> mailList = new ArrayList<Mail>();
 
-		for (Message m : messageList) {
+		for (Message m : mailAgent.getMessage()) {
 			Mail mail = new Mail();
+			mail.setAccountNo(account.getAccountNo());
+			
 			System.out.println("MessageNumber : " + m.getMessageNumber());
 			mail.setMailNo(m.getMessageNumber());
 			System.out.println("Folder : " + m.getFolder().getFullName());
@@ -98,21 +90,22 @@ public class MailDaoImpl implements MailDao {
 	}
 
 	@Override
-	public Map<String, Object> getMail(int mailNo) throws Exception{
-		IMAPAgent mailAgent = new IMAPAgent("imap.daum.net", "2872zo@daum.net", "lkj6322*");
-//		IMAPAgent mailAgent = new IMAPAgent("imap.naver.com", "dbstmdrb000@naver.com", "poii6322!@");
-//		IMAPAgent mailAgent = new IMAPAgent("imap.gmail.com", "yunsg3023@gmail.com", "lkjh6322");
+	public Map<String, Object> getMail(Account account, int mailNo) throws Exception{
+		IMAPAgent mailAgent = new IMAPAgent("imap." + account.getAccountDomain(), account.getAccountId(), account.getAccountPw());
 
 		mailAgent.open();
 
 		Message message = mailAgent.getDefaultFolder().getMessage(mailNo);
 
 		Mail mail = new Mail();
+		mail.setAccountNo(account.getAccountNo());
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		System.out.println("MessageNumber : " + message.getMessageNumber());
 		mail.setMailNo(message.getMessageNumber());
+		
+		
 		System.out.println("Folder : " + message.getFolder().getFullName());
 		mail.setFolder(message.getFolder());
 		System.out.println("SentDate : " + message.getSentDate());
@@ -242,5 +235,27 @@ public class MailDaoImpl implements MailDao {
 		}
 
 		return fileList;
+	}
+
+	@Override
+	public boolean accountVaildationCheck(Account account) {
+		boolean result = true;
+		
+		IMAPAgent mailAgent = new IMAPAgent("imap." + account.getAccountType().substring(1), account.getAccountId()+account.getAccountType(), account.getAccountPw());
+		
+		try {
+			mailAgent.open();
+		} catch (MessagingException | IOException e) {
+			System.out.println("MailAccount Link Fail!");
+			result = false;
+		}finally {
+			try {
+				mailAgent.close();
+			} catch (MessagingException e) {
+				System.out.println("mailAgent Close Fail!");
+			}
+		}
+		
+		return result;
 	}
 }

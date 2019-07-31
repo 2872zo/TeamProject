@@ -18,17 +18,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.phoenix.mvc.common.Event;
-import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.cafe.CafeManageDao;
 import com.phoenix.mvc.service.cafe.CafeMemberDao;
 import com.phoenix.mvc.service.cafe.CafePostDao;
 import com.phoenix.mvc.service.cafe.CafePostService;
+import com.phoenix.mvc.service.domain.Account;
 import com.phoenix.mvc.service.domain.Board;
 import com.phoenix.mvc.service.domain.Mail;
 import com.phoenix.mvc.service.domain.Post;
 import com.phoenix.mvc.service.domain.Reply;
 import com.phoenix.mvc.service.mail.MailDao;
 import com.phoenix.mvc.service.mail.MailService;
+import com.phoenix.mvc.service.user.UserDao;
 
 @Service
 @Transactional
@@ -38,19 +39,22 @@ public class MailServiceImpl implements MailService {
 	@Qualifier("mailDaoImpl")
 	private MailDao	mailDao;
 	
+	@Autowired
+	@Qualifier("userDaoImpl")
+	private UserDao	userDao;
+	
 	public MailServiceImpl() {
 		System.out.println(getClass().getName() + "default Constuctor");
 	}
 
 	@Override
-	public List<Mail> getMailList(Search search) throws Exception {
-		//유저 번호를 통해 연동한 계정정보 가져오는 도메인 필요 => 인터셉터에서 세션에 심어줄것
-		return mailDao.getMailList(search);
+	public List<Mail> getMailList(Account account) throws Exception {
+		return mailDao.getMailList(account);
 	}
 
 	@Override
-	public Map<String, Object> getMail(int mailNo) throws Exception {
-		return mailDao.getMail(mailNo);
+	public Map<String, Object> getMail(Account account, int mailNo) throws Exception {
+		return mailDao.getMail(account, mailNo);
 	}
 
 	@Override
@@ -87,6 +91,20 @@ public class MailServiceImpl implements MailService {
 	public boolean deleteMail(int[] mailNoArray) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public boolean addMailAccount(Account account) {
+		if(mailDao.accountVaildationCheck(account)) {
+			return userDao.addMailAccount(account);
+		}
+		
+		return false;
+	}
+
+	@Override
+	public boolean deleteMailAccount(Account account) {
+		return userDao.deleteMailAccount(account);
 	}
 
 }

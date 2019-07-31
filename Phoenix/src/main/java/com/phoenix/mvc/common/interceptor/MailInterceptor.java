@@ -12,6 +12,7 @@ import com.phoenix.mvc.service.cafe.CafeManageDao;
 import com.phoenix.mvc.service.cafe.CafeManageService;
 import com.phoenix.mvc.service.cafe.CafeMemberService;
 import com.phoenix.mvc.service.cafe.CafePostService;
+import com.phoenix.mvc.service.domain.Account;
 import com.phoenix.mvc.service.domain.Board;
 import com.phoenix.mvc.service.domain.Cafe;
 import com.phoenix.mvc.service.domain.CafeApplication;
@@ -39,7 +40,7 @@ public class MailInterceptor extends HandlerInterceptorAdapter {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)	throws Exception {
-		System.out.println("\n\n================================ Interceptor > preHandle START ================================");
+		System.out.println("\n\n================================ MailInterceptor > preHandle START ================================");
 		String requestURI = request.getRequestURI();
 		System.out.println(">>>>>>>>>>> 요청URL : " + requestURI);
 
@@ -57,12 +58,21 @@ public class MailInterceptor extends HandlerInterceptorAdapter {
 			return false;
 		}
 		// 연동계정 확인
-//		else if ( ) {
-//
-//		}
+		else {
+			List<Account> accountList = userService.getMailAccount(user.getUserNo());
+			
+			if(accountList != null && accountList.size() > 0) {
+				System.out.println("연동된 메인 계정 존재!");
+				request.setAttribute("accountList", accountList);
+			}else {
+				System.out.println("연동된 메일 계정 없음!");
+				response.sendRedirect(request.getContextPath() + "/user/updateUserView");
+				return false;
+			}
+		}
 
 		// 모든 경우가 만족
-		System.out.println("================================ Interceptor > preHandle END ================================\n\n");
+		System.out.println("================================ MailInterceptor > preHandle END ================================\n\n");
 		return true;
 	}
 }

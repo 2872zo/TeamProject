@@ -6,6 +6,8 @@ public class Account {
 	private String accountType;
 	private String accountId;
 	private String accountPw;
+	private String accountDomain;
+	
 	public int getAccountNo() {
 		return accountNo;
 	}
@@ -36,10 +38,16 @@ public class Account {
 	public void setAccountPw(String accountPw) {
 		this.accountPw = accountPw;
 	}
+	public String getAccountDomain() {
+		return accountDomain;
+	}
+	public void setAccountDomain(String accountDomain) {
+		this.accountDomain = accountDomain;
+	}
 	
 	@Override
 	public String toString() {
 		return "Account [accountNo=" + accountNo + ", userNo=" + userNo + ", accountType=" + accountType
-				+ ", accountId=" + accountId + ", accountPw=" + accountPw + "]";
+				+ ", accountId=" + accountId + ", accountPw=" + accountPw + ", accountDomain=" + accountDomain + "]";
 	}
 }

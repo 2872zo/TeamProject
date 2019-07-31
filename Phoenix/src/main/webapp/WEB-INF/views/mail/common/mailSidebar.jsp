@@ -4,10 +4,21 @@
 	<ul class="metismenu" id="menu">
 		<li>
 			<span class="nav-text">
+<%@ page contentType="text/html; charset=utf-8"%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 				<div class="card">
 					<div class="card-body">
-					
+							<select id="accountSelector">
+								
+								<option value="0">전체</option>
+								<c:set var="i" value="1"/>
+								<c:forEach items="${accountList }" var="account">
+									<option value="${i }">${account.accountId }</option>
+									<c:set var="i" value="${i+1 }"/>
+								</c:forEach>								
+							</select>
 						
 							<a href="email-compose.html" class="btn btn-primary btn-block">Compose</a>
 							<div class="mail-list mt-4">

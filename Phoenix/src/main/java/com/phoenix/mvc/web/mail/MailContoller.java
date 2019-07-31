@@ -15,6 +15,7 @@ import javax.mail.Multipart;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.phoenix.mvc.common.Search;
+import com.phoenix.mvc.service.domain.Account;
 import com.phoenix.mvc.service.domain.Mail;
 import com.phoenix.mvc.service.mail.MailService;
 import com.phoenix.mvc.service.mail.impl.IMAPAgent;
@@ -45,16 +47,37 @@ public class MailContoller {
 	}
 
 	@RequestMapping("getMailList")
-	public String getMailList(@ModelAttribute Search search, Map<String, Object> map) throws Exception {
+	public String getMailList(@ModelAttribute Search search, Map<String, Object> map, HttpServletRequest req) throws Exception {
+		List<Account> accountList = (List<Account>)req.getAttribute("accountList");
+		List<Mail> mailList = new ArrayList<Mail>();
 		
-		map.put("mailList", mailService.getMailList(search));
+		if(search.getSearchCondition() == null || search.getSearchCondition().equals("0")) {
+			for(Account account : accountList) {
+				mailList.addAll(mailService.getMailList(account));
+			}
+		}else {
+			mailList = mailService.getMailList(accountList.get(Integer.parseInt(search.getSearchCondition()) - 1));
+		}
+		
+		map.put("mailList", mailList);
 		
 		return "/mail/listMail";
 	}
 
 	@RequestMapping("getMail")
-	public String getMail(Map<String, Object> map, @RequestParam int mailNo) throws Exception {
-		Map<String, Object> resultMap = mailService.getMail(mailNo);
+	public String getMail(Map<String, Object> map, @RequestParam int mailNo, @RequestParam int accountNo, HttpServletRequest req) throws Exception {
+		List<Account> accountList = (List<Account>)req.getAttribute("accountList");
+		
+		Account account = null;
+		
+		for(Account ac : accountList) {
+			if(ac.getAccountNo() == accountNo) {
+				account = ac;
+				break;
+			}
+		}
+		
+		Map<String, Object> resultMap = mailService.getMail(account, mailNo);
 		
 		map.put("mail", resultMap.get("mail"));
 		map.put("fileList", resultMap.get("fileList"));
@@ -96,6 +119,10 @@ public class MailContoller {
 //  
 //  List<Mail> mailList = new ArrayList<Mail>();
 	
+	@RequestMapping("modalTest")
+	public String modalTest() {
+		return "/common/accountModal";
+	}
 	
 	
 	
