@@ -27,6 +27,10 @@ i:hover {
 	width: 80%;
 }
 
+#login1{
+	margin-bottom:2%;
+}
+
 .cursor {
 	cursor: pointer;
 }
@@ -117,6 +121,7 @@ input[type="button"] {
 input[type="checkbox"] {
 	margin-top: 20px;
 }
+
 </style>
 
 
@@ -193,9 +198,11 @@ input[type="checkbox"] {
                                             </a>
                                         </li>
                                         <hr class="my-2">
+                                        <c:if test="${user.userRoleCode=='ur100'}">
                                         <li>
                                             <a href=/user/listUser><i class="icon-list"></i> <span>회원목록</span></a>
                                         </li>
+                                        </c:if>
                                         <li><a href="page-login.html"><i class="icon-list"></i> <span>신고목록</span></a></li>
                                         <li><a href="page-login.html"><i class="icon-list"></i> <span>문의목록</span></a></li>
                                     </ul>
@@ -268,7 +275,12 @@ input[type="checkbox"] {
 									<input type="password" class="form-control"
 										placeholder="PASSWORD" name="password">
 								</div>
-								<button class="btn login-form__btn submit w-100" id="login1">로그인</button>
+								<button class="btn login-form__btn submit w-100" id="login1" style= "margin-bottom:50" >로그인</button>
+								<center>								
+								<a id="kakaos"><img src="/images/uploadFiles/kakao/kakaos.jpg" width=210; height=45;/></a>
+     							<a id="navers"><img src="/images/uploadFiles/naver/navers.jpg" width=210; height=45;/></a>		
+						
+     							</center>
 							</form>
 							<p class="mt-5 login-form__footer">
 								<a href="/user/addUserView" class="text-primary" id="addUser1">회원가입</a>

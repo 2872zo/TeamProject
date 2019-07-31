@@ -34,13 +34,6 @@ img {
 <!--셀렉터 사이즈 조절-->
 
 
-<!--  ///////////////////////// JavaScript ////////////////////////// -->
-<script type="text/javascript">
-	$(function() {
-
-	});
-</script>
-
 </head>
 
 <body>
@@ -104,6 +97,20 @@ img {
 
 			<!-- 피드시작 -->
 			<div class="col-lg-8 col-xl-9">
+			
+				<div class="card">
+                      <div class="card-body">
+                          <form action="#" class="form-profile">
+                              <div class="form-group">
+                                  <textarea class="form-control" name="textarea" id="textarea" cols="30" rows="2" placeholder="Post a new message"></textarea>
+                              </div>
+                              <div class="d-flex align-items-center">
+                                  <button class="btn btn-primary px-3 ml-4">Send</button>
+                              </div>
+                          </form>
+                      </div>
+                  </div>
+                  
 				<div class="card">
 					<div class="card-body">
 						<c:set var="i" value="0" />
@@ -133,6 +140,7 @@ img {
 									</div>
 
 									<p>${timeLine.post }</p>
+									<input type="hidden" class="postSize" value ="${timeLine.postSize }"/>
 									
 									<c:set var = "j" value = "0"/>
 									
@@ -204,13 +212,45 @@ img {
 	<script type="text/javascript">
 
 		$(window).scroll(function(){
+			
 
-			if($(window).scrollTop()>=$(document).height()- $(window).height()){
+			if($(window).scrollTop()>=($(document).height()- $(window).height())*0.9){
 
-				
+				alert("hi")
+				loadNext();
 				}
 
 		});
+
+		function loadNext(){
+			var currentPage = $(".postSize").val();
+			var subject = '${search.subject}'
+				alert("currentPage"+currentPage)
+				alert("subject"+subject)
+			$.ajax({
+				url : "/sns/json/getTimeLine",
+				method : "POST",
+				headers : {
+					"Accept" : "application/json",
+					"Content-Type" : "application/json ; charset=UTF-8"
+				},
+				data : JSON.stringify({
+					currentPage : currentPage,
+					subject : subject
+				}),
+				dataType : "text",
+				success : function(serverData) {
+					alert(serverData)
+					var start = ""
+					if(serverData.timeLine !=""){
+
+						
+
+					}
+				}//success 끝
+
+			});
+		}
 	</script>
 	<script src="/js/custom/cafeCommon.js"></script>
 </body>

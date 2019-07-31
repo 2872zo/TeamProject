@@ -15,6 +15,7 @@
 
 <!-- Custom Stylesheet -->
 <link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet">
 <link href="/css/style.css" rel="stylesheet">
 
 <link rel="stylesheet" href="/css/custom/scroll-top.css">
@@ -30,6 +31,14 @@
     	.webSearch{
     	
     		color:#f5a142;
+    	}
+    	.brand-title{
+    		
+    		color:#f5a142;
+    		background-color : white;
+    		font-family: 'Ubuntu', sans-serif;
+    		font-size:30px;
+    		margin-left:15px;
     	}
     	
     	#webTitle{
@@ -207,10 +216,11 @@
            			<div class="col-md-1">
            			</div>
            			
-           			<div class="card-body col-md-7">
+           			<div class="card-body col-md-7" style="margin-left:32px;">
            				<div class="bootstrap-media">
+           					
            					<ul class="list-unstyled">
-	           				
+	           				<li style="color:black;"><strong>웹사이트</strong></li>
 	           				<c:set var="i" value="0"/>
 	           				<c:forEach var="web" items="${webList}">
 	           					<c:set var="i" value="${i+1}"/>

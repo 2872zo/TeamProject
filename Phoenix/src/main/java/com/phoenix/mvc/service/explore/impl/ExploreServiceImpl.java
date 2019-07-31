@@ -32,9 +32,19 @@ public class ExploreServiceImpl implements ExploreService{
 	
 
 	@Override
-	public List getUnifiedExploreList(Search search) {
+	public Map getUnifiedExploreList(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		Map returnMap = new HashMap();
+		
+		Map blogMap = this.getBlogExploreList(search);
+		Map cafeMap = this.getCafeExploreList(search);
+		Map webMap = this.getWebsiteExploreList(search);
+		
+		returnMap.put("blogList", blogMap.get("blogList"));
+		returnMap.put("cafeList", cafeMap.get("cafeList"));
+		returnMap.put("webList", webMap.get("webList"));
+		
+		return returnMap;
 	}
 	
 

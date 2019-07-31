@@ -20,7 +20,8 @@
 		<result property="userRoleCode" 		column="user_role_code" 		jdbcType="VARCHAR" />
 		<result property="userStatusCode" 		column="user_status_code" 		jdbcType="VARCHAR" />
 		<result property="kakaoId" 				column="kakao_id" 				jdbcType="VARCHAR" />
-		<result property="naverId" 				column="naver_id" 				jdbcType="VARCHAR" />				
+		<result property="naverId" 				column="naver_id" 				jdbcType="VARCHAR" />
+						
 	</resultMap>
 	
 	<resultMap id="accountSelectMap" type="Account">
@@ -36,7 +37,7 @@
 	 	<selectKey keyProperty="userNo" resultType="int" order="BEFORE">
 	 		SELECT SEQ_USERS_USER_NO.NEXTVAL FROM DUAL
 	 	</selectKey>
-		INSERT INTO USERS (user_no, user_id, user_name, user_nickname, password, email, phone, profile_img, reg_date, kakao_id, naver_id) 
+		INSERT INTO USERS (user_no, user_id, user_name, user_nickname, password, email, phone, profile_img, reg_date, kakao_id, naver_id, code) 
 		VALUES ( #{userNo}, #{userId:VARCHAR}, #{userName:VARCHAR}, #{userNickname:VARCHAR}, #{password:VARCHAR}, #{email:VARCHAR}, #{phone:NUMERIC}, #{profileImg:VARCHAR}, SYSDATE, #{kakaoId:VARCHAR}, #{naverId:VARCHAR})
 
 	 </insert>

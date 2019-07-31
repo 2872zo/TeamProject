@@ -43,17 +43,44 @@ public class ExploreController {
 	
 	
 	@RequestMapping("getUnifiedList") //처음 메인화면에서 검색하면 이거 실행
-	public String getUnifiedExploreList(@ModelAttribute Search search, Model model)
+	public String getUnifiedExploreList(@ModelAttribute Search search, Model model) throws Exception
 	{
 		System.out.println("/explore/getUnifiedExploreList 실행");
 		
-		if(search.getSearchKeyword()==null) //URL 치고 들어오는경우
+		int unifiedPageList=2;
+		
+		if(search.getSearchKeyword()==null) { //URL 치고 들어오는경우
 			search.setSearchKeyword("");
+		}
+		if(search.getSearchTheme()==0) { //검색종류 블로그 이 컨트롤러 탔으면 일단 무조건 0이지
+			search.setSearchTheme(0);
+		}
+		if(search.getOrderState()==0) { // 처음 치고 들어오는경우 관련도 순으로 뽑음
+			search.setOrderState(0);
+		}
+		if(!search.isEngineAll() && !search.isEngineDaum() && !search.isEngineNaver()) { //다 false면 
+			search.setEngineAll(true);
+			search.setEngineDaum(true);
+			search.setEngineNaver(true);
+		}
+		if(search.isEngineDaum() && search.isEngineNaver()) { //둘다 true면 전체선택체크되도록
+			search.setEngineAll(true);
+		}
+		if(search.getCurrentPage()==0) { //page설정
+			search.setCurrentPage(1);
+		}
 		
+		search.setPageSize(unifiedPageList);
+		Map returnMap = exploreService.getUnifiedExploreList(search);
 		
+		model.addAttribute("blogList", returnMap.get("blogList"));
+		model.addAttribute("cafeList", returnMap.get("cafeList"));
+		model.addAttribute("webList", returnMap.get("webList"));
 		
-		
-		return "explore/listUnifiedExplore";
+		if( ((List<Blog>)returnMap.get("blogList")).size()==0 &&  ((List<WebExplore>)returnMap.get("webList")).size()==0 &&  ((List<CafeExplore>)returnMap.get("cafeList")).size()==0 )
+			return "explore/noSearchResultPage";
+		else
+			return "explore/listUnifiedExplore";
 	}
 	
 	@RequestMapping("getBlogList")

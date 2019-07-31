@@ -18,6 +18,7 @@ public class User {
 	private String userStatusCode;
 	private String kakaoId;
 	private String naverId;
+	private String code;
 
 
 	////////////////////////////////////////////////////////////////////userNo추가
@@ -156,17 +157,26 @@ public class User {
 	}
 
 
+	public String getCode() {
+		return code;
+	}
+
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+
 	@Override
 	public String toString() {
 		return "User [userNo=" + userNo + ", userId=" + userId + ", userName=" + userName + ", userNickname="
 				+ userNickname + ", password=" + password + ", email=" + email + ", phone=" + phone + ", profileImg="
 				+ profileImg + ", regDate=" + regDate + ", userRoleCode=" + userRoleCode + ", userStatusCode="
-				+ userStatusCode + ", kakaoId=" + kakaoId + ", naverId=" + naverId + "]";
+				+ userStatusCode + ", kakaoId=" + kakaoId + ", naverId=" + naverId + ", code=" + code + "]";
 	}
 
 
-
-
+	
 	
 	
 	

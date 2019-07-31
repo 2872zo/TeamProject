@@ -129,9 +129,19 @@
                                             <label class="col-lg-4 col-form-label" for="phone1"><h5>전화번호 <span class="text-danger">*</span></h5>
                                             </label>
                                             <div class="col-lg-6">
-                                            	<input type="text" class="form-control" id="phone1" name="phone" placeholder="-없이 숫자만 입력하세요">                                               
+                                            	<input type="text" class="form-control" id="phone1" name="phone" placeholder="-없이 숫자만 입력하세요"><button type="button" class="btn btn-primary">전송</button>                                               
                                             	</div>
-                                       		   </div><hr>
+                                       		   </div>
+                                       		   <div class="form-group">
+												    <label for="ssn" class="col-sm-offset-1 col-sm-3 control-label"></label>
+												    <center>
+												    <div class="col-lg-4" id="inj" style="display:none">												    
+												      <input type="text" class="form-control" id="sms" name="sms" placeholder="인증번호를 입력해주세요.">
+												      <button type="button" class="btn btn-primary">인증</button>
+												    </div>
+												    </center>
+											    </div>
+										                                       		   <hr>
                                        		   
                                        <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="email1"><h5>이메일<span class="text-danger">*</span></h5>
@@ -140,14 +150,16 @@
                                              <input type="text" class="form-control" id="email1" name="email">
                                             </div>
                                        	   </div><hr>
-                                       	   
+                                       	   .
                                        	   <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="profileImg1"><h5>프로필이미지</h5>
-                                             </label>
+                                            <label class="col-lg-4 col-form-label" for="val-bannerImg"><h5>회원 프로필 </h5>
+                                            </label>                                           
                                             <div class="col-lg-6">
-                                             <input type="text" class="form-control" id="profileImg1" name="profileImg">
-                                            </div>
-                                       	   </div><hr>		   
+                                               <div><img src="/images/uploadFiles/profileimg/${user.profileImg}" width="300"; height="200px";/>
+                                               </div>
+                                                <input type="file" class=""form-control-file"" id="uploadFile" name="uploadFile">
+                                               </div>
+                                        </div> <hr>		   
                                        		   
 				  				<div class="form-group row">
                                 	<div class="col-lg-8 ml-auto">
@@ -184,6 +196,8 @@
 	<script src="/plugins/sweetalert/js/sweetalert.min.js"></script>
 	<script type="text/javascript">
 
+
+	var checkSessionUser = ${empty sessionScope.user};
 	
 	$(function() {
 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
@@ -207,6 +221,8 @@
 	//유효성 검사
 	function fncAddUser() {
 
+		
+		var cch = 0;
 		var userName = $("input[name='userName']").val();
 		var userId = $("input[id='userid']").val();
 		var password = $("input[id='passWord']").val();
@@ -256,6 +272,10 @@
 		if (email == null || email.length < 1) {
 			sweetAlert("이메일을 입력하세요.","","error");
 			return;
+		}
+		if(cch !=1 ){
+			sweetAlert("반드시 휴대전화 인증을 해야함.","","error");
+			return;			
 		}else{
 			//alert("입력  : "+userId);
 			//alert("입력  : "+pw);
@@ -281,7 +301,7 @@
 						sweetAlert("아이디가 중복되었습니다.","","error");
 						return false;
 					}else{								
-						$("#adduser").attr("method", "POST").attr("action","/user/addUser").submit();						
+						$("#adduser").attr("method", "POST").attr("action","/user/addUser").attr("enctype","multipart/form-data").submit();						
 					}							
 				}
 			});//ajax
@@ -367,11 +387,74 @@
 									});
 		  						  });
 								});
+
+	$(function() {
+		 
+ 		var rand = "";
+	
+		
+		$("button:contains('전송')").on("click" , function() {
+			sweetAlert("인증번호 전송","","success");
+			
+	
+			
+			
+			$("#inj").show();
+		
+			
+			$.ajax({ 
+				   url: "/user/json/sendSms",
+				   data: { 
+					   receiver: $("#phone1").val()
+					   }, 
+					   type: "post",
+					   dataType:"json", 
+			
+					   success : function(JSONData){
+							console.log(JSONData);   
+			
+							rand = JSONData.rand;
+				   
+				   }  
+		
+				 }); 
+			
+				});
+		   
+		   
+			$("button:contains('인증')").on("click" ,function(){ 
+		
+				var join = document.getElementById('join');
+
+				var phone = document.getElementById("phone");
+				
+				var code = $("#sms").val();
+	
+				
+			   if (rand == code) { 
+		   
+			   sweetAlert("인증 성공","","success");
+			   
+			   $("#inj").hide();
+				phone.style.border = "3px solid gold";
+				phone.readOnly = true;
+				$("#pij").hide();
+			   	cch = 1;
+				
+		   } else
+		  		 { 
+			   sweetAlert("인증 실패","","error"); 
+		  	 	} 
+		 	   
+		   });
+	   }); 
+	   
+	   
 	
 	
 </script>
-	<script src="/js/custom/cafeCommon.js"></script>
-
+	<script src="/js/custom/userCommon.js"></script>
+	<script src="/js/custom/toolbarScript.js"></script>
 </body>
 
 </html>
