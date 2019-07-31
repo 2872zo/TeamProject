@@ -4,8 +4,10 @@ import java.util.Map;
 
 import com.phoenix.mvc.service.domain.ShoppingmallSearch;
 
-public interface ShoppingmallDao {
-
-	public Map<String,Object> getTmonProductList(ShoppingmallSearch search);
+public interface ShoppingmallService {
 	
+	public Map<String,Object> getShoppingmallProductList(ShoppingmallSearch search);
+	
+	
+
 }
