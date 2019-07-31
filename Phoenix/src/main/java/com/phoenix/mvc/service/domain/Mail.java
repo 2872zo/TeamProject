@@ -10,6 +10,7 @@ import javax.mail.Folder;
 public class Mail {
 
 	private int mailNo;
+	private int accountNo;
 	private Folder folder;
 	private Date sentDate;
 	private String sender;
@@ -25,6 +26,12 @@ public class Mail {
 	}
 	public void setMailNo(int mailNo) {
 		this.mailNo = mailNo;
+	}
+	public int getAccountNo() {
+		return accountNo;
+	}
+	public void setAccountNo(int accountNo) {
+		this.accountNo = accountNo;
 	}
 	public Folder getFolder() {
 		return folder;
@@ -77,8 +84,8 @@ public class Mail {
 	
 	@Override
 	public String toString() {
-		return "Mail [mailNo=" + mailNo + ", folder=" + folder + ", sentDate=" + sentDate + ", sender=" + sender
-				+ ", senderAddr=" + senderAddr + ", recipients=" + recipients + ", seen=" + seen + ", subject="
-				+ subject + ", content=" + content + "]";
+		return "Mail [mailNo=" + mailNo + ", accountNo=" + accountNo + ", folder=" + folder + ", sentDate=" + sentDate
+				+ ", sender=" + sender + ", senderAddr=" + senderAddr + ", recipients=" + recipients + ", seen=" + seen
+				+ ", subject=" + subject + ", content=" + content + "]";
 	}
 }

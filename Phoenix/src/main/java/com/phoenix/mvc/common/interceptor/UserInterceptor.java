@@ -12,7 +12,7 @@ import com.phoenix.mvc.service.cafe.CafeManageDao;
 import com.phoenix.mvc.service.cafe.CafeManageService;
 import com.phoenix.mvc.service.cafe.CafeMemberService;
 import com.phoenix.mvc.service.cafe.CafePostService;
-import com.phoenix.mvc.service.domain.Account;
+import com.phoenix.mvc.service.chatting.ChattingService;
 import com.phoenix.mvc.service.domain.Board;
 import com.phoenix.mvc.service.domain.Cafe;
 import com.phoenix.mvc.service.domain.CafeApplication;
@@ -29,18 +29,19 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-public class MailInterceptor extends HandlerInterceptorAdapter {
+public class UserInterceptor extends HandlerInterceptorAdapter {
+
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
 
-	public MailInterceptor() {
-		System.out.println("Mail Interceptor 생성");
+	public UserInterceptor() {
+		System.out.println("UserInterceptor 생성했습니다.");
 	}
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)	throws Exception {
-		System.out.println("\n\n================================ MailInterceptor > preHandle START ================================");
+		System.out.println("\n\n================================ UserInterceptor > preHandle 시작 ================================");
 		String requestURI = request.getRequestURI();
 		System.out.println(">>>>>>>>>>> 요청URL : " + requestURI);
 
@@ -49,30 +50,21 @@ public class MailInterceptor extends HandlerInterceptorAdapter {
 
 		// 세션의 로그인 정보
 		User user = (User) request.getSession().getAttribute("user");
-
-
-		// 로그인 여부 확인
-		if (user == null) {
-			System.out.println(">>> User없음");
-			response.sendRedirect(request.getContextPath() + "/user/loginView?targetURL=" + request.getRequestURI());
+		
+	//회원 정보,목록,수정 
+	if(requestURI.contains("/user/getUser") || requestURI.contains("/user/listUser") || requestURI.contains("/user/updateUser")) {
+		if (user==null) {
+			response.sendRedirect("/user/loginView");
 			return false;
 		}
-		// 연동계정 확인
-		else {
-			List<Account> accountList = userService.getMailAccount(user.getUserNo());
-			
-			if(accountList != null && accountList.size() > 0) {
-				System.out.println("연동된 메인 계정 존재!");
-				request.setAttribute("accountList", accountList);
-			}else {
-				System.out.println("연동된 메일 계정 없음!");
-				response.sendRedirect(request.getContextPath() + "/user/updateUserView");
-				return false;
-			}
-		}
-
-		// 모든 경우가 만족
-		System.out.println("================================ MailInterceptor > preHandle END ================================\n\n");
-		return true;
+	}else {
+		//return true;
+		
 	}
+	// 모든 경우가 만족
+		System.out.println("================================ UserInterceptor > preHandle 끝 ===============================\n\n");
+		return true;
+	
+	}
+
 }

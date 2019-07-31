@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.phoenix.mvc.common.Search;
+import com.phoenix.mvc.service.domain.Account;
 import com.phoenix.mvc.service.domain.Cafe;
 import com.phoenix.mvc.service.domain.User;
 import com.phoenix.mvc.service.user.UserDao;
@@ -58,6 +59,21 @@ public class UserDaoImpl implements UserDao{
 	public User selectNaver(String naverId) throws Exception{
 		return sqlSession.selectOne("UserMapper.selectNaver",naverId);
 	}
-	
-	
+
+	///////////////////////////////////////////승규 시작///////////////////////////////////////////////
+	@Override
+	public boolean addMailAccount(Account account) {
+		return sqlSession.insert("UserMapper.addMailAccount", account) == 1? true : false;
+	}
+
+	@Override
+	public boolean deleteMailAccount(Account account) {
+		return sqlSession.delete("UserMapper.deleteMailAccount", account) == 1? true : false;
+	}
+
+	@Override
+	public List<Account> getMailAccount(int userNo) {
+		return sqlSession.selectList("UserMapper.getMailAccount", userNo);
+	}
+	///////////////////////////////////////////승규 끝///////////////////////////////////////////////	
 }

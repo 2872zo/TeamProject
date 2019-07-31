@@ -20,14 +20,24 @@
 		<result property="userRoleCode" 		column="user_role_code" 		jdbcType="VARCHAR" />
 		<result property="userStatusCode" 		column="user_status_code" 		jdbcType="VARCHAR" />
 		<result property="kakaoId" 				column="kakao_id" 				jdbcType="VARCHAR" />
-		<result property="naverId" 				column="naver_id" 				jdbcType="VARCHAR" />				
+		<result property="naverId" 				column="naver_id" 				jdbcType="VARCHAR" />
+						
+	</resultMap>
+	
+	<resultMap id="accountSelectMap" type="Account">
+		<result property="accountNo" 			column="account_no" 			jdbcType="NUMERIC"/>
+		<result property="userNo" 				column="user_no" 				jdbcType="NUMERIC"/>
+		<result property="accountType"			column="account_type" 			jdbcType="VARCHAR" />
+		<result property="accountId"			column="account_id" 			jdbcType="VARCHAR" />
+		<result property="accountPw" 			column="account_pw" 			jdbcType="VARCHAR" />
+		<result property="accountDomain" 		column="account_domain"			jdbcType="VARCHAR" />
 	</resultMap>
 	
 	<insert 	id="addUser"		parameterType="com.phoenix.mvc.service.domain.User" >
 	 	<selectKey keyProperty="userNo" resultType="int" order="BEFORE">
 	 		SELECT SEQ_USERS_USER_NO.NEXTVAL FROM DUAL
 	 	</selectKey>
-		INSERT INTO USERS (user_no, user_id, user_name, user_nickname, password, email, phone, profile_img, reg_date, kakao_id, naver_id) 
+		INSERT INTO USERS (user_no, user_id, user_name, user_nickname, password, email, phone, profile_img, reg_date, kakao_id, naver_id, code) 
 		VALUES ( #{userNo}, #{userId:VARCHAR}, #{userName:VARCHAR}, #{userNickname:VARCHAR}, #{password:VARCHAR}, #{email:VARCHAR}, #{phone:NUMERIC}, #{profileImg:VARCHAR}, SYSDATE, #{kakaoId:VARCHAR}, #{naverId:VARCHAR})
 
 	 </insert>
@@ -115,5 +125,43 @@
 		where naver_Id = #{value}
 
 	 </select> 
+	 
+	 <insert id="addMailAccount" parameterType="Account">
+	 	INSERT 
+	 	INTO account
+	 		(account_no,
+	 	     user_no,
+	 	     account_type,
+	 	     account_id,
+	 	     account_pw,
+	 	     account_domain)
+	 	VALUES
+	 		(seq_account_account_no.NEXTVAL,
+			 #{userNo},
+			 <if test='accountType == "@naver.com"'>'ua100'</if>
+			 <if test='accountType == "@daum.net"'>'ua101'</if>
+			 <if test='accountType == "@gmail.com"'>'ua102'</if>,
+			 '${accountId}${accountType}',
+			 #{accountPw},
+			 #{accountDomain})
+	 </insert>
+	 
+	 <delete id="deleteMailAccount" parameterType="Account">
+	 	DELETE
+	 		account
+	 	WHERE
+	 		user_no = #{userNo}
+	 		AND account_type = #{accountType}
+	 		AND account_id = #{accountId}
+	 </delete>
+	 
+	 <select id="getMailAccount" parameterType="int" resultMap="accountSelectMap">
+	 	SELECT
+	 		*
+	 	FROM
+	 		account
+	 	WHERE
+	 		user_no = #{value} 
+	 </select>
 	 
 </mapper>

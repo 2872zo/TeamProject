@@ -16,6 +16,14 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	@Autowired
 	@Qualifier(value = "cafeInterceptor")
 	private HandlerInterceptor interceptor;
+	
+	@Autowired
+	@Qualifier(value = "mailInterceptor")
+	private HandlerInterceptor mailInterceptor;
+	
+	@Autowired
+	@Qualifier(value = "chatInterceptor")
+	private HandlerInterceptor chatInterceptor;
 		
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -25,6 +33,14 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/cafe/*/getCafeGrade")
                 .excludePathPatterns("/user/login")
                 .excludePathPatterns("/user/logout"); //로그인 쪽은 예외처리를 한다.
+        
+        registry.addInterceptor(mailInterceptor)
+        		.addPathPatterns("/mail/**")
+        		.excludePathPatterns("/mail/modalTest")
+        		.excludePathPatterns("/mail/json/**");
+        
+        registry.addInterceptor(chatInterceptor)
+        .addPathPatterns("/chat/**");
         
     }
     

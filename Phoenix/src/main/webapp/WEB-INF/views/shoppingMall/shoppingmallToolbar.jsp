@@ -24,6 +24,9 @@
 				<a href="/">
 					<span class="brand-title align-middle font-weight-bolder text-center">Phoenix</span>
 				</a>
+				<a href="/">
+					<span class="shopping-title align-middle font-weight-bolder text-center">쇼핑</span>
+				</a>
 				<div class="input-group col-lg-6" style='width: 50%; margin :15px'>
 					<input type="text" class="form-control input-rounded form-control-lg" id='searchKeyword' name="searchKeyword" value="${search.searchKeyword}" style="border: 1px solid #f5a142;">
 					<div class="input-group-append">
@@ -34,7 +37,7 @@
 				</div>
 				
 				<c:if test="${empty user.userNo}"> <!-- 로그인 안되어있을때 -->
-					<div class="input-group col-lg-2"  style='margin-top :0px; margin-left:200px; padding-left: 60px;'>
+					<div class="input-group col-lg-2"  style='margin-top :0px; margin-left:80px; padding-left: 60px;'>
 						<button type="button" class="btn btn-primary login" data-toggle="modal" data-target="#exampleModalCenter">
 							<i class="icon-key">Login</i>
 						</button>

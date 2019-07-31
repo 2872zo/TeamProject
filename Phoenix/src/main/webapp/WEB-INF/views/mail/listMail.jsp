@@ -180,6 +180,7 @@
 										<c:forEach items="${mailList }" var="mail">
 											<tr>
 												<input type="hidden" class="mailNo" value="${mail.mailNo }">
+												<input type="hidden" class="accountNo" value="${mail.accountNo }">
 												<td><input type="checkbox"></td>
 												<td>
 													<c:if test="${mail.seen}">
@@ -253,7 +254,7 @@
 	<script>
 		$(function(){
 			$("tr").on("click", function(){
-				location.href = "/mail/getMail?mailNo=" + $(this).find(".mailNo").val();
+				location.href = "/mail/getMail?mailNo=" + $(this).find(".mailNo").val() + "&accountNo=" + $(this).find(".accountNo").val();
 			});
 		});
 	</script>

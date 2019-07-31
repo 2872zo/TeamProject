@@ -64,8 +64,7 @@
 							//alert("status : " + status);
 							//alert("JSONData.result : \n" + JSONData.result);
 
-							if (JSONData.result == true
-									&& JSONData.memberNickname != "") {
+							if (JSONData.result == true&& JSONData.memberNickname != "") {
 								$("#here").html("<h7 style='color:green;'>사용가능</h7>")
 							} else if (JSONData.result == false) {
 								$("#here").html("<h7>사용불가능</h7>")

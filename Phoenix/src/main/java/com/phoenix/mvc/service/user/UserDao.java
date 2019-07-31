@@ -3,6 +3,7 @@ package com.phoenix.mvc.service.user;
 import java.util.List;
 
 import com.phoenix.mvc.common.Search;
+import com.phoenix.mvc.service.domain.Account;
 import com.phoenix.mvc.service.domain.Cafe;
 import com.phoenix.mvc.service.domain.User;
 
@@ -26,4 +27,10 @@ public interface UserDao {
 	public User selectKakao(String kakaoId) throws Exception;
 	
 	public User selectNaver(String naverId)throws Exception;
+	
+	public boolean addMailAccount(Account account);
+	
+	public boolean deleteMailAccount(Account account);
+
+	public List<Account> getMailAccount(int userNo);
 }
