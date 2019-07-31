@@ -48,6 +48,7 @@
 	<!--*******************
         Preloader end
     ********************-->
+    	
 		<div class="nk-sidebar">
 			<c:import url="/WEB-INF/views/common/userAdminMenubar.jsp"></c:import>
 		</div>
@@ -86,12 +87,9 @@
 										<div class="form-group">
 											<select class="form-control" name="searchCondition" value='${ !empty search.searchCondition ? search.searchCondition : "" }'>
 												
-											<c:if test=""></c:if>	
-												<option value="0" >회원아이디</option>
-												<option value="1" >회원닉네임</option>
+												<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>회원아이디</option>
+												<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>회원닉네임</option>
 												
-												
-
 											</select>
 										</div>
 										&nbsp;&nbsp;
