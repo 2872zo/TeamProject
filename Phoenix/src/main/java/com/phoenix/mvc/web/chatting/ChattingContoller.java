@@ -1,15 +1,16 @@
 package com.phoenix.mvc.web.chatting;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +35,14 @@ public class ChattingContoller {
 	@Autowired
 	@Qualifier("chattingServiceImpl")
 	private ChattingService chattingService;
+	
+	@Value("${enterChatAmount}")
+	private int enterChatAmount;
+	
+	@Value("${readChatAtOnce}")
+	private int readChatAtOnce;
+	
+	
 	
 	public ChattingContoller() {
 		System.out.println(getClass().getName() + "default Constuctor");
@@ -139,7 +148,7 @@ public class ChattingContoller {
 		
 		ChatRoomForMongo chatRoomForMongo = new ChatRoomForMongo();
 		chatRoomForMongo.setOpenUserNo(user.getUserNo());
-		chatRoomForMongo.setRegDate(new DateTime());
+		chatRoomForMongo.setRegDate(new Date());
 		Map map = new HashMap();
 		map.put("chatRoomForMongo",chatRoomForMongo);
 		map.put("user",user);

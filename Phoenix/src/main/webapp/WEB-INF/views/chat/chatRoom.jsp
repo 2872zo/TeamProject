@@ -92,8 +92,10 @@
 		        </div>
 		     
 		        <div class='col-lg-3 d-flex align-items-center justify-content-around'>
-		        <i class="mdi mdi-pencil" style='font-size: 20pt' id='updateChatRoomName'></i>
-		        ${chatRoomInfo.regDate}
+		        <i class="mdi mdi-pencil" style='font-size: 20pt' id='updateChatRoomName'>
+		        </i>
+		        <fmt:formatDate value="${chatRoomInfo.regDate}" 
+		        type="both" pattern="yyyy-MM-dd E a hh:mm:ss"/>
 		        </div>
 	        </div>
         </div>
@@ -107,7 +109,7 @@
         <div class='row d-flex justify-content-start' name='${sessionScope.user.userNo}' style='padding-bottom: 1%;'>
 	      <div class='col-lg-2'>
 	      <img src="/images/uploadfiles/profileimg/${sessionScope.user.profileImg}"
-								 class='rounded' style='width: 32px; height: 32px'>
+								 class='rounded' style='width: 48px; height: 48px'>
 	      </div>
 	      <div class='col-lg-8 d-flex align-items-center'>
 	      <h4><strong>${sessionScope.user.userNickname}</strong></h4>
@@ -121,7 +123,7 @@
 	    
         </div>
        
-	<div class="row" style='height:600px'>
+	<div class="row">
         <div class="col-lg-8">
         <div class='card' style='height:100%'>
         <div class='card-body'>
@@ -136,9 +138,9 @@
 
 
 	<div class="panel-body" id='chat_box2' 
-	style="width:100%; overflow-x:hidden; overflow-y:auto;">
+	style="width:100%; ">
 		<!-- <p class="text-left" id="chat_box" > -->
-		<div id='chat_box' wrap="hard" style='height:500px;'>
+		<div id='chat_box' wrap="hard" style='height:500px ;overflow-x:hidden; overflow-y:auto;;'>
 		<c:forEach items='${chatList}' var='chat'>
 		
 			<!-- 다른사람이 입력한 채팅인 경우 -->
@@ -146,7 +148,7 @@
 			<div class='row d-flex justify-content-start'>
 				<div class='col-lg-1'>
 					<img src="/images/uploadfiles/profileimg/${chat.profileImg}"
-						 class='rounded' style='width: 32px; height: 32px'>
+						 class='rounded' style='width: 48px; height: 48px'>
 				</div>
 				<div class='col-lg-6' style='padding-left: 5px;'>
 					${chat.userNickname}
@@ -158,7 +160,7 @@
 					</div>
 				</div>
 				<div class='col-lg-2' style='padding-left: 0px; margin-top:5px;'>
-					<br/>${chat.regDate}
+					<br/><fmt:formatDate value="${chat.regDate}" type="both" pattern="yy-MM-dd HH:mm"/>
 				</div>
 			</div>
 			</c:if>
@@ -169,7 +171,7 @@
 			<div class='row d-flex justify-content-end'>
 				
 				<div class='col-lg-2 text-right' style='padding-right: 0px;'>
-					${chat.regDate}
+					<fmt:formatDate value="${chat.regDate}" type="both" pattern="yy-MM-dd HH:mm"/>
 				</div>
 				<div class='col-lg-6' style='padding-right: 20px;'>
 					<div class="alert" 
@@ -192,8 +194,32 @@
 	</div>
 <br/>
 <i class="mdi mdi-file-image" style='font-size:25pt;'></i>
-<i class="mdi mdi-emoticon" style='font-size:25pt;' id='emoticon' data-toggle="popover" data-placement="top" data-content='Vivamus
-sagittis lacus vel augue laoreet rutrum faucibus.'></i>
+<i class="mdi mdi-emoticon" style='font-size:25pt;' id='emoticon' data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1"></i>
+
+
+<p>
+  <a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Toggle first element</a>
+  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Toggle second element</button>
+  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Toggle both elements</button>
+</p>
+<div class="row">
+  <div class="col">
+    <div class="collapse multi-collapse" id="multiCollapseExample1">
+      <div class="card card-body">
+        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="collapse multi-collapse" id="multiCollapseExample2">
+      <div class="card card-body">
+        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <div class="input-group d-flex">
   <input type="text" class="form-control" placeholder="채팅을 입력해주세요" id="msg">
   <div class="input-group-append">
@@ -223,7 +249,7 @@ sagittis lacus vel augue laoreet rutrum faucibus.'></i>
 	        margin-bottom: 1%;'>
 		      <div class='col-lg-2'>
 		      <img src="/images/uploadfiles/profileimg/${chatRoomInfo.profileImg}"
-					class='rounded' style='width: 32px; height: 32px'>
+					class='rounded' style='width: 48px; height: 48px'>
 		      </div>
 		      <div class='col-lg-8'>
 		      ${chatRoomInfo.userNickname}
@@ -313,16 +339,23 @@ sagittis lacus vel augue laoreet rutrum faucibus.'></i>
 <!-- <script src="http://localhost:82/socket.io/socket.io.js"></script> -->
  <script src="http://192.168.0.78:82/socket.io/socket.io.js"></script>
 
+
+	<!-- 채팅방 전용 스크립트 -->
+	<script src="/js/custom/chatRoomScript.js"></script>
+
+
+
 	<!--**********************************
         Scripts
     ***********************************-->
+    
+    
 
 	<!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
 
 //툴바 스크립트용 세션체커
 var checkSessionUser = ${empty sessionScope.user};
-
 
 var nickNames = new Array();
 var userNos = new Array();
@@ -424,17 +457,29 @@ $(function() {
 			}
 		
 	});
-
+	
+	
 	$("#chat_box").on('scroll', function(){
-		var top = $(this).scrollTop();
-		//alert(top);
-		var contentH = $('#chat_box').height();
-		//alert(contentH);
-		if((2*top)>contentH){
-			alert(top+"반이 넘어갔어요"+contentH);
-			
+		//스크롤바 맨 위 위치
+		var aaa = "<div>aaaaaaaaaaa!!</div>";
+		
+		var top = $("#chat_box").scrollTop();
+		if(top===0){
+		
+	
+	
+				
 			}
+		//스크롤바 전체 길이
+		
+		var totalHeight= $("#chat_box").prop('scrollHeight');
+		if(top<(totalHeight*0.1)){
+			$(aaa).prependTo("#chat_box")
+			}
+		/*
+		*/
 	});
+	
 
 	 $("#msg").keydown(function(key) {
          //해당하는 키가 엔터키(13) 일떄
@@ -537,6 +582,9 @@ $(function() {
          //로그아웃 체크 : 레스트 컨트롤러로 서버한번 태워서 세션에 유저Number 체크해서 날려야 될듯
 		
          var msgTagging="";
+         var date = new Date();
+         msg.regDate = getFormatDate(date);
+         
 		
 		if (msg.userNo==$("#userNo").val()){
 			msgTagging = "<div class='row d-flex justify-content-end'>"
@@ -576,6 +624,19 @@ $(function() {
 			}
 		
 		$(msgTagging).appendTo("#chat_box");
+
+		//스크롤바 맨 위 위치
+		var top = $("#chat_box").scrollTop();
+		//스크롤바 전체 길이
+		var totalHeight= $("#chat_box").prop('scrollHeight');
+		alert(top+" : "+totalHeight )
+		if(top>(totalHeight*0.50)){
+			 $("#chat_box").scrollTop(totalHeight);
+			}
+
+		
+		
+		
      });
 
 });
@@ -586,8 +647,7 @@ $(function() {
 	
 	<!-- 채팅 사이드 툴바 스크립트 -->
 	<script src="/js/custom/chatSideBar.js"></script>
-	<!-- 채팅방 전용 스크립트 -->
-	<script src="/js/custom/chatRoomScript.js"></script>
+
 
 </body>
 </html>

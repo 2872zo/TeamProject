@@ -1,6 +1,7 @@
 package com.phoenix.mvc.service.domain;
 
-import org.joda.time.DateTime;
+import java.util.Date;
+
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
@@ -10,7 +11,7 @@ public class ChatRoomForMongo {
 	private int openUserNo;
 	private String roomName;
 	private String roomImg;
-	private DateTime regDate;
+	private Date regDate;
 
 	public String getId() {
 		return id;
@@ -44,11 +45,11 @@ public class ChatRoomForMongo {
 		this.roomImg = roomImg;
 	}
 
-	public DateTime getRegDate() {
+	public Date getRegDate() {
 		return regDate;
 	}
 
-	public void setRegDate(DateTime regDate) {
+	public void setRegDate(Date regDate) {
 		this.regDate = regDate;
 	}
 

@@ -1,10 +1,12 @@
 package com.phoenix.mvc.web.chatting;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,19 +24,25 @@ import com.phoenix.mvc.service.domain.User;
 @RequestMapping("/chat/json/*")
 public class ChattingRestController {
 	
-	public ChattingRestController() {
-		System.out.println(getClass().getName() + "default Constuctor");
-	}
-
 	@Autowired
 	@Qualifier("chattingServiceImpl")
 	private ChattingService chattingService;
+	
+	@Value("${enterChatAmount}")
+	private int enterChatAmount;
+	
+	@Value("${readChatAtOnce}")
+	private int readChatAtOnce;
+	
+	public ChattingRestController() {
+		System.out.println(getClass().getName() + "default Constuctor");
+	}
 
 	@PostMapping("addChat")
 	public Chat addChat(@RequestBody Chat chat) throws Exception{
 		System.out.println ("/chat/json/addChat");
 
-		chat.setRegDate(new DateTime());
+		chat.setRegDate(new Date());
 		chattingService.addChat(chat);
 		
 		return chat;
@@ -44,8 +52,8 @@ public class ChattingRestController {
 	public boolean inviteFriend(@RequestBody List<ChatRoomInfo> chatRoomInfoList) throws Exception{
 
 		for (ChatRoomInfo chatRoomInfo : chatRoomInfoList) {
-			chatRoomInfo.setRegDate(new DateTime());
-			chatRoomInfo.setChatRoomName(chatRoomInfo.getRegDate()+"에 초대받은 채팅방");
+			chatRoomInfo.setRegDate(new Date());
+			chatRoomInfo.setChatRoomName(new SimpleDateFormat("yyyy.MM.dd HH:mm").format(chatRoomInfo.getRegDate())+"에 초대받은 채팅방");
 			chattingService.addMyChatRoom(chatRoomInfo);
 		}
 		

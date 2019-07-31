@@ -5,6 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!DOCTYPE html>
+
 <html lang="ko">
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -14,9 +15,7 @@
 <!-- Custom Stylesheet -->
 <link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
 <link href="/css/style.css" rel="stylesheet">
-
 <link rel="stylesheet" href="/css/custom/scroll-top.css">
-
 
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <style type="text/css">
@@ -118,11 +117,18 @@ img {
 	    <div class="col-lg-8">
 	      <div class="card-body">
 	        <h5 class="card-title chatRoom">${chatRoomInfo.chatRoomName}</h5>
-	        <p class="card-text">방id${chatRoomInfo.chatRoomId}</p>
-	        <p class="card-text">정보id${chatRoomInfo.id} </p>
-	        <p class="card-text">참가된시간${chatRoomInfo.regDate} </p>
-	        <p class="card-text">최근 입력 메시지 : ${chatRoomInfo.latestMessage}</p>
-	        <p class="card-text">최근 메시지 입력시간 : ${chatRoomInfo.latestMessagingDate} </p>
+	        <p class="card-text" style='font-size: large;'>
+	        	최근 입력 메시지 :  ${fn:substring(chatRoomInfo.latestMessage,0,50)}
+	        </p>
+	        <p class="card-text">
+	        	최근 메시지 입력시간 : 
+	        	<fmt:formatDate value="${chatRoomInfo.latestMessagingDate}" type="both" pattern="yyyy-MM-dd E a hh:mm:ss"/>
+	        </p>
+	        <p class="card-text">
+	        	참가시간 : 
+	        	<fmt:formatDate value="${chatRoomInfo.regDate}" type="both" pattern="yyyy-MM-dd E a hh:mm:ss"/>
+	        </p>
+	        
 	      </div>
 	    </div>
   		</div>

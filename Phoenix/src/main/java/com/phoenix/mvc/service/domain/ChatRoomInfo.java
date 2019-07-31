@@ -1,8 +1,8 @@
 package com.phoenix.mvc.service.domain;
 
+import java.util.Date;
 import java.util.List;
 
-import org.joda.time.DateTime;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
@@ -14,11 +14,11 @@ public class ChatRoomInfo {
 	String userNickname;
 	String profileImg;
 	String chatRoomName;
-	DateTime regDate;
+	Date regDate;
 	String latestMessage;
-	DateTime latestMessagingDate;
-	DateTime latestEnter;
-	DateTime latestLeave;
+	Date latestMessagingDate;
+	Date latestEnter;
+	Date latestLeave;
 
 	List<String> imgs;
 
@@ -70,11 +70,11 @@ public class ChatRoomInfo {
 		this.chatRoomName = chatRoomName;
 	}
 
-	public DateTime getRegDate() {
+	public Date getRegDate() {
 		return regDate;
 	}
 
-	public void setRegDate(DateTime regDate) {
+	public void setRegDate(Date regDate) {
 		this.regDate = regDate;
 	}
 
@@ -86,27 +86,27 @@ public class ChatRoomInfo {
 		this.latestMessage = latestMessage;
 	}
 
-	public DateTime getLatestMessagingDate() {
+	public Date getLatestMessagingDate() {
 		return latestMessagingDate;
 	}
 
-	public void setLatestMessagingDate(DateTime latestMessagingDate) {
+	public void setLatestMessagingDate(Date latestMessagingDate) {
 		this.latestMessagingDate = latestMessagingDate;
 	}
 
-	public DateTime getLatestEnter() {
+	public Date getLatestEnter() {
 		return latestEnter;
 	}
 
-	public void setLatestEnter(DateTime latestEnter) {
+	public void setLatestEnter(Date latestEnter) {
 		this.latestEnter = latestEnter;
 	}
 
-	public DateTime getLatestLeave() {
+	public Date getLatestLeave() {
 		return latestLeave;
 	}
 
-	public void setLatestLeave(DateTime latestLeave) {
+	public void setLatestLeave(Date latestLeave) {
 		this.latestLeave = latestLeave;
 	}
 
