@@ -60,6 +60,8 @@
         Main wrapper start
     ***********************************-->
     <div id="main-wrapper">
+    
+
 <c:forEach items='${nickNameList}' var='chatFriend'>
 <input type='hidden' class='friendNickname' value='${chatFriend.friendNickname}'>
 <input type='hidden' class='friendUserNo' value='${chatFriend.userNo}'>
@@ -81,6 +83,9 @@
           
 		<div class="content-body" style="min-height: 600px;">
 		<div class='container-fluid'>
+		<form id='fileMultiple' enctype="multipart/form-data" method="post">
+		<input multiple="multiple" type="file" id="file" class="form-control" id="uploadFile" name="uploadFile" >
+		</form>
 		<div class="row">
        
         <div class="col-lg-8" id='${chatRoomInfo.id}'>
@@ -196,7 +201,7 @@
 		<!--  </p>-->
 	</div>
 <br/>
-<i class="mdi mdi-file-image" style='font-size:25pt;'></i>
+<i class="mdi mdi-file-image" style='font-size:25pt;' id='fileUploadButton'></i>
 <i class="mdi mdi-emoticon" style='font-size:25pt;' id='emoticon' data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1"></i>
 
 
@@ -372,6 +377,29 @@ for(var i =0;i<$(".friendNickname").length;i++){
 // 페이지 열자마자 채팅 맨 밑으로...
 $("#chat_box").scrollTop($("#chat_box").prop('scrollHeight'));
 
+$("#fileUploadButton").on("click", function(){
+	alert("ㅇㅇ");
+	//$('#file').click();
+	var fileForm = $("#fileMultiple");
+	var formData = new FormData(fileForm)
+
+	$.ajax(
+			{
+			type : "POST",
+			url : "/chat/fileUpload",
+			data : formData,
+			//contentType: "application/json", //보내는 컨텐츠의 타입
+			//dataType : "json",      //받아올 데이터의 타입 필요없음
+			success : function(serverData, status) {
+								alert("업로드 된듯?");
+							},
+			error : function(request,status,error){
+						        alert("에러남 : "+error);
+						        //socket.emit("send_who", $("#userId").text()+"콘솔에찍히는메시지임");
+						       }
+			}
+		);
+});
 
 
 $(function() {
@@ -489,17 +517,13 @@ $(function() {
 					contentType: "application/json", //보내는 컨텐츠의 타입
 					//dataType : "json",      //받아올 데이터의 타입 필요없음
 					success : function(serverData, status) {
-										//alert(serverData);
-										//var aaas = JSON.parse(serverData);
 										$("#chatIndex").val(serverData.indexNow);
 										
-										//alert(serverData.chatList);
 										$.each(serverData.chatList, function (index, chat) {
 										
 											var msgTagging="";
-									        
-									         //chat.regDate = getFormatDate(chat.regDate);
-									         
+									      	var date = new Date(chat.regDate);
+									        chat.regDate = getFormatDate(date);
 											
 											if (chat.userNo==$("#userNo").val()){
 												msgTagging = "<div class='row d-flex justify-content-end'>"
@@ -523,7 +547,7 @@ $(function() {
 													+"<div class='col-lg-1'>"
 													+"<img src='/images/uploadfiles/profileimg/"
 													+chat.profileImg
-													+"'  class='rounded' style='width: 32px; height: 32px'></div>"
+													+"'  class='rounded' style='width: 48px; height: 48px'></div>"
 													+"<div class='col-lg-6' style='padding-left: 5px;'>"
 													+chat.userNickname
 													+"<div class='alert' name='"
@@ -552,19 +576,9 @@ $(function() {
 					}
 				);
 			}
-		//스크롤바 전체 길이
 		
-		var totalHeight= $("#chat_box").prop('scrollHeight');
-		
-		if(top<(totalHeight*0.01)){
-			
-			//$(aaa).prependTo("#chat_box")
-			}
-		/*
-		*/
 	});
 	
-
 	 $("#msg").keydown(function(key) {
          //해당하는 키가 엔터키(13) 일떄
          if (key.keyCode == 13) {
@@ -572,7 +586,6 @@ $(function() {
              msg_process.click();
          }
      });
-
 
 	$("#updateChatRoomName").click(function() {
 
@@ -666,7 +679,7 @@ $(function() {
          //로그아웃 체크 : 레스트 컨트롤러로 서버한번 태워서 세션에 유저Number 체크해서 날려야 될듯
 		
          var msgTagging="";
-         var date = new Date();
+         var date = new Date(msg.regDate);
          msg.regDate = getFormatDate(date);
          
 		
@@ -692,7 +705,7 @@ $(function() {
 				+"<div class='col-lg-1'>"
 				+"<img src='/images/uploadfiles/profileimg/"
 				+msg.profileImg
-				+"'  class='rounded' style='width: 32px; height: 32px'></div>"
+				+"'  class='rounded' style='width: 48px; height: 48px'></div>"
 				+"<div class='col-lg-6' style='padding-left: 5px;'>"
 				+msg.userNickname
 				+"<div class='alert' name='"
@@ -713,7 +726,7 @@ $(function() {
 		var top = $("#chat_box").scrollTop();
 		//스크롤바 전체 길이
 		var totalHeight= $("#chat_box").prop('scrollHeight');
-		alert(top+" : "+totalHeight )
+		//아래쪽 보고 있을 때 메시지 뜨면 당기게끔
 		if(top>(totalHeight*0.50)){
 			 $("#chat_box").scrollTop(totalHeight);
 			}

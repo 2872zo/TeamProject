@@ -1,7 +1,7 @@
 function getFormatDate(date){ 
-	var year = date.getYear();//yy 
-	//var year = date.getFullYear();//yyyy 
-	//year = String(year).substring(2,4);
+	//var year = date.getYear();//yy 
+	var year = date.getFullYear();//yyyy 
+	year = String(year).substring(2,4);
 	var month = (1 + date.getMonth()); //M 
 	month = month >= 10 ? month : '0' + month; //month두자리로 저장 
 	var day = date.getDate(); //d 

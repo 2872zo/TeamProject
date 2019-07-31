@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Iterator;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,8 +17,11 @@ import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 @Controller
 public class FileController {
@@ -78,6 +82,26 @@ public class FileController {
 		}
 		System.out.println("\nfileUpload() 끝:::");
 	}//end of fileUpload
+	
+	
+	@PostMapping("/chat/fileUpload")
+	public void chatFileUpload(MultipartHttpServletRequest multiRequest) {
+		File upFile = new File(uploadDir);
+		if(upFile.isDirectory()) {
+			upFile.mkdir();
+		}
+		Iterator<String> fileNames = multiRequest.getFileNames();
+		while(fileNames.hasNext()) {
+			String uploadFiles = fileNames.next();
+			MultipartFile mFile = multiRequest.getFile(uploadFiles);
+			String fileName = mFile.getOriginalFilename();
+		try {
+			mFile.transferTo(new File(uploadDir+fileName));
+		} catch (Exception e) {
+				e.printStackTrace();		}
+		}
+	}
+	
 	
 	
 	private boolean isExists(String URLName) {
