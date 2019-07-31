@@ -311,7 +311,7 @@ var checkSessionUser = ${empty sessionScope.user};
 	
 		
 	$(function() {
-
+		
 		$("#chatFriendsListing").on("click", function() {
 			//alert("친구찾아라");
 			$(self.location).attr("href", "/chat/chatFriendsList");
@@ -341,6 +341,13 @@ var checkSessionUser = ${empty sessionScope.user};
 			$("form").attr("method", "POST").attr("action",
 			"/chat/searchChatFriend").submit();
 		});
+
+		$("#searchKeyword").on("keydown", function (){
+			if(event.keyCode==13){
+				$( "#explore" ).trigger( "click" );
+			}
+		});
+		
 		$(".updateFriendName").on("click", function() {
 			var thisChatFriendNo = $(this).attr("name");
 			 var engkornum = /[^가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9]/gi;

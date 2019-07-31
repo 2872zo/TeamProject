@@ -173,9 +173,9 @@
 				</div>
 				<div class='col-lg-6' style='padding-right: 20px;'>
 					<div class="alert" 
-					name='${chat.id}' style='padding:5px; width: 100%; 
-					border: 2px solid #f5a142; color: black;
-					background-color:#f5a142; ' >
+					name='${chat.id}' style='padding:5px;
+					border: 2px solid #f5a142; color: #162ca8;
+					background-color:#ffc68a; ' >
 					${chat.chatMsg}
 					</div>
 				</div>
@@ -460,7 +460,7 @@ $(function() {
 			    swal.showInputError("공백은 입력할 수 없습니다.");
 			    return false
 			  }
-
+			  inputValue = inputValue.replace(/(<([^>]+)>)/ig,"");
 			  var infoId = $("#chatRoomInfoId").val();
 
 				var jsoned = { id : infoId,
@@ -535,7 +535,7 @@ $(function() {
      
      socket.on('send_msg', function(msg) {
          //로그아웃 체크 : 레스트 컨트롤러로 서버한번 태워서 세션에 유저Number 체크해서 날려야 될듯
-
+		
          var msgTagging="";
 		
 		if (msg.userNo==$("#userNo").val()){
@@ -545,7 +545,7 @@ $(function() {
 				+"</div><div class='col-lg-6' style='padding-right: 20px;'>"
 				+"<div class='alert' name='"+msg.id+
 				"' style='padding:5px; width: 100%;border: 2px solid #f5a142;" 
-				+"color: black;background-color:#f5a142; ' >"
+				+"color: #162CA8;background-color:#ffc68a; ' >"
 				+msg.chatMsg
 				+"</div></div></div>"				
 			}
