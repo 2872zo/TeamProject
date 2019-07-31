@@ -7,6 +7,7 @@ import com.phoenix.mvc.service.domain.Chat;
 import com.phoenix.mvc.service.domain.ChatFriend;
 import com.phoenix.mvc.service.domain.ChatRoomForMongo;
 import com.phoenix.mvc.service.domain.ChatRoomInfo;
+import com.phoenix.mvc.service.domain.User;
 
 
 public interface ChattingDao {
@@ -45,6 +46,8 @@ public interface ChattingDao {
 	
 	public ChatRoomInfo getMyChatRoomInfoByChatRoomInfo(ChatRoomInfo chatRoomInfo) throws Exception;
 	
+	public void updateChatRoomRecentMsg(Chat chat) throws Exception;
+	
 	public void testMethod (Chat chat) throws Exception;
 	
 	public void addChat (Chat chat) throws Exception;
@@ -56,4 +59,8 @@ public interface ChattingDao {
 	public List getChatRoomUserList(Search search) throws Exception;
 	
 	public List getFriendNickNameList(Search search) throws Exception;
+	
+	public List getFourImgForChatRoomList(ChatRoomInfo chatRoomInfo) throws Exception;
+	
+	public void updateChatRoomInfoByUser(User user) throws Exception;
 }

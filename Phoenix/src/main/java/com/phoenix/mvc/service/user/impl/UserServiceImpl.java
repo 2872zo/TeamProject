@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.phoenix.mvc.common.Search;
+import com.phoenix.mvc.service.chatting.ChattingDao;
 import com.phoenix.mvc.service.domain.Cafe;
 import com.phoenix.mvc.service.domain.User;
 import com.phoenix.mvc.service.user.UserDao;
@@ -26,6 +27,10 @@ public class UserServiceImpl implements UserService{
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
 	}
+	
+	@Autowired
+	@Qualifier("chattingDaoImpl")	
+	private ChattingDao chattingDao;
 	
 	///Constructor
 	public UserServiceImpl() {
@@ -48,6 +53,7 @@ public class UserServiceImpl implements UserService{
 	@Override // 준호
 	public void updateUser(User user) throws Exception {
 		userDao.updateUser(user);
+		chattingDao.updateChatRoomInfoByUser(user);
 	}
 	
 	public boolean checkUserIdDuplication(String userId) throws Exception {
