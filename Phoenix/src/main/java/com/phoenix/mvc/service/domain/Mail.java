@@ -16,6 +16,7 @@ public class Mail {
 	private String sender;
 	private String senderAddr;
 	private List<Map<String, String>> recipients;
+	private String to;
 	private boolean seen;
 	private String subject;
 	private String content;
@@ -57,6 +58,12 @@ public class Mail {
 	public void setSenderAddr(String senderAddr) {
 		this.senderAddr = senderAddr;
 	}
+	public String getTo() {
+		return to;
+	}
+	public void setTo(String to) {
+		this.to = to;
+	}
 	public boolean isSeen() {
 		return seen;
 	}
@@ -85,7 +92,7 @@ public class Mail {
 	@Override
 	public String toString() {
 		return "Mail [mailNo=" + mailNo + ", accountNo=" + accountNo + ", folder=" + folder + ", sentDate=" + sentDate
-				+ ", sender=" + sender + ", senderAddr=" + senderAddr + ", recipients=" + recipients + ", seen=" + seen
-				+ ", subject=" + subject + ", content=" + content + "]";
+				+ ", sender=" + sender + ", senderAddr=" + senderAddr + ", recipients=" + recipients + ", to=" + to
+				+ ", seen=" + seen + ", subject=" + subject + ", content=" + content + "]";
 	}
 }
