@@ -2,7 +2,9 @@ package com.phoenix.mvc.web.mail;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -11,6 +13,7 @@ import javax.annotation.PreDestroy;
 import javax.mail.Address;
 import javax.mail.BodyPart;
 import javax.mail.Message;
+import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMultipart;
@@ -21,12 +24,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.domain.Account;
+import com.phoenix.mvc.service.domain.Chat;
 import com.phoenix.mvc.service.domain.Mail;
 import com.phoenix.mvc.service.mail.MailService;
 import com.phoenix.mvc.service.mail.impl.IMAPAgent;
@@ -90,6 +98,66 @@ public class MailContoller {
 		
 		
 		return "/mail/getMailList";
+	}
+	
+	
+	@GetMapping("sendMail")
+	public String sendMailView() throws MessagingException {
+		return "/mail/sendMail";
+	}
+	
+	
+	@PostMapping("sendMail")
+	public String sendMail(HttpServletRequest req, @RequestParam int accountNo, @ModelAttribute Mail mail, @RequestParam MultipartFile[] files, @RequestParam String inlineList) throws MessagingException {
+		List<Account> accountList = (List<Account>)req.getAttribute("accountList");
+		
+		Account account = null;
+		
+		for(Account ac : accountList) {
+			if(ac.getAccountNo() == accountNo) {
+				account = ac;
+				break;
+			}
+		}
+		
+		List<Map<String, Object>> attachmentList = null;
+		
+		// 파일 태그명을 다 검색하는 기능 여러칸일 경우에 유용
+		for (MultipartFile file : files) {
+			attachmentList = new ArrayList<Map<String,Object>>();
+			String fileName = file.getOriginalFilename();
+			Map<String, Object> fileMap = new HashMap<String, Object>();
+			
+			try {
+				UUID uid = UUID.randomUUID();
+				fileMap.put("fileName", fileName);
+				
+				fileName = uid + fileName;
+				File fileTo = new File(tmpUploadDir + "/" + fileName);
+				file.transferTo(fileTo);
+				
+				fileMap.put("fileData", fileTo);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			attachmentList.add(fileMap);
+			System.out.println("파일 추가딤!");
+		}
+		
+		mail.setContent(mail.getContent().replaceAll("/images/uploadfiles/", "cid:"));
+		
+		
+		mail.setAttachmentList(attachmentList);
+		
+		System.out.println("account : " + account);
+		System.out.println("mail : " + mail);
+		
+		
+		mailService.sendMail(account, mail);
+		
+		return "/mail/confirmSendMail";
 	}
 
 //	mailAgent.open();  

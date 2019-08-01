@@ -10,12 +10,10 @@
 
 				<div class="card">
 					<div class="card-body">
-							<select id="accountSelector">
-								
+							<select class="form-control mb-2" id="accountSelector" >
 								<option value="0">전체</option>
-								<c:set var="i" value="1"/>
 								<c:forEach items="${accountList }" var="account">
-									<option value="${i }">${account.accountId }</option>
+									<option value="${account.accountNo }">${account.accountId }</option>
 									<c:set var="i" value="${i+1 }"/>
 								</c:forEach>								
 							</select>

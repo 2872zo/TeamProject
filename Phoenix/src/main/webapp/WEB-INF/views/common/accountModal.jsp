@@ -365,7 +365,6 @@ input[type="checkbox"] {
 
 			var formArray = $(".mail-login-input").serializeArray();
 			formObject = objectifyForm(formArray);
-			
 
 			$.ajax({
 				type : "POST",
@@ -382,7 +381,7 @@ input[type="checkbox"] {
 				success : function(data) {
 // 					alert("success");
 					console.log("data : " + data);
-					if(data == true){
+					if(data == 100){
 						$("#mailAccountList").append('<div class="alert alert-dark d-flex justify-content-between" role="alert"' 
 														+ 'style="margin-bottom:5px; background-color:rgba(128, 128, 128, 0.15); ">'
 														+ '<span style="margin-top:5px;">' + formObject.accountId + formObject.accountType  + '</span>'
@@ -391,9 +390,14 @@ input[type="checkbox"] {
 						$("#mailLogin").modal("hide");	
 						$(".mail-login-input")[0].reset();
 						sweetAlert("계정연동 성공", formObject.accountId + formObject.accountType + " 계정이 연동되었습니다.","success");
-					}else{
+					}else if(data == 404 || data == 405){
 						sweetAlert("계정연동 실패","아이디와 비밀번호를 확인해 주십시오.","error");
+					}else if(data == 400){
+						sweetAlert("계정연동 실패","해당 계정의 IMAP설정을 확인해 주십시오.","error");
+					}else{
+						sweetAlert("계정연동 실패","알수없는 오류가 발생했습니다.\n 잠시후 다시 시도해 주십시오.","error");
 					}				
+					
 				},
 				error : function(data) {
 // 					alert("error : " + data);
