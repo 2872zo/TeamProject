@@ -155,7 +155,7 @@
                                             <label class="col-lg-4 col-form-label" for="val-bannerImg"><h5>회원 프로필 </h5>
                                             </label>                                           
                                             <div class="col-lg-6">
-                                               <div><img src="/images/uploadFiles/profileimg/${user.profileImg}" width="300"; height="200px";/>
+                                               <div><img src="/images/uploadFiles/profileimg/${user.profileImg}" width="100"; height="100px"; id="img"/>
                                                </div>
                                                 <input type="file" class=""form-control-file"" id="uploadFile" name="uploadFile">
                                                </div>
@@ -198,6 +198,22 @@
 
 
 	var checkSessionUser = ${empty sessionScope.user};
+
+	function readURL(input) {
+		 if (input.files && input.files[0]) {
+		  var reader = new FileReader();
+		  
+		  reader.onload = function (e) {
+		   $('#img').attr('src', e.target.result);  
+		  }
+		  
+		  reader.readAsDataURL(input.files[0]);
+		  }
+		}
+		  
+		$("#uploadFile").change(function(){
+		   readURL(this);
+		});
 	
 	$(function() {
 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
@@ -220,7 +236,6 @@
 	
 	//유효성 검사
 	function fncAddUser() {
-
 		
 		var cch = 0;
 		var userName = $("input[name='userName']").val();
