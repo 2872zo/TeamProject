@@ -254,7 +254,8 @@ public class MailDaoImpl implements MailDao {
 			mailAgent.open();
 		} catch (MessagingException | IOException e) {
 			System.out.println("MailAccount Link Fail!");
-			System.out.println(e.getMessage());
+//			System.out.println(e.getMessage());
+			e.printStackTrace();
 			if(e.getMessage().contains("404")) {
 				throw new Exception("404");
 			}else if(e.getMessage().contains("405")) {

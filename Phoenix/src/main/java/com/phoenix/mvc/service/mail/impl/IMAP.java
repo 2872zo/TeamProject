@@ -24,13 +24,13 @@ public class IMAP implements MailProto {
 	protected Folder folder;
 	
 	private static String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
-	private String mailPort;
 	
 	@Override
 	public void open(String host, String id, String passwd) throws MessagingException {
 		Properties props = new Properties();
 		props.setProperty("mail.imap.socketFactory.class", SSL_FACTORY);
 		props.setProperty("mail.imap.socketFactory.fallback", "false");
+		props.put("mail.imaps.ssl.trust", "*");
 		props.setProperty("mail.imap.port", "993");
 		props.setProperty("mail.imap.socketFactory.port", "993");
 		
