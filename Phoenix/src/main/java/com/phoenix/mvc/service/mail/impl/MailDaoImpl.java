@@ -1,13 +1,14 @@
 package com.phoenix.mvc.service.mail.impl;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.UUID;
 
 import javax.mail.Address;
@@ -16,7 +17,11 @@ import javax.mail.Header;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
 import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
 
@@ -24,6 +29,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Repository;
 
 import com.phoenix.mvc.service.domain.Account;
@@ -238,24 +244,123 @@ public class MailDaoImpl implements MailDao {
 	}
 
 	@Override
-	public boolean accountVaildationCheck(Account account) {
-		boolean result = true;
-		
+	public boolean accountVaildationCheck(Account account) throws Exception {
 		IMAPAgent mailAgent = new IMAPAgent("imap." + account.getAccountType().substring(1), account.getAccountId()+account.getAccountType(), account.getAccountPw());
 		
 		try {
 			mailAgent.open();
 		} catch (MessagingException | IOException e) {
 			System.out.println("MailAccount Link Fail!");
-			result = false;
+			System.out.println(e.getMessage());
+			if(e.getMessage().contains("404")) {
+				throw new Exception("404");
+			}else if(e.getMessage().contains("405")) {
+				throw new Exception("405");
+			}
+			else if (e.getMessage().contains("not authorized for this service")) {
+				throw new Exception("400");
+			} else {
+				throw new Exception("500");
+			}
+			
 		}finally {
 			try {
 				mailAgent.close();
 			} catch (MessagingException e) {
 				System.out.println("mailAgent Close Fail!");
+				e.printStackTrace();
 			}
 		}
 		
-		return result;
+		return true;
+	}
+
+	@Override
+	public boolean sendGmail(Account account, Mail mail) throws MessagingException {
+		Properties props = new Properties();
+		props.put("mail.transport.protocol", "smtp");
+		props.put("mail.smtp.host", "smtp.gmail.com"); 
+		props.put("mail.smtp.port", 465); 
+		props.put("mail.smtp.starttls.enable", "true"); 
+		props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+		props.put("mail.smtp.auth", "true"); 
+		
+		
+		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+	        protected PasswordAuthentication getPasswordAuthentication() {
+	            return new PasswordAuthentication(account.getAccountId(), account.getAccountPw());
+	        }
+	    });
+		
+		MimeMessageHelper message = new MimeMessageHelper(new MimeMessage(session), false, "UTF-8");
+		
+		message.setTo("2872zo@daum.net");
+		message.setSubject("test전송2");
+		message.setText("메일 테스트 입니다. \n\n\n 3줄 엔터 <br/><br/> br태크 2번");
+		
+		Transport.send(message.getMimeMessage());
+		
+		
+		return true;
+	}
+
+	@Override
+	public boolean sendNaver(Account account, Mail mail) throws MessagingException {
+		Properties props = new Properties();
+		props.put("mail.transport.protocol", "smtp");
+		props.put("mail.smtp.host", "smtp.naver.com"); 
+		props.put("mail.smtp.port", 587); 
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.ssl.trust", "smtp.naver.com");
+		props.put("mail.smtp.auth", "true"); 
+		
+		
+		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+	        protected PasswordAuthentication getPasswordAuthentication() {
+	            return new PasswordAuthentication(account.getAccountId(), account.getAccountPw());
+	        }
+	    });
+		
+		MimeMessageHelper message = new MimeMessageHelper(new MimeMessage(session), false, "UTF-8");
+		
+		message.setFrom(account.getAccountId());
+		message.setTo("2872zo@daum.net");
+		message.setSubject("test전송3");
+		message.setText("<html>메일 테스트 입니다. \n\n\n 3줄 엔터 <br/><br/> br태크 2번<html>", true);
+		
+		Transport.send(message.getMimeMessage());
+		
+		
+		return true;
+	}
+
+	@Override
+	public boolean sendDaum(Account account, Mail mail) throws MessagingException {
+		Properties props = new Properties();
+		props.put("mail.transport.protocol", "smtp");
+		props.put("mail.smtp.host", "smtp.daum.com"); 
+		props.put("mail.smtp.port", 587); 
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.ssl.trust", "smtp.naver.com");
+		props.put("mail.smtp.auth", "true"); 
+		
+		
+		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+	        protected PasswordAuthentication getPasswordAuthentication() {
+	            return new PasswordAuthentication(account.getAccountId(), account.getAccountPw());
+	        }
+	    });
+		
+		MimeMessageHelper message = new MimeMessageHelper(new MimeMessage(session), false, "UTF-8");
+		
+		message.setFrom(account.getAccountId());
+		message.setTo("yunsg3023@gmail.com");
+		message.setSubject("test전송3");
+		message.setText("<html>메일 테스트 입니다. \n\n\n 3줄 엔터 <br/><br/> br태크 2번<html>", true);
+		
+		Transport.send(message.getMimeMessage());
+		
+		
+		return true;
 	}
 }

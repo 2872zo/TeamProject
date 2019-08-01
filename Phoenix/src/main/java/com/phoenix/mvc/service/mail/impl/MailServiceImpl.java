@@ -94,7 +94,7 @@ public class MailServiceImpl implements MailService {
 	}
 
 	@Override
-	public boolean addMailAccount(Account account) {
+	public boolean addMailAccount(Account account) throws Exception {
 		if(mailDao.accountVaildationCheck(account)) {
 			return userDao.addMailAccount(account);
 		}
@@ -105,6 +105,20 @@ public class MailServiceImpl implements MailService {
 	@Override
 	public boolean deleteMailAccount(Account account) {
 		return userDao.deleteMailAccount(account);
+	}
+
+	@Override
+	public boolean sendMail(Account account, Mail mail) throws MessagingException {
+		
+		if(account.getAccountDomain().contains("gmail")) {
+			mailDao.sendGmail(account, mail);
+		}else if(account.getAccountDomain().contains("naver")){
+			mailDao.sendNaver(account, mail);
+		}else {
+			mailDao.sendDaum(account, mail);
+		}
+		
+		return true;
 	}
 
 }
