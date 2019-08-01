@@ -42,12 +42,17 @@ public class MailContoller {
 	}
 
 	@RequestMapping("getMailList")
-	public String getMailList(@ModelAttribute Search search, Map<String, Object> map, HttpServletRequest req, @RequestParam(required = false, defaultValue = "0") int accountNo) throws Exception {
+	public String getMailList(Map<String, Object> map, HttpServletRequest req, 
+			@RequestParam(required = false, defaultValue = "0") int accountNo, @RequestParam(required = false, defaultValue = "1") int currentPage) throws Exception {
+		
+		Map<String, Object> returnMap = null;
 		List<Account> accountList = (List<Account>)req.getAttribute("accountList");
 		List<Mail> mailList = new ArrayList<Mail>();
 		
+		
+		
 		if(accountNo == 0) {
-			mailList = mailService.getMailList(accountList.get(0));
+			returnMap = mailService.getAllAccountMailList(accountList, currentPage);
 		}else {
 			Account selectedAccount = null;
 			for(Account account : accountList) {
@@ -57,10 +62,13 @@ public class MailContoller {
 				}
 			}
 			
-			mailList = mailService.getMailList(selectedAccount);
+			returnMap = mailService.getMailList(selectedAccount, currentPage);
 		}
 		
-		map.put("mailList", mailList);
+		map.put("mailList", returnMap.get("mailList"));
+		map.put("search", returnMap.get("search"));
+		map.put("page", returnMap.get("page"));
+		map.put("currentPage", currentPage);
 		map.put("accountNo", accountNo);
 		
 		return "/mail/listMail";

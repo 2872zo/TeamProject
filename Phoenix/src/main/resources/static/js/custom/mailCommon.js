@@ -1,3 +1,7 @@
+function fncGetMailList(currentPage){
+	location.href = "/mail/getMailList?accountNo=" + $("#accountSelector").val() + "&currentPage=" + currentPage; 
+}
+
 function fncGetMailMain(){
 	location.href = "/mail/getMailList";
 }

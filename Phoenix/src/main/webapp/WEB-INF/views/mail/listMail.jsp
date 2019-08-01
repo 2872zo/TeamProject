@@ -198,7 +198,15 @@
 												</td>
 											</tr>
 										</c:forEach>
-
+										
+										<tr>
+											<td colspan="6">
+												<c:import url="/WEB-INF/views/common/pageNavigator.jsp">
+													<c:param name="subject" value="Mail"/>		
+												</c:import>
+											</td>
+										</tr>
+										
 									</tbody>
 								</table>
 							</div>
@@ -263,7 +271,7 @@
 	<!-- 이 페이지 전용 script -->
 	<script>
 		$(function(){
-			$("tr").on("click", function(){
+			$("tr").not("tr:last").on("click", function(){
 				location.href = "/mail/getMail?mailNo=" + $(this).find(".mailNo").val() + "&accountNo=" + $(this).find(".accountNo").val();
 			});
 		});

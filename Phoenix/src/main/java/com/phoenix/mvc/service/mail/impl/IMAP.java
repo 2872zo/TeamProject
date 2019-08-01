@@ -75,6 +75,16 @@ public class IMAP implements MailProto {
 		
 		return folder.getMessages();
 	}
+	
+
+	@Override
+	public Message[] getMessages(int startNum, int endNum) throws MessagingException {
+		if(!folder.isOpen()) {
+			throw new MessagingException("Already closed folder");
+		}
+		
+		return folder.getMessages(startNum, endNum);
+	}
 
 	@Override
 	public Message[] getRecentMessages(int count) throws MessagingException {
@@ -85,6 +95,16 @@ public class IMAP implements MailProto {
 		int folderSize = folder.getMessageCount();
 		
 		return folder.getMessages(folderSize - count + 1, folderSize);
+	}
+	
+	public Message getRecentMessage(int msgNum) throws MessagingException{
+		if(!folder.isOpen()) {
+			throw new MessagingException("Already closed folder");
+		}
+		
+		int folderSize = folder.getMessageCount();
+		
+		return folder.getMessage(folderSize - msgNum + 1);
 	}
 
 	@Override
