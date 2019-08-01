@@ -118,7 +118,8 @@ img {
 	      <div class="card-body">
 	        <h5 class="card-title chatRoom">${chatRoomInfo.chatRoomName}</h5>
 	        <p class="card-text" style='font-size: large;'id='${chatRoomInfo.chatRoomId}MSG'>
-	        	최근 입력 메시지 :  ${fn:substring(chatRoomInfo.latestMessage,0,50)}
+	        	최근 입력 메시지 :
+	        	${fn:substring(chatRoomInfo.latestMessage,0,50)}
 	        </p>
 	        <p class="card-text" id='${chatRoomInfo.chatRoomId}Time'>
 	        	최근 메시지 입력시간 : 
