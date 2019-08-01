@@ -130,6 +130,8 @@ public class ChattingContoller {
 		List inviteList = (List) map.get("inviteList");
 		List nickNameList = (List) map.get("nickNameList");
 		ChatRoomInfo chatRoomInfo= (ChatRoomInfo)map.get("chatRoomInfo");
+		List kakaoImgs = (List) map.get("kakaoImgs");
+		List lineImgs = (List) map.get("lineImgs");
 		
 		model.addAttribute("chatIndex", chatIndex);
 		model.addAttribute("chatList", chatList);
@@ -137,6 +139,8 @@ public class ChattingContoller {
 		model.addAttribute("inviteList", inviteList);
 		model.addAttribute("nickNameList", nickNameList);
 		model.addAttribute("chatRoomInfo", chatRoomInfo);
+		model.addAttribute("kakaoImgs", kakaoImgs);
+		model.addAttribute("lineImgs", lineImgs);
 		
 		return "chat/chatRoom";
 	}

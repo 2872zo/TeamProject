@@ -169,7 +169,18 @@ display : none;
 					${chat.chatMsg}
 					</c:if>
 					<c:if test="${chat.chatType==1}">
-					<img src='/images/uploadfiles/chatFiles/${chat.chatMsg}' class='rounded' style='width: 100%; height: auto;'>
+					
+					<img src='/images/uploadfiles/chatFiles/${chat.chatMsg}' class='rounded' 
+					style='width: 100%; height: auto;'>
+					
+					</c:if>
+					<c:if test="${chat.chatType==2}">
+					
+					<img src='/images/common/700by700.png' class='rounded' 
+					style="background: url('/images/chatEmoticon/${chat.chatMsg}'); 
+					background-size: cover; background-repeat: no-repeat; 
+					background-position: center; width:50%; margin: 1%; padding:0%;">
+					
 					</c:if>
 					</div>
 				</div>
@@ -196,8 +207,21 @@ display : none;
 					${chat.chatMsg}
 					</c:if>
 					<c:if test="${chat.chatType==1}">
-					<img src='/images/uploadfiles/chatFiles/${chat.chatMsg}' class='rounded' style='width: 100%; height: auto;'>
+					
+					<img src='/images/uploadfiles/chatFiles/${chat.chatMsg}' 
+					class='rounded' style='width: 100%; height: auto;'>
+					
 					</c:if>
+					
+					<c:if test="${chat.chatType==2}">
+					
+					<img src='/images/common/700by700.png' class='rounded' 
+					style="background: url('/images/chatEmoticon/${chat.chatMsg}'); 
+					background-size: cover; background-repeat: no-repeat; 
+					background-position: center; width:50%; margin: 1%; padding:0%;">
+					
+					</c:if>
+					
 					</div>
 				</div>
 					
@@ -213,99 +237,31 @@ display : none;
 	</div>
 <br/>
 <i class="mdi mdi-file-image" style='font-size:25pt;' id='fileUploadButton'></i>
-<i class="mdi mdi-emoticon" style='font-size:25pt;' id='emoticon' data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1"></i>
+<i class="mdi mdi-emoticon" style='font-size:25pt;' id='emoticon' data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false"></i>
 
 
 <p>
-  <a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Toggle first element</a>
-  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Toggle second element</button>
-  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Toggle both elements</button>
+  <a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Toggle first</a>
+  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Toggle second</button>
+  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Toggle </button>
 </p>
+
   <div class="col">
     <div class="collapse multi-collapse" id="multiCollapseExample1">
       <div class="card card-body">
       <div class="row">
-     
+     <c:forEach items='${kakaoImgs}' var='kakao'>
       <img src="/images/common/700by700.png"
 	     class="rounded col-lg-2 emoticons"
-	     name="kakao/kakao_apeach_hot.gif"
-	     style="background: url('/images/chatImoticon/kakao/kakao_apeach_hot.gif'); 
+	     name="kakao/${kakao}"
+	     style="background: url('/images/chatEmoticon/kakao/${kakao}'); 
 	     background-size: cover; 
 	     background-repeat: no-repeat; 
 	     background-position: center;
 	     width:100%; 
 	     margin: 1%;
 	     padding:0%;">
-	     <img src="/images/common/700by700.png"
-	     class="rounded col-lg-2 emoticons"
-	     name="kakao/kakao_apeach_lay_down.gif"
-	     style="background: url('/images/chatImoticon/kakao/kakao_apeach_lay_down.gif'); 
-	     background-size: cover; 
-	     background-repeat: no-repeat; 
-	     background-position: center;
-	     width:100%; 
-	     margin: 1%;
-	     padding:0%;">
-	   <img src="/images/common/700by700.png"
-	     class="rounded col-lg-2 emoticons"
-	     name="kakao/kakao_bye.gif"
-	     style="background: url('/images/chatImoticon/kakao/kakao_bye.gif'); 
-	     background-size: cover; 
-	     background-repeat: no-repeat; 
-	     background-position: center;
-	     width:100%; 
-	     margin: 1%;
-	     padding:0%;">
-	     <img src="/images/common/700by700.png"
-	     class="rounded col-lg-2 emoticons"
-	     name="kakao/kakao_castanets.gif"
-	     style="background: url('/images/chatImoticon/kakao/kakao_castanets.gif'); 
-	     background-size: cover; 
-	     background-repeat: no-repeat; 
-	     background-position: center;
-	     width:100%; 
-	     margin: 1%;
-	     padding:0%;">
-	     <img src="/images/common/700by700.png"
-	     class="rounded col-lg-2 emoticons"
-	     name="kakao/kakao_cheering.gif"
-	     style="background: url('/images/chatImoticon/kakao/kakao_cheering.gif'); 
-	     background-size: cover; 
-	     background-repeat: no-repeat; 
-	     background-position: center;
-	     width:100%; 
-	     margin: 1%;
-	     padding:0%;">
-	     <img src="/images/common/700by700.png"
-	     class="rounded col-lg-2 emoticons"
-	     name="kakao/kakao_cry.gif"
-	     style="background: url('/images/chatImoticon/kakao/kakao_cry.gif'); 
-	     background-size: cover; 
-	     background-repeat: no-repeat; 
-	     background-position: center;
-	     width:100%; 
-	     margin: 1%;
-	     padding:0%;">
-	     <img src="/images/common/700by700.png"
-	     class="rounded col-lg-2 emoticons"
-	     name="kakao/kakao_dance_together.GIF"
-	     style="background: url('/images/chatImoticon/kakao/kakao_dance_together.GIF'); 
-	     background-size: cover; 
-	     background-repeat: no-repeat; 
-	     background-position: center;
-	     width:100%; 
-	     margin: 1%;
-	     padding:0%;">
-	     <img src="/images/common/700by700.png"
-	     class="rounded col-lg-2 emoticons"
-	     name="kakao/kakao_heart.gif"
-	     style="background: url('/images/chatImoticon/kakao/kakao_heart.gif'); 
-	     background-size: cover; 
-	     background-repeat: no-repeat; 
-	     background-position: center;
-	     width:100%; 
-	     margin: 1%;
-	     padding:0%;">
+	 </c:forEach>
 
 				 </div>
       </div>
@@ -314,7 +270,20 @@ display : none;
   <div class="col">
     <div class="collapse multi-collapse" id="multiCollapseExample2">
       <div class="card card-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+      <div class="row">
+        <c:forEach items='${lineImgs}' var='line'>
+      <img src="/images/common/700by700.png"
+	     class="rounded col-lg-2 emoticons"
+	     name="line/${line}"
+	     style="background: url('/images/chatEmoticon/line/${line}'); 
+	     background-size: cover; 
+	     background-repeat: no-repeat; 
+	     background-position: center;
+	     width:100%; 
+	     margin: 1%;
+	     padding:0%;">
+	 </c:forEach>
+      </div>
       </div>
     </div>
   </div>
@@ -665,6 +634,15 @@ $(function() {
 								+msg.chatMsg
 								+"' class='rounded' style='width: 100%; height: auto;'>";
 			}
+
+		if(msg.chatType==2){
+
+			msg.chatMsg = "<img src='/images/common/700by700.png' class='rounded' "
+							+"style='background: url(\"/images/chatEmoticon/"
+							+msg.chatMsg
+							+"\"); background-size: cover; background-repeat: no-repeat; background-position: center;"
+							+"width:50%; margin: 1%; padding:0%;'>"
+			}
 		
 		if (msg.userNo==$("#userNo").val()){
 			
@@ -705,7 +683,7 @@ $(function() {
 					+"</div></div>"
 			
 			}
-		
+
 		$(msgTagging).appendTo("#chat_box");
 
 		//스크롤바 맨 위 위치

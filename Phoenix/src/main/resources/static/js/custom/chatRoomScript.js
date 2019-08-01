@@ -148,12 +148,34 @@ $("#leaveChatRoom").on("click" , function() {
 	//$(self.location).attr("href","/chat/leaveChatRoom");
 	$("#thisChatRoomInfo").attr("method" , "POST").attr("action" , "/chat/leaveChatRoom").submit();
 });
-
-$('[data-toggle="popover"]').popover({
-    container: 'body'
-});
+//이모티콘 입력
 $(".emoticons").on("click" , function() {
-	alert($(this).attr("name"));
-	//alert("이모티콘입니다.");
-	//$(this).attr("data-content","<img src='/images/uploadfiles/profileimg/6.jpg'class='rounded' style='width: 32px; height: 32px'>");
+	//alert($(this).attr("name"));
+	    
+		var jsoned = {
+				chatRoomId : $("#chatRoomId").val(), 
+				userNo : $("#userNo").val(), 
+				userNickname : $("#userNickname").val(),
+				profileImg : $("#profileImg").val(),
+				chatType : 2,
+				chatMsg : $(this).attr("name")
+				};
+		jsoned = JSON.stringify(jsoned);
+
+			$.ajax(
+					{
+					type : "POST",
+					url : "/chat/json/addChat",
+					data : jsoned,
+					contentType: "application/json", //보내는 컨텐츠의 타입
+					//dataType : "json",      //받아올 데이터의 타입 필요없음
+					success : function(serverData, status) {
+										socket.emit("send_msg", serverData); 
+									},
+					error : function(request,status,error){
+								        alert("에러남 : "+error);
+								       }
+					}
+				);
+	   
 });
