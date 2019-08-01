@@ -251,23 +251,50 @@
 					sweetAlert("카페URL이 중복되었습니다.","","error");
 					
 					return false;
-				}
+				}				
 			}
-		});//ajax		
-		
-				}else{
-								
+		});//ajax
+        }else{								
 					//$("form").attr("method", "POST").attr("action","/cafe/addCafe").submit();				
 					$("#addCafe").attr("method", "POST").attr("action","/cafe/addCafe").submit();						
 				}							
 			}
-		});//ajax		
-		
-		}
-	//	alert("만들기");
-		
-	}
-	//카페이름 중복확인 
+
+	$(function() {
+
+		$("button.btn.btn-primary").on("click", function() {
+
+				var inputed = $("input[name='cafeName']").val();
+				// alert("입력  : "+inputed);
+
+					$.ajax({
+							url : "/cafe/json/checkCafeNameDuplication",
+							method : "POST",
+							dataType : "json",
+							headers : {
+										"Accept" : "application/json",
+										"Content-Type" : "application/json"
+								},
+							data : JSON.stringify({
+							cafeName : inputed,
+							}),
+
+							success : function(JSONData) {
+							//alert(JSONData); 
+							//alert(typeof(JSONData));								
+								if(JSONData == false){
+									
+									sweetAlert("카페이름이 중복되었습니다.","","error");
+									
+									return false;
+								}else{
+									$("#addCafe").attr("method", "POST").attr("action","/cafe/addCafe").submit();
+									}				
+						}
+					});
+				});
+			});
+
 	
 	
 	//============= "만들기"  Event 연결 =============

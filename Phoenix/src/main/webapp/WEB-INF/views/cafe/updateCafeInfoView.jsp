@@ -117,18 +117,18 @@ code {
                                             <label class="col-lg-4 col-form-label" for="val-bannerImg"><h5>메인 이미지 </h5>
                                             </label>                                           
                                             <div class="col-lg-6">
-                                               <div><img src="/images/uploadFiles/mainImg/${cafe.mainImg}" width="300"; height="200px";/>
+                                               <div><img src="/images/uploadFiles/mainImg/${cafe.mainImg}" width="150"; height="150px"; id="main"/>
                                                </div>
-                                                <input type="file" class=""form-control-file"" id="uploadFile2" name="uploadFile2" >
+                                                <input type="file" class="form-control-file" id="uploadFile2" name="uploadFile2" >
                                                </div>
                                         </div> <hr>
                                         <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="val-bannerImg"><h5>카페 아이콘 </h5>
                                             </label>                                           
                                             <div class="col-lg-6">
-                                               <div><img src="/images/uploadFiles/cafeIcon/${cafe.cafeIcon}" width="300"; height="200px";/>
+                                               <div><img src="/images/uploadFiles/cafeIcon/${cafe.cafeIcon}" width="150"; height="150px"; id="icon"/>
                                                </div>
-                                                <input type="file" class=""form-control-file"" id="uploadFile3" name="uploadFile3">
+                                                <input type="file" class="form-control-file" id="uploadFile3" name="uploadFile3">
                                                </div>
                                         </div> <hr>
 			  
@@ -181,6 +181,9 @@ code {
 
 
 	//유효성 검사
+	
+	
+	
 	
 		
 	

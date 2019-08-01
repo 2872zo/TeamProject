@@ -14,13 +14,13 @@ import com.phoenix.mvc.service.shoppingmall.ShoppingmallService;
 
 @Controller
 @RequestMapping("/shopping/*")
-public class ShoppingmallContoller {
+public class ShoppingmallController {
 	
 	@Autowired
 	@Qualifier("shoppingmallServiceImpl")
 	private ShoppingmallService shoppingmallService;
 	
-	public ShoppingmallContoller() {
+	public ShoppingmallController() {
 		System.out.println(getClass().getName() + "default Constuctor");
 	}
 	
@@ -47,10 +47,10 @@ public class ShoppingmallContoller {
 			search.setDetectedItemCount(0); //일단 무한스크롤 위해서..
 		}
 		
-		//Map<String, Object> returnMap = shoppingmallService.getShoppingmallProductList(search);
+		Map<String, Object> returnMap = shoppingmallService.getShoppingmallProductList(search);
 		
-		//model.addAttribute("productList",returnMap.get("productList"));
-		//model.addAttribute("search", returnMap.get("search"));
+		model.addAttribute("productList",returnMap.get("productList"));
+		model.addAttribute("search", returnMap.get("search"));
 		
 		return "/shoppingMall/listShoppingmallProduct";
 	}

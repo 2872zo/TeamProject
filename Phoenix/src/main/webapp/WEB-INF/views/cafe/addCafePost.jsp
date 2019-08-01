@@ -10,8 +10,7 @@
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <!-- Favicon icon -->
-<link rel="icon" type="image/png" sizes="16x16"
-	href="/images/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
 <!-- Custom Stylesheet -->
 <link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
 <link href="/css/style.css" rel="stylesheet">

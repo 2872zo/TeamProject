@@ -9,22 +9,13 @@
 
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<!-- Favicon icon -->
-<link rel="icon" type="image/png" sizes="16x16"
-	href="/images/favicon.png">
 <!-- Custom Stylesheet -->
 <link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
 <link href="/css/style.css" rel="stylesheet">
 
-<!-- Date picker plugins css -->
-<link href="/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet">
-
 <link rel="stylesheet" href="/css/custom/scroll-top.css">
-<link rel="stylesheet" href="/css/custom/advenced-search.css">
 <script src="https://kit.fontawesome.com/e589319d43.js"></script>
 
-<!-- 이페이지에서만 사용 -->
-<link href="/css/custom/form-validation.css" rel="stylesheet">
 
 <style>
 #div_menu {
@@ -67,6 +58,17 @@
 	cursor: pointer;
 }
 
+.noticeIcon {
+	height: 28px;
+	margin: 0px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+.thisNotice {
+	background: #F1795E;
+	border-color: #F1795E;
+}
 </style>
 
 <title>${search.cafeURL}</title>
@@ -98,10 +100,8 @@
             Nav header start
         ***********************************-->
 		<div class="nav-header">
-			<c:import url="/WEB-INF/views/common/brand-logo.jsp"/>
+			<c:import url="/WEB-INF/views/common/brand-logo.jsp"></c:import>
 		</div>
-		
-		
 		<!--**********************************
             Nav header end
         ***********************************-->
@@ -110,7 +110,7 @@
             Header start
         ***********************************-->
 		<div class="header">
-			<c:import url="/WEB-INF/views/common/cafeToolbar.jsp"></c:import>
+			<c:import url="/WEB-INF/views/mail/common/mailToolbar.jsp"></c:import>
 		</div>
 		<!--**********************************
             Header end ti-comment-alt
@@ -120,7 +120,7 @@
             Sidebar start
         ***********************************-->
 		<div class="nk-sidebar">
-			<c:import url="/WEB-INF/views/cafe/menubarCafe.jsp"></c:import>
+			<c:import url="/WEB-INF/views/mail/common/mailSidebar.jsp"></c:import>
 		</div>
 		<!--**********************************
             Sidebar end
@@ -139,56 +139,44 @@
                 </div>
             </div>
 			
-			
-			
-			
-			
 				<div class="col-lg-12">
 					<div class="card">
 						<div class="card-body">
-							<h4 class="card-title">게시글 작성</h4>
-							<div>
-
-								<form class="needs-validation" novalidate>
-									<input type="hidden" name="fileList" id="fileList">
-									<input type="hidden" name="cafeURL"> 
-									<input type="hidden" name="memberNo"> 
-									<input type="hidden" name="memberNickname">
-									<input type="hidden" name="boardName">
 						
-									<div class="row">
-										<div class="col-md-8 mb-3">
-											<select class="form-control hideOption" name="boardNo">
-												<c:forEach var="board" items="${boardOption }">
-													<option value="${board.boardNo }" class="boardOption">${board.boardName }</option>
-												</c:forEach>
-											</select>
-										</div>
-						
-										<c:if test="${cafeMember.memberGrade eq 'cg100' or cafeMember.memberGrade eq 'cg101'}">
-											<div class="custom-control custom-checkbox">
-												<input type="checkbox" class="custom-control-input"	id="postNoticeFlag" name="postNoticeFlag"> 
-												<label	class="custom-control-label" for="postNoticeFlag">공지로 등록</label>
-											</div>
-										</c:if>
-									</div>
-						
-									<label for="postTitle">제목</label> 
-									<input type="text" class="form-control" id="postTitle" name="postTitle" required="">
-									<div class="invalid-feedback">제목은 생략할 수 없습니다.</div>
-									
-									<br/>
-									
-									<label for="editor">내용</label>
-									<textarea class="form-control" name="postContent" id="editor" required=""></textarea>
-									<div class="invalid-feedback">내용은 생략할 수 없습니다.</div>
-						
-									<br/>
-									
-									<input type="submit" class="btn btn-primary btn-lg btn-block" id="submitButton" value="등록">
-								</form>
-
-							</div>
+	                        <div class="compose-content">
+	                            <form id="mailForm" enctype="multipart/form-data">
+	                            	<div class="form-group">
+	                            		<input type="hidden" id="inlineList" name="inlineList">
+	                            		<select id="accountSelector" class="form-control" name="accountNo">
+											<option>메일을 보낼 계정을 선택하세요</option>
+											<c:set var="i" value="1"/>
+											<c:forEach items="${accountList }" var="account">
+												<option value="${account.accountNo }">${account.accountId }</option>
+												<c:set var="i" value="${i+1 }"/>
+											</c:forEach>								
+										</select>
+	                            	</div>
+	                                <div class="form-group">
+	                                    <input type="text" class="form-control bg-transparent" placeholder=" 받는 사람" name="to">
+	                                </div>
+	                                <div class="form-group">
+	                                    <input type="text" class="form-control bg-transparent" placeholder=" 제목" name="subject">
+	                                </div>
+	                                <div class="form-group">
+	                                    <textarea id="editor" class="form-control" rows="15" placeholder="내용을 입력하세요" name="content"></textarea>
+	                                </div>
+		                            <h5 class="m-b-20"><i class="fa fa-paperclip m-r-5 f-s-18"></i> Attatchment</h5>
+	                                <div class="form-group">
+	                                    <div class="fallback">
+	                                        <input class="l-border-1" name="files" type="file" multiple="multiple">
+	                                    </div>
+	                                </div>
+	                            </form>
+	                        </div>
+	                        <div class="text-left m-t-15">
+	                            <button class="btn btn-primary m-b-30 m-t-15 f-s-14 p-l-20 p-r-20 m-r-10" type="button" id="send"><i class="fa fa-paper-plane m-r-5"></i> Send</button>
+	                        </div>
+	                        
 						</div>
 					</div>
 				</div>
@@ -197,8 +185,6 @@
 			<!-- row -->
 
 		</div>
-		</div>
-		
 		<!--**********************************
             Content body end
         ***********************************-->
@@ -236,27 +222,13 @@
 	<script src="/plugins/sweetalert/js/sweetalert.init.js"></script>
 	
 	<!-- 메뉴바 이용을 위한 스크립트 -->
-	<script>
-    	var memberNo = '${cafeMember.memberNo}'
-    	var userNo ='${user.userNo}'
-    	var cafeNo= '${cafeMember.cafeNo}'
-		var cafeURL = "${cafeURL}";
-    </script>
 	<script src="/js/custom/scroll-top.js"></script>
-	<script src="/js/custom/menubarCafe.js"></script>
-	<script src="/js/custom/cafeCommon.js"></script>
+	<script src="/js/custom/mailCommon.js"></script>
 
 	<!-- 이 페이지 전용 script -->
-	<script src="/plugins/moment/moment.js"></script>
-    <script src="/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
-    <!-- Date Picker Plugin JavaScript -->
-    <script src="/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
-    
 	<script src="/ckeditor/ckeditor.js"></script>
-	<script src="/js/custom/form-validation.js"></script>
-	
 	<script>
-	<!-- ckeditor 설정 -->
+		<!-- ckeditor 설정 -->
 		$(function() {
 			var uploadFileList = new Array();
 			
@@ -269,48 +241,38 @@
 				$("#preloader").attr("style", "display:none;");
 				
 			    // Prevent the default response handler.
-// 			    evt.stop();
-
-// 			    // Get XHR and response.
+	//			    evt.stop();
+	
+	//			    // Get XHR and response.
 			    var data = evt.data,
 			        xhr = data.fileLoader.xhr,
 			        response = JSON.parse(xhr.responseText.split( '|' ));
-
-// 				console.log(response.fileName);
+	
+	//				console.log(response.fileName);
 				
-// 		        debugger;
+	//		        debugger;
 		        
-		        var fileList;
-				if(CKEDITOR.document.$.getElementById("fileList").value == ""){
-					fileList = response.fileName;
+		        var inlineList;
+				if(CKEDITOR.document.$.getElementById("inlineList").value == ""){
+					inlineList = response.fileName;
 				}else{
-					fileList = CKEDITOR.document.$.getElementById("fileList").value + ","  + response.fileName;
+					inlineList = CKEDITOR.document.$.getElementById("inlineList").value + ","  + response.fileName;
 				}
 		        
-		        CKEDITOR.document.$.getElementById("fileList").value = fileList;
+		        CKEDITOR.document.$.getElementById("inlineList").value = inlineList;
 			} );
-
+	
 		});
 
-		$(function() {
-			$("[name=cafeURL]").val('${search.cafeURL}');
-			$("[name=memberNo]").val("${cafeMember.memberNo}");
-			$("[name=memberNickname]").val('${cafeMember.memberNickname}');
-			$("form").attr("method", "POST").attr("action",	"addPost");
 
-			$("#submitButton").on("click",function(e){
-				$("[name=boardName]").val( $("[name=boardNo] option:selected").text());
+		$(function(){
+			$("#send").on("click", function(){
+				$("#mailForm").attr("method","POST").attr("action", "/mail/sendMail").submit();
 			});
-
-			$(".boardOption").each(function(){
-			    if($(this).val()==${empty search.boardNo? 0 : search.boardNo}){
-			      $(this).attr("selected","selected");
-			    }
-			});
+			
 		});
-		
 	</script>
+
 </body>
 
 </html>
-

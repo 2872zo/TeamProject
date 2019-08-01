@@ -148,10 +148,10 @@ public class UserRestController {
 
 	        try {
 	            HttpPost httpPost = new HttpPost(url);
-	            httpPost.setHeader("Content-type", "application/json; charset=EUC-KR");
+	            httpPost.setHeader("Content-type", "application/json; charset=UTF-8");
 	            String json = "{\"sender\":\""+Config.sender+"\",\"receivers\":[\""+receiver+"\"],\"content\":\""+rand+"\"}";
 	            
-	            StringEntity se = new StringEntity(json, "EUC-KR");
+	            StringEntity se = new StringEntity(json, "UTF-8");
 	            httpPost.setEntity(se);
 	       
 	            HttpResponse httpResponse = client.execute(httpPost, context);

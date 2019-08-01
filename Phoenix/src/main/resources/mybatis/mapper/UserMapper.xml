@@ -37,7 +37,7 @@
 	 	<selectKey keyProperty="userNo" resultType="int" order="BEFORE">
 	 		SELECT SEQ_USERS_USER_NO.NEXTVAL FROM DUAL
 	 	</selectKey>
-		INSERT INTO USERS (user_no, user_id, user_name, user_nickname, password, email, phone, profile_img, reg_date, kakao_id, naver_id, code) 
+		INSERT INTO USERS (user_no, user_id, user_name, user_nickname, password, email, phone, profile_img, reg_date, kakao_id, naver_id) 
 		VALUES ( #{userNo}, #{userId:VARCHAR}, #{userName:VARCHAR}, #{userNickname:VARCHAR}, #{password:VARCHAR}, #{email:VARCHAR}, #{phone:NUMERIC}, #{profileImg:VARCHAR}, SYSDATE, #{kakaoId:VARCHAR}, #{naverId:VARCHAR})
 
 	 </insert>
