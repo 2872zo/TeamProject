@@ -29,8 +29,13 @@
 </head>
 
 <style type="text/css">
+#accountText{
+	color: orange;
+	font-family
+}
+
 #profile {
-    margin-bottom: 6.5%;
+    margin-bottom: 5%;
     }
 
 
@@ -243,9 +248,44 @@ input[type="checkbox"] {
                                     <img class="img-fluid" src="images/big/img1.jpg" alt="">
                                     <div class="card-body">                                
                                          
-                                    <a id="kakaos"><img src="/images/uploadFiles/kakao/kakaoIcon.jpg" width=50; height=45;/></a>   
+                                    <a id="kakaoIcon"><img src="/images/uploadFiles/kakao/kakaoIcon.jpg" width=50; height=45;/></a>   
+                                        <h5><p class="card-text">카카오 &nbsp;&nbsp;: &nbsp;&nbsp;
+                                        <c:if test="${user.kakaoId != null}">연동                                    	
+                                        </c:if></p></h5>
+                                        <br>
+                                    <a id="naverIcon"><img src="/images/uploadFiles/naver/naverIcon.jpg" width=50; height=45;/></a>
+                                        <h5><p class="card-text">네이버 &nbsp;&nbsp;: &nbsp;&nbsp;
+                                        <c:if test="${empty user.kakaoId}"> 미연동                                       	
+                                        </c:if></p></h5>
+                                        
+                                    </div>
+                                    <div class="card-footer">
+                                        <p class="card-text d-inline"><small class="text-muted"></small>
+     <!-- 연동로그인modal -->  <button type="button" class="btn btn-primary login"
+								data-toggle="modal" data-target="#accountLogin">
+								<i class="icon-key">계정연동</i>
+							</button>
+                               </div>
+                                </div>
+                            </div>
+
+                            
+                            
+                            <!-- End Col -->
+
+                        
+                            <div class="col-md-7 col-lg-6">
+                                <div class="card">
+                                    <div class="card-header bg-white">
+                                        <h5 class="card-title">연동계정</h5>
+                                        <h6 class="card-subtitle mb-2 text-muted"></h6>
+                                    </div>
+                                    <img class="img-fluid" src="images/big/img1.jpg" alt="">
+                                    <div class="card-body">                                
+                                         
+                                    <a id="kakaoIcon"><img src="/images/uploadFiles/kakao/kakaoIcon.jpg" width=50; height=45;/></a>   
                                         <h5><p class="card-text">카카오 &nbsp;&nbsp;: &nbsp;&nbsp;연동</p></h5><br>
-                                    <a id="navers"><img src="/images/uploadFiles/naver/naverIcon.jpg" width=50; height=45;/></a>
+                                    <a id="naversIcon"><img src="/images/uploadFiles/naver/naverIcon.jpg" width=50; height=45;/></a>
                                         <h5><p class="card-text">네이버 &nbsp;&nbsp;: &nbsp;&nbsp;미연동</p></h5>
                                         
                                     </div>
@@ -260,6 +300,7 @@ input[type="checkbox"] {
                             
                             
                             <!-- End Col -->
+	                            
                                      
                         </div>
                     </div>
@@ -301,7 +342,7 @@ input[type="checkbox"] {
 										data-toggle="modal" data-target="#shoppingLogin">
 									</i>
 								</h5>
-								
+								<!-- accountList 불러와야 한다 목록 띄워줘야함 -->
 								<div id="shoppingAccountList">
 									<div class="alert alert-dark d-flex justify-content-between" role="alert" 
 										style="margin-bottom:5px; background-color:rgba(128, 128, 128, 0.15); ">
@@ -469,6 +510,48 @@ input[type="checkbox"] {
 			</div><!-- modal dialog end -->
 		</div><!-- modal end -->
 		<!-- SnsLogin 끝 -->
+
+		<!-- Modal 내용 시작 -->
+		<div class="modal fade" id="accountLogin" style="display: none;"
+			aria-hidden="true" style="max-width:100%;" style=" width: auto;">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+
+						<button type="button" class="close" data-dismiss="modal">
+							<span>×</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="card-body pt-5">
+							<a class="text-center">
+								<h2>연동하기</h2>
+							</a>
+
+							<form class="mt-5 mb-5 login-input">
+								
+								<div class="form-group">
+									
+								</div>
+								
+								<center>								
+								<a id="kakaos"><img src="/images/uploadFiles/kakao/kakaos.jpg" width=210; height=45;/></a>
+     							<a id="navers"><img src="/images/uploadFiles/naver/navers.jpg" width=210; height=45;/></a>		
+						
+     							</center>
+							</form>
+							<p class="mt-5 login-form__footer">
+								<a href="/user/addUserView" class="text-primary" id="addUser1">회원가입</a>
+							</p>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<!-- Modal 내용 끝 -->
+		
 			  
 	
 	<!--  화면구성 div end /////////////////////////////////////-->
@@ -520,7 +603,7 @@ input[type="checkbox"] {
 				success : function(data) {
 // 					alert("success");
 					console.log("data : " + data);
-					if(data == true){
+					if(data == 100){
 						$("#mailAccountList").append('<div class="alert alert-dark d-flex justify-content-between" role="alert"' 
 														+ 'style="margin-bottom:5px; background-color:rgba(128, 128, 128, 0.15); ">'
 														+ '<span style="margin-top:5px;">' + formObject.accountId + formObject.accountType  + '</span>'
@@ -529,9 +612,14 @@ input[type="checkbox"] {
 						$("#mailLogin").modal("hide");	
 						$(".mail-login-input")[0].reset();
 						sweetAlert("계정연동 성공", formObject.accountId + formObject.accountType + " 계정이 연동되었습니다.","success");
-					}else{
+					}else if(data == 404 || data == 405){
 						sweetAlert("계정연동 실패","아이디와 비밀번호를 확인해 주십시오.","error");
+					}else if(data == 400){
+						sweetAlert("계정연동 실패","해당 계정의 IMAP설정을 확인해 주십시오.","error");
+					}else{
+						sweetAlert("계정연동 실패","알수없는 오류가 발생했습니다.\n 잠시후 다시 시도해 주십시오.","error");
 					}				
+					
 				},
 				error : function(data) {
 // 					alert("error : " + data);
@@ -547,7 +635,7 @@ input[type="checkbox"] {
 
 			target = $(this).parent();
 			var targetAddr = $(this).prev().text();
-			var formObject = {accountId : targetAddr.substring(0, targetAddr.indexOf("@")), accountType : targetAddr.substring(targetAddr.indexOf("@"))}
+			var formObject = {accountId : targetAddr, accountType : targetAddr.substring(targetAddr.indexOf("@"))}
 
 			$.ajax({
 				type : "POST",
@@ -599,7 +687,7 @@ input[type="checkbox"] {
 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 		$("a[href='#' ]").on("click", function() {
 			//$("form")[0].reset();
-			self.location = "/cafe/main"
+			self.location = "/"
 		});
 	});
 </script>

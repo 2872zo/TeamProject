@@ -196,7 +196,7 @@
 	<script src="/plugins/sweetalert/js/sweetalert.min.js"></script>
 	<script type="text/javascript">
 
-
+	var cch = 0;
 	var checkSessionUser = ${empty sessionScope.user};
 
 	function readURL(input) {
@@ -233,11 +233,13 @@
 			
 		});
 	});
+
+	
 	
 	//유효성 검사
 	function fncAddUser() {
 		
-		var cch = 0;
+		
 		var userName = $("input[name='userName']").val();
 		var userId = $("input[id='userid']").val();
 		var password = $("input[id='passWord']").val();
@@ -289,6 +291,7 @@
 			return;
 		}
 		if(cch !=1 ){
+			alert(cch);
 			sweetAlert("반드시 휴대전화 인증을 해야함.","","error");
 			return;			
 		}else{
@@ -322,15 +325,76 @@
 			});//ajax
 			//return false;
 		}//else
-
-
-		//sweetAlert(userName+"님 환영합니다~","");
-		
-		//alert(userName+"님 환영합니다~");
-		
-		//$("#adduser").attr("method", "POST").attr("action","/user/addUser").submit();
-		
 	}
+
+	$(function() {
+		  
+	  	
+ 		var rand = "";
+		
+		
+		$("button:contains('전송')").on("click" , function() {
+			var phone = $("input[name='phone']").val();
+			//alert("dsada@@@ :"+phone);
+			
+			if (phone == null || phone.length < 1) {
+				sweetAlert("전화번호를 입력하세요.","","error");
+				return;
+			}
+
+			$("#inj").show();
+		
+			
+			$.ajax({ 
+				   url: "/user/json/sendSms",
+				   data: { 
+					   receiver: $("#phone1").val()
+					   }, 
+					   type: "post",
+					   dataType:"json", 
+			
+					   success : function(JSONData){
+							console.log(JSONData);   
+			
+							rand = JSONData.rand;
+				   
+				   }  
+		
+				 }); 
+		
+			});
+		
+		   
+			$("button:contains('인증')").on("click" ,function(){ 
+
+				
+		
+				var join = document.getElementById('join');
+
+				var phone = document.getElementById("phone1");
+				
+				var code = $("#sms").val();
+
+				
+				
+			 if (rand == code) { 
+		   
+				 sweetAlert("인증 성공","","success");
+			   
+			   $("#inj").hide();
+				phone.style.border = "3px solid gold";
+				phone.readOnly = true;
+				$("#pij").hide();
+			   	cch = 1;
+			   	//alert(cch);
+				
+		   } else { 
+			   sweetAlert("인증 실패","","error"); 
+		  	 	} 
+		 	   
+		   });
+		
+	   });
 
 	//한글 입력못하게
 	$(function() {
@@ -403,68 +467,11 @@
 		  						  });
 								});
 
-	$(function() {
-		 
- 		var rand = "";
-	
-		
-		$("button:contains('전송')").on("click" , function() {
-			sweetAlert("인증번호 전송","","success");
-			
-	
-			
-			
-			$("#inj").show();
-		
-			
-			$.ajax({ 
-				   url: "/user/json/sendSms",
-				   data: { 
-					   receiver: $("#phone1").val()
-					   }, 
-					   type: "post",
-					   dataType:"json", 
-			
-					   success : function(JSONData){
-							console.log(JSONData);   
-			
-							rand = JSONData.rand;
-				   
-				   }  
-		
-				 }); 
-			
-				});
-		   
-		   
-			$("button:contains('인증')").on("click" ,function(){ 
-		
-				var join = document.getElementById('join');
 
-				var phone = document.getElementById("phone");
-				
-				var code = $("#sms").val();
 	
-				
-			   if (rand == code) { 
-		   
-			   sweetAlert("인증 성공","","success");
-			   
-			   $("#inj").hide();
-				phone.style.border = "3px solid gold";
-				phone.readOnly = true;
-				$("#pij").hide();
-			   	cch = 1;
-				
-		   } else
-		  		 { 
-			   sweetAlert("인증 실패","","error"); 
-		  	 	} 
-		 	   
-		   });
-	   }); 
 	   
 	   
+		
 	
 	
 </script>

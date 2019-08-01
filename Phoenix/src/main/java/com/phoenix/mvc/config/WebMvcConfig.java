@@ -24,6 +24,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	@Autowired
 	@Qualifier(value = "chatInterceptor")
 	private HandlerInterceptor chatInterceptor;
+	
+	@Autowired
+	@Qualifier(value = "userInterceptor")
+	private HandlerInterceptor userInterceptor;
 		
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -40,7 +44,16 @@ public class WebMvcConfig implements WebMvcConfigurer {
         		.excludePathPatterns("/mail/json/**");
         
         registry.addInterceptor(chatInterceptor)
-        .addPathPatterns("/chat/**");
+        		.addPathPatterns("/chat/**");
+        
+        registry.addInterceptor(userInterceptor)
+        		.addPathPatterns("/user/**")
+        		.excludePathPatterns("/user/loginView")
+        		.excludePathPatterns("/user/json/login")
+                .excludePathPatterns("/user/logout")
+                .excludePathPatterns("/user/addUserView")
+                .excludePathPatterns("/user/oauth")
+                .excludePathPatterns("/user/callback");
         
     }
     

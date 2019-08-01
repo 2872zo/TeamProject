@@ -12,7 +12,7 @@ import com.phoenix.mvc.service.cafe.CafeManageDao;
 import com.phoenix.mvc.service.cafe.CafeManageService;
 import com.phoenix.mvc.service.cafe.CafeMemberService;
 import com.phoenix.mvc.service.cafe.CafePostService;
-import com.phoenix.mvc.service.chatting.ChattingService;
+import com.phoenix.mvc.service.domain.Account;
 import com.phoenix.mvc.service.domain.Board;
 import com.phoenix.mvc.service.domain.Cafe;
 import com.phoenix.mvc.service.domain.CafeApplication;
@@ -30,18 +30,17 @@ import java.util.Map;
 
 @Component
 public class UserInterceptor extends HandlerInterceptorAdapter {
-
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
 
 	public UserInterceptor() {
-		System.out.println("UserInterceptor 생성했습니다.");
+		System.out.println("Mail Interceptor 생성");
 	}
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)	throws Exception {
-		System.out.println("\n\n================================ UserInterceptor > preHandle 시작 ================================");
+		System.out.println("\n\n================================ UserInterceptor > preHandle START ================================");
 		String requestURI = request.getRequestURI();
 		System.out.println(">>>>>>>>>>> 요청URL : " + requestURI);
 
@@ -50,21 +49,46 @@ public class UserInterceptor extends HandlerInterceptorAdapter {
 
 		// 세션의 로그인 정보
 		User user = (User) request.getSession().getAttribute("user");
-		
-	//회원 정보,목록,수정 
-	if(requestURI.contains("/user/getUser") || requestURI.contains("/user/listUser") || requestURI.contains("/user/updateUser")) {
-		if (user==null) {
-			response.sendRedirect("/user/loginView");
+
+		//회원가입
+		if (requestURI.contains("/user/addUser") || requestURI.contains("/user/json/checkUserIdDuplication") || requestURI.contains("/user/json/checkUserPwDuplication") || requestURI.contains("/user/json/sendSms")) {
+			if(user == null) {
+				return true;
+			}
+		}
+//		if(requestURI.contains("/user/listUser")) {
+//			if(user.getUserRoleCode().equals("ur100")) {
+//				return true;
+//			}else {
+//				System.out.println(">>>listUser 관리자 페이지 접근");
+//				response.sendRedirect("/error/400");
+//				return false;
+//			}
+//				
+//		}
+		if(requestURI.contains("/user/getUser") || requestURI.contains("/user/listUser") || requestURI.contains("/user/updateUser")) {
+			if(user == null) {
+				System.out.println(">>>>>비회원이 페이지 접근");
+				response.sendRedirect("/user/loginView");
+				return false;
+			}else if(user.getUserRoleCode().equals("ur100")){
+				return true;
+			}else {
+				System.out.println(">>>listUser 관리자 페이지 접근");
+				response.sendRedirect("/error/400");
+				
+			}
+			
+		}
+		// 로그인 여부 확인
+		if (user == null) {
+			System.out.println(">>> User없음");
+			response.sendRedirect(request.getContextPath() + "/user/loginView?targetURL=" + request.getRequestURI());
 			return false;
 		}
-	}else {
-		//return true;
 		
-	}
-	// 모든 경우가 만족
-		System.out.println("================================ UserInterceptor > preHandle 끝 ===============================\n\n");
+		// 모든 경우가 만족
+		System.out.println("================================ UserInterceptor > preHandle END ================================\n\n");
 		return true;
-	
 	}
-
 }

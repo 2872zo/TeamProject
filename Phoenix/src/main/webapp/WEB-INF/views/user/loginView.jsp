@@ -98,7 +98,7 @@
                     <div class="form-input-content">
                         <div class="card login-form mb-0">
                             <div class="card-body pt-5">
-                                <a class="text-center" href="index.html"> <h4>Phoenix</h4></a>
+                                <a class="text-center" href="/"> <h4>Phoenix</h4></a>
         
                                 <form class="mt-5 mb-5 login-input">
                                     <div class="form-group">
@@ -216,8 +216,8 @@
 							sweetAlert("아이디 또는 비밀번호가 일치하지 않습니다.","","error");
 							return false;
 						}else{
-														
-						self.location = "/";							
+							self.location = "?targetURL=${request.getRequestURI()}";							
+						//self.location ="/";			
 						}							
 					}
 				});//ajax
