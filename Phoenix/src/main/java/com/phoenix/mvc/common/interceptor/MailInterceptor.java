@@ -6,19 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.phoenix.mvc.common.Event;
-import com.phoenix.mvc.common.Search;
-import com.phoenix.mvc.service.cafe.CafeManageDao;
-import com.phoenix.mvc.service.cafe.CafeManageService;
-import com.phoenix.mvc.service.cafe.CafeMemberService;
-import com.phoenix.mvc.service.cafe.CafePostService;
 import com.phoenix.mvc.service.domain.Account;
-import com.phoenix.mvc.service.domain.Board;
-import com.phoenix.mvc.service.domain.Cafe;
-import com.phoenix.mvc.service.domain.CafeApplication;
-import com.phoenix.mvc.service.domain.CafeGrade;
-import com.phoenix.mvc.service.domain.CafeMember;
-import com.phoenix.mvc.service.domain.Post;
 import com.phoenix.mvc.service.domain.User;
 import com.phoenix.mvc.service.user.UserService;
 

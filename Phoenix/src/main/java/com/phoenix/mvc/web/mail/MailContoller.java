@@ -42,19 +42,26 @@ public class MailContoller {
 	}
 
 	@RequestMapping("getMailList")
-	public String getMailList(@ModelAttribute Search search, Map<String, Object> map, HttpServletRequest req) throws Exception {
+	public String getMailList(@ModelAttribute Search search, Map<String, Object> map, HttpServletRequest req, @RequestParam(required = false, defaultValue = "0") int accountNo) throws Exception {
 		List<Account> accountList = (List<Account>)req.getAttribute("accountList");
 		List<Mail> mailList = new ArrayList<Mail>();
 		
-		if(search.getSearchCondition() == null || search.getSearchCondition().equals("0")) {
-			for(Account account : accountList) {
-				mailList.addAll(mailService.getMailList(account));
-			}
+		if(accountNo == 0) {
+			mailList = mailService.getMailList(accountList.get(0));
 		}else {
-			mailList = mailService.getMailList(accountList.get(Integer.parseInt(search.getSearchCondition()) - 1));
+			Account selectedAccount = null;
+			for(Account account : accountList) {
+				if(account.getAccountNo() == accountNo) {
+					selectedAccount = account;
+					break;
+				}
+			}
+			
+			mailList = mailService.getMailList(selectedAccount);
 		}
 		
 		map.put("mailList", mailList);
+		map.put("accountNo", accountNo);
 		
 		return "/mail/listMail";
 	}
@@ -95,7 +102,7 @@ public class MailContoller {
 	
 	
 	@PostMapping("sendMail")
-	public String sendMail(HttpServletRequest req, @RequestParam int accountNo, @ModelAttribute Mail mail, @RequestParam MultipartFile[] files, @RequestParam String inlineList) throws MessagingException {
+	public String sendMail(HttpServletRequest req, @RequestParam int accountNo, @ModelAttribute Mail mail, @RequestParam MultipartFile[] files, @RequestParam String inlineList, Map<String, Object> map) throws MessagingException {
 		List<Account> accountList = (List<Account>)req.getAttribute("accountList");
 		
 		Account account = null;
@@ -109,28 +116,29 @@ public class MailContoller {
 		
 		List<Map<String, Object>> attachmentList = null;
 		
-		// 파일 태그명을 다 검색하는 기능 여러칸일 경우에 유용
-		for (MultipartFile file : files) {
-			attachmentList = new ArrayList<Map<String,Object>>();
-			String fileName = file.getOriginalFilename();
-			Map<String, Object> fileMap = new HashMap<String, Object>();
-			
-			try {
-				UUID uid = UUID.randomUUID();
-				fileMap.put("fileName", fileName);
+		if(files.length > 0 && !files[0].getOriginalFilename().equals("")) {
+			for (MultipartFile file : files) {
+				attachmentList = new ArrayList<Map<String,Object>>();
+				String fileName = file.getOriginalFilename();
+				Map<String, Object> fileMap = new HashMap<String, Object>();
 				
-				fileName = uid + fileName;
-				File fileTo = new File(tmpUploadDir + "/" + fileName);
-				file.transferTo(fileTo);
+				try {
+					UUID uid = UUID.randomUUID();
+					fileMap.put("fileName", fileName);
+					
+					fileName = uid + fileName;
+					File fileTo = new File(tmpUploadDir + "/" + fileName);
+					file.transferTo(fileTo);
+					
+					fileMap.put("fileData", fileTo);
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				
-				fileMap.put("fileData", fileTo);
-				
-			} catch (Exception e) {
-				e.printStackTrace();
+				attachmentList.add(fileMap);
+				System.out.println("파일 추가딤!");
 			}
-			
-			attachmentList.add(fileMap);
-			System.out.println("파일 추가딤!");
 		}
 		
 		mail.setContent(mail.getContent().replaceAll("/images/uploadfiles/", "cid:"));
@@ -143,6 +151,8 @@ public class MailContoller {
 		
 		
 		mailService.sendMail(account, mail);
+		
+		map.put("account", account);
 		
 		return "/mail/confirmSendMail";
 	}

@@ -249,7 +249,17 @@
 	<!-- 메뉴바 이용을 위한 스크립트 -->
 	<script src="/js/custom/scroll-top.js"></script>
 	<script src="/js/custom/mailCommon.js"></script>
-
+	<script>
+		$(function(){
+			//선택 계정 유지
+			$(".accountSelectorOption").each(function(){
+				if($(this).val() == ${accountNo}){
+					$(this).attr("selected", "selected");
+				}
+			});
+		});
+	</script>
+	
 	<!-- 이 페이지 전용 script -->
 	<script>
 		$(function(){
