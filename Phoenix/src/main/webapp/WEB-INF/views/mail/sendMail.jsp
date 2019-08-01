@@ -144,8 +144,9 @@
 						<div class="card-body">
 						
 	                        <div class="compose-content">
-	                            <form id="mailForm">
+	                            <form id="mailForm" enctype="multipart/form-data">
 	                            	<div class="form-group">
+	                            		<input type="hidden" id="inlineList" name="inlineList">
 	                            		<select id="accountSelector" class="form-control" name="accountNo">
 											<option>메일을 보낼 계정을 선택하세요</option>
 											<c:set var="i" value="1"/>
@@ -164,12 +165,10 @@
 	                                <div class="form-group">
 	                                    <textarea id="editor" class="form-control" rows="15" placeholder="내용을 입력하세요" name="content"></textarea>
 	                                </div>
-	                            </form>
-	                            <h5 class="m-b-20"><i class="fa fa-paperclip m-r-5 f-s-18"></i> Attatchment</h5>
-	                            <form action="#" class="dropzone">
+		                            <h5 class="m-b-20"><i class="fa fa-paperclip m-r-5 f-s-18"></i> Attatchment</h5>
 	                                <div class="form-group">
 	                                    <div class="fallback">
-	                                        <input class="l-border-1" name="file" type="file" multiple="multiple">
+	                                        <input class="l-border-1" name="files" type="file" multiple="multiple">
 	                                    </div>
 	                                </div>
 	                            </form>
@@ -253,14 +252,14 @@
 				
 	//		        debugger;
 		        
-		        var fileList;
-				if(CKEDITOR.document.$.getElementById("fileList").value == ""){
-					fileList = response.fileName;
+		        var inlineList;
+				if(CKEDITOR.document.$.getElementById("inlineList").value == ""){
+					inlineList = response.fileName;
 				}else{
-					fileList = CKEDITOR.document.$.getElementById("fileList").value + ","  + response.fileName;
+					inlineList = CKEDITOR.document.$.getElementById("inlineList").value + ","  + response.fileName;
 				}
 		        
-		        CKEDITOR.document.$.getElementById("fileList").value = fileList;
+		        CKEDITOR.document.$.getElementById("inlineList").value = inlineList;
 			} );
 	
 		});
@@ -268,7 +267,6 @@
 
 		$(function(){
 			$("#send").on("click", function(){
-				debugger;
 				$("#mailForm").attr("method","POST").attr("action", "/mail/sendMail").submit();
 			});
 			

@@ -43,6 +43,9 @@ public class MailDaoImpl implements MailDao {
 	@Value("${tmpUploadDir}")
 	private String tmpUploadDir;
 	
+	@Value("${uploadDir}")
+	private String uploadDir;
+	
 	@Autowired
 	@Qualifier("sqlSessionTemplate")
 	private SqlSession sqlSession;
@@ -292,12 +295,20 @@ public class MailDaoImpl implements MailDao {
 	        }
 	    });
 		
-		MimeMessageHelper message = new MimeMessageHelper(new MimeMessage(session), false, "UTF-8");
+		MimeMessageHelper message = new MimeMessageHelper(new MimeMessage(session), true, "UTF-8");
 		
 		message.setFrom(account.getAccountId());
 		message.setTo(mail.getTo().split(","));
 		message.setSubject(mail.getSubject());
 		message.setText(mail.getContent(), true);
+		
+		for(Map<String, Object> map : mail.getAttachmentList()) {
+			message.addAttachment((String)map.get("fileName"), (File)map.get("fileData"));
+		}
+		
+		for(String inlineFileName : mail.getInlineList().split(",")) {
+			message.addInline(inlineFileName, new File(uploadDir + "/" + inlineFileName));
+		}
 		
 		Transport.send(message.getMimeMessage());
 		
@@ -322,12 +333,21 @@ public class MailDaoImpl implements MailDao {
 	        }
 	    });
 		
-		MimeMessageHelper message = new MimeMessageHelper(new MimeMessage(session), false, "UTF-8");
+		MimeMessageHelper message = new MimeMessageHelper(new MimeMessage(session), true, "UTF-8");
 		
 		message.setFrom(account.getAccountId());
 		message.setTo(mail.getTo().split(","));
 		message.setSubject(mail.getSubject());
 		message.setText(mail.getContent(), true);
+		
+		for(Map<String, Object> map : mail.getAttachmentList()) {
+			message.addAttachment((String)map.get("fileName"), (File)map.get("fileData"));
+		}
+		
+		for(String inlineFileName : mail.getInlineList().split(",")) {
+			message.addInline(inlineFileName, new File(uploadDir + "/" + inlineFileName));
+		}
+		
 		
 		Transport.send(message.getMimeMessage());
 		
@@ -357,6 +377,14 @@ public class MailDaoImpl implements MailDao {
 		message.setTo(mail.getTo().split(","));
 		message.setSubject(mail.getSubject());
 		message.setText(mail.getContent(), true);
+		
+		for(Map<String, Object> map : mail.getAttachmentList()) {
+			message.addAttachment((String)map.get("fileName"), (File)map.get("fileData"));
+		}
+		
+		for(String inlineFileName : mail.getInlineList().split(",")) {
+			message.addInline(inlineFileName, new File(uploadDir + "/" + inlineFileName));
+		}
 		
 		Transport.send(message.getMimeMessage());
 		

@@ -1,5 +1,6 @@
 package com.phoenix.mvc.service.domain;
 
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,8 @@ public class Mail {
 	private boolean seen;
 	private String subject;
 	private String content;
+	private List<Map<String, Object>> attachmentList;
+	private String inlineList;
 	
 	
 	public int getMailNo() {
@@ -88,11 +91,24 @@ public class Mail {
 	public void setRecipients(List<Map<String, String>> recipients) {
 		this.recipients = recipients;
 	}
+	public List<Map<String, Object>> getAttachmentList() {
+		return attachmentList;
+	}
+	public void setAttachmentList(List<Map<String, Object>> attachmentList) {
+		this.attachmentList = attachmentList;
+	}
+	public String getInlineList() {
+		return inlineList;
+	}
+	public void setInlineList(String inlineList) {
+		this.inlineList = inlineList;
+	}
 	
 	@Override
 	public String toString() {
 		return "Mail [mailNo=" + mailNo + ", accountNo=" + accountNo + ", folder=" + folder + ", sentDate=" + sentDate
 				+ ", sender=" + sender + ", senderAddr=" + senderAddr + ", recipients=" + recipients + ", to=" + to
-				+ ", seen=" + seen + ", subject=" + subject + ", content=" + content + "]";
+				+ ", seen=" + seen + ", subject=" + subject + ", content=" + content + ", attachmentList="
+				+ attachmentList + ", inlineList=" + inlineList + "]";
 	}
 }
