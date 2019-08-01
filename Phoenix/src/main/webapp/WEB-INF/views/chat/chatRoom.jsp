@@ -19,7 +19,9 @@
 
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <style type="text/css">
-
+#fileMultiple{
+display : none;
+}
 ::-webkit-scrollbar {
   width: 5px;
 }
@@ -79,12 +81,11 @@
 		<!--**********************************
             Sidebar end
         ***********************************-->
-        
           
 		<div class="content-body" style="min-height: 600px;">
 		<div class='container-fluid'>
-		<form id='fileMultiple' enctype="multipart/form-data" method="post">
-		<input multiple="multiple" type="file" id="file" class="form-control" id="uploadFile" name="uploadFile" >
+		<form id='fileMultiple' action='/chat/fileUpload' enctype="multipart/form-data" method="post">
+		<input multiple='multiple' type="file" id="uploadFile" name="file[]" >
 		</form>
 		<div class="row">
        
@@ -125,7 +126,6 @@
         </div>
 	    </div>
 	    
-	    
         </div>
        
 	<div class="row">
@@ -153,6 +153,7 @@
 		
 			<!-- 다른사람이 입력한 채팅인 경우 -->
 			<c:if test="${sessionScope.user.userNo!=chat.userNo}">
+			
 			<div class='row d-flex justify-content-start'>
 				<div class='col-lg-1'>
 					<img src="/images/uploadfiles/profileimg/${chat.profileImg}"
@@ -164,7 +165,12 @@
 					style='padding:5px; width: 100%;
 					margin-top:5px; 
 					border: 2px solid #f5a142; color: black;' >
+					<c:if test="${chat.chatType==0}">
 					${chat.chatMsg}
+					</c:if>
+					<c:if test="${chat.chatType==1}">
+					<img src='/images/uploadfiles/chatFiles/${chat.chatMsg}' class='rounded' style='width: 100%; height: auto;'>
+					</c:if>
 					</div>
 				</div>
 				<div class='col-lg-2' style='padding-left: 0px; margin-top:5px;'>
@@ -186,7 +192,12 @@
 					name='${chat.id}' style='padding:5px;
 					border: 2px solid #f5a142; color: #162ca8;
 					background-color:#ffc68a; ' >
+					<c:if test="${chat.chatType==0}">
 					${chat.chatMsg}
+					</c:if>
+					<c:if test="${chat.chatType==1}">
+					<img src='/images/uploadfiles/chatFiles/${chat.chatMsg}' class='rounded' style='width: 100%; height: auto;'>
+					</c:if>
 					</div>
 				</div>
 					
@@ -210,11 +221,93 @@
   <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Toggle second element</button>
   <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Toggle both elements</button>
 </p>
-<div class="row">
   <div class="col">
     <div class="collapse multi-collapse" id="multiCollapseExample1">
       <div class="card card-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+      <div class="row">
+     
+      <img src="/images/common/700by700.png"
+	     class="rounded col-lg-2 emoticons"
+	     name="kakao/kakao_apeach_hot.gif"
+	     style="background: url('/images/chatImoticon/kakao/kakao_apeach_hot.gif'); 
+	     background-size: cover; 
+	     background-repeat: no-repeat; 
+	     background-position: center;
+	     width:100%; 
+	     margin: 1%;
+	     padding:0%;">
+	     <img src="/images/common/700by700.png"
+	     class="rounded col-lg-2 emoticons"
+	     name="kakao/kakao_apeach_lay_down.gif"
+	     style="background: url('/images/chatImoticon/kakao/kakao_apeach_lay_down.gif'); 
+	     background-size: cover; 
+	     background-repeat: no-repeat; 
+	     background-position: center;
+	     width:100%; 
+	     margin: 1%;
+	     padding:0%;">
+	   <img src="/images/common/700by700.png"
+	     class="rounded col-lg-2 emoticons"
+	     name="kakao/kakao_bye.gif"
+	     style="background: url('/images/chatImoticon/kakao/kakao_bye.gif'); 
+	     background-size: cover; 
+	     background-repeat: no-repeat; 
+	     background-position: center;
+	     width:100%; 
+	     margin: 1%;
+	     padding:0%;">
+	     <img src="/images/common/700by700.png"
+	     class="rounded col-lg-2 emoticons"
+	     name="kakao/kakao_castanets.gif"
+	     style="background: url('/images/chatImoticon/kakao/kakao_castanets.gif'); 
+	     background-size: cover; 
+	     background-repeat: no-repeat; 
+	     background-position: center;
+	     width:100%; 
+	     margin: 1%;
+	     padding:0%;">
+	     <img src="/images/common/700by700.png"
+	     class="rounded col-lg-2 emoticons"
+	     name="kakao/kakao_cheering.gif"
+	     style="background: url('/images/chatImoticon/kakao/kakao_cheering.gif'); 
+	     background-size: cover; 
+	     background-repeat: no-repeat; 
+	     background-position: center;
+	     width:100%; 
+	     margin: 1%;
+	     padding:0%;">
+	     <img src="/images/common/700by700.png"
+	     class="rounded col-lg-2 emoticons"
+	     name="kakao/kakao_cry.gif"
+	     style="background: url('/images/chatImoticon/kakao/kakao_cry.gif'); 
+	     background-size: cover; 
+	     background-repeat: no-repeat; 
+	     background-position: center;
+	     width:100%; 
+	     margin: 1%;
+	     padding:0%;">
+	     <img src="/images/common/700by700.png"
+	     class="rounded col-lg-2 emoticons"
+	     name="kakao/kakao_dance_together.GIF"
+	     style="background: url('/images/chatImoticon/kakao/kakao_dance_together.GIF'); 
+	     background-size: cover; 
+	     background-repeat: no-repeat; 
+	     background-position: center;
+	     width:100%; 
+	     margin: 1%;
+	     padding:0%;">
+	     <img src="/images/common/700by700.png"
+	     class="rounded col-lg-2 emoticons"
+	     name="kakao/kakao_heart.gif"
+	     style="background: url('/images/chatImoticon/kakao/kakao_heart.gif'); 
+	     background-size: cover; 
+	     background-repeat: no-repeat; 
+	     background-position: center;
+	     width:100%; 
+	     margin: 1%;
+	     padding:0%;">
+
+				 </div>
       </div>
     </div>
   </div>
@@ -225,14 +318,14 @@
       </div>
     </div>
   </div>
-</div>
-
 
 <div class="input-group d-flex">
   <input type="text" class="form-control" placeholder="채팅을 입력해주세요" id="msg">
   <div class="input-group-append">
-    <button type="button" class="btn btn-primary" id='msg_process'><i class="mdi mdi-message-text-outline"  style='font-size: 15pt'>
-	  	 </i></button>
+    <button type="button" class="btn btn-primary" id='msg_process'>
+    	<i class="mdi mdi-message-text-outline" style='font-size: 15pt;'>
+	  	</i>
+  	</button>
   </div>
 </div>
 <div><i class="mdi mdi-exit-to-app" style='font-size:25pt;' id='leaveChatRoom'></i>
@@ -249,23 +342,22 @@
          	<div class='card' 
          	style="overflow-x:hidden; overflow-y:auto; width:auto; height: 50%;">
         	<div class='card-body' id ='joinerList'>
-       	채팅 참가자들
-		<c:forEach items='${userList}' var='chatRoomInfo'>
-        
-	        <div class='row d-flex justify-content-start' 
-	        name='${chatRoomInfo.userNo}' style='border: 1px solid #f5a142; 
-	        margin-bottom: 1%;'>
-		      <div class='col-lg-2'>
-		      <img src="/images/uploadfiles/profileimg/${chatRoomInfo.profileImg}"
-					class='rounded' style='width: 48px; height: 48px'>
-		      </div>
-		      <div class='col-lg-8'>
-		      ${chatRoomInfo.userNickname}
-		      </div>
-	      	</div>
-      	
-		</c:forEach>
-					
+        	
+			<c:forEach items='${userList}' var='chatRoomInfo'>
+	        
+		        <div class='row d-flex justify-content-start' 
+		        name='${chatRoomInfo.userNo}' style='border: 1px solid #f5a142; 
+		        margin-bottom: 1%;'>
+			      <div class='col-lg-2'>
+			      <img src="/images/uploadfiles/profileimg/${chatRoomInfo.profileImg}"
+						class='rounded' style='width: 48px; height: 48px'>
+			      </div>
+			      <div class='col-lg-8'>
+			      ${chatRoomInfo.userNickname}
+			      </div>
+		      	</div>
+	      	
+			</c:forEach>
 					
         	</div>
         	</div>
@@ -300,7 +392,7 @@
    style='border:1px solid #f5a142; margin-bottom: 1%; background-color: white;'>
 		      <div class='col-lg-2'>
 		      <img src="/images/uploadfiles/profileimg/${chatFriend.userImg}"
-									 class='rounded' style='width: 32px; height: 32px'>
+									 class='rounded' style='width: 48px; height: 48px'>
 		      </div>
 		      <div class='col-lg-8 d-flex align-items-center'>
 		      <c:if test="${empty chatFriend.friendNickname}">
@@ -347,23 +439,25 @@
 <!-- <script src="http://localhost:82/socket.io/socket.io.js"></script> -->
  <script src="http://192.168.0.78:82/socket.io/socket.io.js"></script>
 
-
-	<!-- 채팅방 전용 스크립트 -->
-	<script src="/js/custom/chatRoomScript.js"></script>
-
-
-
 	<!--**********************************
         Scripts
     ***********************************-->
-    
-    
 
 	<!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
 
 //툴바 스크립트용 세션체커
 var checkSessionUser = ${empty sessionScope.user};
+
+var socket = io("http://192.168.0.78:82");
+//var socket = io("http://localhost:82");
+
+//소켓에 유저넘버랑 방번호 보내줌
+socket.emit("identify", ${sessionScope.user.userNo});
+socket.emit("joiner", $("#chatRoomId").val());
+
+//페이지 열자마자 채팅 맨 밑으로...
+$("#chat_box").scrollTop($("#chat_box").prop('scrollHeight'));
 
 var nickNames = new Array();
 var userNos = new Array();
@@ -373,125 +467,52 @@ for(var i =0;i<$(".friendNickname").length;i++){
 	userNos[i]=Number($($(".friendUserNo")[i]).val());
 }
 
-
-// 페이지 열자마자 채팅 맨 밑으로...
-$("#chat_box").scrollTop($("#chat_box").prop('scrollHeight'));
-
 $("#fileUploadButton").on("click", function(){
-	alert("ㅇㅇ");
-	//$('#file').click();
-	var fileForm = $("#fileMultiple");
-	var formData = new FormData(fileForm)
+		$("#uploadFile").click();
+});
+$("#uploadFile").change(function(){
+	
+	var formData = new FormData($("#fileMultiple").get(0));
 
+	formData.set("chatRoomId" , $("#chatRoomId").val());
+	formData.set("userNickname" , $("#userNickname").val());
+	formData.set("userNo" , $("#userNo").val());
+	formData.set("profileImg" , $("#profileImg").val());
+	formData.set("chatType" , "1");
+	
 	$.ajax(
 			{
 			type : "POST",
+			enctype:"multipart/form-data",
 			url : "/chat/fileUpload",
 			data : formData,
+			processData: false,
+			contentType:false,
 			//contentType: "application/json", //보내는 컨텐츠의 타입
-			//dataType : "json",      //받아올 데이터의 타입 필요없음
+			dataType : "json",      //받아올 데이터의 타입 필요없음
+			beforeSend : function(){
+				$("#preloader").attr("style", "background:rgba(255,245,217,0.5);");
+			},
+			complete : function(){
+				$("#preloader").attr("style", "display:none;");
+			}, 
 			success : function(serverData, status) {
-								alert("업로드 된듯?");
-							},
+						$.each(serverData, function (index, chat) {
+							alert(chat.chatMsg);
+							socket.emit("send_msg", chat);
+						});
+					},
 			error : function(request,status,error){
-						        alert("에러남 : "+error);
-						        //socket.emit("send_who", $("#userId").text()+"콘솔에찍히는메시지임");
-						       }
+						 alert("에러남 : "+request+" : "+status+" : "+error);
+				  }
 			}
 		);
+	 
 });
-
 
 $(function() {
-	//alert($("#userNickname").val());
-	var socket = io("http://192.168.0.78:82");
-	//var socket = io("http://localhost:82");
-	socket.emit("identify", ${sessionScope.user.userNo});
-	socket.emit("joiner", $("#chatRoomId").val());
-	
-	$("#leaveChatRoom").on("click" , function() {
-		//$(self.location).attr("href","/chat/leaveChatRoom");
-		$("#thisChatRoomInfo").attr("method" , "POST").attr("action" , "/chat/leaveChatRoom").submit();
-	});
 
-	$("#doInviting").on("click" , function() {
-
-		var jsonList = new Array();
-	
-		var i = 0;
-		$(".inviteList").each(function(index) {
-			if($(this).css( "background-color" )=="rgb(245, 161, 66)"){
-				alert($("#chatRoomId").val());
-				var userNoJson = $(this).attr("id");
-				var nickNameJson = $(this).attr("name");
-				var profileImgJson = $(this).attr("value");
-				var roomIdJson = $("#chatRoomId").val();
-				var beJson = { chatRoomId : roomIdJson,
-								userNo : userNoJson,
-								userNickname : nickNameJson, 
-								profileImg : profileImgJson
-								};
-				
-				//beJson = JSON.stringify(beJson);
-				jsonList[i]=beJson;
-				//nickNameList[i]=$(this).attr("name");
-				//userNoList[i]=$(this).attr("id");
-				//imgFileList[i]=$(this).attr("value");
-				
-				i+=1;
-				$(this).attr("class","row d-flex justify-content-start");
-				$(this).css( "background-color","white");
-				$(this).attr("name","");
-				$(this).attr("value","");
-				$(this).attr("id","");
-				$("#joinerList").append($(this));
-			}
-		});
-		jsonList = JSON.stringify(jsonList);
-		//alert(jsonList);
-		//alert(nickNameList);
-		//alert(userNoList);
-		//alert(imgFileList);
-		
-		$.ajax(
-				{
-				type : "POST",
-				url : "/chat/json/inviteFriend",
-				data : jsonList,
-				contentType: "application/json", //보내는 컨텐츠의 타입
-				//dataType : "json",      //받아올 데이터의 타입 필요없음
-				success : function(serverData, status) {
-									//alert(status);
-									//alert("server에서 온 Data : \n" + serverData);
-									//alert(serverData.regDate);
-									//targetTag.text(checker);	
-									//socket.emit("send_msg", $("#chatRoomNo").val()+":"+$("#msg").val()+serverData.regDate);
-									//socket.emit("send_msg", $("#chatRoomNo").val()+"-"+JSON.stringify(serverData));
-									//socket.emit("send_msg", serverData); 
-									// $("#msg").val("");
-								},
-				error : function(request,status,error){
-									alert(status);
-							        alert("에러남 : "+error);
-							       }
-				}
-			);
-
-});
-	//초대하기 전에 색상 바꾸는 부분
-	$(".inviteList").on("click" , function() {
-
-		if($(this).css( "background-color" )=="rgb(255, 255, 255)"){
-			$(this).css("background-color","#f5a142");
-			}
-		
-		else if($(this).css( "background-color" )=="rgb(245, 161, 66)"){
-			$(this).css( "background-color","white");
-			}
-		
-	});
-	
-	
+	//이전 채팅 읽기 리버스 무한 스크롤
 	$("#chat_box").on('scroll', function(){
 		//스크롤바 맨 위 위치
 		var top = $("#chat_box").scrollTop();
@@ -518,12 +539,16 @@ $(function() {
 					//dataType : "json",      //받아올 데이터의 타입 필요없음
 					success : function(serverData, status) {
 										$("#chatIndex").val(serverData.indexNow);
-										
 										$.each(serverData.chatList, function (index, chat) {
-										
 											var msgTagging="";
 									      	var date = new Date(chat.regDate);
 									        chat.regDate = getFormatDate(date);
+
+									        if(chat.chatType==1){
+									        	chat.chatMsg = "<img src='/images/uploadfiles/chatFiles/"
+																+msg.chatMsg
+																+"' class='rounded' style='width: 100%; height: auto;'>";
+											}
 											
 											if (chat.userNo==$("#userNo").val()){
 												msgTagging = "<div class='row d-flex justify-content-end'>"
@@ -579,72 +604,25 @@ $(function() {
 		
 	});
 	
-	 $("#msg").keydown(function(key) {
-         //해당하는 키가 엔터키(13) 일떄
-         if (key.keyCode == 13) {
-             //msg_process를 클릭해준다.
-             msg_process.click();
-         }
-     });
-
-	$("#updateChatRoomName").click(function() {
-
-		swal({
-			  title: "방 제목 변경하기",
-			  text: "사용하실 방 제목을 입력해주세요",
-			  type: "input",
-			  showCancelButton: true,
-			  closeOnConfirm: false,
-			  inputPlaceholder: $("#recentChatRoomName").text()
-				}, function (inputValue) {
-			  if (inputValue === false) return false;
-			  if (inputValue === "") {
-			    swal.showInputError("공백은 입력할 수 없습니다.");
-			    return false
-			  }
-			  inputValue = inputValue.replace(/(<([^>]+)>)/ig,"");
-			  var infoId = $("#chatRoomInfoId").val();
-
-				var jsoned = { id : infoId,
-						chatRoomName : inputValue,		
-						};
-				jsoned = JSON.stringify(jsoned);
-
-				$.ajax(
-						{
-						type : "POST",
-						url : "/chat/json/updateChatRoomInfo",
-						data : jsoned,
-						contentType: "application/json", //보내는 컨텐츠의 타입
-						//dataType : "json",      //받아올 데이터의 타입 필요없음
-						success : function(serverData, status) {
-							$("#recentChatRoomName").text(inputValue);
-							swal("성공적으로 변경되었습니다", 
-									"방 제목이 " + inputValue+" 로 변경되었습니다.", "success");
-										},
-						error : function(request,status,error){
-											alert(request);
-											alert(status);
-									        alert("에러남 : "+error);
-									       }
-						}
-					);
-			  
-		});
-
+	$("#msg").keydown(function(key) {
+	    //해당하는 키가 엔터키(13) 일떄
+	    if (key.keyCode == 13) {
+	        //msg_process를 클릭해준다.
+	        msg_process.click();
+	    }
 	});
-		
-     //msg_process를 클릭할 때
-     $("#msg_process").click(function() {
-         //소켓에 send_msg라는 이벤트로 input에 #msg의 벨류를 담고 보내준다.
-         var msgVar = $("#msg").val();
-         //태그 삭제
-         msgVar = msgVar.replace(/(<([^>]+)>)/ig,"");
-         var emptyOnly = /^\s*\s*$/;
-         if(emptyOnly.test(msgVar)){
+	
+	//msg_process를 클릭할 때
+	$("#msg_process").click(function() {
+	    //소켓에 send_msg라는 이벤트로 input에 #msg의 벨류를 담고 보내준다.
+	    var msgVar = $("#msg").val();
+	    //태그 삭제
+	    msgVar = msgVar.replace(/(<([^>]+)>)/ig,"");
+	    var emptyOnly = /^\s*\s*$/;
+	    if(emptyOnly.test(msgVar)){
 			msgVar = "<br/>";
-             } 
-         
+	        } 
+	    
 		var jsoned = {
 				chatRoomId : $("#chatRoomId").val(), 
 				userNo : $("#userNo").val(), 
@@ -654,7 +632,7 @@ $(function() {
 				chatMsg : msgVar
 				};
 		jsoned = JSON.stringify(jsoned);
-	
+
 			$.ajax(
 					{
 					type : "POST",
@@ -672,18 +650,24 @@ $(function() {
 								       }
 					}
 				);
-        
-     });
-     
-     socket.on('send_msg', function(msg) {
-         //로그아웃 체크 : 레스트 컨트롤러로 서버한번 태워서 세션에 유저Number 체크해서 날려야 될듯
+	   
+	});
+
+	socket.on('send_msg', function(msg) {
+	    //로그아웃 체크 : 레스트 컨트롤러로 서버한번 태워서 세션에 유저Number 체크해서 날려야 될듯
 		
-         var msgTagging="";
-         var date = new Date(msg.regDate);
-         msg.regDate = getFormatDate(date);
-         
+	    var msgTagging="";
+	    var date = new Date(msg.regDate);
+	    msg.regDate = getFormatDate(date);
+
+	     if(msg.chatType==1){
+				msg.chatMsg = "<img src='/images/uploadfiles/chatFiles/"
+								+msg.chatMsg
+								+"' class='rounded' style='width: 100%; height: auto;'>";
+			}
 		
 		if (msg.userNo==$("#userNo").val()){
+			
 			msgTagging = "<div class='row d-flex justify-content-end'>"
 				+"<div class='col-lg-2 text-right' style='padding-right: 0px;'>"
 				+msg.regDate
@@ -692,7 +676,8 @@ $(function() {
 				"' style='padding:5px; width: 100%;border: 2px solid #f5a142;" 
 				+"color: #162CA8;background-color:#ffc68a; ' >"
 				+msg.chatMsg
-				+"</div></div></div>"				
+				+"</div></div></div>"	
+			
 			}
 		
 		else if (msg.userNo!=$("#userNo").val()){
@@ -700,24 +685,25 @@ $(function() {
 			if(userNos.indexOf(msg.userNo)!=-1){
 				msg.userNickname = nickNames[userNos.indexOf(msg.userNo)]
 				} 
-			
+
 			msgTagging = "<div class='row d-flex justify-content-start'>"
-				+"<div class='col-lg-1'>"
-				+"<img src='/images/uploadfiles/profileimg/"
-				+msg.profileImg
-				+"'  class='rounded' style='width: 48px; height: 48px'></div>"
-				+"<div class='col-lg-6' style='padding-left: 5px;'>"
-				+msg.userNickname
-				+"<div class='alert' name='"
-				+msg.id
-				+"' style='padding:5px; width: 100%;"
-				+"margin-top:5px; border: 2px solid #f5a142; color: black;' >"
-				+msg.chatMsg
-				+"</div></div>"
-				+"<div class='col-lg-2' style='padding-left: 0px; margin-top:5px;'>"
-				+"<br/>"
-				+msg.regDate
-				+"</div></div>"
+					+"<div class='col-lg-1'>"
+					+"<img src='/images/uploadfiles/profileimg/"
+					+msg.profileImg
+					+"'  class='rounded' style='width: 48px; height: 48px'></div>"
+					+"<div class='col-lg-6' style='padding-left: 5px;'>"
+					+msg.userNickname
+					+"<div class='alert' name='"
+					+msg.id
+					+"' style='padding:5px; width: 100%;"
+					+"margin-top:5px; border: 2px solid #f5a142; color: black;' >"
+					+msg.chatMsg
+					+"</div></div>"
+					+"<div class='col-lg-2' style='padding-left: 0px; margin-top:5px;'>"
+					+"<br/>"
+					+msg.regDate
+					+"</div></div>"
+			
 			}
 		
 		$(msgTagging).appendTo("#chat_box");
@@ -731,11 +717,14 @@ $(function() {
 			 $("#chat_box").scrollTop(totalHeight);
 			}
 		
-     });
+	});
 
 });
 </script>
 
+	<!-- 채팅방 전용 스크립트 -->
+	<script src="/js/custom/chatRoomScript.js"></script>
+	
 	<!-- 공통 툴바용 스크립트 -->
 	<script src="/js/custom/toolbarScript.js"></script>
 	

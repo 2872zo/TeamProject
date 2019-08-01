@@ -365,7 +365,6 @@ input[type="checkbox"] {
 
 			var formArray = $(".mail-login-input").serializeArray();
 			formObject = objectifyForm(formArray);
-			
 
 			$.ajax({
 				type : "POST",
