@@ -3,6 +3,8 @@ package com.phoenix.mvc.service.mail;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.MessagingException;
+
 import com.phoenix.mvc.service.domain.Account;
 import com.phoenix.mvc.service.domain.Mail;
 
@@ -23,9 +25,11 @@ public interface MailService {
 	
 	public boolean deleteMail(int[] mailNoArray);
 
-	public boolean addMailAccount(Account account);
+	public boolean addMailAccount(Account account) throws Exception;
 
 	public boolean deleteMailAccount(Account account);
+
+	public boolean sendMail(Account account, Mail mail) throws MessagingException;
 
 	
 
