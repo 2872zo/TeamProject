@@ -10,6 +10,20 @@
 <html lang="ko">
 
 <head>
+<!--*******************
+        Preloader start
+    ********************-->
+	<div id="preloader">
+		<div class="loader">
+			<svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none"
+					stroke-width="3" stroke-miterlimit="10"></circle>
+            </svg>
+		</div>
+	</div>
+	<!--*******************
+        Preloader end
+    ********************-->
 <!-- ToolBar Start /////////////////////////////////////-->
 <jsp:include page="../common/toolbar.jsp" />
 <!-- ToolBar End /////////////////////////////////////-->
@@ -112,7 +126,7 @@ img {
                   </div>
                   
 				<div class="card">
-					<div class="card-body">
+					<div class="card-body" id = "here">
 						<c:set var="i" value="0" />
 						<c:forEach var="timeLine" items="${timeLine}">
 							<c:set var="i" value="${i+1}" />
@@ -240,17 +254,183 @@ img {
 				}),
 				dataType : "text",
 				success : function(serverData) {
-					alert(serverData)
-					var start = ""
-					if(serverData.timeLine !=""){
+					//alert(serverData)
+					
+					var data = JSON.parse(serverData);
+					var timeLine= data.timeLine;
+					var search= data.search;
+					var feedCount = data.count;
+
+					alert("data "+data)
+					alert("timeLine "+timeLine)
+					alert("search "+search)
+	
+					var start = '';
+					var img1 = '';
+					var img2='';
+					var img3 ='';
+					var img4 ='';
+					var video='';
+					var last ="</div></div>";
+					
+				
+						
+					if(timeLine !=""){
+						alert($(timeLine).length);
+
+						start += "<div class='media media-reply'>";
+
+							if(search.subject == 100){//페북
+								start+= "<i class='mdi mdi-facebook-box'></i>"+
+								"<div class='media-body'><div class='d-sm-flex justify-content-between mb-2'><h5 class='mb-sm-0'>";
+
+							}else if(search.subject == 200){//인스타그램
+								start+= "<i class='mdi mdi-instagram'></i>"+
+								"<div class='media-body'><div class='d-sm-flex justify-content-between mb-2'><h5 class='mb-sm-0'>";
+	
+							}
+						
+						$(timeLine).each(function(index){
+
+							alert("index값 "+index)
+							
+							
+								
+								
+							start+= this.postId+"<small class='text-muted ml-3'>"+this.regDate+"</small></h5>"
+									+"<div class='media-reply__link'><button class='btn btn-transparent p-0 mr-3'><i class='fa fa-thumbs-up'></i></button>"
+									+this.likeCount
+									+"<button class='btn btn-transparent text-dark font-weight-bold p-0 ml-2'>Reply</button></div></div>"
+									+"<p>"+this.post+"</p>";
+
+									alert("start "+start);
+
+									if(this.img1List!= null){
+
+									alert("img1List "+this.img1List)
+									var length = $(this.img1List).length;
+									alert("length"+length);
+									
+									for( var i = 0; i< length; i++){
+
+										alert("dpd?")
+										
+										img1 += "<a href="+this.img1LinkList[i]+"><img alt='' src=";
+										img1 += this.img1List[i] +" style='margin-left:20px; margin-top: 10px'></a>";
+
+										alert("img1 "+img1)
+									}
+
+								}
+
+								else if(this.img2List!= null){
+									
+									alert("img2List "+this.img2List)
+									var length = $(this.img2List).length;
+									alert("length"+length);
+									
+									for( var i = 0; i< length; i++){
+
+										alert("dpd1?")
+										//alert($(this.img2LinkList))
+										alert(this.img2LinkList[i]);
+
+										img2 += "<a href="+this.img2LinkList[i]+"><img alt='' src=";
+										img2 += this.img2List[i] +" style='margin-left:20px; margin-top: 10px'></a>";
+
+										alert("img2 "+img2)
+								
+									}
+						
+								}
+
+								else if(this.img3List!= null){
+
+									alert("img3List "+this.img3List)
+									var length = $(this.img3List).length;
+									alert("length"+length);
+									
+									for( var i = 0; i< length; i++){
+
+										alert("dpd2?")
+										//alert($(this.img3LinkList))
+										alert(this.img3LinkList[i]);
+
+										img3 += "<a href="+this.img3LinkList[i]+"><img alt='' src=";
+										img3 += this.img3List[i] +" style='margin-left:20px; margin-top: 10px'></a>";
+
+										alert("img3 "+img3)
+								
+									}
+									
+						
+								}
+
+								else if(this.img4List!= null){
+									
+									alert("img4List "+this.img4List)
+									var length = $(this.img4List).length;
+									alert("length"+length);
+									
+									for( var i = 0; i< length; i++){
+
+										alert("dpd3?")
+										//alert($(this.img4LinkList))
+										alert(this.img4LinkList[i]);
+
+										img4 += "<a href="+this.img4LinkList[i]+"><img alt='' src=";
+										img4 += this.img4List[i] +" style='margin-left:20px; margin-top: 10px'></a>";
+
+										alert("img4 "+img4)
+								
+									}
+						
+								}
+
+								else if(this.videoList!= null){
+
+									alert("videoList"+this.videoList)
+									var length = $(this.videoList).length;
+									alert("length"+length);
+									
+									for( var i = 0; i< length; i++){
+
+										alert("dpd4?")
+										//alert($(this.videoLinkList))
+										alert(this.videoLinkList[i]);
+
+										video += "<a href="+this.videoLinkList[i]+"><img alt='' src=";
+										video += this.videoList[i] +" style='margin-left:20px; margin-top: 10px'></a>";
+
+										alert("video "+video)
+								
+									}
+									
+						
+								}
+								
+							
+						});//timeline끝
 
 						
+						var plz = start+img1+img2+img3+img4+video+last;
+						alert(start)
+						alert(img1)
+						alert(img2)
+						alert(img3)
+						alert(img4)
+						alert(video)
+						alert(last)
+						alert("plz 확인~ "+plz)
 
-					}
+					}//if끝
+					
+					$("#here").append(plz);
 				}//success 끝
 
-			});
-		}
+			});//ajax
+		}//nextload
+		
 	</script>
 	<script src="/js/custom/cafeCommon.js"></script>
 </body>

@@ -95,7 +95,7 @@ public class SnsServiceImpl implements SnsService {
 		if(search.getCurrentPage()!=0) {
 			for( int k = each.size(); k<search.getCurrentPage(); k++) {
 				((JavascriptExecutor)driver).executeScript("window.scrollTo(0,document.body.scrollHeight)");
-				WebDriverWait wait = new WebDriverWait(driver, 250);
+				WebDriverWait wait = new WebDriverWait(driver, 300);
 				wait.until(ExpectedConditions.invisibilityOf(end));
 				
 			}
@@ -126,21 +126,21 @@ public class SnsServiceImpl implements SnsService {
 					List<WebElement> postId = each.get(i).findElements(By.cssSelector("h5[class='_7tae _14f3 _14f5 _5pbw _5vra']"));
 					
 					if(postId.size() != 0) {//일반작성아이디
-						//System.out.println("작성자ID "+ (each.get(i).findElement(By.cssSelector("h5[class='_7tae _14f3 _14f5 _5pbw _5vra']")).getText()));
+						System.out.println("작성자ID "+ (each.get(i).findElement(By.cssSelector("h5[class='_7tae _14f3 _14f5 _5pbw _5vra']")).getText()));
 						newTimeLine.setPostId(each.get(i).findElement(By.cssSelector("h5[class='_7tae _14f3 _14f5 _5pbw _5vra']")).getText());
 					}
 					
 					List<WebElement> reactionId = each.get(i).findElements(By.cssSelector("h6[class='_7tae _14f3 _14f5 _5pbw _5vra']"));
 					
 					if(reactionId.size() != 0) {//공유한경우의아이디
-						//System.out.println("작성자ID "+ (each.get(i).findElement(By.cssSelector("h6[class='_7tae _14f3 _14f5 _5pbw _5vra']")).getText()));
+						System.out.println("작성자ID "+ (each.get(i).findElement(By.cssSelector("h6[class='_7tae _14f3 _14f5 _5pbw _5vra']")).getText()));
 						newTimeLine.setPostId(each.get(i).findElement(By.cssSelector("h6[class='_7tae _14f3 _14f5 _5pbw _5vra']")).getText());
 					}
 					
 					List<WebElement> post = each.get(i).findElements(By.cssSelector("[data-testid='post_message']"));
 					
 					if(post.size()!=0) {//포스트가 없는경우도 존재
-						//System.out.println("내용 " + (each.get(i).findElement(By.cssSelector("[data-testid='post_message']")).getText()));
+						System.out.println("내용 " + (each.get(i).findElement(By.cssSelector("[data-testid='post_message']")).getText()));
 						newTimeLine.setPost(each.get(i).findElement(By.cssSelector("[data-testid='post_message']")).getText());
 						
 						List<WebElement> morePost = ( each.get(i).findElement(By.cssSelector("[data-testid='post_message']") ).findElements(By.className("see_more_link")));
@@ -154,7 +154,7 @@ public class SnsServiceImpl implements SnsService {
 							
 							newTimeLine.setPost(commonPost.getText());
 							
-							//System.out.println(commonPost.getText());
+							System.out.println(commonPost.getText());
 							
 		
 						}
@@ -162,13 +162,13 @@ public class SnsServiceImpl implements SnsService {
 					}
 					
 			
-					//System.out.println("작성일 " + (each.get(i).findElement(By.cssSelector("span[class='fsm fwn fcg']")).getText()));
+					System.out.println("작성일 " + (each.get(i).findElement(By.cssSelector("span[class='fsm fwn fcg']")).getText()));
 					newTimeLine.setRegDate(each.get(i).findElement(By.cssSelector("span[class='fsm fwn fcg']")).getText());
 					List<WebElement> likeCount = each.get(i).findElements(By.cssSelector("[data-testid='UFI2ReactionsCount/sentenceWithSocialContext']"));
 					
 					if (likeCount.size() != 0) {
 						//System.out.println("좋아요 있음!");
-						//System.out.println("좋아요수 " + (each.get(i).findElement(By.cssSelector("[data-testid='UFI2ReactionsCount/sentenceWithSocialContext']")).getText()));
+						System.out.println("좋아요수 " + (each.get(i).findElement(By.cssSelector("[data-testid='UFI2ReactionsCount/sentenceWithSocialContext']")).getText()));
 						newTimeLine.setLikeCount(each.get(i).findElement(By.cssSelector("[data-testid='UFI2ReactionsCount/sentenceWithSocialContext']")).getText());
 					}
 					System.out.println("--------------------------" + i);
@@ -200,6 +200,7 @@ public class SnsServiceImpl implements SnsService {
 						if (newTimeLine.getVideo1Size() != 0) {
 							System.out.println("동영상");
 							
+							
 							for (int j = count; j < newTimeLine.getVideo1Size(); j++) {
 								System.out.println(j + " 동영상 내부 for문");
 
@@ -209,6 +210,8 @@ public class SnsServiceImpl implements SnsService {
 								
 								WebElement page = driver.findElement(By.id("globalContainer"));//페이지바닥
 								List<WebElement> linkWrap = page.findElements(By.className("_54nf"));//비디오용공동바닥	
+								
+								if(linkWrap.size() != 0) {//클릭안되는 영상도 존재함
 								List<WebElement> link = linkWrap.get(j).findElements(By.className("_54nh"));
 								WebElement videoLink = link.get(3).findElement(By.className("_xd6"));
 								//System.out.println(videoLink.getAttribute("value"));
@@ -218,11 +221,14 @@ public class SnsServiceImpl implements SnsService {
 								newTimeLine.setVideoList(videoList);
 								newTimeLine.setVideoLinkList(videoLinkList);
 								count += newTimeLine.getVideo1Size();
-								
+								}
+							
 							}
+							
+							
 							System.out.println("--------------------------");
 			
-						} else if (newTimeLine.getImg1Size() != 0 || newTimeLine.getImg2Size() != 0 || newTimeLine.getImg3Size() != 0) {
+						} else if (newTimeLine.getImg1Size() != 0 || newTimeLine.getImg2Size() != 0 || newTimeLine.getImg3Size() != 0 || newTimeLine.getImg4Size() != 0) {
 							System.out.println("1");
 							for (int j = 0; j < newTimeLine.getImg1Size(); j++) {
 								System.out.println(j + " 이미지1 내부 for문");
@@ -267,8 +273,8 @@ public class SnsServiceImpl implements SnsService {
 							}
 							System.out.println("--------------------------");
 			
-						}else if((newTimeLine.getVideo1Size() != 0) && (newTimeLine.getImg1Size() != 0 || newTimeLine.getImg2Size() != 0 || newTimeLine.getImg3Size() != 0) ) {
-							for (int j = 0; j < newTimeLine.getVideo1Size(); j++) {
+						}else if((newTimeLine.getVideo1Size() != 0) && (newTimeLine.getImg1Size() != 0 || newTimeLine.getImg2Size() != 0 || newTimeLine.getImg3Size() != 0 ||newTimeLine.getImg4Size() != 0) ) {
+							for (int j = count; j < newTimeLine.getVideo1Size(); j++) {
 								System.out.println(j + " 동영상+이미지 내부 for문");
 								
 								Actions action = new Actions(driver);
@@ -330,14 +336,14 @@ public class SnsServiceImpl implements SnsService {
 								}
 							
 							System.out.println("--------------------------");
-						}
+						}//마지막if
 						
 						
 						list.add(i, newTimeLine);
 						System.out.println("i"+i);
 						System.out.println("list값 궁금해욤 "+list);
 						
-					}
+					}//for문
 				
 		search.setSubject(100);//페이스북100	
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -349,7 +355,7 @@ public class SnsServiceImpl implements SnsService {
 
 		return map;
 		}finally {
-			driver.close();
+			//driver.close();
 		}
 	
 
