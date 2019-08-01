@@ -11,6 +11,7 @@ import javax.annotation.PreDestroy;
 import javax.mail.Address;
 import javax.mail.BodyPart;
 import javax.mail.Message;
+import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMultipart;
@@ -90,6 +91,24 @@ public class MailContoller {
 		
 		
 		return "/mail/getMailList";
+	}
+	
+	@RequestMapping("sendMail")
+	public String sendMail(HttpServletRequest req, @RequestParam int accountNo, @ModelAttribute Mail mail) throws MessagingException {
+		List<Account> accountList = (List<Account>)req.getAttribute("accountList");
+		
+		Account account = null;
+		
+		for(Account ac : accountList) {
+			if(ac.getAccountNo() == accountNo) {
+				account = ac;
+				break;
+			}
+		}
+		
+		mailService.sendMail(account, mail);
+		
+		return "/mail/confirmSendMail";
 	}
 
 //	mailAgent.open();  
