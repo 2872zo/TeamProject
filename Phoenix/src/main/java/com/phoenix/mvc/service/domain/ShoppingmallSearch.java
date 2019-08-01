@@ -5,10 +5,10 @@ import java.util.ArrayList;
 public class ShoppingmallSearch {
 
 	private ArrayList<String> relativeKeyword; //연관검색어
-	private ArrayList<String> relativeKeyowrdLink; //연관검색어해당 링크
+	private ArrayList<String> relativeKeywordLink; //연관검색어해당 링크
 	private String searchTotal; //총 몇개의 검색어?
-	private String searchKeyword;
-	private int detectedItemCount;
+	private String searchKeyword; //rest
+	private int detectedItemCount; //rest
 	
 	public ShoppingmallSearch() {
 		// TODO Auto-generated constructor stub
@@ -25,13 +25,13 @@ public class ShoppingmallSearch {
 	}
 
 
-	public ArrayList<String> getRelativeKeyowrdLink() {
-		return relativeKeyowrdLink;
+	public ArrayList<String> getRelativeKeywordLink() {
+		return relativeKeywordLink;
 	}
 
 
-	public void setRelativeKeyowrdLink(ArrayList<String> relativeKeyowrdLink) {
-		this.relativeKeyowrdLink = relativeKeyowrdLink;
+	public void setRelativeKeywordLink(ArrayList<String> relativeKeywordLink) {
+		this.relativeKeywordLink = relativeKeywordLink;
 	}
 
 
@@ -67,7 +67,7 @@ public class ShoppingmallSearch {
 
 	@Override
 	public String toString() {
-		return "ShoppingmallSearch [relativeKeyword=" + relativeKeyword + ", relativeKeyowrdLink=" + relativeKeyowrdLink
+		return "ShoppingmallSearch [relativeKeyword=" + relativeKeyword + ", relativeKeywordLink=" + relativeKeywordLink
 				+ ", searchTotal=" + searchTotal + ", searchKeyword=" + searchKeyword + ", detectedItemCount="
 				+ detectedItemCount + "]";
 	}

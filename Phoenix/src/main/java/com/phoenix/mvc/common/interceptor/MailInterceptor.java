@@ -66,7 +66,7 @@ public class MailInterceptor extends HandlerInterceptorAdapter {
 				request.setAttribute("accountList", accountList);
 			}else {
 				System.out.println("연동된 메일 계정 없음!");
-				response.sendRedirect(request.getContextPath() + "/user/updateUserView");
+				response.sendRedirect(request.getContextPath() + "/user/getUserInfo");
 				return false;
 			}
 		}

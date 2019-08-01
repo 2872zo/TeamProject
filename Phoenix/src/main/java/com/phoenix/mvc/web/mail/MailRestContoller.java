@@ -56,15 +56,20 @@ public class MailRestContoller {
 	}
 
 	@RequestMapping("addMailAccount")
-	public boolean addMailAccount(@RequestBody Account account, HttpServletRequest req) {
-//		User user = (User)req.getSession().getAttribute("user");
-//		System.out.println(user);
+	public int addMailAccount(@RequestBody Account account, HttpServletRequest req) {
+		int result = 100;
+		
 		account.setUserNo(((User)req.getSession().getAttribute("user")).getUserNo());
 		account.setAccountDomain(account.getAccountType().substring(1));
 		
 		System.out.println("[addMailAccount] account : " + account);
 		
-		return mailService.addMailAccount(account);
+		try {
+			mailService.addMailAccount(account);
+		} catch (Exception e) {
+			result = Integer.parseInt(e.getMessage());
+		}
+		return result;
 	}
 	
 	@RequestMapping("deleteMailAccount")
