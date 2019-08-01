@@ -117,10 +117,10 @@ img {
 	    <div class="col-lg-8">
 	      <div class="card-body">
 	        <h5 class="card-title chatRoom">${chatRoomInfo.chatRoomName}</h5>
-	        <p class="card-text" style='font-size: large;'>
+	        <p class="card-text" style='font-size: large;'id='${chatRoomInfo.chatRoomId}MSG'>
 	        	최근 입력 메시지 :  ${fn:substring(chatRoomInfo.latestMessage,0,50)}
 	        </p>
-	        <p class="card-text">
+	        <p class="card-text" id='${chatRoomInfo.chatRoomId}Time'>
 	        	최근 메시지 입력시간 : 
 	        	<fmt:formatDate value="${chatRoomInfo.latestMessagingDate}" type="both" pattern="yyyy-MM-dd E a hh:mm:ss"/>
 	        </p>
@@ -198,11 +198,11 @@ $(function() {
 	socket.on('send_msg', function(msg) {
 		//var splitter = msg.split(":");
 		//alert("11");
-		var msgTo= msg.chatRoomNo;
-		$("#"+msgTo+"").text(msg.chatMsg);
+		var msgTo= msg.chatRoomId;
+		$("#"+msgTo+"MSG").text("최근 입력 메시지 : "+msg.chatMsg);
+		$("#"+msgTo+"Time").text("최근 입력 시간 : "+msg.regDate);
+		
 	});
-	 //    $('<div></div>').text(msg).appendTo("#"+msgTo+"");
-	   //  });
     
 	//
 	//if(${!empty sessionScope.user}){

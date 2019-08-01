@@ -31,7 +31,7 @@ public class SnsContoller {
 
 		System.out.println("sns/getTimeLine");
 		
-		search.setFbId("wlsgml1416@nvaer.com");
+		search.setFbId("wlsgml1416@naver.com");
 		search.setFbPw("011!wlslgogo");
 		
 		Map<String, Object> map = snsService.getFaceBookTimeLineList(search);

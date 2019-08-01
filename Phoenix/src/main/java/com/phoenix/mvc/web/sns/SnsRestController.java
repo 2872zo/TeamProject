@@ -33,8 +33,9 @@ public class SnsRestController {
 
 		if (search.getSubject() == 100) {
 			
-			search.setFbId("wlsgml1416@nvaer.com");
+			search.setFbId("wlsgml1416@naver.com");
 			search.setFbPw("011!wlslgogo");
+			
 		}
 			System.out.println(search);
 

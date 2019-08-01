@@ -43,6 +43,9 @@ public class MailDaoImpl implements MailDao {
 	@Value("${tmpUploadDir}")
 	private String tmpUploadDir;
 	
+	@Value("${uploadDir}")
+	private String uploadDir;
+	
 	@Autowired
 	@Qualifier("sqlSessionTemplate")
 	private SqlSession sqlSession;
@@ -292,11 +295,20 @@ public class MailDaoImpl implements MailDao {
 	        }
 	    });
 		
-		MimeMessageHelper message = new MimeMessageHelper(new MimeMessage(session), false, "UTF-8");
+		MimeMessageHelper message = new MimeMessageHelper(new MimeMessage(session), true, "UTF-8");
 		
-		message.setTo("2872zo@daum.net");
-		message.setSubject("test전송2");
-		message.setText("메일 테스트 입니다. \n\n\n 3줄 엔터 <br/><br/> br태크 2번");
+		message.setFrom(account.getAccountId());
+		message.setTo(mail.getTo().split(","));
+		message.setSubject(mail.getSubject());
+		message.setText(mail.getContent(), true);
+		
+		for(Map<String, Object> map : mail.getAttachmentList()) {
+			message.addAttachment((String)map.get("fileName"), (File)map.get("fileData"));
+		}
+		
+		for(String inlineFileName : mail.getInlineList().split(",")) {
+			message.addInline(inlineFileName, new File(uploadDir + "/" + inlineFileName));
+		}
 		
 		Transport.send(message.getMimeMessage());
 		
@@ -321,12 +333,21 @@ public class MailDaoImpl implements MailDao {
 	        }
 	    });
 		
-		MimeMessageHelper message = new MimeMessageHelper(new MimeMessage(session), false, "UTF-8");
+		MimeMessageHelper message = new MimeMessageHelper(new MimeMessage(session), true, "UTF-8");
 		
 		message.setFrom(account.getAccountId());
-		message.setTo("2872zo@daum.net");
-		message.setSubject("test전송3");
-		message.setText("<html>메일 테스트 입니다. \n\n\n 3줄 엔터 <br/><br/> br태크 2번<html>", true);
+		message.setTo(mail.getTo().split(","));
+		message.setSubject(mail.getSubject());
+		message.setText(mail.getContent(), true);
+		
+		for(Map<String, Object> map : mail.getAttachmentList()) {
+			message.addAttachment((String)map.get("fileName"), (File)map.get("fileData"));
+		}
+		
+		for(String inlineFileName : mail.getInlineList().split(",")) {
+			message.addInline(inlineFileName, new File(uploadDir + "/" + inlineFileName));
+		}
+		
 		
 		Transport.send(message.getMimeMessage());
 		
@@ -338,10 +359,9 @@ public class MailDaoImpl implements MailDao {
 	public boolean sendDaum(Account account, Mail mail) throws MessagingException {
 		Properties props = new Properties();
 		props.put("mail.transport.protocol", "smtp");
-		props.put("mail.smtp.host", "smtp.daum.com"); 
-		props.put("mail.smtp.port", 587); 
-		props.put("mail.smtp.starttls.enable", "true");
-		props.put("mail.smtp.ssl.trust", "smtp.naver.com");
+		props.put("mail.smtp.host", "smtp.daum.net"); 
+		props.put("mail.smtp.port", 465); 
+		props.put("mail.smtp.ssl.enable", "true");
 		props.put("mail.smtp.auth", "true"); 
 		
 		
@@ -351,12 +371,20 @@ public class MailDaoImpl implements MailDao {
 	        }
 	    });
 		
-		MimeMessageHelper message = new MimeMessageHelper(new MimeMessage(session), false, "UTF-8");
+		MimeMessageHelper message = new MimeMessageHelper(new MimeMessage(session), true, "UTF-8");
 		
 		message.setFrom(account.getAccountId());
-		message.setTo("yunsg3023@gmail.com");
-		message.setSubject("test전송3");
-		message.setText("<html>메일 테스트 입니다. \n\n\n 3줄 엔터 <br/><br/> br태크 2번<html>", true);
+		message.setTo(mail.getTo().split(","));
+		message.setSubject(mail.getSubject());
+		message.setText(mail.getContent(), true);
+		
+		for(Map<String, Object> map : mail.getAttachmentList()) {
+			message.addAttachment((String)map.get("fileName"), (File)map.get("fileData"));
+		}
+		
+		for(String inlineFileName : mail.getInlineList().split(",")) {
+			message.addInline(inlineFileName, new File(uploadDir + "/" + inlineFileName));
+		}
 		
 		Transport.send(message.getMimeMessage());
 		

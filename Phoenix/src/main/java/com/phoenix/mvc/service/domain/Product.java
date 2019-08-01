@@ -3,15 +3,15 @@ package com.phoenix.mvc.service.domain;
 public class Product {
 	
 	
-	private String detailPageLink; //0
-	private String productName; //0
-	private String price;//0
-	private String productImage; //0
+	private String detailPageLink; //00
+	private String productName; //00
+	private String price;//00
+	private String productImage; //00
 	private String delivery; //0
-	private String averageDeliveryDate; //0
-	private String buyCount;//0
-	private String reviewAverage;//0
-	private String reviewCount;//0
+	private String averageDeliveryDate; //00
+	private String buyCount;//00
+	private String reviewAverage;//00
+	private String reviewCount;//00
 
 	public Product() {
 		// TODO Auto-generated constructor stub
