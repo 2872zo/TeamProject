@@ -120,13 +120,19 @@ public class MailDaoImpl implements MailDao {
 		System.out.println("SentDate : " + message.getSentDate());
 		mail.setSentDate(message.getSentDate());
 
+		//보낸사람
 		for (Address addr : message.getFrom()) {
 			String fullAddr = MimeUtility.decodeText(addr.toString());
 			System.out.println("Address : " + fullAddr);
-			mail.setSender(fullAddr.substring(0, fullAddr.indexOf("<") - 1));
-			mail.setSenderAddr(fullAddr.substring(fullAddr.indexOf("<"), fullAddr.length()));
+			if (!fullAddr.contains("<")) {
+				mail.setSender(fullAddr);
+			} else {
+				mail.setSender(fullAddr.substring(0, fullAddr.indexOf("<") - 1));
+				mail.setSenderAddr(fullAddr.substring(fullAddr.indexOf("<"), fullAddr.length()));
+			}
 		}
 
+		//받는사람
 		List<Map<String, String>> recipients = new ArrayList<Map<String, String>>();
 		for (Address addr : message.getAllRecipients()) {
 			String fullAddr = MimeUtility.decodeText(addr.toString());
@@ -260,7 +266,7 @@ public class MailDaoImpl implements MailDao {
 			}else if(e.getMessage().contains("405")) {
 				throw new Exception("405");
 			}
-			else if (e.getMessage().contains("not authorized for this service")) {
+			else if (e.getMessage().contains("not authorized for this service") || e.getMessage().contains("imap")) {
 				throw new Exception("400");
 			} else {
 				throw new Exception("500");
@@ -302,12 +308,16 @@ public class MailDaoImpl implements MailDao {
 		message.setSubject(mail.getSubject());
 		message.setText(mail.getContent(), true);
 		
-		for(Map<String, Object> map : mail.getAttachmentList()) {
-			message.addAttachment((String)map.get("fileName"), (File)map.get("fileData"));
+		if(mail.getAttachmentList() != null && mail.getAttachmentList().size() > 0) {
+			for(Map<String, Object> map : mail.getAttachmentList()) {
+				message.addAttachment((String)map.get("fileName"), (File)map.get("fileData"));
+			}
 		}
 		
-		for(String inlineFileName : mail.getInlineList().split(",")) {
-			message.addInline(inlineFileName, new File(uploadDir + "/" + inlineFileName));
+		if(mail.getInlineList() != null && mail.getInlineList().length() > 0) {
+			for(String inlineFileName : mail.getInlineList().split(",")) {
+				message.addInline(inlineFileName, new File(uploadDir + "/" + inlineFileName));
+			}
 		}
 		
 		Transport.send(message.getMimeMessage());
@@ -340,12 +350,16 @@ public class MailDaoImpl implements MailDao {
 		message.setSubject(mail.getSubject());
 		message.setText(mail.getContent(), true);
 		
-		for(Map<String, Object> map : mail.getAttachmentList()) {
-			message.addAttachment((String)map.get("fileName"), (File)map.get("fileData"));
+		if(mail.getAttachmentList() != null && mail.getAttachmentList().size() > 0) {
+			for(Map<String, Object> map : mail.getAttachmentList()) {
+				message.addAttachment((String)map.get("fileName"), (File)map.get("fileData"));
+			}
 		}
 		
-		for(String inlineFileName : mail.getInlineList().split(",")) {
-			message.addInline(inlineFileName, new File(uploadDir + "/" + inlineFileName));
+		if(mail.getInlineList() != null && mail.getInlineList().length() > 0) {
+			for(String inlineFileName : mail.getInlineList().split(",")) {
+				message.addInline(inlineFileName, new File(uploadDir + "/" + inlineFileName));
+			}
 		}
 		
 		
@@ -378,12 +392,16 @@ public class MailDaoImpl implements MailDao {
 		message.setSubject(mail.getSubject());
 		message.setText(mail.getContent(), true);
 		
-		for(Map<String, Object> map : mail.getAttachmentList()) {
-			message.addAttachment((String)map.get("fileName"), (File)map.get("fileData"));
+		if(mail.getAttachmentList() != null && mail.getAttachmentList().size() > 0) {
+			for(Map<String, Object> map : mail.getAttachmentList()) {
+				message.addAttachment((String)map.get("fileName"), (File)map.get("fileData"));
+			}
 		}
 		
-		for(String inlineFileName : mail.getInlineList().split(",")) {
-			message.addInline(inlineFileName, new File(uploadDir + "/" + inlineFileName));
+		if(mail.getInlineList() != null && mail.getInlineList().length() > 0) {
+			for(String inlineFileName : mail.getInlineList().split(",")) {
+				message.addInline(inlineFileName, new File(uploadDir + "/" + inlineFileName));
+			}
 		}
 		
 		Transport.send(message.getMimeMessage());
