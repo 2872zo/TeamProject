@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -48,40 +49,55 @@ public class ShoppingmallDaoImpl implements ShoppingmallDao
 		ArrayList<String> keywordLinkList = new ArrayList<String>(); //연관검색어 링크
 		Map returnMap = new HashMap(); //return할 맵
 		List<Product> productList = new ArrayList<Product>();
-		 
 		
-		WebElement webElement = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("search_app")));
-		webElement = webElement.findElement(By.className("ct_wrap")).findElement(By.className("result_info"));
-		webElement = webElement.findElement(By.tagName("strong")).findElement(By.className("cnt"));
-		search.setSearchTotal(webElement.getText()); //total검색 개수
-	
-		webElement = wait.until(ExpectedConditions.presenceOfElementLocated(By.className("related_keyword")));
 		
-		List<WebElement> relatedKeyword = webElement.findElements(By.tagName("dd"));
-		for(int i=0; i<relatedKeyword.size(); i++)
+		if(search.getDetectedItemCount()==0) // 처음이면 연관검색어도 크롤링
 		{
-			keywordList.add(relatedKeyword.get(i).getText()); //연관검색어 저장
-			//System.out.println(relatedKeyword.get(i).getText());
-			keywordLinkList.add(relatedKeyword.get(i).findElement(By.tagName("a")).getAttribute("href")); //연관검색어링크 저장
-			//System.out.println(relatedKeyword.get(i).findElement(By.tagName("a")).getAttribute("href"));
+			WebElement webElement = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("search_app")));
+			webElement = webElement.findElement(By.className("ct_wrap")).findElement(By.className("result_info"));
+			webElement = webElement.findElement(By.tagName("strong")).findElement(By.className("cnt"));
+			search.setSearchTotal(webElement.getText()); //total검색 개수
+		
+			webElement = wait.until(ExpectedConditions.presenceOfElementLocated(By.className("related_keyword")));
+			
+			List<WebElement> relatedKeyword = webElement.findElements(By.tagName("dd"));
+			for(int i=0; i<relatedKeyword.size(); i++)
+			{
+				keywordList.add(relatedKeyword.get(i).getText()); //연관검색어 저장
+				//System.out.println(relatedKeyword.get(i).getText());
+				keywordLinkList.add(relatedKeyword.get(i).findElement(By.tagName("a")).getAttribute("href")); //연관검색어링크 저장
+				//System.out.println(relatedKeyword.get(i).findElement(By.tagName("a")).getAttribute("href"));
+			}
+			
+			search.setRelativeKeyword(keywordList);
+			search.setRelativeKeywordLink(keywordLinkList);
 		}
 		
-		search.setRelativeKeyword(keywordList);
-		search.setRelativeKeyowrdLink(keywordLinkList);
 		
-		webElement = driver.findElement(By.className("infinite-scroll-component "));
+		WebElement webElement = wait.until(ExpectedConditions.presenceOfElementLocated(By.className("infinite-scroll-component "))); //찾을때까지 기달기달
 		List<WebElement> items = webElement.findElements(By.className("item"));
 		
-		//search.setDetectedItemCount(items.size());//맨처음 들어올때, item몇개 detect되는지 확인.
+		if(items.size()<=search.getDetectedItemCount()) //나온 item이 이미 출력된개수보다 작거나 같으면 스크롤한다.
+		{
+			while(items.size()<search.getDetectedItemCount()+24) //
+			{
+				JavascriptExecutor jse = (JavascriptExecutor)driver;
+				jse.executeScript("window.scrollBy(0,250)"); //250px 다운
+				
+				items = webElement.findElements(By.className("item"));
+				System.out.println(items.size());
+			}
+			
+		}
 		
-		for(int i=0; i< items.size(); i++) // item은 큰틀
+		for(int i=search.getDetectedItemCount(); i< search.getDetectedItemCount()+24; i++) // item은 큰틀
 		{
 			Product product = new Product();
 			webElement = items.get(i);
 			product.setDetailPageLink(webElement.findElement(By.tagName("a")).getAttribute("href")); //상세보기링크
 			
-			
-			product.setProductImage(webElement.findElement(By.className("thumb")).getAttribute("style"));//이미지
+
+			product.setProductImage(webElement.findElement(By.className("thumb")).getAttribute("style").split("\"")[1]);//이미지
 			WebElement dealInfo = webElement.findElement(By.className("deal_info"));
 			product.setProductName(dealInfo.findElement(By.className("title")).getText());//상품이름
 			
@@ -109,7 +125,7 @@ public class ShoppingmallDaoImpl implements ShoppingmallDao
 			productList.add(product);
 		}
 		
-		search.setDetectedItemCount(productList.size()); //== 검색된 class="item" 의 개수 다음번에 오면 이개수+1부터 찾기시작. 
+		search.setDetectedItemCount(search.getDetectedItemCount()+productList.size()); //== 검색된 class="item" 의 개수 다음번에 오면 이개수+1부터 찾기시작. 
 
 		returnMap.put("productList", productList);
 		returnMap.put("search", search);
