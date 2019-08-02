@@ -678,7 +678,7 @@ public class MailDaoImpl implements MailDao {
 		
 		IMAPAgent mailAgent = new IMAPAgent("imap." + account.getAccountDomain(), account.getAccountId(), account.getAccountPw(), folderName);
 
-		mailAgent.open();
+		mailAgent.openFolder();
 
 		Message message = mailAgent.getMessage(mailNo);
 
