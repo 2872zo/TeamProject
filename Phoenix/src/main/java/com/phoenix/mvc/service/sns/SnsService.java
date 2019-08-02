@@ -8,5 +8,7 @@ import com.phoenix.mvc.service.domain.TimeLine;
 public interface SnsService {
 
 	public Map<String, Object> getFaceBookTimeLineList(Search search);
+	
+	public TimeLine writeFb(Search search);
 
 }

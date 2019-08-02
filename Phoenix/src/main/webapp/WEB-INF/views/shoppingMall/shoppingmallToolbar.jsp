@@ -30,7 +30,7 @@
 				<div class="input-group col-lg-6" style='width: 50%; margin :15px'>
 					<input type="text" class="form-control input-rounded form-control-lg" id='searchKeyword' name="searchKeyword" value="${search.searchKeyword}" style="border: 1px solid #f5a142;">
 					<div class="input-group-append">
-						<button class="btn btn-lg btn-outline-primary" type="button" id="explore">
+						<button class="btn btn-lg btn-outline-primary" type="button" id="searchProduct">
 							<i class="mdi mdi-magnify" style='font-size: 18pt;' ></i>
 						</button>
 					</div>
