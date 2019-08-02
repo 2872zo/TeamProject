@@ -198,11 +198,11 @@ input[type="checkbox"] {
                                             
                                         </li>
                                         <hr class="my-2">
-                                        <c:if test="${user.userRoleCode=='ur100'}">
+                                       
                                         <li>
                                             <a href=/user/listUser><i class="icon-list"></i> <span>회원목록</span></a>
                                         </li>
-                                        </c:if>
+                                       
                                         <li><a href="page-login.html"><i class="icon-list"></i> <span>신고목록</span></a></li>
                                         <li><a href="page-login.html"><i class="icon-list"></i> <span>문의목록</span></a></li>
                                     </ul>
