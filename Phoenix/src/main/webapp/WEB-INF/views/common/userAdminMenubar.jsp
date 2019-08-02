@@ -12,13 +12,13 @@
 
 	<ul class="metismenu" id="menu">
 	<br>
-		
+		<c:if test="${user.userRoleCode=='ur101'}">
 		<li><a id="statistics"
 			href="javascript:fncUserList()"
 			aria-expanded="false"> <i class="icon-note menu-icon"></i>
 				<span class="nav-text">회원목록</span>
 		</a></li>
-		
+		</c:if>
 	<br>
 		<li><a id="board" href="javascript:fncGetBoard('${cafeURL}')"
 			aria-expanded="false"> <i class="icon-note menu-icon"></i>
