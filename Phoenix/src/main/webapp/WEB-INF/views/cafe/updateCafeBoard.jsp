@@ -22,7 +22,39 @@
     <link href="/css/style.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     
+    <style>
     
+    	#plusBoard{
+    		
+    		margin-left:10px;
+    	}
+    	
+    	select[name=board]{
+    	
+    		width:200px;
+    		
+    	}
+    	
+    	select[name=addableBoard]{
+    		
+    		height:219px !important;
+    	}
+    	
+    	p{
+    		margin:0;
+    		font-size:11px;
+    	}
+    	
+    	.borderLine{
+    		
+    		margin-top:10%;
+    		margin-left:5%;
+    		font-size:15px;
+    		color:black;
+    	}
+    	
+    
+    </style>
     
 	<script type="text/javascript">
 
@@ -50,7 +82,7 @@
 		function hideAndShow(){
 
 			var selectBoxValue = $("select[name=board] option:selected").val();
-
+			//alert(selectBoxValue);
 			for(var i=1; i<=$("input[id=totalBoardsize]").val(); i++) 
 			{
 				$(".boardDetail"+i).hide();
@@ -58,7 +90,10 @@
 			
 			if(selectBoxValue.indexOf("newBoard")!= -1) //새로생긴애
 			{
-				$("input[name='"+selectBoxValue+"']").parent().show();
+				//alert("악!");
+				var splitNumber = selectBoxValue.split('d')[1];
+				//alert("splitNumber : "+splitNumber);
+				$("input[name='newBoardName"+splitNumber+"']").parent().show();
 			}
 			else //원래있던애
 			{
@@ -93,7 +128,7 @@
 				//alert($("select[name=addableBoard]").val());
 				//기존 게시판리스트에 추가
 				//alert($("select[name=board] option:selected").parent().html().trim());  //attr("selected",false); //추가
-				var appendBoard = "<option class='apple' value='newBoard"+count+"' id='' selected='selected' >"+$("select[name=addableBoard]").val()+"</option>"
+				var appendBoard = "<option class='eachBoard' value='newBoard"+count+"' id='' selected='selected' >"+$("select[name=addableBoard]").val()+"</option>"
 
 				
 				$("select[name=board] option:selected").removeAttr('selected');
@@ -106,19 +141,20 @@
 
 				
 				
-				if($("select[name=addableBoard]").val()=="자유게시판"){
+				if($("select[name=addableBoard]").val()=="새로운게시판"){
 					//게시판 추가하면  밑에 input type text추가하고 
+						//alert("새로운게시판")
 					 	appendBoardDetail = "<div class ='boardDetail"+totalBoardSize+"'> <br/><br/>"
-						+"<h4>메뉴명</h4>   <input type='text' class='form-control input-default' name='newBoard"+count+"'  placeholder='게시판이름' maxlength='6' required /><hr/> "
-						+"<h4>메뉴설명</h4> <input type='text'  class='form-control input-default' name='newBoardDetail"+count+"' width='50' placeholder='게시판설명' required >"
-						+"<br/><hr/><h4>공개설정</h4>"
+						+"<label>메뉴명</label>   <input type='text' class='form-control input-default' name='newBoardName"+count+"'  value='새로운게시판' maxlength='6' required /><hr/> "
+						+"<label>메뉴설명</label> <input type='text'  class='form-control input-default' name='newBoardDetail"+count+"' width='50' value='새로운게시판 입니다.' required >"
+						+"<br/><hr/><label>공개설정</label>"
 						+"<div class='radio'><label class='radio-inline'>"
   						+"<input type='radio' value='0' name='newBoardPrivate"+count+"' checked> 전체공개 </label>"
     					+"<label class='radio-inline'>"
    						+"<input type='radio' value='1' name='newBoardPrivate"+count+"'> 멤버공개 </label></div>"
-						+"게시판 공개여부를 설정합니다.<br/>멤버공개를 선택시, 게시판은 멤버에게만 보여집니다."
-						+"<br/><hr/>"
-						+"<h4>접근권한설정</h4><div class='form-inline'><select class='form-control' name='grade'>"
+						+"<div class='exclusiveExplain'><p>게시판 공개여부를 설정합니다.  멤버공개를 선택시 게시판은 멤버에게만 보여집니다.</p></div>"
+						+"<hr/>"
+						+"<label>접근권한설정</label><div class='form-inline'><select class='form-control' name='grade'>"
 						+"<c:forEach var='grade' items='${useGradeList}'>"
 						+"<option value='${grade.cafeGradeNo}/new"+count+"'>${grade.gradeName}</option>"
 						+"</c:forEach></select> 이상</div><hr/>"
@@ -136,14 +172,14 @@
 						+"<option value='30/new"+count+"'}>한달</option>"
 						+"<option value='180/new"+count+"'}>6개월</option>"
 						+"<option value='365/new"+count+"'}>1년</option>"
-						+"</select> 게시물 기준</div>"
+						+"</select> 게시물 기준</div>";
 						//$(".boardDetail").hide();
 				}
 				else{
 					 appendBoardDetail = "<div class ='boardDetail"+totalBoardSize+"'> <br/><br/>"
-					 					+"<input type='hidden' name='newBoard"+count+"' value='----------------'/>"
-					 					+"<br/><h4>메뉴들을 구분선을 통해 쉽게 구분할 수 있습니다.</h4>"
-					 					+"<br/><br/></div>"
+					 					+"<input type='hidden' name='newBoardName"+count+"' value='----------------'/>"
+					 					+"<div class='borderLine'>메뉴들을 구분선을 통해 쉽게 구분할 수 있습니다.</div>"
+					 					+"<br/><br/></div>";
 				}
 
 				//alert("dkd")			
@@ -249,6 +285,24 @@
 
 			$("#save").on("click",function(){
 
+				//유효성체크
+				
+				var elements = $('[type=text][name*="newBoardName"],[type=text][name*="boardName"]' );
+				var returnNow = false;
+				
+				elements.each(function(){
+				debugger;
+					if($(this).val()==null || $(this).val()==""){ //value값이 null이거나 nullString일때
+						alert("메뉴명은 빈칸일 수 없습니다.");
+						returnNow = true;
+						return false;
+					}
+				});
+
+				if(returnNow){
+					return;
+				}
+					
 				AllSelect();
 				$("form").attr("method","POST").attr("action","/cafe/${cafeURL}/manage/updateCafeBoard").submit();
 				
@@ -362,7 +416,7 @@
 										<label>추가메뉴</label>
 										<br /> <br /> 
 										<select name="addableBoard" size="10" class="form-control">
-											<option value="자유게시판" selected="selected">자유게시판</option>
+											<option value="새로운게시판" selected="selected">새로운게시판</option>
 											<option value="--------------------">구분선</option>
 										</select>
 									</div>
@@ -397,12 +451,12 @@
 
 
 												<c:if test="${i eq 1}">
-													<option class="apple"
+													<option class="eachBoard"
 														value="${board.boardName}/${board.boardNo}" id="${board.boardNo}" selected="selected">${board.boardName}</option>
 												</c:if>
 
 												<c:if test="${i ne 1}">
-													<option class="apple"
+													<option class="eachBoard"
 														value="${board.boardName}/${board.boardNo}" id="${board.boardNo}">${board.boardName}</option>
 												</c:if>
 
@@ -443,8 +497,10 @@
 																멤버공개
 															</label>
 														</div>
-														게시판 공개여부를 설정합니다.<br />멤버공개를 선택시, 게시판은 멤버에게만 보여집니다.
-														<br />
+														<div class="exclusiveExplain">
+															<p>게시판 공개여부를 설정합니다.  멤버공개를 선택시 게시판은 멤버에게만 보여집니다.</p>
+														</div>
+														
 														<hr />
 
 														<label>접근권한설정</label>
@@ -499,8 +555,7 @@
 
 													<c:if test="${board.boardType=='cb102'}">
 														<input type="hidden" name="boardName/${board.boardNo}" value="----------------" />
-														<br />
-														<label>메뉴들을 구분선을 통해 쉽게 구분할 수 있습니다.</label>
+														<div class="borderLine">메뉴들을 구분선을 통해 쉽게 구분할 수 있습니다.</div>
 													</c:if>
 
 

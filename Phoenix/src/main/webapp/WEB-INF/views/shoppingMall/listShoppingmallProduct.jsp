@@ -133,58 +133,6 @@
     		padding-left :10px; 
     		font-size:10px;
     	}
-    	
-    	.loader-ellips {
-		  display : none;
-		  font-size: 20px; /* change size here */
-		  position: relative;
-		  width: 4em;
-		  height: 1em;
-		  margin: 10px auto;
-		}
-		
-		.loader-ellips__dot {
-		  display: block;
-		  width: 1em;
-		  height: 1em;
-		  border-radius: 0.5em;
-		  background: #555; /* change color here */
-		  position: absolute;
-		  animation-duration: 0.5s;
-		  animation-timing-function: ease;
-		  animation-iteration-count: infinite;
-		}
-		
-		.loader-ellips__dot:nth-child(1),
-		.loader-ellips__dot:nth-child(2) {
-		  left: 0;
-		}
-		.loader-ellips__dot:nth-child(3) { left: 1.5em; }
-		.loader-ellips__dot:nth-child(4) { left: 3em; }
-		
-		@keyframes reveal {
-		  from { transform: scale(0.001); }
-		  to { transform: scale(1); }
-		}
-		
-		@keyframes slide {
-		  to { transform: translateX(1.5em) }
-		}
-		
-		.loader-ellips__dot:nth-child(1) {
-		  animation-name: reveal;
-		}
-		
-		.loader-ellips__dot:nth-child(2),
-		.loader-ellips__dot:nth-child(3) {
-		  animation-name: slide;
-		}
-		
-		.loader-ellips__dot:nth-child(4) {
-		  animation-name: reveal;
-		  animation-direction: reverse;
-		}
-    	
     
     </style>
 <!--**********************************
@@ -206,30 +154,18 @@
 		$(document).ready(function(){ //스크롤액션
 			
 			var i =0;
-			var win  = $(window);
 			
 			win.scroll(function(){
 	
 				
-				if( win.scrollTop() >= ($(document).height() - win.height())*0.9){
+				if( $(window).scrollTop() >= ($(document).height() - $(window).height())*0.9){
 					
 					if(boolsw){
 						
 						if(i>0){
-							var totalCount = $("#searchTotal").val();
-							totalCount= totalCount.replace(/,/gi,'');
-							var detectedItemCount = $("#detectedItemCount").val();
 
-							totalCount--;
-							alert(totalCount);
-							alert(detectedItemCount);
-							//debugger;
-							
-							if(totalCount>detectedItemCount){
-								//alert("안녕");
-								sendData();
-							}
-							
+							alert();
+							//sendData();
 						}
 						i++;
 					}
@@ -244,8 +180,6 @@
 		function sendData(){ //무한스크롤 에이잭스 통신
 					
 					boolsw = false;
-					var totalCount = $("#searchTotal").val();
-					totalCount = totalCount.replace(/,/gi,'');
 					
 					$.ajax({
 						url : "/shopping/json/infiniteProductList",
@@ -256,87 +190,66 @@
 						},
 						data : JSON.stringify({ //보내는 data jsonString 화
 							searchKeyword : $("input[name=searchKeyword]").val(), //있음
-							detectedItemCount : $("input[name=detectedItemCount]").val(),
-							searchTotal : totalCount
+							engineAll : $("input[name=engineAll]").val(),
+							engineNaver : $("input[name=engineNaver]").val(),
+							engineDaum : $("input[name=engineDaum]").val(),
+							orderState : $("select[name=orderState]").val(), //있음
+							currentPage : currentPage+""
 						
 						}),
-						beforeSend : function(){
-							$(".loader-ellips").css("display","block");
-						},
 						dataType : "text",
 						success : function(serverData){
-							alert("serverData : "+serverData);
+							//alert(serverData);
 							setTimeout(function(){boolsw = true;},500);
 							
+							$("input[name=currentPage]").val(currentPage);
 							
 							var data = JSON.parse(serverData);
 							
 							var str = "";
+							//var resultPage = data.page;
 							var search = data.search;
-							var productList = data.productList;
-
-							var j=0;
+							var list = data.imageList;
+							var i=0;
+							var r=1;
+							var c=0;
+							//alert(resultPage);
 							//alert(search);
 							//alert(list);
-							$("#searchTotal").val(search.searchTotal);
-							$("#detectedItemCount").val(search.detectedItemCount);
-							
-							if(productList != ""){ 
-		
-									str +="<div class ='row'>";
 						
-								$(productList).each( 
+							if(list != ""){ //한번 불러올때마다 inline이랑 시켜줘야한다.
+		
+									str +="<div class ='photo-grid-box'>" //메모장에있는거 그냥 가져다 붙이면 되지않나. ->이거 안댐 왜냐면 js(jquery)보다 jstl이 먼저 실행되기때문이다
+										+"<div class='form-inline'>";
+								$(list).each( //말고 jstl 해도된잔하아.
 										
 									function(){
 									
-										if(j%3==2)
-										{ //맨 오른쪽 인애
-											str+="<div class='thumbnail' style='border-right:0px;'>";
-										}
-										else
-										{ //나머지
-											str+="<div class='thumbnail'>";
-										}
-
-										str+= "<a href='"+this.detailPageLink+"'>"
-										+"<img src='"+this.productImage+"' alt='' />"
-										+"<div class='caption'><div class='title'>"+this.productName+"</div><br/>"
-										+"<div class='price_area'>"
-										+"<p class='price'><span style='font-weight:800; font-size:20px;'>"+this.price+"</span> 원</p><p class='delivery'>";
-
-										if(this.averageDeliveryDate!=null && this.averageDeliveryDate.indexOf('.')!= -1)
+										console.log(this);
+										c++;
+										if(this.title==null)
 										{
-											str+=this.averageDeliveryDate;
+											this.title ="";
 										}
-
-										str+="</p><span class='reviewAverage'>"+this.reviewAverage+"</span>" //this.reviewAverage null처리
-										+"<span class='reviewCount'>";
-
-										if(this.reviewCount!="" || this.reviewCount!=null)
-										{
-											str+="("+this.reviewCount+")";
-										}
-
-										str+="</span><span class='buyCount'>"+this.buyCount+" 개 구매</span></div></div></a></div>";
-										j++;
-
-										if(j%3==0)
-										{
-											str+="</div>";
-											if(j!=24)
-											{
-												str+="<div class='row'>";
-											}
+										str +="<div class='imageGroup'>" 
+											+"<img alt='' class='imageThumbnail' src='"+this.thumbnail+"' width='190' height='167' data-row='"+r+"' data-col='"+c+"'>"
+											+"<p class='imageTitle'>"+this.title+"</p></div>";
+										i++;
+		
+										if(i%6==0){ //6개씩 줄바꿈
+											str +="</div>";
+											r++;
+											c=0;
+											str+="<div class='form-inline'>";
 										}
 										
-
-									});
-
-							
+								});
+		
+								str+="</div></div>"
 							}//end list 반복문
 							
-							$(".context-body").append(str);
-							
+							$(".card-body.col-md-12").append(str);
+							imageTitleHide();//다시 하이드 시켜준다.
 						}//end success
 						
 						
@@ -411,28 +324,22 @@
 	           						<div class="result-info">
 	           							<strong>
 	           								<span>'${search.searchKeyword}'에 대한 검색 결과</span>
-	           								<span style="color:#f5a142;" > '${search.searchTotal}'</span> 건
-	           								<input type="hidden" id ="searchTotal" name="searchTotal" value="${search.searchTotal}" />
-	           								<input type="hidden" id="detectedItemCount" name="detectedItemCount" value="${search.detectedItemCount}"/>
+	           								<span style="color:#f5a142;"> '${search.searchTotal}'</span> 건
 	           							</strong>
 	           						</div>
 	           						<br/>
 	           						<div class="related_keyword">
 	           							<dl class="form-inline">
-	           								<c:if test="${!empty search.relativeKeyword}"><!-- 연관검색어 있을경우 -->
-	           									<dt>연관검색어</dt>
-		           								<c:set var="i" value="0"/>
-		           								<c:forEach var="relativeKeyword" items="${search.relativeKeyword}">
-		           									<dd><a href="${search.relativeKeywordLink[i]}">${relativeKeyword}</a></dd>
-		           									<c:set var="i" value="${i+1}"/>
-		           								</c:forEach>
-	           								</c:if>
-	           								
+	           								<dt>연관검색어</dt>
+	           								<c:set var="i" value="0"/>
+	           								<c:forEach var="relativeKeyword" items="${search.relativeKeyword}">
+	           									<dd><a href="${search.relativeKeywordLink[i]}">${relativeKeyword}</a></dd>
+	           									<c:set var="i" value="${i+1}"/>
+	           								</c:forEach>
 	           							</dl>
 	           						</div>
 	           					</div>
 	           					<hr/>
-	           					
 	           					<div class="context-body">
 	           						<div class="row">
 	           						<c:set var="j" value="0"/>
@@ -480,14 +387,6 @@
 	           					
 	           					
 	           					</div>
-	           					<br/>
-	           					<div class="loader-ellips">
-								  <span class="loader-ellips__dot"></span>
-								  <span class="loader-ellips__dot"></span>
-								  <span class="loader-ellips__dot"></span>
-								  <span class="loader-ellips__dot"></span>
-								</div>
-	           					
 	           				</div>
            				</div>
            			</div>
@@ -527,9 +426,9 @@
            		
    	 </form>
    	 
-   	<!-- 검색 엔터용 스크립트같은데
-   		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script> -->
-   	<!-- 검색 공통 스크립트
-   		<script src="/js/custom/shoppingmallCommon.js"></script> -->
+   	<!-- 검색 엔터용 스크립트같은데 -->
+   		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+   	<!-- 검색 공통 스크립트 -->
+   		<script src="/js/custom/shoppingmallCommon.js"></script>
 	</body>
 </html>

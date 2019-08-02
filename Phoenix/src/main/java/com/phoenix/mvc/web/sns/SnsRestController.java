@@ -38,6 +38,7 @@ public class SnsRestController {
 			search.setFbPw("011!wlslgogo");
 			
 		}
+		
 			System.out.println(search);
 
 			Map returnMap = new HashMap();
@@ -47,7 +48,6 @@ public class SnsRestController {
 			System.out.println("map이욤 : " + map);
 
 			returnMap.put("timeLine", map.get("timeLine"));
-			returnMap.put("count", map.get("count"));
 			returnMap.put("search", map.get("search"));
 
 			return returnMap;
