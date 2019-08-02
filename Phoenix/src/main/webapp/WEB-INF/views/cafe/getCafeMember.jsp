@@ -217,9 +217,6 @@ ${cafeGrade.gradeName}
 		
 <br/>
 
-
-
-
 <c:if test='${member.memberStatusCode=="cs100" && member.memberGrade != "cg100"}'>
 <div class="alert alert-danger">
   <h4 class="alert-heading">멤버정지메뉴</h4>
