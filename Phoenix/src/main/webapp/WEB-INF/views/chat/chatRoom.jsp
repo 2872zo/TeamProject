@@ -240,12 +240,12 @@ display : none;
 		<!--  </p>-->
 	</div>
 <br/>
+
 <i class="mdi mdi-file-image" style='font-size:25pt;' id='fileUploadButton'></i>
 
 <i class="mdi mdi-emoticon" style='font-size:25pt;' data-toggle="collapse"  data-target="#collapseOne" aria-expanded="true" ></i>
 
 <i class="mdi mdi-emoticon-cool" style='font-size:25pt;' data-toggle="collapse"  data-target="#collapseTwo" aria-expanded="true" ></i>
-
 
 <div class="accordion" id="accordionExample">
 
@@ -471,7 +471,6 @@ $("#uploadFile").change(function(){
 			}, 
 			success : function(serverData, status) {
 						$.each(serverData, function (index, chat) {
-							alert(chat.chatMsg);
 							socket.emit("send_msg", chat);
 						});
 					},

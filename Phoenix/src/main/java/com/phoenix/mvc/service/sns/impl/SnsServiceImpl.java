@@ -17,6 +17,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.phoenix.mvc.common.Search;
@@ -30,13 +31,20 @@ public class SnsServiceImpl implements SnsService {
 	@Autowired
 	@Qualifier("snsDaoImpl")
 	private SnsDao snsDao;
+	
+	
+	@Value("${webDriverId}")
+	private String WEB_DRIVER_ID;
+	
+	@Value("${webDriverPath}")
+	private String WEB_DRIVER_PATH;
 
 	private WebDriver driver;
 	private WebElement webElement;
 
-	public static final String WEB_DRIVER_ID = "webdriver.chrome.driver";
+	//public static final String WEB_DRIVER_ID = "webdriver.chrome.driver";
 	// public static final String WEB_DRIVER_PATH="C:/z.utility/chromedriver.exe";
-	public static final String WEB_DRIVER_PATH = "C:/Users/wlsgm/OneDrive/바탕 화면/java/chromedriver.exe";
+	//public static final String WEB_DRIVER_PATH = "C:/Users/wlsgm/OneDrive/바탕 화면/java/chromedriver.exe";
 
 	private String url;
 

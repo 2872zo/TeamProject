@@ -265,6 +265,12 @@ img {
 				subject : subject
 			}),
 			dataType : "text",
+			beforeSend : function(){
+				$("#preloader").attr("style", "background:rgba(255,245,217,0.5);");
+			},
+			complete : function(){
+				$("#preloader").attr("style", "display:none;");
+			}, 
 			success : function(serverData) {
 				//alert(serverData)
 				

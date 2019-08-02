@@ -91,6 +91,11 @@ public class ShoppingmallDaoImpl implements ShoppingmallDao
 				items = webElement.findElements(By.className("item"));
 				System.out.println(items.size());
 				
+				if(search.getSearchTotal()!=null) {
+					
+					search.setSearchTotal(search.getSearchTotal().replaceAll(",", ""));
+				}
+					
 				if(items.size()==Integer.parseInt(search.getSearchTotal()))
 					break;
 			}

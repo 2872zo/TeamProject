@@ -176,7 +176,7 @@ var checkSessionUser = ${empty sessionScope.user};
 		});
 		
 		$("#shop").on("click", function() {
-			$(self.location).attr("href", "/shopping/myCartList");
+			$(self.location).attr("href", "/shopping/getProductList");
 		});
 
 	});
