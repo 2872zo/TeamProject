@@ -19,6 +19,12 @@
 <link href="/css/style.css" rel="stylesheet">
 <link rel="stylesheet" href="/css/custom/scroll-top.css">
 
+<style type="text/css">
+.goToMember:hover {
+cursor: pointer;
+}
+
+</style>
 
 </head>
 
@@ -64,6 +70,7 @@
 
 		<div class="content-body" style="min-height: 743px;">
 		<form id='memberDetailForm'>
+<input type="hidden" name='cafeNo' id='cafeNo' value='${search.cafeNo}'>		
 <input type="hidden" name='memberNo' id='memberNo' value='0'>
 </form>
 		
@@ -81,13 +88,7 @@
 <div class='card'>
 <div class='card-body'>
 
-
-			
-  <br/>
-  
-  
-              
-  
+<br/>
 
 <form id='memberListingForm'>
 <input type="hidden" name='currentPage' 	value='0' id='memberCurrentPage' >
@@ -95,11 +96,6 @@
 <input type="hidden" name='memberGrade' 	value='${search.memberGrade}' id='memberGrade'>		
 <input type="hidden" name='status' 			value='${search.status}' id='status'>
 <input type="hidden" name='sortCode' 		value='${search.sortCode}' id='sortCode'>
-
-	
-	
-
-
 	    
 <br/>
 
@@ -148,7 +144,7 @@
   <a href="#" class='sortCode badge badge-${ search.sortCode==5 ? "dark" : "light" }'>출석적은순</a>
  </div> 
 
-  <table class="table table-borderless">
+  <table class="table table-hover">
   <thead>
     <tr>
  

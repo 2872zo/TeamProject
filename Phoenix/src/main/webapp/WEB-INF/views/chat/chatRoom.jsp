@@ -63,31 +63,48 @@ display : none;
     <!--*******************
         Preloader end
     ********************-->
-
-    <!--**********************************
+    
+        <!--**********************************
         Main wrapper start
     ***********************************-->
     <div id="main-wrapper">
     
+     <!--**********************************
+            Nav header start
+        ***********************************-->
+           <div class="nav-header">
+            <c:import url="/WEB-INF/views/common/brand-logo.jsp"/>
+        </div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+        
+        
+<!-- ToolBar Start /////////////////////////////////////-->
+<jsp:include page="../common/toolbar.jsp" />
+<!-- ToolBar End /////////////////////////////////////-->
+    
+    
+           	<!--**********************************
+            Sidebar start
+        ***********************************-->
+			<c:import url="/WEB-INF/views/chat/chatSideMenu.jsp"></c:import>
+		<!--**********************************
+            Sidebar end
+        ***********************************-->
+          
+    
+
+
+    
+    <div class="content-body">
 
 <c:forEach items='${nickNameList}' var='chatFriend'>
 <input type='hidden' class='friendNickname' value='${chatFriend.friendNickname}'>
 <input type='hidden' class='friendUserNo' value='${chatFriend.userNo}'>
 </c:forEach>
-     		<!-- ToolBar Start /////////////////////////////////////-->
-		<jsp:include page="/WEB-INF/views/common/toolbar.jsp" />
-		<!-- ToolBar End /////////////////////////////////////-->
 
-       	<!--**********************************
-            Sidebar start
-        ***********************************-->
-		<div class="nk-sidebar">
-			<c:import url="/WEB-INF/views/chat/chatSideMenu.jsp"></c:import>
-		</div>
-		<!--**********************************
-            Sidebar end
-        ***********************************-->
-          
+
 		<div class="content-body" style="min-height: 600px;">
 		<div class='container-fluid'>
 		<form id='fileMultiple' action='/chat/fileUpload' enctype="multipart/form-data" method="post">
@@ -387,6 +404,7 @@ display : none;
         	
         </div>
 
+</div>
 </div>
 </div>
 </div>

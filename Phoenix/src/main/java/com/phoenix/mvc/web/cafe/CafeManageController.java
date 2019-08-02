@@ -92,8 +92,9 @@ public class CafeManageController {
 
 		Map<String, Object> map = cafeManageService.getCafeMemberList(search);
 		List memberList = (List) map.get("memberList");
-		List gradeList = (List) map.get("gradeList");
+		List<CafeGrade> gradeList = (List) map.get("gradeList");
 		int totalCount = (int) map.get("totalCount");
+		search.setCafeNo(gradeList.get(0).getCafeNo());
 		Page page = new Page(search.getCurrentPage(), totalCount, pageUnit, pageSize);
 		model.addAttribute("memberList", memberList);
 		model.addAttribute("gradeList", gradeList);
