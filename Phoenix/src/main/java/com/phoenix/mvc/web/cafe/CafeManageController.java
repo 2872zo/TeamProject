@@ -363,11 +363,11 @@ public class CafeManageController {
 					}
 				}
 
-			} else if (element.contains("newBoard")) // 새로생긴애 newBoardName
+			} else if (element.contains("newBoardName")) // 새로생긴애 newBoardName
 			{
 //element.split("e")[2]
 				for (int i = 0; i < newBoard.size(); i++) {
-					if (newBoard.get(i).getBoardNo() == Integer.parseInt(element.split("d")[1])) {
+					if (newBoard.get(i).getBoardNo() == Integer.parseInt(element.split("e")[2])) {
 						newBoard.get(i).setBoardName(request.getParameter(element));
 					}
 				}

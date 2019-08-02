@@ -65,7 +65,7 @@ public class SnsServiceImpl implements SnsService {
 			prefs.put("profile.default_content_setting_values.notifications", 2);
 			ChromeOptions options = new ChromeOptions();
 			options.setExperimentalOption("prefs", prefs);
-			options.addArguments("headless");//창안켜줭~
+			//options.addArguments("headless");//창안켜줭~
 			options.setCapability("ignoreProtectedModeSettings", true);
 			driver = new ChromeDriver(options);
 
@@ -91,29 +91,31 @@ public class SnsServiceImpl implements SnsService {
 		List <TimeLine> list = new ArrayList<TimeLine>();
 		
 		WebElement end = driver.findElement(By.id("pageFooter"));
-
-			//System.out.println("===="+k+"번째 스크롤====");
-		if(search.getCurrentPage()==0) {
-		
-			((JavascriptExecutor)driver).executeScript("window.scrollTo(0,document.body.scrollHeight)");
-			WebDriverWait wait = new WebDriverWait(driver, 300);
-			wait.until(ExpectedConditions.invisibilityOf(end));
-		}
-		
 		WebElement feed = driver.findElement(By.cssSelector("div[role='feed']")); // 피드 전체
-		List<WebElement> each = feed.findElements(By.cssSelector("div[class='_5pcr userContentWrapper']"));// 각자피드
+		List<WebElement> checkSize = feed.findElements(By.cssSelector("div[class='_5pcr userContentWrapper']"));
 		
-		if(search.getCurrentPage()!=0) {
-			for( int k = each.size(); k<search.getCurrentPage(); k++) {
-				((JavascriptExecutor)driver).executeScript("window.scrollTo(0,document.body.scrollHeight)");
-				WebDriverWait wait = new WebDriverWait(driver, 300);
-				wait.until(ExpectedConditions.invisibilityOf(end));
-				
-			}
+		
+		int eachSize = checkSize.size();
+		
+		System.out.println(checkSize.size()+" each 사이즈 임");
+		
+		
+		while(eachSize<=6) {//
+			
+			((JavascriptExecutor)driver).executeScript("window.scrollBy(0,200)");
+			WebDriverWait wait = new WebDriverWait(driver, 10);
+			wait.until(ExpectedConditions.invisibilityOf(end));
+			List<WebElement> size = feed.findElements(By.cssSelector("div[class='_5pcr userContentWrapper']"));
+			System.out.println("while문 안에 사이즈 체크 "+ size.size());
+			eachSize+=size.size();
+			
 		}
 		
-			
-			System.out.println(" 페이스북 포스트수 : " + each.size()); // 포스트 수
+		
+		
+		List<WebElement> each = feed.findElements(By.cssSelector("div[class='_5pcr userContentWrapper']"));
+		
+		System.out.println(" 페이스북 포스트수 : " +each.size()); // 포스트 수
 			
 			int count=0;
 			
@@ -131,7 +133,8 @@ public class SnsServiceImpl implements SnsService {
 					List<String> videoList  = new ArrayList<String>();
 					List<String> videoLinkList = new ArrayList<String>();
 					
-					newTimeLine.setPostSize(each.size());
+					newTimeLine.setPostSize(each.size()+search.getCurrentPage());
+					System.out.println("타임라인 사이즈 궁금쓰 "+newTimeLine.getPostSize());
 		
 					System.out.println(i + " 번째 포스트 "); // 포스트 수
 					List<WebElement> postId = each.get(i).findElements(By.cssSelector("h5[class='_7tae _14f3 _14f5 _5pbw _5vra']"));
@@ -140,6 +143,7 @@ public class SnsServiceImpl implements SnsService {
 						System.out.println("작성자ID "+ (each.get(i).findElement(By.cssSelector("h5[class='_7tae _14f3 _14f5 _5pbw _5vra']")).getText()));
 						newTimeLine.setPostId(each.get(i).findElement(By.cssSelector("h5[class='_7tae _14f3 _14f5 _5pbw _5vra']")).getText());
 					}
+					
 					
 					List<WebElement> reactionId = each.get(i).findElements(By.cssSelector("h6[class='_7tae _14f3 _14f5 _5pbw _5vra']"));
 					
@@ -189,7 +193,7 @@ public class SnsServiceImpl implements SnsService {
 					List<WebElement> video = common.findElements(By.tagName("video"));
 					System.out.println("해당피드동영상 : " + video.size());
 					newTimeLine.setVideo1Size(video.size());
-					List<WebElement> videoImg = common.findElements(By.className("img"));
+					List<WebElement> videoImg = common.findElements(By.className("_3m6-"));
 		
 					List<WebElement> img1 = common.findElements(By.cssSelector("a[class='_4-eo _2t9n _50z9']"));
 					System.out.println("해당피드사진1: " + img1.size());
@@ -226,6 +230,8 @@ public class SnsServiceImpl implements SnsService {
 								if(linkWrap.size() != 0) {//클릭안되는 영상도 존재함
 								List<WebElement> link = linkWrap.get(j).findElements(By.className("_54nh"));
 								WebElement videoLink = link.get(3).findElement(By.className("_xd6"));
+								
+						
 								//System.out.println(videoLink.getAttribute("value"));
 								
 								
@@ -361,14 +367,17 @@ public class SnsServiceImpl implements SnsService {
 					}//for문
 				
 		search.setSubject(100);//페이스북100	
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
+		
+		
 		map.put("timeLine",list);
-		map.put("count", each.size());
 		map.put("search", search);
 		
 
 		return map;
+		
 		}finally {
 			//driver.close();
 		}
