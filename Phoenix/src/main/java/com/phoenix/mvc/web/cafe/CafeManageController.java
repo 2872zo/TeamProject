@@ -92,8 +92,9 @@ public class CafeManageController {
 
 		Map<String, Object> map = cafeManageService.getCafeMemberList(search);
 		List memberList = (List) map.get("memberList");
-		List gradeList = (List) map.get("gradeList");
+		List<CafeGrade> gradeList = (List) map.get("gradeList");
 		int totalCount = (int) map.get("totalCount");
+		search.setCafeNo(gradeList.get(0).getCafeNo());
 		Page page = new Page(search.getCurrentPage(), totalCount, pageUnit, pageSize);
 		model.addAttribute("memberList", memberList);
 		model.addAttribute("gradeList", gradeList);
@@ -362,11 +363,11 @@ public class CafeManageController {
 					}
 				}
 
-			} else if (element.contains("newBoard")) // 새로생긴애 newBoardName
+			} else if (element.contains("newBoardName")) // 새로생긴애 newBoardName
 			{
 //element.split("e")[2]
 				for (int i = 0; i < newBoard.size(); i++) {
-					if (newBoard.get(i).getBoardNo() == Integer.parseInt(element.split("d")[1])) {
+					if (newBoard.get(i).getBoardNo() == Integer.parseInt(element.split("e")[2])) {
 						newBoard.get(i).setBoardName(request.getParameter(element));
 					}
 				}

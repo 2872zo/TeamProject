@@ -16,6 +16,8 @@
     <!-- Favicon icon -->
     
     <!-- Custom Stylesheet -->
+
+    
     
     <link href="/css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -26,6 +28,29 @@
 	<script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
 	<script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.js"></script>
 	<script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+	
+	
+	
+	<style type="text/css">
+	
+		
+		.card{
+		
+			width:135px;
+			height:135px;
+		}
+		
+		.eventName{
+			
+			display:block;
+			height:50px;
+			line-height:50px;
+			white-space :nowrap;
+			font-weight:bold;
+		}
+	
+	
+	</style>
 	
 	<script type="text/javascript">
 
@@ -137,7 +162,7 @@
 						dataType : "text",
 						success : function(serverData){
 
-							alert(serverData);
+							//alert(serverData);
 							var data = JSON.parse(serverData);
 							tenDates = data.dates; //x축설정
 							chartData= data.chartResult;
@@ -173,8 +198,6 @@
 		  } );
 
 	</script>
-	
-	
 	
 </head>
 
@@ -257,12 +280,12 @@
                     </div>
                 </div>     
                  
-                <div class="row">
+                <div class="row" style="margin-left:50px; margin-top:30px;">
                 
 					<div class="col-md-2">
 						<div class="card text-center">
 							<div class="card-body">
-								<h5>방문자 수</h5>
+								<div class="eventName">방문자 수</div>
 								<h4 class="card-text" id="et100">
 									<c:if test="${empty statisticMap['et100']}">0</c:if>
 									${statisticMap['et100']}
@@ -274,7 +297,7 @@
 					<div class="col-md-2">
 						<div class="card text-center">
 							<div class="card-body">
-								<h5>게시글 수</h5>
+								<div class="eventName">게시글 수</div>
 								<h4 class="card-text" id="et103">
 									<c:if test="${empty statisticMap['et103']}">0</c:if>
 									${statisticMap['et103']}
@@ -286,7 +309,7 @@
 					<div class="col-md-2">
 						<div class="card text-center">
 							<div class="card-body">
-								<h5>댓글 수 </h5>
+								<div class="eventName">댓글 수 </div>
 								<h4 class="card-text" id="et104">
 									<c:if test="${empty statisticMap['et104']}">0</c:if>
 									${statisticMap['et104']}
@@ -298,8 +321,7 @@
 					<div class="col-md-2">
 						<div class="card text-center">
 							<div class="card-body">
-								<h5>가입</h5>
-								<h5>신청인 수</h5>
+								<div class="eventName">가입신청인 수</div>
 								<h4 class="card-text" id="et105">
 									<c:if test="${empty statisticMap['et105']}">0</c:if>
 									${statisticMap['et105']}
@@ -311,8 +333,7 @@
 					<div class="col-md-2">
 						<div class="card text-center">
 							<div class="card-body">
-								<h5>가입 </h5>
-								<h5>멤버 수 </h5>
+								<div class="eventName">가입멤버 수 </div>
 								<h4 class="card-text" id="et106">
 									<c:if test="${empty statisticMap['et106']}">0</c:if>
 									${statisticMap['et106']}

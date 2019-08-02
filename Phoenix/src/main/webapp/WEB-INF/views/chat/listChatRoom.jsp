@@ -19,6 +19,7 @@
 
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <style type="text/css">
+
 .friends {
 	border: 1px solid red;
 }
@@ -47,26 +48,40 @@ img {
 	<!--*******************
         Preloader end
     ********************-->
-
-
-	<!--**********************************
+    
+    	<!--**********************************
         Main wrapper start
     ***********************************-->
 	<div id="main-wrapper">
-
-		<!-- ToolBar Start /////////////////////////////////////-->
-		<jsp:include page="/WEB-INF/views/common/toolbar.jsp" />
-		<!-- ToolBar End /////////////////////////////////////-->
+    
+     <!--**********************************
+            Nav header start
+        ***********************************-->
+           <div class="nav-header">
+            <c:import url="/WEB-INF/views/common/brand-logo.jsp"/>
+        </div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+        
+        
+<!-- ToolBar Start /////////////////////////////////////-->
+<jsp:include page="../common/toolbar.jsp" />
+<!-- ToolBar End /////////////////////////////////////-->
 
 		<!--**********************************
             Sidebar start
         ***********************************-->
-		<div class="nk-sidebar">
 			<c:import url="/WEB-INF/views/chat/chatSideMenu.jsp"></c:import>
-		</div>
 		<!--**********************************
             Sidebar end
         ***********************************-->
+
+
+
+
+
+
 		<!--**********************************
             Content body start
         ***********************************-->
@@ -87,7 +102,7 @@ img {
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	
 	<div class='card'>
-	<div class='card-body'>
+	<div class='card-body' id='roomListGuide'>
 
 	
 
@@ -182,16 +197,13 @@ img {
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
 
+var socket = io("http://192.168.0.78:82");
+//var socket = io("http://localhost:82");
+
 $(function() {
 	
 	var checkSessionUser = ${empty sessionScope.user};
-	var socket = io("http://192.168.0.78:82");
-	//var socket = io("http://localhost:82");
 	
-	//socket.emit("joiner", ${sessionScope.user.userNo});
-	//alert("1");
-	//var roomNumbers = ${sessionScope.roomNos};
-	//alert(${sessionScope.roomNos});
 	//노드쪽에 유저번호 전송
 	socket.emit("identify", ${sessionScope.user.userNo});
 	socket.emit("joiner", $("#roomNos").val());
@@ -202,19 +214,18 @@ $(function() {
 		var msgTo= msg.chatRoomId;
 		$("#"+msgTo+"MSG").text("최근 입력 메시지 : "+msg.chatMsg);
 		$("#"+msgTo+"Time").text("최근 입력 시간 : "+msg.regDate);
+		//alert($("#"+msgTo+"MSG").parent().html());
+		$("#"+msgTo+"MSG").parent().parent().parent().prependTo($("#roomListGuide"));
+		
 		
 	});
     
-	//
-	//if(${!empty sessionScope.user}){
-	//	
-	//	};
-	//
 	//	
 	$("#addingChatRoom").on("click" , function() {
 		//alert("채팅방 만들기 버튼입니다.");
 		$(self.location).attr("href", "/chat/addChatRoom");
 	});
+	
 	$(".enterTheRoom").on("click" , function() {
 		//alert("실행됨!");
 		//var roomNumber =  parseInt($(this).attr('name'));

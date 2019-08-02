@@ -39,7 +39,6 @@ public class SnsContoller {
 		System.out.println("map이욤 : "+map);
 		
 		model.addAttribute("timeLine", map.get("timeLine"));
-		model.addAttribute("count", map.get("count"));
 		model.addAttribute("search", map.get("search"));
 		
 		System.out.println("model이욤: "+model);

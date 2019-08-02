@@ -27,16 +27,18 @@ public class ShoppingmallRestController {
 	}
 	
 	@RequestMapping("/json/infiniteProductList")
-	public Map getInfiniteProductList(@RequestBody ShoppingmallSearch search )
+	public Map getInfiniteProductList(@RequestBody ShoppingmallSearch search)
 	{
 		
 		System.out.println("json/infiniteProductList 컨트롤러 시작");
+		
+		System.out.println("searchTotal : "+search.getSearchTotal());
 		
 		if(search.getSearchKeyword()==null )
 		{
 			search.setSearchKeyword("자전거");
 		}
-		if(search.getDetectedItemCount()==0)
+		if(search.getDetectedItemCount()==0) //일리가 없음
 		{
 			search.setDetectedItemCount(0); //일단 무한스크롤 위해서..
 		}

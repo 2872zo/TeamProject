@@ -21,9 +21,7 @@
 <!-- 토스터 css -->
 <link rel="stylesheet" href="/plugins/toastr/css/toastr.min.css">
 <!-- 토스터 css -->
-<!-- ToolBar Start /////////////////////////////////////-->
-<jsp:include page="../common/toolbar.jsp" />
-<!-- ToolBar End /////////////////////////////////////-->
+	     
 <title>CafeTabMain</title>
 <!--셀렉터 사이즈 조절-->
 
@@ -53,6 +51,21 @@
     ********************-->
 
 
+ <!--**********************************
+            Nav header start
+        ***********************************-->
+           <div class="nav-header">
+            <c:import url="/WEB-INF/views/common/brand-logo.jsp"/>
+        </div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+        
+        
+<!-- ToolBar Start /////////////////////////////////////-->
+<jsp:include page="../common/toolbar.jsp" />
+<!-- ToolBar End /////////////////////////////////////-->
+
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<br/>
 	<div class="container">
@@ -78,7 +91,7 @@
   &nbsp;<input type="text" class="form-control form-control-lg" placeholder="검색어 입력해주세요" name="searchKeyword" id="searchKeyword" >
   </div>
   <div class='input-group-append'>
-  &nbsp;<button class="btn btn-sm btn-outline-primary" type="button" id="cafeExplore"><i class="mdi mdi-magnify" style='font-size: 18pt;'></i></button>
+  &nbsp;<button class="btn btn-sm btn-outline-primary" type="button" id="cafeExplore" style='z-index: 0;'><i class="mdi mdi-magnify" style='font-size: 18pt;'></i></button>
 	</div>
 	
 	</div><!--카드바디 -->
@@ -103,7 +116,6 @@
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	
 			</div>
-	
 
 		<c:if test="${!empty sessionScope.user}">
 			
@@ -247,7 +259,6 @@
 	
 	<!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
-var checkSessionUser = ${empty sessionScope.user};
 
 $(function() {
 	

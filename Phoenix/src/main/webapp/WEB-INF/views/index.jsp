@@ -133,17 +133,9 @@
 	
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
-
-//툴바 스크립트용 세션체커
-var checkSessionUser = ${empty sessionScope.user};
-		
-	
 		
 	$(function() {
 
-
-		 
-		
 		$("#explore").on("click", function() {
 			var keyword = $("#searchKeyword").val()
 			$(self.location).attr("href", "/explore/getUnifiedList?searchKeyword="+ keyword);
@@ -176,15 +168,15 @@ var checkSessionUser = ${empty sessionScope.user};
 		});
 		
 		$("#shop").on("click", function() {
-			$(self.location).attr("href", "/shopping/myCartList");
+			$(self.location).attr("href", "/shopping/getProductList");
 		});
 
 	});
+	
 </script>
 
 <!-- 공통 툴바용 스크립트 -->	
 	<script src="/js/custom/toolbarScript.js"></script>
-
 
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
 

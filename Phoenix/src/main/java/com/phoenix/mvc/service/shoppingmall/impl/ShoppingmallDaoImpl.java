@@ -58,19 +58,23 @@ public class ShoppingmallDaoImpl implements ShoppingmallDao
 			webElement = webElement.findElement(By.tagName("strong")).findElement(By.className("cnt"));
 			search.setSearchTotal(webElement.getText()); //total검색 개수
 		
-			webElement = wait.until(ExpectedConditions.presenceOfElementLocated(By.className("related_keyword")));
-			
-			List<WebElement> relatedKeyword = webElement.findElements(By.tagName("dd"));
-			for(int i=0; i<relatedKeyword.size(); i++)
+			if(driver.findElements(By.className("related_keyword")).size()!=0) //연관검색어 없는 경우가 있다.
 			{
-				keywordList.add(relatedKeyword.get(i).getText()); //연관검색어 저장
-				//System.out.println(relatedKeyword.get(i).getText());
-				keywordLinkList.add(relatedKeyword.get(i).findElement(By.tagName("a")).getAttribute("href")); //연관검색어링크 저장
-				//System.out.println(relatedKeyword.get(i).findElement(By.tagName("a")).getAttribute("href"));
+				webElement = wait.until(ExpectedConditions.presenceOfElementLocated(By.className("related_keyword")));
+				
+				List<WebElement> relatedKeyword = webElement.findElements(By.tagName("dd"));
+				for(int i=0; i<relatedKeyword.size(); i++)
+				{
+					keywordList.add(relatedKeyword.get(i).getText()); //연관검색어 저장
+					//System.out.println(relatedKeyword.get(i).getText());
+					keywordLinkList.add(relatedKeyword.get(i).findElement(By.tagName("a")).getAttribute("href")); //연관검색어링크 저장
+					//System.out.println(relatedKeyword.get(i).findElement(By.tagName("a")).getAttribute("href"));
+				}
+				
+				search.setRelativeKeyword(keywordList);
+				search.setRelativeKeywordLink(keywordLinkList);
 			}
-			
-			search.setRelativeKeyword(keywordList);
-			search.setRelativeKeywordLink(keywordLinkList);
+		
 		}
 		
 		
@@ -86,6 +90,14 @@ public class ShoppingmallDaoImpl implements ShoppingmallDao
 				
 				items = webElement.findElements(By.className("item"));
 				System.out.println(items.size());
+				
+				if(search.getSearchTotal()!=null) {
+					
+					search.setSearchTotal(search.getSearchTotal().replaceAll(",", ""));
+				}
+					
+				if(items.size()==Integer.parseInt(search.getSearchTotal()))
+					break;
 			}
 			
 		}
