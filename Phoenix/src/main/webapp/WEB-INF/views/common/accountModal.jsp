@@ -282,11 +282,11 @@ input[type="checkbox"] {
 							<form class="mt-5 mb-5 login-input">
 								<div class="form-group">
 									<input type="text" class="form-control" placeholder="ID"
-										name="userId">
+										name="userId" id="shopUserId">
 								</div>
 								<div class="form-group">
 									<input type="password" class="form-control"
-										placeholder="PASSWORD" name="password">
+										placeholder="PASSWORD" name="password" id="shopPassword">
 								</div>
 								<button class="btn login-form__btn submit w-100" id="addShoppingAccount">로그인</button>
 							</form>
@@ -318,10 +318,10 @@ input[type="checkbox"] {
 							<form class="mt-5 mb-5 login-input">
 								<div class="form-group">
 									<input type="text" class="form-control" placeholder="ID"
-										name="userId">
+										name="userId" id="snsUserId">
 								</div>
 								<div class="form-group">
-									<input type="password" class="form-control" placeholder="PASSWORD" name="password">
+									<input type="password" class="form-control" placeholder="PASSWORD" name="password" id="snsPassword">
 								</div>
 								<button class="btn login-form__btn submit w-100" id="addSnsAccount">로그인</button>
 							</form>

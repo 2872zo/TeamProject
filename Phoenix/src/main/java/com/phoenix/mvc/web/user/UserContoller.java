@@ -65,23 +65,7 @@ public class UserContoller {
 
 		return "user/loginView";
 	}
-	//레스트컨트롤러탐
-	@RequestMapping( value="login", method=RequestMethod.POST )
-	public String login(@ModelAttribute("user") User user , HttpSession session ) throws Exception{
-		
-		System.out.println("/user/login : POST");
-		//Business Logic
-		System.out.println("!!!!!!!!!!!!!!!!!!!"+user.getUserId());
-		//System.out.println("!!!!!!!!!!!!!!!!!!!"+dbUser);
-		User dbUser=userService.getUser(user.getUserId());
-		
-		
-		if( user.getPassword().equals(dbUser.getPassword())){
-			session.setAttribute("user", dbUser);
-		}
-			
-		return "redirect:/";
-	}
+	
 	
 	@GetMapping("addUserView")
 	public String addUserView(@ModelAttribute User user) throws Exception {
@@ -147,7 +131,7 @@ public class UserContoller {
 		
 		session.invalidate();
 		
-		return "redirect:/cafe/main";
+		return "redirect:/";
 	}
 	
 	@RequestMapping(value = "getUserInfo")
@@ -176,9 +160,25 @@ public class UserContoller {
 	}
 	
 	@PostMapping("updateUser")
-	public String updateUser(@ModelAttribute("user") User user, Model model) throws Exception {
+	public String updateUser(@ModelAttribute("user") User user, Model model,
+							 @RequestParam("uploadFile") MultipartFile uploadFile) throws Exception {
 
 		System.out.println("/updateUser : POST");
+		
+		String fileName = uploadFile.getOriginalFilename()
+				.substring(uploadFile.getOriginalFilename().lastIndexOf("\\") + 1);
+
+		File f = new File(uploadPath, fileName);
+		System.out.println("파일업로드하자~~~~~~~~~~~~~~~~~~" + fileName);
+
+		try {
+			uploadFile.transferTo(f);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		user.setProfileImg(fileName);
+		
 		
 		userService.updateUser(user);
 
@@ -188,7 +188,7 @@ public class UserContoller {
 		
 		model.addAttribute("user", user);
 		
-		return "user/updateUser";
+		return "user/updateUserView";
 	}
 
 	@RequestMapping(value="listUser")

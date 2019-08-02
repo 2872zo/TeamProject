@@ -2,6 +2,7 @@ package com.phoenix.mvc.service.chatting.impl;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -36,6 +37,12 @@ public class ChattingServiceImpl implements ChattingService{
 	
 	@Value("${readChatAmount}")
 	private int readChatAmount;
+	
+	@Value("${emoticonKakao}")
+	private String emoticonsKakao;
+	
+	@Value("${emoticonLine}")
+	private String emoticonsLine;
 	
 	public ChattingServiceImpl() {
 		System.out.println(getClass().getName() + "default Constuctor");
@@ -119,7 +126,14 @@ public class ChattingServiceImpl implements ChattingService{
 	
 	@Override
 	public Map getChatRoom(Search search) throws Exception {
-	
+		String[] kakaoEmoticons = emoticonsKakao.split("@");
+		ArrayList<String> kakaoImgs = new ArrayList<>(Arrays.asList(kakaoEmoticons));
+
+		String[] lineEmoticons = emoticonsLine.split("@");
+		ArrayList<String> lineImgs = new ArrayList<>(Arrays.asList(lineEmoticons));
+		System.out.println(kakaoImgs);
+		System.out.println(lineImgs);
+
 		Map map = new HashMap();
 		List<ChatFriend> nickNameList = chattingDao.getFriendNickNameList(search);
 		long chatCount = chattingDao.getChatCount(search);
@@ -163,6 +177,8 @@ public class ChattingServiceImpl implements ChattingService{
 		map.put("chatList", chatList);
 		map.put("userList", userList);
 		map.put("inviteList", inviteList);
+		map.put("kakaoImgs", kakaoImgs);
+		map.put("lineImgs", lineImgs);
 		return map;
 		
 	}
