@@ -113,7 +113,7 @@ $("#doInviting").on("click" , function() {
 			contentType: "application/json", //보내는 컨텐츠의 타입
 			//dataType : "json",      //받아올 데이터의 타입 필요없음
 			success : function(serverData, status) {
-				alert(i);
+				//alert(i);
 							},
 			error : function(request,status,error){
 								alert(status);
