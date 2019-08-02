@@ -33,4 +33,6 @@ public interface UserDao {
 	public boolean deleteMailAccount(Account account);
 
 	public List<Account> getMailAccount(int userNo);
+	
+	public void updateUserKakao(User user) throws Exception;
 }

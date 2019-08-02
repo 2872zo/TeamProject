@@ -102,6 +102,11 @@ public class UserServiceImpl implements UserService{
 
 		return userDao.selectNaver(naverId);
 	}
+	
+	public void updateUserKakao(User user) throws Exception {
+		userDao.updateUserKakao(user);		
+	}
+	
 
 	
 /////////////////////////////준호끝///////////////////////////////////
