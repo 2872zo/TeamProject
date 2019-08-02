@@ -723,9 +723,11 @@ public class CafeManageController {
 
 //준호
 	@RequestMapping(value = "/{cafeURL}/manage/updateCafeInfo", method = RequestMethod.POST)
-	public String updateCafeInfo(@ModelAttribute Cafe cafe, Model model,
-			@RequestParam("uploadFile2") MultipartFile uploadFile2,
-			@RequestParam("uploadFile3") MultipartFile uploadFile3) throws Exception {
+	public String updateCafeInfo(@PathVariable String cafeURL,
+								 @ModelAttribute Cafe cafe, Model model,
+								 @RequestParam("uploadFile2") MultipartFile uploadFile2,
+								 @RequestParam("uploadFile3") MultipartFile uploadFile3
+								 ) throws Exception {
 
 		System.out.println("/updateCafeInfoView : POST");
 
@@ -754,22 +756,15 @@ public class CafeManageController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		
 		cafe.setCafeIcon(fileName3);
-
+		
+		cafeManageService.updateCafeInfo(cafe);
+		
 		System.out.println("파일명좀 알려줘~" + fileName3);
 
-		cafeManageService.updateCafeInfo(cafe);
-
-		Cafe cafe2 = cafeManageService.getCafeInfo(cafe.getCafeNo());
-
-		cafe = cafe2;
-
-		System.out.println("카페2좀 찍어줘");
-		System.out.println(cafe2);
-
 		model.addAttribute("cafeURL", cafe.getCafeURL());
-		model.addAttribute("cafe", cafe2);
+
 		return "cafe/updateCafeInfoView";
 	}
 

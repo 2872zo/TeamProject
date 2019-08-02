@@ -24,4 +24,8 @@ public interface MailDao {
 	public boolean sendDaum(Account account, Mail mail) throws MessagingException;
 
 	public Map<String, Object> getAllAccountMailList(List<Account> accountList, int currentPage) throws MessagingException, FileNotFoundException, IOException;
+
+	public Map<String, Object> getAllAccountSentMailList(List<Account> accountList, int currentPage) throws FileNotFoundException, MessagingException, IOException;
+	
+	public Map<String, Object> getSentMail(Account account, int mailNo) throws Exception;
 }

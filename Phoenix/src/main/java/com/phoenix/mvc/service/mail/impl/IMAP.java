@@ -46,6 +46,28 @@ public class IMAP implements MailProto {
 		folder = store.getDefaultFolder().getFolder("INBOX");
 		folder.open(Folder.READ_WRITE);
 	}
+	
+	@Override
+	public void open(String host, String id, String passwd, String folderName) throws MessagingException {
+		Properties props = new Properties();
+		props.setProperty("mail.imap.socketFactory.class", SSL_FACTORY);
+		props.setProperty("mail.imap.socketFactory.fallback", "false");
+		props.put("mail.imaps.ssl.trust", "*");
+		props.setProperty("mail.imap.port", "993");
+		props.setProperty("mail.imap.socketFactory.port", "993");
+		
+		//session생성
+		session = Session.getInstance(props, null);
+		URLName urlName = new URLName("imap", host, 993, "", id, passwd);
+		
+		//메일 서버와 연결
+		store = new IMAPStore(session,urlName);
+		store.connect();
+		
+		//연결에서 메일을 가져와 폴더에 저장하고 연결을 유지함
+		folder = store.getDefaultFolder().getFolder(folderName);
+		folder.open(Folder.READ_WRITE);
+	}
 
 	@Override
 	public void close() throws MessagingException {

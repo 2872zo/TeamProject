@@ -14,6 +14,7 @@ import java.util.UUID;
 
 import javax.mail.Address;
 import javax.mail.Flags;
+import javax.mail.Folder;
 import javax.mail.Header;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -295,12 +296,13 @@ public class MailDaoImpl implements MailDao {
 		mail.setSubject(message.getSubject());
 
 		// 전체 컨텐츠
-		System.out.println("Content : " + message.getContent());
-		mail.setContent(message.getContent().toString());
 
 		if (!(message.getContent() instanceof String)) {
 			List<Map<String, String>> fileList = printMessage(message, mail);
 			map.put("fileList", fileList);
+		}else {
+			System.out.println("Content : " + message.getContent());
+			mail.setContent(message.getContent().toString());
 		}
 
 		System.out.println(mail);
@@ -384,7 +386,8 @@ public class MailDaoImpl implements MailDao {
 				}
 			}
 		} else {
-			System.out.println(content);
+			System.out.println("multipart 아님!");
+			mail.setContent((String) content);
 		}
 
 		return fileList;
@@ -547,5 +550,204 @@ public class MailDaoImpl implements MailDao {
 		
 		
 		return true;
+	}
+
+
+	@Override
+	public Map<String, Object> getAllAccountSentMailList(List<Account> accountList, int currentPage) throws FileNotFoundException, MessagingException, IOException {
+		List<Map<String, Object>> mailAgentList = new ArrayList<Map<String,Object>>();
+		List<Mail> resultMailList = new ArrayList<Mail>();
+		
+		
+		for(Account account : accountList) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			
+			String folderName = null; 
+			
+			if(account.getAccountDomain().contains("gmail")) {
+				folderName = "[Gmail]/보낸편지함";
+			}else {
+				folderName = "Sent Messages";
+			}
+			
+			map.put("mailAgent",new IMAPAgent("imap." + account.getAccountDomain(), account.getAccountId(), account.getAccountPw(), folderName));
+			map.put("account", account);
+			map.put("idx", 1);
+			
+			mailAgentList.add(map);
+		}
+
+		//모든 메일 계정의 모든 메일 수를 더해서 총 개수를 구함
+		int totalCount = 0;
+		
+		
+		for(Map map : mailAgentList) {
+			((IMAPAgent)map.get("mailAgent")).openFolder();
+			
+			totalCount += ((IMAPAgent)map.get("mailAgent")).getMessageCount();
+		}
+		
+		//paging을 위한 Search객체와 Page객체 생성
+		Search search = new Search();
+		search.setCurrentPage(currentPage);
+		search.setPageSize(mailPageSize);
+		Page page = new Page(currentPage, totalCount, mailPageUnit, mailPageSize);
+		
+		//실제 mailList 가져와서 저장
+		for(int i = 1; i <= search.getEndRowNum(); i++) {
+			Message recentMessage = null;
+			int getMessageIdx = 0;
+			
+			for (int j = 0; j < mailAgentList.size(); j++) {
+				Map map = mailAgentList.get(j);
+				
+				int folderSize = ((IMAPAgent) map.get("mailAgent")).getMessageCount();
+				
+				Message currentMessage = ((IMAPAgent) map.get("mailAgent")).getMessage(folderSize - (int) map.get("idx") + 1);
+
+				if (recentMessage == null || recentMessage.getSentDate().compareTo(currentMessage.getSentDate()) < 0) {
+					recentMessage = currentMessage;
+					getMessageIdx = j;
+				}
+			}
+			
+			if(i >= search.getStartRowNum()) {
+				System.out.println("mailNum : " + i);
+				//저장할 mail 생성
+				Mail mail = new Mail();
+				mail.setAccountNo(((Account)mailAgentList.get(getMessageIdx).get("account")).getAccountNo());
+				
+	 			//메일 번호 저장
+				System.out.println("MessageNumber : " + recentMessage.getMessageNumber());
+				mail.setMailNo(recentMessage.getMessageNumber());
+				
+				System.out.println("Folder : " + recentMessage.getFolder().getFullName());
+				mail.setFolder(recentMessage.getFolder());
+				System.out.println("SentDate : " + recentMessage.getSentDate());
+				mail.setSentDate(recentMessage.getSentDate());
+				
+				mail.setSeen(recentMessage.isSet(Flags.Flag.SEEN));
+	
+				for (Address addr : recentMessage.getFrom()) {
+					System.out.println("Address : " + MimeUtility.decodeText(addr.toString()));
+					String fullAddr = MimeUtility.decodeText(addr.toString());
+	
+					if (fullAddr.contains("<")) {
+						mail.setSender(fullAddr.substring(0, fullAddr.indexOf("<") - 1));
+						mail.setSenderAddr(fullAddr.substring(fullAddr.indexOf("<"), fullAddr.length()));
+					} else {
+						mail.setSender(fullAddr);
+					}
+				}
+				
+				// 제목
+				System.out.println("Subject : " + recentMessage.getSubject());
+				mail.setSubject(recentMessage.getSubject());
+	
+				
+				resultMailList.add(mail);
+			}
+			
+			mailAgentList.get(getMessageIdx).put("idx", (int)mailAgentList.get(getMessageIdx).get("idx") + 1);
+		}
+		
+		System.out.println(resultMailList);
+			
+		for(Map map : mailAgentList) {
+			((IMAPAgent)map.get("mailAgent")).close();
+		}
+		
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		returnMap.put("mailList", resultMailList);
+		returnMap.put("page", page);
+		returnMap.put("search", search);
+		returnMap.put("totalCount", totalCount);
+		
+		return returnMap;
+	}
+	
+	@Override
+	public Map<String, Object> getSentMail(Account account, int mailNo) throws Exception {
+		String folderName = null;
+		
+		if(account.getAccountDomain().contains("gmail")) {
+			folderName = "[Gmail]/보낸편지함";
+		}else {
+			folderName = "Sent Messages";
+		}
+		
+		IMAPAgent mailAgent = new IMAPAgent("imap." + account.getAccountDomain(), account.getAccountId(), account.getAccountPw(), folderName);
+
+		mailAgent.open();
+
+		Message message = mailAgent.getMessage(mailNo);
+
+		Mail mail = new Mail();
+		mail.setAccountNo(account.getAccountNo());
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		System.out.println("MessageNumber : " + message.getMessageNumber());
+		mail.setMailNo(message.getMessageNumber());
+		
+		
+		System.out.println("Folder : " + message.getFolder().getFullName());
+		mail.setFolder(message.getFolder());
+		System.out.println("SentDate : " + message.getSentDate());
+		mail.setSentDate(message.getSentDate());
+
+		//보낸사람
+		for (Address addr : message.getFrom()) {
+			String fullAddr = MimeUtility.decodeText(addr.toString());
+			System.out.println("Address : " + fullAddr);
+			if (!fullAddr.contains("<")) {
+				mail.setSender(fullAddr);
+			} else {
+				mail.setSender(fullAddr.substring(0, fullAddr.indexOf("<") - 1));
+				mail.setSenderAddr(fullAddr.substring(fullAddr.indexOf("<"), fullAddr.length()));
+			}
+		}
+
+		//받는사람
+		List<Map<String, String>> recipients = new ArrayList<Map<String, String>>();
+		for (Address addr : message.getAllRecipients()) {
+			String fullAddr = MimeUtility.decodeText(addr.toString());
+			System.out.println("Address : " + fullAddr);
+
+			Map<String, String> recipientMap = new HashMap<String, String>();
+			System.out.println("fullAddr : " + fullAddr);
+			if (!fullAddr.contains("<")) {
+				recipientMap.put("recipient", fullAddr);
+			} else {
+				recipientMap.put("recipient", fullAddr.substring(0, fullAddr.indexOf("<") - 1));
+				recipientMap.put("recipientAddr", fullAddr.substring(fullAddr.indexOf("<"), fullAddr.length()));
+			}
+			recipients.add(recipientMap);
+		}
+		mail.setRecipients(recipients);
+		
+		mail.setSeen(message.isSet(Flags.Flag.SEEN));
+
+		// 제목
+		System.out.println("Subject : " + message.getSubject());
+		mail.setSubject(message.getSubject());
+
+		// 전체 컨텐츠
+
+		if (!(message.getContent() instanceof String)) {
+			List<Map<String, String>> fileList = printMessage(message, mail);
+			map.put("fileList", fileList);
+		}else {
+			System.out.println("Content : " + message.getContent());
+			mail.setContent(message.getContent().toString());
+		}
+
+		System.out.println(mail);
+
+		mailAgent.close();
+
+		map.put("mail", mail);
+
+		return map;
 	}
 }

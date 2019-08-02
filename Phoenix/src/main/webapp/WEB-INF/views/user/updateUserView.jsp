@@ -272,6 +272,7 @@
 			sweetAlert("이메일을 입력하세요.","","error");
 			return;
 		}else{								
+			sweetAlert("수정완료.","","success");
 			$("#updateUser").attr("method", "POST").attr("action","/user/updateUser").attr("enctype","multipart/form-data").submit();						
 					}							
 			
