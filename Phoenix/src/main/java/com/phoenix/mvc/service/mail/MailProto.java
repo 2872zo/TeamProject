@@ -12,6 +12,8 @@ import javax.mail.Message;
 public interface MailProto {
 	public void open(String host, String id, String passwd) throws MessagingException, FileNotFoundException, IOException;
 	
+	void open(String host, String id, String passwd, String folderName) throws MessagingException;
+	
 	public void close() throws MessagingException;
 	
 	public Message getMessages(int msgNum) throws MessagingException;
@@ -31,4 +33,5 @@ public interface MailProto {
 	public Folder getFolder() throws MessagingException;
 	
 	public Store getStore() throws MessagingException;
+
 }

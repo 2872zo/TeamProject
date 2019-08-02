@@ -14,8 +14,8 @@ function fncOnChangeAccount(accountNo){
 	location.href = "/mail/getMailList?accountNo=" + accountNo;
 }
 
-function fncGetSentMailList(accountNo){
-	location.href = "/mail/getSentMailList?accountNo=" + accountNo;
+function fncGetSentMailList(currentPage){
+	location.href = "/mail/getSentMailList?accountNo=" + $("#accountSelector").val() + "&currentPage=" + currentPage;
 }
 
 function fncGetImportantMailList(accountNo){

@@ -15,6 +15,7 @@ public class MailAgent {
 	protected String host;
 	protected String id;
 	protected String passwd;
+	protected String folderName;
 	
 	public MailAgent() {
 	}
@@ -30,8 +31,24 @@ public class MailAgent {
 		this.passwd = passwd;
 	}
 	
+	public MailAgent(MailProto mailProto, String host, String id, String passwd, String folderName) {
+		if(mailProto == null || host == null || id == null || passwd == null) {
+			throw new IllegalArgumentException();
+		}
+		
+		this.mailProto = mailProto;
+		this.host = host;
+		this.id = id;
+		this.passwd = passwd;
+		this.folderName = folderName;
+	}
+	
 	public void open() throws MessagingException, FileNotFoundException, IOException{
 		mailProto.open(host, id, passwd);
+	}
+	
+	public void openFolder() throws MessagingException, FileNotFoundException, IOException{
+		mailProto.open(host, id, passwd, folderName);
 	}
 	
 	public void close() throws MessagingException{

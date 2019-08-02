@@ -16,7 +16,11 @@ public class IMAPAgent extends MailAgent{
         super(new IMAP(), host, id, passwd);  
     }  
       
-    public Folder getFolder(String name) throws MessagingException {  
+	public IMAPAgent(String host, String id, String passwd, String folderName) {
+		super(new IMAP(), host, id, passwd, folderName);  
+	}
+
+	public Folder getFolder(String name) throws MessagingException {  
         return getStore().getFolder(name);  
     }  
       
@@ -63,4 +67,8 @@ public class IMAPAgent extends MailAgent{
     public boolean hasNewMessage(Folder folder) throws MessagingException {  
         return folder.hasNewMessages();  
     }
+
+	
+
+	
 }

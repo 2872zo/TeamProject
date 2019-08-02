@@ -1,6 +1,8 @@
 package com.phoenix.mvc.web.mail;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -164,6 +166,61 @@ public class MailContoller {
 		map.put("account", account);
 		
 		return "/mail/confirmSendMail";
+	}
+	
+	@RequestMapping("getSentMailList")
+	public String getSentMailList(HttpServletRequest req, @RequestParam(required = false, defaultValue = "0") int accountNo, 
+			@RequestParam(required = false, defaultValue = "1") int currentPage, Map<String, Object> map) throws Exception {
+		if(currentPage == 0) {
+			currentPage = 1;
+		}
+		
+		List<Account> accountList = (List<Account>)req.getAttribute("accountList");
+		Map<String, Object> returnMap = null;
+		
+		if(accountNo == 0) {
+			returnMap = mailService.getAllAccountSentMailList(accountList, currentPage);
+		}else {
+			Account selectedAccount = null;
+			for(Account account : accountList) {
+				if(account.getAccountNo() == accountNo) {
+					selectedAccount = account;
+					break;
+				}
+			}
+			
+			returnMap = mailService.getMailList(selectedAccount, currentPage);
+		}
+		
+		map.put("mailList", returnMap.get("mailList"));
+		map.put("search", returnMap.get("search"));
+		map.put("page", returnMap.get("page"));
+		map.put("currentPage", currentPage);
+		map.put("accountNo", accountNo);
+		map.put("totalCount", returnMap.get("totalCount"));
+		
+		return "/mail/listSentMail";
+	}
+	
+	@RequestMapping("getSentMail")
+	public String getSentMail(Map<String, Object> map, @RequestParam int mailNo, @RequestParam int accountNo, HttpServletRequest req) throws Exception {
+		List<Account> accountList = (List<Account>)req.getAttribute("accountList");
+		
+		Account account = null;
+		
+		for(Account ac : accountList) {
+			if(ac.getAccountNo() == accountNo) {
+				account = ac;
+				break;
+			}
+		}
+		
+		Map<String, Object> resultMap = mailService.getSentMail(account, mailNo);
+		
+		map.put("mail", resultMap.get("mail"));
+		map.put("fileList", resultMap.get("fileList"));
+		
+		return "/mail/getMail";
 	}
 
 //	mailAgent.open();  
