@@ -12,11 +12,13 @@
 
 	<ul class="metismenu" id="menu">
 	<br>
+		
 		<li><a id="statistics"
 			href="javascript:fncUserList()"
 			aria-expanded="false"> <i class="icon-note menu-icon"></i>
 				<span class="nav-text">회원목록</span>
 		</a></li>
+		
 	<br>
 		<li><a id="board" href="javascript:fncGetBoard('${cafeURL}')"
 			aria-expanded="false"> <i class="icon-note menu-icon"></i>

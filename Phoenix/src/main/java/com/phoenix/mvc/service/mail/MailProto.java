@@ -18,7 +18,11 @@ public interface MailProto {
 	
 	public Message[] getMessages() throws MessagingException;
 	
+	public Message[] getMessages(int startNum, int endNum) throws MessagingException;
+	
 	public Message[] getRecentMessages(int count) throws MessagingException;
+	
+	public Message getRecentMessage(int msgNum) throws MessagingException;
 	
 	public int getMessageCount() throws MessagingException;
 	

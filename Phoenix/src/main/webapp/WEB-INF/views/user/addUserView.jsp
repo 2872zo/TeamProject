@@ -150,7 +150,7 @@
                                              <input type="text" class="form-control" id="email1" name="email">
                                             </div>
                                        	   </div><hr>
-                                       	   .
+                                       	   
                                        	   <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="val-bannerImg"><h5>회원 프로필 </h5>
                                             </label>                                           

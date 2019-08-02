@@ -11,53 +11,32 @@
 				<div class="card">
 					<div class="card-body">
 							<select class="form-control mb-2" id="accountSelector" >
-								<option value="0">전체</option>
+								<option class="accountSelectorOption" value="0">전체</option>
 								<c:forEach items="${accountList }" var="account">
-									<option value="${account.accountNo }">${account.accountId }</option>
+									<option class="accountSelectorOption" value="${account.accountNo }">${account.accountId }</option>
 									<c:set var="i" value="${i+1 }"/>
 								</c:forEach>								
 							</select>
 						
-							<a href="email-compose.html" class="btn btn-primary btn-block">Compose</a>
+							<a href="javascript:fncSendMail()" class="btn btn-primary btn-block">메일 쓰기</a>
+							
 							<div class="mail-list mt-4">
-								<a href="email-inbox.html" class="list-group-item border-0 text-primary p-r-0"> 
+								<a href="javascript:fncGetMailMain(${accountNo })" class="list-group-item border-0 text-primary p-r-0"> 
 									<i class="fa fa-inbox font-18 align-middle mr-2"></i> <b>Inbox</b> 
 									<span class="badge badge-primary badge-sm float-right m-t-5">198</span>
 								</a> 
 								
-								<a href="#" class="list-group-item border-0 p-r-0"> <i
+								<a href="javascript:fncGetSentMailList(${accountNo })" class="list-group-item border-0 p-r-0"> <i
 									class="fa fa-paper-plane font-18 align-middle mr-2"></i>Sent
 								</a> 
 								
-								<a href="#" class="list-group-item border-0 p-r-0"> 
+								<a href="javascript:fncGetImportantMailList(${accountNo })" class="list-group-item border-0 p-r-0"> 
 									<i class="fa fa-star-o font-18 align-middle mr-2"></i>Important 
 									<span class="badge badge-danger badge-sm float-right m-t-5">47</span>
 								</a> 
 								
-								<a href="#" class="list-group-item border-0 p-r-0">
-									<i class="mdi mdi-file-document-box font-18 align-middle mr-2"></i>Draft
-								</a>
-								
-								<a href="#" class="list-group-item border-0 p-r-0">
+								<a href="javascript:fncGetTrashMailList(${accountNo })" class="list-group-item border-0 p-r-0">
 									<i class="fa fa-trash font-18 align-middle mr-2"></i>Trash
-								</a>
-							</div>
-							<h5 class="mt-5 m-b-10">Categories</h5>
-							<div class="list-group mail-list">
-								<a href="#" class="list-group-item border-0">
-									<span class="fa fa-briefcase f-s-14 mr-2"></span>Work
-								</a> 
-								
-								<a href="#"	class="list-group-item border-0">
-									<span class="fa fa-sellsy f-s-14 mr-2"></span>Private
-								</a> 
-								
-								<a href="#" class="list-group-item border-0">
-									<span class="fa fa-ticket f-s-14 mr-2"></span>Support
-								</a> 
-								
-								<a href="#"	class="list-group-item border-0">
-									<span class="fa fa-tags f-s-14 mr-2"></span>Social
 								</a>
 							</div>
 						
