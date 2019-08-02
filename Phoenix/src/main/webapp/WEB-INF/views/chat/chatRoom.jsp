@@ -436,9 +436,6 @@ display : none;
 	<!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
 
-//툴바 스크립트용 세션체커
-var checkSessionUser = ${empty sessionScope.user};
-
 var socket = io("http://192.168.0.78:82");
 //var socket = io("http://localhost:82");
 
@@ -653,7 +650,6 @@ $(function() {
 
 	socket.on('send_msg', function(msg) {
 	    //로그아웃 체크 : 레스트 컨트롤러로 서버한번 태워서 세션에 유저Number 체크해서 날려야 될듯
-		
 	    var msgTagging="";
 	    var date = new Date(msg.regDate);
 	    msg.regDate = getFormatDate(date);

@@ -1,24 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!DOCTYPE html>
 
 <html lang="ko">
 
-
-
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>멤버상세조회</title>
 
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Favicon icon -->
+<link rel="icon" type="image/png" sizes="16x16"
+	href="/images/favicon.png">
+<!-- Custom Stylesheet -->
 <link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
 <link href="/css/style.css" rel="stylesheet">
 <link rel="stylesheet" href="/css/custom/scroll-top.css">
-
 
 </head>
 
@@ -71,82 +71,81 @@
 			
 <div class='container'>
 
-<br/>
-<br/>
-<div class='card'>
-<div class='card-body'>
-
-
-
-
-
-
-
-
-
-
-<div class="card">
+<div class="card d-flex justify-content-center" style='width:50%;'>
 <div class="card-body">
 <div class='row'>
-<div class='col-lg-2'>
-<img src="/images/common/700by700.png"
-	     class="rounded"
-	     style="background: url('/images/uploadfiles/profileimg/${member.profileImg}'); 
-	     background-size: cover; 
-	     background-repeat: no-repeat; 
-	     background-position: center;
-	     width:100%; 
-	     margin: 1%;
-	     padding:0%;">
-</div>
-			<div class='col-lg-7'>
-				<h5 class="card-title">
-${member.memberNickname}
-				</h5>
-				<p class="card-text">${member.gradeName}</p>
-				
-				
-				<p class="card-text">
-				<c:if test='${member.memberStatusCode=="cs100"}'>
-				<button type="button" class='btn btn-success' disabled >활동</button></c:if>
-			    <c:if test='${member.memberStatusCode=="cs101"}'>
-			    <button type="button" class='btn btn-danger' disabled >정지</button></c:if>
-			    <c:if test='${member.memberStatusCode=="cs102"}'>
-			    <button type="button" class='btn btn-secondary' disabled >탈퇴</button></c:if>
-			    </p>
-				
-			</div>
-			<div class='col-lg-3'>
-			<p class="card-text">${member.visitCount}</p>
-				<p class="card-text">${member.postCount}</p>
-			<p class="card-text">${member.replyCount}</p>
-			</div>
+	<div class='col-lg-2'>
+		<img src="/images/common/700by700.png"
+		     class="rounded"
+		     style="background: url('/images/uploadfiles/profileimg/${member.profileImg}'); 
+		     background-size: cover; 
+		     background-repeat: no-repeat; 
+		     background-position: center;
+		     width:100%; 
+		     margin: 1%;
+		     padding:0%;">
+	</div>
+	
+	<div class='col-lg-6'>
+	
+		<h5 class="card-title">
+		${member.memberNickname}
+		</h5>	
+		<p class="card-text">
+		가입일 : ${member.regDate}
+		</p>
+		<p class="card-text">
+		
+		<c:if test='${member.memberStatusCode=="cs100"}'>
+		<button type="button" class='btn btn-success' 
+		style='color:white;' disabled >활동</button>
+		</c:if>
+		
+	    <c:if test='${member.memberStatusCode=="cs101"}'>
+	    <button type="button" class='btn btn-danger' 
+	    style='color:white;' disabled >정지</button>
+	    </c:if>
+	    
+	    <c:if test='${member.memberStatusCode=="cs102"}'>
+	    <button type="button" class='btn btn-secondary' 
+	    style='color:white;' disabled >탈퇴</button>
+	    </c:if>
+		
+		<c:if test="${member.memberGrade =='cg100'}">
+		<button type="button" class='btn btn-success' 
+		style='color:white;' disabled>${member.gradeName}
+		</button>
+		</c:if>
+		
+		<c:if test="${member.memberGrade =='cg101'}">
+		<button type="button" class='btn btn-info' 
+		style='color:white;' disabled>${member.gradeName}
+		</button>
+		</c:if>
+		
+		<c:if test="${member.memberGrade !='cg100' && member.memberGrade !='cg101'}">
+		<button type="button" class='btn btn-primary' 
+		style='color:white;' disabled>${member.gradeName}
+		</button>
+		</c:if>
+    
+	    </p>
+		
+	</div>
+
+	
+
+	<div class='col-lg-4 '>
+	방문수 : ${member.visitCount} 회
+	<br/>
+	작성글 : ${member.postCount} 개
+	<br/>
+	댓글수 : ${member.replyCount} 개
+	</div>
 			
 		</div>
 	</div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-</div>
-
 
 <c:if test='${member.memberGrade != "cg100" && member.memberStatusCode=="cs100"}'>
 <div class='card'>
@@ -184,7 +183,10 @@ ${cafeGrade.gradeName}
 <div class='card-body'>
 <c:if test="${empty blocks}" >
 <br/>
-정지당한 내역이 없습니다.
+<div class='d-flex justify-content-center'>
+<i class="mdi mdi-broom" style='font-style: normal;font-size: 25pt;'>
+정지 내역이 없습니다.</i>
+</div>
 <br/>
 </c:if>
 <c:if test="${!empty blocks}">
@@ -225,23 +227,35 @@ ${cafeGrade.gradeName}
  </p>
   <hr>
   <p class="mb-0">필요한 경우 기간이 되기 전에 정지상태를 해제할 수 있습니다.</p>
-  <form id='memberBlockForm'>
-<input type='hidden' name='cafeNo' value='${member.cafeNo}' >
-<input type='hidden' value='${member.memberNo}' name='memberNo'>
-<div class="input-group mb-3">
-	   <select class="selectpicker" aria-label="Example select with button addon" name='blockPeriod'>
-	    <option value="1" selected>01일</option>
-	    <option value="3" >03일</option>
-	    <option value="5" >05일</option>
-	    <option value="7" >07일</option>
-	    <option value="15" >15일</option>
-	    <option value="30" >30일</option>
-	    <option value="365250" >약 천년</option>	    
-	   </select>
-	  &nbsp;<input type="text" class="form-control" placeholder="정지사유를 (500자 이하)입력해주세요" aria-label="Text input with dropdown button" name='blockReason' id="blockReason" style='background-color: white;'>
-	    &nbsp;<button class="btn btn-sm btn-outline-danger" type="button" id="blocking">정지</button>
+ <p>
+<form id='memberBlockForm'>
+
+	<input type='hidden' name='cafeNo' value='${member.cafeNo}' >
+	<input type='hidden' value='${member.memberNo}' name='memberNo'>
+
+	<div class="input-group mb-3 d-flex justify-content-center">
+		<div class="input-group-prepend">
+		   <select class="form-control valid" name='blockPeriod'>
+		    <option value="1" selected>01일</option>
+		    <option value="3" >03일</option>
+		    <option value="5" >05일</option>
+		    <option value="7" >07일</option>
+		    <option value="15" >15일</option>
+		    <option value="30" >30일</option>
+		    <option value="365250" >약 천년</option>	    
+		   </select>
+		</div>
+		<div class="input-group-append" style='width:80%;'>
+			<input type="text" class="form-control" 
+			placeholder="정지사유를 (500자 이하)입력해주세요" 
+			name='blockReason' id="blockReason">
+		</div>
+		<div class="input-group-append">
+			<button class="btn btn-outline-danger" type="button" id="blocking">정지</button>
+		</div>
 	</div>
 </form>
+</p> 
 </div>
 
 
@@ -287,32 +301,74 @@ ${cafeGrade.gradeName}
     <script src="/js/gleek.js"></script>
     <script src="/js/styleSwitcher.js"></script>
     
-    <!-- 메뉴바 이용을 위한 스크립트 -->
-	<script src="/js/custom/scroll-top.js"></script>
+    <!-- 스위트얼럿 -->
+    <script src="/plugins/sweetalert/js/sweetalert.min.js"></script>
+	<script src="/plugins/sweetalert/js/sweetalert.init.js"></script>
+    <!-- 스위트얼럿 -->
     
-    <script type="text/javascript">
-	</script>
-	<script src="/js/custom/cafeCommon.js"></script>
+    <!-- 메뉴바 이용을 위한 스크립트 -->
+    
+	<script src="/js/custom/scroll-top.js"></script>
+    <script src="/js/custom/menubarCafe.js"></script>
+  	<script src="/js/custom/cafeCommon.js"></script>
 
 	<!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
 $(function() {
+
+	$("#unBlockReason").keydown(function (key) {
+        if(key.keyCode == 13){//키가 13이면 실행 (엔터는 13)
+        	event.preventDefault();
+            $("#updateBlock").click();
+        }
+    });
+
+	$("#blockReason").keydown(function (key) {
+        if(key.keyCode == 13){//키가 13이면 실행 (엔터는 13)
+        	event.preventDefault();
+            $("#blocking").click();
+        }
+    });
+	
 	
 	$("#unBlockReason").attr("placeholder", "기존 정지사유 : "+$("#blockReason1").text());
 
 	$("#updateBlock").on("click" , function() {
+		if($("#unBlockReason").val()==""){
+			swal("잠깐 !", "빈칸은 입력할 수 없어요", "warning");
+			return false
+			}
 		$("#blockNo").val($($(".blockNo")[0]).val());
 		$("#memberBlockupdateForm").attr("method" , "POST").attr("action" , "/cafe/"+"${cafeURL}"+"/manage/updateCafeMemberBlock").submit();
 	});
 	
 	$("#blocking").on("click" , function() {
+		if($("#blockReason").val()==""){
+			//alert("");
+			swal("잠깐 !", "빈칸은 입력할 수 없어요", "warning");
+						return false
+						}
 		$("#memberBlockForm").attr("method" , "POST").attr("action" , "/cafe/"+"${cafeURL}"+"/manage/addMemberBlock").submit();
 	});
 	
 	$(".changeMemberGrade").on("click" , function() {
-		//alert($(this).val());
+
 		$("#cafeMemberGradeNo").val($(this).val());
-		$("#memberGradeForm").attr("method" , "POST").attr("action" , "/cafe/"+"${cafeURL}"+"/manage/updateCafeMemberGrade").submit();	
+		
+		swal({
+		  title: "등급 변경할까요?",
+		  text: "확인하시면 등급이 변경됩니다.",
+		  type: "warning",
+		  showCancelButton: true,
+		  confirmButtonClass: "btn-danger",
+		  confirmButtonText: "확인",
+		  cancelButtonText: "취소",
+		  closeOnConfirm: false
+		},
+		function(){
+			$("#memberGradeForm").attr("method" , "POST").attr("action" , "/cafe/"+"${cafeURL}"+"/manage/updateCafeMemberGrade").submit();	
+		});
+				
 	});
 	
 });
