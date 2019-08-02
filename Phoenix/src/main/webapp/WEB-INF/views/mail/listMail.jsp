@@ -24,6 +24,11 @@
 	tr:hover{
 		cursor:pointer;
 	}
+	
+	tr:last-child:hover{
+		background-color:white !important;
+		cursor:default;
+	}
 </style>
 
 <title>${search.cafeURL}</title>
@@ -174,7 +179,7 @@
 								<form id="boardPage">
 									<input type="hidden" name="currentPage">
 								</form>
-								<p>총 ${postTotalCount }개 중 ${search.startRowNum} - ${search.endRowNum }</p>
+								<p>총 ${totalCount }개 중 ${search.startRowNum} - ${search.endRowNum }</p>
 								<table class="table table-hover">
 									<tbody>
 										<c:forEach items="${mailList }" var="mail">

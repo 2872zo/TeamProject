@@ -70,6 +70,7 @@ public class MailContoller {
 		map.put("page", returnMap.get("page"));
 		map.put("currentPage", currentPage);
 		map.put("accountNo", accountNo);
+		map.put("totalCount", returnMap.get("totalCount"));
 		
 		return "/mail/listMail";
 	}

@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -91,7 +92,7 @@ public class MailDaoImpl implements MailDao {
 		Page page = new Page(currentPage, totalCount, mailPageUnit, mailPageSize);
 		
 		//실제 mailList 가져와서 저장
-		for(int i = 0; i < search.getEndRowNum(); i++) {
+		for(int i = 1; i <= search.getEndRowNum(); i++) {
 			Message recentMessage = null;
 			int getMessageIdx = 0;
 			
@@ -119,6 +120,8 @@ public class MailDaoImpl implements MailDao {
 				mail.setFolder(recentMessage.getFolder());
 				System.out.println("SentDate : " + recentMessage.getSentDate());
 				mail.setSentDate(recentMessage.getSentDate());
+				
+				mail.setSeen(recentMessage.isSet(Flags.Flag.SEEN));
 	
 				for (Address addr : recentMessage.getFrom()) {
 					System.out.println("Address : " + MimeUtility.decodeText(addr.toString()));
@@ -154,6 +157,7 @@ public class MailDaoImpl implements MailDao {
 		returnMap.put("mailList", resultMailList);
 		returnMap.put("page", page);
 		returnMap.put("search", search);
+		returnMap.put("totalCount", totalCount);
 		
 		return returnMap;
 	}
@@ -173,15 +177,19 @@ public class MailDaoImpl implements MailDao {
 		search.setPageSize(mailPageSize);
 		Page page = new Page(currentPage, totalCount, mailPageUnit, mailPageSize);
 		
-		int endRowNum = search.getEndRowNum();
-		
-		if(totalCount < endRowNum) {
-			endRowNum = totalCount;
+		int startRowNum = totalCount - search.getEndRowNum() + 1;
+		int endRowNum = totalCount - search.getStartRowNum() + 1;
+		if(startRowNum < 1) {
+			startRowNum = 1;
 		}
+		
+		
 		
 		List<Mail> mailList = new ArrayList<Mail>();
 
-		for (Message m : mailAgent.getMessages(search.getStartRowNum(), endRowNum)) {
+		
+		
+		for (Message m : mailAgent.getMessages(startRowNum, endRowNum)) {
 			Mail mail = new Mail();
 			mail.setAccountNo(account.getAccountNo());
 			
@@ -214,13 +222,16 @@ public class MailDaoImpl implements MailDao {
 			System.out.println(mail);
 			System.out.println("=======================================================================================================");
 		}
-
+		
 		mailAgent.close();
 
+		Collections.reverse(mailList);
+		
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		returnMap.put("mailList", mailList);
 		returnMap.put("page", page);
 		returnMap.put("search", search);
+		returnMap.put("totalCount", totalCount);
 		
 		return returnMap;
 	}
