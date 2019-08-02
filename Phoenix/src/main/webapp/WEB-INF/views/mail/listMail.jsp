@@ -24,6 +24,11 @@
 	tr:hover{
 		cursor:pointer;
 	}
+	
+	tr:last-child:hover{
+		background-color:white !important;
+		cursor:default;
+	}
 </style>
 
 <title>${search.cafeURL}</title>
@@ -174,7 +179,7 @@
 								<form id="boardPage">
 									<input type="hidden" name="currentPage">
 								</form>
-								<p>총 ${postTotalCount }개 중 ${search.startRowNum} - ${search.endRowNum }</p>
+								<p>총 ${totalCount }개 중 ${search.startRowNum} - ${search.endRowNum }</p>
 								<table class="table table-hover">
 									<tbody>
 										<c:forEach items="${mailList }" var="mail">
@@ -198,7 +203,15 @@
 												</td>
 											</tr>
 										</c:forEach>
-
+										
+										<tr>
+											<td colspan="6">
+												<c:import url="/WEB-INF/views/common/pageNavigator.jsp">
+													<c:param name="subject" value="Mail"/>		
+												</c:import>
+											</td>
+										</tr>
+										
 									</tbody>
 								</table>
 							</div>
@@ -249,11 +262,21 @@
 	<!-- 메뉴바 이용을 위한 스크립트 -->
 	<script src="/js/custom/scroll-top.js"></script>
 	<script src="/js/custom/mailCommon.js"></script>
-
+	<script>
+		$(function(){
+			//선택 계정 유지
+			$(".accountSelectorOption").each(function(){
+				if($(this).val() == ${accountNo}){
+					$(this).attr("selected", "selected");
+				}
+			});
+		});
+	</script>
+	
 	<!-- 이 페이지 전용 script -->
 	<script>
 		$(function(){
-			$("tr").on("click", function(){
+			$("tr").not("tr:last").on("click", function(){
 				location.href = "/mail/getMail?mailNo=" + $(this).find(".mailNo").val() + "&accountNo=" + $(this).find(".accountNo").val();
 			});
 		});

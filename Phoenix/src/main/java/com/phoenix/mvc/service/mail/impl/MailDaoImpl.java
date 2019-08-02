@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +33,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Repository;
 
+import com.phoenix.mvc.common.Page;
+import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.domain.Account;
 import com.phoenix.mvc.service.domain.Mail;
 import com.phoenix.mvc.service.mail.MailDao;
@@ -46,19 +49,147 @@ public class MailDaoImpl implements MailDao {
 	@Value("${uploadDir}")
 	private String uploadDir;
 	
+	@Value("${mailPageSize}")
+	private int mailPageSize;
+	
+	@Value("${mailPageUnit}")
+	private int mailPageUnit;
+	
 	@Autowired
 	@Qualifier("sqlSessionTemplate")
 	private SqlSession sqlSession;
+	
+	
+	@Override
+	public Map<String, Object> getAllAccountMailList(List<Account> accountList, int currentPage) throws MessagingException, FileNotFoundException, IOException {
+		
+		List<Map<String, Object>> mailAgentList = new ArrayList<Map<String,Object>>();
+		List<Mail> resultMailList = new ArrayList<Mail>();
+		
+		
+		for(Account account : accountList) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("mailAgent",new IMAPAgent("imap." + account.getAccountDomain(), account.getAccountId(), account.getAccountPw()));
+			map.put("account", account);
+			map.put("idx", 1);
+			
+			mailAgentList.add(map);
+		}
+
+		//모든 메일 계정의 모든 메일 수를 더해서 총 개수를 구함
+		int totalCount = 0;
+		
+		for(Map map : mailAgentList) {
+			((IMAPAgent)map.get("mailAgent")).open();
+			
+			totalCount += ((IMAPAgent)map.get("mailAgent")).getMessageCount();
+		}
+		
+		//paging을 위한 Search객체와 Page객체 생성
+		Search search = new Search();
+		search.setCurrentPage(currentPage);
+		search.setPageSize(mailPageSize);
+		Page page = new Page(currentPage, totalCount, mailPageUnit, mailPageSize);
+		
+		//실제 mailList 가져와서 저장
+		for(int i = 1; i <= search.getEndRowNum(); i++) {
+			Message recentMessage = null;
+			int getMessageIdx = 0;
+			
+			for (int j = 0; j < mailAgentList.size(); j++) {
+				Map map = mailAgentList.get(j);
+				Message currentMessage = ((IMAPAgent) map.get("mailAgent")).getRecentMessage((int) map.get("idx"));
+
+				if (recentMessage == null || recentMessage.getSentDate().compareTo(currentMessage.getSentDate()) < 0) {
+					recentMessage = currentMessage;
+					getMessageIdx = j;
+				}
+			}
+			
+			if(i >= search.getStartRowNum()) {
+				System.out.println("mailNum : " + i);
+				//저장할 mail 생성
+				Mail mail = new Mail();
+				mail.setAccountNo(((Account)mailAgentList.get(getMessageIdx).get("account")).getAccountNo());
+				
+	 			//메일 번호 저장
+				System.out.println("MessageNumber : " + recentMessage.getMessageNumber());
+				mail.setMailNo(recentMessage.getMessageNumber());
+				
+				System.out.println("Folder : " + recentMessage.getFolder().getFullName());
+				mail.setFolder(recentMessage.getFolder());
+				System.out.println("SentDate : " + recentMessage.getSentDate());
+				mail.setSentDate(recentMessage.getSentDate());
+				
+				mail.setSeen(recentMessage.isSet(Flags.Flag.SEEN));
+	
+				for (Address addr : recentMessage.getFrom()) {
+					System.out.println("Address : " + MimeUtility.decodeText(addr.toString()));
+					String fullAddr = MimeUtility.decodeText(addr.toString());
+	
+					if (fullAddr.contains("<")) {
+						mail.setSender(fullAddr.substring(0, fullAddr.indexOf("<") - 1));
+						mail.setSenderAddr(fullAddr.substring(fullAddr.indexOf("<"), fullAddr.length()));
+					} else {
+						mail.setSender(fullAddr);
+					}
+				}
+				
+				// 제목
+				System.out.println("Subject : " + recentMessage.getSubject());
+				mail.setSubject(recentMessage.getSubject());
+	
+				
+				resultMailList.add(mail);
+			}
+			
+			mailAgentList.get(getMessageIdx).put("idx", (int)mailAgentList.get(getMessageIdx).get("idx") + 1);
+		}
+		
+		
+		System.out.println(resultMailList);
+			
+		for(Map map : mailAgentList) {
+			((IMAPAgent)map.get("mailAgent")).close();
+		}
+		
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		returnMap.put("mailList", resultMailList);
+		returnMap.put("page", page);
+		returnMap.put("search", search);
+		returnMap.put("totalCount", totalCount);
+		
+		return returnMap;
+	}
+
 
 	@Override
-	public List<Mail> getMailList(Account account) throws Exception {
+	public Map<String, Object> getMailList(Account account, int currentPage) throws Exception {
 		IMAPAgent mailAgent = new IMAPAgent("imap." + account.getAccountDomain(), account.getAccountId(), account.getAccountPw());
 
 		mailAgent.open();
 		
+		int totalCount = mailAgent.getMessageCount();
+		
+		//paging을 위한 Search객체와 Page객체 생성
+		Search search = new Search();
+		search.setCurrentPage(currentPage);
+		search.setPageSize(mailPageSize);
+		Page page = new Page(currentPage, totalCount, mailPageUnit, mailPageSize);
+		
+		int startRowNum = totalCount - search.getEndRowNum() + 1;
+		int endRowNum = totalCount - search.getStartRowNum() + 1;
+		if(startRowNum < 1) {
+			startRowNum = 1;
+		}
+		
+		
+		
 		List<Mail> mailList = new ArrayList<Mail>();
 
-		for (Message m : mailAgent.getMessage()) {
+		
+		
+		for (Message m : mailAgent.getMessages(startRowNum, endRowNum)) {
 			Mail mail = new Mail();
 			mail.setAccountNo(account.getAccountNo());
 			
@@ -89,13 +220,20 @@ public class MailDaoImpl implements MailDao {
 
 			mailList.add(mail);
 			System.out.println(mail);
-			System.out.println(
-					"=======================================================================================================");
+			System.out.println("=======================================================================================================");
 		}
-
+		
 		mailAgent.close();
 
-		return mailList;
+		Collections.reverse(mailList);
+		
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		returnMap.put("mailList", mailList);
+		returnMap.put("page", page);
+		returnMap.put("search", search);
+		returnMap.put("totalCount", totalCount);
+		
+		return returnMap;
 	}
 
 	@Override
@@ -120,13 +258,19 @@ public class MailDaoImpl implements MailDao {
 		System.out.println("SentDate : " + message.getSentDate());
 		mail.setSentDate(message.getSentDate());
 
+		//보낸사람
 		for (Address addr : message.getFrom()) {
 			String fullAddr = MimeUtility.decodeText(addr.toString());
 			System.out.println("Address : " + fullAddr);
-			mail.setSender(fullAddr.substring(0, fullAddr.indexOf("<") - 1));
-			mail.setSenderAddr(fullAddr.substring(fullAddr.indexOf("<"), fullAddr.length()));
+			if (!fullAddr.contains("<")) {
+				mail.setSender(fullAddr);
+			} else {
+				mail.setSender(fullAddr.substring(0, fullAddr.indexOf("<") - 1));
+				mail.setSenderAddr(fullAddr.substring(fullAddr.indexOf("<"), fullAddr.length()));
+			}
 		}
 
+		//받는사람
 		List<Map<String, String>> recipients = new ArrayList<Map<String, String>>();
 		for (Address addr : message.getAllRecipients()) {
 			String fullAddr = MimeUtility.decodeText(addr.toString());
@@ -254,13 +398,14 @@ public class MailDaoImpl implements MailDao {
 			mailAgent.open();
 		} catch (MessagingException | IOException e) {
 			System.out.println("MailAccount Link Fail!");
-			System.out.println(e.getMessage());
+//			System.out.println(e.getMessage());
+			e.printStackTrace();
 			if(e.getMessage().contains("404")) {
 				throw new Exception("404");
 			}else if(e.getMessage().contains("405")) {
 				throw new Exception("405");
 			}
-			else if (e.getMessage().contains("not authorized for this service")) {
+			else if (e.getMessage().contains("not authorized for this service") || e.getMessage().contains("imap")) {
 				throw new Exception("400");
 			} else {
 				throw new Exception("500");
@@ -302,12 +447,16 @@ public class MailDaoImpl implements MailDao {
 		message.setSubject(mail.getSubject());
 		message.setText(mail.getContent(), true);
 		
-		for(Map<String, Object> map : mail.getAttachmentList()) {
-			message.addAttachment((String)map.get("fileName"), (File)map.get("fileData"));
+		if(mail.getAttachmentList() != null && mail.getAttachmentList().size() > 0) {
+			for(Map<String, Object> map : mail.getAttachmentList()) {
+				message.addAttachment((String)map.get("fileName"), (File)map.get("fileData"));
+			}
 		}
 		
-		for(String inlineFileName : mail.getInlineList().split(",")) {
-			message.addInline(inlineFileName, new File(uploadDir + "/" + inlineFileName));
+		if(mail.getInlineList() != null && mail.getInlineList().length() > 0) {
+			for(String inlineFileName : mail.getInlineList().split(",")) {
+				message.addInline(inlineFileName, new File(uploadDir + "/" + inlineFileName));
+			}
 		}
 		
 		Transport.send(message.getMimeMessage());
@@ -340,12 +489,16 @@ public class MailDaoImpl implements MailDao {
 		message.setSubject(mail.getSubject());
 		message.setText(mail.getContent(), true);
 		
-		for(Map<String, Object> map : mail.getAttachmentList()) {
-			message.addAttachment((String)map.get("fileName"), (File)map.get("fileData"));
+		if(mail.getAttachmentList() != null && mail.getAttachmentList().size() > 0) {
+			for(Map<String, Object> map : mail.getAttachmentList()) {
+				message.addAttachment((String)map.get("fileName"), (File)map.get("fileData"));
+			}
 		}
 		
-		for(String inlineFileName : mail.getInlineList().split(",")) {
-			message.addInline(inlineFileName, new File(uploadDir + "/" + inlineFileName));
+		if(mail.getInlineList() != null && mail.getInlineList().length() > 0) {
+			for(String inlineFileName : mail.getInlineList().split(",")) {
+				message.addInline(inlineFileName, new File(uploadDir + "/" + inlineFileName));
+			}
 		}
 		
 		
@@ -378,12 +531,16 @@ public class MailDaoImpl implements MailDao {
 		message.setSubject(mail.getSubject());
 		message.setText(mail.getContent(), true);
 		
-		for(Map<String, Object> map : mail.getAttachmentList()) {
-			message.addAttachment((String)map.get("fileName"), (File)map.get("fileData"));
+		if(mail.getAttachmentList() != null && mail.getAttachmentList().size() > 0) {
+			for(Map<String, Object> map : mail.getAttachmentList()) {
+				message.addAttachment((String)map.get("fileName"), (File)map.get("fileData"));
+			}
 		}
 		
-		for(String inlineFileName : mail.getInlineList().split(",")) {
-			message.addInline(inlineFileName, new File(uploadDir + "/" + inlineFileName));
+		if(mail.getInlineList() != null && mail.getInlineList().length() > 0) {
+			for(String inlineFileName : mail.getInlineList().split(",")) {
+				message.addInline(inlineFileName, new File(uploadDir + "/" + inlineFileName));
+			}
 		}
 		
 		Transport.send(message.getMimeMessage());

@@ -62,5 +62,5 @@ public class IMAPAgent extends MailAgent{
       
     public boolean hasNewMessage(Folder folder) throws MessagingException {  
         return folder.hasNewMessages();  
-    }     
+    }
 }

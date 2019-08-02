@@ -45,9 +45,17 @@ public class MailAgent {
     public Message[] getMessage() throws MessagingException {  
         return mailProto.getMessages();  
     }  
+    
+    public Message[] getMessages(int startNum, int endNum) throws MessagingException {  
+        return mailProto.getMessages(startNum, endNum);  
+    } 
       
     public Message[] getRecentMessages(int count) throws MessagingException {  
         return mailProto.getRecentMessages(count);  
+    }  
+    
+    public Message getRecentMessage(int msgNum) throws MessagingException {  
+        return mailProto.getRecentMessage(msgNum);  
     }  
       
     public String getUID(Message msg) throws MessagingException {  

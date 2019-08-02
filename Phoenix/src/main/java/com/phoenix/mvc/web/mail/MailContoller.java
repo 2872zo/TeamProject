@@ -2,22 +2,13 @@ package com.phoenix.mvc.web.mail;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.PreDestroy;
-import javax.mail.Address;
-import javax.mail.BodyPart;
-import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.Multipart;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMultipart;
-import javax.mail.internet.MimeUtility;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,15 +21,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.domain.Account;
-import com.phoenix.mvc.service.domain.Chat;
 import com.phoenix.mvc.service.domain.Mail;
 import com.phoenix.mvc.service.mail.MailService;
-import com.phoenix.mvc.service.mail.impl.IMAPAgent;
-import com.sun.mail.util.BASE64DecoderStream;
 
 @Controller
 @RequestMapping("/mail/")
@@ -55,19 +42,35 @@ public class MailContoller {
 	}
 
 	@RequestMapping("getMailList")
-	public String getMailList(@ModelAttribute Search search, Map<String, Object> map, HttpServletRequest req) throws Exception {
+	public String getMailList(Map<String, Object> map, HttpServletRequest req, 
+			@RequestParam(required = false, defaultValue = "0") int accountNo, @RequestParam(required = false, defaultValue = "1") int currentPage) throws Exception {
+		
+		Map<String, Object> returnMap = null;
 		List<Account> accountList = (List<Account>)req.getAttribute("accountList");
 		List<Mail> mailList = new ArrayList<Mail>();
 		
-		if(search.getSearchCondition() == null || search.getSearchCondition().equals("0")) {
-			for(Account account : accountList) {
-				mailList.addAll(mailService.getMailList(account));
-			}
+		
+		
+		if(accountNo == 0) {
+			returnMap = mailService.getAllAccountMailList(accountList, currentPage);
 		}else {
-			mailList = mailService.getMailList(accountList.get(Integer.parseInt(search.getSearchCondition()) - 1));
+			Account selectedAccount = null;
+			for(Account account : accountList) {
+				if(account.getAccountNo() == accountNo) {
+					selectedAccount = account;
+					break;
+				}
+			}
+			
+			returnMap = mailService.getMailList(selectedAccount, currentPage);
 		}
 		
-		map.put("mailList", mailList);
+		map.put("mailList", returnMap.get("mailList"));
+		map.put("search", returnMap.get("search"));
+		map.put("page", returnMap.get("page"));
+		map.put("currentPage", currentPage);
+		map.put("accountNo", accountNo);
+		map.put("totalCount", returnMap.get("totalCount"));
 		
 		return "/mail/listMail";
 	}
@@ -108,7 +111,7 @@ public class MailContoller {
 	
 	
 	@PostMapping("sendMail")
-	public String sendMail(HttpServletRequest req, @RequestParam int accountNo, @ModelAttribute Mail mail, @RequestParam MultipartFile[] files, @RequestParam String inlineList) throws MessagingException {
+	public String sendMail(HttpServletRequest req, @RequestParam int accountNo, @ModelAttribute Mail mail, @RequestParam MultipartFile[] files, @RequestParam String inlineList, Map<String, Object> map) throws MessagingException {
 		List<Account> accountList = (List<Account>)req.getAttribute("accountList");
 		
 		Account account = null;
@@ -122,28 +125,29 @@ public class MailContoller {
 		
 		List<Map<String, Object>> attachmentList = null;
 		
-		// 파일 태그명을 다 검색하는 기능 여러칸일 경우에 유용
-		for (MultipartFile file : files) {
-			attachmentList = new ArrayList<Map<String,Object>>();
-			String fileName = file.getOriginalFilename();
-			Map<String, Object> fileMap = new HashMap<String, Object>();
-			
-			try {
-				UUID uid = UUID.randomUUID();
-				fileMap.put("fileName", fileName);
+		if(files.length > 0 && !files[0].getOriginalFilename().equals("")) {
+			for (MultipartFile file : files) {
+				attachmentList = new ArrayList<Map<String,Object>>();
+				String fileName = file.getOriginalFilename();
+				Map<String, Object> fileMap = new HashMap<String, Object>();
 				
-				fileName = uid + fileName;
-				File fileTo = new File(tmpUploadDir + "/" + fileName);
-				file.transferTo(fileTo);
+				try {
+					UUID uid = UUID.randomUUID();
+					fileMap.put("fileName", fileName);
+					
+					fileName = uid + fileName;
+					File fileTo = new File(tmpUploadDir + "/" + fileName);
+					file.transferTo(fileTo);
+					
+					fileMap.put("fileData", fileTo);
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				
-				fileMap.put("fileData", fileTo);
-				
-			} catch (Exception e) {
-				e.printStackTrace();
+				attachmentList.add(fileMap);
+				System.out.println("파일 추가딤!");
 			}
-			
-			attachmentList.add(fileMap);
-			System.out.println("파일 추가딤!");
 		}
 		
 		mail.setContent(mail.getContent().replaceAll("/images/uploadfiles/", "cid:"));
@@ -156,6 +160,8 @@ public class MailContoller {
 		
 		
 		mailService.sendMail(account, mail);
+		
+		map.put("account", account);
 		
 		return "/mail/confirmSendMail";
 	}
