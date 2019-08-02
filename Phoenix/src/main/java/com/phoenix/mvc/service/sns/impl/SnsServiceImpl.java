@@ -38,7 +38,7 @@ public class SnsServiceImpl implements SnsService {
 	// public static final String WEB_DRIVER_PATH="C:/z.utility/chromedriver.exe";
 	public static final String WEB_DRIVER_PATH = "C:/Users/wlsgm/OneDrive/바탕 화면/java/chromedriver.exe";
 
-	private String base_url;
+	private String url;
 
 	public SnsServiceImpl() {
 		System.out.println(getClass().getName() + "default Constuctor");
@@ -49,32 +49,35 @@ public class SnsServiceImpl implements SnsService {
 		
 		try {
 
-		//크롬세팅
-		System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
+			//크롬세팅
+			System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
+			
+			//팝업옵션해제
+			Map<String, Object> prefs = new HashMap<String, Object>();
+			prefs.put("profile.default_content_setting_values.notifications", 2);
+			ChromeOptions options = new ChromeOptions();
+			options.setExperimentalOption("prefs", prefs);
+			options.addArguments("headless");//창안켜줭~
+			options.setCapability("ignoreProtectedModeSettings", true);
+			driver = new ChromeDriver(options);
+
+			
+			url = "https://ko-kr.facebook.com";
+			
+			//페이스북접속
+			driver.get(url);
+
+			//로그인
+			webElement = driver.findElement(By.id("email"));
+			webElement.sendKeys(search.getFbId());
+
+			webElement = driver.findElement(By.id("pass"));
+			webElement.sendKeys(search.getFbPw());
+
+			webElement = driver.findElement(By.id("loginbutton"));
+			webElement.submit();
 		
-		//팝업옵션해제
-		Map<String, Object> prefs = new HashMap<String, Object>();
-		prefs.put("profile.default_content_setting_values.notifications", 2);
-		ChromeOptions options = new ChromeOptions();
-		options.setExperimentalOption("prefs", prefs);
-		options.setCapability("ignoreProtectedModeSettings", true);
-		driver = new ChromeDriver(options);
 
-		
-		base_url = "https://ko-kr.facebook.com";
-		
-		//페이스북접속
-		driver.get(base_url);
-
-		//로그인
-		webElement = driver.findElement(By.id("email"));
-		webElement.sendKeys(search.getFbId());
-
-		webElement = driver.findElement(By.id("pass"));
-		webElement.sendKeys(search.getFbPw());
-
-		webElement = driver.findElement(By.id("loginbutton"));
-		webElement.submit();
 		
 		//////////////////////////////////////////////////////////////
 		List <TimeLine> list = new ArrayList<TimeLine>();
@@ -85,7 +88,7 @@ public class SnsServiceImpl implements SnsService {
 		if(search.getCurrentPage()==0) {
 		
 			((JavascriptExecutor)driver).executeScript("window.scrollTo(0,document.body.scrollHeight)");
-			WebDriverWait wait = new WebDriverWait(driver, 250);
+			WebDriverWait wait = new WebDriverWait(driver, 300);
 			wait.until(ExpectedConditions.invisibilityOf(end));
 		}
 		
@@ -178,6 +181,7 @@ public class SnsServiceImpl implements SnsService {
 					List<WebElement> video = common.findElements(By.tagName("video"));
 					System.out.println("해당피드동영상 : " + video.size());
 					newTimeLine.setVideo1Size(video.size());
+					List<WebElement> videoImg = common.findElements(By.className("img"));
 		
 					List<WebElement> img1 = common.findElements(By.cssSelector("a[class='_4-eo _2t9n _50z9']"));
 					System.out.println("해당피드사진1: " + img1.size());
@@ -216,7 +220,9 @@ public class SnsServiceImpl implements SnsService {
 								WebElement videoLink = link.get(3).findElement(By.className("_xd6"));
 								//System.out.println(videoLink.getAttribute("value"));
 								
-								videoList.add(video.get(j).getAttribute("src"));
+								
+								
+								videoList.add(videoImg.get(j).getAttribute("src"));
 								videoLinkList.add(videoLink.getAttribute("value"));
 								newTimeLine.setVideoList(videoList);
 								newTimeLine.setVideoLinkList(videoLinkList);
@@ -287,7 +293,8 @@ public class SnsServiceImpl implements SnsService {
 								WebElement videoLink = link.get(3).findElement(By.className("_xd6"));
 								//System.out.println(videoLink.getAttribute("value"));
 								
-								videoList.add(video.get(j).getAttribute("src"));
+								//videoList.add(video.get(j).getAttribute("src"));
+								videoList.add(videoImg.get(j).getAttribute("src"));
 								videoLinkList.add(videoLink.getAttribute("value"));
 								newTimeLine.setVideoList(videoList);
 								newTimeLine.setVideoLinkList(videoLinkList);
@@ -360,5 +367,83 @@ public class SnsServiceImpl implements SnsService {
 	
 
 
+	}
+	
+	private WebDriver headlessConnection(){
+		
+		System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
+		
+		//팝업옵션해제
+		Map<String, Object> prefs = new HashMap<String, Object>();
+		prefs.put("profile.default_content_setting_values.notifications", 2);
+		ChromeOptions options = new ChromeOptions();
+		options.setExperimentalOption("prefs", prefs);
+		options.setCapability("ignoreProtectedModeSettings", true);
+		options.addArguments("headless");//창안켜줭~
+		WebDriver driver = new ChromeDriver(options);
+		WebDriverWait wait = new WebDriverWait(driver, 10);
+		
+		return driver;
+	}
+	
+	private WebDriver connection(){
+		
+		//크롬세팅
+		System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
+				
+		//팝업옵션해제
+		Map<String, Object> prefs = new HashMap<String, Object>();
+		prefs.put("profile.default_content_setting_values.notifications", 2);
+		ChromeOptions options = new ChromeOptions();
+		options.setExperimentalOption("prefs", prefs);
+		options.setCapability("ignoreProtectedModeSettings", true);
+		driver = new ChromeDriver(options);
+		
+		
+		return driver;
+	}
+	
+	private WebElement fbLogIn(Search search){
+		
+		url = "https://ko-kr.facebook.com";
+		
+		//페이스북접속
+		driver.get(url);
+
+		//로그인
+		webElement = driver.findElement(By.id("email"));
+		webElement.sendKeys(search.getFbId());
+
+		webElement = driver.findElement(By.id("pass"));
+		webElement.sendKeys(search.getFbPw());
+
+		webElement = driver.findElement(By.id("loginbutton"));
+		webElement.submit();
+		
+		return webElement;
+	}
+	
+	public TimeLine writeFb(Search search) {
+		
+		//크롬연결~
+		WebDriver driver = this.connection();
+				
+		//페북 로그인
+		this.fbLogIn(search);
+		
+		webElement = driver.findElement(By.name("xhpc_message"));
+		webElement.sendKeys(search.getSearchKeyword());
+		webElement.submit();
+		
+		
+		TimeLine timeLine = new TimeLine();
+
+		timeLine.setPost(search.getSearchKeyword());
+		timeLine.setPassword(search.getFbPw());
+		timeLine.setPostId(search.getFbId());
+		
+		
+		return timeLine;
+		
 	}
 }

@@ -108,18 +108,19 @@ img {
 					</div>
 				</div>
 			</div>
+			
 
 			<!-- 피드시작 -->
 			<div class="col-lg-8 col-xl-9">
 			
 				<div class="card">
                       <div class="card-body">
-                          <form action="#" class="form-profile">
+                           <form class="form-profile">
                               <div class="form-group">
-                                  <textarea class="form-control" name="textarea" id="textarea" cols="30" rows="2" placeholder="Post a new message"></textarea>
+                                  <textarea class="form-control" name="textarea" id="post" cols="30" rows="2" placeholder="Post a new message"></textarea>
                               </div>
                               <div class="d-flex align-items-center">
-                                  <button class="btn btn-primary px-3 ml-4">Send</button>
+                                  <button class="btn btn-primary px-3 ml-4" id ="send">Send</button>
                               </div>
                           </form>
                       </div>
@@ -220,218 +221,220 @@ img {
 
 	<script src="/plugins/sweetalert/js/sweetalert.min.js"></script>
 	<script src="/plugins/sweetalert/js/sweetalert.init.js"></script>
-	<script src="/js/custom/scroll-top.js"></script>
-	<script src="/js/custom/menubarCafe.js"></script>
 	
 	<script type="text/javascript">
 
+	
+	
+	$(document).ready(function(){
+
+		
+
 		$(window).scroll(function(){
+
 			
+		
 
 			if($(window).scrollTop()>=($(document).height()- $(window).height())*0.9){
 
 				alert("hi")
 				loadNext();
-				}
+			}
 
 		});
+	});
 
-		function loadNext(){
-			var currentPage = $(".postSize").val();
-			var subject = '${search.subject}'
-				alert("currentPage"+currentPage)
-				alert("subject"+subject)
-			$.ajax({
-				url : "/sns/json/getTimeLine",
-				method : "POST",
-				headers : {
-					"Accept" : "application/json",
-					"Content-Type" : "application/json ; charset=UTF-8"
-				},
-				data : JSON.stringify({
-					currentPage : currentPage,
-					subject : subject
-				}),
-				dataType : "text",
-				success : function(serverData) {
-					//alert(serverData)
-					
-					var data = JSON.parse(serverData);
-					var timeLine= data.timeLine;
-					var search= data.search;
-					var feedCount = data.count;
-
-					alert("data "+data)
-					alert("timeLine "+timeLine)
-					alert("search "+search)
 	
-					var start = '';
-					var img1 = '';
-					var img2='';
-					var img3 ='';
-					var img4 ='';
-					var video='';
-					var last ="</div></div>";
-					
+
+	function loadNext(){
+		var currentPage = $(".postSize").val();
+		var subject = '${search.subject}'
+			alert("currentPage"+currentPage)
+			alert("subject"+subject)
+			
+		
+		$.ajax({
+			url : "/sns/json/getTimeLine",
+			method : "POST",
+			headers : {
+				"Accept" : "application/json",
+				"Content-Type" : "application/json ; charset=UTF-8"
+			},
+			data : JSON.stringify({
+				currentPage : currentPage,
+				subject : subject
+			}),
+			dataType : "text",
+			success : function(serverData) {
+				//alert(serverData)
 				
-						
-					if(timeLine !=""){
-						alert($(timeLine).length);
+				
+				
+				var data = JSON.parse(serverData);
+				var timeLine= data.timeLine;
+				var search= data.search;
+				var feedCount = data.count;
 
-						start += "<div class='media media-reply'>";
+				//alert("data "+data)
+				//alert("timeLine "+timeLine)
+				//alert("search "+search)
 
-							if(search.subject == 100){//페북
-								start+= "<i class='mdi mdi-facebook-box'></i>"+
-								"<div class='media-body'><div class='d-sm-flex justify-content-between mb-2'><h5 class='mb-sm-0'>";
-
-							}else if(search.subject == 200){//인스타그램
-								start+= "<i class='mdi mdi-instagram'></i>"+
-								"<div class='media-body'><div class='d-sm-flex justify-content-between mb-2'><h5 class='mb-sm-0'>";
+				
 	
-							}
-						
-						$(timeLine).each(function(index){
-
-							alert("index값 "+index)
-							
-							
-								
-								
-							start+= this.postId+"<small class='text-muted ml-3'>"+this.regDate+"</small></h5>"
-									+"<div class='media-reply__link'><button class='btn btn-transparent p-0 mr-3'><i class='fa fa-thumbs-up'></i></button>"
-									+this.likeCount
-									+"<button class='btn btn-transparent text-dark font-weight-bold p-0 ml-2'>Reply</button></div></div>"
-									+"<p>"+this.post+"</p>";
-
-									alert("start "+start);
-
-									if(this.img1List!= null){
-
-									alert("img1List "+this.img1List)
-									var length = $(this.img1List).length;
-									alert("length"+length);
-									
-									for( var i = 0; i< length; i++){
-
-										alert("dpd?")
-										
-										img1 += "<a href="+this.img1LinkList[i]+"><img alt='' src=";
-										img1 += this.img1List[i] +" style='margin-left:20px; margin-top: 10px'></a>";
-
-										alert("img1 "+img1)
-									}
-
-								}
-
-								else if(this.img2List!= null){
-									
-									alert("img2List "+this.img2List)
-									var length = $(this.img2List).length;
-									alert("length"+length);
-									
-									for( var i = 0; i< length; i++){
-
-										alert("dpd1?")
-										//alert($(this.img2LinkList))
-										alert(this.img2LinkList[i]);
-
-										img2 += "<a href="+this.img2LinkList[i]+"><img alt='' src=";
-										img2 += this.img2List[i] +" style='margin-left:20px; margin-top: 10px'></a>";
-
-										alert("img2 "+img2)
-								
-									}
-						
-								}
-
-								else if(this.img3List!= null){
-
-									alert("img3List "+this.img3List)
-									var length = $(this.img3List).length;
-									alert("length"+length);
-									
-									for( var i = 0; i< length; i++){
-
-										alert("dpd2?")
-										//alert($(this.img3LinkList))
-										alert(this.img3LinkList[i]);
-
-										img3 += "<a href="+this.img3LinkList[i]+"><img alt='' src=";
-										img3 += this.img3List[i] +" style='margin-left:20px; margin-top: 10px'></a>";
-
-										alert("img3 "+img3)
-								
-									}
-									
-						
-								}
-
-								else if(this.img4List!= null){
-									
-									alert("img4List "+this.img4List)
-									var length = $(this.img4List).length;
-									alert("length"+length);
-									
-									for( var i = 0; i< length; i++){
-
-										alert("dpd3?")
-										//alert($(this.img4LinkList))
-										alert(this.img4LinkList[i]);
-
-										img4 += "<a href="+this.img4LinkList[i]+"><img alt='' src=";
-										img4 += this.img4List[i] +" style='margin-left:20px; margin-top: 10px'></a>";
-
-										alert("img4 "+img4)
-								
-									}
-						
-								}
-
-								else if(this.videoList!= null){
-
-									alert("videoList"+this.videoList)
-									var length = $(this.videoList).length;
-									alert("length"+length);
-									
-									for( var i = 0; i< length; i++){
-
-										alert("dpd4?")
-										//alert($(this.videoLinkList))
-										alert(this.videoLinkList[i]);
-
-										video += "<a href="+this.videoLinkList[i]+"><img alt='' src=";
-										video += this.videoList[i] +" style='margin-left:20px; margin-top: 10px'></a>";
-
-										alert("video "+video)
-								
-									}
-									
-						
-								}
-								
-							
-						});//timeline끝
-
-						
-						var plz = start+img1+img2+img3+img4+video+last;
-						alert(start)
-						alert(img1)
-						alert(img2)
-						alert(img3)
-						alert(img4)
-						alert(video)
-						alert(last)
-						alert("plz 확인~ "+plz)
-
-					}//if끝
+				
+			
 					
-					$("#here").append(plz);
-				}//success 끝
+				if(timeLine !=""){
+					//alert($(timeLine).length);
 
-			});//ajax
-		}//nextload
+					
+						
+					
+					$(timeLine).each(function(index){
+
+						//alert("index값 "+index)
+						
+						var start = '';
+						
+						start += "<div class='media media-reply'>";
+						
+						if(search.subject == 100){//페북
+							start+= "<i class='mdi mdi-facebook-box'></i>"+
+							"<div class='media-body'><div class='d-sm-flex justify-content-between mb-2'><h5 class='mb-sm-0'>";
+
+						}else if(search.subject == 200){//인스타그램
+							start+= "<i class='mdi mdi-instagram'></i>"+
+							"<div class='media-body'><div class='d-sm-flex justify-content-between mb-2'><h5 class='mb-sm-0'>";
+
+						}
+						
+					
+						start+= this.postId+"<small class='text-muted ml-3'>"+this.regDate+"</small></h5>"
+								+"<div class='media-reply__link'><button class='btn btn-transparent p-0 mr-3'><i class='fa fa-thumbs-up'></i></button>"
+								+this.likeCount
+								+"<button class='btn btn-transparent text-dark font-weight-bold p-0 ml-2'>Reply</button></div></div>"
+								+"<p>"+this.post+"</p>";
+
+								//alert("start "+start);
+							
+						
+
+							if(this.img1List!= null){
+
+							//alert("img1List "+this.img1List)
+							var length = $(this.img1List).length;
+							//alert("length"+length);
+								
+								for( var i = 0; i< length; i++){
+
+									//alert("dpd?")
+									
+									start += "<a href="+this.img1LinkList[i]+"><img alt='' src=";
+									start += this.img1List[i] +" style='margin-left:20px; margin-top: 10px'></a>";
+
+								}
+
+							}
+
+							else if(this.img2List!= null){
+								
+								//alert("img2List "+this.img2List)
+								var length = $(this.img2List).length;
+								//alert("length"+length);
+								
+								for( var i = 0; i< length; i++){
+
+									//alert("dpd1?")
+									//alert($(this.img2LinkList))
+									//alert(this.img2LinkList[i]);
+
+									start += "<a href="+this.img2LinkList[i]+"><img alt='' src=";
+									start += this.img2List[i] +" style='margin-left:20px; margin-top: 10px'></a>";
+
+							
+								}
+					
+							}
+
+							else if(this.img3List!= null){
+
+								//alert("img3List "+this.img3List)
+								var length = $(this.img3List).length;
+								//alert("length"+length);
+								
+								for( var i = 0; i< length; i++){
+
+									//alert("dpd2?")
+									//alert($(this.img3LinkList))
+									//alert(this.img3LinkList[i]);
+
+									start += "<a href="+this.img3LinkList[i]+"><img alt='' src=";
+									start += this.img3List[i] +" style='margin-left:20px; margin-top: 10px'></a>";
+
+							
+								}
+								
+					
+							}
+
+							else if(this.img4List!= null){
+								
+								//alert("img4List "+this.img4List)
+								var length = $(this.img4List).length;
+								//alert("length"+length);
+								
+								for( var i = 0; i< length; i++){
+
+									//alert("dpd3?")
+									//alert($(this.img4LinkList))
+									//alert(this.img4LinkList[i]);
+
+									start += "<a href="+this.img4LinkList[i]+"><img alt='' src=";
+									start += this.img4List[i] +" style='margin-left:20px; margin-top: 10px'></a>";
+
+									
+							
+								}
+					
+							}
+
+							else if(this.videoList!= null){
+
+								//alert("videoList"+this.videoList)
+								var length = $(this.videoList).length;
+								//alert("length"+length);
+								
+								for( var i = 0; i< length; i++){
+
+									
+									//alert(this.videoLinkList[i]);
+
+									start += "<a href="+this.videoLinkList[i]+"><img alt='' src=";
+									start += this.videoList[i] +" style='margin-left:20px; margin-top: 10px'></a>";
+
+							
+								}
+								
+					
+							}
+
+						start+="</div></div>"
+						$("#here").append(start);
+					});//timeline끝
+
+					
+
+
+				}//if끝
+				
+				
+			}//success 끝
+
+		});//ajax
+	}//nextload
 		
 	</script>
 	<script src="/js/custom/cafeCommon.js"></script>
+	<script src="/js/custom/snsCommon.js"></script>
 </body>
 </html>

@@ -48,8 +48,13 @@ public class MailServiceImpl implements MailService {
 	}
 
 	@Override
-	public List<Mail> getMailList(Account account) throws Exception {
-		return mailDao.getMailList(account);
+	public Map<String, Object> getAllAccountMailList(List<Account> accountList, int currentPage) throws MessagingException, FileNotFoundException, IOException {
+		return mailDao.getAllAccountMailList(accountList, currentPage);
+	}
+	
+	@Override
+	public Map<String, Object> getMailList(Account account, int currentPage) throws Exception {
+		return mailDao.getMailList(account, currentPage);
 	}
 
 	@Override
@@ -120,5 +125,4 @@ public class MailServiceImpl implements MailService {
 		
 		return true;
 	}
-
 }

@@ -66,7 +66,7 @@ public class UserInterceptor extends HandlerInterceptorAdapter {
 //			}
 //				
 //		}
-		if(requestURI.contains("/user/getUser") || requestURI.contains("/user/listUser") || requestURI.contains("/user/updateUser")) {
+		if(requestURI.contains("/user/listUser")) {
 			if(user == null) {
 				System.out.println(">>>>>비회원이 페이지 접근");
 				response.sendRedirect("/user/loginView");
@@ -75,9 +75,13 @@ public class UserInterceptor extends HandlerInterceptorAdapter {
 				return true;
 			}else {
 				System.out.println(">>>listUser 관리자 페이지 접근");
-				response.sendRedirect("/error/400");
-				
+				response.sendRedirect("/error/400");				
 			}
+		if(requestURI.contains("/user/getUser") || requestURI.contains("/user/updateUser")) {
+			System.out.println(">>>비회원이 페이지 접근");
+			response.sendRedirect("/user/loginView");
+			return false;
+		}	
 			
 		}
 		// 로그인 여부 확인
