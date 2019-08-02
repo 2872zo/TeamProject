@@ -124,22 +124,12 @@ input[type="checkbox"] {
 
 </style>
 
-
-
 	<!--**********************************
         Main wrapper start
     ***********************************-->
 
 
-	      <!--**********************************
-            Nav header start
-        ***********************************-->
-           <div class="nav-header">
-            <c:import url="/WEB-INF/views/common/brand-logo.jsp"/>
-        </div>
-        <!--**********************************
-            Nav header end
-        ***********************************-->
+
    
 <!--**********************************
             Header start
@@ -198,7 +188,7 @@ input[type="checkbox"] {
                                             
                                         </li>
                                         <hr class="my-2">
-                                        <c:if test="${user.userRoleCode=='ur100'}">
+                                      <c:if test="${user.userRoleCode=='ur101'}">
                                         <li>
                                             <a href=/user/listUser><i class="icon-list"></i> <span>회원목록</span></a>
                                         </li>

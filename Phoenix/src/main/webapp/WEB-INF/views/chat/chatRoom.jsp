@@ -18,7 +18,12 @@
 <link rel="stylesheet" href="/css/custom/scroll-top.css">
 
 <!--  ///////////////////////// CSS ////////////////////////// -->
+
 <style type="text/css">
+
+.emoticons{
+cursor: pointer;
+}
 #fileMultiple{
 display : none;
 }
@@ -37,6 +42,7 @@ display : none;
   background: #f5a142; 
   border-radius: 2px;
 }
+
 </style>
 
 </head>
@@ -57,31 +63,48 @@ display : none;
     <!--*******************
         Preloader end
     ********************-->
-
-    <!--**********************************
+    
+        <!--**********************************
         Main wrapper start
     ***********************************-->
     <div id="main-wrapper">
     
+     <!--**********************************
+            Nav header start
+        ***********************************-->
+           <div class="nav-header">
+            <c:import url="/WEB-INF/views/common/brand-logo.jsp"/>
+        </div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+        
+        
+<!-- ToolBar Start /////////////////////////////////////-->
+<jsp:include page="../common/toolbar.jsp" />
+<!-- ToolBar End /////////////////////////////////////-->
+    
+    
+           	<!--**********************************
+            Sidebar start
+        ***********************************-->
+			<c:import url="/WEB-INF/views/chat/chatSideMenu.jsp"></c:import>
+		<!--**********************************
+            Sidebar end
+        ***********************************-->
+          
+    
+
+
+    
+    <div class="content-body">
 
 <c:forEach items='${nickNameList}' var='chatFriend'>
 <input type='hidden' class='friendNickname' value='${chatFriend.friendNickname}'>
 <input type='hidden' class='friendUserNo' value='${chatFriend.userNo}'>
 </c:forEach>
-     		<!-- ToolBar Start /////////////////////////////////////-->
-		<jsp:include page="/WEB-INF/views/common/toolbar.jsp" />
-		<!-- ToolBar End /////////////////////////////////////-->
 
-       	<!--**********************************
-            Sidebar start
-        ***********************************-->
-		<div class="nk-sidebar">
-			<c:import url="/WEB-INF/views/chat/chatSideMenu.jsp"></c:import>
-		</div>
-		<!--**********************************
-            Sidebar end
-        ***********************************-->
-          
+
 		<div class="content-body" style="min-height: 600px;">
 		<div class='container-fluid'>
 		<form id='fileMultiple' action='/chat/fileUpload' enctype="multipart/form-data" method="post">
@@ -134,19 +157,18 @@ display : none;
         <div class='card-body'>
         <form id='getChatForm'>
         <input type='hidden' id='chatIndex' name='chatIndex' value='${chatIndex}'>
-        </form>
-<form id='thisChatRoomInfo'>
-    <input type='hidden' id='chatRoomInfoId' name='id' 			 value='${chatRoomInfo.id}'>
-	<input type='hidden' id='chatRoomId' 	 name='chatRoomId' 	 value='${chatRoomInfo.chatRoomId}'>
-	<input type='hidden' id='userNo' 	 	 name='userNo' 		 value='${sessionScope.user.userNo}'>
-	<input type='hidden' id='userNickname'	 name='userNickname' value='${sessionScope.user.userNickname}'>
-	<input type='hidden' id='profileImg'	 name='profileImg' 	 value='${sessionScope.user.profileImg}'>
-</form>
+   		</form>
+		        
+		<form id='thisChatRoomInfo'>
+		    <input type='hidden' id='chatRoomInfoId' name='id' 			 value='${chatRoomInfo.id}'>
+			<input type='hidden' id='chatRoomId' 	 name='chatRoomId' 	 value='${chatRoomInfo.chatRoomId}'>
+			<input type='hidden' id='userNo' 	 	 name='userNo' 		 value='${sessionScope.user.userNo}'>
+			<input type='hidden' id='userNickname'	 name='userNickname' value='${sessionScope.user.userNickname}'>
+			<input type='hidden' id='profileImg'	 name='profileImg' 	 value='${sessionScope.user.profileImg}'>
+		</form>
 	<!--  화면구성 div Start /////////////////////////////////////-->
 
-
-	<div class="panel-body" id='chat_box2' 
-	style="width:100%; ">
+	<div class="panel-body" id='chat_box2' style="width:100%; ">
 		<!-- <p class="text-left" id="chat_box" > -->
 		<div id='chat_box' wrap="hard" style='height:500px ;overflow-x:hidden; overflow-y:auto;;'>
 		<c:forEach items='${chatList}' var='chat'>
@@ -231,17 +253,16 @@ display : none;
 
 		</c:forEach>
 		
-		
 		</div>
 		<!--  </p>-->
 	</div>
 <br/>
+
 <i class="mdi mdi-file-image" style='font-size:25pt;' id='fileUploadButton'></i>
 
 <i class="mdi mdi-emoticon" style='font-size:25pt;' data-toggle="collapse"  data-target="#collapseOne" aria-expanded="true" ></i>
 
 <i class="mdi mdi-emoticon-cool" style='font-size:25pt;' data-toggle="collapse"  data-target="#collapseTwo" aria-expanded="true" ></i>
-
 
 <div class="accordion" id="accordionExample">
 
@@ -381,9 +402,9 @@ display : none;
   </div>
   </div>
         	
-        	
         </div>
 
+</div>
 </div>
 </div>
 </div>
@@ -391,7 +412,6 @@ display : none;
 </div>
 
 <!--  ///////////////////////// CSS ////////////////////////// -->
-
 
 	<!--**********************************
         Scripts
@@ -440,6 +460,7 @@ for(var i =0;i<$(".friendNickname").length;i++){
 $("#fileUploadButton").on("click", function(){
 		$("#uploadFile").click();
 });
+
 $("#uploadFile").change(function(){
 	
 	var formData = new FormData($("#fileMultiple").get(0));
@@ -468,7 +489,6 @@ $("#uploadFile").change(function(){
 			}, 
 			success : function(serverData, status) {
 						$.each(serverData, function (index, chat) {
-							alert(chat.chatMsg);
 							socket.emit("send_msg", chat);
 						});
 					},
@@ -484,95 +504,104 @@ $(function() {
 
 	//이전 채팅 읽기 리버스 무한 스크롤
 	$("#chat_box").on('scroll', function(){
-		//스크롤바 맨 위 위치
-		var top = $("#chat_box").scrollTop();
-		//채팅 남은갯수
-		var pagingChecker = $("#chatIndex").val();
-		//20당 한줄 정도 잡으면 될듯 긁어오고 아래로 스크롤링할 양
-		var scrolldownsize= 100;
-		
-		if(top===0 && pagingChecker>0 ){
-
-			var jsoned = {
-				chatRoomId : $("#chatRoomId").val(), 
-				chatIndexNow : $("#chatIndex").val(), 
-				};
-			
-			jsoned = JSON.stringify(jsoned);
+	//스크롤바 맨 위 위치
+	var top = $("#chat_box").scrollTop();
+	//채팅 남은갯수
+	var pagingChecker = $("#chatIndex").val();
+	//20당 한줄 정도 잡으면 될듯 긁어오고 아래로 스크롤링할 양
+	var scrolldownsize= 100;
 	
-			$.ajax(
-					{
-					type : "POST",
-					url : "/chat/json/getMoreChat",
-					data : jsoned,
-					contentType: "application/json", //보내는 컨텐츠의 타입
-					//dataType : "json",      //받아올 데이터의 타입 필요없음
-					success : function(serverData, status) {
-										$("#chatIndex").val(serverData.indexNow);
-										$.each(serverData.chatList, function (index, chat) {
-											var msgTagging="";
-									      	var date = new Date(chat.regDate);
-									        chat.regDate = getFormatDate(date);
+	if(top===0 && pagingChecker>0 ){
 
-									        if(chat.chatType==1){
-									        	chat.chatMsg = "<img src='/images/uploadfiles/chatFiles/"
-																+msg.chatMsg
-																+"' class='rounded' style='width: 100%; height: auto;'>";
-											}
-											
-											if (chat.userNo==$("#userNo").val()){
-												msgTagging = "<div class='row d-flex justify-content-end'>"
-													+"<div class='col-lg-2 text-right' style='padding-right: 0px;'>"
-													+chat.regDate
-													+"</div><div class='col-lg-6' style='padding-right: 20px;'>"
-													+"<div class='alert' name='"+chat.id+
-													"' style='padding:5px; width: 100%;border: 2px solid #f5a142;" 
-													+"color: #162CA8;background-color:#ffc68a; ' >"
-													+chat.chatMsg
-													+"</div></div></div>"				
-												}
-											
-											else if (chat.userNo!=$("#userNo").val()){
+	var jsoned = {
+					chatRoomId : $("#chatRoomId").val(), 
+					chatIndexNow : $("#chatIndex").val(), 
+					};
+			
+	jsoned = JSON.stringify(jsoned);
+	
+	$.ajax(
+			{
+			type : "POST",
+			url : "/chat/json/getMoreChat",
+			data : jsoned,
+			contentType: "application/json", //보내는 컨텐츠의 타입
+			//dataType : "json",      //받아올 데이터의 타입 필요없음
+			success : function(serverData, status) {
+					$("#chatIndex").val(serverData.indexNow);
+					$.each(serverData.chatList, function (index, chat) {
+						var msgTagging="";
+				      	var date = new Date(chat.regDate);
+				        chat.regDate = getFormatDate(date);
 
-												if(userNos.indexOf(chat.userNo)!=-1){
-													chat.userNickname = nickNames[userNos.indexOf(chat.userNo)]
-													} 
-												
-												msgTagging = "<div class='row d-flex justify-content-start'>"
-													+"<div class='col-lg-1'>"
-													+"<img src='/images/uploadfiles/profileimg/"
-													+chat.profileImg
-													+"'  class='rounded' style='width: 48px; height: 48px'></div>"
-													+"<div class='col-lg-6' style='padding-left: 5px;'>"
-													+chat.userNickname
-													+"<div class='alert' name='"
-													+chat.id
-													+"' style='padding:5px; width: 100%;"
-													+"margin-top:5px; border: 2px solid #f5a142; color: black;' >"
-													+chat.chatMsg
-													+"</div></div>"
-													+"<div class='col-lg-2' style='padding-left: 0px; margin-top:5px;'>"
-													+"<br/>"
-													+chat.regDate
-													+"</div></div>"
-												}
+				        if(chat.chatType==1){
+				        	chat.chatMsg = "<img src='/images/uploadfiles/chatFiles/"
+											+msg.chatMsg
+											+"' class='rounded' style='width: 100%; height: auto;'>";
+						}
 
-											$(msgTagging).prependTo("#chat_box");
+				        if(chat.chatType==2){
 
-											$("#chat_box").scrollTop(scrolldownsize);
-											
-											});
+				        	chat.chatMsg = "<img src='/images/common/700by700.png' class='rounded' "
+											+"style='background: url(\"/images/chatEmoticon/"
+											+chat.chatMsg
+											+"\"); background-size: cover; "
+											+"background-repeat: no-repeat; background-position: center;"
+											+"width:50%; margin: 1%; padding:0%;'>"
+							}
+						
+						if (chat.userNo==$("#userNo").val()){
+							msgTagging = "<div class='row d-flex justify-content-end'>"
+								+"<div class='col-lg-2 text-right' style='padding-right: 0px;'>"
+								+chat.regDate
+								+"</div><div class='col-lg-6' style='padding-right: 20px;'>"
+								+"<div class='alert' name='"+chat.id+
+								"' style='padding:5px; width: 100%;border: 2px solid #f5a142;" 
+								+"color: #162CA8;background-color:#ffc68a; ' >"
+								+chat.chatMsg
+								+"</div></div></div>"				
+							}
+						
+						else if (chat.userNo!=$("#userNo").val()){
 
-									},
-					error : function(request,status,error){
-								        alert("에러남 : "+error);
-								        //socket.emit("send_who", $("#userId").text()+"콘솔에찍히는메시지임");
-								       }
-					}
-				);
-			}
+							if(userNos.indexOf(chat.userNo)!=-1){
+								chat.userNickname = nickNames[userNos.indexOf(chat.userNo)]
+								} 
+							
+							msgTagging = "<div class='row d-flex justify-content-start'>"
+								+"<div class='col-lg-1'>"
+								+"<img src='/images/uploadfiles/profileimg/"
+								+chat.profileImg
+								+"'  class='rounded' style='width: 48px; height: 48px'></div>"
+								+"<div class='col-lg-6' style='padding-left: 5px;'>"
+								+chat.userNickname
+								+"<div class='alert' name='"
+								+chat.id
+								+"' style='padding:5px; width: 100%;"
+								+"margin-top:5px; border: 2px solid #f5a142; color: black;' >"
+								+chat.chatMsg
+								+"</div></div>"
+								+"<div class='col-lg-2' style='padding-left: 0px; margin-top:5px;'>"
+								+"<br/>"
+								+chat.regDate
+								+"</div></div>"
+							}
+
+									$(msgTagging).prependTo("#chat_box");
+
+									$("#chat_box").scrollTop(scrolldownsize);
+									
+									});
+
+							},
+				error : function(request,status,error){
+							        alert("에러남 : "+error);
+							       }
+				}
+			);
+	}
 		
-	});
+});
 	
 	$("#msg").keydown(function(key) {
 	    //해당하는 키가 엔터키(13) 일떄
@@ -616,7 +645,6 @@ $(function() {
 									},
 					error : function(request,status,error){
 								        alert("에러남 : "+error);
-								        //socket.emit("send_who", $("#userId").text()+"콘솔에찍히는메시지임");
 								       }
 					}
 				);
@@ -709,7 +737,6 @@ $(function() {
 	
 	<!-- 채팅 사이드 툴바 스크립트 -->
 	<script src="/js/custom/chatSideBar.js"></script>
-
 
 </body>
 </html>

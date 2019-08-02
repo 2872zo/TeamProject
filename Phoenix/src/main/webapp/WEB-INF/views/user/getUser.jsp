@@ -156,13 +156,13 @@ input[type="checkbox"] {
 </style>
 
 <body>
-		<c:if test="${user.userRoleCode=='ur100'}">
+		
 		<div class="nk-sidebar">
 					
 			<c:import url="/WEB-INF/views/common/userAdminMenubar.jsp"></c:import>
 			
 		</div>
-		</c:if>
+		
 <div class="content-body" style="min-height: 743px;">
 
 

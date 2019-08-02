@@ -92,8 +92,9 @@ public class CafeManageController {
 
 		Map<String, Object> map = cafeManageService.getCafeMemberList(search);
 		List memberList = (List) map.get("memberList");
-		List gradeList = (List) map.get("gradeList");
+		List<CafeGrade> gradeList = (List) map.get("gradeList");
 		int totalCount = (int) map.get("totalCount");
+		search.setCafeNo(gradeList.get(0).getCafeNo());
 		Page page = new Page(search.getCurrentPage(), totalCount, pageUnit, pageSize);
 		model.addAttribute("memberList", memberList);
 		model.addAttribute("gradeList", gradeList);
@@ -362,11 +363,11 @@ public class CafeManageController {
 					}
 				}
 
-			} else if (element.contains("newBoard")) // 새로생긴애 newBoardName
+			} else if (element.contains("newBoardName")) // 새로생긴애 newBoardName
 			{
 //element.split("e")[2]
 				for (int i = 0; i < newBoard.size(); i++) {
-					if (newBoard.get(i).getBoardNo() == Integer.parseInt(element.split("d")[1])) {
+					if (newBoard.get(i).getBoardNo() == Integer.parseInt(element.split("e")[2])) {
 						newBoard.get(i).setBoardName(request.getParameter(element));
 					}
 				}
@@ -722,9 +723,11 @@ public class CafeManageController {
 
 //준호
 	@RequestMapping(value = "/{cafeURL}/manage/updateCafeInfo", method = RequestMethod.POST)
-	public String updateCafeInfo(@ModelAttribute Cafe cafe, Model model,
-			@RequestParam("uploadFile2") MultipartFile uploadFile2,
-			@RequestParam("uploadFile3") MultipartFile uploadFile3) throws Exception {
+	public String updateCafeInfo(@PathVariable String cafeURL,
+								 @ModelAttribute Cafe cafe, Model model,
+								 @RequestParam("uploadFile2") MultipartFile uploadFile2,
+								 @RequestParam("uploadFile3") MultipartFile uploadFile3
+								 ) throws Exception {
 
 		System.out.println("/updateCafeInfoView : POST");
 
@@ -753,22 +756,15 @@ public class CafeManageController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		
 		cafe.setCafeIcon(fileName3);
-
+		
+		cafeManageService.updateCafeInfo(cafe);
+		
 		System.out.println("파일명좀 알려줘~" + fileName3);
 
-		cafeManageService.updateCafeInfo(cafe);
-
-		Cafe cafe2 = cafeManageService.getCafeInfo(cafe.getCafeNo());
-
-		cafe = cafe2;
-
-		System.out.println("카페2좀 찍어줘");
-		System.out.println(cafe2);
-
 		model.addAttribute("cafeURL", cafe.getCafeURL());
-		model.addAttribute("cafe", cafe2);
+
 		return "cafe/updateCafeInfoView";
 	}
 

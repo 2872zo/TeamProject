@@ -52,8 +52,6 @@ $("#updateChatRoomName").click(function() {
 								"방 제목이 " + inputValue+" 로 변경되었습니다.", "success");
 									},
 					error : function(request,status,error){
-										alert(request);
-										alert(status);
 								        alert("에러남 : "+error);
 								       }
 					}
@@ -79,74 +77,87 @@ $(".inviteList").on("click" , function() {
 });
 //초대하기 눌렀을 때
 $("#doInviting").on("click" , function() {
+	swal({
+		  title: "채팅방에 초대.",
+		  text: "선택하신 친구분들이 채팅방에 초대됩니다.",
+		  type: "info",
+		  showCancelButton: true,
+		  confirmButtonClass: "btn-info",
+		  confirmButtonText: "확인",
+		  cancelButtonText: "취소",
+		  closeOnConfirm: false
+		},
+		function(){
+		 
+			var jsonList = new Array();
 
-	var jsonList = new Array();
-
-	var i = 0;
-	$(".inviteList").each(function(index) {
-		if($(this).css( "background-color" )=="rgb(245, 161, 66)"){
-			alert($("#chatRoomId").val());
-			var userNoJson = $(this).attr("id");
-			var nickNameJson = $(this).attr("name");
-			var profileImgJson = $(this).attr("value");
-			var roomIdJson = $("#chatRoomId").val();
-			var beJson = { chatRoomId : roomIdJson,
-							userNo : userNoJson,
-							userNickname : nickNameJson, 
-							profileImg : profileImgJson
-							};
+			var i = 0;
+			$(".inviteList").each(function(index) {
+				if($(this).css( "background-color" )=="rgb(245, 161, 66)"){
+					var userNoJson = $(this).attr("id");
+					var nickNameJson = $(this).attr("name");
+					var profileImgJson = $(this).attr("value");
+					var roomIdJson = $("#chatRoomId").val();
+					var beJson = { chatRoomId : roomIdJson,
+									userNo : userNoJson,
+									userNickname : nickNameJson, 
+									profileImg : profileImgJson
+									};
+					
+					jsonList[i]=beJson;
+					
+					i+=1;
+					$(this).attr("class","row d-flex justify-content-start");
+					$(this).css( "background-color","white");
+					$(this).attr("name","");
+					$(this).attr("value","");
+					$(this).attr("id","");
+					$("#joinerList").append($(this));
+				}
+			});
+			jsonList = JSON.stringify(jsonList);
 			
-			//beJson = JSON.stringify(beJson);
-			jsonList[i]=beJson;
-			//nickNameList[i]=$(this).attr("name");
-			//userNoList[i]=$(this).attr("id");
-			//imgFileList[i]=$(this).attr("value");
+			$.ajax(
+					{
+					type : "POST",
+					url : "/chat/json/inviteFriend",
+					data : jsonList,
+					contentType: "application/json", //보내는 컨텐츠의 타입
+					//dataType : "json",      //받아올 데이터의 타입 필요없음
+					success : function(serverData, status) {
+						swal("초대성공", i+" 명이 초대됐어요", "success")
+									},
+					error : function(request,status,error){
+										alert(status);
+								        alert("에러남 : "+error);
+								       }
+					}
+				);
 			
-			i+=1;
-			$(this).attr("class","row d-flex justify-content-start");
-			$(this).css( "background-color","white");
-			$(this).attr("name","");
-			$(this).attr("value","");
-			$(this).attr("id","");
-			$("#joinerList").append($(this));
-		}
-	});
-	jsonList = JSON.stringify(jsonList);
-	//alert(jsonList);
-	//alert(nickNameList);
-	//alert(userNoList);
-	//alert(imgFileList);
+		});
 	
-	$.ajax(
-			{
-			type : "POST",
-			url : "/chat/json/inviteFriend",
-			data : jsonList,
-			contentType: "application/json", //보내는 컨텐츠의 타입
-			//dataType : "json",      //받아올 데이터의 타입 필요없음
-			success : function(serverData, status) {
-								//alert(status);
-								//alert("server에서 온 Data : \n" + serverData);
-								//alert(serverData.regDate);
-								//targetTag.text(checker);	
-								//socket.emit("send_msg", $("#chatRoomNo").val()+":"+$("#msg").val()+serverData.regDate);
-								//socket.emit("send_msg", $("#chatRoomNo").val()+"-"+JSON.stringify(serverData));
-								//socket.emit("send_msg", serverData); 
-								// $("#msg").val("");
-							},
-			error : function(request,status,error){
-								alert(status);
-						        alert("에러남 : "+error);
-						       }
-			}
-		);
-
 });
 
 //방 나가기
 $("#leaveChatRoom").on("click" , function() {
-	//$(self.location).attr("href","/chat/leaveChatRoom");
-	$("#thisChatRoomInfo").attr("method" , "POST").attr("action" , "/chat/leaveChatRoom").submit();
+	
+	swal({
+		  title: "나가실건가요?",
+		  text: "나가시면 되돌릴 수 없어요",
+		  type: "warning",
+		  showCancelButton: true,
+		  confirmButtonClass: "btn-danger",
+		  confirmButtonText: "나갈거야!",
+		  cancelButtonText: "취소",
+		  closeOnConfirm: false
+		},
+		function(){
+		  swal("퇴장", "다음에 만나요", "success");
+		  setTimeout(function() {
+			  $("#thisChatRoomInfo").attr("method" , "POST").attr("action" , "/chat/leaveChatRoom").submit();
+			}, 1500);
+		});
+	
 });
 //이모티콘 입력
 $(".emoticons").on("click" , function() {

@@ -27,6 +27,7 @@ public class CafeMember {
 	private Date blockStartDate;
 	private Date blockEndDate;
 	private String blockReason;
+	private String profileImg;
 	private ArrayList<CafeMemberBlock> blocks;
 	private List<CafeMember> cafeMemberList;
 	private boolean memberNicknameFlag;
@@ -152,6 +153,12 @@ public class CafeMember {
 	}
 	public void setBlockReason(String blockReason) {
 		this.blockReason = blockReason;
+	}
+	public String getProfileImg() {
+		return profileImg;
+	}
+	public void setProfileImg(String profileImg) {
+		this.profileImg = profileImg;
 	}
 	public ArrayList<CafeMemberBlock> getBlocks() {
 		return blocks;

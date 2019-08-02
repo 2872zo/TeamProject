@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.phoenix.mvc.common.Page;
 import com.phoenix.mvc.common.Search;
+import com.phoenix.mvc.service.domain.TimeLine;
 import com.phoenix.mvc.service.sns.impl.SnsServiceImpl;
 
 @RestController
@@ -37,6 +38,7 @@ public class SnsRestController {
 			search.setFbPw("011!wlslgogo");
 			
 		}
+		
 			System.out.println(search);
 
 			Map returnMap = new HashMap();
@@ -46,10 +48,22 @@ public class SnsRestController {
 			System.out.println("map이욤 : " + map);
 
 			returnMap.put("timeLine", map.get("timeLine"));
-			returnMap.put("count", map.get("count"));
 			returnMap.put("search", map.get("search"));
 
 			return returnMap;
+		
+	}
+	
+	@RequestMapping(value = "/json/writeFB")
+	public TimeLine writeFB (@RequestBody Search search) {
+		
+		System.out.println("/json/writeFB 시작!");
+		
+		TimeLine timeLine = snsService.writeFb(search);
+		
+		System.out.println("값 확인 "+timeLine);
+		
+		return timeLine;
 		
 	}
 

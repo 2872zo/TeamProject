@@ -53,26 +53,40 @@ img {
 	<!--*******************
         Preloader end
     ********************-->
-
-
-	<!--**********************************
+    
+    <!--**********************************
         Main wrapper start
     ***********************************-->
 	<div id="main-wrapper">
+    
 
-		<!-- ToolBar Start /////////////////////////////////////-->
-		<jsp:include page="/WEB-INF/views/common/toolbar.jsp" />
-		<!-- ToolBar End /////////////////////////////////////-->
 
-		<!--**********************************
+ <!--**********************************
+            Nav header start
+        ***********************************-->
+           <div class="nav-header">
+            <c:import url="/WEB-INF/views/common/brand-logo.jsp"/>
+        </div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+        
+        
+<!-- ToolBar Start /////////////////////////////////////-->
+<jsp:include page="../common/toolbar.jsp" />
+<!-- ToolBar End /////////////////////////////////////-->
+
+
+<!--**********************************
             Sidebar start
         ***********************************-->
-		<div class="nk-sidebar">
+		
 			<c:import url="/WEB-INF/views/chat/chatSideMenu.jsp"></c:import>
-		</div>
+		
 		<!--**********************************
             Sidebar end
         ***********************************-->
+		
 		<!--**********************************
             Content body start
         ***********************************-->
@@ -82,7 +96,6 @@ img {
 				<div class='container-fluid'>
 			<div class="row">
 				<div class="col-lg-8">
-				
 
 					<div class='card'>
 					<div class='card-body'>
@@ -243,7 +256,7 @@ img {
 					
 
 						<div class='card'>
-							<div class='card-body'>8888주ㅡㄹㅇ야</div>
+							<div class='card-body'></div>
 						</div>
 					
 
@@ -265,8 +278,6 @@ img {
 		<div class="footer">
 			<div class="copyright">
 				<p>
-					Copyright &copy; Designed & Developed by <a
-						href="https://themeforest.net/user/quixlab">Quixlab</a> 2018
 				</p>
 			</div>
 		</div>

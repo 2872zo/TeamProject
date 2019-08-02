@@ -17,6 +17,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.phoenix.mvc.common.Search;
@@ -30,15 +31,22 @@ public class SnsServiceImpl implements SnsService {
 	@Autowired
 	@Qualifier("snsDaoImpl")
 	private SnsDao snsDao;
+	
+	
+	@Value("${webDriverId}")
+	private String WEB_DRIVER_ID;
+	
+	@Value("${webDriverPath}")
+	private String WEB_DRIVER_PATH;
 
 	private WebDriver driver;
 	private WebElement webElement;
 
-	public static final String WEB_DRIVER_ID = "webdriver.chrome.driver";
+	//public static final String WEB_DRIVER_ID = "webdriver.chrome.driver";
 	// public static final String WEB_DRIVER_PATH="C:/z.utility/chromedriver.exe";
-	public static final String WEB_DRIVER_PATH = "C:/Users/wlsgm/OneDrive/바탕 화면/java/chromedriver.exe";
+	//public static final String WEB_DRIVER_PATH = "C:/Users/wlsgm/OneDrive/바탕 화면/java/chromedriver.exe";
 
-	private String base_url;
+	private String url;
 
 	public SnsServiceImpl() {
 		System.out.println(getClass().getName() + "default Constuctor");
@@ -49,60 +57,65 @@ public class SnsServiceImpl implements SnsService {
 		
 		try {
 
-		//크롬세팅
-		System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
+			//크롬세팅
+			System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
+			
+			//팝업옵션해제
+			Map<String, Object> prefs = new HashMap<String, Object>();
+			prefs.put("profile.default_content_setting_values.notifications", 2);
+			ChromeOptions options = new ChromeOptions();
+			options.setExperimentalOption("prefs", prefs);
+			//options.addArguments("headless");//창안켜줭~
+			options.setCapability("ignoreProtectedModeSettings", true);
+			driver = new ChromeDriver(options);
+
+			
+			url = "https://ko-kr.facebook.com";
+			
+			//페이스북접속
+			driver.get(url);
+
+			//로그인
+			webElement = driver.findElement(By.id("email"));
+			webElement.sendKeys(search.getFbId());
+
+			webElement = driver.findElement(By.id("pass"));
+			webElement.sendKeys(search.getFbPw());
+
+			webElement = driver.findElement(By.id("loginbutton"));
+			webElement.submit();
 		
-		//팝업옵션해제
-		Map<String, Object> prefs = new HashMap<String, Object>();
-		prefs.put("profile.default_content_setting_values.notifications", 2);
-		ChromeOptions options = new ChromeOptions();
-		options.setExperimentalOption("prefs", prefs);
-		options.setCapability("ignoreProtectedModeSettings", true);
-		driver = new ChromeDriver(options);
 
-		
-		base_url = "https://ko-kr.facebook.com";
-		
-		//페이스북접속
-		driver.get(base_url);
-
-		//로그인
-		webElement = driver.findElement(By.id("email"));
-		webElement.sendKeys(search.getFbId());
-
-		webElement = driver.findElement(By.id("pass"));
-		webElement.sendKeys(search.getFbPw());
-
-		webElement = driver.findElement(By.id("loginbutton"));
-		webElement.submit();
 		
 		//////////////////////////////////////////////////////////////
 		List <TimeLine> list = new ArrayList<TimeLine>();
 		
 		WebElement end = driver.findElement(By.id("pageFooter"));
-
-			//System.out.println("===="+k+"번째 스크롤====");
-		if(search.getCurrentPage()==0) {
-		
-			((JavascriptExecutor)driver).executeScript("window.scrollTo(0,document.body.scrollHeight)");
-			WebDriverWait wait = new WebDriverWait(driver, 250);
-			wait.until(ExpectedConditions.invisibilityOf(end));
-		}
-		
 		WebElement feed = driver.findElement(By.cssSelector("div[role='feed']")); // 피드 전체
-		List<WebElement> each = feed.findElements(By.cssSelector("div[class='_5pcr userContentWrapper']"));// 각자피드
+		List<WebElement> checkSize = feed.findElements(By.cssSelector("div[class='_5pcr userContentWrapper']"));
 		
-		if(search.getCurrentPage()!=0) {
-			for( int k = each.size(); k<search.getCurrentPage(); k++) {
-				((JavascriptExecutor)driver).executeScript("window.scrollTo(0,document.body.scrollHeight)");
-				WebDriverWait wait = new WebDriverWait(driver, 300);
-				wait.until(ExpectedConditions.invisibilityOf(end));
-				
-			}
+		
+		int eachSize = checkSize.size();
+		
+		System.out.println(checkSize.size()+" each 사이즈 임");
+		
+		
+		while(eachSize<=6) {//
+			
+			((JavascriptExecutor)driver).executeScript("window.scrollBy(0,200)");
+			WebDriverWait wait = new WebDriverWait(driver, 10);
+			wait.until(ExpectedConditions.invisibilityOf(end));
+			List<WebElement> size = feed.findElements(By.cssSelector("div[class='_5pcr userContentWrapper']"));
+			System.out.println("while문 안에 사이즈 체크 "+ size.size());
+			eachSize+=size.size();
+			
 		}
 		
-			
-			System.out.println(" 페이스북 포스트수 : " + each.size()); // 포스트 수
+		
+		
+		List<WebElement> each = feed.findElements(By.cssSelector("div[class='_5pcr userContentWrapper']"));
+		
+		System.out.println(" 페이스북 포스트수 : " +each.size()); // 포스트 수
 			
 			int count=0;
 			
@@ -120,7 +133,8 @@ public class SnsServiceImpl implements SnsService {
 					List<String> videoList  = new ArrayList<String>();
 					List<String> videoLinkList = new ArrayList<String>();
 					
-					newTimeLine.setPostSize(each.size());
+					newTimeLine.setPostSize(each.size()+search.getCurrentPage());
+					System.out.println("타임라인 사이즈 궁금쓰 "+newTimeLine.getPostSize());
 		
 					System.out.println(i + " 번째 포스트 "); // 포스트 수
 					List<WebElement> postId = each.get(i).findElements(By.cssSelector("h5[class='_7tae _14f3 _14f5 _5pbw _5vra']"));
@@ -129,6 +143,7 @@ public class SnsServiceImpl implements SnsService {
 						System.out.println("작성자ID "+ (each.get(i).findElement(By.cssSelector("h5[class='_7tae _14f3 _14f5 _5pbw _5vra']")).getText()));
 						newTimeLine.setPostId(each.get(i).findElement(By.cssSelector("h5[class='_7tae _14f3 _14f5 _5pbw _5vra']")).getText());
 					}
+					
 					
 					List<WebElement> reactionId = each.get(i).findElements(By.cssSelector("h6[class='_7tae _14f3 _14f5 _5pbw _5vra']"));
 					
@@ -178,6 +193,7 @@ public class SnsServiceImpl implements SnsService {
 					List<WebElement> video = common.findElements(By.tagName("video"));
 					System.out.println("해당피드동영상 : " + video.size());
 					newTimeLine.setVideo1Size(video.size());
+					List<WebElement> videoImg = common.findElements(By.className("_3m6-"));
 		
 					List<WebElement> img1 = common.findElements(By.cssSelector("a[class='_4-eo _2t9n _50z9']"));
 					System.out.println("해당피드사진1: " + img1.size());
@@ -214,9 +230,13 @@ public class SnsServiceImpl implements SnsService {
 								if(linkWrap.size() != 0) {//클릭안되는 영상도 존재함
 								List<WebElement> link = linkWrap.get(j).findElements(By.className("_54nh"));
 								WebElement videoLink = link.get(3).findElement(By.className("_xd6"));
+								
+						
 								//System.out.println(videoLink.getAttribute("value"));
 								
-								videoList.add(video.get(j).getAttribute("src"));
+								
+								
+								videoList.add(videoImg.get(j).getAttribute("src"));
 								videoLinkList.add(videoLink.getAttribute("value"));
 								newTimeLine.setVideoList(videoList);
 								newTimeLine.setVideoLinkList(videoLinkList);
@@ -287,7 +307,8 @@ public class SnsServiceImpl implements SnsService {
 								WebElement videoLink = link.get(3).findElement(By.className("_xd6"));
 								//System.out.println(videoLink.getAttribute("value"));
 								
-								videoList.add(video.get(j).getAttribute("src"));
+								//videoList.add(video.get(j).getAttribute("src"));
+								videoList.add(videoImg.get(j).getAttribute("src"));
 								videoLinkList.add(videoLink.getAttribute("value"));
 								newTimeLine.setVideoList(videoList);
 								newTimeLine.setVideoLinkList(videoLinkList);
@@ -346,19 +367,100 @@ public class SnsServiceImpl implements SnsService {
 					}//for문
 				
 		search.setSubject(100);//페이스북100	
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
+		
+		
 		map.put("timeLine",list);
-		map.put("count", each.size());
 		map.put("search", search);
 		
 
 		return map;
+		
 		}finally {
 			//driver.close();
 		}
 	
 
 
+	}
+	
+	private WebDriver headlessConnection(){
+		
+		System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
+		
+		//팝업옵션해제
+		Map<String, Object> prefs = new HashMap<String, Object>();
+		prefs.put("profile.default_content_setting_values.notifications", 2);
+		ChromeOptions options = new ChromeOptions();
+		options.setExperimentalOption("prefs", prefs);
+		options.setCapability("ignoreProtectedModeSettings", true);
+		options.addArguments("headless");//창안켜줭~
+		WebDriver driver = new ChromeDriver(options);
+		WebDriverWait wait = new WebDriverWait(driver, 10);
+		
+		return driver;
+	}
+	
+	private WebDriver connection(){
+		
+		//크롬세팅
+		System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
+				
+		//팝업옵션해제
+		Map<String, Object> prefs = new HashMap<String, Object>();
+		prefs.put("profile.default_content_setting_values.notifications", 2);
+		ChromeOptions options = new ChromeOptions();
+		options.setExperimentalOption("prefs", prefs);
+		options.setCapability("ignoreProtectedModeSettings", true);
+		driver = new ChromeDriver(options);
+		
+		
+		return driver;
+	}
+	
+	private WebElement fbLogIn(Search search){
+		
+		url = "https://ko-kr.facebook.com";
+		
+		//페이스북접속
+		driver.get(url);
+
+		//로그인
+		webElement = driver.findElement(By.id("email"));
+		webElement.sendKeys(search.getFbId());
+
+		webElement = driver.findElement(By.id("pass"));
+		webElement.sendKeys(search.getFbPw());
+
+		webElement = driver.findElement(By.id("loginbutton"));
+		webElement.submit();
+		
+		return webElement;
+	}
+	
+	public TimeLine writeFb(Search search) {
+		
+		//크롬연결~
+		WebDriver driver = this.connection();
+				
+		//페북 로그인
+		this.fbLogIn(search);
+		
+		webElement = driver.findElement(By.name("xhpc_message"));
+		webElement.sendKeys(search.getSearchKeyword());
+		webElement.submit();
+		
+		
+		TimeLine timeLine = new TimeLine();
+
+		timeLine.setPost(search.getSearchKeyword());
+		timeLine.setPassword(search.getFbPw());
+		timeLine.setPostId(search.getFbId());
+		
+		
+		return timeLine;
+		
 	}
 }

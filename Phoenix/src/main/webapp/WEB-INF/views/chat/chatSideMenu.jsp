@@ -11,6 +11,7 @@ li:hover {
 	
 }
 </style>
+<div class="nk-sidebar">
 <div class="nk-nav-scroll">
 	<ul class="metismenu" id="menu">
 		<li id='friendsList'><a id="statistics"
@@ -30,4 +31,4 @@ li:hover {
 
 	</ul>
 </div>
-
+</div>

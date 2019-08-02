@@ -76,43 +76,87 @@
 <div class='card'>
 <div class='card-body'>
 
-<table class="table table-borderless">
-	<thead>
-    <tr>
-  	  <th scope="col">멤버번호</th>
-      <th scope="col">카페번호</th>
-      <th scope="col">닉네임</th>
-      <th scope="col">등급명</th>
-      <th scope="col">방문횟수</th>
-      <th scope="col">멤버상태</th>
-    </tr>
-	</thead>
-	<tbody>
-  <tr>
-  	<th scope="row">${member.memberNo}</th>
-	<td>${member.cafeNo}</td>
-	<td>${member.memberNickname}</td>
-	<td>${member.gradeName}</td>
-	<td>${member.visitCount}</td>
-	<td>
-      <c:if test='${cafeMember.memberStatusCode=="cs100"}'>활동</c:if>
-      <c:if test='${cafeMember.memberStatusCode=="cs101"}'>정지</c:if>
-      <c:if test='${cafeMember.memberStatusCode=="cs102"}'>탈퇴</c:if>
-      </td>
-  </tr>
-	</tbody>
-</table>
 
 
 
-<c:if test='${member.memberGrade != "cg100" && member.memberStatusCode!="cs102"}'>
 
+
+
+
+
+
+<div class="card">
+<div class="card-body">
+<div class='row'>
+<div class='col-lg-2'>
+<img src="/images/common/700by700.png"
+	     class="rounded"
+	     style="background: url('/images/uploadfiles/profileimg/${member.profileImg}'); 
+	     background-size: cover; 
+	     background-repeat: no-repeat; 
+	     background-position: center;
+	     width:100%; 
+	     margin: 1%;
+	     padding:0%;">
+</div>
+			<div class='col-lg-7'>
+				<h5 class="card-title">
+${member.memberNickname}
+				</h5>
+				<p class="card-text">${member.gradeName}</p>
+				
+				
+				<p class="card-text">
+				<c:if test='${member.memberStatusCode=="cs100"}'>
+				<button type="button" class='btn btn-success' disabled >활동</button></c:if>
+			    <c:if test='${member.memberStatusCode=="cs101"}'>
+			    <button type="button" class='btn btn-danger' disabled >정지</button></c:if>
+			    <c:if test='${member.memberStatusCode=="cs102"}'>
+			    <button type="button" class='btn btn-secondary' disabled >탈퇴</button></c:if>
+			    </p>
+				
+			</div>
+			<div class='col-lg-3'>
+			<p class="card-text">${member.visitCount}</p>
+				<p class="card-text">${member.postCount}</p>
+			<p class="card-text">${member.replyCount}</p>
+			</div>
+			
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+</div>
+
+
+<c:if test='${member.memberGrade != "cg100" && member.memberStatusCode=="cs100"}'>
+<div class='card'>
+<div class='card-body'>
 <div class="alert alert-primary" role="alert">
   <h4 class="alert-heading">멤버등급변경</h4>
   <p>해당 카페 멤버가 클릭한 등급으로 변경됩니다.</p>
   <div class='d-flex justify-content-center'>
 <c:forEach var='cafeGrade' items='${cafeGrades}'>
-<c:if test='${cafeGrade.memberGradeCode != "cg100"}'>
+<c:if test="${cafeGrade.memberGradeCode !='cg100'}">
 <button type="button" class='changeMemberGrade btn btn-${ cafeGrade.memberGradeCode==member.memberGrade ? "" : "outline-" }${ cafeGrade.memberGradeCode=="cg101" ? "info" : "primary" }' value='${cafeGrade.cafeGradeNo}'>
 ${cafeGrade.gradeName}
 </button>&nbsp;
@@ -129,11 +173,15 @@ ${cafeGrade.gradeName}
 <input type='hidden' name='memberNo' value='${member.memberNo}'>
 <input type='hidden' name='cafeMemberGradeNo' id='cafeMemberGradeNo' value='0'>
 </form>
-
+</div>
+</div>
 </c:if>
 
 <br/>
 
+
+<div class='card'>
+<div class='card-body'>
 <c:if test="${empty blocks}" >
 <br/>
 정지당한 내역이 없습니다.
@@ -143,7 +191,6 @@ ${cafeGrade.gradeName}
 <table class="table table-borderless">
 	<thead>
     <tr>
-  	  <th scope="col">정지번호</th>
   	  <th scope="col">정지시작일</th>
       <th scope="col">정지종료일</th>
       <th scope="col">정지기간</th>
@@ -154,8 +201,8 @@ ${cafeGrade.gradeName}
 	<c:set var="i" value="0" />
   <c:forEach var="block" items="${blocks}">
   <c:set var="i" value="${ i+1 }" />
+  <input type ='hidden' class='blockNo' value='${block.blockNo}'>
   <tr>
-  	<th scope="row" class='blockNo' id='blockNo${i}'>${block.blockNo}</th>
   	<td>${block.blockStartDate}</td>
 	<td>${block.blockEndDate}</td>
 	<td>${block.period} 일</td>
@@ -170,9 +217,6 @@ ${cafeGrade.gradeName}
 		
 <br/>
 
-
-
-
 <c:if test='${member.memberStatusCode=="cs100" && member.memberGrade != "cg100"}'>
 <div class="alert alert-danger">
   <h4 class="alert-heading">멤버정지메뉴</h4>
@@ -185,8 +229,7 @@ ${cafeGrade.gradeName}
 <input type='hidden' name='cafeNo' value='${member.cafeNo}' >
 <input type='hidden' value='${member.memberNo}' name='memberNo'>
 <div class="input-group mb-3">
-	  <div class="input-group-prepend">
-	   <select class="selectpicker custom-select-lg" aria-label="Example select with button addon" name='blockPeriod'>
+	   <select class="selectpicker" aria-label="Example select with button addon" name='blockPeriod'>
 	    <option value="1" selected>01일</option>
 	    <option value="3" >03일</option>
 	    <option value="5" >05일</option>
@@ -195,13 +238,8 @@ ${cafeGrade.gradeName}
 	    <option value="30" >30일</option>
 	    <option value="365250" >약 천년</option>	    
 	   </select>
-	    </div>
-	    	 <div class="input-group-append">
-	  &nbsp;<input type="text" class="form-control-plaintext" placeholder="정지사유를 (500자 이하)입력해주세요" aria-label="Text input with dropdown button" name='blockReason' id="blockReason" style='background-color: white;'>
-	 </div>
-	 <div class="input-group-append">
+	  &nbsp;<input type="text" class="form-control" placeholder="정지사유를 (500자 이하)입력해주세요" aria-label="Text input with dropdown button" name='blockReason' id="blockReason" style='background-color: white;'>
 	    &nbsp;<button class="btn btn-sm btn-outline-danger" type="button" id="blocking">정지</button>
-	 </div>
 	</div>
 </form>
 </div>
@@ -263,7 +301,7 @@ $(function() {
 	$("#unBlockReason").attr("placeholder", "기존 정지사유 : "+$("#blockReason1").text());
 
 	$("#updateBlock").on("click" , function() {
-		$("#blockNo").val($("#blockNo1").text());
+		$("#blockNo").val($($(".blockNo")[0]).val());
 		$("#memberBlockupdateForm").attr("method" , "POST").attr("action" , "/cafe/"+"${cafeURL}"+"/manage/updateCafeMemberBlock").submit();
 	});
 	

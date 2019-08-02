@@ -16,6 +16,7 @@
 <link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
 <link href="/css/style.css" rel="stylesheet">
 <link rel="stylesheet" href="/css/custom/scroll-top.css">
+<link rel="stylesheet" href="/plugins/sweetalert/css/sweetalert.css">
 
 
 		</head>
@@ -78,7 +79,7 @@ code {
 							<hr style="border: solid 1px gray;">		
 								<div class="basic-form">			
 								<br>
-									<form>
+									<form id="cafeUpdate">
 
 
 								<input type="hidden" name="cafeNo" value="${cafe.cafeNo }"/>
@@ -117,7 +118,7 @@ code {
                                             <label class="col-lg-4 col-form-label" for="val-bannerImg"><h5>메인 이미지 </h5>
                                             </label>                                           
                                             <div class="col-lg-6">
-                                               <div><img src="/images/uploadFiles/mainImg/${cafe.mainImg}" width="150"; height="150px"; id="main"/>
+                                               <div><img src="/images/uploadFiles/mainImg/${cafe.mainImg}" id="main" width="150"; height="150px"; id="main"/>
                                                </div>
                                                 <input type="file" class="form-control-file" id="uploadFile2" name="uploadFile2" >
                                                </div>
@@ -126,7 +127,7 @@ code {
                                             <label class="col-lg-4 col-form-label" for="val-bannerImg"><h5>카페 아이콘 </h5>
                                             </label>                                           
                                             <div class="col-lg-6">
-                                               <div><img src="/images/uploadFiles/cafeIcon/${cafe.cafeIcon}" width="150"; height="150px"; id="icon"/>
+                                               <div><img src="/images/uploadFiles/cafeIcon/${cafe.cafeIcon}" id="icon" width="150"; height="150px"; id="icon"/>
                                                </div>
                                                 <input type="file" class="form-control-file" id="uploadFile3" name="uploadFile3">
                                                </div>
@@ -149,7 +150,8 @@ code {
 
 				  				<div class="form-group row">
                                 	<div class="col-lg-8 ml-auto">
-                                  		<button type="submit" class="btn btn-primary" id="updateCafeInfo">수정</button>
+                                  		<button type="button" class="btn btn-primary" id="update">수정</button>
+                                  		<!--  <button type="button" class="btn btn-primary" id="update">수정</button>-->
                                   		<a class="btn btn-success btn" href="#" role="button">취&nbsp;소</a>
                                     </div>
                                    </div>
@@ -176,13 +178,99 @@ code {
 	<script src="/js/styleSwitcher.js"></script>
 	<!-- 메뉴바 이용을 위한 스크립트 -->
 	<script src="/js/custom/scroll-top.js"></script>
+	<script src="/plugins/sweetalert/js/sweetalert.min.js"></script>
 	
 	<script type="text/javascript">
 
 
 	//유효성 검사
+
+			function readURL(input) {
+				 if (input.files && input.files[0]) {
+				  var reader = new FileReader();
+				  
+				  reader.onload = function (e) {
+				   $('#main').attr('src', e.target.result);  
+				  }
+				  
+				  reader.readAsDataURL(input.files[0]);
+				  }
+				}
+				  
+				$("#uploadFile2").change(function(){
+				   readURL(this);
+				});
+							
+				function readURL1(input) {
+					 if (input.files && input.files[0]) {
+					  var reader = new FileReader();
+					  
+					  reader.onload = function (e) {
+					   $('#icon').attr('src', e.target.result);  
+					  }
+					  
+					  reader.readAsDataURL(input.files[0]);
+					  }
+					}
+					  
+					$("#uploadFile3").change(function(){
+					   readURL1(this);
+					});
 	
 	
+	function fncUpdateCafe() {
+		
+		
+		var cafeName = $("input[name='cafeName']").val();
+
+		if (cafeName == null || cafeName.length < 1) {
+			sweetAlert("카페이름을 입력하세요","","error");
+			return false;
+		}
+		else{
+			//alert("입력  : "+userId);
+			//alert("입력  : "+pw);
+			//alert("입력  : "password);
+			$.ajax({
+				url : "/cafe/json/checkCafeNameDuplication",
+				method : "POST",
+				dataType : "json",
+				headers : {
+					"Accept" : "application/json",
+					"Content-Type" : "application/json"
+				},										
+				data : JSON.stringify({											
+				cafeName : cafeName,		
+				}),
+				
+				success : function(JSONData) {
+					//alert(JSONData); 
+					//alert(typeof(JSONData));
+					
+					if(JSONData != false || cafeName == "${cafe.cafeName}"){
+						//alert("카페이름중복");	
+	/*					swal({title:"수정하시겠습니까?",
+						text:"",
+						type:"warning",showCancelButton:!0,
+						confirmButtonColor:"#DD6B55",
+						confirmButtonText:"수정",
+						cancelButtonText:"취소",
+						closeOnConfirm:!1,closeOnCancel:!1},
+						function(e){e?swal("수정완료","","success"):swal
+						("취소","","error")})
+		*/							
+						$("#cafeUpdate").attr("method", "POST").attr("action","/cafe/${cafeURL}/manage/updateCafeInfo").attr("enctype","multipart/form-data").submit();
+					}else if(JSONData == false){
+						sweetAlert("카페이름이 중복되었습니다.","","error");
+						return false;
+						
+					}						
+				
+				}
+			});//ajax
+			//return false;
+		}//else
+	}
 	
 	
 		
@@ -195,10 +283,11 @@ code {
 		//============= "가입"  Event 연결 =============
 		 $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$( "button.btn.btn-primary" ).on("click" , function() {
-				alert("수정");
-				//fncUpdateCafe();		
-				$("form").attr("method" , "POST").attr("action" , "/cafe/${cafe.cafeURL}/manage/updateCafeInfo").attr("enctype","multipart/form-data").submit();
+			$( "#update" ).on("click" , function() {
+				//alert("수정");
+				
+				//sweetAlert("수정.","","success");
+				fncUpdateCafe();					
 			});
 		});	
 
@@ -209,7 +298,7 @@ code {
 									var inputed = $("input[name='cafeName']").val();
 									 //alert("입력  : "+inputed);
 											$.ajax({
-												url : "/cafe/${cafeURL}/json/checkCafeNameDuplication",
+												url : "/cafe/json/checkCafeNameDuplication",
 												method : "POST",
 												dataType : "json",
 												headers : {

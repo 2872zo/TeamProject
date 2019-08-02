@@ -66,9 +66,9 @@ public class CafeInterceptor extends HandlerInterceptorAdapter {
 		User user = (User) request.getSession().getAttribute("user");
 
 		// 카페 생성
-		if (requestURI.contains("/cafe/addCafe") || requestURI.contains("/cafe/json/checkCafeNameDuplication") || requestURI.contains("/cafe/json/checkCafeURLDuplication")) {
+		if (requestURI.contains("/cafe/addCafe") ||requestURI.contains("/cafe/updateCafe") || requestURI.contains("/cafe/json/checkCafeNameDuplication") || requestURI.contains("/cafe/json/checkCafeURLDuplication")) {
 			if(user != null) {
-				
+				System.out.println("@@@@@@@@@인터셉터 들어왔니@@@@@@@");
 				//return true;				
 			}else {
 				System.out.println("CafeInterceptor >>> addCafe");
@@ -76,14 +76,26 @@ public class CafeInterceptor extends HandlerInterceptorAdapter {
 				return false;
 			}
 		} else {
+			
 			// cafeURL 추가 - controller에 PathVariable 처리 되있어야함
 			String cafeURL = pathVariables.get("cafeURL");
 			request.setAttribute("cafeURL", cafeURL);
+			
+			if(requestURI.contains("/manage/updateCafeInfo")) {
+				if(user != null) {
+					System.out.println("ghghghghgh타니@@@@@@@@");
+				}else {
+					System.out.println("CafeInterceptor >>> updateCafe");
+					response.sendRedirect("/user/loginView");
+					return false;					
+				}
+			}			
 
 			// cafe 정보 - 카페URL 사용
 			Cafe cafe = cafeManageService.getCafeInfo(cafeURL);
 			request.setAttribute("cafe", cafe);
-
+			
+			
 			if(cafe.isClosedFlag()) {
 				System.out.println(">>> 폐쇄된 카페");
 				response.sendRedirect("/cafe/" + cafeURL + "/closedCafe");
