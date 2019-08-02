@@ -43,6 +43,56 @@ img {
     border-style: none;
     width: 150px;
 }
+.loader-ellips {
+		  display : none;
+		  font-size: 20px; /* change size here */
+		  position: relative;
+		  width: 4em;
+		  height: 1em;
+		  margin: 10px auto;
+		}
+		
+		.loader-ellips__dot {
+		  display: block;
+		  width: 1em;
+		  height: 1em;
+		  border-radius: 0.5em;
+		  background: #555; /* change color here */
+		  position: absolute;
+		  animation-duration: 0.5s;
+		  animation-timing-function: ease;
+		  animation-iteration-count: infinite;
+		}
+		
+		.loader-ellips__dot:nth-child(1),
+		.loader-ellips__dot:nth-child(2) {
+		  left: 0;
+		}
+		.loader-ellips__dot:nth-child(3) { left: 1.5em; }
+		.loader-ellips__dot:nth-child(4) { left: 3em; }
+		
+		@keyframes reveal {
+		  from { transform: scale(0.001); }
+		  to { transform: scale(1); }
+		}
+		
+		@keyframes slide {
+		  to { transform: translateX(1.5em) }
+		}
+		
+		.loader-ellips__dot:nth-child(1) {
+		  animation-name: reveal;
+		}
+		
+		.loader-ellips__dot:nth-child(2),
+		.loader-ellips__dot:nth-child(3) {
+		  animation-name: slide;
+		}
+		
+		.loader-ellips__dot:nth-child(4) {
+		  animation-name: reveal;
+		  animation-direction: reverse;
+		}
 </style>
 <title>SNS TIMELINE</title>
 <!--셀렉터 사이즈 조절-->
@@ -64,54 +114,11 @@ img {
 	</div>
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-lg-4 col-xl-3">
-				<div class="card">
-					<div class="card-body">
-						<div class="media align-items-center mb-4">
-							<img class="mr-3" src="images/avatar/11.png" width="80"
-								height="80" alt="">
-							<div class="media-body">
-								<h3 class="mb-0">지니</h3>
-								<p class="text-muted mb-0">Korea</p>
-							</div>
-						</div>
-
-						<div class="row mb-5">
-							<div class="col">
-								<div class="card card-profile text-center">
-									<span class="mb-1 text-primary"><i class="icon-people"></i></span>
-									<h3 class="mb-0">263</h3>
-									<p class="text-muted px-4">Following</p>
-								</div>
-							</div>
-							<div class="col">
-								<div class="card card-profile text-center">
-									<span class="mb-1 text-warning"><i
-										class="icon-user-follow"></i></span>
-									<h3 class="mb-0">263</h3>
-									<p class="text-muted">Followers</p>
-								</div>
-							</div>
-							<div class="col-12 text-center">
-								<button class="btn btn-danger px-5">무슨버튼할까</button>
-							</div>
-						</div>
-
-						<h4>About Me</h4>
-						<p class="text-muted">Hi, I'm Pikamy, has been the industry
-							standard dummy text ever since the 1500s.</p>
-						<ul class="card-profile__info">
-							<li class="mb-1"><strong class="text-dark mr-4">Mobile</strong>
-								<span>01793931609</span></li>
-							<li><strong class="text-dark mr-4">Email</strong> <span>name@domain.com</span></li>
-						</ul>
-					</div>
-				</div>
-			</div>
+			
 			
 
 			<!-- 피드시작 -->
-			<div class="col-lg-8 col-xl-9">
+			<div class="col-lg-8 col-xl-12">
 			
 				<div class="card">
                       <div class="card-body">
@@ -138,6 +145,7 @@ img {
 								<c:if test="${search.subject eq 200 }">
 									<i class="mdi mdi-instagram"></i>
 								</c:if>
+								
 								<div class="media-body">
 									<div class="d-sm-flex justify-content-between mb-2">
 										<h5 class="mb-sm-0">
@@ -192,7 +200,7 @@ img {
 									<c:if test="${!empty timeLine.videoList}"> <!-- 동영상 -->
 									<c:forEach var ="videoList" items="${timeLine.videoList }"  varStatus="status" >
 									<c:set var="j" value="${j+1}" />
-	           							<a href="${timeLine.videoLinkList[status.index] }"><video src="${videoList }"></video>blob!!!!</a>
+	           							<a href="${timeLine.videoLinkList[status.index] }"><img src="${videoList }"></video>blob!!!!</a>
 	           						</c:forEach>
 										
 	           						</c:if>	           						
@@ -201,6 +209,14 @@ img {
 							</div>
 						</c:forEach>
 					</div>
+					<br/>
+          				<div class="loader-ellips">
+						  <span class="loader-ellips__dot"></span>
+						  <span class="loader-ellips__dot"></span>
+						  <span class="loader-ellips__dot"></span>
+						  <span class="loader-ellips__dot"></span>
+						</div>
+	           					
 				</div>
 			</div>
 			<!-- 피드끝 -->
@@ -223,10 +239,12 @@ img {
 	<script src="/plugins/sweetalert/js/sweetalert.init.js"></script>
 	
 	<script type="text/javascript">
-
+	var merong =  false;
 	
 	
 	$(document).ready(function(){
+
+		
 
 		
 
@@ -235,10 +253,14 @@ img {
 			
 		
 
-			if($(window).scrollTop()>=($(document).height()- $(window).height())*0.9){
+			if($(window).scrollTop()>=( $(document).height()- $(window).height() ) ){
 
 				alert("hi")
-				loadNext();
+				if( merong == false){
+
+					loadNext();
+				}
+				
 			}
 
 		});
@@ -247,7 +269,8 @@ img {
 	
 
 	function loadNext(){
-		var currentPage = $(".postSize").val();
+		var search = Number('${search.currentPage}');
+		var currentPage = $(".postSize").val() 
 		var subject = '${search.subject}'
 			alert("currentPage"+currentPage)
 			alert("subject"+subject)
@@ -264,6 +287,13 @@ img {
 				currentPage : currentPage,
 				subject : subject
 			}),
+			beforeSend : function(){
+				$(".loader-ellips").css("display","block");
+				merong = true;
+			},
+			complete : function(){
+				merong = false;
+			},
 			dataType : "text",
 			success : function(serverData) {
 				//alert(serverData)
@@ -273,7 +303,6 @@ img {
 				var data = JSON.parse(serverData);
 				var timeLine= data.timeLine;
 				var search= data.search;
-				var feedCount = data.count;
 
 				//alert("data "+data)
 				//alert("timeLine "+timeLine)
