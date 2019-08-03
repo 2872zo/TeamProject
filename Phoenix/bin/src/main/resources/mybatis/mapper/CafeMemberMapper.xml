@@ -8,6 +8,7 @@
 
 	<resultMap id="cafeMemberSelectMap" type="CafeMember">
 		<result property="memberNo" 			column="member_no" 				jdbcType="NUMERIC"/>
+		<result property="cafeURL" 				column="url" 					jdbcType="NUMERIC"/>
 		<result property="cafeNo" 				column="cafe_no" 				jdbcType="NUMERIC" />
 		<result property="userNo" 				column="user_no" 				jdbcType="NUMERIC" />
 		<result property="cafeMemberGradeNo" 	column="cafe_member_grade_no" 	jdbcType="NUMERIC" />
@@ -17,8 +18,11 @@
 		<result property="favoriteFlag" 		column="favorite_flag" 			jdbcType="CHAR"  />
 		<result property="regDate" 				column="reg_date" 				jdbcType="VARCHAR" />
 		<result property="visitCount" 			column="visit_count" 			jdbcType="NUMERIC" />
+		<result property="postCount" 			column="post_count" 			jdbcType="NUMERIC" />
+		<result property="replyCount" 			column="reply_count" 			jdbcType="NUMERIC" />
 		<result property="gradeName"  			column="grade_name" 			jdbcType="VARCHAR"/>
 		<result property="memberGrade" 			column="member_grade_code" 		jdbcType="VARCHAR"/>
+		<result property="profileImg" 			column="profile_img" 			jdbcType="VARCHAR"/>
 	</resultMap>
 	
 	<resultMap id="cafeMemberBlcokMap" type="CafeMemberBlock">
@@ -48,7 +52,8 @@
 		SELECT
 		m.cafe_no, m.member_no, m.member_nickname, 
 		g.member_grade_code, g.grade_name, 
-		TO_CHAR(m.reg_date, 'YYYY-MM-DD HH24:MM:SS') reg_date, m.visit_count, m.member_status_code
+		TO_CHAR(m.reg_date, 'YYYY-MM-DD HH24:MM:SS') reg_date, 
+		m.visit_count, m.post_count, m.reply_count, m.member_status_code
 		FROM
 		cafe_member m, cafe_member_grade g
 		WHERE
@@ -116,16 +121,25 @@
 	 
 	<select id="getCafeMemeber" parameterType="Search" resultMap="cafeMemberSelectMap">
 	 	SELECT
-		m.cafe_no, m.member_no, m.member_nickname, m.notice_flag, m.favorite_flag,
-		g.member_grade_code, g.grade_name, 
-		TO_CHAR(m.reg_date, 'YYYY-MM-DD HH24:MM:SS') reg_date, 
-		m.visit_count,m.member_status_code
+	 		u.profile_img, 
+			m.cafe_no, 
+			m.member_no, 
+			m.member_nickname, 
+			m.notice_flag, 
+			m.favorite_flag,
+			g.member_grade_code, 
+			g.grade_name, 
+			TO_CHAR(m.reg_date, 'YYYY-MM-DD HH24:MM:SS') reg_date, 
+			m.visit_count, m.post_count, m.reply_count,
+			m.member_status_code
 		FROM
-		cafe_member m, cafe_member_grade g
+			cafe_member m, cafe_member_grade g, users u
 		WHERE
-		m.cafe_member_grade_no=g.cafe_member_grade_no	
+			m.cafe_member_grade_no = g.cafe_member_grade_no
 		AND
-		m.member_no = #{memberNo}
+			m.user_no=u.user_no	
+		AND
+			m.member_no = #{memberNo}
 	</select>
 		
 	<select id="getMemberCount" parameterType="Search" resultType="int">
@@ -178,6 +192,36 @@
 		m.member_no = #{memberNo}
 		ORDER BY b.block_no DESC
 	</select>
+	
+	<select id = "getLatestBlock" parameterType="int" resultMap="cafeMemberBlcokMap">
+	
+		SELECT 
+			TO_CHAR(end_date, 'YYYY-MM-DD HH24:MM:SS') end_date,
+			block_no,
+			member_no
+		FROM 
+			cafe_member_block
+		WHERE 
+			member_no = #{memberNo}
+		AND 
+			block_no = ( SELECT 
+						 	MAX(block_no) 
+						 FROM 
+						 	cafe_member_block 
+						 WHERE 
+						 	member_no = #{memberNo})
+						 	
+	</select>
+	
+	<update id="blockExpired" parameterType="int">
+		UPDATE
+		cafe_member_block
+		<set>
+		reason = '정지기간만료'
+		</set>
+		WHERE 
+		block_no = #{blockNo}
+	</update>
 	
 	<update id="updateCafeMemberBlock" parameterType="CafeMemberBlock">
 		UPDATE
@@ -237,7 +281,7 @@
 		SET
 		reply_count = reply_count-1
 		WHERE member_no = (SELECT
-								m.member_no, m.reply_count, p.post_no, r.reply_no 
+								m.member_no
 						 	FROM
 						 		cafe_member m, reply r, post p
 						 	WHERE 
@@ -281,5 +325,30 @@
 		WHERE
 		member_nickname=#{memberNickname} and cafe_no=#{cafeNo}	
 	</select>
+	
+	<select id = 'checkMember' parameterType="CafeMember" resultMap="cafeMemberSelectMap"> 
+		SELECT 
+			m.user_no, 
+			m.cafe_no, 
+			m.member_no,
+			m.member_nickname, 
+			TO_CHAR(m.reg_date, 'YYYY-MM-DD HH24:MM:SS') reg_date, 
+			m.visit_count, 
+			m.post_count, 
+			m.reply_count, 
+			g.member_grade_code, 
+			g.grade_name,
+			m.member_status_code,
+			m.cafe_member_grade_no
+		FROM 
+			cafe_member m, cafe c, cafe_member_grade g
+		WHERE 
+			m.cafe_member_grade_no = g.cafe_member_grade_no
+			AND m.cafe_no = c.cafe_no			
+			AND m.member_status_code in ('cs100','cs101')
+			AND c.url = #{cafeURL}
+			AND m.user_no = #{userNo}
+	</select>
+	
 	
 </mapper>

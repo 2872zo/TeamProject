@@ -16,9 +16,7 @@
 <link href="/css/style.css" rel="stylesheet">
 
 <link rel="stylesheet" href="/css/custom/scroll-top.css">
-
-<!-- ToolBar Start /////////////////////////////////////-->
-<jsp:include page="/WEB-INF/views/common/toolbar.jsp" />
+ 
 <title>CafeSearch</title>
 <style type="text/css">
 .dropdown-toggle{height: 100%; font-size: 16pt;}
@@ -29,58 +27,71 @@
 </head>
 
 <body>
-<br/>
+<!--*******************
+        Preloader start
+    ********************-->
+	<div id="preloader">
+		<div class="loader">
+			<svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none"
+					stroke-width="3" stroke-miterlimit="10"></circle>
+            </svg>
+		</div>
+	</div>
+	<!--*******************
+        Preloader end
+    ********************-->
+<!--**********************************
+            Nav header start
+        ***********************************-->
+           <div class="nav-header">
+            <c:import url="/WEB-INF/views/common/brand-logo.jsp"/>
+        </div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+<!-- ToolBar Start /////////////////////////////////////-->
+<jsp:include page="/WEB-INF/views/common/toolbar.jsp" />
+<!-- ToolBar End /////////////////////////////////////-->
 <div class="container">
   
+	
+<div class='card'>
   	
-  	
-  	
-		<form class="form-inline justify-content-center" id='cafeSearch'>
-  	<div class='card'>
 <div class='card-body'>
+	<form class="form-inline justify-content-center" id='cafeSearch'>
   	<input type='hidden' id="condtioner" value='${search.searchCondition}'>
-<div class="input-group d-flex justify-content-center" >
-  <div class='input-group-prepend'>
-  <select class="selectpicker" name='searchCondition' id='searchCondition'>
-	<option class='searchCondition' value="0">카페+게시글</option>
-	<option class='searchCondition' value="1">카페</option>
-	<option class='searchCondition' value="2">게시글</option>
-  </select>
-  </div>
-  <div class='input-group-append'>
-  &nbsp;<input type="text" class="form-control form-control-lg" placeholder="검색어 입력해주세요" name="searchKeyword" id="searchKeyword" >
-  </div>
-  <div class='input-group-append'>
-  &nbsp;<button class="btn btn-sm btn-outline-primary" type="button" id="cafeExplore"><i class="mdi mdi-magnify" style='font-size: 18pt;'></i></button>
-	</div>
-</div>
+  	<input type="hidden" id="currentPage" name="currentPage" value="0" />
+	<input type="hidden" name='cafeURL' value='${ !empty search.cafeURL ? search.cafeURL : "" }'>
+	<input type="hidden" name='boardName' value='${ !empty search.boardName ? search.boardName : "" }'>
+	<input type="hidden" name='cafeType' id='cafeTypeForSearch' value='0'>		
   	
-  		</div><!--카드바디 -->
-</div><!--카드 -->
-  	
-  	
-  	
-  	
+		<div class="input-group d-flex justify-content-center" >
+  		<div class='input-group-prepend'>
+  		<select class="selectpicker" name='searchCondition' id='searchCondition'>
+			<option class='searchCondition' value="0">카페+게시글</option>
+			<option class='searchCondition' value="1">카페</option>
+			<option class='searchCondition' value="2">게시글</option>
+  		</select>
+  		</div>
+  		<div class='input-group-append'>
+  		&nbsp;<input type="text" class="form-control form-control-lg" placeholder="검색어 입력해주세요" name="searchKeyword" id="searchKeyword" >
+  		</div>
+  		<div class='input-group-append'>
+  		&nbsp;<button class="btn btn-sm btn-outline-primary" type="button" id="cafeExplore"><i class="mdi mdi-magnify" style='font-size: 18pt;'></i></button>
+		</div>
+		</div>
 
-
-
-
-			<input type="hidden" id="currentPage" name="currentPage" value="0" />
-			<input type="hidden" name='cafeURL'
-				value='${ !empty search.cafeURL ? search.cafeURL : "" }'> <input
-				type="hidden" name='boardName'
-				value='${ !empty search.boardName ? search.boardName : "" }'>
-
-
-
-
-
-
-
+		
 
 		</form>
+  	
+</div><!--카드바디 -->
+</div><!--카드 -->
+
+
+	
 		
-			
 			
 			<!--  카페검색창 끝 /////////////////////////////////////-->
 
@@ -89,9 +100,26 @@
 <div class="card-body">
 
   <c:if test="${ !empty search.searchCondition && search.searchCondition==1}">
- 	카페 검색결과 총 ${totalCount} 건 입니다.
+ 	
+ 		<div class="btn-group d-flex justify-content-center" role="group">
+			<button type="button" role="group"
+				class='btn btn-outline-success col-lg-2 cafeCategory'>친목/모임</button>
+			<button type="button" role="group"
+				class='btn btn-outline-success col-lg-2 cafeCategory'>스포츠/레저</button>
+			<button type="button" role="group"
+				class='btn btn-outline-success col-lg-2 cafeCategory'>영화</button>
+			<button type="button" role="group"
+				class='btn btn-outline-success col-lg-2 cafeCategory'>게임</button>
+			<button type="button" role="group"
+				class='btn btn-outline-success col-lg-2 cafeCategory'>음악</button>
+			<button type="button" role="group"
+				class='btn btn-outline-success col-lg-2 cafeCategory'>여행</button>
+		</div>
+		 <br/>
+		총 ${totalCount} 건 입니다.
+		 <br/>
  	</c:if>
-    <br/>
+   
 
  <div class="row d-flex justify-content-between">
   <c:forEach var="cafe" items="${cafeList}">
@@ -202,8 +230,18 @@
 	
 	<!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
-var checkSessionUser = ${empty sessionScope.user};
-
+$("#cafeTypeForSearch").val(${search.cafeType});
+$($(".cafeCategory")[$("#cafeTypeForSearch").val()-1]).attr("class","btn btn-success col-lg-2 cafeCategory");
+$(".cafeCategory").on(
+		"click",
+		function() {
+			//alert($(".cafeCategory").index($(this)));
+			
+			$("#cafeTypeForSearch").val($(".cafeCategory").index($(this))+1);
+			//alert($("#cafeTypeForSearch").val());
+			$("#cafeSearch").attr("method", "POST").attr("action",
+			"/cafe/main/search").submit();
+		});
 $(function() {
 	
 	if(${!empty search.searchKeyword}){

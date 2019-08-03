@@ -36,9 +36,35 @@
 		c.cafe_icon, c.cafe_detail, c.cafe_no, c.url, c.cafe_name, c.members, u.user_nickname
 		FROM cafe c, users u
 		WHERE c.manage_user_no=u.user_no
+		<if test="searchKeyword != null">
 		AND
 		(c.cafe_name like '%' ||#{searchKeyword}|| '%'	
 		OR c.cafe_detail like '%' ||#{searchKeyword}|| '%')
+		</if>
+		<if test="cafeType!=0">
+		AND c.cafe_type = 
+		</if>
+		<if test="cafeType==1">
+		'cc100'
+		</if>
+		<if test="cafeType==2">
+		'cc101'
+		</if>
+		<if test="cafeType==3">
+		'cc102'
+		</if>
+		<if test="cafeType==4">
+		'cc103'
+		</if>
+		<if test="cafeType==5">
+		'cc104'
+		</if>
+		<if test="cafeType==6">
+		'cc105'
+		</if>
+		<if test="cafeType==7">
+		'cc106'
+		</if>
 		ORDER BY c.reg_date DESC
 	</sql>
 	
@@ -61,7 +87,8 @@
 	 
 	<sql id="categoryCafe">
 	 	SELECT
-		cafe_no, cafe_icon, cafe_name, cafe_detail, cafe_type, url, reg_date, members
+		url, cafe_no, cafe_icon, cafe_name, 
+		cafe_detail, cafe_type, reg_date, members
 		FROM
 		cafe
 		<where>

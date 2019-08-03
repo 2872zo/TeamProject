@@ -105,8 +105,7 @@ display : none;
 </c:forEach>
 
 
-		<div class="content-body" style="min-height: 600px;">
-		<div class='container-fluid'>
+		<div class="container-fluid" style="min-height: 600px;">
 		<form id='fileMultiple' action='/chat/fileUpload' enctype="multipart/form-data" method="post">
 		<input multiple='multiple' type="file" id="uploadFile" name="file[]" >
 		</form>
@@ -181,7 +180,9 @@ display : none;
 					<img src="/images/uploadfiles/profileimg/${chat.profileImg}"
 						 class='rounded' style='width: 48px; height: 48px'>
 				</div>
-				<div class='col-lg-6' style='padding-left: 5px;'>
+				<c:if test="${chat.chatType==0||chat.chatType==1}">
+				
+				<div class='col-lg-6' style='margin-left: 1%;'>
 					${chat.userNickname}
 					<div class="alert" name='${chat.id}' 
 					style='padding:5px; width: 100%;
@@ -196,16 +197,24 @@ display : none;
 					style='width: 100%; height: auto;'>
 					
 					</c:if>
+					</div>
+					</div>
+					</c:if>
 					<c:if test="${chat.chatType==2}">
 					
-					<img src='/images/common/700by700.png' class='rounded' 
-					style="background: url('/images/chatEmoticon/${chat.chatMsg}'); 
-					background-size: cover; background-repeat: no-repeat; 
-					background-position: center; width:50%; margin: 1%; padding:0%;">
+					<div class='col-lg-4' style='padding-right: 20px;'>
+					${chat.userNickname}
+						<div class="alert" name='${chat.id}' style='padding:5px;' >
+							<img src='/images/common/700by700.png' class='rounded' 
+							style="background: url('/images/chatEmoticon/${chat.chatMsg}'); 
+							background-size: cover; background-repeat: no-repeat; 
+							background-position: center; width:100%; margin: 1%; padding:0%;">
+						</div>
+					</div>
 					
 					</c:if>
-					</div>
-				</div>
+					
+				
 				<div class='col-lg-2' style='padding-left: 0px; margin-top:5px;'>
 					<br/><fmt:formatDate value="${chat.regDate}" type="both" pattern="yy-MM-dd HH:mm"/>
 				</div>
@@ -215,39 +224,42 @@ display : none;
 			
 			<!-- 자기가 입력한 채팅인 경우 -->
 			<c:if test="${sessionScope.user.userNo==chat.userNo}">
-			<div class='row d-flex justify-content-end'>
+			<div class='row d-flex justify-content-end' >
 				
 				<div class='col-lg-2 text-right' style='padding-right: 0px;'>
 					<fmt:formatDate value="${chat.regDate}" type="both" pattern="yy-MM-dd HH:mm"/>
 				</div>
-				<div class='col-lg-6' style='padding-right: 20px;'>
-					<div class="alert" 
-					name='${chat.id}' style='padding:5px;
-					border: 2px solid #f5a142; color: #162ca8;
-					background-color:#ffc68a; ' >
-					<c:if test="${chat.chatType==0}">
-					${chat.chatMsg}
-					</c:if>
-					<c:if test="${chat.chatType==1}">
-					
-					<img src='/images/uploadfiles/chatFiles/${chat.chatMsg}' 
-					class='rounded' style='width: 100%; height: auto;'>
-					
+					<c:if test="${chat.chatType==0||chat.chatType==1}">
+						<div class='col-lg-6' style='padding-right: 20px;'>
+						<div class="alert" 
+						name='${chat.id}' style='padding:5px;
+						border: 2px solid #f5a142; color: #162ca8;
+						background-color:#ffc68a; ' >
+						
+							<c:if test="${chat.chatType==0}">
+							${chat.chatMsg}
+							</c:if>
+							<c:if test="${chat.chatType==1}">
+							<img src='/images/uploadfiles/chatFiles/${chat.chatMsg}' 
+							class='rounded' style='width: 100%; height: auto;'>
+							</c:if>
+							
+						</div>
+						</div>
 					</c:if>
 					
 					<c:if test="${chat.chatType==2}">
-					
-					<img src='/images/common/700by700.png' class='rounded' 
-					style="background: url('/images/chatEmoticon/${chat.chatMsg}'); 
-					background-size: cover; background-repeat: no-repeat; 
-					background-position: center; width:50%; margin: 1%; padding:0%;">
-					
+					<div class='col-lg-4' style='padding-right: 20px;'>
+						<div class="alert" name='${chat.id}' style='padding:5px;' >
+							<img src='/images/common/700by700.png' class='rounded' 
+							style="background: url('/images/chatEmoticon/${chat.chatMsg}'); 
+							background-size: cover; background-repeat: no-repeat; 
+							background-position: center; width:100%; margin: 1%; padding:0%;">
+						</div>
+					</div>
 					</c:if>
 					
 					</div>
-				</div>
-					
-			</div>
 			</c:if>
 			<!-- 자기가 입력한 채팅인 경우 -->
 
@@ -358,17 +370,17 @@ display : none;
     <div class="card-header" id="headingOne">
       <h2 class="mb-0">
         <div class='row'>
-        <div class='col-lg-9'>
-	        <button class="btn btn-primary btn-block d-flex align-items-center" 
-	        type="button" data-toggle="collapse" data-target="#invitationList" 
-	        aria-expanded="true" aria-controls="collapseOne">
-	          	초대가능한 친구목록
-	        </button>
-        </div>
-        <div class='col-lg-2'>
-			<i class="mdi mdi-playlist-plus d-flex align-items-center" 
-			style='height: 100%;width: auto;' id = 'doInviting'></i>
-      	</div>
+	        <div class='col-lg-9'>
+		        <button class="btn btn-primary btn-block d-flex align-items-center" 
+		        type="button" data-toggle="collapse" data-target="#invitationList" 
+		        aria-expanded="true" aria-controls="collapseOne">
+		          	초대가능한 친구목록
+		        </button>
+	        </div>
+	        <div class='col-lg-2'>
+				<i class="mdi mdi-playlist-plus d-flex align-items-center" 
+				style='height: 100%;width: auto;' id = 'doInviting'></i>
+	      	</div>
       </div>
       </h2>
     </div>
@@ -407,7 +419,6 @@ display : none;
 </div>
 </div>
 </div>
-</div>
 
 </div>
 
@@ -426,8 +437,8 @@ display : none;
 	<script src="/js/custom/scroll-top.js"></script>
 	
 	<!-- 소켓용 스크립트 -->
-<!-- <script src="http://localhost:82/socket.io/socket.io.js"></script> -->
- <script src="http://192.168.0.78:82/socket.io/socket.io.js"></script>
+ <script src="http://localhost:82/socket.io/socket.io.js"></script> 
+<!-- <script src="http://192.168.0.78:82/socket.io/socket.io.js"></script>-->
 
 	<!--**********************************
         Scripts
@@ -436,8 +447,8 @@ display : none;
 	<!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
 
-var socket = io("http://192.168.0.78:82");
-//var socket = io("http://localhost:82");
+//var socket = io("http://192.168.0.78:82");
+var socket = io("http://localhost:82");
 
 //소켓에 유저넘버랑 방번호 보내줌
 socket.emit("identify", ${sessionScope.user.userNo});
@@ -531,58 +542,97 @@ $(function() {
 				      	var date = new Date(chat.regDate);
 				        chat.regDate = getFormatDate(date);
 
-				        if(chat.chatType==1){
-				        	chat.chatMsg = "<img src='/images/uploadfiles/chatFiles/"
-											+msg.chatMsg
-											+"' class='rounded' style='width: 100%; height: auto;'>";
-						}
-
-				        if(chat.chatType==2){
-
-				        	chat.chatMsg = "<img src='/images/common/700by700.png' class='rounded' "
-											+"style='background: url(\"/images/chatEmoticon/"
-											+chat.chatMsg
-											+"\"); background-size: cover; "
-											+"background-repeat: no-repeat; background-position: center;"
-											+"width:50%; margin: 1%; padding:0%;'>"
-							}
-						
 						if (chat.userNo==$("#userNo").val()){
-							msgTagging = "<div class='row d-flex justify-content-end'>"
-								+"<div class='col-lg-2 text-right' style='padding-right: 0px;'>"
-								+chat.regDate
-								+"</div><div class='col-lg-6' style='padding-right: 20px;'>"
-								+"<div class='alert' name='"+chat.id+
-								"' style='padding:5px; width: 100%;border: 2px solid #f5a142;" 
-								+"color: #162CA8;background-color:#ffc68a; ' >"
-								+chat.chatMsg
-								+"</div></div></div>"				
+							if(chat.chatType==0 || chat.chatType==1){
+								if(chat.chatType==1){
+									chat.chatMsg = imgHead
+													+chat.chatMsg
+												+imgTail
+								}
+								msgTagging = startOfMine
+								+regDateMyHead
+									+chat.regDate
+								+regDateMyTail
+								+textHead
+								+idHeadSecond
+									+chat.id
+								+idTailFirst
+								+idTailSecond
+									+chat.chatMsg
+								+textTail
+								+endOfTag	
+							}
+							if(chat.chatType==2){
+								
+								msgTagging = startOfMine
+											+regDateMyHead
+												+chat.regDate
+											+regDateMyTail
+											+startOfMyEmo
+											+idFront
+												+chat.id
+											+idTail
+											+emoFront
+												+chat.chatMsg
+											+emoBack
+											+endOfMyEmo
+											+endOfTag
+							}			
 							}
 						
 						else if (chat.userNo!=$("#userNo").val()){
 
-							if(userNos.indexOf(chat.userNo)!=-1){
+							if(userNos.indexOf(msg.userNo)!=-1){
 								chat.userNickname = nickNames[userNos.indexOf(chat.userNo)]
 								} 
-							
-							msgTagging = "<div class='row d-flex justify-content-start'>"
-								+"<div class='col-lg-1'>"
-								+"<img src='/images/uploadfiles/profileimg/"
-								+chat.profileImg
-								+"'  class='rounded' style='width: 48px; height: 48px'></div>"
-								+"<div class='col-lg-6' style='padding-left: 5px;'>"
-								+chat.userNickname
-								+"<div class='alert' name='"
-								+chat.id
-								+"' style='padding:5px; width: 100%;"
-								+"margin-top:5px; border: 2px solid #f5a142; color: black;' >"
-								+chat.chatMsg
-								+"</div></div>"
-								+"<div class='col-lg-2' style='padding-left: 0px; margin-top:5px;'>"
-								+"<br/>"
-								+chat.regDate
-								+"</div></div>"
+							if(chat.chatType==0 || chat.chatType==1){
+
+								if(chat.chatType==1){
+									chat.chatMsg = imgHead
+													+chat.chatMsg
+													+imgTail
+								}
+								
+								msgTagging = startOfYour
+								+ProfileHead
+								+ProfileImgHead
+									+chat.profileImg
+								+ProfileImgTail
+								+textHeadYour
+									+chat.userNickname
+								+idFrontYour
+									+chat.id
+								+idBackYour
+									+chat.chatMsg
+								+textTail
+								+regDateHeadYour
+									+chat.regDate
+								+regDateTailYour
+								
 							}
+
+							if(chat.chatType==2){
+
+								msgTagging = startOfYour
+								+ProfileHead
+								+ProfileImgHead
+									+chat.profileImg
+								+ProfileImgTail
+								+startOfMyEmo
+									+chat.userNickname
+								+idFrontYour
+									+chat.id
+								+idBackYourEmo
+								+emoFront
+									+chat.chatMsg
+								+emoBack
+								+endOfMyEmo
+								+regDateHeadYour
+									+chat.regDate
+								+regDateTailYour
+								+endOfTag
+							}
+						}
 
 									$(msgTagging).prependTo("#chat_box");
 
@@ -654,60 +704,105 @@ $(function() {
 	    var date = new Date(msg.regDate);
 	    msg.regDate = getFormatDate(date);
 
-	     if(msg.chatType==1){
-				msg.chatMsg = "<img src='/images/uploadfiles/chatFiles/"
-								+msg.chatMsg
-								+"' class='rounded' style='width: 100%; height: auto;'>";
+			if (msg.userNo==$("#userNo").val()){
+				if(msg.chatType==0 || msg.chatType==1){
+					if(msg.chatType==1){
+						msg.chatMsg = imgHead
+										+msg.chatMsg
+									+imgTail
+					}
+					msgTagging = startOfMine
+					+regDateMyHead
+						+msg.regDate
+					+regDateMyTail
+					+textHead
+					+idHeadSecond
+						+msg.id
+					+idTailFirst
+					+idTailSecond
+						+msg.chatMsg
+					+textTail
+					+endOfTag	
+				}
+				if(msg.chatType==2){
+					
+					msgTagging = startOfMine
+								+regDateMyHead
+									+msg.regDate
+								+regDateMyTail
+								+startOfMyEmo
+								+idFront
+									+msg.id
+								+idTail
+								+emoFront
+									+msg.chatMsg
+								+emoBack
+								+endOfMyEmo
+								+endOfTag
+				}
 			}
-
-		if(msg.chatType==2){
-
-			msg.chatMsg = "<img src='/images/common/700by700.png' class='rounded' "
-							+"style='background: url(\"/images/chatEmoticon/"
-							+msg.chatMsg
-							+"\"); background-size: cover; background-repeat: no-repeat; background-position: center;"
-							+"width:50%; margin: 1%; padding:0%;'>"
-			}
-		
-		if (msg.userNo==$("#userNo").val()){
 			
-			msgTagging = "<div class='row d-flex justify-content-end'>"
-				+"<div class='col-lg-2 text-right' style='padding-right: 0px;'>"
-				+msg.regDate
-				+"</div><div class='col-lg-6' style='padding-right: 20px;'>"
-				+"<div class='alert' name='"+msg.id+
-				"' style='padding:5px; width: 100%;border: 2px solid #f5a142;" 
-				+"color: #162CA8;background-color:#ffc68a; ' >"
-				+msg.chatMsg
-				+"</div></div></div>"	
-			
-			}
-		
-		else if (msg.userNo!=$("#userNo").val()){
+			else if (msg.userNo!=$("#userNo").val()){
+				
+				if(userNos.indexOf(msg.userNo)!=-1){
+					msg.userNickname = nickNames[userNos.indexOf(msg.userNo)]
+					} 
+				if(msg.chatType==0 || msg.chatType==1){
 
-			if(userNos.indexOf(msg.userNo)!=-1){
-				msg.userNickname = nickNames[userNos.indexOf(msg.userNo)]
-				} 
-
-			msgTagging = "<div class='row d-flex justify-content-start'>"
-					+"<div class='col-lg-1'>"
-					+"<img src='/images/uploadfiles/profileimg/"
-					+msg.profileImg
-					+"'  class='rounded' style='width: 48px; height: 48px'></div>"
-					+"<div class='col-lg-6' style='padding-left: 5px;'>"
-					+msg.userNickname
-					+"<div class='alert' name='"
+					if(msg.chatType==1){
+						msg.chatMsg = imgHead
+										+msg.chatMsg
+										+imgTail
+					}
+					
+					msgTagging = startOfYour
+					+ProfileHead
+					+ProfileImgHead
+						+msg.profileImg
+					+ProfileImgTail
+					+textHeadYour
+						+msg.userNickname
+					+idFrontYour
 					+msg.id
-					+"' style='padding:5px; width: 100%;"
-					+"margin-top:5px; border: 2px solid #f5a142; color: black;' >"
+					+idBackYour
 					+msg.chatMsg
-					+"</div></div>"
-					+"<div class='col-lg-2' style='padding-left: 0px; margin-top:5px;'>"
-					+"<br/>"
+					+textTail
+					+regDateHeadYour
 					+msg.regDate
-					+"</div></div>"
+					+regDateTailYour
+					
+				}
+
+				if(msg.chatType==2){
+
+					msgTagging = startOfYour
+					+ProfileHead
+					+ProfileImgHead
+						+msg.profileImg
+					+ProfileImgTail
+					+startOfMyEmo
+						+msg.userNickname
+					
+				+idFrontYour
+				+msg.id
+				+idBackYourEmo
+					
+					+emoFront
+						+msg.chatMsg
+					+emoBack
+					+endOfMyEmo
+					
+					+regDateHeadYour
+						+msg.regDate
+					+regDateTailYour
+					+endOfTag
+					
+				}
+
+				
+				}
 			
-			}
+		
 
 		$(msgTagging).appendTo("#chat_box");
 

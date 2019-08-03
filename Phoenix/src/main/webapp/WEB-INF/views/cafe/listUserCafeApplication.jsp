@@ -17,12 +17,49 @@
 
 <link rel="stylesheet" href="/css/custom/scroll-top.css">
 
-<!-- ToolBar Start /////////////////////////////////////-->
-<jsp:include page="../common/toolbar.jsp" />
 <title>가입신청내역</title>
 </head>
 
 <body>
+<!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+            </svg>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+    
+    
+        
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+    
+    
+    
+    
+    
+ <!--**********************************
+            Nav header start
+        ***********************************-->
+           <div class="nav-header">
+            <c:import url="/WEB-INF/views/common/brand-logo.jsp"/>
+        </div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+        
+        
+<!-- ToolBar Start /////////////////////////////////////-->
+<jsp:include page="../common/toolbar.jsp" />
+<!-- ToolBar End /////////////////////////////////////-->
 <form id="cafeHomeForm">
 <input type="hidden" id="userNo" name="userNo" value="${search.userNo}"/>
 <input type="hidden" id="status" name="status" value="${search.status}"/>
@@ -82,6 +119,7 @@
 	
 
 	
+</div>
 </div>
 </div>
 </div>

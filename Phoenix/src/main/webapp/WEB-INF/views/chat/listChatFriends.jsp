@@ -146,15 +146,23 @@ img {
 									<div class="card-body">
 										<div class='row'>
 											<div class='col-lg-2'>
-												<img alt="" src="/images/uploadfiles/profileimg/${chatFriend.userImg}"
-													class='rounded img-fluid' alt="Responsive image" style='width: inherit;'>
+											
+											<img src="/images/common/700by700.png"
+										     class="rounded"
+										     style="background: url('/images/uploadfiles/profileimg/${chatFriend.userImg}'); 
+										     background-size: cover; 
+										     background-repeat: no-repeat; 
+										     background-position: center;
+										     width:100%; margin: 1%; padding:0%;">
+											
+											
+											
 											</div>
 											<div class='col-lg-7'>
 												<h5 class="card-title" id='${chatFriend.chatFriendNo}nickName'>
 												<c:if test="${!empty chatFriend.friendNickname}">${chatFriend.friendNickname}</c:if>
 												<c:if test="${empty chatFriend.friendNickname}">${chatFriend.userNickname}</c:if>
 												</h5>
-												<p class="card-text">${chatFriend.chatFriendNo}</p>
 												<p class="card-text">원래 닉네임 : ${chatFriend.userNickname}</p>
 											</div>
 											<div class='col-lg-2'>
@@ -185,13 +193,16 @@ img {
 											<div class="card-body">
 												<div class='row'>
 													<div class='col-lg-2'>
-														<img alt="" src="/images/uploadfiles/profileimg/${chatFriend.userImg}"
-															class='rounded img-fluid' alt="Responsive image">
+										<img src="/images/common/700by700.png"
+										     class="rounded"
+										     style="background: url('/images/uploadfiles/profileimg/${chatFriend.userImg}'); 
+										     background-size: cover; 
+										     background-repeat: no-repeat; 
+										     background-position: center;
+										     width:100%; margin: 1%; padding:0%;">
 													</div>
 													<div class='col-lg-7'>
 														<h5 class="card-title">${chatFriend.userNickname}</h5>
-														<p class="card-text">${chatFriend.friendNickname}</p>
-															<p class="card-text">${chatFriend.userNo}</p>
 													</div>
 													<div class='col-lg-2'>
 													</div>
@@ -217,14 +228,16 @@ img {
 											<div class="card-body">
 												<div class='row'>
 													<div class='col-lg-2'>
-														<img alt="" src="/images/uploadfiles/profileimg/${chatFriend.userImg}"
-															class='rounded img-fluid' alt="Responsive image">
+														<img src="/images/common/700by700.png"
+										     class="rounded"
+										     style="background: url('/images/uploadfiles/profileimg/${chatFriend.userImg}'); 
+										     background-size: cover; 
+										     background-repeat: no-repeat; 
+										     background-position: center;
+										     width:100%; margin: 1%; padding:0%;">
 													</div>
 													<div class='col-lg-7'>
 														<h5 class="card-title">${chatFriend.userNickname}</h5>
-														<p class="card-text">With supporting text below as a
-															natural lead-in to additional content.</p>
-															<p class="card-text">${chatFriend.userNo}</p>
 													</div>
 													<div class='col-lg-2'>
 													</div>

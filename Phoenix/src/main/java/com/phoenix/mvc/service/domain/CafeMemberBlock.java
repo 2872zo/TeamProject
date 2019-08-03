@@ -1,6 +1,5 @@
 package com.phoenix.mvc.service.domain;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class CafeMemberBlock {
@@ -31,16 +30,14 @@ public class CafeMemberBlock {
 	public void setBlockNo(int blockNo) {
 		this.blockNo = blockNo;
 	}
-	public String getBlockStartDate() {
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-		return format.format(blockStartDate);
+	public Date getBlockStartDate() {
+		return blockStartDate;
 	}
 	public void setBlockStartDate(Date blockStartDate) {
 		this.blockStartDate = blockStartDate;
 	}
-	public String getBlockEndDate() {
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-		return format.format(blockEndDate);
+	public Date getBlockEndDate() {
+		return blockEndDate;
 	}
 	public void setBlockEndDate(Date blockEndDate) {
 		this.blockEndDate = blockEndDate;

@@ -1,3 +1,46 @@
+//사진용 태그
+var imgHead = "<img src='/images/uploadfiles/chatFiles/";
+var imgTail = "' class='rounded' style='width: 100%; height: auto;'>";
+
+
+//자기가 입력한 메시지/사진용 태그
+
+var startOfMine =  "<div class='row d-flex justify-content-end'>";
+var regDateMyHead = "<div class='col-lg-2 text-right' style='padding-right: 0px;'>";
+var regDateMyTail = "</div>";
+var textHead = "<div class='col-lg-6' style='padding-right: 20px;'>";
+var idHeadSecond ="<div class='alert' name='";
+var idTailFirst = "' style='padding:5px; width: 100%;border: 2px solid #f5a142;";
+var idTailSecond = "color: #162CA8;background-color:#ffc68a; ' >";
+var textTail = "</div></div>";
+var endOfTag = "</div>";
+
+//이모티콘용 태그
+
+var startOfMyEmo = "<div class='col-lg-4' style='padding-right: 20px;'>"
+var idFront = "<div class='alert' name='";
+var idTail = "' style='padding:5px;' >";
+var emoFront = 	"<img src='/images/common/700by700.png' class='rounded' style=\"background: url('/images/chatEmoticon/";
+var emoBack = "'); background-size: cover; background-repeat: no-repeat; background-position: center; width:100%; margin: 1%; padding:0%;\">";
+var endOfMyEmo = "</div></div>";
+
+
+
+//남이 입력한 메시지/사진용 태그
+var startOfYour = "<div class='row d-flex justify-content-start'>";
+var ProfileHead = "<div class='col-lg-1'>";
+var ProfileImgHead = "<img src='/images/uploadfiles/profileimg/";
+var ProfileImgTail = "'  class='rounded' style='width: 48px; height: 48px'></div>";
+var textHeadYour = "<div class='col-lg-6' style='margin-left: 1%;'>";
+var idFrontYour = "<div class='alert' name='";
+var idBackYour = "' style='padding:5px; width: 100%;margin-top:5px; border: 2px solid #f5a142; color: black;' >";
+var regDateHeadYour = "<div class='col-lg-2' style='padding-left: 0px; margin-top:5px;'><br/>";
+var regDateTailYour = "</div></div>";
+//남이 입력한 이모티콘용 태그
+//var startOfYourEmo = "<div class='col-lg-4' style='padding-right: 20px;'>"
+var idBackYourEmo = "' style='padding:5px; ' >";
+
+
 function getFormatDate(date){ 
 	//var year = date.getYear();//yy 
 	var year = date.getFullYear();//yyyy 

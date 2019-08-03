@@ -94,10 +94,10 @@
   &nbsp;<button class="btn btn-sm btn-outline-primary" type="button" id="cafeExplore" style='z-index: 0;'><i class="mdi mdi-magnify" style='font-size: 18pt;'></i></button>
 	</div>
 	
-	</div><!--카드바디 -->
-</div><!--카드 -->
+	</div><!--인풋그룹-->
+</div><!--카드바디 -->
 
-</div><!--인풋그룹-->
+</div><!--카드 -->
 </form>
 
 		<form id="cafeHomeForm">
@@ -107,15 +107,12 @@
 				value="${search.status}" /> 
 			<input type="hidden" id="cafeType" name="cafeType" 
 				value="${search.cafeType}" />
+			<input type="hidden" id="searchCondition" name="searchCondition" 
+				value="1" />
 			<input type="hidden" id="boardNo" name="boardNo" 
 				value="0" />
 		</form>
 		
-	<div class="card">
-	
-	<!--  화면구성 div Start /////////////////////////////////////-->
-	
-			</div>
 
 		<c:if test="${!empty sessionScope.user}">
 			
@@ -180,9 +177,10 @@
 			</c:if>
 </div>
 </div>
+		<br/>
 		</c:if>
 
-		<br />
+
 <div class="card" style='min-height: 300px;'>
 <div class="card-body" id='cafeCategoryPosition'>
 
@@ -233,6 +231,9 @@
 				
 			</div>
 		</c:if>
+		 
+		 <button type="button" class="btn btn-outline-primary" id='moreCafe'>카페 더보기</button>
+		
 	</div>
 		</div>
 
@@ -259,7 +260,12 @@
 	
 	<!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
-
+$("#moreCafe").on("click", function() {
+	var typeCheck = Number($("#cafeType").val());
+	typeCheck +=1;
+	$("#cafeType").val(typeCheck);
+	$("#cafeHomeForm").attr("method", "POST").attr("action", "/cafe/main/search").submit();
+});
 $(function() {
 	
 	if(${!empty search.searchKeyword}){

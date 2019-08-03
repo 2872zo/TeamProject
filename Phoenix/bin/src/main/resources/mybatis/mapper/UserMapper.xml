@@ -18,15 +18,27 @@
 		<result property="profileImg" 			column="profile_img" 			jdbcType="VARCHAR" />		
 		<result property="regDate" 				column="reg_date" 				jdbcType="DATE" />
 		<result property="userRoleCode" 		column="user_role_code" 		jdbcType="VARCHAR" />
-		<result property="userStatusCode" 		column="user_status_code" 		jdbcType="VARCHAR" />		
+		<result property="userStatusCode" 		column="user_status_code" 		jdbcType="VARCHAR" />
+		<result property="kakaoId" 				column="kakao_id" 				jdbcType="VARCHAR" />
+		<result property="naverId" 				column="naver_id" 				jdbcType="VARCHAR" />
+						
+	</resultMap>
+	
+	<resultMap id="accountSelectMap" type="Account">
+		<result property="accountNo" 			column="account_no" 			jdbcType="NUMERIC"/>
+		<result property="userNo" 				column="user_no" 				jdbcType="NUMERIC"/>
+		<result property="accountType"			column="account_type" 			jdbcType="VARCHAR" />
+		<result property="accountId"			column="account_id" 			jdbcType="VARCHAR" />
+		<result property="accountPw" 			column="account_pw" 			jdbcType="VARCHAR" />
+		<result property="accountDomain" 		column="account_domain"			jdbcType="VARCHAR" />
 	</resultMap>
 	
 	<insert 	id="addUser"		parameterType="com.phoenix.mvc.service.domain.User" >
 	 	<selectKey keyProperty="userNo" resultType="int" order="BEFORE">
 	 		SELECT SEQ_USERS_USER_NO.NEXTVAL FROM DUAL
 	 	</selectKey>
-		INSERT INTO USERS (user_no, user_id, user_name, user_nickname, password, email, phone, profile_img, reg_date) 
-		VALUES ( #{userNo}, #{userId:VARCHAR}, #{userName:VARCHAR}, #{userNickname:VARCHAR}, #{password:NUMERIC}, #{email:VARCHAR}, #{phone:VARCHAR}, #{profileImg:VARCHAR}, SYSDATE)
+		INSERT INTO USERS (user_no, user_id, user_name, user_nickname, password, email, phone, profile_img, reg_date, kakao_id, naver_id) 
+		VALUES ( #{userNo}, #{userId:VARCHAR}, #{userName:VARCHAR}, #{userNickname:VARCHAR}, #{password:VARCHAR}, #{email:VARCHAR}, #{phone:NUMERIC}, #{profileImg:VARCHAR}, SYSDATE, #{kakaoId:VARCHAR}, #{naverId:VARCHAR})
 
 	 </insert>
 	
@@ -38,7 +50,7 @@
 		user_no, user_id, user_name, user_nickname, password, email, phone, profile_img, reg_date, user_role_code, user_status_code 		
 		FROM users 
 		WHERE user_id = #{value}
-	 </select>	 
+	 </select>
 	 
 	 <select 	id="getUserInfo"	parameterType="int"	resultMap="userSelectMap">
 		SELECT
@@ -56,8 +68,101 @@
 			password = #{password:VARCHAR},
 			email = #{email:VARCHAR},
 			phone = #{phone:NUMERIC},
-			profile_img = #{profileImg:VARCHAR}					
+			profile_img = #{profileImg:VARCHAR},	
+			kakao_id = #{kakaoId:VARCHAR}				
 	   	</set>
 	  WHERE user_no = #{userNo:NUMERIC}
 	 </update>
+	 
+	 <select  id="getUserList"  parameterType="search"	resultMap="userSelectMap">
+	  	SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+				FROM		(	SELECT user_no, user_id, user_nickname, reg_date, email, user_status_code
+							FROM users
+							<if test="searchCondition != null">
+								<where>
+									<if test="searchCondition == 0 and searchKeyword !='' ">
+						 				user_id like '%'|| #{searchKeyword} || '%'
+									</if>
+									<if test="searchCondition == 1 and searchKeyword !='' ">
+						 				user_nickname like '%'|| #{searchKeyword} || '%'
+									</if>													
+								</where>
+							</if>
+							ORDER BY user_no ) inner_table
+						WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+	 </select>
+	 
+	 <select  id="getUserTotalCount"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM(	SELECT user_no, user_id, user_nickname, reg_date, email, user_status_code
+						FROM users
+						<if test="searchCondition != null">
+							<where>
+								<if test="searchCondition == 0 and searchKeyword !='' ">
+						 			
+						 		user_id like '%'|| #{searchKeyword} || '%'
+								</if>
+								<if test="searchCondition == 1 and searchKeyword !='' ">
+						 		user_nickname like '%'|| #{searchKeyword} || '%'
+								</if>								
+							</where>
+						</if> ) countTable						
+	 </select>	 
+	 
+	 <select id="selectKakao" parameterType="string" resultMap="userSelectMap">
+		SELECT *
+		FROM
+		users			
+		where kakao_Id = #{value}
+
+	 </select> 
+	 
+	 <select id="selectNaver" parameterType="string" resultMap="userSelectMap">
+		SELECT *
+		FROM
+		users			
+		where naver_Id = #{value}
+
+	 </select> 
+	 
+	 <insert id="addMailAccount" parameterType="Account">
+	 	INSERT 
+	 	INTO account
+	 		(account_no,
+	 	     user_no,
+	 	     account_type,
+	 	     account_id,
+	 	     account_pw,
+	 	     account_domain)
+	 	VALUES
+	 		(seq_account_account_no.NEXTVAL,
+			 #{userNo},
+			 <if test='accountType == "@naver.com"'>'ua100'</if>
+			 <if test='accountType == "@daum.net"'>'ua101'</if>
+			 <if test='accountType == "@gmail.com"'>'ua102'</if>,
+			 '${accountId}${accountType}',
+			 #{accountPw},
+			 #{accountDomain})
+	 </insert>
+	 
+	 <delete id="deleteMailAccount" parameterType="Account">
+	 	DELETE
+	 		account
+	 	WHERE
+	 		user_no = #{userNo}
+	 		AND account_type = #{accountType}
+	 		AND account_id = #{accountId}
+	 </delete>
+	 
+	 <select id="getMailAccount" parameterType="int" resultMap="accountSelectMap">
+	 	SELECT
+	 		*
+	 	FROM
+	 		account
+	 	WHERE
+	 		user_no = #{value} 
+	 </select>
+	 
 </mapper>
