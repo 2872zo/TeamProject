@@ -35,31 +35,28 @@
         Preloader end
     ********************-->
     
-    
-        
     <!--**********************************
         Main wrapper start
     ***********************************-->
+    
     <div id="main-wrapper">
-    
-    
-    
-    
     
  <!--**********************************
             Nav header start
         ***********************************-->
+
            <div class="nav-header">
             <c:import url="/WEB-INF/views/common/brand-logo.jsp"/>
         </div>
+
         <!--**********************************
             Nav header end
         ***********************************-->
         
-        
 <!-- ToolBar Start /////////////////////////////////////-->
 <jsp:include page="../common/toolbar.jsp" />
 <!-- ToolBar End /////////////////////////////////////-->
+
 <form id="cafeHomeForm">
 <input type="hidden" id="userNo" name="userNo" value="${search.userNo}"/>
 <input type="hidden" id="status" name="status" value="${search.status}"/>
@@ -82,16 +79,10 @@
 	
 	<c:if test="${!empty applicationList}">
 
-<table class="table table-borderless ">
+<table class="table">
 	<thead>
     <tr>
-  	  <th scope="col">신청번호</th>
-      <th scope="col">유저번호</th>
-      <th scope="col">카페번호</th>
-      <th scope="col">카페주소</th>
-      <th scope="col">카페이름</th>
-      <th scope="col">카페아이콘</th>
-      <th scope="col">카페종류</th>
+  	  <th scope="col">카페</th>
       <th scope="col">신청일</th>
       <th scope="col">신청닉네임</th>
       <th scope="col">승인여부</th>
@@ -101,17 +92,38 @@
   
 	<c:forEach var="cafeApplication" items="${applicationList}">
 	<tr>
-	 <th scope="row">${cafeApplication.applicationNo}</th>
-	 <td>${cafeApplication.userNo}</td>
-	 <td>${cafeApplication.cafeNo}</td>
-	 <td>${cafeApplication.cafeURL}</td>
-	 <td>${cafeApplication.cafeName}</td>
-	 <td>${cafeApplication.cafeIcon}</td>
-	 <td>${cafeApplication.cafeType}</td>
-	 <td>${cafeApplication.regDate}</td>
-	 <td>${cafeApplication.memberNickname}</td>
-	 <td>${cafeApplication.acceptStatusCode}</td>
+	 <th scope="row" style='width:50%;'>
+		 <div class="row" style='border: 1px solid black;'>
+		 <div class="col-lg-4">
+		 <img src="/images/common/700by700.png" class="card-img" alt="..."
+		style=" width:50%; border:thin; border-color=red; 
+	background: url('/images/uploadFiles/cafeicon/${cafeApplication.cafeIcon}');
+	 no-repeat center center; background-size:cover;">
+		 </div>
+		 <div class="col-lg-5 d-flex align-items-center">
+		 ${cafeApplication.cafeName}
+		 </div>
+		 <div class='col-lg-3 d-flex align-items-center'>
+		 <c:if test='${cafeApplication.cafeType=="cc100"}'>친목/모임</c:if>
+		 <c:if test='${cafeApplication.cafeType=="cc101"}'>스포츠/레저</c:if>
+		 <c:if test='${cafeApplication.cafeType=="cc102"}'>영화</c:if>
+		 <c:if test='${cafeApplication.cafeType=="cc103"}'>게임</c:if>
+		 <c:if test='${cafeApplication.cafeType=="cc104"}'>음악</c:if>
+		 <c:if test='${cafeApplication.cafeType=="cc105"}'>여행</c:if>
+		 
+		 </div>
+		 </div>
+	</th>
+	 <td >${cafeApplication.regDate}</td>
+	 <td >${cafeApplication.memberNickname}</td>
+	 <td >
+	 <c:if test='${cafeApplication.acceptStatusCode=="ca101"}'><i class="mdi mdi-emoticon-neutral" style='font-size: 15pt;'></i>대기중</c:if>
+	 <c:if test='${cafeApplication.acceptStatusCode=="ca102"}'><i class="mdi mdi-emoticon-happy" style='font-size: 15pt;'></i>승인</c:if>
+	 <c:if test='${cafeApplication.acceptStatusCode=="ca103"}'><i class="mdi mdi-emoticon-sad" style='font-size: 15pt;'></i>거절</c:if>
+	 <c:if test='${cafeApplication.acceptStatusCode=="ca104"}'><i class="mdi mdi-emoticon-cool" style='font-size: 15pt;'></i>자동승인</c:if>
+	 </td>
 	 </tr>
+	 
 	</c:forEach>
   
 	</tbody>

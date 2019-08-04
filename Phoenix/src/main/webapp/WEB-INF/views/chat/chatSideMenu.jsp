@@ -23,11 +23,15 @@ li:hover {
 			aria-expanded="false"> <i class="mdi mdi-server" style='font-size: 25pt'></i>
 				<span class="nav-text align-middle" style='font-size: 15pt'>채팅방목록</span>
 		</a></li>
+		
+<!--  
 
 		<li id='config'><a id="info"
 			aria-expanded="false"> <i class="mdi mdi-settings" style='font-size: 25pt'></i>
 				<span class="nav-text align-middle" style='font-size: 15pt'>환경설정</span>
 		</a></li>
+		
+-->
 
 	</ul>
 </div>

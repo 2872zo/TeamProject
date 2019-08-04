@@ -108,9 +108,14 @@ img {
 							</i>
 							<i class="chatButtons mdi mdi-account-search" id='friendSearching' style='font-size: 30pt;'>
 							</i>
+							
+							<!--  
+							
 							<i class="chatButtons mdi mdi-sleep-off" style='font-size: 30pt;'>
 							</i>
-
+							
+							-->
+							
 						</div>
 
 						<!-- 상단 친구 종류 선택 버튼 메뉴 -->

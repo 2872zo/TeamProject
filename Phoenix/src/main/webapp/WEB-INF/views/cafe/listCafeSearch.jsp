@@ -96,6 +96,8 @@
   <c:if test="${ !empty search.searchCondition && search.searchCondition==1}">
  	
  		<div class="btn-group d-flex justify-content-center" role="group">
+ 		<button type="button" role="group"
+				class='btn btn-outline-success col-lg-2 cafeCategory'>전체</button>
 			<button type="button" role="group"
 				class='btn btn-outline-success col-lg-2 cafeCategory'>친목/모임</button>
 			<button type="button" role="group"
@@ -228,11 +230,11 @@ $($(".searchCondition")[${search.searchCondition}]).prop("selected", true);
 
 $("#cafeTypeForSearch").val(${search.cafeType});
 
-$($(".cafeCategory")[$("#cafeTypeForSearch").val()-1]).attr("class","btn btn-success col-lg-2 cafeCategory");
+$($(".cafeCategory")[$("#cafeTypeForSearch").val()]).attr("class","btn btn-success col-lg-2 cafeCategory");
 
 $(".cafeCategory").on("click", function() {
 	
-			$("#cafeTypeForSearch").val($(".cafeCategory").index($(this))+1);
+			$("#cafeTypeForSearch").val($(".cafeCategory").index($(this)));
 			$("#cafeSearch").attr("method", "POST").attr("action", "/cafe/main/search").submit();
 
 });
@@ -288,8 +290,8 @@ $(function() {
 				var countNo=$(".goToPost").index(this);
 				var cafeURL = $($(".cafeURL")[countNo]).val();
 				var postNo = $($(".postNo")[countNo]).val();
-				//alert(cafeURL);
-				//alert(postNo);
+				alert(cafeURL);
+				alert(postNo);
 				$(self.location).attr("href", "/cafe/"+cafeURL+"/getPost/"+postNo);
 			});
 	
