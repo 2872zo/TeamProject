@@ -62,7 +62,8 @@ public class Search {
 	private String fbPw;
 	private String igId;
 	private String igPw;
-	private int subject;
+	private int insta;
+	private int face;
 
 	/// Constructor
 	public Search() {
@@ -156,12 +157,12 @@ public class Search {
 		this.status = status;
 	}
 
-	public boolean isEnginePhoenix() {
-		return enginePhoenix;
+	public int getSortCode() {
+		return sortCode;
 	}
 
-	public void setEnginePhoenix(boolean enginePhoenix) {
-		this.enginePhoenix = enginePhoenix;
+	public void setSortCode(int sortCode) {
+		this.sortCode = sortCode;
 	}
 
 	public String getSearchCondition() {
@@ -196,22 +197,20 @@ public class Search {
 		this.pageSize = pageSize;
 	}
 
-	// ==> Select Query 시 ROWNUM 마지막 값
 	public int getEndRowNum() {
-		return getCurrentPage() * getPageSize();
+		return endRowNum;
 	}
 
-	// ==> Select Query 시 ROWNUM 시작 값
+	public void setEndRowNum(int endRowNum) {
+		this.endRowNum = endRowNum;
+	}
+
 	public int getStartRowNum() {
-		return (getCurrentPage() - 1) * getPageSize() + 1;
+		return startRowNum;
 	}
 
-	public int getSortCode() {
-		return sortCode;
-	}
-
-	public void setSortCode(int sortCode) {
-		this.sortCode = sortCode;
+	public void setStartRowNum(int startRowNum) {
+		this.startRowNum = startRowNum;
 	}
 
 	public String getTermStart() {
@@ -334,28 +333,20 @@ public class Search {
 		this.engineGoogle = engineGoogle;
 	}
 
+	public boolean isEnginePhoenix() {
+		return enginePhoenix;
+	}
+
+	public void setEnginePhoenix(boolean enginePhoenix) {
+		this.enginePhoenix = enginePhoenix;
+	}
+
 	public int getOrderState() {
 		return orderState;
 	}
 
 	public void setOrderState(int orderState) {
 		this.orderState = orderState;
-	}
-
-	public String getSearchThemeSort() {
-		return searchThemeSort;
-	}
-
-	public void setSearchThemeSort(String searchThemeSort) {
-		this.searchThemeSort = searchThemeSort;
-	}
-
-	public int getSearchEngine() {
-		return searchEngine;
-	}
-
-	public void setSearchEngine(int searchEngine) {
-		this.searchEngine = searchEngine;
 	}
 
 	public String getOrderStateSort() {
@@ -366,6 +357,22 @@ public class Search {
 		this.orderStateSort = orderStateSort;
 	}
 
+	public int getSearchTheme() {
+		return searchTheme;
+	}
+
+	public void setSearchTheme(int searchTheme) {
+		this.searchTheme = searchTheme;
+	}
+
+	public String getSearchThemeSort() {
+		return searchThemeSort;
+	}
+
+	public void setSearchThemeSort(String searchThemeSort) {
+		this.searchThemeSort = searchThemeSort;
+	}
+
 	public String getFilter() {
 		return filter;
 	}
@@ -374,12 +381,12 @@ public class Search {
 		this.filter = filter;
 	}
 
-	public int getSearchTheme() {
-		return searchTheme;
+	public int getSearchEngine() {
+		return searchEngine;
 	}
 
-	public void setSearchTheme(int searchTheme) {
-		this.searchTheme = searchTheme;
+	public void setSearchEngine(int searchEngine) {
+		this.searchEngine = searchEngine;
 	}
 
 	public String getFbId() {
@@ -414,12 +421,20 @@ public class Search {
 		this.igPw = igPw;
 	}
 
-	public int getSubject() {
-		return subject;
+	public int getInsta() {
+		return insta;
 	}
 
-	public void setSubject(int subject) {
-		this.subject = subject;
+	public void setInsta(int insta) {
+		this.insta = insta;
+	}
+
+	public int getFace() {
+		return face;
+	}
+
+	public void setFace(int face) {
+		this.face = face;
 	}
 
 	@Override
@@ -437,8 +452,8 @@ public class Search {
 				+ ", engineDaum=" + engineDaum + ", engineGoogle=" + engineGoogle + ", enginePhoenix=" + enginePhoenix
 				+ ", orderState=" + orderState + ", orderStateSort=" + orderStateSort + ", searchTheme=" + searchTheme
 				+ ", searchThemeSort=" + searchThemeSort + ", filter=" + filter + ", searchEngine=" + searchEngine
-				+ ", fbId=" + fbId + ", fbPw=" + fbPw + ", igId=" + igId + ", igPw=" + igPw + ", subject=" + subject
-				+ "]";
+				+ ", fbId=" + fbId + ", fbPw=" + fbPw + ", igId=" + igId + ", igPw=" + igPw + ", insta=" + insta
+				+ ", face=" + face + "]";
 	}
 
-}// end of class
+	}// end of class
