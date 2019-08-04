@@ -95,30 +95,42 @@ public class CafeTabContoller {
 ///////////////////////////////준호끝///////////////////////////////////////		
 
 ///////////////////////////////// 기황 시작//////////////////////////////////////
-	@RequestMapping(value = "main", method = RequestMethod.GET)
-	public String cafeMain(HttpSession session, Model model) throws Exception {
+	@RequestMapping(value = "main")
+	public String cafeMain(@ModelAttribute Search search, HttpSession session, Model model) throws Exception {
 
 		System.out.println("/cafe/main GET");
 		User user = new User();
 		if (session.getAttribute("user") != null) {
 			user = (User) session.getAttribute("user");
 		}
-		Search search = new Search();
+		System.out.println("커렌트페이지 ㅐㄴ놔라"+search.getCurrentPage());
+		pageSize = 1;
+
+		if (search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+		
+		search.setPageSize(pageSize);
+		
 		search.setUserNo(user.getUserNo());// 유저번호세팅
-		search.setStatus(0);// 활동중 카페선택 세팅
-		search.setCafeType(0);// 카테고리0번 고르게 세팅
 
 		Map map = cafeTabService.getCafeHome(search);
+		
 		List myCafelist = (List) map.get("myCafelist");
 		List categorizedCafeList = (List) map.get("categorizedCafeList");
-
+		
+		int totalCount = (int) map.get("totalCount");
+		Page page = new Page(search.getCurrentPage(), totalCount, pageUnit, pageSize);
+		
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("page", page);
 		model.addAttribute("search", search);
 		model.addAttribute("myCafelist", myCafelist);
 		model.addAttribute("categorizedCafeList", categorizedCafeList);
 
 		return "forward:/WEB-INF/views/cafe/cafeHomeMain.jsp";
 	}
-
+/*
 	@RequestMapping(value = "main", method = RequestMethod.POST)
 	public String cafeMainPost(@ModelAttribute Search search, Model model) throws Exception {
 
@@ -134,7 +146,7 @@ public class CafeTabContoller {
 
 		return "forward:/WEB-INF/views/cafe/cafeHomeMain.jsp";
 	}
-
+*/
 	@RequestMapping("main/search")
 	public String cafeSearch(@ModelAttribute("search") Search search, Model model) throws Exception {
 
@@ -188,18 +200,6 @@ public class CafeTabContoller {
 		return "cafe/listCafeNewsFeed";
 
 	}
-
-	/*
-	 * 테스트용 메서드입니다.
-	 * 
-	 * @RequestMapping("main/testing") public String onlyForTest(@ModelAttribute
-	 * CafeMember cafeMember) throws Exception {
-	 * 
-	 * System.out.println("들어왔니?????");
-	 * 
-	 * List<CafeMember> list = cafeMember.getCafeMemberList(); for(int i=0;i<6;i++)
-	 * { System.out.println(list.get(i)); } return "cafe/listCafeNewsFeed"; }
-	 */
 
 ///////////////////////////////// 기황 끝//////////////////////////////////////
 

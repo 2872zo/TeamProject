@@ -23,7 +23,6 @@
 #searchKeyword{width:300pt;}
 </style>
 
-
 </head>
 
 <body>
@@ -66,19 +65,19 @@
 	<input type="hidden" name='boardName' value='${ !empty search.boardName ? search.boardName : "" }'>
 	<input type="hidden" name='cafeType' id='cafeTypeForSearch' value='0'>		
   	
-		<div class="input-group d-flex justify-content-center" >
+		<div class="input-group d-flex justify-content-center"  style='width: 100%'>
   		<div class='input-group-prepend'>
-  		<select class="selectpicker" name='searchCondition' id='searchCondition'>
+  		<select class="form-control valid" name='searchCondition' id='searchCondition'>
 			<option class='searchCondition' value="0">카페+게시글</option>
 			<option class='searchCondition' value="1">카페</option>
 			<option class='searchCondition' value="2">게시글</option>
   		</select>
   		</div>
   		<div class='input-group-append'>
-  		&nbsp;<input type="text" class="form-control form-control-lg" placeholder="검색어 입력해주세요" name="searchKeyword" id="searchKeyword" >
+  		<input type="text" class="form-control" placeholder="검색어 입력해주세요" name="searchKeyword" id="searchKeyword" value='${search.searchKeyword}'>
   		</div>
   		<div class='input-group-append'>
-  		&nbsp;<button class="btn btn-sm btn-outline-primary" type="button" id="cafeExplore"><i class="mdi mdi-magnify" style='font-size: 18pt;'></i></button>
+  		<button class="btn btn-sm btn-outline-primary" type="button" id="cafeExplore"><i class="mdi mdi-magnify" style='font-size: 15pt;'></i></button>
 		</div>
 		</div>
 
@@ -88,14 +87,9 @@
   	
 </div><!--카드바디 -->
 </div><!--카드 -->
-
-
-	
-		
-			
 			<!--  카페검색창 끝 /////////////////////////////////////-->
 
-  <c:if test="${!empty cafeList}">
+  <c:if test="${!empty cafeList || search.searchCondition==1}">
   <div class='card'>
 <div class="card-body">
 
@@ -158,7 +152,7 @@
 </div>
   </c:if>
   <br/>
-  <c:if test="${!empty postList}">
+  <c:if test="${!empty postList ||search.searchCondition==2}">
   <div class='card'>
 <div class="card-body">
  	<c:if test="${ !empty search.searchCondition && search.searchCondition==2}">
@@ -230,41 +224,19 @@
 	
 	<!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
+$($(".searchCondition")[${search.searchCondition}]).prop("selected", true);
+
 $("#cafeTypeForSearch").val(${search.cafeType});
+
 $($(".cafeCategory")[$("#cafeTypeForSearch").val()-1]).attr("class","btn btn-success col-lg-2 cafeCategory");
-$(".cafeCategory").on(
-		"click",
-		function() {
-			//alert($(".cafeCategory").index($(this)));
-			
+
+$(".cafeCategory").on("click", function() {
+	
 			$("#cafeTypeForSearch").val($(".cafeCategory").index($(this))+1);
-			//alert($("#cafeTypeForSearch").val());
-			$("#cafeSearch").attr("method", "POST").attr("action",
-			"/cafe/main/search").submit();
-		});
-$(function() {
-	
-	if(${!empty search.searchKeyword}){
-		$("#searchKeyword").val(${search.searchKeyword});
-		}
-	
-	if(${!empty search.searchCondition}){
-		
-		var count = $("#condtioner").val();
-		
-		if (count==0){
-			$(".filter-option-inner-inner").text("카페+게시글");
-			}
-		if (count==1){
-			$(".filter-option-inner-inner").text("카페");
-			}
-		if (count==2){
-			$(".filter-option-inner-inner").text("게시글");
-			}
-		$($(".searchCondition")[count]).prop("selected",true);
-	}
-	
-	
+			$("#cafeSearch").attr("method", "POST").attr("action", "/cafe/main/search").submit();
+
+});
+
 	$("#cafeExplore").on(
 			"click",
 			function() {
@@ -272,11 +244,11 @@ $(function() {
 						"/cafe/main/search").submit();
 			});
 
-});
+
 
 
 function fncGetList(currentPage) {
-	  $("#currentPage").val(currentPage)
+	  $("#currentPage").val(currentPage);
 	  $("form").attr("method" , "POST").attr("action" , "/cafe/main/search").submit();
 	}
 	

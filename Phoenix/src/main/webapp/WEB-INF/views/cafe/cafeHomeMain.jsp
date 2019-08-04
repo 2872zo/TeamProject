@@ -30,7 +30,6 @@
 #searchKeyword{width:300pt;}
 </style>
 
-
 </head>
 
 <body>
@@ -79,43 +78,35 @@
 <div class='card'>
 <div class='card-body'>
 <input type='hidden' id="condtioner" value='${search.searchCondition}'>
-<div class="input-group" >
-  <div class='input-group-prepend'>
-  <select class="selectpicker" name='searchCondition' id='searchCondition'>
-	<option class='searchCondition' value="0">카페+게시글</option>
-	<option class='searchCondition' value="1">카페</option>
-	<option class='searchCondition' value="2">게시글</option>
-  </select>
-  </div>
-  <div class='input-group-append'>
-  &nbsp;<input type="text" class="form-control form-control-lg" placeholder="검색어 입력해주세요" name="searchKeyword" id="searchKeyword" >
-  </div>
-  <div class='input-group-append'>
-  &nbsp;<button class="btn btn-sm btn-outline-primary" type="button" id="cafeExplore" style='z-index: 0;'><i class="mdi mdi-magnify" style='font-size: 18pt;'></i></button>
-	</div>
-	
-	</div><!--인풋그룹-->
+<div class="input-group d-flex justify-content-center"  style='width: 100%'>
+  		<select class="form-control valid" name='searchCondition' id='searchCondition'>
+			<option class='searchCondition' value="0">카페+게시글</option>
+			<option class='searchCondition' value="1">카페</option>
+			<option class='searchCondition' value="2">게시글</option>
+  		</select>
+  		<div class='input-group-append'>
+  		<input type="text" class="form-control" placeholder="검색어 입력해주세요" name="searchKeyword" id="searchKeyword" value='${search.searchKeyword}'>
+  		</div>
+  		<div class='input-group-append'>
+  		<button class="btn btn-sm btn-outline-primary" type="button" id="cafeExplore"><i class="mdi mdi-magnify" style='font-size: 15pt;'></i></button>
+		</div>
+		</div><!--인풋그룹-->
 </div><!--카드바디 -->
 
 </div><!--카드 -->
 </form>
 
 		<form id="cafeHomeForm">
-			<input type="hidden" id="userNo" name="userNo"
-				value="${search.userNo}" />
-			<input type="hidden" id="status" name="status" 
-				value="${search.status}" /> 
-			<input type="hidden" id="cafeType" name="cafeType" 
-				value="${search.cafeType}" />
-			<input type="hidden" id="searchCondition" name="searchCondition" 
-				value="1" />
-			<input type="hidden" id="boardNo" name="boardNo" 
-				value="0" />
+			<input type="hidden" id="status" name="status" value="${search.status}" /> 
+			<input type="hidden" id="cafeType" name="cafeType" value="${search.cafeType}" />
+			<input type="hidden" id="currentPageForHome" name="currentPage" value="0" />
+			<input type="hidden" id="searchCondition" name="searchCondition" value="1" />
+			<input type="hidden" id="boardNo" name="boardNo" value="${search.boardNo}" />
 		</form>
 		
 
 		<c:if test="${!empty sessionScope.user}">
-			
+			<!-- 카페만들기 버튼 -->
 			<div class="card">
 			<div class="card-body">
 	
@@ -123,7 +114,10 @@
 				id='addCafe'>카페 만들기</button>
 			</div>
 			</div>
+			<!-- 카페만들기 버튼 -->
 			
+			
+			<!-- 가입된 카페목록 -->
 			<div class="card" id='myCafePosition' style='min-height: 300px;'>
 			<div class="card-body">
 
@@ -144,7 +138,6 @@
 
 				<div class="row d-flex justify-content-between">
 					<c:forEach var="myCafe" items="${myCafelist}">
-			
 		
 						<div class="card myCafe col-lg-6" style=" border: 1px solid #F7790A; "
 							name='${myCafe.cafeURL}'>
@@ -173,13 +166,13 @@
 					</c:forEach>
 
 				</div>
-
+			<jsp:include page="../common/pageNavigator.jsp" />
 			</c:if>
+			
 </div>
 </div>
-		<br/>
 		</c:if>
-
+	<!-- 가입된 카페목록 -->
 
 <div class="card" style='min-height: 300px;'>
 <div class="card-body" id='cafeCategoryPosition'>
@@ -260,6 +253,13 @@
 	
 	<!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
+
+function fncGetList(currentPage) {
+	$("#boardNo").val("1");
+	$("#currentPageForHome").val(currentPage);
+	$("#cafeHomeForm").attr("method", "POST").attr("action", "/cafe/main").submit();
+}
+
 $("#moreCafe").on("click", function() {
 	var typeCheck = Number($("#cafeType").val());
 	typeCheck +=1;
@@ -321,6 +321,11 @@ $(function() {
 			$(self.location).attr("href", "/cafe/addCafeView");
 		});
 
+
+
+		
+
+		
 		$(".cafeListing").on(
 				"click",
 				function() {

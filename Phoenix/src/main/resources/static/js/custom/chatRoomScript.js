@@ -2,9 +2,7 @@
 var imgHead = "<img src='/images/uploadfiles/chatFiles/";
 var imgTail = "' class='rounded' style='width: 100%; height: auto;'>";
 
-
 //자기가 입력한 메시지/사진용 태그
-
 var startOfMine =  "<div class='row d-flex justify-content-end'>";
 var regDateMyHead = "<div class='col-lg-2 text-right' style='padding-right: 0px;'>";
 var regDateMyTail = "</div>";
@@ -16,15 +14,12 @@ var textTail = "</div></div>";
 var endOfTag = "</div>";
 
 //이모티콘용 태그
-
 var startOfMyEmo = "<div class='col-lg-4' style='padding-right: 20px;'>"
 var idFront = "<div class='alert' name='";
 var idTail = "' style='padding:5px;' >";
 var emoFront = 	"<img src='/images/common/700by700.png' class='rounded' style=\"background: url('/images/chatEmoticon/";
 var emoBack = "'); background-size: cover; background-repeat: no-repeat; background-position: center; width:100%; margin: 1%; padding:0%;\">";
 var endOfMyEmo = "</div></div>";
-
-
 
 //남이 입력한 메시지/사진용 태그
 var startOfYour = "<div class='row d-flex justify-content-start'>";
@@ -104,8 +99,6 @@ $("#updateChatRoomName").click(function() {
 
 });
 
-
-
 //초대하기 전에 색상 바꾸는 부분
 $(".inviteList").on("click" , function() {
 
@@ -118,11 +111,22 @@ $(".inviteList").on("click" , function() {
 		}
 	
 });
+
 //초대하기 눌렀을 때
 $("#doInviting").on("click" , function() {
+	
+	var inviteFlag=0;
+	
+	$(".inviteList").each(function(index) {
+		if($(this).css( "background-color" )=="rgb(245, 161, 66)"){
+			inviteFlag += 1;
+		}
+	});
+	
+	if(inviteFlag>0){
 	swal({
 		  title: "채팅방에 초대.",
-		  text: "선택하신 친구분들이 채팅방에 초대됩니다.",
+		  text: "선택하신 "+inviteFlag+" 명의 친구가 채팅방에 초대됩니다.",
 		  type: "info",
 		  showCancelButton: true,
 		  confirmButtonClass: "btn-info",
@@ -178,6 +182,7 @@ $("#doInviting").on("click" , function() {
 				);
 			
 		});
+	}
 	
 });
 

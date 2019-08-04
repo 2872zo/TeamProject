@@ -94,6 +94,7 @@
       <th scope="col">카페종류</th>
       <th scope="col">신청일</th>
       <th scope="col">신청닉네임</th>
+      <th scope="col">승인여부</th>
     </tr>
 	</thead>
 	<tbody>
@@ -109,6 +110,7 @@
 	 <td>${cafeApplication.cafeType}</td>
 	 <td>${cafeApplication.regDate}</td>
 	 <td>${cafeApplication.memberNickname}</td>
+	 <td>${cafeApplication.acceptStatusCode}</td>
 	 </tr>
 	</c:forEach>
   

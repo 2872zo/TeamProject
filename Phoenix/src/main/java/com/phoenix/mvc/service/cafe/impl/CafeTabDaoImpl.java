@@ -63,15 +63,15 @@ public class CafeTabDaoImpl implements CafeTabDao {
 	}
 	
 	@Override
+	public int myCafeListTotalCount(Search search) throws Exception {
+		return sqlSession.selectOne("CafeTabMapper.myCafeListTotalCount", search);
+	}
+	
+	@Override
 	public List getMyOwnCafeList(Search search) throws Exception {
 		return sqlSession.selectList("CafeTabMapper.ownCafe", search);
 	}
 		
-	@Override
-	public int myCafeListTotalCount(Search search) throws Exception {
-		return sqlSession.selectOne("CafeTabMapper.myCafeListTotalCount", search);
-	}
-
 	@Override
 	public int ownCafeTotalCount(Search search) throws Exception {
 		// TODO Auto-generated method stub

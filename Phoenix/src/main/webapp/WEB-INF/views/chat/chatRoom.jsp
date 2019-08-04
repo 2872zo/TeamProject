@@ -24,9 +24,11 @@
 .emoticons{
 cursor: pointer;
 }
+
 #fileMultiple{
 display : none;
 }
+
 ::-webkit-scrollbar {
   width: 5px;
 }
@@ -297,7 +299,6 @@ display : none;
     </div>
   </div>
   
-  
   <div class="card">
 
     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
@@ -370,11 +371,11 @@ display : none;
     <div class="card-header" id="headingOne">
       <h2 class="mb-0">
         <div class='row'>
-	        <div class='col-lg-9'>
+	        <div class='col-lg-6'>
 		        <button class="btn btn-primary btn-block d-flex align-items-center" 
 		        type="button" data-toggle="collapse" data-target="#invitationList" 
 		        aria-expanded="true" aria-controls="collapseOne">
-		          	초대가능한 친구목록
+		          	초대가능한 친구목록<i class="mdi mdi-chevron-double-down"></i>
 		        </button>
 	        </div>
 	        <div class='col-lg-2'>
@@ -437,7 +438,7 @@ display : none;
 	<script src="/js/custom/scroll-top.js"></script>
 	
 	<!-- 소켓용 스크립트 -->
- <script src="http://localhost:82/socket.io/socket.io.js"></script> 
+  <script src="http://localhost:82/socket.io/socket.io.js"></script>  
 <!-- <script src="http://192.168.0.78:82/socket.io/socket.io.js"></script>-->
 
 	<!--**********************************
@@ -455,7 +456,9 @@ socket.emit("identify", ${sessionScope.user.userNo});
 socket.emit("joiner", $("#chatRoomId").val());
 
 //페이지 열자마자 채팅 맨 밑으로...
-$("#chat_box").scrollTop($("#chat_box").prop('scrollHeight'));
+$(document).ready(function(){
+	$("#chat_box").scrollTop($("#chat_box").prop('scrollHeight'));
+});
 
 var nickNames = new Array();
 var userNos = new Array();
@@ -594,43 +597,43 @@ $(function() {
 								}
 								
 								msgTagging = startOfYour
-								+ProfileHead
-								+ProfileImgHead
-									+chat.profileImg
-								+ProfileImgTail
-								+textHeadYour
-									+chat.userNickname
-								+idFrontYour
-									+chat.id
-								+idBackYour
-									+chat.chatMsg
-								+textTail
-								+regDateHeadYour
-									+chat.regDate
-								+regDateTailYour
+											+ProfileHead
+											+ProfileImgHead
+												+chat.profileImg
+											+ProfileImgTail
+											+textHeadYour
+												+chat.userNickname
+											+idFrontYour
+												+chat.id
+											+idBackYour
+												+chat.chatMsg
+											+textTail
+											+regDateHeadYour
+												+chat.regDate
+											+regDateTailYour
 								
 							}
 
 							if(chat.chatType==2){
 
 								msgTagging = startOfYour
-								+ProfileHead
-								+ProfileImgHead
-									+chat.profileImg
-								+ProfileImgTail
-								+startOfMyEmo
-									+chat.userNickname
-								+idFrontYour
-									+chat.id
-								+idBackYourEmo
-								+emoFront
-									+chat.chatMsg
-								+emoBack
-								+endOfMyEmo
-								+regDateHeadYour
-									+chat.regDate
-								+regDateTailYour
-								+endOfTag
+											+ProfileHead
+											+ProfileImgHead
+												+chat.profileImg
+											+ProfileImgTail
+											+startOfMyEmo
+												+chat.userNickname
+											+idFrontYour
+												+chat.id
+											+idBackYourEmo
+											+emoFront
+												+chat.chatMsg
+											+emoBack
+											+endOfMyEmo
+											+regDateHeadYour
+												+chat.regDate
+											+regDateTailYour
+											+endOfTag
 							}
 						}
 
@@ -706,23 +709,25 @@ $(function() {
 
 			if (msg.userNo==$("#userNo").val()){
 				if(msg.chatType==0 || msg.chatType==1){
+					
 					if(msg.chatType==1){
-						msg.chatMsg = imgHead
-										+msg.chatMsg
-									+imgTail
+						msg.chatMsg = 	imgHead
+											+msg.chatMsg
+										+imgTail
 					}
+					
 					msgTagging = startOfMine
-					+regDateMyHead
-						+msg.regDate
-					+regDateMyTail
-					+textHead
-					+idHeadSecond
-						+msg.id
-					+idTailFirst
-					+idTailSecond
-						+msg.chatMsg
-					+textTail
-					+endOfTag	
+								+regDateMyHead
+									+msg.regDate
+								+regDateMyTail
+								+textHead
+								+idHeadSecond
+									+msg.id
+								+idTailFirst
+								+idTailSecond
+									+msg.chatMsg
+								+textTail
+								+endOfTag	
 				}
 				if(msg.chatType==2){
 					
@@ -746,7 +751,8 @@ $(function() {
 				
 				if(userNos.indexOf(msg.userNo)!=-1){
 					msg.userNickname = nickNames[userNos.indexOf(msg.userNo)]
-					} 
+					}
+				
 				if(msg.chatType==0 || msg.chatType==1){
 
 					if(msg.chatType==1){
@@ -756,63 +762,59 @@ $(function() {
 					}
 					
 					msgTagging = startOfYour
-					+ProfileHead
-					+ProfileImgHead
-						+msg.profileImg
-					+ProfileImgTail
-					+textHeadYour
-						+msg.userNickname
-					+idFrontYour
-					+msg.id
-					+idBackYour
-					+msg.chatMsg
-					+textTail
-					+regDateHeadYour
-					+msg.regDate
-					+regDateTailYour
+								+ProfileHead
+								+ProfileImgHead
+									+msg.profileImg
+								+ProfileImgTail
+								+textHeadYour
+									+msg.userNickname
+								+idFrontYour
+									+msg.id
+								+idBackYour
+									+msg.chatMsg
+								+textTail
+								+regDateHeadYour
+									+msg.regDate
+								+regDateTailYour
 					
 				}
 
 				if(msg.chatType==2){
 
 					msgTagging = startOfYour
-					+ProfileHead
-					+ProfileImgHead
-						+msg.profileImg
-					+ProfileImgTail
-					+startOfMyEmo
-						+msg.userNickname
-					
-				+idFrontYour
-				+msg.id
-				+idBackYourEmo
-					
-					+emoFront
-						+msg.chatMsg
-					+emoBack
-					+endOfMyEmo
-					
-					+regDateHeadYour
-						+msg.regDate
-					+regDateTailYour
-					+endOfTag
+								+ProfileHead
+								+ProfileImgHead
+									+msg.profileImg
+								+ProfileImgTail
+								+startOfMyEmo
+									+msg.userNickname
+								+idFrontYour
+									+msg.id
+								+idBackYourEmo
+								+emoFront
+									+msg.chatMsg
+								+emoBack
+								+endOfMyEmo
+								+regDateHeadYour
+									+msg.regDate
+								+regDateTailYour
+								+endOfTag
 					
 				}
 
-				
 				}
 			
-		
-
 		$(msgTagging).appendTo("#chat_box");
 
 		//스크롤바 맨 위 위치
+		
 		var top = $("#chat_box").scrollTop();
 		//스크롤바 전체 길이
 		var totalHeight= $("#chat_box").prop('scrollHeight');
 		//아래쪽 보고 있을 때 메시지 뜨면 당기게끔
+		//alert(top+":::"+totalHeight);
 		if(top>(totalHeight*0.50)){
-			 $("#chat_box").scrollTop(totalHeight);
+			 $("#chat_box").scrollTop($("#chat_box").prop('scrollHeight'));
 			}
 		
 	});
