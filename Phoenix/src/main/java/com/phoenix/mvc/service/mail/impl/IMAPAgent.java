@@ -68,7 +68,29 @@ public class IMAPAgent extends MailAgent{
         return folder.hasNewMessages();  
     }
 
+    public Message[] getDraftMessages() throws MessagingException {  
+        return getDefaultFolder().search(new FlagTerm(new Flags(Flags.Flag.SEEN), false));  
+    }  
+    
+    public Message[] getFlagMessages() throws MessagingException{
+    	return getDefaultFolder().search(new FlagTerm(new Flags(Flags.Flag.FLAGGED), true));
+    }
+    
+    public Message getFlagMessage(int msgNum) throws MessagingException{
+    	return getDefaultFolder().search(new FlagTerm(new Flags(Flags.Flag.FLAGGED), true))[msgNum];
+    }
+
+	public void setDeleteMail(int msgNum) throws MessagingException{
+		getMessage(msgNum).setFlag(Flag.DELETED, true);
+	}
+
+	public void setSeenMail(int msgNum) throws MessagingException {
+		setSeenFlag(getMessage(msgNum));
+	}
 	
+	public void setUnSeenMail(int msgNum) throws MessagingException {
+		setUnSeenFlag(getMessage(msgNum));
+	}
 
 	
 }

@@ -87,18 +87,6 @@ public class MailServiceImpl implements MailService {
 	}
 
 	@Override
-	public boolean deleteMail(int mailNo) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean deleteMail(int[] mailNoArray) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public boolean addMailAccount(Account account) throws Exception {
 		if(mailDao.accountVaildationCheck(account)) {
 			return userDao.addMailAccount(account);
@@ -126,14 +114,33 @@ public class MailServiceImpl implements MailService {
 		return true;
 	}
 
-
 	@Override
 	public Map<String, Object> getAllAccountSentMailList(List<Account> accountList, int currentPage) throws FileNotFoundException, MessagingException, IOException {
 		return mailDao.getAllAccountSentMailList(accountList, currentPage);
 	}
 
 	@Override
-	public Map<String, Object> getSentMail(Account account, int mailNo) throws Exception {
-		return mailDao.getSentMail(account, mailNo);
+	public Map<String, Object> getAllAccountFlagMailList(List<Account> accountList, int currentPage) throws FileNotFoundException, MessagingException, IOException {
+		return mailDao.getAllAccountFlagMailList(accountList, currentPage);
+	}
+
+	@Override
+	public Map<String, Object> getAllAccountDeletedMailList(List<Account> accountList, int currentPage)	throws FileNotFoundException, MessagingException, IOException {
+		return mailDao.getAllAccountDeletedMailList(accountList, currentPage);
+	}
+
+	@Override
+	public boolean deleteMail(List<Map<String, Object>> mailInfoList, List<Account> accountList) throws FileNotFoundException, MessagingException, IOException {
+		return mailDao.deleteMail(mailInfoList, accountList);
+	}
+
+	@Override
+	public boolean setSeenMail(List<Map<String, Object>> mailInfoList, List<Account> accountList)	throws FileNotFoundException, MessagingException, IOException {
+		return mailDao.setSeenMail(mailInfoList, accountList);
+	}
+
+	@Override
+	public boolean setUnSeenMail(List<Map<String, Object>> mailInfoList, List<Account> accountList) throws FileNotFoundException, MessagingException, IOException {
+		return mailDao.setUnSeenMail(mailInfoList, accountList);
 	}
 }

@@ -1,4 +1,7 @@
 function fncGetMailList(currentPage){
+	if(currentPage == undefined){
+		currentPage = 1;
+	}
 	location.href = "/mail/getMailList?accountNo=" + $("#accountSelector").val() + "&currentPage=" + currentPage; 
 }
 
@@ -11,19 +14,28 @@ function fncSendMail(){
 }
 
 function fncOnChangeAccount(accountNo){
-	location.href = "/mail/getMailList?accountNo=" + accountNo;
+	location.href = window.location.pathname + "?accountNo=" + accountNo;
 }
 
 function fncGetSentMailList(currentPage){
+	if(currentPage == undefined){
+		currentPage = 1;
+	}
 	location.href = "/mail/getSentMailList?accountNo=" + $("#accountSelector").val() + "&currentPage=" + currentPage;
 }
 
-function fncGetImportantMailList(accountNo){
-	location.href = "/mail/getImportantMailList?accountNo=" + accountNo;
+function fncGetImportantMailList(currentPage){
+	if(currentPage == undefined){
+		currentPage = 1;
+	}
+	location.href = "/mail/getFlagMailList?accountNo=" + $("#accountSelector").val() + "&currentPage=" + currentPage;
 }
 
-function fncGetTrashMailList(accountNo){
-	location.href = "/mail/getTrashMailList?accountNo=" + accountNo;
+function fncGetTrashMailList(currentPage){
+	if(currentPage == undefined){
+		currentPage = 1;
+	}
+	location.href = "/mail/getTrashMailList?accountNo=" + $("#accountSelector").val() + "&currentPage=" + currentPage;
 }
 
 $(function(){

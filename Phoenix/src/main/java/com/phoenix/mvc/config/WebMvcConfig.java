@@ -40,8 +40,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         
         registry.addInterceptor(mailInterceptor)
         		.addPathPatterns("/mail/**")
-        		.excludePathPatterns("/mail/modalTest")
-        		.excludePathPatterns("/mail/json/**");
+        		.excludePathPatterns("/mail/modalTest");
         
         registry.addInterceptor(chatInterceptor)
         		.addPathPatterns("/chat/**");

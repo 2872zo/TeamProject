@@ -96,6 +96,74 @@
 <!-- 					</ol> -->
 <!-- 				</div> -->
 
+				<div class="row">
+					<div class="col-md-12">
+						<div class="input-group" id="adv-search">
+							<input type="text" class="form-control input-default" name="searchKeyword" id="searchKeyword" />
+							<div class="input-group-btn">
+								<div class="btn-group" role="group">
+									<div class="dropdown dropdown-lg">
+										<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+											<span class="caret"></span>
+										</button>
+										<div class="dropdown-menu dropdown-menu-right" role="menu">
+											<form class="form-horizontal" role="form" id="searchForm">
+												<input type="hidden" name="currentPage">
+												<div class="form-group">
+													<label for="termStart">기간 시작</label> 
+													<input class="form-control" type="text" id="termStart" name="termStart" readonly="readonly">
+												</div>
+
+												<div class="form-group">
+													<label for="termEnd">시작 끝</label> 
+													<input class="form-control" type="text" id="termEnd" name="termEnd" readonly="readonly">
+												</div>
+
+												<div class="form-group">
+													<label for="boardNo">게시판</label> 
+													<select	class="form-control hideOption" name="boardNo">
+														<option value="0" class="boardOption">전체</option>
+														<c:forEach var="board" items="${boardOption }">
+															<option value="${board.boardNo }" class="boardOption">${board.boardName }</option>
+														</c:forEach>
+													</select>
+												</div>
+
+												<div class="form-group">
+													<label for="searchCondition">구분</label> <select
+														class="form-control hideOption" name="searchCondition">
+														<option value="0" class="searchOption">전체</option>
+														<option value="1" class="searchOption">호칭</option>
+														<option value="2" class="searchOption">제목</option>
+														<option value="3" class="searchOption">내용</option>
+														<option value="4" class="searchOption">댓글</option>
+													</select>
+												</div>
+
+												<div class="form-group">
+													<label for="searchKeyword">키워드</label> <input type="text"
+														class="form-control" name="searchKeyword"
+														id="advSearchKeyword">
+												</div>
+
+												<button type="submit" class="btn btn-primary"
+													style="margin-left: 15px; margin-right: 15px;"
+													id="advSubmitButton">
+													<span class="searchIcon" aria-hidden="true"></span>
+												</button>
+											</form>
+										</div>
+									</div>
+
+									<button type="button" class="btn btn-primary">
+										<span class="searchIcon" aria-hidden="true" id="submitButton"></span>
+									</button>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 
 			</div>
 			
@@ -139,7 +207,7 @@
 										<tr>
 											<td colspan="6">
 												<c:import url="/WEB-INF/views/common/pageNavigator.jsp">
-													<c:param name="subject" value="SentMail"/>		
+													<c:param name="subject" value="FlagMail"/>		
 												</c:import>
 											</td>
 										</tr>
