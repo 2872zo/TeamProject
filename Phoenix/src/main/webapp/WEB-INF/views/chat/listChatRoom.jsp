@@ -180,8 +180,8 @@ img {
 
 
 <!-- 소켓용 스크립트 -->
- <script src="http://localhost:82/socket.io/socket.io.js"></script> 
-<!-- <script src="http://192.168.0.78:82/socket.io/socket.io.js"></script> -->
+ <!-- <script src="http://localhost:82/socket.io/socket.io.js"></script>  -->
+<script src="http://192.168.0.78:82/socket.io/socket.io.js"></script>
 
 
 	<!--**********************************
@@ -193,8 +193,8 @@ img {
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
 
-//var socket = io("http://192.168.0.78:82");
-var socket = io("http://localhost:82");
+var socket = io("http://192.168.0.78:82");
+//var socket = io("http://localhost:82");
 
 $(function() {
 	

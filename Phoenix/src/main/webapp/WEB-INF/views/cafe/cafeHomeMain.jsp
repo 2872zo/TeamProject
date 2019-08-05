@@ -27,7 +27,10 @@
 
 <style type="text/css">
 .dropdown-toggle{height: 100%; font-size: 16pt;}
-#searchKeyword{width:300pt;}
+.myCafe:hover {
+	cursor: pointer;
+	background-color: #e3dad1;
+	}
 </style>
 
 </head>
@@ -75,9 +78,10 @@
 				value='${ !empty search.cafeURL ? search.cafeURL : "" }'> <input
 				type="hidden" name='boardName'
 				value='${ !empty search.boardName ? search.boardName : "" }'>
+				<input type='hidden' id="condtioner" value='${search.searchCondition}'>
 <div class='card'>
 <div class='card-body'>
-<input type='hidden' id="condtioner" value='${search.searchCondition}'>
+
 <div class="input-group d-flex justify-content-center"  style='width: 100%'>
   		<select class="form-control valid" name='searchCondition' id='searchCondition'>
 			<option class='searchCondition' value="0">카페+게시글</option>

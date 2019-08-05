@@ -20,7 +20,6 @@
 <title>CafeSearch</title>
 <style type="text/css">
 .dropdown-toggle{height: 100%; font-size: 16pt;}
-#searchKeyword{width:300pt;}
 </style>
 
 </head>
@@ -52,27 +51,26 @@
 <!-- ToolBar Start /////////////////////////////////////-->
 <jsp:include page="/WEB-INF/views/common/toolbar.jsp" />
 <!-- ToolBar End /////////////////////////////////////-->
+<br/>
 <div class="container">
   
-	
-<div class='card'>
-  	
-<div class='card-body'>
-	<form class="form-inline justify-content-center" id='cafeSearch'>
+		<form class="form-inline justify-content-center" id='cafeSearch'>
   	<input type='hidden' id="condtioner" value='${search.searchCondition}'>
   	<input type="hidden" id="currentPage" name="currentPage" value="0" />
 	<input type="hidden" name='cafeURL' value='${ !empty search.cafeURL ? search.cafeURL : "" }'>
 	<input type="hidden" name='boardName' value='${ !empty search.boardName ? search.boardName : "" }'>
-	<input type="hidden" name='cafeType' id='cafeTypeForSearch' value='0'>		
+	<input type="hidden" name='cafeType' id='cafeTypeForSearch' value='0'>	
+
+<div class='card'>
   	
+<div class='card-body'>
+	
 		<div class="input-group d-flex justify-content-center"  style='width: 100%'>
-  		<div class='input-group-prepend'>
   		<select class="form-control valid" name='searchCondition' id='searchCondition'>
 			<option class='searchCondition' value="0">카페+게시글</option>
 			<option class='searchCondition' value="1">카페</option>
 			<option class='searchCondition' value="2">게시글</option>
   		</select>
-  		</div>
   		<div class='input-group-append'>
   		<input type="text" class="form-control" placeholder="검색어 입력해주세요" name="searchKeyword" id="searchKeyword" value='${search.searchKeyword}'>
   		</div>
@@ -81,12 +79,12 @@
 		</div>
 		</div>
 
-		
+	</div><!--카드바디 -->
+</div><!--카드 -->	
 
 		</form>
   	
-</div><!--카드바디 -->
-</div><!--카드 -->
+
 			<!--  카페검색창 끝 /////////////////////////////////////-->
 
   <c:if test="${!empty cafeList || search.searchCondition==1}">
@@ -232,70 +230,50 @@ $("#cafeTypeForSearch").val(${search.cafeType});
 
 $($(".cafeCategory")[$("#cafeTypeForSearch").val()]).attr("class","btn btn-success col-lg-2 cafeCategory");
 
-$(".cafeCategory").on("click", function() {
-	
-			$("#cafeTypeForSearch").val($(".cafeCategory").index($(this)));
-			$("#cafeSearch").attr("method", "POST").attr("action", "/cafe/main/search").submit();
-
-});
-
-	$("#cafeExplore").on(
-			"click",
-			function() {
-				$("#cafeSearch").attr("method", "POST").attr("action",
-						"/cafe/main/search").submit();
-			});
-
-
-
-
 function fncGetList(currentPage) {
-	  $("#currentPage").val(currentPage);
-	  $("form").attr("method" , "POST").attr("action" , "/cafe/main/search").submit();
-	}
-	
-$(function() {
+  $("#currentPage").val(currentPage);
+  $("form").attr("method" , "POST").attr("action" , "/cafe/main/search").submit();
+}
 
-	$("#cafeExplore").on("click" , function() {
-		$("#cafeSearch").attr("method" , "POST").attr("action" , "/cafe/main/search").submit();
-	});
-	
-	$("#addCafe").on("click" , function() {
-		$(self.location).attr("href","/cafe/addCafe");
-	});
-	
-	$("#moreCafe").on("click" , function() {
-		$("#searchCondition").val(1);
-		$("form").attr("method" , "POST").attr("action" , "/cafe/main/search").submit();
-	});
-
-	$("#morePost").on("click" , function() {
-		$("#searchCondition").val(2);
-		$("form").attr("method" , "POST").attr("action" , "/cafe/main/search").submit();
-	});
-
-	$(".cafeURL").on("click" , function() {
-		$("form").attr("method" , "POST").attr("action" , "/cafe/"+$(this).text()+"/manage/getCafeMemberList").submit();
-	});
-
-	$(".myCafe").on("click" , function() {
-		var moveTo = $(this).attr('name');
-		$(self.location).attr("href","/cafe/"+moveTo);
-		
-	});
-
-	$(".goToPost").on(
-			"click",
-			function() {
-				var countNo=$(".goToPost").index(this);
-				var cafeURL = $($(".cafeURL")[countNo]).val();
-				var postNo = $($(".postNo")[countNo]).val();
-				alert(cafeURL);
-				alert(postNo);
-				$(self.location).attr("href", "/cafe/"+cafeURL+"/getPost/"+postNo);
-			});
-	
+$(".cafeCategory").on("click", function() {
+	$("#cafeTypeForSearch").val($(".cafeCategory").index($(this)));
+	$("#cafeSearch").attr("method", "POST").attr("action", "/cafe/main/search").submit();
 });
+
+$("#cafeExplore").on("click", function() {
+	$("#cafeSearch").attr("method", "POST").attr("action", "/cafe/main/search").submit();
+});
+	
+$("#addCafe").on("click" , function() {
+	$(self.location).attr("href","/cafe/addCafe");
+});
+
+$("#moreCafe").on("click" , function() {
+	$("#searchCondition").val(1);
+	$("form").attr("method" , "POST").attr("action" , "/cafe/main/search").submit();
+});
+
+$("#morePost").on("click" , function() {
+	$("#searchCondition").val(2);
+	$("form").attr("method" , "POST").attr("action" , "/cafe/main/search").submit();
+});
+
+$(".cafeURL").on("click" , function() {
+	$("form").attr("method" , "POST").attr("action" , "/cafe/"+$(this).text()+"/manage/getCafeMemberList").submit();
+});
+
+$(".myCafe").on("click" , function() {
+	var moveTo = $(this).attr('name');
+	$(self.location).attr("href","/cafe/"+moveTo);
+});
+
+$(".goToPost").on("click", function() {
+	var countNo=$(".goToPost").index(this);
+	var cafeURL = $($(".cafeURL")[countNo]).val();
+	var postNo = $($(".postNo")[countNo]).val();
+	$(self.location).attr("href", "/cafe/"+cafeURL+"/getPost/"+postNo);
+});
+	
 </script>
 
 <!-- 공통 툴바용 스크립트 -->	
