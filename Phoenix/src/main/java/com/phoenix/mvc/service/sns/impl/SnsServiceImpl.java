@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.phoenix.mvc.common.Search;
+import com.phoenix.mvc.service.domain.Account;
 import com.phoenix.mvc.service.domain.TimeLine;
 import com.phoenix.mvc.service.sns.SnsDao;
 import com.phoenix.mvc.service.sns.SnsService;
@@ -47,6 +48,92 @@ public class SnsServiceImpl implements SnsService {
 	public SnsServiceImpl() {
 		System.out.println(getClass().getName() + "default Constuctor");
 	}
+	
+
+	private WebDriver headlessConnection(){
+		
+		System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
+		
+		//팝업옵션해제
+		Map<String, Object> prefs = new HashMap<String, Object>();
+		prefs.put("profile.default_content_setting_values.notifications", 2);
+		ChromeOptions options = new ChromeOptions();
+		options.setExperimentalOption("prefs", prefs);
+		options.setCapability("ignoreProtectedModeSettings", true);
+		//options.addArguments("headless");//창안켜줭~
+		driver = new ChromeDriver(options);
+		wait = new WebDriverWait(driver, 10);
+		
+		return driver;
+	}
+	
+	
+	public Account fbLogIn(Account account){
+		
+		
+		driver = this.headlessConnection();
+		
+		url = "https://ko-kr.facebook.com";
+		
+		//페이스북접속
+		driver.get(url);
+
+		//로그인
+		webElement = driver.findElement(By.id("email"));
+		webElement.sendKeys(account.getAccountId());
+
+		webElement = driver.findElement(By.id("pass"));
+		webElement.sendKeys(account.getAccountPw());
+
+		webElement = driver.findElement(By.id("loginbutton"));
+		webElement.submit();
+		
+		//로그인 성공인지 실패인지 찾기
+		//WebElement login = driver.findElement(By.id("login_link")); 
+		WebElement feed = driver.findElement(By.cssSelector("div[role='feed']"));
+		
+		if(feed.isEnabled()) {
+			System.out.println("페이스북 로그인 성공");
+			account.setAccountDomain("faceBook");
+			return snsDao.addSnsAccount(account);
+			
+		}else {
+			System.out.println("페이스북 로그인 실패");
+			return null;
+			
+		}
+		
+
+		
+	}
+	
+	@Override
+	public Account igLogIn(Account account) {
+		
+		driver = this.headlessConnection();
+		
+		url = "https://www.instagram.com/accounts/login/?hl=ko&source=auth_switcher";
+		
+		//인스타그램접속
+		driver.get(url);
+
+		//로그인
+		List<WebElement> input = driver.findElements(By.tagName("input"));
+		webElement = input.get(0);
+		webElement.sendKeys(account.getAccountId());
+
+		webElement = driver.findElement(By.name("password"));
+		webElement.sendKeys(account.getAccountPw());
+
+		webElement = driver.findElement(By.xpath("//*[@id='react-root']/section/main/div/article/div/div[1]/div/form/div[6]/button"));
+		webElement.submit();
+
+		
+		
+		return null;
+	}
+	
+
 
 	@Override
 	public Map<String, Object> getFaceBookTimeLineList(Search search) {
@@ -423,92 +510,28 @@ public class SnsServiceImpl implements SnsService {
 
 	}
 	
-	private WebDriver headlessConnection(){
-		
-		System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
-		
-		//팝업옵션해제
-		Map<String, Object> prefs = new HashMap<String, Object>();
-		prefs.put("profile.default_content_setting_values.notifications", 2);
-		ChromeOptions options = new ChromeOptions();
-		options.setExperimentalOption("prefs", prefs);
-		options.setCapability("ignoreProtectedModeSettings", true);
-		//options.addArguments("headless");//창안켜줭~
-		driver = new ChromeDriver(options);
-		wait = new WebDriverWait(driver, 10);
-		
-		return driver;
-	}
 	
-	
-	private WebElement fbLogIn(WebDriver driver,Search search){
-		
-		url = "https://ko-kr.facebook.com";
-		
-		//페이스북접속
-		driver.get(url);
-
-		//로그인
-		webElement = driver.findElement(By.id("email"));
-		webElement.sendKeys(search.getFbId());
-
-		webElement = driver.findElement(By.id("pass"));
-		webElement.sendKeys(search.getFbPw());
-
-		webElement = driver.findElement(By.id("loginbutton"));
-		webElement.submit();
-		
-		return webElement;
-	}
-	
-	private WebElement InstaLogIn(WebDriver driver, Search search){
-		
-		url = "https://www.instagram.com/accounts/login/?hl=ko&source=auth_switcher";
-		
-		//인스타그램접속
-		driver.get(url);
-
-		//로그인
-		List<WebElement> input = driver.findElements(By.tagName("input"));
-		webElement = input.get(0);
-		webElement.sendKeys(search.getIgId());
-
-		webElement = driver.findElement(By.name("password"));
-		webElement.sendKeys(search.getIgPw());
-
-		webElement = driver.findElement(By.xpath("//*[@id='react-root']/section/main/div/article/div/div[1]/div/form/div[6]/button"));
-		webElement.submit();
-
-		//Thread.sleep(200);
-		//wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/div[3]/div/div/div[3]/button[2]")));
-		//driver.findElement(By.xpath("/html/body/div[3]/div/div/div[3]/button[2]")).click(); // 알람 나중에 하기
-		
-		return webElement;
-	}
-	
-	public TimeLine writeFb(Search search) {
-		
-		//크롬연결~
-		WebDriver driver = this.headlessConnection();
-				
-		//페북 로그인
-		this.fbLogIn(driver, search);
-		
-		webElement = driver.findElement(By.name("xhpc_message"));
-		webElement.sendKeys(search.getSearchKeyword());
-		webElement.submit();
-		
-		
-		TimeLine timeLine = new TimeLine();
-
-		timeLine.setPost(search.getSearchKeyword());
-		timeLine.setPassword(search.getFbPw());
-		timeLine.setPostId(search.getFbId());
-		
-		
-		return timeLine;
-		
-	}
+	/*
+	 * public TimeLine writeFb(Account account) {
+	 * 
+	 * //크롬연결~ driver = this.headlessConnection();
+	 * 
+	 * //페북 로그인 this.fbLogIn(account);
+	 * 
+	 * webElement = driver.findElement(By.name("xhpc_message"));
+	 * webElement.sendKeys(search.getSearchKeyword()); webElement.submit();
+	 * 
+	 * 
+	 * TimeLine timeLine = new TimeLine();
+	 * 
+	 * timeLine.setPost(search.getSearchKeyword());
+	 * timeLine.setPassword(search.getFbPw()); timeLine.setPostId(search.getFbId());
+	 * 
+	 * 
+	 * return timeLine;
+	 * 
+	 * }
+	 */
 
 	@Override
 	public Map<String, Object> getInstaTimeLineList(Search search) {
@@ -735,6 +758,16 @@ public class SnsServiceImpl implements SnsService {
 		
 		
 	}
+
+
+	@Override
+	public TimeLine writeFb(Search search) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
 
 
 }

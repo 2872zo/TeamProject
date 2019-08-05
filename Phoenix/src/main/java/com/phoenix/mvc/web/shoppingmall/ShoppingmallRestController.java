@@ -49,5 +49,12 @@ public class ShoppingmallRestController {
 		
 		return returnMap;
 	}
+	
+	@RequestMapping("/json/addShoppingmallAccount")
+	public Map addShoppingmallAccount()
+	{
+		
+		return null;
+	}
 
 }

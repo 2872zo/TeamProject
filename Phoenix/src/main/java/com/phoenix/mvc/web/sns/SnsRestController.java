@@ -30,17 +30,37 @@ public class SnsRestController {
 	public SnsRestController() {
 		System.out.println(this.getClass().getName() + "생성자 시작");
 	}
-	
-	@RequestMapping(value="/json/addSns")
-	public Account addSns(@RequestBody Account account, HttpServletRequest request ) {
-		
+
+	@RequestMapping(value = "/json/addSns")
+	public boolean addSns(@RequestBody Account account, HttpServletRequest request) {
+
 		System.out.println("/json/addSns 시작!");
-		
-		
-		System.out.println(account+" 확인");
-		
-		return account;
-		
+
+		System.out.println(account + " 확인");
+
+		boolean result = true;
+
+		if (account.getAccountType().equals("ua110")) {// 페북임
+
+			account = snsService.fbLogIn(account);
+
+			if (account == null) {
+
+				result = false;
+			}
+
+		} else if (account.getAccountType().equals("ua109")) {// 인스타
+
+			account = snsService.igLogIn(account);
+
+			if (account == null) {
+
+				result = false;
+			}
+		}
+
+		return result;
+
 	}
 
 	@RequestMapping(value = "/json/getTimeLine")
@@ -53,16 +73,16 @@ public class SnsRestController {
 			search.setFbId("wlsgml1416@naver.com");
 			search.setFbPw("011!wlslgogo");
 
-		} 
-		
+		}
+
 		if (search.getInsta() == 200) {
 
 			search.setIgId("rlawlsgml1416");
 			search.setIgPw("011!wlslgogo");
-			
-			//search.setIgId("andaralamira");
-			//search.setIgPw("011wlslgogo");
-			
+
+			// search.setIgId("andaralamira");
+			// search.setIgPw("011wlslgogo");
+
 		}
 
 		System.out.println("+search+ " + search);
@@ -78,8 +98,8 @@ public class SnsRestController {
 		returnMap.put("faceSearch", fbMap.get("search"));
 		returnMap.put("instaTimeLine", igMap.get("timeLine"));
 		returnMap.put("instaSearch", igMap.get("search"));
-		
-		System.out.println("returnmap이욤 "+returnMap);
+
+		System.out.println("returnmap이욤 " + returnMap);
 
 		return returnMap;
 
