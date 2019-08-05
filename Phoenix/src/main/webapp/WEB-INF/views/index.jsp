@@ -70,13 +70,7 @@
         Preloader end
     ********************-->
 
-	<div class='container-fluid'>
-
-
-
 		<!--  화면구성 div Start /////////////////////////////////////-->
-
-	</div>
 
 	<div class="card">
 
