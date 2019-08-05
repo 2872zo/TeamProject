@@ -104,6 +104,60 @@ public class MailContoller {
 		return "/mail/getMail";
 	}
 	
+	@RequestMapping("getSentMail")
+	public String getSentMail(Map<String, Object> map, @RequestParam int mailNo, @RequestParam int accountNo, HttpServletRequest req) throws Exception {
+		List<Account> accountList = (List<Account>)req.getAttribute("accountList");
+		
+		Account account = null;
+		
+		for(Account ac : accountList) {
+			if(ac.getAccountNo() == accountNo) {
+				account = ac;
+				break;
+			}
+		}
+		
+		Map<String, Object> resultMap = mailService.getSentMail(account, mailNo);
+		
+		Mail mail = (Mail) resultMap.get("mail");
+		if(!mail.getContent().contains("<br/>")) {
+			mail.setContent(mail.getContent().replace("\n", "<br/>"));
+		}
+		
+		map.put("mail", mail);
+		map.put("fileList", resultMap.get("fileList"));
+		map.put("accountNo", accountNo);
+		
+		return "/mail/getMail";
+	}
+	
+	@RequestMapping("getTrashMail")
+	public String getTrashMail(Map<String, Object> map, @RequestParam int mailNo, @RequestParam int accountNo, HttpServletRequest req) throws Exception {
+		List<Account> accountList = (List<Account>)req.getAttribute("accountList");
+		
+		Account account = null;
+		
+		for(Account ac : accountList) {
+			if(ac.getAccountNo() == accountNo) {
+				account = ac;
+				break;
+			}
+		}
+		
+		Map<String, Object> resultMap = mailService.getTrashMail(account, mailNo);
+		
+		Mail mail = (Mail) resultMap.get("mail");
+		if(!mail.getContent().contains("<br/>")) {
+			mail.setContent(mail.getContent().replace("\n", "<br/>"));
+		}
+		
+		map.put("mail", mail);
+		map.put("fileList", resultMap.get("fileList"));
+		map.put("accountNo", accountNo);
+		
+		return "/mail/getMail";
+	}
+	
 	
 	@GetMapping("sendMail")
 	public String sendMailView() throws MessagingException {

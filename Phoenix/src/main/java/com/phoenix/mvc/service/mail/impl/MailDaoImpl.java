@@ -806,7 +806,53 @@ public class MailDaoImpl implements MailDao {
 		
 		return returnMap;
 	}
+	
+	@Override
+	public Map<String, Object> getSentMail(Account account, int mailNo) throws Exception {
+		String folderName = null;
+		
+		if(account.getAccountDomain().contains("gmail")) {
+			folderName = "[Gmail]/보낸편지함";
+		}else {
+			folderName = "Sent Messages";
+		}
+		
+		IMAPAgent mailAgent = new IMAPAgent("imap." + account.getAccountDomain(), account.getAccountId(), account.getAccountPw(), folderName);
 
+		mailAgent.openFolder();
+
+		Message message = mailAgent.getMessage(mailNo);
+
+		Map<String, Object> map = messageToMail(message, account.getAccountNo());
+
+		mailAgent.close();
+
+		return map;
+	}
+
+	@Override
+	public Map<String, Object> getTrashMail(Account account, int mailNo) throws Exception {
+		String folderName = null;
+		
+		if(account.getAccountDomain().contains("gmail")) {
+			folderName = "[Gmail]/휴지통";
+		}else {
+			folderName = "Deleted Messages";
+		}
+		
+		IMAPAgent mailAgent = new IMAPAgent("imap." + account.getAccountDomain(), account.getAccountId(), account.getAccountPw(), folderName);
+
+		mailAgent.openFolder();
+
+		Message message = mailAgent.getMessage(mailNo);
+		
+		Map<String, Object> map = messageToMail(message, account.getAccountNo());
+
+		mailAgent.close();
+
+		return map;
+	}
+	
 	@Override
 	public boolean setSeenMail(List<Map<String, Object>> mailInfoList, List<Account> accountList) throws FileNotFoundException, MessagingException, IOException {
 		List<Map<String, Object>> mailAgentList = new ArrayList<Map<String,Object>>();
@@ -1003,6 +1049,46 @@ public class MailDaoImpl implements MailDao {
 		
 		return true;
 	}
+
+	@Override
+	public boolean inboxMail(List<Map<String, Object>> mailInfoList, List<Account> accountList)	throws FileNotFoundException, MessagingException, IOException {
+		List<Map<String, Object>> mailAgentList = new ArrayList<Map<String,Object>>();
+		
+		for(Account account : accountList) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("mailAgent",new IMAPAgent("imap." + account.getAccountDomain(), account.getAccountId(), account.getAccountPw()));
+			map.put("account", account);
+			((IMAPAgent)map.get("mailAgent")).open();
+			
+			mailAgentList.add(map);
+		}
+		
+		for(Map mailInfo : mailInfoList) {
+			IMAPAgent mailAgent = null;
+			String src = null;
+			
+			for(Map mailAgentMap : mailAgentList) {
+				if( (int)((Account)mailAgentMap.get("account")).getAccountNo() == Integer.parseInt((String) mailInfo.get("accountNo")) ) {
+					mailAgent = (IMAPAgent) mailAgentMap.get("mailAgent");
+					
+					if(((Account)mailAgentMap.get("account")).getAccountDomain().contains("gmail")) {
+						src = "[Gmail]/휴지통";
+					} else {
+						src = "Deleted Messages";
+					}
+					
+					break;
+				}
+			}
+			
+			if(mailAgent != null) {
+				Message[] mailTarget = {mailAgent.getMessage(Integer.parseInt((String) mailInfo.get("mailNo")))};
+				mailAgent.moveMessage(mailTarget, mailAgent.getFolder(src), mailAgent.getFolder("inbox")); 
+			}
+		}
+		
+		return true;
+	}
 	
 	@Override
 	public Map<String, Object> getBoxMailCount(List<Account> accountList) throws MessagingException, FileNotFoundException, IOException {
@@ -1067,7 +1153,8 @@ public class MailDaoImpl implements MailDao {
 		
 		mail.setFlag(message.isSet(Flag.FLAGGED));
 		mail.setSeen((message.isSet(Flag.SEEN)));
-		if(message.getFolder().getName().contains("휴지통") || message.getFolder().getName().contains("Deleted Message")) {
+		
+		if(message.getFolder().getFullName().contains("[Gmail]/휴지통") || message.getFolder().getFullName().contains("Deleted Messages")) {
 			mail.setTrash(true);
 		}
 		
@@ -1217,4 +1304,6 @@ public class MailDaoImpl implements MailDao {
 		
 		return fileList;
 	}
+
+	
 }
