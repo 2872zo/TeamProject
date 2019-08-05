@@ -380,15 +380,9 @@ public class CafeManageServiceImpl implements CafeManageService {
 	public boolean dropCafe(Cafe cafe, String cafeURL) {
 
 		int check = cafeManageDao.getCafeNo(cafeURL);
-		int cafeNo = cafe.getCafeNo();
+		cafe.setCafeNo(check);
 
-		if (check == cafeNo) {
-
-			return cafeManageDao.dropCafe(cafe);
-
-		} else {
-			return false;
-		}
+		return cafeManageDao.dropCafe(cafe);
 	}
 
 ////////////////////////////////지니끝//////////////////////////////////

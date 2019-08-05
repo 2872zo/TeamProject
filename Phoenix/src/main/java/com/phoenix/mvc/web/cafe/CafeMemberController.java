@@ -78,6 +78,10 @@ public class CafeMemberController {
 		// userNo 받아오깅
 		User user = (User) request.getSession().getAttribute("user");
 		int userNo = user.getUserNo();
+		
+		//자동가입 여부와 상관없이 application 작성
+		cafeApplication.setUserNo(userNo);
+		cafeMemberService.addCafeApplication(cafeApplication);
 
 		if (cafeApplication.isAutoApplicationAcceptFlag()) {// 자동가입승인 ca103, 카페멤버 추가
 			cafeApplication.setUserNo(userNo);
@@ -91,10 +95,7 @@ public class CafeMemberController {
 			member.setMemberNicknameFlag(cafeApplication.isMemberNicknameFlag());
 			cafeMemberService.addCafeMember(member);
 
-		} else {// 자동가입승인X
-			cafeApplication.setUserNo(userNo);
-			cafeMemberService.addCafeApplication(cafeApplication);
-		}
+		} 
 
 		return "redirect:/cafe/" + cafeApplication.getCafeURL() + "/";// 해당카페메인으로 이동!
 

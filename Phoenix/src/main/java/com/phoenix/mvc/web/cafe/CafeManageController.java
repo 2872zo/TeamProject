@@ -607,12 +607,13 @@ public class CafeManageController {
 
 		System.out.println("/{cafeURL}/manage/dropCafe : POST");
 
-		System.out.println(cafe);
+		System.out.println("**"+cafe+"**");
+		System.out.println(cafeURL);
 
 		cafe.setClosedFlag(true);// 카페폐쇄
 		cafeManageService.dropCafe(cafe, cafeURL);
 
-		return "cafe/cafeHomeMain";
+		return "redirect:/cafe/main";
 	}
 
 	@RequestMapping(value = "/{cafeURL}/manage/updateCafeGradeView", method = RequestMethod.GET)
