@@ -114,7 +114,6 @@
 		 <br/>
  	</c:if>
    
-
  <div class="row d-flex justify-content-between">
   <c:forEach var="cafe" items="${cafeList}">
   
@@ -156,7 +155,7 @@
   <div class='card'>
 <div class="card-body">
  	<c:if test="${ !empty search.searchCondition && search.searchCondition==2}">
-  	 게시글 검색결과 총 ${totalCount} 건 입니다.
+  	 총 ${totalCount} 건 입니다.
  	</c:if>
  	<br/>
    
@@ -166,7 +165,7 @@
 		<input type='hidden' class='postNo'  value='${post.postNo}'>
 		<div class="card w-85 goToPost" style=" border: 1px solid #F7790A; ">
 			<div class='row'>
-			<div class='col-lg-3'>
+			<div class='col-lg-2'>
 			<div class="card-body">
 			<img src="/images/common/16by9.png" class="card-img" alt="..."
 			style="background: url('/images/uploadFiles/cafeicon/${post.cafeIcon}');

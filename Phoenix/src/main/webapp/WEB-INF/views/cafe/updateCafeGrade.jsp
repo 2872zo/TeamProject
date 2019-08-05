@@ -256,18 +256,15 @@
 
 						if(visit>nextV || post>nextP || reply>nextR){
 							alert("다음 등금 기준은 낮은 등급보다 높아야 합니다.")
-							
+							break;
 							
 						}else if(visit==nextV || post==nextP || reply==nextR){
 							alert("등급 기준이 같을 수는 없습니다.")
-							
+							break;
 						}else if(visit<nextV && post<nextP && reply<nextR){
 							//alert("ok")
 							$("form").attr("method", "POST").attr("action","/cafe/" + '${cafeURL}'+ "/manage/updateCafeGrade?CafeNo="+ $(".cafeNo").val()).submit();
 						}
-		
-					
-		
 		
 				}
 			

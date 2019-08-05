@@ -66,7 +66,6 @@
             Nav header end
         ***********************************-->
         
-        
 		<!-- ToolBar Start /////////////////////////////////////-->
 		<jsp:include page="../common/toolbar.jsp" />
 		<!-- ToolBar End /////////////////////////////////////-->
@@ -122,7 +121,6 @@
 			</div>
 			</div>
 			<!-- 카페만들기 버튼 -->
-			
 			
 			<!-- 가입된 카페목록 -->
 			<div class="card" id='myCafePosition' style='min-height: 300px;'>
@@ -201,38 +199,42 @@
 		
 		<br/>
 
-		<c:if test="${!empty categorizedCafeList}">
+	<c:if test="${!empty categorizedCafeList}">
 
-			<div class="row d-flex justify-content-between">
-				<c:forEach var="categoryCafe" items="${categorizedCafeList}">
+		<div class="row d-flex justify-content-between">
+			
+			<c:forEach var="categoryCafe" items="${categorizedCafeList}">
 
-
-					<div class="card myCafe col-lg-6" name='${categoryCafe.cafeURL}' style=" border: 1px solid #F7790A; ">
-						<div class="row no-gutters">
-							<div class="col-md-4 d-flex align-items-center">
-							<img src="/images/common/16by9.png" class="card-img" alt="..."
-								style=" border:thin; border-color=red; 
-										background: url('/images/uploadFiles/cafeicon/${categoryCafe.cafeIcon}');
- 										no-repeat center center; background-size:cover;">
-							</div>
-							<div class="col-md-8">
-								<div class="card-body">
-								<h5 class="card-title">${categoryCafe.cafeName}</h5>
-								<p class="card-text">${categoryCafe.cafeDetail}</p>
-								<p class="card-text">
-								<small class="text-muted">${categoryCafe.regDate}</small>
-								</p>
-								</div>
+				<div class="card myCafe col-lg-6" name='${categoryCafe.cafeURL}' style=" border: 1px solid #F7790A; ">
+					<div class="row no-gutters">
+						<div class="col-md-4 d-flex align-items-center">
+						<img src="/images/common/16by9.png" class="card-img" alt="..."
+							style=" border:thin; border-color=red; 
+									background: url('/images/uploadFiles/cafeicon/${categoryCafe.cafeIcon}');
+										no-repeat center center; background-size:cover;">
+						</div>
+						<div class="col-md-8">
+							<div class="card-body">
+							<h5 class="card-title">${categoryCafe.cafeName}</h5>
+							<p class="card-text">${categoryCafe.cafeDetail}</p>
+							<p class="card-text">
+							<i class="mdi mdi-account-multiple-outline" style='font-size: 15pt;'></i>
+							${categoryCafe.members}
+							</p>
+							<p class="card-text">
+							<fmt:formatDate value="${categoryCafe.regDate}" type="both" pattern="yyyy-MM-dd"/>
+							</p>
 							</div>
 						</div>
 					</div>
+				</div>
 
-				</c:forEach>
-				
-			</div>
-		</c:if>
+			</c:forEach>
+			
+		</div>
+	</c:if>
 		 
-		 <button type="button" class="btn btn-outline-primary" id='moreCafe'>카페 더보기</button>
+		 <button type="button" class="btn btn-outline-success" id='moreCafe'>카페 더보기</button>
 		
 	</div>
 		</div>
@@ -245,19 +247,18 @@
 <!--**********************************
         Scripts
     ***********************************-->
+
 	<script src="/plugins/common/common.min.js"></script>
 	<script src="/js/custom.min.js"></script>
 	<script src="/js/settings.js"></script>
 	<script src="/js/gleek.js"></script>
 	<script src="/js/styleSwitcher.js"></script>
 
-
 	<!-- 메뉴바 이용을 위한 스크립트 -->
 	<script src="/js/custom/scroll-top.js"></script>
 	<!-- 토스트기 -->
 	<script src="/plugins/toastr/js/toastr.min.js"></script>
     	
-	
 	<!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
 
@@ -273,6 +274,7 @@ $("#moreCafe").on("click", function() {
 	$("#cafeType").val(typeCheck);
 	$("#cafeHomeForm").attr("method", "POST").attr("action", "/cafe/main/search").submit();
 });
+
 $(function() {
 	
 	if(${!empty search.searchKeyword}){
@@ -328,11 +330,6 @@ $(function() {
 			$(self.location).attr("href", "/cafe/addCafeView");
 		});
 
-
-
-		
-
-		
 		$(".cafeListing").on(
 				"click",
 				function() {
@@ -432,7 +429,7 @@ $(function() {
 							alert("에러남 : " + error);
 						}
 					});
-				});
+		});
 
 	});
 </script>
