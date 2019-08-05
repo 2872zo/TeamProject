@@ -64,29 +64,31 @@ public class MailInterceptor extends HandlerInterceptorAdapter {
 			System.out.println("연동된 메인 계정 존재!");
 			request.setAttribute("accountList", accountList);
 			
-			int accountNo = 0;
-			
-			if(request.getParameter("accountNo") != null) {
-				System.out.println("accountNo Null 아님");
-				accountNo = Integer.parseInt((String)request.getParameter("accountNo"));
-			}
-			
-			
-			if(accountNo != 0) {
-				for(Account account : accountList) {
-					if(account.getAccountNo() == accountNo) {
-						accountList = new ArrayList<Account>();
-						accountList.add(account);
-						break;
+			if(!requestURI.contains("json")) {
+				int accountNo = 0;
+				
+				if(request.getParameter("accountNo") != null) {
+					System.out.println("accountNo Null 아님");
+					accountNo = Integer.parseInt((String)request.getParameter("accountNo"));
+				}
+				
+				
+				if(accountNo != 0) {
+					for(Account account : accountList) {
+						if(account.getAccountNo() == accountNo) {
+							accountList = new ArrayList<Account>();
+							accountList.add(account);
+							break;
+						}
 					}
 				}
+				
+				Map<String, Object> mailCount = mailService.getBoxMailCount(accountList);
+				request.setAttribute("inboxTotalCount", mailCount.get("inboxTotalCount"));
+				request.setAttribute("sentTotalCount", mailCount.get("sentTotalCount"));
+				request.setAttribute("importantTotalCount", mailCount.get("importantTotalCount"));
+				request.setAttribute("trashTotalCount", mailCount.get("trashTotalCount"));
 			}
-			
-			Map<String, Object> mailCount = mailService.getBoxMailCount(accountList);
-			request.setAttribute("inboxTotalCount", mailCount.get("inboxTotalCount"));
-			request.setAttribute("sentTotalCount", mailCount.get("sentTotalCount"));
-			request.setAttribute("importantTotalCount", mailCount.get("importantTotalCount"));
-			request.setAttribute("trashTotalCount", mailCount.get("trashTotalCount"));
 		}
 
 		// 모든 경우가 만족

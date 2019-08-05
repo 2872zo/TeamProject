@@ -130,7 +130,7 @@ $(function(){
 					checked = $(":checkbox").not(":checkbox:first").filter(":checkbox:checked");
 					
 					if(checked.length < 1){
-						sweetAlert("게시글 삭제 실패","삭제할 메일을 선택하십시오.","error");
+						sweetAlert("메일 삭제 실패","삭제할 메일을 선택하십시오.","error");
 						return;
 					}else{
 						var mailInfoList = new Array();
@@ -181,7 +181,7 @@ $(function(){
 					checked = $(":checkbox").not(":checkbox:first").filter(":checkbox:checked");
 					
 					if(checked.length < 1){
-						sweetAlert("게시글 삭제 실패","삭제할 메일을 선택하십시오.","error");
+						sweetAlert("메일 삭제 실패","삭제할 메일을 선택하십시오.","error");
 						return;
 					}else{
 						var mailInfoList = new Array();
