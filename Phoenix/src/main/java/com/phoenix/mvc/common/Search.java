@@ -197,20 +197,14 @@ public class Search {
 		this.pageSize = pageSize;
 	}
 
+	// ==> Select Query 시 ROWNUM 마지막 값
 	public int getEndRowNum() {
-		return endRowNum;
+		return getCurrentPage() * getPageSize();
 	}
 
-	public void setEndRowNum(int endRowNum) {
-		this.endRowNum = endRowNum;
-	}
-
+	// ==> Select Query 시 ROWNUM 시작 값
 	public int getStartRowNum() {
-		return startRowNum;
-	}
-
-	public void setStartRowNum(int startRowNum) {
-		this.startRowNum = startRowNum;
+		return (getCurrentPage() - 1) * getPageSize() + 1;
 	}
 
 	public String getTermStart() {
