@@ -115,6 +115,7 @@ public class MailDaoImpl implements MailDao {
 				//저장할 mail 생성
 				Mail mail = new Mail();
 				mail.setAccountNo(((Account)mailAgentList.get(getMessageIdx).get("account")).getAccountNo());
+				mail.setAccountDomain(((Account)mailAgentList.get(getMessageIdx).get("account")).getAccountDomain());
 				
 	 			//메일 번호 저장
 				System.out.println("MessageNumber : " + recentMessage.getMessageNumber());
@@ -191,6 +192,7 @@ public class MailDaoImpl implements MailDao {
 		for (Message m : mailAgent.getMessages(startRowNum, endRowNum)) {
 			Mail mail = new Mail();
 			mail.setAccountNo(account.getAccountNo());
+			mail.setAccountDomain(account.getAccountDomain());
 			
 			System.out.println("MessageNumber : " + m.getMessageNumber());
 			mail.setMailNo(m.getMessageNumber());
@@ -484,6 +486,7 @@ public class MailDaoImpl implements MailDao {
 				//저장할 mail 생성
 				Mail mail = new Mail();
 				mail.setAccountNo(((Account)mailAgentList.get(getMessageIdx).get("account")).getAccountNo());
+				mail.setAccountDomain(((Account)mailAgentList.get(getMessageIdx).get("account")).getAccountDomain());
 				
 	 			//메일 번호 저장
 				System.out.println("MessageNumber : " + recentMessage.getMessageNumber());
@@ -607,6 +610,7 @@ public class MailDaoImpl implements MailDao {
 				//저장할 mail 생성
 				Mail mail = new Mail();
 				mail.setAccountNo(((Account)mailAgentList.get(getMessageIdx).get("account")).getAccountNo());
+				mail.setAccountDomain(((Account)mailAgentList.get(getMessageIdx).get("account")).getAccountDomain());
 				
 	 			//메일 번호 저장
 				System.out.println("MessageNumber : " + recentMessage.getMessageNumber());
@@ -736,6 +740,7 @@ public class MailDaoImpl implements MailDao {
 				//저장할 mail 생성
 				Mail mail = new Mail();
 				mail.setAccountNo(((Account)mailAgentList.get(getMessageIdx).get("account")).getAccountNo());
+				mail.setAccountDomain(((Account)mailAgentList.get(getMessageIdx).get("account")).getAccountDomain());
 				
 	 			//메일 번호 저장
 				System.out.println("MessageNumber : " + recentMessage.getMessageNumber());
@@ -887,7 +892,7 @@ public class MailDaoImpl implements MailDao {
 				System.out.println(i + "번째 MimeBodyPart.ContentType : " + bp.getContentType());
 
 				// 현재 Part가 첨부파일이 아닌 본문인경우
-				if (bp.getContentType().contains("text/html") || bp.getContentType().contains("TEXT/HTML")) {
+				if (bp.getContentType().toUpperCase().contains("TEXT/HTML")) {
 					String body = (String) bp.getContent();
 					System.out.println("BodyPart가 본문인 경우 : " + body);
 					mail.setContent(body);
@@ -896,7 +901,7 @@ public class MailDaoImpl implements MailDao {
 				else {
 					Object obj = bp.getContent();
 
-					if (obj instanceof BASE64DecoderStream || bp.getContentType().contains("TEXT/PLAIN")) {
+					if (obj instanceof BASE64DecoderStream || bp.getContentType().toUpperCase().contains("TEXT/PLAIN") || bp.getContentType().toUpperCase().contains("MESSAGE/RFC822") ) {
 						System.out.println("AttachMent Content!");
 						if (bp.getFileName() == null) {
 							System.out.println("파일 비어있음!");
@@ -1071,5 +1076,59 @@ public class MailDaoImpl implements MailDao {
 		}
 		
 		return false;
+	}
+
+	
+	@Override
+	public Map<String, Object> getBoxMailCount(List<Account> accountList) throws MessagingException, FileNotFoundException, IOException {
+		List<Map<String, Object>> mailAgentList = new ArrayList<Map<String,Object>>();
+		List<Mail> resultMailList = new ArrayList<Mail>();
+		
+		
+		for(Account account : accountList) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			
+			map.put("mailAgent",new IMAPAgent("imap." + account.getAccountDomain(), account.getAccountId(), account.getAccountPw()));
+			map.put("account", account);
+			
+			mailAgentList.add(map);
+		}
+
+		//모든 메일 계정의 모든 메일 수를 더해서 총 개수를 구함
+		int inboxTotalCount = 0;
+		int sentTotalCount = 0;
+		int importantTotalCount = 0;
+		int trashTotalCount = 0;
+		
+		for(Map map : mailAgentList) {
+			if(((Account)map.get("account")).getAccountDomain().contains("gmail")){
+				((IMAPAgent)map.get("mailAgent")).open();
+				
+				inboxTotalCount += ((IMAPAgent)map.get("mailAgent")).getFolder("inbox").getMessageCount();
+				sentTotalCount += ((IMAPAgent)map.get("mailAgent")).getFolder("[Gmail]/보낸편지함").getMessageCount();
+				importantTotalCount += ((IMAPAgent)map.get("mailAgent")).getDefaultFolder().search(new FlagTerm(new Flags(Flags.Flag.FLAGGED), true)).length;
+				trashTotalCount += ((IMAPAgent)map.get("mailAgent")).getFolder("[Gmail]/휴지통").getMessageCount();
+				
+				((IMAPAgent)map.get("mailAgent")).close();
+			} else {
+				((IMAPAgent)map.get("mailAgent")).open();
+				
+				inboxTotalCount += ((IMAPAgent)map.get("mailAgent")).getFolder("inbox").getMessageCount();
+				sentTotalCount += ((IMAPAgent)map.get("mailAgent")).getFolder("Sent Messages").getMessageCount();
+				importantTotalCount += ((IMAPAgent)map.get("mailAgent")).getDefaultFolder().search(new FlagTerm(new Flags(Flags.Flag.FLAGGED), true)).length;
+				trashTotalCount += ((IMAPAgent)map.get("mailAgent")).getFolder("Deleted Messages").getMessageCount();
+				
+				((IMAPAgent)map.get("mailAgent")).close();
+			}
+			
+		}
+		
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		returnMap.put("inboxTotalCount", inboxTotalCount);
+		returnMap.put("sentTotalCount", sentTotalCount);
+		returnMap.put("importantTotalCount", importantTotalCount);
+		returnMap.put("trashTotalCount", trashTotalCount);
+		
+		return returnMap;
 	}
 }

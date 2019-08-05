@@ -148,4 +148,9 @@ public class MailServiceImpl implements MailService {
 	public boolean trashMail(List<Map<String, Object>> mailInfoList, List<Account> accountList) throws FileNotFoundException, MessagingException, IOException {
 		return mailDao.trashMail(mailInfoList, accountList);
 	}
+
+	@Override
+	public Map<String, Object> getBoxMailCount(List<Account> accountList) throws MessagingException, FileNotFoundException, IOException {
+		return mailDao.getBoxMailCount(accountList);
+	}
 }

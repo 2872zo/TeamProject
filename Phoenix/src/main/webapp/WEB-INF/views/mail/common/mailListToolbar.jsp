@@ -22,7 +22,8 @@
 						<input type="checkbox" class="form-check-input">
 					</div>
 					
-					<button class="btn btn-primary btn-sm" id="delete" style="margin-right:20px;" name="deleteMailButton">삭제</button>		
+					<button type="button" class="btn btn-primary btn-sm" id="delete" name="deleteMailButton" style="border-radius: 0.25rem; height:37px; margin-right:10px;">삭제</button>
+<!-- 					<button type="button" class="btn btn-primary btn-sm" >삭제</button>		 -->
 					
 					<div class="btn-group" role="group">
 						<button type="button" class="btn mb-1 btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">읽음표시</button>

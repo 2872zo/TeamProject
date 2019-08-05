@@ -92,7 +92,10 @@ public class MailContoller {
 		
 		Map<String, Object> resultMap = mailService.getMail(account, mailNo);
 		
-		map.put("mail", resultMap.get("mail"));
+		Mail mail = (Mail) resultMap.get("mail");
+		mail.setContent(mail.getContent().replace("\n", "<br/>"));
+		
+		map.put("mail", mail);
 		map.put("fileList", resultMap.get("fileList"));
 		map.put("accountNo", accountNo);
 		
