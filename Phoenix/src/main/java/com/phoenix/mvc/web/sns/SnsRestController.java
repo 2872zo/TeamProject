@@ -3,6 +3,8 @@ package com.phoenix.mvc.web.sns;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.phoenix.mvc.common.Page;
 import com.phoenix.mvc.common.Search;
+import com.phoenix.mvc.service.domain.Account;
 import com.phoenix.mvc.service.domain.TimeLine;
+import com.phoenix.mvc.service.domain.User;
 import com.phoenix.mvc.service.sns.impl.SnsServiceImpl;
 
 @RestController
@@ -25,6 +29,18 @@ public class SnsRestController {
 
 	public SnsRestController() {
 		System.out.println(this.getClass().getName() + "생성자 시작");
+	}
+	
+	@RequestMapping(value="/json/addSns")
+	public Account addSns(@RequestBody Account account, HttpServletRequest request ) {
+		
+		System.out.println("/json/addSns 시작!");
+		
+		
+		System.out.println(account+" 확인");
+		
+		return account;
+		
 	}
 
 	@RequestMapping(value = "/json/getTimeLine")
@@ -49,7 +65,7 @@ public class SnsRestController {
 			
 		}
 
-		System.out.println("@@search@@ " + search);
+		System.out.println("+search+ " + search);
 
 		Map returnMap = new HashMap();
 
