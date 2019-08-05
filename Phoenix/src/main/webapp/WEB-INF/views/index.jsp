@@ -42,6 +42,11 @@
 		box-shadow : 1px 1px 15px 1px #8080804a;
 	}
 	
+	.header{
+		
+		width:100% !important;
+	}
+	
 	
 	
 </style>

@@ -6,7 +6,7 @@
 
 
 	      <c:set var="URI" value="${pageContext.request.requestURI}" />
-	<div class="header" style="margin-left:0px; width:100%;">
+	<div class="header" style="margin-left:240px; width:81%;">
 		<div class="header-content clearfix">
 	
 			<div class="nav-control">
