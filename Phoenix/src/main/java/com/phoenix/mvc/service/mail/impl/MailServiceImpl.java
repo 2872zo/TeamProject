@@ -63,30 +63,6 @@ public class MailServiceImpl implements MailService {
 	}
 
 	@Override
-	public boolean setSeenFlag(int mailNo) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean setSeenFlags(int[] mailNoArray) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean setUnSeenFlag(int mailNo) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean setUnSeenFlags(int[] mailNoArray) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public boolean addMailAccount(Account account) throws Exception {
 		if(mailDao.accountVaildationCheck(account)) {
 			return userDao.addMailAccount(account);
@@ -125,11 +101,6 @@ public class MailServiceImpl implements MailService {
 	}
 
 	@Override
-	public boolean deleteMail(List<Map<String, Object>> mailInfoList, List<Account> accountList) throws FileNotFoundException, MessagingException, IOException {
-		return mailDao.deleteMail(mailInfoList, accountList);
-	}
-
-	@Override
 	public boolean setSeenMail(List<Map<String, Object>> mailInfoList, List<Account> accountList)	throws FileNotFoundException, MessagingException, IOException {
 		return mailDao.setSeenMail(mailInfoList, accountList);
 	}
@@ -138,6 +109,16 @@ public class MailServiceImpl implements MailService {
 	public boolean setUnSeenMail(List<Map<String, Object>> mailInfoList, List<Account> accountList) throws FileNotFoundException, MessagingException, IOException {
 		return mailDao.setUnSeenMail(mailInfoList, accountList);
 	}
+	
+	@Override
+	public boolean setFlagMail(List<Map<String, Object>> mailInfoList, List<Account> accountList) throws FileNotFoundException, MessagingException, IOException {
+		return mailDao.setFlagMail(mailInfoList, accountList);
+	}
+
+	@Override
+	public boolean setUnFlagMail(List<Map<String, Object>> mailInfoList, List<Account> accountList)	throws FileNotFoundException, MessagingException, IOException {
+		return mailDao.setUnFlagMail(mailInfoList, accountList);
+	}
 
 	@Override
 	public boolean trashMail(List<Map<String, Object>> mailInfoList, List<Account> accountList) throws FileNotFoundException, MessagingException, IOException {
@@ -145,7 +126,14 @@ public class MailServiceImpl implements MailService {
 	}
 
 	@Override
+	public boolean deleteMail(List<Map<String, Object>> mailInfoList, List<Account> accountList) throws FileNotFoundException, MessagingException, IOException {
+		return mailDao.deleteMail(mailInfoList, accountList);
+	}
+	
+	@Override
 	public Map<String, Object> getBoxMailCount(List<Account> accountList) throws MessagingException, FileNotFoundException, IOException {
 		return mailDao.getBoxMailCount(accountList);
 	}
+
+	
 }

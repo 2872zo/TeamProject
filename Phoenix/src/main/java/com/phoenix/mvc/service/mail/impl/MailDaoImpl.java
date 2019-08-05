@@ -118,6 +118,9 @@ public class MailDaoImpl implements MailDao {
 				mail.setAccountNo(((Account)mailAgentList.get(getMessageIdx).get("account")).getAccountNo());
 				mail.setAccountDomain(((Account)mailAgentList.get(getMessageIdx).get("account")).getAccountDomain());
 				
+				mail.setFlag(recentMessage.isSet(Flag.FLAGGED));
+				mail.setSeen(recentMessage.isSet(Flag.SEEN));
+				
 	 			//메일 번호 저장
 				System.out.println("MessageNumber : " + recentMessage.getMessageNumber());
 				mail.setMailNo(recentMessage.getMessageNumber());
@@ -194,6 +197,9 @@ public class MailDaoImpl implements MailDao {
 			Mail mail = new Mail();
 			mail.setAccountNo(account.getAccountNo());
 			mail.setAccountDomain(account.getAccountDomain());
+			
+			mail.setFlag(m.isSet(Flag.FLAGGED));
+			mail.setSeen(m.isSet(Flag.SEEN));
 			
 			System.out.println("MessageNumber : " + m.getMessageNumber());
 			mail.setMailNo(m.getMessageNumber());
@@ -489,6 +495,9 @@ public class MailDaoImpl implements MailDao {
 				mail.setAccountNo(((Account)mailAgentList.get(getMessageIdx).get("account")).getAccountNo());
 				mail.setAccountDomain(((Account)mailAgentList.get(getMessageIdx).get("account")).getAccountDomain());
 				
+				mail.setFlag(recentMessage.isSet(Flag.FLAGGED));
+				mail.setSeen(recentMessage.isSet(Flag.SEEN));
+				
 	 			//메일 번호 저장
 				System.out.println("MessageNumber : " + recentMessage.getMessageNumber());
 				mail.setMailNo(recentMessage.getMessageNumber());
@@ -612,6 +621,9 @@ public class MailDaoImpl implements MailDao {
 				Mail mail = new Mail();
 				mail.setAccountNo(((Account)mailAgentList.get(getMessageIdx).get("account")).getAccountNo());
 				mail.setAccountDomain(((Account)mailAgentList.get(getMessageIdx).get("account")).getAccountDomain());
+				
+				mail.setFlag(recentMessage.isSet(Flag.FLAGGED));
+				mail.setSeen(recentMessage.isSet(Flag.SEEN));
 				
 	 			//메일 번호 저장
 				System.out.println("MessageNumber : " + recentMessage.getMessageNumber());
@@ -743,6 +755,9 @@ public class MailDaoImpl implements MailDao {
 				mail.setAccountNo(((Account)mailAgentList.get(getMessageIdx).get("account")).getAccountNo());
 				mail.setAccountDomain(((Account)mailAgentList.get(getMessageIdx).get("account")).getAccountDomain());
 				
+				mail.setFlag(recentMessage.isSet(Flag.FLAGGED));
+				mail.setSeen(recentMessage.isSet(Flag.SEEN));
+				
 	 			//메일 번호 저장
 				System.out.println("MessageNumber : " + recentMessage.getMessageNumber());
 				mail.setMailNo(recentMessage.getMessageNumber());
@@ -790,197 +805,6 @@ public class MailDaoImpl implements MailDao {
 		returnMap.put("totalCount", totalCount);
 		
 		return returnMap;
-	}
-	
-	private Map<String, Object> messageToMail(Message message, int accountNo) throws IOException, Exception {
-		Mail mail = new Mail();
-		mail.setAccountNo(accountNo);
-		
-		mail.setFlag(message.isSet(Flag.FLAGGED));
-		mail.setSeen((message.isSet(Flag.SEEN)));
-		if(message.getFolder().getName().contains("휴지통") || message.getFolder().getName().contains("Deleted Message")) {
-			mail.setTrash(true);
-		}
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		
-		System.out.println("MessageNumber : " + message.getMessageNumber());
-		mail.setMailNo(message.getMessageNumber());
-		
-		
-		System.out.println("Folder : " + message.getFolder().getFullName());
-		mail.setFolder(message.getFolder());
-		System.out.println("SentDate : " + message.getSentDate());
-		mail.setSentDate(message.getSentDate());
-
-		//보낸사람
-		for (Address addr : message.getFrom()) {
-			String fullAddr = MimeUtility.decodeText(addr.toString());
-			System.out.println("Address : " + fullAddr);
-			if (!fullAddr.contains("<")) {
-				mail.setSender(fullAddr);
-			} else {
-				mail.setSender(fullAddr.substring(0, fullAddr.indexOf("<") - 1));
-				mail.setSenderAddr(fullAddr.substring(fullAddr.indexOf("<"), fullAddr.length()));
-			}
-		}
-
-		//받는사람
-		List<Map<String, String>> recipients = new ArrayList<Map<String, String>>();
-		for (Address addr : message.getAllRecipients()) {
-			String fullAddr = MimeUtility.decodeText(addr.toString());
-			System.out.println("Address : " + fullAddr);
-
-			Map<String, String> recipientMap = new HashMap<String, String>();
-			System.out.println("fullAddr : " + fullAddr);
-			if (!fullAddr.contains("<")) {
-				recipientMap.put("recipient", fullAddr);
-			} else {
-				recipientMap.put("recipient", fullAddr.substring(0, fullAddr.indexOf("<") - 1));
-				recipientMap.put("recipientAddr", fullAddr.substring(fullAddr.indexOf("<"), fullAddr.length()));
-			}
-			recipients.add(recipientMap);
-		}
-		mail.setRecipients(recipients);
-		
-		mail.setSeen(message.isSet(Flags.Flag.SEEN));
-
-		// 제목
-		System.out.println("Subject : " + message.getSubject());
-		mail.setSubject(message.getSubject());
-
-		// 전체 컨텐츠
-
-		if (!(message.getContent() instanceof String)) {
-			List<Map<String, String>> fileList = printMessage(message, mail);
-			map.put("fileList", fileList);
-		}else {
-			System.out.println("Content : " + message.getContent());
-			mail.setContent(message.getContent().toString());
-		}
-
-		System.out.println(mail);
-		
-		if(mail.getContent() != null) {
-			mail.setContent(mail.getContent().replaceAll("\n\r", "<br/>"));
-		}
-		
-		map.put("mail", mail);
-		
-		return map;
-	}
-
-	// 파일을 제외한 모든 내용을 가져옴
-	private List<Map<String, String>> printMessage(Message message, Mail mail) throws Exception {
-
-		// 파일정보를 저장하는 리스트
-		List<Map<String, String>> fileList = new ArrayList<Map<String, String>>();
-
-		Object content = message.getContent();
-
-		MimeMultipart multiPart = null;
-		// 메시지의 컨텐츠가 MultiPart가 아니고 본문인지 판별
-		// 본문이아닌 MultiPart라면 분해하여 첨부파일을 저장하고 본문을 찾음
-		if (content instanceof Multipart) {
-			multiPart = (MimeMultipart) content;
-
-			// 몇개의 Part로 구성되어있는지 확인
-			int bodyCount = multiPart.getCount();
-
-			// 디버깅을 위한 코드
-			System.out.println("Multipart Count : " + multiPart.getCount());
-			System.out.println("Body : ");
-
-			// 각각의 Part가 무엇으로 이루어져있는지 판별하여 첨부파일은 저장하고 본문을 찾음
-			for (int i = 0; i < bodyCount; i++) {
-				MimeBodyPart bp = (MimeBodyPart) multiPart.getBodyPart(i);
-
-				// 디버깅을 위한 코드
-				System.out.println(i + "번째 MimeBodyPart.ContentType : " + bp.getContentType());
-
-				// 현재 Part가 첨부파일이 아닌 본문인경우
-				if (bp.getContentType().toUpperCase().contains("TEXT/HTML")) {
-					String body = (String) bp.getContent();
-					System.out.println("BodyPart가 본문인 경우 : " + body);
-					mail.setContent(body);
-				}
-				// 현재 Part가 본문이 아닌 경우 첨부파일인지 확인하기위해 파일이 형식확인
-				else {
-					Object obj = bp.getContent();
-
-					if (obj instanceof BASE64DecoderStream || bp.getContentType().toUpperCase().contains("TEXT/PLAIN") || bp.getContentType().toUpperCase().contains("MESSAGE/RFC822") ) {
-						System.out.println("AttachMent Content!");
-						if (bp.getFileName() == null) {
-							System.out.println("파일 비어있음!");
-							continue;
-						}
-
-						// 파일이름이 base64로 인코딩 되어있어 utf-8로 디코딩을 실행
-						String body = MimeUtility.decodeText(bp.getFileName());
-						// 중복제거를 위해 유니크 아이디 추가
-						UUID uid = UUID.randomUUID();
-						File file = new File(tmpUploadDir + "/" + uid + "_" + body);
-
-						// 현재 Part의 정보를 파일에 저장
-						bp.saveFile(file);
-
-						// 디버깅을 위한 코드
-						System.out.println("Content-Disposition : " + body);
-
-						// 서버에 저장한 파일의 정보를 전달하기위해 리스트에 추가
-						Map<String, String> fileContent = new HashMap<String, String>();
-						fileContent.put("filePath", "/tmpfiles/" + uid + "_" + body);
-						fileContent.put("fileName", body);
-						fileList.add(fileContent);
-					} else if (obj instanceof MimeMultipart) {
-						String body = ((MimeMultipart) obj).getBodyPart(0).getContent().toString();
-
-						System.out.println("multipart 본문 : " + body);
-
-						mail.setContent(body);
-					}
-				}
-			}
-		} else {
-			System.out.println("multipart 아님!");
-			mail.setContent((String) content);
-		}
-
-		return fileList;
-	}
-
-	
-	@Override
-	public boolean deleteMail(List<Map<String, Object>> mailInfoList, List<Account> accountList) throws FileNotFoundException, MessagingException, IOException {
-		
-		List<Map<String, Object>> mailAgentList = new ArrayList<Map<String,Object>>();
-		
-		for(Account account : accountList) {
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("mailAgent",new IMAPAgent("imap." + account.getAccountDomain(), account.getAccountId(), account.getAccountPw()));
-			map.put("account", account);
-			((IMAPAgent)map.get("mailAgent")).open();
-			
-			mailAgentList.add(map);
-		}
-		
-		for(Map mailInfo : mailInfoList) {
-			IMAPAgent mailAgent = null;
-			
-			for(Map mailAgentMap : mailAgentList) {
-				if( (int)((Account)mailAgentMap.get("account")).getAccountNo() == Integer.parseInt((String) mailInfo.get("accountNo")) ) {
-					mailAgent = (IMAPAgent) mailAgentMap.get("mailAgent");
-					break;
-				}
-			}
-			
-			if(mailAgent != null) {
-				mailAgent.setDeleteMail(Integer.parseInt((String) mailInfo.get("mailNo")));
-			}
-		}
-		
-		
-		return true;
 	}
 
 	@Override
@@ -1046,6 +870,68 @@ public class MailDaoImpl implements MailDao {
 	}
 
 	@Override
+	public boolean setFlagMail(List<Map<String, Object>> mailInfoList, List<Account> accountList) throws MessagingException, FileNotFoundException, IOException {
+		List<Map<String, Object>> mailAgentList = new ArrayList<Map<String,Object>>();
+		
+		for(Account account : accountList) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("mailAgent",new IMAPAgent("imap." + account.getAccountDomain(), account.getAccountId(), account.getAccountPw()));
+			map.put("account", account);
+			((IMAPAgent)map.get("mailAgent")).open();
+			
+			mailAgentList.add(map);
+		}
+		
+		for(Map mailInfo : mailInfoList) {
+			IMAPAgent mailAgent = null;
+			
+			for(Map mailAgentMap : mailAgentList) {
+				if( (int)((Account)mailAgentMap.get("account")).getAccountNo() == Integer.parseInt((String) mailInfo.get("accountNo")) ) {
+					mailAgent = (IMAPAgent) mailAgentMap.get("mailAgent");
+					break;
+				}
+			}
+			
+			if(mailAgent != null) {
+				mailAgent.setFlagMail(Integer.parseInt((String) mailInfo.get("mailNo")));
+			}
+		}
+		
+		return true;
+	}
+
+	@Override
+	public boolean setUnFlagMail(List<Map<String, Object>> mailInfoList, List<Account> accountList) throws MessagingException, FileNotFoundException, IOException {
+		List<Map<String, Object>> mailAgentList = new ArrayList<Map<String,Object>>();
+		
+		for(Account account : accountList) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("mailAgent",new IMAPAgent("imap." + account.getAccountDomain(), account.getAccountId(), account.getAccountPw()));
+			map.put("account", account);
+			((IMAPAgent)map.get("mailAgent")).open();
+			
+			mailAgentList.add(map);
+		}
+		
+		for(Map mailInfo : mailInfoList) {
+			IMAPAgent mailAgent = null;
+			
+			for(Map mailAgentMap : mailAgentList) {
+				if( (int)((Account)mailAgentMap.get("account")).getAccountNo() == Integer.parseInt((String) mailInfo.get("accountNo")) ) {
+					mailAgent = (IMAPAgent) mailAgentMap.get("mailAgent");
+					break;
+				}
+			}
+			
+			if(mailAgent != null) {
+				mailAgent.setUnFlagMail(Integer.parseInt((String) mailInfo.get("mailNo")));
+			}
+		}
+		
+		return true;
+	}
+
+	@Override
 	public boolean trashMail(List<Map<String, Object>> mailInfoList, List<Account> accountList)	throws FileNotFoundException, MessagingException, IOException {
 		List<Map<String, Object>> mailAgentList = new ArrayList<Map<String,Object>>();
 		
@@ -1082,9 +968,41 @@ public class MailDaoImpl implements MailDao {
 			}
 		}
 		
-		return false;
+		return true;
 	}
 
+	@Override
+	public boolean deleteMail(List<Map<String, Object>> mailInfoList, List<Account> accountList) throws FileNotFoundException, MessagingException, IOException {
+		
+		List<Map<String, Object>> mailAgentList = new ArrayList<Map<String,Object>>();
+		
+		for(Account account : accountList) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("mailAgent",new IMAPAgent("imap." + account.getAccountDomain(), account.getAccountId(), account.getAccountPw()));
+			map.put("account", account);
+			((IMAPAgent)map.get("mailAgent")).open();
+			
+			mailAgentList.add(map);
+		}
+		
+		for(Map mailInfo : mailInfoList) {
+			IMAPAgent mailAgent = null;
+			
+			for(Map mailAgentMap : mailAgentList) {
+				if( (int)((Account)mailAgentMap.get("account")).getAccountNo() == Integer.parseInt((String) mailInfo.get("accountNo")) ) {
+					mailAgent = (IMAPAgent) mailAgentMap.get("mailAgent");
+					break;
+				}
+			}
+			
+			if(mailAgent != null) {
+				mailAgent.setDeleteMail(Integer.parseInt((String) mailInfo.get("mailNo")));
+			}
+		}
+		
+		
+		return true;
+	}
 	
 	@Override
 	public Map<String, Object> getBoxMailCount(List<Account> accountList) throws MessagingException, FileNotFoundException, IOException {
@@ -1137,5 +1055,166 @@ public class MailDaoImpl implements MailDao {
 		returnMap.put("trashTotalCount", trashTotalCount);
 		
 		return returnMap;
+	}
+	
+	
+	
+	
+	
+	private Map<String, Object> messageToMail(Message message, int accountNo) throws IOException, Exception {
+		Mail mail = new Mail();
+		mail.setAccountNo(accountNo);
+		
+		mail.setFlag(message.isSet(Flag.FLAGGED));
+		mail.setSeen((message.isSet(Flag.SEEN)));
+		if(message.getFolder().getName().contains("휴지통") || message.getFolder().getName().contains("Deleted Message")) {
+			mail.setTrash(true);
+		}
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		System.out.println("MessageNumber : " + message.getMessageNumber());
+		mail.setMailNo(message.getMessageNumber());
+		
+		
+		System.out.println("Folder : " + message.getFolder().getFullName());
+		mail.setFolder(message.getFolder());
+		System.out.println("SentDate : " + message.getSentDate());
+		mail.setSentDate(message.getSentDate());
+		
+		//보낸사람
+		for (Address addr : message.getFrom()) {
+			String fullAddr = MimeUtility.decodeText(addr.toString());
+			System.out.println("Address : " + fullAddr);
+			if (!fullAddr.contains("<")) {
+				mail.setSender(fullAddr);
+			} else {
+				mail.setSender(fullAddr.substring(0, fullAddr.indexOf("<") - 1));
+				mail.setSenderAddr(fullAddr.substring(fullAddr.indexOf("<"), fullAddr.length()));
+			}
+		}
+		
+		//받는사람
+		List<Map<String, String>> recipients = new ArrayList<Map<String, String>>();
+		for (Address addr : message.getAllRecipients()) {
+			String fullAddr = MimeUtility.decodeText(addr.toString());
+			System.out.println("Address : " + fullAddr);
+			
+			Map<String, String> recipientMap = new HashMap<String, String>();
+			System.out.println("fullAddr : " + fullAddr);
+			if (!fullAddr.contains("<")) {
+				recipientMap.put("recipient", fullAddr);
+			} else {
+				recipientMap.put("recipient", fullAddr.substring(0, fullAddr.indexOf("<") - 1));
+				recipientMap.put("recipientAddr", fullAddr.substring(fullAddr.indexOf("<"), fullAddr.length()));
+			}
+			recipients.add(recipientMap);
+		}
+		mail.setRecipients(recipients);
+		
+		mail.setSeen(message.isSet(Flags.Flag.SEEN));
+		
+		// 제목
+		System.out.println("Subject : " + message.getSubject());
+		mail.setSubject(message.getSubject());
+		
+		// 전체 컨텐츠
+		
+		if (!(message.getContent() instanceof String)) {
+			List<Map<String, String>> fileList = printMessage(message, mail);
+			map.put("fileList", fileList);
+		}else {
+			System.out.println("Content : " + message.getContent());
+			mail.setContent(message.getContent().toString());
+		}
+		
+		System.out.println(mail);
+		
+		if(mail.getContent() != null) {
+			mail.setContent(mail.getContent().replaceAll("\n\r", "<br/>"));
+		}
+		
+		map.put("mail", mail);
+		
+		return map;
+	}
+	
+	// 파일을 제외한 모든 내용을 가져옴
+	private List<Map<String, String>> printMessage(Message message, Mail mail) throws Exception {
+		
+		// 파일정보를 저장하는 리스트
+		List<Map<String, String>> fileList = new ArrayList<Map<String, String>>();
+		
+		Object content = message.getContent();
+		
+		MimeMultipart multiPart = null;
+		// 메시지의 컨텐츠가 MultiPart가 아니고 본문인지 판별
+		// 본문이아닌 MultiPart라면 분해하여 첨부파일을 저장하고 본문을 찾음
+		if (content instanceof Multipart) {
+			multiPart = (MimeMultipart) content;
+			
+			// 몇개의 Part로 구성되어있는지 확인
+			int bodyCount = multiPart.getCount();
+			
+			// 디버깅을 위한 코드
+			System.out.println("Multipart Count : " + multiPart.getCount());
+			System.out.println("Body : ");
+			
+			// 각각의 Part가 무엇으로 이루어져있는지 판별하여 첨부파일은 저장하고 본문을 찾음
+			for (int i = 0; i < bodyCount; i++) {
+				MimeBodyPart bp = (MimeBodyPart) multiPart.getBodyPart(i);
+				
+				// 디버깅을 위한 코드
+				System.out.println(i + "번째 MimeBodyPart.ContentType : " + bp.getContentType());
+				
+				// 현재 Part가 첨부파일이 아닌 본문인경우
+				if (bp.getContentType().toUpperCase().contains("TEXT/HTML")) {
+					String body = (String) bp.getContent();
+					System.out.println("BodyPart가 본문인 경우 : " + body);
+					mail.setContent(body);
+				}
+				// 현재 Part가 본문이 아닌 경우 첨부파일인지 확인하기위해 파일이 형식확인
+				else {
+					Object obj = bp.getContent();
+					
+					if (obj instanceof BASE64DecoderStream || bp.getContentType().toUpperCase().contains("TEXT/PLAIN") || bp.getContentType().toUpperCase().contains("MESSAGE/RFC822") ) {
+						System.out.println("AttachMent Content!");
+						if (bp.getFileName() == null) {
+							System.out.println("파일 비어있음!");
+							continue;
+						}
+						
+						// 파일이름이 base64로 인코딩 되어있어 utf-8로 디코딩을 실행
+						String body = MimeUtility.decodeText(bp.getFileName());
+						// 중복제거를 위해 유니크 아이디 추가
+						UUID uid = UUID.randomUUID();
+						File file = new File(tmpUploadDir + "/" + uid + "_" + body);
+						
+						// 현재 Part의 정보를 파일에 저장
+						bp.saveFile(file);
+						
+						// 디버깅을 위한 코드
+						System.out.println("Content-Disposition : " + body);
+						
+						// 서버에 저장한 파일의 정보를 전달하기위해 리스트에 추가
+						Map<String, String> fileContent = new HashMap<String, String>();
+						fileContent.put("filePath", "/tmpfiles/" + uid + "_" + body);
+						fileContent.put("fileName", body);
+						fileList.add(fileContent);
+					} else if (obj instanceof MimeMultipart) {
+						String body = ((MimeMultipart) obj).getBodyPart(0).getContent().toString();
+						
+						System.out.println("multipart 본문 : " + body);
+						
+						mail.setContent(body);
+					}
+				}
+			}
+		} else {
+			System.out.println("multipart 아님!");
+			mail.setContent((String) content);
+		}
+		
+		return fileList;
 	}
 }
