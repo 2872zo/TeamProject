@@ -62,7 +62,7 @@ public class SnsServiceImpl implements SnsService {
 		options.setCapability("ignoreProtectedModeSettings", true);
 		//options.addArguments("headless");//창안켜줭~
 		driver = new ChromeDriver(options);
-		wait = new WebDriverWait(driver, 10);
+		wait = new WebDriverWait(driver, 20);
 		
 		return driver;
 	}
@@ -70,7 +70,7 @@ public class SnsServiceImpl implements SnsService {
 	
 	public Account fbLogIn(Account account){
 		
-		
+		try {
 		driver = this.headlessConnection();
 		
 		url = "https://ko-kr.facebook.com";
@@ -92,25 +92,34 @@ public class SnsServiceImpl implements SnsService {
 		//WebElement login = driver.findElement(By.id("login_link")); 
 		WebElement feed = driver.findElement(By.cssSelector("div[role='feed']"));
 		
-		if(feed.isEnabled()) {
-			System.out.println("페이스북 로그인 성공");
-			account.setAccountDomain("faceBook");
-			return snsDao.addSnsAccount(account);
-			
-		}else {
-			System.out.println("페이스북 로그인 실패");
-			return null;
-			
+			if(feed.isEnabled()) {
+				System.out.println("페이스북 로그인 성공");
+				account.setAccountDomain("faceBook");
+				return snsDao.addSnsAccount(account);
+				
+			}else {
+				System.out.println("페이스북 로그인 실패");
+				return null;
+				
+			}
+		}finally {
+			driver.close();
+			driver.quit();
 		}
-		
 
-		
 	}
 	
 	@Override
-	public Account igLogIn(Account account) {
+	public Account igLogIn(Account account) throws InterruptedException {
 		
-		driver = this.headlessConnection();
+		
+		try{
+			
+		ChromeOptions options = new ChromeOptions();
+		options.setCapability("ignoreProtectedModeSettings", true);
+		//options.addArguments("headless");//창안켜줭~
+		driver = new ChromeDriver(options);
+		wait = new WebDriverWait(driver, 20);
 		
 		url = "https://www.instagram.com/accounts/login/?hl=ko&source=auth_switcher";
 		
@@ -128,9 +137,26 @@ public class SnsServiceImpl implements SnsService {
 		webElement = driver.findElement(By.xpath("//*[@id='react-root']/section/main/div/article/div/div[1]/div/form/div[6]/button"));
 		webElement.submit();
 
+		//로그인성공인지 실패인지 찾기
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/div[3]/div/div/div[3]/button[2]")));
+		WebElement click =driver.findElement(By.className("piCib"));
 		
 		
-		return null;
+			if(click.isEnabled()) {
+				System.out.println("인스타그램 로그인 성공");
+				account.setAccountDomain("instagram");
+				return snsDao.addSnsAccount(account);
+				
+			}else {
+				System.out.println("인스타그램 로그인 실패");
+				return null;
+				
+			}
+		}finally {
+			driver.close();
+			driver.quit();
+		}
+		
 	}
 	
 

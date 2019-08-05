@@ -179,6 +179,22 @@
 </style>
 
 <body>
+
+
+	<!--*******************
+        Preloader start
+    ********************-->
+	<div id="preloader">
+		<div class="loader">
+			<svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none"
+					stroke-width="3" stroke-miterlimit="10"></circle>
+            </svg>
+		</div>
+	</div>
+	<!--*******************
+        Preloader end
+    ********************-->
 		
 		<div class="nk-sidebar">
 					
@@ -538,11 +554,11 @@
 						<div class="card-body pt-5" align="center">
 							<div class="form-group" >
                               <label class="radio-inline mr-3">
-                                  <input type="radio"  name ="sns" value="ua110"></label>
-                                  <img alt="" src="https://www.tokyu.co.jp/tokyuplus/_resource/images/instagram/logo_001.png"style="width: 150px;">
+                                  <input type="radio"  name ="sns" value="ua109"></label>
+                                  <img alt="" src="https://www.tokyu.co.jp/tokyuplus/_resource/images/instagram/logo_001.png"style="width: 150px;padding-right: 10px;">
                          
                               <label class="radio-inline mr-3">
-                                  <input type="radio"  name ="sns" value="ua109"></label>
+                                  <input type="radio"  name ="sns" value="ua110"></label>
                                   <img alt="" src="http://pluspng.com/img-png/facebook-logo-png-1722.png"  style="width: 150px;padding-bottom: 10px;">
                    
                               </div>
@@ -729,6 +745,13 @@
 			
 		});	
 
+
+	});//function끝
+	//////////////////////////////////////SNS시작.//////////////////////////////////////////////
+	
+	
+	$(function(){
+
 		//sns계정 추가
 		$("#addSnsAccount").on("click", function(e){
 			e.preventDefault();
@@ -750,6 +773,9 @@
 					},
 					complete : function(){
 						$("#preloader").attr("style", "display:none;");
+						$("form").each(function(){
+							this.reset();
+						});
 					}, 
 					success :  function(data) {
 						//alert("success "+data)
@@ -768,10 +794,9 @@
 					}//error
 
 				});//ajax 끝
-		});//sns끝		
-
-
-	});//function끝
+		});//click끝		
+	});//sns끝
+	//////////////////////////////////////SNS끝.//////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////쇼핑몰계정시작////////////////////////
 	

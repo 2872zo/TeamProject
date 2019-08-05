@@ -32,7 +32,7 @@ public class SnsRestController {
 	}
 
 	@RequestMapping(value = "/json/addSns")
-	public boolean addSns(@RequestBody Account account, HttpServletRequest request) {
+	public boolean addSns(@RequestBody Account account, HttpServletRequest request) throws InterruptedException {
 
 		System.out.println("/json/addSns 시작!");
 

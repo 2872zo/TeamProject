@@ -16,6 +16,6 @@ public interface SnsService {
 	
 	public Account fbLogIn(Account account);		
 	
-	public Account igLogIn(Account account);
+	public Account igLogIn(Account account) throws InterruptedException;
 
 }
