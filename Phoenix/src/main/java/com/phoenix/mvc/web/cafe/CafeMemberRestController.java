@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -98,6 +99,17 @@ public class CafeMemberRestController {
 		map.put("memberStatusCode", cafeMember.getMemberStatusCode());
 
 		return map;
+
+	}
+	
+	@RequestMapping(value = "json/{cafeURL}/updateCafeMemberProfile", method = RequestMethod.POST)
+	public String updateCafeMemberProfile(@RequestBody CafeMember cafeMember) {
+
+		System.out.println("/cafe/json/{cafeURL}/updateCafeMemberProfile : POST");
+
+		cafeMemberService.updateCafeMemberProfile(cafeMember);
+
+		return "ok";// 메인으로 이동
 
 	}
 

@@ -1,6 +1,9 @@
 package com.phoenix.mvc.web.sns;
 
+import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -11,7 +14,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.phoenix.mvc.common.Search;
+import com.phoenix.mvc.service.domain.Account;
 import com.phoenix.mvc.service.domain.TimeLine;
+import com.phoenix.mvc.service.domain.User;
 import com.phoenix.mvc.service.sns.SnsService;
 
 @RequestMapping("/sns/*")
@@ -27,18 +32,32 @@ public class SnsContoller {
 	}
 
 	@GetMapping(value = "/getTimeLine")
-	public String getTimeLine(Model model, @ModelAttribute("search") Search search) {
+	public String getTimeLine(Model model, @ModelAttribute("search") Search search, HttpServletRequest request) {
 
 		System.out.println("sns/getTimeLine");
 		
-		search.setFbId("wlsgml1416@naver.com");
-		search.setFbPw("011!wlslgogo");
+		User user = (User) request.getSession().getAttribute("user");
+		search.setUserNo(user.getUserNo());
 		
-		search.setIgId("rlawlsgml1416");
-		search.setIgPw("011!wlslgogo");
+		List accountList = snsService.getSnsAccount(search);
 		
-	//	search.setIgId("andaralamira");
-	//	search.setIgPw("011wlslgogo");
+		System.out.println(accountList);
+		
+		for(int i = 0; i<accountList.size(); i++) {
+			Account account =(Account) accountList.get(i);
+			if(account.getAccountType().equals("ua109")) {
+				search.setIgId(account.getAccountId());
+				search.setIgPw(account.getAccountPw());
+			}else if(account.getAccountType().equals("ua110")) {
+				search.setFbId(account.getAccountId());
+				search.setFbPw(account.getAccountPw());
+				
+			}
+			
+		}
+		
+		System.out.println("fb: "+search.getFbId());
+		System.out.println("ig: "+search.getIgId());
 		
 		Map<String, Object> fbMap = snsService.getFaceBookTimeLineList(search);
 		Map<String, Object> igMap = snsService.getInstaTimeLineList(search);

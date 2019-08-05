@@ -3,13 +3,17 @@ package com.phoenix.mvc.web.shoppingmall;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.phoenix.mvc.service.domain.Account;
 import com.phoenix.mvc.service.domain.ShoppingmallSearch;
+import com.phoenix.mvc.service.domain.User;
 import com.phoenix.mvc.service.shoppingmall.ShoppingmallService;
 
 @RestController
@@ -51,10 +55,21 @@ public class ShoppingmallRestController {
 	}
 	
 	@RequestMapping("/json/addShoppingmallAccount")
-	public Map addShoppingmallAccount()
+	public Map addShoppingmallAccount(@RequestBody Account account, HttpSession session)
 	{
 		
-		return null;
+		System.out.println("json/addShoppingmallAccount 실행");
+		
+		System.out.println("account : "+account);
+		User user = (User)session.getAttribute("user");
+		
+		String loginResult = shoppingmallService.login(account, user);
+		
+		//loginResult를 그냥 리턴..
+		Map returnMap = new HashMap();
+		returnMap.put("loginResult", loginResult);
+		
+		return returnMap;
 	}
 
 }
