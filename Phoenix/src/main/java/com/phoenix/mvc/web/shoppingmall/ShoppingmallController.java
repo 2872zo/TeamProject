@@ -2,6 +2,8 @@ package com.phoenix.mvc.web.shoppingmall;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.phoenix.mvc.service.domain.ShoppingmallSearch;
+import com.phoenix.mvc.service.domain.User;
 import com.phoenix.mvc.service.shoppingmall.ShoppingmallService;
 
 @Controller
@@ -54,4 +57,26 @@ public class ShoppingmallController {
 		
 		return "/shoppingMall/listShoppingmallProduct";
 	}
+	
+	@RequestMapping(value="getPurchaseList") //URL 치고 들어올수 없도록 interceptor 등록
+	public String getPurchaseList(@ModelAttribute ShoppingmallSearch search, Model model, HttpSession session)
+	{
+		System.out.println("shopping/getPurchaseList 컨트롤러");
+		
+		//살려야함
+		//User user = (User)session.getAttribute("user"); //항상 user있음
+		
+		//가짜데이터..
+		User user = new User();
+		user.setUserNo(10000);
+		Map<String,Object> returnMap = shoppingmallService.getPurchaseList(user, search);
+		
+		
+		model.addAttribute("totalPurchaseList", returnMap.get("totalPurchaseList"));
+		model.addAttribute("myAccountList", returnMap.get("myAccountList"));
+		//return해주는걸로 if써서 model에 각각 담아주기
+		
+		return "/shoppingMall/listMyPurchase";
+	}
+	
 }

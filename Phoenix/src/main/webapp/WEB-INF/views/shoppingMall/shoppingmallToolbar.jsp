@@ -45,9 +45,17 @@
 				</c:if>
 				
 				<c:if test="${!empty user.userNo}"> <!-- 로그인이 되어있을때 -->
-					<div class="input-group"> <!-- 로그인된 후에 class col-lg 잡기 -->
+					<div class="input-group" style="margin-left:10%;"> <!-- 로그인된 후에 class col-lg 잡기 -->
+						<div class="input-group-prepend">
+                            <button class="btn btn-outline-dark dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false" style="width:100px;height:40px;border-radius:3px;margin-right:40px;margin-top:5px;">내 쇼핑</button>
+                            <div class="dropdown-menu" x-placement="top-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, -151px, 0px);">
+                            	<div class="dropdown-item" id="purchaseList" >통합구매내역</div> 
+                            	<div class="dropdown-item" id="cartList" href="#">찜 목록</div>
+                               <!--   <div role="separator" class="dropdown-divider"></div>-->
+                            </div>
+                        </div>
 						<i class="mdi mdi-comment-processing-outline" id='goChat' style='font-size: 30pt'></i>
-						<button type="button" class="btn btn-primary logout">
+						<button type="button" class="btn btn-primary logout" style="height:40px; margin-top:5px; margin-left:20px;">
 							<i class="icon-key">Logout</i>
 						</button>
 					</div>

@@ -42,9 +42,9 @@
 				</c:if>
 				
 				<c:if test="${!empty user.userNo}"> <!-- 로그인이 되어있을때 -->
-					<div class="input-group"> <!-- 로그인된 후에 class col-lg 잡기 -->
+					<div class="input-group" style="margin-left:18%;"> <!-- 로그인된 후에 class col-lg 잡기 -->
 						<i class="mdi mdi-comment-processing-outline" id='goChat' style='font-size: 30pt'></i>
-						<button type="button" class="btn btn-primary logout">
+						<button type="button" class="btn btn-primary logout" style="height:40px; margin-top:5px; margin-left:20px;">
 							<i class="icon-key">Logout</i>
 						</button>
 					</div>

@@ -10,23 +10,7 @@
 <html lang="ko">
 
 <head>
-<!--*******************
-        Preloader start
-    ********************-->
-	<div id="preloader">
-		<div class="loader">
-			<svg class="circular" viewBox="25 25 50 50">
-                <circle class="path" cx="50" cy="50" r="20" fill="none"
-					stroke-width="3" stroke-miterlimit="10"></circle>
-            </svg>
-		</div>
-	</div>
-	<!--*******************
-        Preloader end
-    ********************-->
-<!-- ToolBar Start /////////////////////////////////////-->
-<jsp:include page="../common/toolbar.jsp" />
-<!-- ToolBar End /////////////////////////////////////-->
+
 
 <link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
 <link href="/css/style.css" rel="stylesheet">
@@ -101,6 +85,34 @@ img {
 </head>
 
 <body>
+<!--*******************
+        Preloader start
+    ********************-->
+	<div id="preloader">
+		<div class="loader">
+			<svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none"
+					stroke-width="3" stroke-miterlimit="10"></circle>
+            </svg>
+		</div>
+	</div>
+	<!--*******************
+        Preloader end
+    ********************-->
+    
+    <!--**********************************
+            Nav header start
+        ***********************************-->
+           <div class="nav-header">
+            <c:import url="/WEB-INF/views/common/brand-logo.jsp"/>
+        </div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+        
+<!-- ToolBar Start /////////////////////////////////////-->
+<jsp:include page="../common/toolbar.jsp" />
+<!-- ToolBar End /////////////////////////////////////-->
 
 	<!--  화면구성 div start /////////////////////////////////////-->
 
@@ -132,18 +144,19 @@ img {
                           </form>
                       </div>
                   </div>
-                  
+                 <input type="hidden" id ="faceSize" value="${faceSearch.currentPage }"/> 
+                 <input type="hidden" id ="instaSize" value = "${instaSearch.pageSize}"/>
+                 <input type="hidden" id ="total" value = "${instaSearch.status}"/>
+                 
 				<div class="card">
 					<div class="card-body" id = "here">
+					<!--여기 나눠지는곳  -->
 						<c:set var="i" value="0" />
-						<c:forEach var="timeLine" items="${timeLine}">
+						<c:forEach var="timeLine" items="${faceTimeLine}">
 							<c:set var="i" value="${i+1}" />
 							<div class="media media-reply">
-								<c:if test="${search.subject eq 100 }">
-									<i class="mdi mdi-facebook-box"></i>
-								</c:if>
-								<c:if test="${search.subject eq 200 }">
-									<i class="mdi mdi-instagram"></i>
+								<c:if test="${faceSearch.face eq 100 }">
+									<i class="mdi mdi-facebook-box"  style="font-size: 25px"></i>
 								</c:if>
 								
 								<div class="media-body">
@@ -157,8 +170,7 @@ img {
 												<i class="fa fa-thumbs-up"></i>
 											</button>
 											${timeLine.likeCount }
-											<button
-												class="btn btn-transparent text-dark font-weight-bold p-0 ml-2">Reply</button>
+											
 										</div>
 									</div>
 
@@ -200,9 +212,56 @@ img {
 									<c:if test="${!empty timeLine.videoList}"> <!-- 동영상 -->
 									<c:forEach var ="videoList" items="${timeLine.videoList }"  varStatus="status" >
 									<c:set var="j" value="${j+1}" />
-	           							<a href="${timeLine.videoLinkList[status.index] }"><img src="${videoList }"></video>blob!!!!</a>
+	           							<a href="${timeLine.videoLinkList[status.index] }"><img alt="" src="${videoList }" style="margin-left:20px; margin-top: 10px"></a>
 	           						</c:forEach>
 										
+	           						</c:if>	           						
+									
+								</div>
+							</div>
+						</c:forEach>
+					<!--여기 나눠지는곳  -->
+						<c:set var="i" value="0" />
+						<c:forEach var="timeLine" items="${instaTimeLine}">
+							<c:set var="i" value="${i+1}" />
+							<div class="media media-reply">
+
+								<c:if test="${instaSearch.insta eq 200 }">
+									<i class="mdi mdi-instagram" style="font-size: 25px"></i>
+								</c:if>
+								
+								<div class="media-body">
+									<div class="d-sm-flex justify-content-between mb-2">
+										<h5 class="mb-sm-0">
+											${timeLine.postId} 
+											<small class="text-muted ml-3">${timeLine.regDate }</small>
+										</h5>
+										<div class="media-reply__link">
+											<button class="btn btn-transparent p-0 mr-3">
+												<i class="fa fa-thumbs-up"></i>
+											</button>
+											${timeLine.likeCount }
+											
+										</div>
+									</div>
+
+									<p>${timeLine.post }</p>
+									<input type="hidden" class="postSize" value ="${timeLine.postSize }"/>
+									
+									<c:set var = "j" value = "0"/>
+									
+									<c:if test="${!empty timeLine.img1List}"> <!-- 이미지1 -->
+									<c:forEach var ="img1List" items="${timeLine.img1List }" >
+									<c:set var="j" value="${j+1}" />
+	           							<img alt="" src="${img1List}" style="margin-left:20px; margin-top: 10px">
+	           						</c:forEach>
+	           						</c:if>
+	           					
+									<c:if test="${!empty timeLine.videoList}"> <!-- 동영상 -->
+									<c:forEach var ="videoList" items="${timeLine.videoList }"  >
+									<c:set var="j" value="${j+1}" />
+	           							<video src="${videoList }" autoplay="autoplay" controls="controls" width="300px"  style='margin-left:20px; margin-top: 10px'></video>
+	           						</c:forEach>
 	           						</c:if>	           						
 									
 								</div>
@@ -244,18 +303,11 @@ img {
 	
 	$(document).ready(function(){
 
-		
-
-		
-
 		$(window).scroll(function(){
-
-			
-		
 
 			if($(window).scrollTop()>=( $(document).height()- $(window).height() ) ){
 
-				alert("hi")
+				//alert("hi")
 				if( merong == false){
 
 					loadNext();
@@ -269,13 +321,20 @@ img {
 	
 
 	function loadNext(){
-		var search = Number('${search.currentPage}');
-		var currentPage = $(".postSize").val() 
-		var subject = '${search.subject}'
-			alert("currentPage"+currentPage)
-			alert("subject"+subject)
-			
 		
+		var currentPage = Number($("#faceSize").val())
+		var pageSize = Number($("#instaSize").val())
+		var face = '${faceSearch.face}'
+		var insta = '${instaSearch.insta}'
+		var status = Number($("#total").val())
+
+			//alert("currentPage"+currentPage)
+			//alert("pageSize"+pageSize)
+			//alert("face"+face)
+			//alert("insta"+insta)
+			//alert("status"+status)
+		
+
 		$.ajax({
 			url : "/sns/json/getTimeLine",
 			method : "POST",
@@ -285,8 +344,12 @@ img {
 			},
 			data : JSON.stringify({
 				currentPage : currentPage,
-				subject : subject
+				face : face,
+				insta : insta,
+				pageSize : pageSize,
+				status : status
 			}),
+			dataType : "text",
 			beforeSend : function(){
 				$(".loader-ellips").css("display","block");
 				merong = true;
@@ -294,38 +357,31 @@ img {
 			complete : function(){
 				merong = false;
 			},
-			dataType : "text",
-			beforeSend : function(){
-				$("#preloader").attr("style", "background:rgba(255,245,217,0.5);");
-			},
-			complete : function(){
-				$("#preloader").attr("style", "display:none;");
-			}, 
 			success : function(serverData) {
 				//alert(serverData)
-				
-				
-				
+	
 				var data = JSON.parse(serverData);
-				var timeLine= data.timeLine;
-				var search= data.search;
+				var faceTimeLine= data.faceTimeLine;
+				var instaTimeLine= data.instaTimeLine;
+				var faceSearch= data.faceSearch;
+				var instaSearch= data.instaSearch;
 
 				//alert("data "+data)
-				//alert("timeLine "+timeLine)
-				//alert("search "+search)
-
+				//alert("instaTimeLine "+instaTimeLine)
+				//alert("instaSearch "+instaSearch)
 				
-	
+				$("#faceSize").val(faceSearch.currentPage)
+				//alert("페북후의 값 확인 "+$("#faceSize").val())
+				$("#instaSize").val(instaSearch.pageSize)
+				//alert("인스타후의 값 확인 "+$("#instaSize").val())
+				$("#total").val(instaSearch.status)
+				//alert("인스타후의status 값 확인 "+$("#total").val())
 				
-			
-					
-				if(timeLine !=""){
+				
+				if(faceTimeLine !="" && instaTimeLine !=""){
 					//alert($(timeLine).length);
 
-					
-						
-					
-					$(timeLine).each(function(index){
+					$(faceTimeLine).each(function(index){
 
 						//alert("index값 "+index)
 						
@@ -333,21 +389,16 @@ img {
 						
 						start += "<div class='media media-reply'>";
 						
-						if(search.subject == 100){//페북
-							start+= "<i class='mdi mdi-facebook-box'></i>"+
+						if(faceSearch.face == 100){//페북
+							start+= "<i class='mdi mdi-facebook-box' style='font-size: 25px'></i>"+
 							"<div class='media-body'><div class='d-sm-flex justify-content-between mb-2'><h5 class='mb-sm-0'>";
-
-						}else if(search.subject == 200){//인스타그램
-							start+= "<i class='mdi mdi-instagram'></i>"+
-							"<div class='media-body'><div class='d-sm-flex justify-content-between mb-2'><h5 class='mb-sm-0'>";
-
 						}
 						
 					
 						start+= this.postId+"<small class='text-muted ml-3'>"+this.regDate+"</small></h5>"
 								+"<div class='media-reply__link'><button class='btn btn-transparent p-0 mr-3'><i class='fa fa-thumbs-up'></i></button>"
 								+this.likeCount
-								+"<button class='btn btn-transparent text-dark font-weight-bold p-0 ml-2'>Reply</button></div></div>"
+								+"</div></div>"
 								+"<p>"+this.post+"</p>";
 
 								//alert("start "+start);
@@ -440,7 +491,7 @@ img {
 								//alert("length"+length);
 								
 								for( var i = 0; i< length; i++){
-
+						
 									
 									//alert(this.videoLinkList[i]);
 
@@ -455,7 +506,65 @@ img {
 
 						start+="</div></div>"
 						$("#here").append(start);
-					});//timeline끝
+					});//fbtimeline끝
+
+					$(instaTimeLine).each(function(){
+
+						var end ='';
+
+						end += "<div class='media media-reply'>";
+
+						if(instaSearch.insta==200){//인스타
+
+							end +="<i class='mdi mdi-instagram' style='font-size: 25px'></i>"+
+							"<div class='media-body'><div class='d-sm-flex justify-content-between mb-2'><h5 class='mb-sm-0'>";
+						}
+
+						end+= this.postId+"<small class='text-muted ml-3'>"+this.regDate+"</small></h5>"
+						+"<div class='media-reply__link'><button class='btn btn-transparent p-0 mr-3'><i class='fa fa-thumbs-up'></i></button>"
+						+this.likeCount
+						+"</div></div>"
+						+"<p>"+this.post+"</p>";
+
+						if(this.img1List!=null){
+							
+						//alert("img1List"+this.img1List)
+						var length = $(this.img1List).length;
+						//alert("length"+length);
+						
+							for( var i = 0; i< length; i++){
+	
+								//alert(this.img1List[i]);
+							
+								
+								end += "<img alt='' src="+this.img1List[i] +" style='margin-left:20px; margin-top: 10px'>";
+	
+							}
+
+
+						}
+
+						else if(this.videoList!= null){
+
+							//alert("videoList"+this.videoList)
+							var length = $(this.videoList).length;
+							//alert("length"+length);
+							
+							for( var i = 0; i< length; i++){
+
+								//alert(this.videoList[i]);
+								
+								end += "<video src="+ this.videoList[i] +" autoplay='autoplay' controls='controls' width='300px'  style='margin-left:20px; margin-top: 10px'></video>";
+
+						
+							}
+							
+				
+						}
+						end+="</div></div>"
+						$("#here").append(end);
+
+					});//istatimeline끝
 
 					
 
@@ -470,6 +579,5 @@ img {
 		
 	</script>
 	<script src="/js/custom/cafeCommon.js"></script>
-	<script src="/js/custom/snsCommon.js"></script>
 </body>
 </html>

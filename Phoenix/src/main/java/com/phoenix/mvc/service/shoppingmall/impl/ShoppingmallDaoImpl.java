@@ -6,19 +6,26 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.ibatis.session.SqlSession;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
+import com.phoenix.mvc.service.domain.Account;
 import com.phoenix.mvc.service.domain.Product;
+import com.phoenix.mvc.service.domain.Purchase;
 import com.phoenix.mvc.service.domain.ShoppingmallSearch;
+import com.phoenix.mvc.service.domain.User;
 import com.phoenix.mvc.service.shoppingmall.ShoppingmallDao;
 
 @Repository("shoppingmallDaoImpl")
@@ -30,6 +37,17 @@ public class ShoppingmallDaoImpl implements ShoppingmallDao
 	
 	@Value("${webDriverPath}")
 	private String WEB_DRIVER_PATH;
+	
+	@Value("${tmonLoginURL}")
+	private String tmonLoginURL;
+	
+	@Value("${tmonMyOrderlistURL}")
+	private String tmonMyOrderlistURL;
+	
+	
+	@Autowired
+	@Qualifier("sqlSessionTemplate")
+	private SqlSession sqlSession;
 	
 	private WebDriverWait wait;
 	
@@ -147,10 +165,164 @@ public class ShoppingmallDaoImpl implements ShoppingmallDao
 		return returnMap;
 	}
 	
+	@Override //account 계정 다 가져오긔
+	public List<Account> getShoppingmallAccount(int userNo) {
+		
+		return sqlSession.selectList("getMailAccount", userNo);
+	}
 	
-	private void tmonSearchProduct(WebDriver driver, ShoppingmallSearch search) //티몬검색
+	@Override 
+	public Map<String, Object> getTmonPurchaseList(ShoppingmallSearch search, Account account) {
+		
+		WebDriver driver = this.connectToSelenium(); //드라이버연결
+		this.tmonLogin(driver, account);//로그인
+		driver.get(tmonMyOrderlistURL); //내가 구매한 상품목록으로 이동
+		
+		WebElement webElement = wait.until(ExpectedConditions.presenceOfElementLocated(By.className("all"))); //1년
+		webElement.click();
+		
+		////////////////////////////////////////////////////////////////ajax통신 기다린다////////////////
+		WebDriverWait wait = new WebDriverWait(driver, 5000);
+	    wait.until(new ExpectedCondition<Boolean>() {
+
+	        public Boolean apply(WebDriver wdriver) {
+	            return ((JavascriptExecutor) driver).executeScript("return jQuery.active == 0").equals(true);
+	        }
+
+	    });
+	    
+	    Boolean isJqueryUsed = (Boolean) ((JavascriptExecutor) driver)
+	            .executeScript("return (typeof(jQuery) != 'undefined')");
+	    if (isJqueryUsed) {
+	        while (true) {
+	            // JavaScript test to verify jQuery is active or not
+	            Boolean ajaxIsComplete = (Boolean) (((JavascriptExecutor) driver)
+	                    .executeScript("return jQuery.active == 0"));
+	            if (ajaxIsComplete)
+	                break;
+	            try {
+	                Thread.sleep(100);
+	            } catch (InterruptedException e) {
+	            }
+	        }
+	    }
+	    
+	    /////////////////////////////////////////////////////////////////////////////////////////////
+	    
+	    
+		//본격적으로 가져오기(테이블)
+		List<Purchase> purchaseList = new ArrayList<Purchase>();
+		Map returnMap = new HashMap();
+		WebElement myOrderTable = driver.findElement(By.xpath("//*[@id=\"buy_list\"]/div[2]/table")); // 테이블 절대경로
+		WebElement tableHead = myOrderTable.findElement(By.tagName("thead"));
+		WebElement tableBody = myOrderTable.findElement(By.tagName("tbody"));
+		List<WebElement> col = tableHead.findElements(By.tagName("th")); // 이렇게 찾으면 되는거 아닌가?
+		List<WebElement> row = tableBody.findElements(By.tagName("tr"));
+		
+		
+		System.out.println("구매내역있음");
+		//한 컬럼에  th/th/td/td 가지고있음.
+		System.out.println(row.size());
+		for(int i=1; i<=row.size(); i+=2) //i+=2만큼 홀수만 돈다.
+		{
+			System.out.println("i : "+i);
+			Purchase purchase = new Purchase();
+			
+			webElement = tableBody.findElement(By.xpath("//*[@id=\"buy_list\"]/div[2]/table/tbody/tr["+i+"]"));
+			
+			WebElement dealInfoTH = webElement.findElement(By.className("deal_info"));
+			WebElement sumUpOverTH =webElement.findElement(By.cssSelector(".sum_up"));
+			WebElement expireOverTD = webElement.findElement(By.cssSelector(".expiry"));
+			WebElement manageOverTD = webElement.findElement(By.cssSelector(".manage"));
+			
+			String orderDate = dealInfoTH.findElement(By.className("dt")).getText();
+			purchase.setOrderDate(orderDate); // orderDate설정
+			String orderTime = dealInfoTH.findElement(By.className("date_num")).findElement(By.tagName("i")).getText();
+			purchase.setOrderTime(orderTime);
+			String orderNumber = dealInfoTH.findElement(By.className("buy_num")).findElement(By.tagName("strong")).getText();
+			purchase.setOrderNumber(Integer.parseInt(orderNumber));
+			String totalPrice = dealInfoTH.findElement(By.className("won")).findElement(By.tagName("em")).getText();
+			purchase.setTotalPrice(totalPrice);
+			String imageSrc = sumUpOverTH.findElement(By.tagName("img")).getAttribute("src");
+			purchase.setImageSrc(imageSrc);
+			String originPageLink = sumUpOverTH.findElement(By.tagName("h4")).findElement(By.tagName("a")).getAttribute("href");
+			purchase.setOriginPageLink(originPageLink);
+			String productName = sumUpOverTH.findElement(By.tagName("h4")).getText();
+			purchase.setProductName(productName);
+			String productDetail = sumUpOverTH.findElement(By.className("detail")).getText();
+			purchase.setProductDetail(productDetail); 
+			
+			//productDetail.indexOf("구매수량");
+			//System.out.println("구매수량"+productDetail.charAt(productDetail.indexOf("구매수량")+4));
+			purchase.setQuantity(Integer.parseInt(productDetail.charAt(productDetail.indexOf("구매수량")+4)+"")); // 구매수량나온애
+			
+			
+		
+			if( dealInfoTH.findElements(By.className("delivery")).size()!=0 ) //배송비 <>있냐 없냐?일단 test
+			{
+				String deliveryPrice = dealInfoTH.findElement(By.className("delivery")).findElement(By.tagName("span")).getText();
+				purchase.setDeliveryPrice(deliveryPrice);
+			}
+			else//없으면
+			{
+				// 쿠팡 같은경우 배송하지 않고 실물로 사용하는 티켓이라서 배송 x 
+			}
+			
+			if(expireOverTD.findElements(By.className("delivery_condition")).size()!=0)// 있으면
+			{
+				String orderState = expireOverTD.findElement(By.className("delivery_condition")).findElement(By.tagName("strong")).getText();
+				purchase.setOrderState(orderState);
+			}
+			else // 없으면
+			{
+				String orderState = expireOverTD.findElement(By.className("p_cfm")).getText();
+				purchase.setOrderState(orderState); // 꼭 확인해 주세요~~ 어쩌꾸
+			}
+			
+			purchase.setPurchaseFrom("tmon");
+			//System.out.println(sumUpOverTH.findElements(By.className("add_date_info")).size());
+			purchaseList.add(purchase);// purchaseList.size하면 몇개 샀는지 알수있음.
+			//System.out.println(purchase);
+			
+		}
+		
+		
+		returnMap.put("purchaseList", purchaseList);
+		
+		return returnMap;
+	}
+	
+	
+	private void tmonSearchProduct(WebDriver driver, ShoppingmallSearch search) //티몬상품검색
 	{
 		driver.get("http://search.tmon.co.kr/search/?keyword="+search.getSearchKeyword()+"&thr=ts");
+	}
+	
+	private void tmonLogin(WebDriver driver, Account account)//티몬 로그인
+	{
+		//브라우저에 url주소창에 치고 request받은거랑 같음
+		driver.get(tmonLoginURL);
+		//11번가 iframe 안씀
+		
+		WebElement webElement = driver.findElement(By.id("userid"));
+		String id11st = account.getAccountId();
+		webElement.sendKeys(id11st);
+		
+		webElement = driver.findElement(By.id("pwd"));
+		String password11st = account.getAccountPw();
+		webElement.sendKeys(password11st);
+		
+		webElement = driver.findElement(By.className("btn_login"));
+		webElement.click();
+		
+		try {
+			Thread.sleep(2000); //왜기달림 로그인 되는 시간 보다, orderList 가는 시간이 더 빠르면 안된다고 생각함 그래서 해줌.
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 	}
 	
 	private WebDriver connectToSelenium() //셀레니움 크롬 드라이버 연결
@@ -162,10 +334,13 @@ public class ShoppingmallDaoImpl implements ShoppingmallDao
 		options.setCapability("ignoreProtectedModeSettings", true);
 		options.addArguments("headless");
 		WebDriver driver = new ChromeDriver(options);
-		//driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		wait = new WebDriverWait(driver, 10);
-		
+		driver.manage().timeouts().implicitlyWait(1,TimeUnit.SECONDS);
 		return driver;
 	}
+
+	
+
+	
 	
 }

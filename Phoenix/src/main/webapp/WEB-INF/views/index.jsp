@@ -14,14 +14,15 @@
 	href="/images/favicon.png">
 <!-- Custom Stylesheet -->
 <link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
+
 <link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet">
 <link href="/css/style.css" rel="stylesheet">
 
+<link href="/css/custom/common-toolbar.css" rel="stylesheet">
+
 <link rel="stylesheet" href="/css/custom/scroll-top.css">
 
-<!-- ToolBar Start /////////////////////////////////////-->
-<jsp:include page="/WEB-INF/views/common/toolbar.jsp" />
-<!-- ToolBar End /////////////////////////////////////-->
+
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <style type="text/css">
 	
@@ -31,13 +32,17 @@
 	}
 	
 	.input-group-append{
-		box-shadow : 5px 5px 5px #8080804a;
+		
+		border-radius :50%;
+		box-shadow : 1px 1px 18px 5px #8080804a;
 	}
 	
 	#searchKeyword{
 		
-		box-shadow : 5px 5px 5px #8080804a;
+		box-shadow : 1px 1px 15px 1px #8080804a;
 	}
+	
+	
 	
 </style>
 
@@ -59,7 +64,14 @@
 	<!--*******************
         Preloader end
     ********************-->
-
+ <form name ="form" >
+ 		
+ 		<!-- ToolBar Start /////////////////////////////////////-->
+		<jsp:include page="/WEB-INF/views/common/toolbar.jsp" />
+		<!-- ToolBar End /////////////////////////////////////-->
+		 
+ 
+ 
 	<div class='container-fluid'>
 
 
@@ -77,7 +89,7 @@
 				<div class="input-group mb-3 " style='width: 50%;'>
 					<input type="text" class="form-control input-rounded form-control-lg " id='searchKeyword'>
 					<div class="input-group-append">
-						<button class="btn btn-lg btn-outline-primary" type="button" id="explore">
+						<button class="btn btn-lg btn-rounded btn-primary" type="button" id="explore">
 							<i class="mdi mdi-magnify" style='font-size: 18pt;'></i>
 						</button>
 					</div>
@@ -179,6 +191,6 @@
 	<script src="/js/custom/toolbarScript.js"></script>
 
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
-
+	</form>
 </body>
 </html>

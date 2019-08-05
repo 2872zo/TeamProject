@@ -9,6 +9,8 @@ public interface SnsService {
 
 	public Map<String, Object> getFaceBookTimeLineList(Search search);
 	
+	public Map<String, Object> getInstaTimeLineList(Search search);
+	
 	public TimeLine writeFb(Search search);
 
 }

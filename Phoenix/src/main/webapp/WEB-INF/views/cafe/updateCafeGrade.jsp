@@ -255,11 +255,11 @@
 					//alert("nextR "+nextR)
 
 						if(visit>nextV || post>nextP || reply>nextR){
-							alert("다음 등업 조건은 낮은 등급보다 높아야 합니다.")
+							alert("다음 등금 기준은 낮은 등급보다 높아야 합니다.")
 							
 							
 						}else if(visit==nextV || post==nextP || reply==nextR){
-							alert("등업 조건이 같을 수는 없습니다.")
+							alert("등급 기준이 같을 수는 없습니다.")
 							
 						}else if(visit<nextV && post<nextP && reply<nextR){
 							//alert("ok")

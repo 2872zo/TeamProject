@@ -68,7 +68,8 @@
 			password = #{password:VARCHAR},
 			email = #{email:VARCHAR},
 			phone = #{phone:NUMERIC},
-			profile_img = #{profileImg:VARCHAR}					
+			profile_img = #{profileImg:VARCHAR},	
+			kakao_id = #{kakaoId:VARCHAR}				
 	   	</set>
 	  WHERE user_no = #{userNo:NUMERIC}
 	 </update>

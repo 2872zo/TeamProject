@@ -34,12 +34,21 @@ public class SnsContoller {
 		search.setFbId("wlsgml1416@naver.com");
 		search.setFbPw("011!wlslgogo");
 		
-		Map<String, Object> map = snsService.getFaceBookTimeLineList(search);
+		search.setIgId("rlawlsgml1416");
+		search.setIgPw("011!wlslgogo");
 		
-		System.out.println("map이욤 : "+map);
+	//	search.setIgId("andaralamira");
+	//	search.setIgPw("011wlslgogo");
 		
-		model.addAttribute("timeLine", map.get("timeLine"));
-		model.addAttribute("search", map.get("search"));
+		Map<String, Object> fbMap = snsService.getFaceBookTimeLineList(search);
+		Map<String, Object> igMap = snsService.getInstaTimeLineList(search);
+		System.out.println("fbMap이욤 : "+fbMap);
+		System.out.println("igMap이욤 : "+igMap);
+		
+		model.addAttribute("faceTimeLine", fbMap.get("timeLine"));
+		model.addAttribute("faceSearch", fbMap.get("search"));
+		model.addAttribute("instaTimeLine", igMap.get("timeLine"));
+		model.addAttribute("instaSearch", igMap.get("search"));
 		
 		System.out.println("model이욤: "+model);
 	
