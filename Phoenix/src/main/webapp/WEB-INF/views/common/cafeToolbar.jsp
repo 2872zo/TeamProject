@@ -84,7 +84,7 @@
 	</div>
 	
 </div>
-	
+</div>
 	<!-- Modal 내용 시작 -->
 		<div class="modal fade" id="exampleModalCenter" style="display: none;" aria-hidden="true" style="max-width:100%;" style=" width: auto;">
 			<div class="modal-dialog modal-dialog-centered" role="document">

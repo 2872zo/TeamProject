@@ -91,10 +91,11 @@
         ***********************************-->
 		<div class="content-body">
 			<div class="row page-titles mx-0">
-<!-- 				<div class="col p-md-0"> -->
-<!-- 					<ol class="breadcrumb"> -->
-<!-- 					</ol> -->
-<!-- 				</div> -->
+				<div class="col p-md-0">
+					<ol class="breadcrumb">
+						Mail > 보낸 메일함
+					</ol>
+				</div>
 
 
 			</div>
