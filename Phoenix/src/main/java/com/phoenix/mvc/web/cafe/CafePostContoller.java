@@ -500,7 +500,9 @@ public class CafePostContoller {
 		// 구분선 모두 처리
 		Predicate<Board> condition = board -> board.getBoardType().equals("cb102");
 		boardOption.removeIf(condition);
-
+		
+		condition = board -> Integer.parseInt(board.getAccessGrade().substring(2)) > Integer.parseInt(cafeMember.getMemberGrade().substring(2));
+		boardOption.removeIf(condition);
 		
 		System.out.println(replyPage);
 		System.out.println(postPage);

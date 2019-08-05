@@ -151,7 +151,7 @@
 								<span>${post.postTitle }</span> 
 								<span style="float:right;">
 									<span style="color:#76838f; font-size:0.75em;">${post.regDate }&nbsp; </span>
-									<c:if test="${cafeMember.memberNo eq reply.memberNo or cafeMember.memberGrade eq 'cg100' or cafeMember.memberGrade eq 'cg101'}">
+									<c:if test="${cafeMember.memberNo eq post.memberNo or cafeMember.memberGrade eq 'cg100' or cafeMember.memberGrade eq 'cg101'}">
 										<a href="#" name="update" class="badge badge-dark">수정</a>
 										<a href="#"	name="delete" class="badge badge-dark">삭제</a>
 									</c:if>
