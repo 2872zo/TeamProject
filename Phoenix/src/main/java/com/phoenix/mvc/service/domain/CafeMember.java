@@ -106,7 +106,6 @@ public class CafeMember {
 	}
 	public String getRegDate() {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		
 		return format.format(regDate);
 	}
 	public void setRegDate(Date regDate) {
@@ -136,14 +135,16 @@ public class CafeMember {
 	public void setBlockPeriod(int blockPeriod) {
 		this.blockPeriod = blockPeriod;
 	}
-	public Date getBlockStartDate() {
-		return blockStartDate;
+	public String getBlockStartDate() {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd HH:mm");
+		return format.format(blockStartDate);
 	}
 	public void setBlockStartDate(Date blockStartDate) {
 		this.blockStartDate = blockStartDate;
 	}
-	public Date getBlockEndDate() {
-		return blockEndDate;
+	public String getBlockEndDate() {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd HH:mm");
+		return format.format(blockEndDate);
 	}
 	public void setBlockEndDate(Date blockEndDate) {
 		this.blockEndDate = blockEndDate;

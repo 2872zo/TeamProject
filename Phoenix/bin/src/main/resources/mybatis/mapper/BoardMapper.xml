@@ -14,9 +14,14 @@
 		<result property="boardName" 		column="board_name" 			jdbcType="VARCHAR" />
 		<result property="accessGrade" 		column="access_grade" 				jdbcType="VARCHAR" />
 		<result property="boardIndex" 		column="board_index" 				jdbcType="NUMERIC" />
-		<result property="privateFlag" 		column="private_flag" 		jdbcType="CHAR" />
+		<result property="privateFlag" 		column="private_flag" 				jdbcType="CHAR" />
 		<result property="boardType" 		column="board_type" 				jdbcType="VARCHAR" />
 		<result property="boardDetail" 		column="board_detail" 				jdbcType="NUMERIC"  />
+		<result property="bestLikeCount" 	column="best_like_count" 				jdbcType="NUMERIC"  />
+		<result property="bestTerm" 		column="best_term" 						jdbcType="NUMERIC"  />
+		<result property="bestPostCount" 	column="best_post_count" 				jdbcType="NUMERIC"  />
+		<result property="memberGradeCode"  column="member_grade_code"					jdbcType="VARCHAR"/>
+		<result property="memberGradeName"  column="grade_name"					jdbcType="VARCHAR"/>
 	</resultMap>
 	
 	<resultMap id="postSelectMap" type="com.phoenix.mvc.service.domain.Post">
@@ -35,43 +40,50 @@
 	</resultMap>
 	
 	<resultMap id="cafeMemberSelectMap" type="com.phoenix.mvc.service.domain.CafeMember">
-		<result property="memberNo" 			column="member_no" 			jdbcType="NUMERIC"/>
-		<result property="cafeNo"			column="cafe_no" 			jdbcType="NUMERIC" />
-		<result property="userNo" 		column="user_no" 			jdbcType="NUMERIC" />
-		<result property="cafeMemberGradeNo" 			column="cafe_member_grade_no" 				jdbcType="NUMERIC" />
-		<result property="noticeFlag" 				column="notice_flag" 				jdbcType="CHAR" />
-		<result property="memberNickname" 			column="member_nickname" 		jdbcType="VARCHAR" />
-		<result property="memberStatusCode" 			column="member_status_code" 				jdbcType="VARCHAR" />
-		<result property="favoriteFlag" 			column="favorite_flag" 				jdbcType="CHAR"  />
-		<result property="regDate" 			column="reg_date" 			jdbcType="DATE" />
-		<result property="visitCount" 			column="visit_count" 				jdbcType="NUMERIC" />
-		<result property="gradeName"			column="grade_name"  jdbcType="VARCHAR"/>
+		<result property="memberNo" 			column="member_no" 				jdbcType="NUMERIC"/>
+		<result property="cafeNo"				column="cafe_no" 				jdbcType="NUMERIC" />
+		<result property="userNo" 				column="user_no" 				jdbcType="NUMERIC" />
+		<result property="cafeMemberGradeNo" 	column="cafe_member_grade_no" 	jdbcType="NUMERIC" />
+		<result property="memberGrade" 			column="member_grade_code" 		jdbcType="VARCHAR" />
+		<result property="noticeFlag" 			column="notice_flag" 			jdbcType="CHAR" />
+		<result property="memberNickname" 		column="member_nickname" 		jdbcType="VARCHAR" />
+		<result property="memberStatusCode" 	column="member_status_code" 	jdbcType="VARCHAR" />
+		<result property="favoriteFlag" 		column="favorite_flag" 			jdbcType="CHAR"  />
+		<result property="regDate" 				column="reg_date" 				jdbcType="DATE" />
+		<result property="visitCount" 			column="visit_count" 			jdbcType="NUMERIC" />
+		<result property="gradeName"			column="grade_name"  			jdbcType="VARCHAR"/>
+		<result property="postCount" 			column="post_count" 			jdbcType="NUMERIC" />
+		<result property="replyCount" 			column="reply_count" 			jdbcType="NUMERIC" />
 	</resultMap>
 	
 	<resultMap id="eventSelectMap" type="com.phoenix.mvc.common.Event">
 		<result property="eventNo" 			column="event_no" 			jdbcType="NUMERIC"/>
 		<result property="targetNo"			column="target_no" 			jdbcType="NUMERIC" />
-		<result property="eventType" 		column="event_type" 			jdbcType="VARCHAR" />
-		<result property="cafeNo" 			column="event_cafe_no" 				jdbcType="NUMERIC" />
-		<result property="eventUserNo" 		column="event_user_no" 				jdbcType="NUMERIC" />
-		<result property="regDate" 			column="reg_date" 		jdbcType="DATE" />
+		<result property="eventType" 		column="event_type" 		jdbcType="VARCHAR" />
+		<result property="cafeNo" 			column="event_cafe_no" 		jdbcType="NUMERIC" />
+		<result property="eventUserNo" 		column="event_user_no" 		jdbcType="NUMERIC" />
+		<result property="regDate" 			column="reg_date" 			jdbcType="DATE" />
 	</resultMap>
 
 	<select  id="getBoardList"   parameterType="int"  resultMap="boardSelectMap">
 		SELECT *
-		FROM board
-		WHERE cafe_no = #{value}
-		ORDER BY board_index
+		FROM board b, cafe_member_grade g
+		WHERE b.cafe_no = #{value}
+		AND b.cafe_no = g.cafe_no
+		AND g.cafe_member_grade_no = b.access_grade
+		ORDER BY b.board_index
 	</select>
 	
 	<select  id="getBoardListBySearch"   parameterType="search"  resultMap="boardSelectMap">
 		SELECT *
-		FROM board
+		FROM board b, cafe_member_grade g
 		WHERE cafe_url = #{cafeURL}
+		AND b.cafe_no = g.cafe_no
+		AND g.cafe_member_grade_no = b.access_grade
 		<if test="searchCondition==1">
-			AND board_type !='cb102'
+			AND b.board_type !='cb102'
 		</if>
-		ORDER BY board_index
+		ORDER BY b.board_index
 	</select>
 	
 	
@@ -88,10 +100,29 @@
 	</select>
 	
 	<select id="getCafeMember" parameterType="hashmap" resultMap="cafeMemberSelectMap"> 
-		
-		SELECT me.member_no, me.cafe_no, me.user_no, me.notice_flag, me.member_nickname, me.cafe_member_grade_no, mg.grade_name, me.member_status_code, me.favorite_flag, me.visit_count, me.reg_date
-		FROM cafe_member me,cafe_member_grade mg
-		WHERE (me.cafe_member_grade_no = mg.cafe_member_grade_no ) AND me.user_no = #{userNo} AND me.cafe_no = #{cafeNo}
+		SELECT 
+			me.member_no, 
+			me.cafe_no, 
+			me.user_no, 
+			me.notice_flag, 
+			me.member_nickname, 
+			me.cafe_member_grade_no,
+			mg.member_grade_code, 
+			mg.grade_name, 
+			me.member_status_code, 
+			me.favorite_flag, 
+			me.visit_count, 
+			me.reg_date,
+			me.post_count,
+			me.reply_count
+		FROM 
+			cafe_member me,
+			cafe_member_grade mg
+		WHERE 
+			(me.cafe_member_grade_no = mg.cafe_member_grade_no ) 
+			AND me.user_no = #{userNo} 
+			AND me.cafe_no = #{cafeNo}
+			AND me.member_status_code not in('cs102')
 		
 	</select>
 	
@@ -110,7 +141,7 @@
 		WHERE event_user_no =#{eventUserNo:NUMERIC}
 			  AND event_type='et100' 
 			  AND event_cafe_no=#{cafeNo:NUMERIC}
-			  AND to_char(reg_date,'yyyy-mm-dd') = to_char(SYSDATE,'yyyy-mm-dd');
+			  AND to_char(reg_date,'yyyy-mm-dd') = to_char(SYSDATE,'yyyy-mm-dd')
 	</select>
 	
 	<select id="getCafeStatistics" parameterType="Event" resultType="map">
@@ -132,7 +163,7 @@
 	</select>
 	
 	<insert id="insertCafeBoard" parameterType="list" >
-		INSERT INTO board(board_no,cafe_no,cafe_url,board_name,access_grade,board_index,private_flag,board_type,board_detail)
+		INSERT INTO board(board_no,cafe_no,cafe_url,board_name,access_grade,board_index,private_flag,board_type,board_detail,best_like_count,best_term,best_post_count)
 		SELECT SEQ_BOARD_BOARD_NO.NEXTVAL, A.* from(
 		<foreach collection="list" item="item" separator="UNION ALL ">
 			SELECT #{item.cafeNo} as cafe_no,
@@ -142,7 +173,10 @@
 				   #{item.boardIndex} as board_index,
 				   #{item.privateFlag} as private_flag,
 				   #{item.boardType} as board_type,
-				   #{item.boardDetail:VARCHAR} as board_detail
+				   #{item.boardDetail:VARCHAR} as board_detail,
+				   #{item.bestLikeCount:NUMERIC} as best_like_count,
+				   #{item.bestTerm:NUMERIC} as best_term,
+				   #{item.bestPostCount:NUMERIC} as best_post_count 
 			FROM dual
 		</foreach>)A
 		</insert>
@@ -154,7 +188,10 @@
 					access_grade = #{item.accessGrade:VARCHAR},
 					board_index = #{item.boardIndex:NUMERIC},
 					private_flag = #{item.privateFlag:CHAR},
-					board_detail = #{item.boardDetail:VARCHAR}
+					board_detail = #{item.boardDetail:VARCHAR},
+					best_like_count = #{item.bestLikeCount:NUMERIC},
+					best_term = #{item.bestTerm:NUMERIC},
+					best_post_count = #{item.bestPostCount:NUMERIC}
 				WHERE board_no = #{item.boardNo}	
 			</foreach>
 		</update>
@@ -166,5 +203,28 @@
 				board_no = #{item.boardNo}
 			</foreach>
 		</delete>
-
+		
+		
+		<select id="getBoard" parameterType="int" resultMap="boardSelectMap">
+			SELECT
+				*
+			FROM 
+				board b, cafe_member_grade g
+			WHERE
+				board_no = #{value}
+				AND b.cafe_no = g.cafe_no
+				AND b.access_grade = g.cafe_member_grade_no
+		</select>
+		
+		<select id="getBoardByPostNo" parameterType="int" resultMap="boardSelectMap">
+			SELECT
+				b.*, g.grade_name, g.member_grade_code
+			FROM 
+				board b, post p, cafe_member_grade g
+			WHERE
+				b.board_no = p.board_no
+				AND b.cafe_no = g.cafe_no
+				AND b.access_grade = g.cafe_member_grade_no
+				AND post_no = #{value}
+		</select>
 </mapper>

@@ -1,167 +1,299 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=utf-8"%>
 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!DOCTYPE html>
 
+
 <html lang="ko">
 
-<head>
+<style type="text/css">
 
-<!-- ////////////////////////////// jQuery CDN ////////////////////////////// -->
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"
- integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
- crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
- integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
- crossorigin="anonymous"></script>
-<!-- ////////////////////////////// bootstrap CDN ////////////////////////////// -->
-<link rel="stylesheet"
- href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
- integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
- crossorigin="anonymous">
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
- integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
- crossorigin="anonymous"></script>
- 
+i:hover {
+	cursor: pointer;
+	color: #f5a142;
+}
 
-<!--  ///////////////////////// CSS ////////////////////////// -->
-<style>
+#div_menu {
+	width: 20%;
+	height: 500px;
+	float: left;
+	background-color: #82FA58;
+}
 
-    </style>
-<!--  ///////////////////////// JavaScript ////////////////////////// -->
-<script type="text/javascript">
+#div_con {
+	width: 80%;
+}
 
-$(function() {
-	//툴바 로그아웃 기준으로 작성하고 로그인시 변경되는 부분
-	if(${!empty sessionScope.user}){
+#login1{
+	margin-bottom:2%;
+}
+
+.cursor {
+	cursor: pointer;
+}
+
+.cursor:hover {
+	text-decoration: underline;
+}
+
+.member {
+	font-size: 50px;
+	text-shadow: 0 0 10px #666;
+	color: #fff;
+	margin: 0 auto;
+	text-align: left;
+	text-transform: capitalize;
+	font-family: "맑은 고딕";
+	font-style: italic;
+}
+
+body {
+	font-family: "맑은 고딕";
+	font-size: 12px;
+}
+
+.form {
+	max-width: 100%;
+	width: auto;
+	display: table;
+	border-radius: 25px;
+	border: 5px double #999;
+	margin: center;
+}
+
+.form2 {
+	width: 380px;
+	min-width: 320px;
+	height: 200px;
+	margin: 60px auto;
+	margin-left: 20px;
+}
+
+.form3 {
+	float: left;
+	/*   background:#f00;  */
+}
+
+.form3 label {
+	width: 100px;
+	height: 20px;
+	/*  display: block; */
+	float: left;
+}
+
+.form4 {
+	padding: 0px 0px 0px 70px;
+}
+
+#wrap {
+	width: 600px;
+	height: 500px;
+	margin: 0 auto;
+}
+
+.clear {
+	clear: both;
+}
+
+input[type="submit"] {
+	float: left;
+	/*  display:block; */
+	height: 50px;
+	background: #FFBB00;
+	border-radius: 5px;
+	border: none;
+	font-family: "맑은 고딕";
+}
+
+input[type="button"] {
+	height: 30px;
+	background: gray;
+	border-radius: 5px;
+	/*  width: 140px; */
+	font-family: "맑은 고딕";
+	margin-top: 10px;
+	margin-right: 20px;
+}
+
+input[type="checkbox"] {
+	margin-top: 20px;
+}
+
+</style>
+
+	<!--**********************************
+        Main wrapper start
+    ***********************************-->
+
+
+
+   
+<!--**********************************
+            Header start
+        ***********************************-->
+        <c:set var="URI" value="${pageContext.request.requestURI}" />
+		<div class="header">
+			<div class="header-content clearfix">
+
+				<div class="nav-control">
+				<c:if test='${fn:startsWith(URI,"/WEB-INF/views/chat/")}'>
+					<div class="hamburger">
+						<span class="toggle-icon"><i class="icon-menu"></i></span>
+					</div>
+					</c:if>
+				</div>
+				
+					<div class="header-left d-flex align-items-center">
+					
+							<c:if test='${fn:startsWith(URI,"/WEB-INF/views/cafe/")}'>
+							<i class="mdi mdi-coffee" style='font-size: 30pt;' id="cafeHomeButton">
+							</i>
+							</c:if>
+							
+							<c:if test='${fn:startsWith(URI,"/WEB-INF/views/cafe/cafeHomeMain.jsp")
+							 || fn:startsWith(URI,"/WEB-INF/views/cafe/listCafeNewsFeed.jsp") 
+							 || fn:startsWith(URI,"/WEB-INF/views/cafe/listUserCafeApplication.jsp")}'>
+								<c:if test="${!empty sessionScope.user}">
+									<i class="mdi mdi-clipboard-outline" id='newsFeeding' style='font-size: 30pt'></i>
+									<i class="mdi mdi-library-books" id='myApplications' style='font-size: 30pt'></i>
+								</c:if>
+							</c:if>
+					</div>
+						 
+						
+				
+				
+
+				<div class="header-right">
+					<ul class="clearfix d-flex align-items-center justify-content-around">
+					<!-- 로그인상태시 표시되는 부분 -->
+					<c:if test="${!empty sessionScope.user}">
+						<li class="icons dropdown" style='position: relative;right: 15%;'>
+                            <div class="user-img c-pointer position-relative" data-toggle="dropdown" aria-expanded="false">
+                                <span class="activity active"></span>
+                                <img src="/images/uploadFiles/profileimg/${user.profileImg}" height="40" width="40" alt="">
+                            </div>
+                            <div class="drop-down dropdown-profile animated fadeIn dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-132px, 57px, 0px);">
+                                <div class="dropdown-content-body">
+                                    <ul>
+                                        <li>
+                                            <a href=/user/getUserInfo?userNo=${user.userNo }><i class="icon-user"></i> <span>회원정보상세</span></a>
+                                        </li>
+                                        <li>
+                                             
+                                            <div class="badge gradient-3 badge-pill gradient-1"></div>
+                                            
+                                        </li>
+                                        <hr class="my-2">
+                                      <c:if test="${user.userRoleCode=='ur101'}">
+                                        <li>
+                                            <a href=/user/listUser><i class="icon-list"></i> <span>회원목록</span></a>
+                                        </li>
+                                        </c:if>
+                                        <li><a href="page-login.html"><i class="icon-list"></i> <span>신고목록</span></a></li>
+                                        <li><a href="page-login.html"><i class="icon-list"></i> <span>문의목록</span></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+
+                        <!-- 회원관리부분 -->
+                        <!-- 채팅부분 -->
+                         </c:if>
+					<ul class="clearfix d-flex align-items-center">
+
+						<c:if test="${!empty sessionScope.user}">
+
+							<i class="mdi mdi-comment-processing-outline" id='goChat'
+								style='font-size: 35pt; position: relative; right: 5%;'></i>
+								 <div style='margin-left: 2%;margin-right: 2%;'></div>
+							<!-- 채팅 -->
+							<!-- 로그아웃버튼 -->
+							<button type="button" class="btn btn-primary logout">
+								<i class="icon-key">Logout</i>
+							</button>
+							<!-- 로그아웃버튼 -->
+						</c:if>
+						<!-- 로그인상태시 표시되는 부분 -->
+						<c:if test="${empty sessionScope.user}">
+							<button type="button" class="btn btn-primary login"
+								data-toggle="modal" data-target="#exampleModalCenter">
+								<i class="icon-key">Login</i>
+							</button>
+						</c:if>
 		
-		$("#login").attr('class' , 'logout btn btn-dark')
-		$("#login").text('로그아웃');
-		$("#goChat").attr('class' , 'btn btn-info');
-		$("#goChat").text('로그인해서채팅가능');
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
 
-		}
 
-	//페이지 별로 변경되는 부분도 여기다가 작성해야할듯
 
-	$(".login").on("click" , function() {
-		$(self.location).attr("href","/user/loginView");
-	});
 
-	$(".logout").on("click" , function() {
-		$(self.location).attr("href","/user/logout");
-	});
-
-	$("#phoenix").on("click" , function() {
-		$(self.location).attr("href","/");
-	});
-
-	$("#cafeHome").on("click" , function() {
-		$(self.location).attr("href","/cafe/main");
-	});
-
-	$("#applications").on("click" , function() {
-		$(self.location).attr("href","/cafe/main/cafeApplicationList");
-	});
-
-	$("#newsFeed").on("click" , function() {
-		$(self.location).attr("href","/cafe/main/cafeNewsFeed");
-	});	
-
-	$("#cafeExplore").on("click" , function() {
-		$("#cafeSearch").attr("method" , "POST").attr("action" , "/cafe/search").submit();
-	});
 	
-	$(".searchCondition").on("click" , function() {
-		$("#searchCondition").val($(".searchCondition").index(this));
-	});
-
-	$("#goChat").on("click" , function() {
-		$(self.location).attr("href","/chat/chatRoomList");
-	});
-
-	$("#viewFriendsList").on("click" , function() {
-		$(self.location).attr("href","/chat/chatFriendsList");
-	});
-
-	$("#viewChatRoomList").on("click" , function() {
-		$(self.location).attr("href","/chat/chatRoomList");
-	});
-	
-	$("#viewConfig").on("click" , function() {
-		$(self.location).attr("href","/chat/config");
-	});
-	
-});
-
-</script>
-</head>
-
-<body>
 
 
+		<!-- Modal 내용 시작 -->
+		<div class="modal fade" id="exampleModalCenter" style="display: none;"
+			aria-hidden="true" style="max-width:100%;" style=" width: auto;">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
 
-	<!--  화면구성 div Start /////////////////////////////////////-->
-	<!-- ffb347 FFAA28 FFA01E FFAA28 FFAF00 FFA01E F7750A-->
-		<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #F7790A;">
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <a class="navbar-brand" href="#" id="phoenix">Phoenix</a>
+						<button type="button" class="close" data-dismiss="modal">
+							<span>×</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="card-body pt-5">
+							<a class="text-center">
+								<h4>불사조</h4>
+							</a>
 
-  <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-       <c:set var="uriCheck" value="${pageContext.request.requestURI}" />
-      <c:if test='${uriCheck.startsWith("/WEB-INF/views/cafe/")}'>
-               <li class="nav-item active">
-        <a class="nav-link" href='#' id='cafeHome'>CafeHome<span class="sr-only">(current)</span></a>
-      </li>
-       <li class="nav-item">
-      <form class="form-inline" id='cafeSearch'>
-		<input type="hidden" id="currentPage" name="currentPage" value="0"/>
-		<input type ="hidden" name = 'cafeURL' value='${ !empty search.cafeURL ? search.cafeURL : "" }'>
-		<input type ="hidden" name = 'boardName' value='${ !empty search.boardName ? search.boardName : "" }'>
-	
-	   <select class="custom-select" aria-label="Example select with button addon" name='searchCondition' id='searchCondition'>
-	    <option class='searchCondition' selected value="0"   ${ !empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>카페+게시글</option>
-	    <option class='searchCondition' value="1"   ${ !empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>카페</option>
-	    <option class='searchCondition' value="2"   ${ !empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>게시글</option>
-	   </select>
-	
-	  <input type="text" class="form-control" placeholder="검색어 입력해주세요" aria-label="Text input with dropdown button" aria-describedby="button-addon2" value='${ !empty search.searchKeyword ? search.searchKeyword : '' }' name="searchKeyword" id="searchKeyword">
-	  <button class="btn btn-outline-light" type="button" id="cafeExplore">검색</button>
-	</form>	
-  	 </li>
-  	 </c:if>
-  <c:if test='${uriCheck.startsWith("/WEB-INF/views/cafe/") && !empty sessionScope.user}'>
-      <li class="nav-item">
-        <a class="nav-link" href="#" id='applications'>카페 가입신청내역</a>
-      </li>   
-       <li class="nav-item">
-        <a class="nav-link" href="#" id='newsFeed'>새글 피드</a>
-      </li>  
-      </c:if>
-     
-      
-      <c:if test='${uriCheck.startsWith("/WEB-INF/views/chat/") && !empty sessionScope.user}'>
-     <li class="nav-item">
+							<form class="mt-5 mb-5 login-input">
+								<div class="form-group">
+									<input type="text" class="form-control" placeholder="ID"
+										name="userId">
+								</div>
+								<div class="form-group">
+									<input type="password" class="form-control"
+										placeholder="PASSWORD" name="password">
+								</div>
+								<button class="btn login-form__btn submit w-100" id="login1" style= "margin-bottom:50" >로그인</button>
+								<center>								
+								<a id="kakaos"><img src="/images/uploadFiles/kakao/kakaos.jpg" width=210; height=45;/></a>
+     							<a id="navers"><img src="/images/uploadFiles/naver/navers.jpg" width=210; height=45;/></a>		
+						
+     							</center>
+							</form>
+							<p class="mt-5 login-form__footer">
+								<a href="/user/addUserView" class="text-primary" id="addUser1">회원가입</a>
+							</p>
+						</div>
+					</div>
 
-    <button class="btn btn-outline-light" type="button" id='viewFriendsList'>친구목록보기</button>
-    <button class="btn btn-outline-light" type="button" id='viewChatRoomList'>채팅방목록보기</button>
-    <button class="btn btn-outline-light" type="button" id='viewConfig'>환경설정</button>
- 	</li> 
-     </c:if>
-     
+				</div>
+			</div>
+		</div>
 
-    </ul>
+		<!-- Modal 내용 끝 -->
+		<!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
 
-      	<button type="button" class='btn btn-dark' id='${empty sessionScope.user ? "noChat":"goChat"}'>채팅</button>
-		<button type="submit" class='login btn btn-outline-light' id='login'>로그인</button>
-		
-  </div>
-</nav>
 
-</body>
+
+	<!--**********************************
+        Main wrapper end
+    ***********************************-->
+    
+    
+<link rel="stylesheet" href="/plugins/sweetalert/css/sweetalert.css">  
+<script src="/plugins/sweetalert/js/sweetalert.min.js"></script>
 </html>

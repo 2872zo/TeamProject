@@ -16,82 +16,104 @@
 <link href="/css/style.css" rel="stylesheet">
 
 <link rel="stylesheet" href="/css/custom/scroll-top.css">
-
-<!-- ToolBar Start /////////////////////////////////////-->
-<jsp:include page="/WEB-INF/views/common/toolbar.jsp" />
+ 
 <title>CafeSearch</title>
 <style type="text/css">
 .dropdown-toggle{height: 100%; font-size: 16pt;}
-#searchKeyword{width:300pt;}
 </style>
-
 
 </head>
 
 <body>
+<!--*******************
+        Preloader start
+    ********************-->
+	<div id="preloader">
+		<div class="loader">
+			<svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none"
+					stroke-width="3" stroke-miterlimit="10"></circle>
+            </svg>
+		</div>
+	</div>
+	<!--*******************
+        Preloader end
+    ********************-->
+<!--**********************************
+            Nav header start
+        ***********************************-->
+           <div class="nav-header">
+            <c:import url="/WEB-INF/views/common/brand-logo.jsp"/>
+        </div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+<!-- ToolBar Start /////////////////////////////////////-->
+<jsp:include page="/WEB-INF/views/common/toolbar.jsp" />
+<!-- ToolBar End /////////////////////////////////////-->
 <br/>
 <div class="container">
   
-  	
-  	
-  	
 		<form class="form-inline justify-content-center" id='cafeSearch'>
-  	<div class='card'>
-<div class='card-body'>
   	<input type='hidden' id="condtioner" value='${search.searchCondition}'>
-<div class="input-group d-flex justify-content-center" >
-  <div class='input-group-prepend'>
-  <select class="selectpicker" name='searchCondition' id='searchCondition'>
-	<option class='searchCondition' value="0">카페+게시글</option>
-	<option class='searchCondition' value="1">카페</option>
-	<option class='searchCondition' value="2">게시글</option>
-  </select>
-  </div>
-  <div class='input-group-append'>
-  &nbsp;<input type="text" class="form-control form-control-lg" placeholder="검색어 입력해주세요" name="searchKeyword" id="searchKeyword" >
-  </div>
-  <div class='input-group-append'>
-  &nbsp;<button class="btn btn-sm btn-outline-primary" type="button" id="cafeExplore"><i class="mdi mdi-magnify" style='font-size: 18pt;'></i></button>
-	</div>
-</div>
+  	<input type="hidden" id="currentPage" name="currentPage" value="0" />
+	<input type="hidden" name='cafeURL' value='${ !empty search.cafeURL ? search.cafeURL : "" }'>
+	<input type="hidden" name='boardName' value='${ !empty search.boardName ? search.boardName : "" }'>
+	<input type="hidden" name='cafeType' id='cafeTypeForSearch' value='0'>	
+
+<div class='card'>
   	
-  		</div><!--카드바디 -->
-</div><!--카드 -->
-  	
-  	
-  	
-  	
+<div class='card-body'>
+	
+		<div class="input-group d-flex justify-content-center"  style='width: 100%'>
+  		<select class="form-control valid" name='searchCondition' id='searchCondition'>
+			<option class='searchCondition' value="0">카페+게시글</option>
+			<option class='searchCondition' value="1">카페</option>
+			<option class='searchCondition' value="2">게시글</option>
+  		</select>
+  		<div class='input-group-append'>
+  		<input type="text" class="form-control" placeholder="검색어 입력해주세요" name="searchKeyword" id="searchKeyword" value='${search.searchKeyword}'>
+  		</div>
+  		<div class='input-group-append'>
+  		<button class="btn btn-sm btn-outline-primary" type="button" id="cafeExplore"><i class="mdi mdi-magnify" style='font-size: 15pt;'></i></button>
+		</div>
+		</div>
 
-
-
-
-			<input type="hidden" id="currentPage" name="currentPage" value="0" />
-			<input type="hidden" name='cafeURL'
-				value='${ !empty search.cafeURL ? search.cafeURL : "" }'> <input
-				type="hidden" name='boardName'
-				value='${ !empty search.boardName ? search.boardName : "" }'>
-
-
-
-
-
-
-
+	</div><!--카드바디 -->
+</div><!--카드 -->	
 
 		</form>
-		
-			
-			
+  	
+
 			<!--  카페검색창 끝 /////////////////////////////////////-->
 
-  <c:if test="${!empty cafeList}">
+  <c:if test="${!empty cafeList || search.searchCondition==1}">
   <div class='card'>
 <div class="card-body">
 
   <c:if test="${ !empty search.searchCondition && search.searchCondition==1}">
- 	카페 검색결과 총 ${totalCount} 건 입니다.
+ 	
+ 		<div class="btn-group d-flex justify-content-center" role="group">
+ 		<button type="button" role="group"
+				class='btn btn-outline-success col-lg-2 cafeCategory'>전체</button>
+			<button type="button" role="group"
+				class='btn btn-outline-success col-lg-2 cafeCategory'>친목/모임</button>
+			<button type="button" role="group"
+				class='btn btn-outline-success col-lg-2 cafeCategory'>스포츠/레저</button>
+			<button type="button" role="group"
+				class='btn btn-outline-success col-lg-2 cafeCategory'>영화</button>
+			<button type="button" role="group"
+				class='btn btn-outline-success col-lg-2 cafeCategory'>게임</button>
+			<button type="button" role="group"
+				class='btn btn-outline-success col-lg-2 cafeCategory'>음악</button>
+			<button type="button" role="group"
+				class='btn btn-outline-success col-lg-2 cafeCategory'>여행</button>
+		</div>
+		 <br/>
+		총 ${totalCount} 건 입니다.
+		 <br/>
  	</c:if>
-    <br/>
+   
 
  <div class="row d-flex justify-content-between">
   <c:forEach var="cafe" items="${cafeList}">
@@ -130,7 +152,7 @@
 </div>
   </c:if>
   <br/>
-  <c:if test="${!empty postList}">
+  <c:if test="${!empty postList ||search.searchCondition==2}">
   <div class='card'>
 <div class="card-body">
  	<c:if test="${ !empty search.searchCondition && search.searchCondition==2}">
@@ -202,88 +224,56 @@
 	
 	<!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
-var checkSessionUser = ${empty sessionScope.user};
+$($(".searchCondition")[${search.searchCondition}]).prop("selected", true);
 
-$(function() {
-	
-	if(${!empty search.searchKeyword}){
-		$("#searchKeyword").val(${search.searchKeyword});
-		}
-	
-	if(${!empty search.searchCondition}){
-		
-		var count = $("#condtioner").val();
-		
-		if (count==0){
-			$(".filter-option-inner-inner").text("카페+게시글");
-			}
-		if (count==1){
-			$(".filter-option-inner-inner").text("카페");
-			}
-		if (count==2){
-			$(".filter-option-inner-inner").text("게시글");
-			}
-		$($(".searchCondition")[count]).prop("selected",true);
-	}
-	
-	
-	$("#cafeExplore").on(
-			"click",
-			function() {
-				$("#cafeSearch").attr("method", "POST").attr("action",
-						"/cafe/main/search").submit();
-			});
+$("#cafeTypeForSearch").val(${search.cafeType});
 
-});
-
+$($(".cafeCategory")[$("#cafeTypeForSearch").val()]).attr("class","btn btn-success col-lg-2 cafeCategory");
 
 function fncGetList(currentPage) {
-	  $("#currentPage").val(currentPage)
-	  $("form").attr("method" , "POST").attr("action" , "/cafe/main/search").submit();
-	}
-	
-$(function() {
+  $("#currentPage").val(currentPage);
+  $("form").attr("method" , "POST").attr("action" , "/cafe/main/search").submit();
+}
 
-	$("#cafeExplore").on("click" , function() {
-		$("#cafeSearch").attr("method" , "POST").attr("action" , "/cafe/main/search").submit();
-	});
-	
-	$("#addCafe").on("click" , function() {
-		$(self.location).attr("href","/cafe/addCafe");
-	});
-	
-	$("#moreCafe").on("click" , function() {
-		$("#searchCondition").val(1);
-		$("form").attr("method" , "POST").attr("action" , "/cafe/main/search").submit();
-	});
-
-	$("#morePost").on("click" , function() {
-		$("#searchCondition").val(2);
-		$("form").attr("method" , "POST").attr("action" , "/cafe/main/search").submit();
-	});
-
-	$(".cafeURL").on("click" , function() {
-		$("form").attr("method" , "POST").attr("action" , "/cafe/"+$(this).text()+"/manage/getCafeMemberList").submit();
-	});
-
-	$(".myCafe").on("click" , function() {
-		var moveTo = $(this).attr('name');
-		$(self.location).attr("href","/cafe/"+moveTo);
-		
-	});
-
-	$(".goToPost").on(
-			"click",
-			function() {
-				var countNo=$(".goToPost").index(this);
-				var cafeURL = $($(".cafeURL")[countNo]).val();
-				var postNo = $($(".postNo")[countNo]).val();
-				//alert(cafeURL);
-				//alert(postNo);
-				$(self.location).attr("href", "/cafe/"+cafeURL+"/getPost/"+postNo);
-			});
-	
+$(".cafeCategory").on("click", function() {
+	$("#cafeTypeForSearch").val($(".cafeCategory").index($(this)));
+	$("#cafeSearch").attr("method", "POST").attr("action", "/cafe/main/search").submit();
 });
+
+$("#cafeExplore").on("click", function() {
+	$("#cafeSearch").attr("method", "POST").attr("action", "/cafe/main/search").submit();
+});
+	
+$("#addCafe").on("click" , function() {
+	$(self.location).attr("href","/cafe/addCafe");
+});
+
+$("#moreCafe").on("click" , function() {
+	$("#searchCondition").val(1);
+	$("form").attr("method" , "POST").attr("action" , "/cafe/main/search").submit();
+});
+
+$("#morePost").on("click" , function() {
+	$("#searchCondition").val(2);
+	$("form").attr("method" , "POST").attr("action" , "/cafe/main/search").submit();
+});
+
+$(".cafeURL").on("click" , function() {
+	$("form").attr("method" , "POST").attr("action" , "/cafe/"+$(this).text()+"/manage/getCafeMemberList").submit();
+});
+
+$(".myCafe").on("click" , function() {
+	var moveTo = $(this).attr('name');
+	$(self.location).attr("href","/cafe/"+moveTo);
+});
+
+$(".goToPost").on("click", function() {
+	var countNo=$(".goToPost").index(this);
+	var cafeURL = $($(".cafeURL")[countNo]).val();
+	var postNo = $($(".postNo")[countNo]).val();
+	$(self.location).attr("href", "/cafe/"+cafeURL+"/getPost/"+postNo);
+});
+	
 </script>
 
 <!-- 공통 툴바용 스크립트 -->	

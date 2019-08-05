@@ -16,7 +16,8 @@
 	href="/images/favicon.png">
 <!-- Custom Stylesheet -->
 <link href="/css/style.css" rel="stylesheet">
-
+<link rel="stylesheet" href="/plugins/sweetalert/css/sweetalert.css">
+<link href="/css/custom/common-toolbar.css" rel="stylesheet">
 <link rel="stylesheet" href="/css/custom/scroll-top.css">
 <!-- 토스터 css -->
 <link rel="stylesheet" href="/plugins/toastr/css/toastr.min.css">
@@ -25,11 +26,15 @@
 <title>CafeTabMain</title>
 <!--셀렉터 사이즈 조절-->
 
+<script src="/plugins/sweetalert/js/sweetalert.min.js"></script>
 <style type="text/css">
-.dropdown-toggle{height: 100%; font-size: 16pt;}
-#searchKeyword{width:300pt;}
-</style>
 
+.dropdown-toggle{height: 100%; font-size: 16pt;}
+.myCafe:hover {
+	cursor: pointer;
+	background-color: #e3dad1;
+	}
+</style>
 
 </head>
 
@@ -55,16 +60,16 @@
             Nav header start
         ***********************************-->
            <div class="nav-header">
-            <c:import url="/WEB-INF/views/common/brand-logo.jsp"/>
-        </div>
+            	<c:import url="/WEB-INF/views/common/brand-logo.jsp"/>
+          </div>
         <!--**********************************
             Nav header end
         ***********************************-->
         
         
-<!-- ToolBar Start /////////////////////////////////////-->
-<jsp:include page="../common/toolbar.jsp" />
-<!-- ToolBar End /////////////////////////////////////-->
+		<!-- ToolBar Start /////////////////////////////////////-->
+		<jsp:include page="../common/toolbar.jsp" />
+		<!-- ToolBar End /////////////////////////////////////-->
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<br/>
@@ -76,49 +81,39 @@
 				value='${ !empty search.cafeURL ? search.cafeURL : "" }'> <input
 				type="hidden" name='boardName'
 				value='${ !empty search.boardName ? search.boardName : "" }'>
+				<input type='hidden' id="condtioner" value='${search.searchCondition}'>
 <div class='card'>
 <div class='card-body'>
-<input type='hidden' id="condtioner" value='${search.searchCondition}'>
-<div class="input-group" >
-  <div class='input-group-prepend'>
-  <select class="selectpicker" name='searchCondition' id='searchCondition'>
-	<option class='searchCondition' value="0">카페+게시글</option>
-	<option class='searchCondition' value="1">카페</option>
-	<option class='searchCondition' value="2">게시글</option>
-  </select>
-  </div>
-  <div class='input-group-append'>
-  &nbsp;<input type="text" class="form-control form-control-lg" placeholder="검색어 입력해주세요" name="searchKeyword" id="searchKeyword" >
-  </div>
-  <div class='input-group-append'>
-  &nbsp;<button class="btn btn-sm btn-outline-primary" type="button" id="cafeExplore" style='z-index: 0;'><i class="mdi mdi-magnify" style='font-size: 18pt;'></i></button>
-	</div>
-	
-	</div><!--카드바디 -->
-</div><!--카드 -->
 
-</div><!--인풋그룹-->
+<div class="input-group d-flex justify-content-center"  style='width: 100%'>
+  		<select class="form-control valid" name='searchCondition' id='searchCondition'>
+			<option class='searchCondition' value="0">카페+게시글</option>
+			<option class='searchCondition' value="1">카페</option>
+			<option class='searchCondition' value="2">게시글</option>
+  		</select>
+  		<div class='input-group-append'>
+  		<input type="text" class="form-control" placeholder="검색어 입력해주세요" name="searchKeyword" id="searchKeyword" value='${search.searchKeyword}'>
+  		</div>
+  		<div class='input-group-append'>
+  		<button class="btn btn-sm btn-outline-primary" type="button" id="cafeExplore"><i class="mdi mdi-magnify" style='font-size: 15pt;'></i></button>
+		</div>
+		</div><!--인풋그룹-->
+</div><!--카드바디 -->
+
+</div><!--카드 -->
 </form>
 
 		<form id="cafeHomeForm">
-			<input type="hidden" id="userNo" name="userNo"
-				value="${search.userNo}" />
-			<input type="hidden" id="status" name="status" 
-				value="${search.status}" /> 
-			<input type="hidden" id="cafeType" name="cafeType" 
-				value="${search.cafeType}" />
-			<input type="hidden" id="boardNo" name="boardNo" 
-				value="0" />
+			<input type="hidden" id="status" name="status" value="${search.status}" /> 
+			<input type="hidden" id="cafeType" name="cafeType" value="${search.cafeType}" />
+			<input type="hidden" id="currentPageForHome" name="currentPage" value="0" />
+			<input type="hidden" id="searchCondition" name="searchCondition" value="1" />
+			<input type="hidden" id="boardNo" name="boardNo" value="${search.boardNo}" />
 		</form>
 		
-	<div class="card">
-	
-	<!--  화면구성 div Start /////////////////////////////////////-->
-	
-			</div>
 
 		<c:if test="${!empty sessionScope.user}">
-			
+			<!-- 카페만들기 버튼 -->
 			<div class="card">
 			<div class="card-body">
 	
@@ -126,7 +121,10 @@
 				id='addCafe'>카페 만들기</button>
 			</div>
 			</div>
+			<!-- 카페만들기 버튼 -->
 			
+			
+			<!-- 가입된 카페목록 -->
 			<div class="card" id='myCafePosition' style='min-height: 300px;'>
 			<div class="card-body">
 
@@ -147,7 +145,6 @@
 
 				<div class="row d-flex justify-content-between">
 					<c:forEach var="myCafe" items="${myCafelist}">
-			
 		
 						<div class="card myCafe col-lg-6" style=" border: 1px solid #F7790A; "
 							name='${myCafe.cafeURL}'>
@@ -176,13 +173,14 @@
 					</c:forEach>
 
 				</div>
-
+			<jsp:include page="../common/pageNavigator.jsp" />
 			</c:if>
+			
 </div>
 </div>
 		</c:if>
+	<!-- 가입된 카페목록 -->
 
-		<br />
 <div class="card" style='min-height: 300px;'>
 <div class="card-body" id='cafeCategoryPosition'>
 
@@ -233,6 +231,9 @@
 				
 			</div>
 		</c:if>
+		 
+		 <button type="button" class="btn btn-outline-primary" id='moreCafe'>카페 더보기</button>
+		
 	</div>
 		</div>
 
@@ -260,6 +261,18 @@
 	<!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
 
+function fncGetList(currentPage) {
+	$("#boardNo").val("1");
+	$("#currentPageForHome").val(currentPage);
+	$("#cafeHomeForm").attr("method", "POST").attr("action", "/cafe/main").submit();
+}
+
+$("#moreCafe").on("click", function() {
+	var typeCheck = Number($("#cafeType").val());
+	typeCheck +=1;
+	$("#cafeType").val(typeCheck);
+	$("#cafeHomeForm").attr("method", "POST").attr("action", "/cafe/main/search").submit();
+});
 $(function() {
 	
 	if(${!empty search.searchKeyword}){
@@ -315,6 +328,11 @@ $(function() {
 			$(self.location).attr("href", "/cafe/addCafeView");
 		});
 
+
+
+		
+
+		
 		$(".cafeListing").on(
 				"click",
 				function() {

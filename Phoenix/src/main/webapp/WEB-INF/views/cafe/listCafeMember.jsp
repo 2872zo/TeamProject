@@ -149,7 +149,6 @@ cursor: pointer;
     <tr>
  
       <th scope="col">닉네임</th>
-      
       <th scope="col">등급명</th>
       <th scope="col">멤버상태</th>
       <th scope="col">가입일</th>
@@ -172,9 +171,15 @@ cursor: pointer;
       
       <td>${cafeMember.gradeName}</td>
       <td>
-      <c:if test='${cafeMember.memberStatusCode=="cs100"}'>활동</c:if>
-      <c:if test='${cafeMember.memberStatusCode=="cs101"}'>정지</c:if>
-      <c:if test='${cafeMember.memberStatusCode=="cs102"}'>탈퇴</c:if>
+      <c:if test='${cafeMember.memberStatusCode=="cs100"}'>
+      <button type="button" class='btn btn-sm btn-success' style='color: white;' disabled >활동</button>
+      </c:if>
+      <c:if test='${cafeMember.memberStatusCode=="cs101"}'>
+     <button type="button" class='btn btn-sm btn-danger' style='color: white;' disabled >정지</button>
+     </c:if>
+      <c:if test='${cafeMember.memberStatusCode=="cs102"}'>
+      <button type="button" class='btn btn-sm btn-secondary' style='color: white;' disabled >탈퇴</button>
+      </c:if>
       </td>
       <td>${cafeMember.regDate}</td> 
       <td>${cafeMember.visitCount}</td>

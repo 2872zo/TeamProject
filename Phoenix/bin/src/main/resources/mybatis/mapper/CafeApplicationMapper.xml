@@ -83,6 +83,14 @@
 						 			AND u.user_id like '%' || #{searchKeyword}||'%'
 								</if>
 								</if> 
+								<if test="status != null">
+									<if test="status==100">
+										AND accept_status_code ='ca100'
+									</if>
+									<if test ="status==101">
+									   AND accept_status_code NOT IN 'ca100'
+									</if>
+								</if>
 							</where>) countTable						
 	 </select>
 	 
@@ -127,6 +135,17 @@
   	<select id="getCafeApplication2" parameterType="int" resultMap="cafeApplicationSelectMap">
   		<include refid="selectAllFromCafeApplication"/>
 		AND application_no = #{applicationNo}
+  	</select>
+  	
+  	 <select id="getCafeApplication3" parameterType="search" resultMap="cafeApplicationSelectMap">
+  		SELECT 
+  		application_no,user_no,cafe_no,
+  		reg_date,question1,question2,question3,
+  		answer1,answer2,answer3,accept_status_code
+  		FROM
+  		cafe_application
+  		WHERE user_no = #{userNo}
+  		AND cafe_no = #{cafeNo}
   	</select>
 	 
 </mapper>

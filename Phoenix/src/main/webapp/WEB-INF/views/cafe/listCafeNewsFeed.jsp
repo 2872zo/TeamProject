@@ -18,15 +18,41 @@
 <link rel="stylesheet" href="/css/custom/scroll-top.css">
 
 <title>카페뉴스피드</title>
-
-
-
-<!-- ToolBar Start /////////////////////////////////////-->
-<jsp:include page="../common/toolbar.jsp" />
-<!-- ToolBar End /////////////////////////////////////-->
 </head>
 
 <body>
+<!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+            </svg>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+    
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+    
+ <!--**********************************
+            Nav header start
+        ***********************************-->
+           <div class="nav-header">
+            <c:import url="/WEB-INF/views/common/brand-logo.jsp"/>
+        </div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+        
+<!-- ToolBar Start /////////////////////////////////////-->
+<jsp:include page="../common/toolbar.jsp" />
+<!-- ToolBar End /////////////////////////////////////-->
 <br/>
 	<div class='container'>
 
@@ -67,6 +93,7 @@
 		</div>
 		</div>
 	
+	</div>
 	</div>
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	

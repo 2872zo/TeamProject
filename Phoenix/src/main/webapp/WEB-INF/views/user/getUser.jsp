@@ -37,10 +37,13 @@
 	color: orange;
 	font-family
 }
-
-
-
-
+	
+	#profile {
+	    margin-bottom: 5%;
+	    }
+	
+	
+	
 i{
 	-webkit-transition:color 0.3s;
     transition:color 0.3s;

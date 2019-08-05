@@ -162,8 +162,7 @@ public class CafeTabServiceImpl implements CafeTabService {
 		return map;
 	}
 
-/////////////////////////////////////////////// 예림
-/////////////////////////////////////////////// 끝/////////////////////////////////////
+/////////////////////////////////////////////// 예림 끝/////////////////////////////////////
 
 ////////////////////////////// 기황시작//////////////////////////////
 
@@ -171,12 +170,16 @@ public class CafeTabServiceImpl implements CafeTabService {
 	public Map getCafeHome(Search search) throws Exception {
 		Map map = new HashMap();
 		List myCafelist = new ArrayList();
+		int totalCount;
 		if (search.getStatus() == 2) {
+			totalCount = cafeTabDao.ownCafeTotalCount(search);
 			myCafelist = cafeTabDao.getMyOwnCafeList(search);
 		} else {
+			totalCount = cafeTabDao.myCafeListTotalCount(search);
 			myCafelist = cafeTabDao.getMyCafeList(search);
 		}
 		List categorizedCafeList = cafeTabDao.getCategorizedCafeList(search);
+		map.put("totalCount", totalCount);
 		map.put("myCafelist", myCafelist);
 		map.put("categorizedCafeList", categorizedCafeList);
 		return map;
@@ -243,7 +246,6 @@ public class CafeTabServiceImpl implements CafeTabService {
 
 	@Override
 	public Map getNewsFeed(int userNo) throws Exception {
-// TODO Auto-generated method stub
 		Map map = new HashMap();
 
 		List newsFeed = cafePostDao.getMyPostList(userNo);
@@ -254,7 +256,6 @@ public class CafeTabServiceImpl implements CafeTabService {
 	
 	@Override
 	public int updateFavorite(CafeMember cafeMember) throws Exception {
-// TODO Auto-generated method stub
 		return cafeMemberDao.updateFavorite(cafeMember);
 	}
 	

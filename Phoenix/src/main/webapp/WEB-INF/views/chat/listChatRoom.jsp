@@ -19,7 +19,9 @@
 
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <style type="text/css">
-
+.enterTheRoom:hover {
+cursor: pointer;
+}
 .friends {
 	border: 1px solid red;
 }
@@ -78,10 +80,6 @@ img {
         ***********************************-->
 
 
-
-
-
-
 		<!--**********************************
             Content body start
         ***********************************-->
@@ -110,7 +108,7 @@ img {
 
 	<c:forEach items="${chatRoomList}" var ='chatRoomInfo'>
 	
-	<div class="card mb-3  enterTheRoom" 
+	<div class="card mb-3 enterTheRoom" 
 	name='${chatRoomInfo.chatRoomId}' id='${chatRoomInfo.id}'
 	style='border: 1px solid white;'>
 		<div class="row" style='margin: 1%;'>
@@ -151,8 +149,6 @@ img {
 	</div>
 	</c:forEach>
 	
-	
-	
 		</div><!-- 카드바디 -->
 	</div><!-- 카드 -->
 	</div><!-- 컨테이너 -->
@@ -184,8 +180,8 @@ img {
 
 
 <!-- 소켓용 스크립트 -->
-<!-- <script src="http://localhost:82/socket.io/socket.io.js"></script> -->
- <script src="http://192.168.0.78:82/socket.io/socket.io.js"></script> 
+ <!-- <script src="http://localhost:82/socket.io/socket.io.js"></script>  -->
+<script src="http://192.168.0.78:82/socket.io/socket.io.js"></script>
 
 
 	<!--**********************************
@@ -216,7 +212,6 @@ $(function() {
 		$("#"+msgTo+"Time").text("최근 입력 시간 : "+msg.regDate);
 		//alert($("#"+msgTo+"MSG").parent().html());
 		$("#"+msgTo+"MSG").parent().parent().parent().prependTo($("#roomListGuide"));
-		
 		
 	});
     

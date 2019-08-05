@@ -36,9 +36,21 @@
 		c.cafe_icon, c.cafe_detail, c.cafe_no, c.url, c.cafe_name, c.members, u.user_nickname
 		FROM cafe c, users u
 		WHERE c.manage_user_no=u.user_no
+		<if test="searchKeyword != null">
 		AND
 		(c.cafe_name like '%' ||#{searchKeyword}|| '%'	
 		OR c.cafe_detail like '%' ||#{searchKeyword}|| '%')
+		</if>
+		<if test="cafeType!=0">
+		AND c.cafe_type = 
+		</if>
+		<if test="cafeType==1">'cc100'</if>
+		<if test="cafeType==2">'cc101'</if>
+		<if test="cafeType==3">'cc102'</if>
+		<if test="cafeType==4">'cc103'</if>
+		<if test="cafeType==5">'cc104'</if>
+		<if test="cafeType==6">'cc105'</if>
+		<if test="cafeType==7">'cc106'</if>
 		ORDER BY c.reg_date DESC
 	</sql>
 	
@@ -61,38 +73,28 @@
 	 
 	<sql id="categoryCafe">
 	 	SELECT
-		cafe_no, cafe_icon, cafe_name, cafe_detail, cafe_type, url, reg_date, members
+		url, cafe_no, cafe_icon, cafe_name, 
+		cafe_detail, cafe_type, reg_date, members
 		FROM
 		cafe
 		<where>
 		CLOSED_FLAG = '0'
 		AND cafe_type = 
-		<if test="cafeType==0">
-		'cc100'
-		</if>
-		<if test="cafeType==1">
-		'cc101'
-		</if>
-		<if test="cafeType==2">
-		'cc102'
-		</if>
-		<if test="cafeType==3">
-		'cc103'
-		</if>
-		<if test="cafeType==4">
-		'cc104'
-		</if>
-		<if test="cafeType==5">
-		'cc105'
-		</if>
-		<if test="cafeType==6">
-		'cc106'
-		</if>
+		<if test="cafeType==0">'cc100'</if>
+		<if test="cafeType==1">'cc101'</if>
+		<if test="cafeType==2">'cc102'</if>
+		<if test="cafeType==3">'cc103'</if>
+		<if test="cafeType==4">'cc104'</if>
+		<if test="cafeType==5">'cc105'</if>
+		<if test="cafeType==6">'cc106'</if>
 		</where> 
 	</sql>
 		
 	 <select id="categorizedCafeList" parameterType="Search" resultMap="cafeTabSelectMap">
-		<include refid="categoryCafe"/>
+		SELECT
+		*
+		FROM(<include refid="categoryCafe"/>)
+		WHERE ROWNUM<![CDATA[<]]>6
 	 </select>
 	 
 	 <select id="countCategorizedCafe" parameterType="Search" resultType="int">
@@ -130,10 +132,15 @@
 	 </sql>
 	 
 	 <select id="cafeSortingByStatus" parameterType="Search" resultMap="cafeTabSelectMap">
-	 	<include refid="cafeListByStatus"/>
+	 	SELECT
+	 	*
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  			FROM(<include refid="cafeListByStatus"/>) inner_table
+				WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
 	 </select>
 	 
-	 <select id="myCafeListTotalCount" parameterType="Search" resultMap="cafeTabSelectMap">
+	 <select id="myCafeListTotalCount" parameterType="Search" resultType="int">
 	 	SELECT
 		count(*)
 		FROM (
@@ -158,14 +165,19 @@
 	 </sql>
 	 
 	 <select id="ownCafe" parameterType="Search" resultMap="cafeTabSelectMap">
-		<include refid="getOwnCafe"></include>
+		SELECT
+		*
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  			FROM(<include refid="getOwnCafe"/>) inner_table
+				WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
 	 </select>
 	 
-	 <select id="ownCafeTotalCount" parameterType="Search" resultMap="cafeTabSelectMap">
+	 <select id="ownCafeTotalCount" parameterType="Search" resultType="int">
 		SELECT
 		count(*)
 		FROM (
-		<include refid="getOwnCafe"></include>
+		<include refid="getOwnCafe"/>
 		)
 	 </select>
 	 

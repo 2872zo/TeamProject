@@ -19,6 +19,16 @@
 
 <link rel="stylesheet" href="/css/custom/scroll-top.css">
 
+    <!--**********************************
+            Nav header start
+        ***********************************-->
+           <div class="nav-header">
+            <c:import url="/WEB-INF/views/common/index-logo.jsp"/>
+        </div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+
 <!-- ToolBar Start /////////////////////////////////////-->
 <jsp:include page="/WEB-INF/views/common/toolbar.jsp" />
 <!-- ToolBar End /////////////////////////////////////-->
@@ -39,6 +49,10 @@
 		box-shadow : 5px 5px 5px #8080804a;
 	}
 	
+<<<<<<< HEAD
+=======
+	
+>>>>>>> refs/remotes/origin/master
 </style>
 
 </head>
@@ -60,13 +74,7 @@
         Preloader end
     ********************-->
 
-	<div class='container-fluid'>
-
-
-
 		<!--  화면구성 div Start /////////////////////////////////////-->
-
-	</div>
 
 	<div class="card">
 

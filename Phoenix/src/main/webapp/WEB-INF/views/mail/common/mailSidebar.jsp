@@ -21,21 +21,21 @@
 							<a href="javascript:fncSendMail()" class="btn btn-primary btn-block">메일 쓰기</a>
 							
 							<div class="mail-list mt-4">
-								<a href="javascript:fncGetMailMain(${accountNo })" class="list-group-item border-0 text-primary p-r-0"> 
+								<a href="javascript:fncGetMailMain(${currentPage })" class="list-group-item border-0 text-primary p-r-0"> 
 									<i class="fa fa-inbox font-18 align-middle mr-2"></i> <b>Inbox</b> 
 									<span class="badge badge-primary badge-sm float-right m-t-5">198</span>
 								</a> 
 								
-								<a href="javascript:fncGetSentMailList(${accountNo })" class="list-group-item border-0 p-r-0"> <i
+								<a href="javascript:fncGetSentMailList(${currentPage })" class="list-group-item border-0 p-r-0"> <i
 									class="fa fa-paper-plane font-18 align-middle mr-2"></i>Sent
 								</a> 
 								
-								<a href="javascript:fncGetImportantMailList(${accountNo })" class="list-group-item border-0 p-r-0"> 
+								<a href="javascript:fncGetImportantMailList(${currentPage })" class="list-group-item border-0 p-r-0"> 
 									<i class="fa fa-star-o font-18 align-middle mr-2"></i>Important 
 									<span class="badge badge-danger badge-sm float-right m-t-5">47</span>
 								</a> 
 								
-								<a href="javascript:fncGetTrashMailList(${accountNo })" class="list-group-item border-0 p-r-0">
+								<a href="javascript:fncGetTrashMailList(${currentPage })" class="list-group-item border-0 p-r-0">
 									<i class="fa fa-trash font-18 align-middle mr-2"></i>Trash
 								</a>
 							</div>

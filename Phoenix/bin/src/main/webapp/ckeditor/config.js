@@ -32,7 +32,7 @@ CKEDITOR.editorConfig = function( config ) {
 	config.filebrowserImageUploadUrl = '/fileUpload';
 	
 	config.width = '100%';
-	config.height = '500px';
+	config.height = '600px';
 	
 	
 	//이미지 플러그인 https://ckeditor.com/cke4/addon/image2

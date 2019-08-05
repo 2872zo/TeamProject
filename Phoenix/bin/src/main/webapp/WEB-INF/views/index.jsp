@@ -1,120 +1,184 @@
-<%@ page contentType="text/html; charset=euc-kr"%>
+<%@ page contentType="text/html; charset=utf-8"%>
 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!DOCTYPE html>
-
 <html lang="ko">
 
 <head>
-<meta charset="EUC-KR">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Favicon icon -->
+<link rel="icon" type="image/png" sizes="16x16"
+	href="/images/favicon.png">
+<!-- Custom Stylesheet -->
+<link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet">
+<link href="/css/style.css" rel="stylesheet">
 
+<link rel="stylesheet" href="/css/custom/scroll-top.css">
 
-<!-- ////////////////////////////// jQuery CDN ////////////////////////////// -->
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"
- integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
- crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
- integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
- crossorigin="anonymous"></script>
-<!-- ////////////////////////////// bootstrap CDN ////////////////////////////// -->
-<link rel="stylesheet"
- href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
- integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
- crossorigin="anonymous">
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
- integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
- crossorigin="anonymous"></script>
+<!-- ToolBar Start /////////////////////////////////////-->
+<jsp:include page="/WEB-INF/views/common/toolbar.jsp" />
+<!-- ToolBar End /////////////////////////////////////-->
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <style type="text/css">
-	.cafe3 {background-color:#000;color: #FFF;}
-    .cafe3:hover {background-color: #FFF;}
+	
+	p{
+		
+		font-family: 'Ubuntu', sans-serif;
+	}
+	
+	.input-group-append{
+		box-shadow : 5px 5px 5px #8080804a;
+	}
+	
+	#searchKeyword{
+		
+		box-shadow : 5px 5px 5px #8080804a;
+	}
+	
 </style>
-<!--  ///////////////////////// JavaScript ////////////////////////// -->
-<script type="text/javascript">
-$(function() {
-	
-	
-	$( "#explore" ).on("click" , function() {
-		$(self.location).attr("href","/explore/exploreList");
-	});
-	$( "#cafe" ).on("click" , function() {
-			$(self.location).attr("href","/cafe/main");
-		});
-	$( "#mail" ).on("click" , function() {
-		$(self.location).attr("href","/mail/main");
-	});
-	$( "#sns" ).on("click" , function() {
-		$(self.location).attr("href","/sns/main");
-	});
-	$( "#shop" ).on("click" , function() {
-		$(self.location).attr("href","/shopping/myCartList");
-	});
 
-	$( "#cafe1" ).on("click" , function() {
-		$(self.location).attr("href","/cafe/no1cafe/manage/dropCafeView");
-	});
-
-	$( "#cafe2" ).on("click" , function() {
-		$(self.location).attr("href","/cafe/no1cafe/");
-	});
-
-	$( "#cafe3" ).on("click" , function() {
-		$(self.location).attr("href","/cafe/no1cafe/addCafeApplicationView");
-	});
-	
-
-});
-</script>
 </head>
 
 <body>
 
-	<!-- ToolBar Start /////////////////////////////////////-->
-	<jsp:include page="common/toolbar.jsp" />
-	<!-- ToolBar End /////////////////////////////////////-->
+	<!--*******************
+        Preloader start
+    ********************-->
+	<div id="preloader">
+		<div class="loader">
+			<svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none"
+					stroke-width="3" stroke-miterlimit="10" />
+            </svg>
+		</div>
+	</div>
+	<!--*******************
+        Preloader end
+    ********************-->
 
-	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
-	<div class="container">
+	<div class='container-fluid'>
+
+
+
+		<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
+
+	</div>
+
+	<div class="card">
+
+		<div class="card-body">
 		<br/>
-	<div class="input-group mb-3">
-  <div class="input-group-prepend">
-   <select class="custom-select custom-select-lg" aria-label="Example select with button addon">
-    <option selected value="0">ÅëÇÕ°Ë»ö</option>
-    <option value="1">google</option>
-    <option value="2">NAVER</option>
-    <option value="3">DAUM</option>
-  </select>
-    </div>
-  <input type="text" class="form-control form-control-lg" placeholder="°Ë»ö¾î ÀÔ·ÂÇØÁÖ¼¼¿ä" aria-label="Text input with dropdown button" aria-describedby="button-addon2">
- <div class="input-group-append">
-    <button class="btn btn-outline-secondary" type="button" id="explore">°Ë»ö</button>
-  </div>
-</div>
-	
-	<br/>
-	<div class="d-flex justify-content-around">
-	<button type="button" class="btn btn-lg btn-success" id="cafe">CAFE</button>
-	<button type="button" class="btn btn-lg btn-primary" id="mail">MAIL</button>
-	<button type="button" class="btn btn-lg btn-info" id="sns">SNS</button>
-	<button type="button" class="btn btn-lg btn-warning" id="shop">SHOP</button>
+			<p class="text-center" style='color: #f5a142; font-size: 90px; '>Phoenix</p>
+			<div class='d-flex justify-content-center'>
+				<div class="input-group mb-3 " style='width: 50%;'>
+					<input type="text" class="form-control input-rounded form-control-lg " id='searchKeyword'>
+					<div class="input-group-append">
+						<button class="btn btn-lg btn-outline-primary" type="button" id="explore">
+							<i class="mdi mdi-magnify" style='font-size: 18pt;'></i>
+						</button>
+					</div>
+				</div>
+			</div>
+
+			<div class="d-flex justify-content-center align-items-center">
+				
+				<div class="cafeIcon" style='font-size: 75pt; margin:30px;' id="cafe">
+					<a title="ì¹´íŽ˜ ë°”ë¡œê°€ê¸°"><i class="mdi mdi-coffee"></i> </a>
+				</div>
+				<div class="mailIcon" style='font-size: 75pt; margin:30px;' id='mail'>
+					<a title="ë©”ì¼ ë°”ë¡œê°€ê¸°"><i class="mdi mdi-email-outline"></i> </a>
+				</div>
+				<div class="snsIcon" style='font-size: 75pt; margin:30px;' id='sns'>
+					<a title="sns ë°”ë¡œê°€ê¸°"><i class="mdi mdi-heart-box-outline" ></i></a>
+				</div>
+				<div class="shopIcon" style='font-size: 75pt; margin:30px;' id="shop">
+					<a title="ì‡¼í•‘ ë°”ë¡œê°€ê¸°"><i class="mdi mdi-cart-outline"></i></a>
+				</div>
+			
+			</div>
+			
+			<br/>
+			<br/>
+
+		</div>
 	</div>
-	<br/>
-	<br/>
-	<br/>
-	<br/>
-	<br/>
-	<br/>
+
+
+	<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
+
+
+<!--**********************************
+        Scripts
+    ***********************************-->
+	<script src="/plugins/common/common.min.js"></script>
+	<script src="/js/custom.min.js"></script>
+	<script src="/js/settings.js"></script>
+	<script src="/js/gleek.js"></script>
+	<script src="/js/styleSwitcher.js"></script>
+
+	<script src="/plugins/sweetalert/js/sweetalert.min.js"></script>
+	<script src="/plugins/sweetalert/js/sweetalert.init.js"></script>
+
+	<!-- ë©”ë‰´ë°” ì´ìš©ì„ ìœ„í•œ ìŠ¤í¬ë¦½íŠ¸ -->
+	<script src="/js/custom/scroll-top.js"></script>
 	
 	
-	<div class="d-flex justify-content-around">
-	<button type="button" class="btn btn-lg btn-outline-danger" id="cafe1">¸Å´ÏÀú¸Þ´º</button>
-	<button type="button" class="btn btn-lg btn-outline-danger" id="cafe2">±ÛÀÛ¼º°ü·Ã</button>
-	<button type="button" class="btn btn-lg black-background cafe3" id="cafe3">°¡ÀÔ½ÅÃ»</button>
-	</div>
+	<!--**********************************
+        Scripts
+    ***********************************-->
 	
-</div>
-	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
+<!--  ///////////////////////// JavaScript ////////////////////////// -->
+<script type="text/javascript">
+		
+	$(function() {
+
+		$("#explore").on("click", function() {
+			var keyword = $("#searchKeyword").val()
+			$(self.location).attr("href", "/explore/getUnifiedList?searchKeyword="+ keyword);
+		});
+
+		$("#searchKeyword").focus(function() {
+			$(this).attr("style", "border: 2px solid #f5a142");
+		});
+
+		$("#searchKeyword").blur(function() {
+			$(this).attr("style", "");
+		});
+
+		$("#searchKeyword").on("keyup", function(a) {
+			if (a.keyCode == 13) {
+				$('#explore').trigger('click');
+			}
+		});
+
+		$("#cafe").on("click", function() {
+			$(self.location).attr("href", "/cafe/main");
+		});
+		
+		$("#mail").on("click", function() {
+			$(self.location).attr("href", "/mail/getMailList");
+		});
+		
+		$("#sns").on("click", function() {
+			$(self.location).attr("href", "/sns/getTimeLine");
+		});
+		
+		$("#shop").on("click", function() {
+			$(self.location).attr("href", "/shopping/getProductList");
+		});
+
+	});
+	
+</script>
+
+<!-- ê³µí†µ íˆ´ë°”ìš© ìŠ¤í¬ë¦½íŠ¸ -->	
+	<script src="/js/custom/toolbarScript.js"></script>
+
+<!--  ///////////////////////// JavaScript ////////////////////////// -->
 
 </body>
 </html>

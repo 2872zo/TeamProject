@@ -30,6 +30,7 @@
 		<result property="memberNo" 				 column="member_no" 					jdbcType="NUMERIC" />
 		<result property="favorited" 				 column="favorite_flag" 				jdbcType="CHAR" />
 	</resultMap>
+	
 	<sql id="listCafe">
 		SELECT
 		c.cafe_icon, c.cafe_detail, c.cafe_no, c.url, c.cafe_name, c.members, u.user_nickname
