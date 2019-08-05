@@ -73,13 +73,25 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	@Override
-	public boolean deleteMailAccount(Account account) {
-		return sqlSession.delete("UserMapper.deleteMailAccount", account) == 1? true : false;
+	public boolean deleteAccount(Account account) {
+		return sqlSession.delete("UserMapper.deleteAccount", account) == 1? true : false;
 	}
 
 	@Override
 	public List<Account> getMailAccount(int userNo) {
 		return sqlSession.selectList("UserMapper.getMailAccount", userNo);
 	}
+	
+	@Override
+	public List<Account> getSnsAccount(int userNo) throws Exception {
+		return sqlSession.selectList("UserMapper.getSnsAccount", userNo);
+	}
+
+	@Override
+	public List<Account> getShoppingmallAccount(int userNo) throws Exception {
+		return sqlSession.selectList("UserMapper.getShoppingmallAccount", userNo);
+	}
 	///////////////////////////////////////////승규 끝///////////////////////////////////////////////	
+
+	
 }

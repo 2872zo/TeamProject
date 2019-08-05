@@ -32,16 +32,20 @@
 </head>
 
 <style type="text/css">
-#accountText{
-	color: orange;
-	font-family
-}
+	#accountText{
+		color: orange;
+		font-family
+	}
 	
 	#profile {
 	    margin-bottom: 5%;
 	    }
 	
 	
+	i{
+		-webkit-transition:color 0.3s;
+	    transition:color 0.3s;
+	}
 	
 	i:hover {
 		cursor: pointer;
@@ -161,6 +165,15 @@
 		
 		background-color: black;
 	}
+	
+	#ggg{
+		padding: 0px 0px 0px 15px;
+ 		float : left;
+}
+#ggg{
+		padding: 5px 5px 5px 15px;
+ 		float : left;
+}
     
     
 </style>
@@ -187,7 +200,7 @@
 								<div class="basic-form">			
 								<br>
 									<form id="adduser">
-						<input type="hidden" name="userNo" value="${user.userNo }"/>
+						<input type="hidden" id = "userNo" name="userNo" value="${user.userNo }"/>
                            
                            
                            <div class="row">
@@ -197,8 +210,8 @@
                         <div class="row">
                         
                         
-                            <div class="col-md-7 col-lg-6" >
-                                <div class="card" >
+                            <div class="col-md-7 col-lg-6">
+                                <div class="card">
                                     <div class="card-header bg-white">
                                         <h5 class="card-title">프로필</h5>
                                         <h6 class="card-subtitle mb-2 text-muted"></h6>
@@ -354,7 +367,15 @@
 									</i>
 								</h5>	
 								
-								<div id="mailAccountList"></div>
+								<div id="mailAccountList">
+									<c:forEach items="${mailAccountList }" var="mailAccount">
+										<div class="alert alert-dark d-flex justify-content-between" role="alert" style="margin-bottom:5px; background-color:rgba(128, 128, 128, 0.15); ">
+											<input type="hidden" name="accountType" value="${mailAccount.accountType }">
+											<span style="margin-top:5px;">${mailAccount.accountId }</span>
+											<button type="button" class="btn btn-danger btn-sm deleteAccount">연동해제</button>
+										</div> 	
+									</c:forEach>
+								</div>
 							</div>
 
 							<hr/>
@@ -369,11 +390,14 @@
 								</h5>
 								<!-- accountList 불러와야 한다 목록 띄워줘야함 -->
 								<div id="shoppingAccountList">
-									<div class="alert alert-dark d-flex justify-content-between" role="alert" 
-										style="margin-bottom:5px; background-color:rgba(128, 128, 128, 0.15); ">
-										<span style="margin-top:5px;">아이콘이나 연동계정 아이디 넣을것</span>
-										<button type="button" class="btn btn-danger btn-sm deleteMailAccount">연동해제</button>
-									</div> 	
+									<c:forEach items="${shoppingmallAccountList }" var="account">
+										<div class="alert alert-dark d-flex justify-content-between" role="alert" style="margin-bottom:5px; background-color:rgba(128, 128, 128, 0.15); ">
+											<input type="hidden" name="accountType" class="shoppingmallAccountType" value="${account.accountType}">
+											<span style="margin-top:5px;">${account.accountDomain }</span>
+											<span style="margin-top:5px;">${account.accountId }</span>
+											<button type="button" class="btn btn-danger btn-sm deleteAccount">연동해제</button>
+										</div> 	
+									</c:forEach>
 								</div>				
 							</div>
 
@@ -479,21 +503,30 @@
 					<div class="modal-body">
 						<div class="card-body pt-5">
 							<a class="text-center">
-								<h4>불사조</h4>
+								<h4>쇼핑몰 연동</h4>
 							</a>
-
-							<form class="mt-5 mb-5 login-input">
+							
+							<form class="mt-5 mb-5 shoppingmall-login-input">
+								<div class="form-group" >
+	                              <label class="radio-inline mr-3">
+	                                  <input type="radio"  name ="shoppingmallAcountType" value="ua105" checked></label>
+	                                  <img alt="" src="/images/uploadfiles/shoppingmall/tmon.jpg"style="width: 100px;">
+	                         
+	                              <label class="radio-inline mr-3">
+	                                  <input type="radio"  name ="shoppingmallAcountType" value="ua103"></label>
+	                                  <img alt="" src="/images/uploadfiles/shoppingmall/11st.jpg"  style="width: 100px;">
+	                   
+	                             </div>
+					
 								<div class="form-group">
-									<input type="text" class="form-control" placeholder="ID"
-										name="userId">
+									<input type="text" class="form-control" placeholder="ID"  name="shoppingmallAccountId">
 								</div>
 								<div class="form-group">
-									<input type="password" class="form-control"
-										placeholder="PASSWORD" name="password">
+									<input type="password" class="form-control" placeholder="PASSWORD"  name="shoppingmallAccountPw">
 								</div>
 								<button class="btn login-form__btn submit w-100" id="addShoppingAccount">로그인</button>
 							</form>
-							
+						
 						</div><!-- card body end -->
 					</div><!-- modal body end -->
 				</div><!-- modal content end -->
@@ -516,11 +549,11 @@
 						<div class="card-body pt-5" align="center">
 							<div class="form-group" >
                               <label class="radio-inline mr-3">
-                                  <input type="radio"  name ="sns" value="ua109"></label>
-                                  <img alt="" src="https://www.tokyu.co.jp/tokyuplus/_resource/images/instagram/logo_001.png"style="width: 150px;padding-right: 10px;">
+                                  <input type="radio"  name ="sns" value="ua110"></label>
+                                  <img alt="" src="https://www.tokyu.co.jp/tokyuplus/_resource/images/instagram/logo_001.png"style="width: 150px;">
                          
                               <label class="radio-inline mr-3">
-                                  <input type="radio"  name ="sns" value="ua110"></label>
+                                  <input type="radio"  name ="sns" value="ua109"></label>
                                   <img alt="" src="http://pluspng.com/img-png/facebook-logo-png-1722.png"  style="width: 150px;padding-bottom: 10px;">
                    
                               </div>
@@ -638,7 +671,7 @@
 						$("#mailAccountList").append('<div class="alert alert-dark d-flex justify-content-between" role="alert"' 
 														+ 'style="margin-bottom:5px; background-color:rgba(128, 128, 128, 0.15); ">'
 														+ '<span style="margin-top:5px;">' + formObject.accountId + formObject.accountType  + '</span>'
-														+ '<button type="button" class="btn btn-danger btn-sm deleteMailAccount">연동해제</button>'
+														+ '<button type="button" class="btn btn-danger btn-sm deleteAccount">연동해제</button>'
 														+ '</div>');
 						$("#mailLogin").modal("hide");	
 						$(".mail-login-input")[0].reset();
@@ -661,17 +694,17 @@
 		});
 
 		//메일 계정 연동 해제
-		$(document).on("click", ".deleteMailAccount", function(){
-// 			alert("deleteMailAccount!");
+		$(document).on("click", ".deleteAccount", function(){
+// 			alert("deleteAccount!");
 
 			target = $(this).parent();
-			var targetAddr = $(this).prev().text();
-			var formObject = {accountId : targetAddr, accountType : targetAddr.substring(targetAddr.indexOf("@"))}
+			var targetAddr = $(this).prev();
+			var formObject = {accountId : targetAddr.text(), accountType : targetAddr.prev().val()}
 
 			$.ajax({
 				type : "POST",
 				contentType: "application/json",
-				url : "/mail/json/deleteMailAccount",
+				url : "/user/json/deleteAccount",
 				dataType : "JSON",
 				data: JSON.stringify(formObject),
 				success : function(data) {
@@ -679,7 +712,7 @@
 					console.log("data : " + data);
 					if(data == true){
 						target.remove();
-						sweetAlert("계정연동 해제 성공",targetAddr + " 계정의 연동이 해제되었습니다.","success");
+						sweetAlert("계정연동 해제 성공",targetAddr.text() + " 계정의 연동이 해제되었습니다.","success");
 					}else{
 						sweetAlert("계정연동 해제 실패","잠시후 다시 시도해 주십시오.","error");
 					}
@@ -690,14 +723,104 @@
 			});
 		});
 
+
+/////////////////////////////////////////////////////////쇼핑몰계정시작////////////////////////
 		//쇼핑몰계정 추가
-		$("#addShoppingAccount").on("click", function(){
-			alert("쇼핑몰계정 로그인!")
+		$("#addShoppingAccount").on("click", function(e){
+
+			e.preventDefault();
+			
+			alert("쇼핑몰계정 로그인!");
+
+			var addType =  $("input[name=shoppingmallAcountType]").val();
+			var insertId = $("input[name=shoppingmallAccountId]").val();
+			var elements = $(".shoppingmallAccountType");
+			var domain  ="";
+			
+			var boolsw = false;
+			
+			elements.each(function(){
+
+				if($(this).val() == addType){
+
+					boolsw = true;
+					return;
+				}
+			});
+			//ajax보내기전에  이 쇼핑몰에  account가 이미 등록되어있는지 확인 ok
+			//account가 이미있으면 alert창으로 계정이 이미존재합니다. 재등록을 원한다면 계정 해제를 한후 새로 등록해주세요.ok
+			//없으면 ajax통신으로 계정 add 하고 return 값으로 처리
+			
+			if(boolsw){
+
+				sweetAlert("계정연동 실패","해당 쇼핑몰 계정이 이미 연동되어있습니다.재등록을 원한다면 계정 해제를 한후 새로 등록해주세요.","error");
+				return;
+			}
+
+			if(addType=='ua105'){
+
+				domain="티몬";
+			}else if(addType=='ua103'){
+				domain="11번가";
+			}
+				
+			//var 
+			$.ajax({
+
+
+					url : "/shopping/json/addShoppingmallAccount",
+					method : "POST",
+					append	 : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json ; charset=UTF-8"
+					},
+					data : JSON.stringify({ //보내는 data jsonString 화
+
+						accountType : $("input[name=shoppingmallAcountType]").val(),
+						accountId : $("input[name=shoppingmallAccountId]").val(),
+						accountPw : $("input[name=shoppingmallAccountPw]").val(),
+						accountDomain : domain
+						
+					}),
+					dataType : "text",
+					success : function(serverData){
+
+						alert(serverData);
+						var data = JSON.parse(serverData);
+
+						if(data.loginResult =='100'){
+							//성공
+							
+							
+							$("#shoppingAccountList").append('<div class="alert alert-dark d-flex justify-content-between" role="alert"' 
+																+ 'style="margin-bottom:5px; background-color:rgba(128, 128, 128, 0.15); ">'
+																+'<span style="margin-top:5px;">'+domain+'</span>'
+																+ '<span style="margin-top:5px;">' +insertId + '</span>'
+																+ '<button type="button" class="btn btn-danger btn-sm deleteAccount">연동해제</button>'
+																+ '</div>');
+							$("#shoppingLogin").modal("hide");	
+							$(".shoppingmall-login-input")[0].reset();
+							sweetAlert("계정연동 성공", insertId + " 계정이 연동되었습니다.","success");
+						
+						}
+						else(data.loginResult =='400'){
+							//실패
+							sweetAlert("계정연동 해제 실패","아아디, 비밀번호를 확인해 주세요","error");
+						}
+						//return 값이 success면 모달 끄고 append
+						
+					}//success
+
+
+				});//ajax끝
+
+		
 		});	
 
+
+/////////////////////////////////////////////////////////쇼핑몰계정끝////////////////////////
 		//sns계정 추가
 		$("#addSnsAccount").on("click", function(e){
-			alert("sns계정 로그인!")
 			e.preventDefault();
 
 			$.ajax({
@@ -740,34 +863,7 @@
 
 	});//function끝
 
-/////////////////////////////////////////////////////////쇼핑몰계정시작////////////////////////
-	
-	$(function(){
 
-		$("#addShoppingAccount").on("click",function(){
-			//1. hidden value값 확인한다 . -1이면 선택해 달라고 action
-			//2. 아이디 비번창 비었는지 확인.
-			//3. 끝나면 hidden값,아이디+비번 가지고 날라간다.
-			//if()
-			
-		});// 계정로그인버튼 클릭했을때.
-
-		$(".shoppingmall_button").on("click",function(){
-
-			alert($(this).val());
-			$("#selected_shoppingmall").val($(this).val());
-			alert($("#selected_shoppingmall").val());
-			
-		});
-
-	});
-		
-
-
-
-/////////////////////////////////////////////////////쇼핑몰계정끝///////////////////////
-
-	
 ////////////////////////////////////////////////////////////////////////////////////	
 	var checkSessionUser = ${empty sessionScope.user};
 

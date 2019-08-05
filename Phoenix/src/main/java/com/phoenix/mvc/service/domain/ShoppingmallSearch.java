@@ -9,6 +9,7 @@ public class ShoppingmallSearch {
 	private String searchTotal; //총 몇개의 검색어?
 	private String searchKeyword; //rest
 	private int detectedItemCount; //rest
+//	private String 
 	
 	public ShoppingmallSearch() {
 		// TODO Auto-generated constructor stub
