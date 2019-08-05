@@ -95,8 +95,6 @@
 <!-- 					<ol class="breadcrumb"> -->
 <!-- 					</ol> -->
 <!-- 				</div> -->
-
-
 			</div>
 			
 			
@@ -146,7 +144,7 @@
 										<tr>
 											<td colspan="6">
 												<c:import url="/WEB-INF/views/common/pageNavigator.jsp">
-													<c:param name="subject" value="SentMail"/>		
+													<c:param name="subject" value="FlagMail"/>		
 												</c:import>
 											</td>
 										</tr>
