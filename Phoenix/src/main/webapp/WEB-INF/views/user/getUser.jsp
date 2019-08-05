@@ -188,7 +188,7 @@
 								<div class="basic-form">			
 								<br>
 									<form id="adduser">
-						<input type="hidden" name="userNo" value="${user.userNo }"/>
+						<input type="hidden" id = "userNo" name="userNo" value="${user.userNo }"/>
                            
                            
                            <div class="row">
@@ -497,18 +497,24 @@
 						</button>
 					</div>
 					<div class="modal-body">
-						<div class="card-body pt-5">
-							<a class="text-center">
-								<h4>불사조</h4>
-							</a>
-
+						<div class="card-body pt-5" align="center">
+							<div class="form-group" >
+                              <label class="radio-inline mr-3">
+                                  <input type="radio"  name ="sns" value="ua110"></label>
+                                  <img alt="" src="https://www.tokyu.co.jp/tokyuplus/_resource/images/instagram/logo_001.png"style="width: 150px;">
+                         
+                              <label class="radio-inline mr-3">
+                                  <input type="radio"  name ="sns" value="ua109"></label>
+                                  <img alt="" src="http://pluspng.com/img-png/facebook-logo-png-1722.png"  style="width: 150px;padding-bottom: 10px;">
+                   
+                              </div>
+				
 							<form class="mt-5 mb-5 login-input">
 								<div class="form-group">
-									<input type="text" class="form-control" placeholder="ID"
-										name="userId">
+									<input type="text" class="form-control" placeholder="ID" id="snsId">
 								</div>
 								<div class="form-group">
-									<input type="password" class="form-control" placeholder="PASSWORD" name="password">
+									<input type="password" class="form-control" placeholder="PASSWORD" id="snsPw">
 								</div>
 								<button class="btn login-form__btn submit w-100" id="addSnsAccount">로그인</button>
 							</form>
@@ -676,6 +682,39 @@
 		//sns계정 추가
 		$("#addSnsAccount").on("click", function(){
 			alert("sns계정 로그인!")
+			//alert($("input[name=sns]:checked").val());
+			//alert($("#snsId").val());
+			//alert($("#snsPw").val());
+			alert($("#userNo").val());
+		
+				$.ajax({
+					url: "/sns/json/addSns",
+					type : "POST",
+					data: JSON.stringify({
+						userNo : $("#userNo").val(),
+						accountType : $("input[name=sns]:checked").val(),
+						accountId : $("#snsId").val(),
+						accountPw : $("#snsPw").val()
+
+					}),
+					dataType : "json",
+					contentType : "application/json",
+					beforeSend : function(){
+						$("#preloader").attr("style", "background:rgba(255,245,217,0.5);");
+					},
+					complete : function(){
+						$("#preloader").attr("style", "display:none;");
+					}, 
+					success :  function(data) {
+						alert(data)
+
+					},//success
+					error : function(data){
+						alert(data)
+
+					}//error
+
+				});//ajax 끝
 		});		
 	});
 
@@ -709,6 +748,17 @@
 	
 ////////////////////////////////////////////////////////////////////////////////////	
 	var checkSessionUser = ${empty sessionScope.user};
+
+	$( function() {
+		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		$("a[id='kakaos' ]").on("click" , function() {
+				
+				var popOption = "left=500, top=100, width=600, height=600, resizable=no, location=no;"		
+				window.open("https://kauth.kakao.com/oauth/authorize?client_id=44d5aabe2b56604fedd6b0bfe3098f1a&redirect_uri=http://localhost:8080/user/oauth1&response_type=code","Kakao login",popOption);
+				
+		});
+	});
+
 	
 	$(function() {
 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)

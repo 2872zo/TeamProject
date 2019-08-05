@@ -213,7 +213,64 @@ public class UserContoller {
 		return "/user/listUser";
 	}
 	
-	@RequestMapping(value = "oauth")
+//	@RequestMapping(value = "oauth")
+//	public String kakaoLogin(@RequestParam("code") String code, Model model, HttpSession session) throws Exception {
+//		System.out.println("로그인 할때 임시 코드값");
+//		// 카카오 홈페이지에서 받은 결과 코드
+//		System.out.println(code);
+//		System.out.println("로그인 후 결과값");
+//
+//		// 카카오 rest api 객체 선언
+//		KakaoRestapi kr = new KakaoRestapi();
+//		// 결과값을 node에 담아줌
+//		JsonNode node = kr.getAccessToken(code);
+//		// 결과값 출력
+//		System.out.println(node);
+//
+//		JsonNode userInfo = KakaoUserInfo.getKakaoUserInfo(node.get("access_token"));
+//
+//		JsonNode kakao_account = userInfo.path("kakao_account");
+//
+//		String kakaoId = userInfo.path("id").asText();
+//
+//		String token = node.path("access_token").asText();		
+//
+//		String email = null;
+//
+//		email = kakao_account.path("email").asText();
+//
+//		System.out.println("토큰 나와라 얍" + token);
+//
+//		String userId = userInfo.path("kakao_account").asText();
+//
+//		System.out.println("id : " + kakaoId);
+//
+//		System.out.println("userId" + userId + "dsada" + email + "이메일ㅇ느?");
+//
+//		User user = userService.getKakao(kakaoId);
+//
+//		if (user != null) {
+//
+//			user = userService.getUser(user.getUserId());
+//
+//			System.out.println("기존 카카오 계정이네" + user);
+//
+//			session.setAttribute("user", user);
+//
+//			return "/user/kakaoResult";
+//		}
+//
+//		else {
+//
+//			session.setAttribute("kakaoId", kakaoId);
+//			
+//			System.out.println("신규 카카오 계정이네 회원가입으로 보내자");
+//
+//			return "/user/kakaoResult";
+//		}
+//	}
+	
+	@RequestMapping(value = "oauth1")
 	public String kakaoLogin(@RequestParam("code") String code, Model model, HttpSession session) throws Exception {
 		System.out.println("로그인 할때 임시 코드값");
 		// 카카오 홈페이지에서 받은 결과 코드
@@ -241,21 +298,24 @@ public class UserContoller {
 
 		System.out.println("토큰 나와라 얍" + token);
 
-		String userId = userInfo.path("kakao_account").asText();
-
-		System.out.println("id : " + kakaoId);
-
-		System.out.println("userId" + userId + "dsada" + email + "이메일ㅇ느?");
-
-		User user = userService.getKakao(kakaoId);
+		User user = (User) session.getAttribute("user");
 
 		if (user != null) {
 
 			user = userService.getUser(user.getUserId());
 
-			System.out.println("기존 카카오 계정이네" + user);
-
+			System.out.println("연동 ㄱㄱ" + user);	
+			
+			session.setAttribute("kakaoId", kakaoId);
+			
+			user.setKakaoId(kakaoId);
+			
+			userService.updateUser(user);
+			
 			session.setAttribute("user", user);
+			
+			System.out.println("카카오아이디뭐냐?@@@@@@@" + kakaoId);
+			
 
 			return "/user/kakaoResult";
 		}

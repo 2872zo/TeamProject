@@ -59,6 +59,12 @@ public class UserDaoImpl implements UserDao{
 	public User selectNaver(String naverId) throws Exception{
 		return sqlSession.selectOne("UserMapper.selectNaver",naverId);
 	}
+	
+	@Override // 준호
+	public void updateUserKakao(User user) throws Exception {
+		sqlSession.update("UserMapper.updateUserKakao", user);
+	}
+	
 
 	///////////////////////////////////////////승규 시작///////////////////////////////////////////////
 	@Override
