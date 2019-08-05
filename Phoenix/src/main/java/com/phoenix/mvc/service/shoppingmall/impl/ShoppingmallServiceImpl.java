@@ -80,17 +80,21 @@ public class ShoppingmallServiceImpl implements ShoppingmallService
 	public String login(Account account, User user) {
 		
 		int loginResult = shoppingmallDao.login(account, user);
+		String result = "400";
 		
 		if(loginResult==100) { //login success
 			
-			//여기서 user에따른 account add하는 dao 부른다. 그리고 return 뭐 success
+			//account 저장하기전에 domain set해줘얗마닝;
+			shoppingmallDao.addShoppingmallAccount(account, user);
+			result ="100";
 		}
 		else if(loginResult==400) { //login fail
 			
 			//return fail
+			result="400";
 		}
 		
-		return null;
+		return result;
 	}
 	
 	

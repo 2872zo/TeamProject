@@ -16,4 +16,6 @@ public interface ShoppingmallDao {
 	public Map<String,Object> getTmonPurchaseList(ShoppingmallSearch search, Account account);
 	
 	public int login(Account account, User user);
+	
+	public void addShoppingmallAccount(Account account, User user);
 }

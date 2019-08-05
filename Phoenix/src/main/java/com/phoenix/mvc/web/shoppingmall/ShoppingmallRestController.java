@@ -66,8 +66,10 @@ public class ShoppingmallRestController {
 		String loginResult = shoppingmallService.login(account, user);
 		
 		//loginResult를 그냥 리턴..
+		Map returnMap = new HashMap();
+		returnMap.put("loginResult", loginResult);
 		
-		return null;
+		return returnMap;
 	}
 
 }

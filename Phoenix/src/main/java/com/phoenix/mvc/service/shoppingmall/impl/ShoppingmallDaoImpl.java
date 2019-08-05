@@ -290,6 +290,7 @@ public class ShoppingmallDaoImpl implements ShoppingmallDao
 			
 		}
 		
+		driver.quit();
 		
 		returnMap.put("purchaseList", purchaseList);
 		
@@ -308,7 +309,19 @@ public class ShoppingmallDaoImpl implements ShoppingmallDao
 			result = this.tmonLogin(webDriver, account);
 		}
 		
+		webDriver.quit(); //연결 끊어버림
+		
 		return result;
+	}
+	
+	@Override
+	public void addShoppingmallAccount(Account account, User user) {
+		
+		Map map = new HashMap();
+		map.put("account", account);
+		map.put("user",user);
+		
+		sqlSession.insert("addShoppingmallAccount", map);
 	}
 
 	
@@ -359,13 +372,14 @@ public class ShoppingmallDaoImpl implements ShoppingmallDao
 		
 		ChromeOptions options = new ChromeOptions();
 		options.setCapability("ignoreProtectedModeSettings", true);
-		//options.addArguments("headless");
+		options.addArguments("headless");
 		WebDriver driver = new ChromeDriver(options);
 		wait = new WebDriverWait(driver, 10);
 		driver.manage().timeouts().implicitlyWait(1,TimeUnit.SECONDS);
 		return driver;
 	}
 
+	
 	
 	
 
