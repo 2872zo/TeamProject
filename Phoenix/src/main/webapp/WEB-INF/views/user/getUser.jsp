@@ -670,7 +670,16 @@
 
 			var formArray = $(".mail-login-input").serializeArray();
 			formObject = objectifyForm(formArray);
+
+			var accountType = null;
 			
+			if(formObject.accountType.indexOf("naver") != -1){
+				accountType = 'ua100';
+			}else if(formObject.accountType.indexOf("daum") != -1){
+				accountType = 'ua101';
+			}else if(formObject.accountType.indexOf("gmail") != -1){
+				accountType = 'ua102';
+			}
 
 			$.ajax({
 				type : "POST",
@@ -690,7 +699,7 @@
 					if(data == 100){
 						$("#mailAccountList").append('<div class="alert alert-dark d-flex justify-content-between" role="alert"' 
 														+ 'style="margin-bottom:5px; background-color:rgba(128, 128, 128, 0.15); ">'
-														//+'<input type="hidden" name="accountType" value="'++'">'
+														+'<input type="hidden" name="accountType" value="' + accountType + '">'
 														+ '<span style="margin-top:5px;">' + formObject.accountId + formObject.accountType  + '</span>'
 														+ '<button type="button" class="btn btn-danger btn-sm deleteAccount">연동해제</button>'
 														+ '</div>');

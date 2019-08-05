@@ -177,7 +177,48 @@
             Content body end
         ***********************************-->
         
-        
+        <!-- Modal 내용 시작 -->
+		<div class="modal fade" id="exampleModalCenter" style="display: none;" aria-hidden="true" style="max-width:100%;" style=" width: auto;">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+
+						<button type="button" class="close" data-dismiss="modal">
+							<span>×</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="card-body pt-5">
+							<a class="text-center">
+								<h4>불사조</h4>
+							</a>
+
+							<form class="mt-5 mb-5 login-input">
+								<div class="form-group">
+									<input type="text" class="form-control" placeholder="ID"
+										name="userId">
+								</div>
+								<div class="form-group">
+									<input type="password" class="form-control"
+										placeholder="PASSWORD" name="password">
+								</div>
+								<button class="btn login-form__btn submit w-100" id="login1" style= "margin-bottom:50" >로그인</button>
+								<center>								
+									<a id="kakaos"><img src="/images/uploadFiles/kakao/kakaos.jpg" width=210; height=45;/></a>
+	     							<a id="navers"><img src="/images/uploadFiles/naver/navers.jpg" width=210; height=45;/></a>		
+     							</center>
+							</form>
+							<p class="mt-5 login-form__footer">
+								<a href="/user/addUserView" class="text-primary" id="addUser1">회원가입</a>
+							</p>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<!-- Modal 내용 끝 -->
         <!--**********************************
             Footer start
         ***********************************-->
