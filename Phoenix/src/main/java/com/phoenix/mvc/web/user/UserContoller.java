@@ -2,6 +2,7 @@ package com.phoenix.mvc.web.user;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletRequest;
@@ -25,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.phoenix.mvc.common.Page;
 import com.phoenix.mvc.common.Search;
+import com.phoenix.mvc.service.domain.Account;
 import com.phoenix.mvc.service.domain.Cafe;
 import com.phoenix.mvc.service.domain.User;
 import com.phoenix.mvc.service.user.UserDao;
@@ -138,8 +140,16 @@ public class UserContoller {
 		User user = userService.getUserInfo(userNo);
 
 		System.out.println("카페정보들오니" + user);
+		
+		List<List<Account>> allAccountList = userService.getAllAccount(userNo);
 
 		model.addAttribute("user", user);
+		
+		System.out.println("accountList : " + allAccountList);
+		
+		model.addAttribute("mailAccountList", allAccountList.get(0));
+		model.addAttribute("shoppingmallAccountList", allAccountList.get(1));
+		model.addAttribute("snsAccountList", allAccountList.get(2));
 
 		return "user/getUser";
 

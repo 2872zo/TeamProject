@@ -42,15 +42,6 @@ import com.sun.mail.util.BASE64DecoderStream;
 @RestController
 @RequestMapping("/mail/json/")
 public class MailRestContoller {
-	@Value("${accountType.naver}")
-	private String naverCode;
-	
-	@Value("${accountType.daum}")
-	private String daumCode;
-	
-	@Value("${accountType.gmail}")
-	private String gmailCode;
-	
 	@Autowired
 	@Qualifier("mailServiceImpl")
 	private MailService mailService;
@@ -74,31 +65,6 @@ public class MailRestContoller {
 			result = Integer.parseInt(e.getMessage());
 		}
 		return result;
-	}
-	
-	@RequestMapping("deleteMailAccount")
-	public boolean deleteMailAccount(@RequestBody Account account, HttpServletRequest req) {
-		account.setUserNo(((User)req.getSession().getAttribute("user")).getUserNo());
-		
-		String accountType = null;
-		
-		if(account.getAccountType().contains("naver")) {
-			accountType = naverCode;
-		}else if(account.getAccountType().contains("daum")){
-			accountType = daumCode;
-		}else if(account.getAccountType().contains("gmail")){
-			accountType = gmailCode;
-		}
-		
-		if(accountType == null) {
-			System.out.println("존재하지 않는 계정 유형");
-			return false;
-		}
-		
-		account.setAccountType(accountType);
-		System.out.println("[addMailAccount] account : " + account);
-		
-		return mailService.deleteMailAccount(account);
 	}
 	
 	@RequestMapping("setSeenMail")

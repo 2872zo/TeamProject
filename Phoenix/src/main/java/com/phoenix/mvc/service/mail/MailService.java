@@ -29,8 +29,6 @@ public interface MailService {
 
 	public boolean addMailAccount(Account account) throws Exception;
 
-	public boolean deleteMailAccount(Account account);
-
 	public boolean sendMail(Account account, Mail mail) throws MessagingException;
 
 	public Map<String, Object> getAllAccountSentMailList(List<Account> accountList, int currentPage) throws FileNotFoundException, MessagingException, IOException;

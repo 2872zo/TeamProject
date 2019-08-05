@@ -96,11 +96,6 @@ public class MailServiceImpl implements MailService {
 	}
 
 	@Override
-	public boolean deleteMailAccount(Account account) {
-		return userDao.deleteMailAccount(account);
-	}
-
-	@Override
 	public boolean sendMail(Account account, Mail mail) throws MessagingException {
 		
 		if(account.getAccountDomain().contains("gmail")) {

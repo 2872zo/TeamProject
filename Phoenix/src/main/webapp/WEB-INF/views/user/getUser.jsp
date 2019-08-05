@@ -367,7 +367,15 @@
 									</i>
 								</h5>	
 								
-								<div id="mailAccountList"></div>
+								<div id="mailAccountList">
+									<c:forEach items="${mailAccountList }" var="mailAccount">
+										<div class="alert alert-dark d-flex justify-content-between" role="alert" style="margin-bottom:5px; background-color:rgba(128, 128, 128, 0.15); ">
+											<input type="hidden" name="accountType" value="${mailAccount.accountType }">
+											<span style="margin-top:5px;">${mailAccount.accountId }</span>
+											<button type="button" class="btn btn-danger btn-sm deleteAccount">연동해제</button>
+										</div> 	
+									</c:forEach>
+								</div>
 							</div>
 
 							<hr/>
@@ -683,17 +691,17 @@
 		});
 
 		//메일 계정 연동 해제
-		$(document).on("click", ".deleteMailAccount", function(){
-// 			alert("deleteMailAccount!");
+		$(document).on("click", ".deleteAccount", function(){
+// 			alert("deleteAccount!");
 
 			target = $(this).parent();
-			var targetAddr = $(this).prev().text();
-			var formObject = {accountId : targetAddr, accountType : targetAddr.substring(targetAddr.indexOf("@"))}
+			var targetAddr = $(this).prev();
+			var formObject = {accountId : targetAddr.text(), accountType : targetAddr.prev().val()}
 
 			$.ajax({
 				type : "POST",
 				contentType: "application/json",
-				url : "/mail/json/deleteMailAccount",
+				url : "/user/json/deleteAccount",
 				dataType : "JSON",
 				data: JSON.stringify(formObject),
 				success : function(data) {
@@ -701,7 +709,7 @@
 					console.log("data : " + data);
 					if(data == true){
 						target.remove();
-						sweetAlert("계정연동 해제 성공",targetAddr + " 계정의 연동이 해제되었습니다.","success");
+						sweetAlert("계정연동 해제 성공",targetAddr.text() + " 계정의 연동이 해제되었습니다.","success");
 					}else{
 						sweetAlert("계정연동 해제 실패","잠시후 다시 시도해 주십시오.","error");
 					}
