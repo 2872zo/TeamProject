@@ -48,13 +48,13 @@
 	 <select 	id="getUser"	parameterType="String"	resultMap="userSelectMap">
 		SELECT
 		user_no, user_id, user_name, user_nickname, password, email, phone, profile_img, reg_date, user_role_code, user_status_code 		
-		FROM users 
+		FROM users
 		WHERE user_id = #{value}
 	 </select>
 	 
 	 <select 	id="getUserInfo"	parameterType="int"	resultMap="userSelectMap">
 		SELECT
-		user_no, user_id, user_name, user_nickname, password, email, phone, profile_img, reg_date, user_role_code, user_status_code 		
+		user_no, user_id, user_name, user_nickname, password, email, phone, profile_img, reg_date, user_role_code, user_status_code, kakao_id, naver_id		
 		FROM users 
 		WHERE user_no = #{value}
 	 </select>	 
@@ -116,7 +116,7 @@
 		FROM
 		users			
 		where kakao_Id = #{value}
-
+	
 	 </select> 
 	 
 	 <select id="selectNaver" parameterType="string" resultMap="userSelectMap">

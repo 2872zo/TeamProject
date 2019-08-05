@@ -45,8 +45,6 @@
 		<jsp:include page="../common/cafeManageTollbar.jsp" />
 		<!-- ToolBar End /////////////////////////////////////-->
 
-
-
 		<!--**********************************
             Sidebar start
         ***********************************-->
@@ -69,7 +67,7 @@
 				</div>
 			</div>
 			
-<div class='container'>
+<div class='container-fluid'>
 
 <div class="card d-flex justify-content-center" style='width:50%;'>
 <div class="card-body">
