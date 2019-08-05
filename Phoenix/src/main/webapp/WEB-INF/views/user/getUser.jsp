@@ -498,20 +498,20 @@
 							<form class="mt-5 mb-5 login-input">
 								<div class="form-group" >
 	                              <label class="radio-inline mr-3">
-	                                  <input type="radio"  name ="accountType" value="ua105"></label>
+	                                  <input type="radio"  name ="shoppingmallAcountType" value="ua105"></label>
 	                                  <img alt="" src="/images/uploadfiles/shoppingmall/tmon.jpg"style="width: 150px;">
 	                         
 	                              <label class="radio-inline mr-3">
-	                                  <input type="radio"  name ="accountType" value="ua103"></label>
+	                                  <input type="radio"  name ="shoppingmallAcountType" value="ua103"></label>
 	                                  <img alt="" src="/images/uploadfiles/shoppingmall/11st.jpg"  style="width: 150px;padding-bottom: 10px;">
 	                   
 	                             </div>
 					
 								<div class="form-group">
-									<input type="text" class="form-control" placeholder="ID"  name="accountId">
+									<input type="text" class="form-control" placeholder="ID"  name="shoppingmallAccountId">
 								</div>
 								<div class="form-group">
-									<input type="password" class="form-control" placeholder="PASSWORD"  name="accountPw">
+									<input type="password" class="form-control" placeholder="PASSWORD"  name="shoppingmallAccountPw">
 								</div>
 								<button class="btn login-form__btn submit w-100" id="addShoppingAccount">로그인</button>
 							</form>
@@ -712,23 +712,48 @@
 			});
 		});
 
+
+/////////////////////////////////////////////////////////쇼핑몰계정시작////////////////////////
 		//쇼핑몰계정 추가
 		$("#addShoppingAccount").on("click", function(){
 			alert("쇼핑몰계정 로그인!");
 
 			//ajax보내기전에  이 쇼핑몰에  account가 이미 등록되어있는지 확인
 			//account가 이미있으면 alert창으로 계정이 이미존재합니다. 재등록을 원한다면 계정 해제를 한후 새로 등록해주세요.
-			//없으면 ajax통신으로 계정 add
-			
-			$.ajax({ //ajax통신해서 보내고 
-
+			//없으면 ajax통신으로 계정 add 하고 return 값으로 처리
 				
-		
-			});
+			var 
+			$.ajax({
+
+
+						url : "/shopping/json/addShoppingmallAccount",
+						method : "POST",
+						headers : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json ; charset=UTF-8"
+						},
+						data : JSON.stringify({ //보내는 data jsonString 화
+
+							accountType : $("input[name=shoppingmallAcountType]").val(),
+							accountId : $("input[name=shoppingmallAccountId]").val(),
+							accountPw : $("input[name=shoppingmallAccountPw]").val()
+							
+						}),
+						dataType : "text",
+						success : function(serverData){
+
+							//return 값이 success면 모달 끄고 append
+							
+						}//success
+
+
+					});//ajax끝
 
 			
 		});	
 
+
+/////////////////////////////////////////////////////////쇼핑몰계정끝////////////////////////
 		//sns계정 추가
 		$("#addSnsAccount").on("click", function(e){
 			e.preventDefault();
@@ -773,34 +798,7 @@
 
 	});//function끝
 
-/////////////////////////////////////////////////////////쇼핑몰계정시작////////////////////////
-	
-	$(function(){
 
-		$("#addShoppingAccount").on("click",function(){
-			//1. hidden value값 확인한다 . -1이면 선택해 달라고 action
-			//2. 아이디 비번창 비었는지 확인.
-			//3. 끝나면 hidden값,아이디+비번 가지고 날라간다.
-			//if()
-			
-		});// 계정로그인버튼 클릭했을때.
-
-		$(".shoppingmall_button").on("click",function(){
-
-			alert($(this).val());
-			$("#selected_shoppingmall").val($(this).val());
-			alert($("#selected_shoppingmall").val());
-			
-		});
-
-	});
-		
-
-
-
-/////////////////////////////////////////////////////쇼핑몰계정끝///////////////////////
-
-	
 ////////////////////////////////////////////////////////////////////////////////////	
 	var checkSessionUser = ${empty sessionScope.user};
 

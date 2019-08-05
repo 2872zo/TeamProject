@@ -74,6 +74,24 @@ public class ShoppingmallServiceImpl implements ShoppingmallService
 		
 		return returnMap;
 	}
+
+
+	@Override
+	public String login(Account account, User user) {
+		
+		int loginResult = shoppingmallDao.login(account, user);
+		
+		if(loginResult==100) { //login success
+			
+			//여기서 user에따른 account add하는 dao 부른다. 그리고 return 뭐 success
+		}
+		else if(loginResult==400) { //login fail
+			
+			//return fail
+		}
+		
+		return null;
+	}
 	
 	
 	

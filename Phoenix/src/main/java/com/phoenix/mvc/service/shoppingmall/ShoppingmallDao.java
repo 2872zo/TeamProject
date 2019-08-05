@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.phoenix.mvc.service.domain.Account;
 import com.phoenix.mvc.service.domain.ShoppingmallSearch;
+import com.phoenix.mvc.service.domain.User;
 
 public interface ShoppingmallDao {
 
@@ -13,4 +14,6 @@ public interface ShoppingmallDao {
 	public List<Account> getShoppingmallAccount(int userNo);
 	
 	public Map<String,Object> getTmonPurchaseList(ShoppingmallSearch search, Account account);
+	
+	public int login(Account account, User user);
 }
