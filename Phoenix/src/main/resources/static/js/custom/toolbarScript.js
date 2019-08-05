@@ -94,7 +94,7 @@ $(function() {
 							return false;
 						}else{
 							//self.location = "/user/loginView/?targetURL=${targetURL }"	
-						self.location = "/";
+							window.location.reload();
 						}						
 					}
 				});//ajax

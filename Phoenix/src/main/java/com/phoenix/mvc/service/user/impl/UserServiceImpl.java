@@ -1,5 +1,6 @@
 package com.phoenix.mvc.service.user.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -116,7 +117,21 @@ public class UserServiceImpl implements UserService{
 	public List<Account> getMailAccount(int userNo) {
 		return userDao.getMailAccount(userNo);
 	}
+	
+
+	@Override
+	public List<List<Account>> getAllAccount(int userNo) throws Exception {
+		List<List<Account>> allAccountList = new ArrayList<List<Account>>();
+		allAccountList.add(userDao.getMailAccount(userNo));
+		allAccountList.add(userDao.getShoppingmallAccount(userNo));
+		allAccountList.add(userDao.getSnsAccount(userNo));
+		
+		return allAccountList;
+	}
+
+	@Override
+	public boolean deleteAccount(Account account) {
+		return userDao.deleteAccount(account);
+	}
 	//////////////////////////////승규 끝/////////////////////////////////
-
-
 }
