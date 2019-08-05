@@ -1032,4 +1032,44 @@ public class MailDaoImpl implements MailDao {
 		
 		return true;
 	}
+
+	@Override
+	public boolean trashMail(List<Map<String, Object>> mailInfoList, List<Account> accountList)	throws FileNotFoundException, MessagingException, IOException {
+		List<Map<String, Object>> mailAgentList = new ArrayList<Map<String,Object>>();
+		
+		for(Account account : accountList) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("mailAgent",new IMAPAgent("imap." + account.getAccountDomain(), account.getAccountId(), account.getAccountPw()));
+			map.put("account", account);
+			((IMAPAgent)map.get("mailAgent")).open();
+			
+			mailAgentList.add(map);
+		}
+		
+		for(Map mailInfo : mailInfoList) {
+			IMAPAgent mailAgent = null;
+			String dest = null;
+			
+			for(Map mailAgentMap : mailAgentList) {
+				if( (int)((Account)mailAgentMap.get("account")).getAccountNo() == Integer.parseInt((String) mailInfo.get("accountNo")) ) {
+					mailAgent = (IMAPAgent) mailAgentMap.get("mailAgent");
+					
+					if(((Account)mailAgentMap.get("account")).getAccountDomain().contains("gmail")) {
+						dest = "[Gmail]/휴지통";
+					} else {
+						dest = "Deleted Messages";
+					}
+					
+					break;
+				}
+			}
+			
+			if(mailAgent != null) {
+				Message[] mailTarget = {mailAgent.getMessage(Integer.parseInt((String) mailInfo.get("mailNo")))};
+				mailAgent.moveMessage(mailTarget, mailAgent.getFolder("inbox"), mailAgent.getFolder(dest)); 
+			}
+		}
+		
+		return false;
+	}
 }

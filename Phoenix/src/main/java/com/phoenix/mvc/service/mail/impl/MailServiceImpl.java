@@ -143,4 +143,9 @@ public class MailServiceImpl implements MailService {
 	public boolean setUnSeenMail(List<Map<String, Object>> mailInfoList, List<Account> accountList) throws FileNotFoundException, MessagingException, IOException {
 		return mailDao.setUnSeenMail(mailInfoList, accountList);
 	}
+
+	@Override
+	public boolean trashMail(List<Map<String, Object>> mailInfoList, List<Account> accountList) throws FileNotFoundException, MessagingException, IOException {
+		return mailDao.trashMail(mailInfoList, accountList);
+	}
 }

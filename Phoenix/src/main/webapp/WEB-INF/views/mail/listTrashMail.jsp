@@ -111,20 +111,27 @@
 								<form id="boardPage">
 									<input type="hidden" name="currentPage">
 								</form>
-								<p>총 ${totalCount }개 중 ${search.startRowNum} - ${search.endRowNum }</p>
+								<p>총 ${totalCount }개 중 ${search.startRowNum} - 
+									<c:if test="${search.endRowNum > totalCount}">${totalCount }</c:if> 
+									<c:if test="${search.endRowNum <= totalCount}">${search.endRowNum }</c:if>
+								</p>
 								<table class="table table-hover">
 									<tbody>
 										<c:forEach items="${mailList }" var="mail">
 											<tr>
 												<input type="hidden" class="mailNo" value="${mail.mailNo }">
 												<input type="hidden" class="accountNo" value="${mail.accountNo }">
-												<td><input type="checkbox"></td>
+												<td><input type="checkbox" onclick="event.cancelBubble = true;"></td>
 												<td>
 													<c:if test="${mail.seen}">
-														<i class="mdi mdi-email-open"></i>
+														<a class="seenFlag" onclick="event.cancelBubble = true;">
+															<i class="mdi mdi-email-open"></i>
+														</a>
 													</c:if>
 													<c:if test="${!mail.seen}">
-														<i class="mdi mdi-email"></i>
+														<a class="seenFlag" onclick="event.cancelBubble = true;">
+															<i class="mdi mdi-email"></i>
+														</a>
 													</c:if>
 												</td>
 												<td>${mail.folder.fullName }</td>

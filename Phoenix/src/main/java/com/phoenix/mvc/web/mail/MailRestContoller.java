@@ -117,6 +117,14 @@ public class MailRestContoller {
 		return mailService.setUnSeenMail(mailInfoList, (List<Account>) req.getAttribute("accountList") );
 	}
 	
+	@RequestMapping("trashMail")
+	public boolean trashMail(@RequestBody List<Map<String, Object>> mailInfoList, HttpServletRequest req) throws FileNotFoundException, MessagingException, IOException {
+		System.out.println(mailInfoList);
+		System.out.println((List<Account>) req.getAttribute("accountList"));
+		
+		return mailService.trashMail(mailInfoList, (List<Account>) req.getAttribute("accountList") );
+	}
+	
 	@RequestMapping("deleteMail")
 	public boolean deleteMail(@RequestBody List<Map<String, Object>> mailInfoList, HttpServletRequest req) throws FileNotFoundException, MessagingException, IOException {
 		System.out.println(mailInfoList);

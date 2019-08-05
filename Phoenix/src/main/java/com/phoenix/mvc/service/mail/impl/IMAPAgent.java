@@ -35,9 +35,15 @@ public class IMAPAgent extends MailAgent{
         }  
     }  
       
-    public void moveMessage(Message[] message, Folder src, Folder dest) throws MessagingException {  
+    public void moveMessage(Message[] message, Folder src, Folder dest) throws MessagingException {
+    	dest.open(Folder.READ_WRITE);
+    	src.open(Folder.READ_WRITE);
+    	
         src.copyMessages(message, dest);  
         src.setFlags(message, new Flags(Flags.Flag.DELETED), true);  
+        
+        src.close();
+        dest.close();
     }  
       
     //메세지 하나만 읽음 처리할때
