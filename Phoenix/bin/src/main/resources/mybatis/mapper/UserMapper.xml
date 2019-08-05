@@ -6,7 +6,6 @@
 
 <mapper namespace="UserMapper">
  	
- 	
 	<resultMap id="userSelectMap" type="com.phoenix.mvc.service.domain.User">
 		<result property="userNo" 				column="user_no" 				jdbcType="NUMERIC"/>
 		<result property="userId" 				column="user_id" 				jdbcType="VARCHAR"/>
@@ -163,6 +162,41 @@
 	 		account
 	 	WHERE
 	 		user_no = #{value} 
+	 </select>
+	 
+	  <insert id="addSnsAccount" parameterType="Account">
+	 	INSERT 
+	 	INTO account
+	 		(account_no,
+	 	     user_no,
+	 	     account_type,
+	 	     account_id,
+	 	     account_pw,
+	 	     account_domain)
+	 	VALUES
+	 		(seq_account_account_no.NEXTVAL,
+			 #{userNo},
+			 #{accountType},
+			 #{accountId},
+			 #{accountPw},
+			 #{accountDomain})
+	 </insert>
+	 
+	<update id="updateSnsAccount"	parameterType="Account" >
+	   	UPDATE account
+	   	<set>
+		account_domain=#{accountDomain}	
+	   	</set>
+	   	WHERE user_no = #{userNo} AND account_type = #{accountType}
+	 </update>
+	
+	<select id="getSnsAccount" parameterType="Account" resultMap="accountSelectMap">
+	 	SELECT
+	 		*
+	 	FROM
+	 		account
+	 	WHERE
+	 		user_no = #{value}  AND account_type = 'ua109' AND account_type = 'ua110'
 	 </select>
 	 
 </mapper>

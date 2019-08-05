@@ -31,4 +31,6 @@ public interface UserService {
 	public User getNaver(String naverId) throws Exception;
 	
 	public List<Account> getMailAccount(int userNo);
+	
+	public void updateUserKakao(User user) throws Exception;
 }
