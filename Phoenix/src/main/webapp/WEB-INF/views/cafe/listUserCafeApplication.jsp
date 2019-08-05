@@ -117,10 +117,10 @@
 	 <td >${cafeApplication.regDate}</td>
 	 <td >${cafeApplication.memberNickname}</td>
 	 <td >
-	 <c:if test='${cafeApplication.acceptStatusCode=="ca101"}'><i class="mdi mdi-emoticon-neutral" style='font-size: 15pt;'></i>대기중</c:if>
-	 <c:if test='${cafeApplication.acceptStatusCode=="ca102"}'><i class="mdi mdi-emoticon-happy" style='font-size: 15pt;'></i>승인</c:if>
-	 <c:if test='${cafeApplication.acceptStatusCode=="ca103"}'><i class="mdi mdi-emoticon-sad" style='font-size: 15pt;'></i>거절</c:if>
-	 <c:if test='${cafeApplication.acceptStatusCode=="ca104"}'><i class="mdi mdi-emoticon-cool" style='font-size: 15pt;'></i>자동승인</c:if>
+	 <c:if test='${cafeApplication.acceptStatusCode=="ca100"}'><i class="mdi mdi-emoticon-neutral" style='font-size: 15pt;'></i>대기중</c:if>
+	 <c:if test='${cafeApplication.acceptStatusCode=="ca101"}'><i class="mdi mdi-emoticon-happy" style='font-size: 15pt;'></i>승인</c:if>
+	 <c:if test='${cafeApplication.acceptStatusCode=="ca102"}'><i class="mdi mdi-emoticon-sad" style='font-size: 15pt;'></i>거절</c:if>
+	 <c:if test='${cafeApplication.acceptStatusCode=="ca103"}'><i class="mdi mdi-emoticon-cool" style='font-size: 15pt;'></i>자동승인</c:if>
 	 </td>
 	 </tr>
 	 

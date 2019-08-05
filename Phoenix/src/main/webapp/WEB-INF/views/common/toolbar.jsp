@@ -6,7 +6,6 @@
 
 <!DOCTYPE html>
 
-
 <html lang="ko">
 
 <style type="text/css">
@@ -127,9 +126,6 @@ input[type="checkbox"] {
 	<!--**********************************
         Main wrapper start
     ***********************************-->
-
-
-
    
 <!--**********************************
             Header start

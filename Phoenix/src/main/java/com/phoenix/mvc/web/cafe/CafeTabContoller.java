@@ -14,17 +14,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.phoenix.mvc.service.cafe.CafeManageService;
 import com.phoenix.mvc.service.cafe.CafeTabService;
 import com.phoenix.mvc.service.domain.Cafe;
-import com.phoenix.mvc.service.domain.CafeMember;
 import com.phoenix.mvc.common.Page;
 import com.phoenix.mvc.service.domain.User;
 import com.phoenix.mvc.service.user.UserService;
@@ -129,29 +124,13 @@ public class CafeTabContoller {
 
 		return "forward:/WEB-INF/views/cafe/cafeHomeMain.jsp";
 	}
-/*
-	@RequestMapping(value = "main", method = RequestMethod.POST)
-	public String cafeMainPost(@ModelAttribute Search search, Model model) throws Exception {
 
-		System.out.println("/cafe/main POST");
-
-		Map map = cafeTabService.getCafeHome(search);
-		List myCafelist = (List) map.get("myCafelist");
-		List categorizedCafeList = (List) map.get("categorizedCafeList");
-
-		model.addAttribute("search", search);
-		model.addAttribute("myCafelist", myCafelist);
-		model.addAttribute("categorizedCafeList", categorizedCafeList);
-
-		return "forward:/WEB-INF/views/cafe/cafeHomeMain.jsp";
-	}
-*/
 	@RequestMapping("main/search")
 	public String cafeSearch(@ModelAttribute("search") Search search, Model model) throws Exception {
 
 		System.out.println("/cafe/main/search입니다.");
 
-		pageSize = 3;
+		pageSize = 10;
 
 		if (search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
@@ -202,8 +181,7 @@ public class CafeTabContoller {
 
 ///////////////////////////////// 기황 끝//////////////////////////////////////
 
-////////////////////////////////////////////// 예림시작
-////////////////////////////////////////////// ////////////////////////////////////////////////
+////////////////////////////////////////////// 예림시작  ////////////////////////////////////////////////
 //@RequestMapping("/{cafeURL}")
 	public String getCafeMain(@PathVariable String cafeURL, HttpSession session, Model model) throws Exception {
 		System.out.println("/cafe/{cafeURL}");
@@ -238,6 +216,5 @@ public class CafeTabContoller {
 
 		return "cafe/mainCafe";
 	}
-//////////////////////////////////////////////////// 예림
-//////////////////////////////////////////////////// 끝//////////////////////////////////////////////
+//////////////////////////////////////////////////// 예림 끝//////////////////////////////////////////////
 }
