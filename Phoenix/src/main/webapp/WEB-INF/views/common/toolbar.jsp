@@ -153,8 +153,8 @@ input[type="checkbox"] {
 							 || fn:startsWith(URI,"/WEB-INF/views/cafe/listCafeNewsFeed.jsp") 
 							 || fn:startsWith(URI,"/WEB-INF/views/cafe/listUserCafeApplication.jsp")}'>
 								<c:if test="${!empty sessionScope.user}">
-									<i class="mdi mdi-clipboard-outline" id='newsFeeding' style='font-size: 30pt'></i>
-									<i class="mdi mdi-library-books" id='myApplications' style='font-size: 30pt'></i>
+								<i class="mdi mdi-library-books" id='newsFeeding' style='font-size: 30pt'></i>
+								<i class="mdi mdi-clipboard-outline" id='myApplications' style='font-size: 30pt'></i>
 								</c:if>
 							</c:if>
 					</div>
@@ -229,12 +229,6 @@ input[type="checkbox"] {
             Header end ti-comment-alt
         ***********************************-->
 
-
-
-
-	
-
-
 		<!-- Modal 내용 시작 -->
 		<div class="modal fade" id="exampleModalCenter" style="display: none;"
 			aria-hidden="true" style="max-width:100%;" style=" width: auto;">
@@ -282,8 +276,6 @@ input[type="checkbox"] {
 		<!--**********************************
             Header end ti-comment-alt
         ***********************************-->
-
-
 
 	<!--**********************************
         Main wrapper end
