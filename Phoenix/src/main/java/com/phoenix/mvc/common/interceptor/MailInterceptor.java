@@ -8,11 +8,13 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.phoenix.mvc.service.domain.Account;
 import com.phoenix.mvc.service.domain.User;
+import com.phoenix.mvc.service.mail.MailService;
 import com.phoenix.mvc.service.user.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +23,10 @@ public class MailInterceptor extends HandlerInterceptorAdapter {
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
+	
+	@Autowired
+	@Qualifier("mailServiceImpl")
+	private MailService mailService;
 
 	public MailInterceptor() {
 		System.out.println("Mail Interceptor 생성");
@@ -49,14 +55,38 @@ public class MailInterceptor extends HandlerInterceptorAdapter {
 		else {
 			List<Account> accountList = userService.getMailAccount(user.getUserNo());
 			
-			if(accountList != null && accountList.size() > 0) {
-				System.out.println("연동된 메인 계정 존재!");
-				request.setAttribute("accountList", accountList);
-			}else {
+			if(!(accountList != null && accountList.size() > 0)) {
 				System.out.println("연동된 메일 계정 없음!");
-				response.sendRedirect(request.getContextPath() + "/user/getUserInfo");
+				response.sendRedirect(request.getContextPath() + "/user/getUserInfo?userNo=" + user.getUserNo());
 				return false;
 			}
+			
+			System.out.println("연동된 메인 계정 존재!");
+			request.setAttribute("accountList", accountList);
+			
+			int accountNo = 0;
+			
+			if(request.getParameter("accountNo") != null) {
+				System.out.println("accountNo Null 아님");
+				accountNo = Integer.parseInt((String)request.getParameter("accountNo"));
+			}
+			
+			
+			if(accountNo != 0) {
+				for(Account account : accountList) {
+					if(account.getAccountNo() == accountNo) {
+						accountList = new ArrayList<Account>();
+						accountList.add(account);
+						break;
+					}
+				}
+			}
+			
+			Map<String, Object> mailCount = mailService.getBoxMailCount(accountList);
+			request.setAttribute("inboxTotalCount", mailCount.get("inboxTotalCount"));
+			request.setAttribute("sentTotalCount", mailCount.get("sentTotalCount"));
+			request.setAttribute("importantTotalCount", mailCount.get("importantTotalCount"));
+			request.setAttribute("trashTotalCount", mailCount.get("trashTotalCount"));
 		}
 
 		// 모든 경우가 만족

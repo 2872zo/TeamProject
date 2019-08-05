@@ -215,7 +215,6 @@ display : none;
 					</div>
 					
 					</c:if>
-					
 				
 				<div class='col-lg-2' style='padding-left: 0px; margin-top:5px;'>
 					<br/><fmt:formatDate value="${chat.regDate}" type="both" pattern="yy-MM-dd HH:mm"/>

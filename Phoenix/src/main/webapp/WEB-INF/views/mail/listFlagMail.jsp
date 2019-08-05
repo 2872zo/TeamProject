@@ -119,6 +119,17 @@
 											<tr>
 												<input type="hidden" class="mailNo" value="${mail.mailNo }">
 												<input type="hidden" class="accountNo" value="${mail.accountNo }">
+												<td>
+													<c:if test="${fn:contains(mail.accountDomain, 'daum') }">
+														<img src="/images/daum.ico" style="width: 20px;height: auto;">
+													</c:if>
+													<c:if test="${fn:contains(mail.accountDomain, 'naver') }">
+														<img src="/images/naver.ico" style="width: 20px;height: auto;">
+													</c:if>
+													<c:if test="${fn:contains(mail.accountDomain, 'gmail') }">
+														<img src="/images/google.ico" style="width: 20px;height: auto;">
+													</c:if>
+												</td>
 												<td><input type="checkbox" onclick="event.cancelBubble = true;"></td>
 												<td>
 													<c:if test="${mail.seen}">

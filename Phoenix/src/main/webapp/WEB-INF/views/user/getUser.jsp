@@ -8,6 +8,9 @@
 <html lang="ko">
 	
 <head>
+           <div class="nav-header">
+            <c:import url="/WEB-INF/views/common/brand-logo.jsp"/>
+        </div>
 
 		<!-- ToolBar Start /////////////////////////////////////-->
 		<jsp:include page="../common/toolbar.jsp" />
@@ -29,20 +32,16 @@
 </head>
 
 <style type="text/css">
-	#accountText{
-		color: orange;
-		font-family
-	}
+#accountText{
+	color: orange;
+	font-family
+}
 	
 	#profile {
 	    margin-bottom: 5%;
 	    }
 	
 	
-	i{
-		-webkit-transition:color 0.3s;
-	    transition:color 0.3s;
-	}
 	
 	i:hover {
 		cursor: pointer;
@@ -188,7 +187,7 @@
 								<div class="basic-form">			
 								<br>
 									<form id="adduser">
-						<input type="hidden" id = "userNo" name="userNo" value="${user.userNo }"/>
+						<input type="hidden" name="userNo" value="${user.userNo }"/>
                            
                            
                            <div class="row">
@@ -198,8 +197,8 @@
                         <div class="row">
                         
                         
-                            <div class="col-md-7 col-lg-6">
-                                <div class="card">
+                            <div class="col-md-7 col-lg-6" >
+                                <div class="card" >
                                     <div class="card-header bg-white">
                                         <h5 class="card-title">프로필</h5>
                                         <h6 class="card-subtitle mb-2 text-muted"></h6>
@@ -220,7 +219,7 @@
                             
                             
                             <!-- End Col -->
-                            <div class="col-md-7 col-lg-6">
+                            <div class="col-md-7 col-lg-6" id="phonemail">
                                 <div class="card">
                                     <div class="card-header bg-white">
                                         <h5 class="card-title">연락처</h5>
@@ -250,7 +249,7 @@
                         <div class="row">
                         
                         
-                            <div class="col-md-7 col-lg-6">
+                            <div class="col-md-7 col-lg-6" id="knlogin">
                                 <div class="card">
                                     <div class="card-header bg-white">
                                         <h5 class="card-title">연동로그인</h5>
@@ -258,16 +257,31 @@
                                     </div>
                                     <img class="img-fluid" src="images/big/img1.jpg" alt="">
                                     <div class="card-body">                                
-                                         
-                                    <a id="kakaoIcon"><img src="/images/uploadFiles/kakao/kakaoIcon.jpg" width=50; height=45;/></a>   
-                                        <h5><p class="card-text">카카오 &nbsp;&nbsp;: &nbsp;&nbsp;
-                                        <c:if test="${user.kakaoId != null}">연동                                    	
-                                        </c:if></p></h5>
+                                     
+                                     <c:if test="${user.kakaoId != null }">    
+                                    <a id="kakaoIcon"><img src="/images/uploadFiles/kakao/kakaoIcon.jpg" width=50; height=45;/></a>
+                                    	
+                                    <font size="4" color="#dea004"> 연동</font>
+                                    		  
+                                        </c:if>
+                                       
+                                     <c:if test="${user.kakaoId == null }">    
+                                    <a id="kakaoIcon"><img src="/images/uploadFiles/kakao/kakaoIcon.jpg" width=50; height=45;/></a> 
+                                    <font size="4" color="#dea004"> 미연동</font>
+                                        </c:if>
                                         <br>
+                                        <br>
+                                     <c:if test="${user.naverId != null }">    
+                                    <a id="naverIcon"><img src="/images/uploadFiles/naver/naverIcon.jpg" width=50; height=45;/></a> 
+										<font size="4" color="#dea004"> 연동</font> 
+                                        </c:if>
+                                    <a><img src="/images/uploadFiles/kakao/white.jpg" width=50; height=45;/></a>
+                                        <font size="4" color="#dea004"></font><br><br>
+                                        
+                                     <c:if test="${user.naverId == null }">    
                                     <a id="naverIcon"><img src="/images/uploadFiles/naver/naverIcon.jpg" width=50; height=45;/></a>
-                                        <h5><p class="card-text">네이버 &nbsp;&nbsp;: &nbsp;&nbsp;
-                                        <c:if test="${empty user.kakaoId}"> 미연동                                       	
-                                        </c:if></p></h5>
+										<font size="4" color="#dea004"> 미연동</font>
+                                        </c:if>
                                         
                                     </div>
                                     <div class="card-footer">
@@ -285,7 +299,7 @@
                             <!-- End Col -->
 
                         
-                            <div class="col-md-7 col-lg-6">
+                            <div class="col-md-7 col-lg-6" id="shmlogin">
                                 <div class="card">
                                     <div class="card-header bg-white">
                                         <h5 class="card-title">연동계정</h5>
@@ -293,12 +307,12 @@
                                     </div>
                                     <img class="img-fluid" src="images/big/img1.jpg" alt="">
                                     <div class="card-body">                                
-                                         
-                                    <a id="kakaoIcon"><img src="/images/uploadFiles/kakao/kakaoIcon.jpg" width=50; height=45;/></a>   
-                                        <h5><p class="card-text">카카오 &nbsp;&nbsp;: &nbsp;&nbsp;연동</p></h5><br>
-                                    <a id="naversIcon"><img src="/images/uploadFiles/naver/naverIcon.jpg" width=50; height=45;/></a>
-                                        <h5><p class="card-text">네이버 &nbsp;&nbsp;: &nbsp;&nbsp;미연동</p></h5>
-                                        
+                                    <a><img src="/images/uploadFiles/kakao/mail.jpg" width=50; height=45;/></a>                                      
+                                        <font size="4" color="#dea004">연동가능</font><br><br>
+                                    <a><img src="/images/uploadFiles/kakao/shop.jpg" width=50; height=45;/></a>
+                                        <font size="4" color="#dea004">연동가능</font><br><br>
+                                    <a><img src="/images/uploadFiles/kakao/sns.jpg" width=50; height=45;/></a>     
+                                        <font size="4" color="#dea004">연동가능</font><br>
                                     </div>
                                     <div class="card-footer">
                                         <p class="card-text d-inline"><small class="text-muted"></small>
@@ -465,17 +479,19 @@
 					<div class="modal-body">
 						<div class="card-body pt-5">
 							<a class="text-center">
-								<h4>쇼핑몰 연동</h4>
+								<h4>불사조</h4>
 							</a>
 
-							<form class="mt-5 mb-5 login-input form-inline">
-								<div  id="11stIcon" value="0"><img class="shoppingmall_button" src="/images/uploadfiles/shoppingmall/11st.jpg" /></div>
-								<div value="1"><img id="coupangIcon" class="shoppingmall_button" src="/images/uploadfiles/shoppingmall/coupang.jpg" /></div>
-								<div value="2"><img id="gmarketIcon" class="shoppingmall_button" src="/images/uploadfiles/shoppingmall/gmarket.jpg" /></div>
-								<div value="3"><img id="tmonIcon"  class="shoppingmall_button" src="/images/uploadfiles/shoppingmall/tmon.jpg" /></div>
-								
-								<input type="hidden" id="selected_shoppingmall" name="selected_shoppingmall" value="-1"/>
-								
+							<form class="mt-5 mb-5 login-input">
+								<div class="form-group">
+									<input type="text" class="form-control" placeholder="ID"
+										name="userId">
+								</div>
+								<div class="form-group">
+									<input type="password" class="form-control"
+										placeholder="PASSWORD" name="password">
+								</div>
+								<button class="btn login-form__btn submit w-100" id="addShoppingAccount">로그인</button>
 							</form>
 							
 						</div><!-- card body end -->

@@ -23,6 +23,7 @@ public class Mail {
 	private String content;
 	private List<Map<String, Object>> attachmentList;
 	private String inlineList;
+	private String accountDomain;
 	
 	
 	public int getMailNo() {
@@ -104,6 +105,12 @@ public class Mail {
 		this.inlineList = inlineList;
 	}
 	
+	public String getAccountDomain() {
+		return accountDomain;
+	}
+	public void setAccountDomain(String accountDomain) {
+		this.accountDomain = accountDomain;
+	}
 	@Override
 	public String toString() {
 		return "Mail [mailNo=" + mailNo + ", accountNo=" + accountNo + ", folder=" + folder + ", sentDate=" + sentDate

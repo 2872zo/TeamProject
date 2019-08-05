@@ -88,6 +88,7 @@
 		<if test="cafeType==5">'cc105'</if>
 		<if test="cafeType==6">'cc106'</if>
 		</where> 
+		ORDER BY members DESC
 	</sql>
 		
 	 <select id="categorizedCafeList" parameterType="Search" resultMap="cafeTabSelectMap">
@@ -129,6 +130,7 @@
 		</if>
 		AND
 		m.user_no = #{userNo}
+		ORDER BY members DESC
 	 </sql>
 	 
 	 <select id="cafeSortingByStatus" parameterType="Search" resultMap="cafeTabSelectMap">
@@ -162,6 +164,7 @@
 		AND
 		g.member_grade_code='cg100' 
 		AND m.user_no = #{userNo}
+		ORDER BY reg_date DESC
 	 </sql>
 	 
 	 <select id="ownCafe" parameterType="Search" resultMap="cafeTabSelectMap">

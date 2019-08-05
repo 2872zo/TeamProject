@@ -44,4 +44,6 @@ public interface MailService {
 	public boolean setUnSeenMail(List<Map<String, Object>> mailInfoList, List<Account> accountList) throws FileNotFoundException, MessagingException, IOException;
 
 	public boolean trashMail(List<Map<String, Object>> mailInfoList, List<Account> accountList) throws FileNotFoundException, MessagingException, IOException;
+
+	public Map<String, Object> getBoxMailCount(List<Account> accountList) throws MessagingException, FileNotFoundException, IOException;
 }
