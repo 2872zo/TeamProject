@@ -76,7 +76,7 @@ html, body, .container-fluid {
 
 		<!--  화면구성 div Start /////////////////////////////////////-->
 
-	<div class="container-fluid" style='background-color: white;'>
+	<div class="container-fluid" style='background-color: white; padding-top:8%;'>
 
 		<br/>
 			<p class="text-center" style='color: #f5a142; font-size: 90px; '>Phoenix</p>
