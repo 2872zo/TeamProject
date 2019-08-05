@@ -12,7 +12,6 @@
             <c:import url="/WEB-INF/views/common/brand-logo.jsp"/>
         </div>
 
-
 		<!-- ToolBar Start /////////////////////////////////////-->
 		<jsp:include page="../common/toolbar.jsp" />
 		<!-- ToolBar End /////////////////////////////////////-->
@@ -731,14 +730,10 @@
 		});	
 
 		//sns계정 추가
-		$("#addSnsAccount").on("click", function(){
-			alert("sns계정 로그인!")
-			//alert($("input[name=sns]:checked").val());
-			//alert($("#snsId").val());
-			//alert($("#snsPw").val());
-			alert($("#userNo").val());
-		
-				$.ajax({
+		$("#addSnsAccount").on("click", function(e){
+			e.preventDefault();
+
+			$.ajax({
 					url: "/sns/json/addSns",
 					type : "POST",
 					data: JSON.stringify({
@@ -757,17 +752,26 @@
 						$("#preloader").attr("style", "display:none;");
 					}, 
 					success :  function(data) {
-						alert(data)
+						//alert("success "+data)
+	
+						if(data ==true){
+							sweetAlert("계정연동 성공"," 계정이 연동되었습니다.","success");
+						}else if (data == false){
+							sweetAlert("계정연동 실패","아이디와 비밀번호를 확인해 주십시오.","error");
+						}
 
 					},//success
 					error : function(data){
-						alert(data)
+						//alert("error "+data)
+						sweetAlert("계정연동 실패","아이디와 비밀번호를 확인해 주십시오.","error");
 
 					}//error
 
 				});//ajax 끝
-		});		
-	});
+		});//sns끝		
+
+
+	});//function끝
 
 /////////////////////////////////////////////////////////쇼핑몰계정시작////////////////////////
 	
