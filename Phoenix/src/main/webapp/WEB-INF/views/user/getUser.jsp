@@ -500,11 +500,11 @@
 						<div class="card-body pt-5" align="center">
 							<div class="form-group" >
                               <label class="radio-inline mr-3">
-                                  <input type="radio"  name ="sns" value="ua110"></label>
-                                  <img alt="" src="https://www.tokyu.co.jp/tokyuplus/_resource/images/instagram/logo_001.png"style="width: 150px;">
+                                  <input type="radio"  name ="sns" value="ua109"></label>
+                                  <img alt="" src="https://www.tokyu.co.jp/tokyuplus/_resource/images/instagram/logo_001.png"style="width: 150px;padding-right: 10px;">
                          
                               <label class="radio-inline mr-3">
-                                  <input type="radio"  name ="sns" value="ua109"></label>
+                                  <input type="radio"  name ="sns" value="ua110"></label>
                                   <img alt="" src="http://pluspng.com/img-png/facebook-logo-png-1722.png"  style="width: 150px;padding-bottom: 10px;">
                    
                               </div>
@@ -680,14 +680,11 @@
 		});	
 
 		//sns계정 추가
-		$("#addSnsAccount").on("click", function(){
+		$("#addSnsAccount").on("click", function(e){
 			alert("sns계정 로그인!")
-			//alert($("input[name=sns]:checked").val());
-			//alert($("#snsId").val());
-			//alert($("#snsPw").val());
-			alert($("#userNo").val());
-		
-				$.ajax({
+			e.preventDefault();
+
+			$.ajax({
 					url: "/sns/json/addSns",
 					type : "POST",
 					data: JSON.stringify({
@@ -706,17 +703,26 @@
 						$("#preloader").attr("style", "display:none;");
 					}, 
 					success :  function(data) {
-						alert(data)
+						//alert("success "+data)
+	
+						if(data ==true){
+							sweetAlert("계정연동 성공"," 계정이 연동되었습니다.","success");
+						}else if (data == false){
+							sweetAlert("계정연동 실패","아이디와 비밀번호를 확인해 주십시오.","error");
+						}
 
 					},//success
 					error : function(data){
-						alert(data)
+						//alert("error "+data)
+						sweetAlert("계정연동 실패","아이디와 비밀번호를 확인해 주십시오.","error");
 
 					}//error
 
 				});//ajax 끝
-		});		
-	});
+		});//sns끝		
+
+
+	});//function끝
 
 /////////////////////////////////////////////////////////쇼핑몰계정시작////////////////////////
 	
