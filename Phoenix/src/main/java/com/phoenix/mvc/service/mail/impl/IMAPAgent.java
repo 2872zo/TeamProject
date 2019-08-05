@@ -35,9 +35,15 @@ public class IMAPAgent extends MailAgent{
         }  
     }  
       
-    public void moveMessage(Message[] message, Folder src, Folder dest) throws MessagingException {  
+    public void moveMessage(Message[] message, Folder src, Folder dest) throws MessagingException {
+    	dest.open(Folder.READ_WRITE);
+    	src.open(Folder.READ_WRITE);
+    	
         src.copyMessages(message, dest);  
         src.setFlags(message, new Flags(Flags.Flag.DELETED), true);  
+        
+        src.close();
+        dest.close();
     }  
       
     //메세지 하나만 읽음 처리할때
@@ -68,7 +74,29 @@ public class IMAPAgent extends MailAgent{
         return folder.hasNewMessages();  
     }
 
+    public Message[] getDraftMessages() throws MessagingException {  
+        return getDefaultFolder().search(new FlagTerm(new Flags(Flags.Flag.SEEN), false));  
+    }  
+    
+    public Message[] getFlagMessages() throws MessagingException{
+    	return getDefaultFolder().search(new FlagTerm(new Flags(Flags.Flag.FLAGGED), true));
+    }
+    
+    public Message getFlagMessage(int msgNum) throws MessagingException{
+    	return getDefaultFolder().search(new FlagTerm(new Flags(Flags.Flag.FLAGGED), true))[msgNum];
+    }
+
+	public void setDeleteMail(int msgNum) throws MessagingException{
+		getMessage(msgNum).setFlag(Flag.DELETED, true);
+	}
+
+	public void setSeenMail(int msgNum) throws MessagingException {
+		setSeenFlag(getMessage(msgNum));
+	}
 	
+	public void setUnSeenMail(int msgNum) throws MessagingException {
+		setUnSeenFlag(getMessage(msgNum));
+	}
 
 	
 }

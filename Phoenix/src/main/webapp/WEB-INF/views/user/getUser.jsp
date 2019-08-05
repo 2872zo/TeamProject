@@ -714,6 +714,17 @@ input[type="checkbox"] {
 	
 ////////////////////////////////////////////////////////////////////////////////////	
 	var checkSessionUser = ${empty sessionScope.user};
+
+	$( function() {
+		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		$("a[id='kakaos' ]").on("click" , function() {
+				
+				var popOption = "left=500, top=100, width=600, height=600, resizable=no, location=no;"		
+				window.open("https://kauth.kakao.com/oauth/authorize?client_id=44d5aabe2b56604fedd6b0bfe3098f1a&redirect_uri=http://localhost:8080/user/oauth1&response_type=code","Kakao login",popOption);
+				
+		});
+	});
+
 	
 	$(function() {
 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)

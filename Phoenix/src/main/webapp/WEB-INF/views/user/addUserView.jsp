@@ -7,6 +7,10 @@
 <html lang="ko">
 
 <head>
+           <div class="nav-header">
+            <c:import url="/WEB-INF/views/common/brand-logo.jsp"/>
+        </div>
+
 		<!-- ToolBar Start /////////////////////////////////////-->
 		<jsp:include page="../common/toolbar.jsp" />
 		<!-- ToolBar End /////////////////////////////////////-->
@@ -113,10 +117,19 @@
                                             <div class="col-lg-6">
                                              <input type="password" class="form-control" id="passwordCheck" name="passwordCheck">
                                             </div>
-                                       	   </div><hr>
-
-                                        
-                                        
+                                       	   </div>
+                                   	   
+									<div class="form-group">
+							  <label class="col-lg-4 col-form-label" for="password3"></label>
+							<!--   <div class="col-sm-4" id="alert-success">비밀번호가 일치합니다.</div> -->
+							  <span id = "alert-success"><Strong class="text-success">비밀번호가 일치합니다.</Strong>
+							      </span>
+								<!-- <div class="col-sm-4" id="alert-danger">비밀번호가 일치하지 않습니다.</div> -->
+								<span id = "alert-danger"><Strong class= "text-danger">비밀번호가 일치하지 않습니다.</Strong>
+							      </span>
+							</div>
+                                    
+                                        <hr>
                                         <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="userNickname1"><h5>닉네임<span class="text-danger">*</span></h5>
                                              </label>
@@ -234,7 +247,29 @@
 		});
 	});
 
-	
+	   $(function(){
+	         $("#alert-success").hide();
+	         $("#alert-danger").hide();
+	         $("input").keyup(function(){
+	             var pwd1=$("#passWord").val();
+	             var pwd2=$("#passwordCheck").val();
+	             if(pwd1 != "" || pwd2 != ""){
+	                 if(pwd1 == pwd2){
+	                	 
+	                 	$("#check1").show();
+	                     $("#alert-success").show();
+	                     $("#alert-danger").hide();
+	                     $("#submit").removeAttr("disabled");
+	                 }else{
+	                	 
+	                	 $("#check1").hide();	
+	                     $("#alert-success").hide();
+	                     $("#alert-danger").show();
+	                     $("#submit").attr("disabled", "disabled");
+	                 }    
+	             }
+	         });
+	     });
 	
 	//유효성 검사
 	function fncAddUser() {
