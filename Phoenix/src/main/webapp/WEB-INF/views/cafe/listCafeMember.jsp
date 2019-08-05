@@ -82,11 +82,11 @@ cursor: pointer;
 <div class='card-body'>
 
 <form id='memberListingForm'>
-<input type="hidden" name='currentPage' 	value='0' id='memberCurrentPage' >
-<input type="hidden" name='cafeNo' 			value='${search.cafeNo}'>
-<input type="hidden" name='memberGrade' 	value='${search.memberGrade}' id='memberGrade'>		
-<input type="hidden" name='status' 			value='${search.status}' id='status'>
-<input type="hidden" name='sortCode' 		value='${search.sortCode}' id='sortCode'>
+<input type="hidden" name='currentPage' value='0' id='memberCurrentPage' >
+<input type="hidden" name='cafeNo' 		value='${search.cafeNo}'>
+<input type="hidden" name='memberGrade' value='${search.memberGrade}' id='memberGrade'>		
+<input type="hidden" name='status' 		value='${search.status}' id='status'>
+<input type="hidden" name='sortCode' 	value='${search.sortCode}' id='sortCode'>
 
 <div class='row'>
 <div class="col-lg-4">
@@ -118,7 +118,7 @@ cursor: pointer;
    <c:set var="i" value="0" />
    <c:forEach var="cafeGrade" items="${gradeList}">
    <c:set var="i" value="${ i+1 }" />
-  <button type="button" class='memberGrade btn btn-${ search.memberGrade == i ? "" : "outline-" }info'>
+  <button type="button" name='${cafeGrade.memberGradeCode}' class='memberGrade btn btn-${ search.memberGrade == i ? "" : "outline-" }info'>
   ${cafeGrade.gradeName}
   </button>
   </c:forEach>
