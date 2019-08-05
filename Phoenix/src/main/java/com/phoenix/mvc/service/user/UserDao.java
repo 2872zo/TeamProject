@@ -30,9 +30,14 @@ public interface UserDao {
 	
 	public boolean addMailAccount(Account account);
 	
-	public boolean deleteMailAccount(Account account);
+	public boolean deleteAccount(Account account);
 
 	public List<Account> getMailAccount(int userNo);
 	
 	public void updateUserKakao(User user) throws Exception;
+	
+	public List<Account> getSnsAccount(int userNo) throws Exception;
+
+	public List<Account> getShoppingmallAccount(int userNo) throws Exception;
+
 }

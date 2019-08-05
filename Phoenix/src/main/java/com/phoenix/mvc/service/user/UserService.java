@@ -8,7 +8,6 @@ import com.phoenix.mvc.service.domain.Account;
 import com.phoenix.mvc.service.domain.User;
 
 
-//==> ȸ���������� ������ ���� �߻�ȭ/ĸ��ȭ�� Service  Interface Definition  
 public interface UserService {
 	
 	// ȸ������
@@ -33,4 +32,8 @@ public interface UserService {
 	public List<Account> getMailAccount(int userNo);
 	
 	public void updateUserKakao(User user) throws Exception;
+
+	public List<List<Account>> getAllAccount(int userNo) throws Exception;
+	
+	public boolean deleteAccount(Account account);
 }

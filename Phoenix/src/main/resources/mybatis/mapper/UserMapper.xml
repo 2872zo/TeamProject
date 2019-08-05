@@ -127,6 +127,7 @@
 
 	 </select> 
 	 
+	 
 	 <insert id="addMailAccount" parameterType="Account">
 	 	INSERT 
 	 	INTO account
@@ -147,7 +148,7 @@
 			 #{accountDomain})
 	 </insert>
 	 
-	 <delete id="deleteMailAccount" parameterType="Account">
+	 <delete id="deleteAccount" parameterType="Account">
 	 	DELETE
 	 		account
 	 	WHERE
@@ -162,8 +163,38 @@
 	 	FROM
 	 		account
 	 	WHERE
-	 		user_no = #{value} 
+	 		user_no = #{value}
+	 		AND account_type IN ('ua100', 'ua101', 'ua102') 
 	 </select>
+	 
+	 <insert id="addShoppingmallAccount" parameterType="Account">
+	 	INSERT 
+	 	INTO account
+	 		(account_no,
+	 	     user_no,
+	 	     account_type,
+	 	     account_id,
+	 	     account_pw,
+	 	     account_domain)
+	 	VALUES
+	 		(seq_account_account_no.NEXTVAL,
+			 #{userNo},
+			 #{accountType},
+			 #{accountId},
+			 #{accountPw},
+			 #{accountDomain})
+	 </insert>
+	 
+	 <select id="getShoppingmallAccount" parameterType="int" resultMap="accountSelectMap">
+	 	SELECT
+	 		*
+	 	FROM
+	 		account
+	 	WHERE
+	 		user_no = #{value}
+	 		AND account_type IN ('ua103', 'ua104', 'ua105', 'ua106', 'ua107', 'ua108') 
+	 </select>
+	 
 	 
 	 <insert id="addSnsAccount" parameterType="Account">
 	 	INSERT 
@@ -198,5 +229,4 @@
 	 	WHERE
 	 		user_no = #{value}  AND account_type = 'ua109' AND account_type = 'ua110'
 	 </select>
-	 
 </mapper>
