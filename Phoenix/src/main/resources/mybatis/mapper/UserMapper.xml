@@ -227,6 +227,6 @@
 	 	FROM
 	 		account
 	 	WHERE
-	 		user_no = #{value}  AND account_type = 'ua109' AND account_type = 'ua110'
+	 		user_no = #{value}  AND account_type IN ( 'ua109','ua110')
 	 </select>
 </mapper>

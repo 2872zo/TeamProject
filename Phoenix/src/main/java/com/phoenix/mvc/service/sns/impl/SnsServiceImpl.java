@@ -60,7 +60,7 @@ public class SnsServiceImpl implements SnsService {
 		ChromeOptions options = new ChromeOptions();
 		options.setExperimentalOption("prefs", prefs);
 		options.setCapability("ignoreProtectedModeSettings", true);
-		//options.addArguments("headless");//창안켜줭~
+		options.addArguments("headless");//창안켜줭~
 		driver = new ChromeDriver(options);
 		wait = new WebDriverWait(driver, 20);
 		
@@ -318,8 +318,7 @@ public class SnsServiceImpl implements SnsService {
 						if(newTimeLine.getPost() == null) {
 							newTimeLine.setPost(" ");
 						}else if(newTimeLine.getPost()!= null) {
-							newTimeLine.getPost().replaceAll(newTimeLine.getPostId(), "");
-							newTimeLine.getPost().replaceAll("  ", "");
+							newTimeLine.setPost(newTimeLine.getPost().replaceAll("  ", ""));
 						}
 							
 					}
@@ -693,9 +692,10 @@ public class SnsServiceImpl implements SnsService {
 						
 					if(newTimeLine.getPost() == null) {
 						newTimeLine.setPost(" ");
+					}else if(newTimeLine.getPostId()!= null) {
+						newTimeLine.setPost(newTimeLine.getPost().replaceAll(newTimeLine.getPostId(), ""));
 					}else if(newTimeLine.getPost()!= null) {
-						newTimeLine.getPost().replaceAll(newTimeLine.getPostId(), "");
-						newTimeLine.getPost().replaceAll("  ", "");
+						newTimeLine.setPost(newTimeLine.getPost().replaceAll("  ", ""));
 					}
 				}
 			
@@ -791,6 +791,17 @@ public class SnsServiceImpl implements SnsService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public List getSnsAccount(Search search) {
+		
+		
+		
+		return snsDao.getSnsAccount(search.getUserNo());
+	}
+
+
+
 
 
 

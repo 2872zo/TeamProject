@@ -12,5 +12,6 @@ public interface SnsDao {
 	
 	public boolean deleteSnsAccount(Account account);
 	
+	
 
 }

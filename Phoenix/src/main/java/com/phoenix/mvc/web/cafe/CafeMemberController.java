@@ -78,7 +78,6 @@ public class CafeMemberController {
 		// userNo 받아오깅
 		User user = (User) request.getSession().getAttribute("user");
 		int userNo = user.getUserNo();
-		// int userNo = 10008;
 
 		if (cafeApplication.isAutoApplicationAcceptFlag()) {// 자동가입승인 ca103, 카페멤버 추가
 			cafeApplication.setUserNo(userNo);

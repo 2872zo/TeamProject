@@ -425,12 +425,14 @@
 									</i>
 								</h5>	
 								<div id="snsAccountList">
-									<div class="alert alert-dark d-flex justify-content-between" role="alert" 
-										style="margin-bottom:5px; background-color:rgba(128, 128, 128, 0.15); ">
-										<span style="margin-top:5px;">아이콘이나 연동계정 아이디 넣을것</span>
-										<button type="button" class="btn btn-danger btn-sm deleteMailAccount">연동해제</button>
-									</div> 	
-								</div>			
+									<c:forEach items="${snsAccountList }" var="snsAccount">
+										<div class="alert alert-dark d-flex justify-content-between" role="alert" style="margin-bottom:5px; background-color:rgba(128, 128, 128, 0.15); ">
+											<input type="hidden" name="accountType" value="${snsAccount.accountType }">
+											<span style="margin-top:5px;">${snsAccount.accountId }</span>
+											<button type="button" class="btn btn-danger btn-sm deleteAccount">연동해제</button>
+										</div> 	
+									</c:forEach>
+								</div>				
 							</div>
 							
 						</div><!-- card body end -->
@@ -562,21 +564,21 @@
 						<div class="card-body pt-5" align="center">
 							<div class="form-group" >
                               <label class="radio-inline mr-3">
-                                  <input type="radio"  name ="sns" value="ua109"></label>
+                                  <input type="radio"  name ="accountType" value="ua109"></label>
                                   <img alt="" src="https://www.tokyu.co.jp/tokyuplus/_resource/images/instagram/logo_001.png"style="width: 150px;padding-right: 10px;">
                          
                               <label class="radio-inline mr-3">
-                                  <input type="radio"  name ="sns" value="ua110"></label>
+                                  <input type="radio"  name ="accountType" value="ua110"></label>
                                   <img alt="" src="http://pluspng.com/img-png/facebook-logo-png-1722.png"  style="width: 150px;padding-bottom: 10px;">
                    
                               </div>
 				
 							<form class="mt-5 mb-5 login-input">
 								<div class="form-group">
-									<input type="text" class="form-control" placeholder="ID" id="snsId">
+									<input type="text" class="form-control" placeholder="ID" id="snsId" name ="accountId" >
 								</div>
 								<div class="form-group">
-									<input type="password" class="form-control" placeholder="PASSWORD" id="snsPw">
+									<input type="password" class="form-control" placeholder="PASSWORD" id="snsPw" name="accountPw">
 								</div>
 								<button class="btn login-form__btn submit w-100" id="addSnsAccount">로그인</button>
 							</form>
@@ -769,7 +771,7 @@
 					type : "POST",
 					data: JSON.stringify({
 						userNo : $("#userNo").val(),
-						accountType : $("input[name=sns]:checked").val(),
+						accountType : $("input[name=accountType]:checked").val(),
 						accountId : $("#snsId").val(),
 						accountPw : $("#snsPw").val()
 
@@ -789,6 +791,7 @@
 						//alert("success "+data)
 	
 						if(data ==true){
+							$("#snsLogin").modal("hide");
 							sweetAlert("계정연동 성공"," 계정이 연동되었습니다.","success");
 						}else if (data == false){
 							sweetAlert("계정연동 실패","아이디와 비밀번호를 확인해 주십시오.","error");
