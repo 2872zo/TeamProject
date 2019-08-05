@@ -467,17 +467,28 @@
 							<a class="text-center">
 								<h4>쇼핑몰 연동</h4>
 							</a>
-
-							<form class="mt-5 mb-5 login-input form-inline">
-								<div  id="11stIcon" value="0"><img class="shoppingmall_button" src="/images/uploadfiles/shoppingmall/11st.jpg" /></div>
-								<div value="1"><img id="coupangIcon" class="shoppingmall_button" src="/images/uploadfiles/shoppingmall/coupang.jpg" /></div>
-								<div value="2"><img id="gmarketIcon" class="shoppingmall_button" src="/images/uploadfiles/shoppingmall/gmarket.jpg" /></div>
-								<div value="3"><img id="tmonIcon"  class="shoppingmall_button" src="/images/uploadfiles/shoppingmall/tmon.jpg" /></div>
-								
-								<input type="hidden" id="selected_shoppingmall" name="selected_shoppingmall" value="-1"/>
-								
-							</form>
 							
+							<form class="mt-5 mb-5 login-input">
+								<div class="form-group" >
+	                              <label class="radio-inline mr-3">
+	                                  <input type="radio"  name ="accountType" value="ua105"></label>
+	                                  <img alt="" src="/images/uploadfiles/shoppingmall/tmon.jpg"style="width: 150px;">
+	                         
+	                              <label class="radio-inline mr-3">
+	                                  <input type="radio"  name ="accountType" value="ua103"></label>
+	                                  <img alt="" src="/images/uploadfiles/shoppingmall/11st.jpg"  style="width: 150px;padding-bottom: 10px;">
+	                   
+	                             </div>
+					
+								<div class="form-group">
+									<input type="text" class="form-control" placeholder="ID"  name="accountId">
+								</div>
+								<div class="form-group">
+									<input type="password" class="form-control" placeholder="PASSWORD"  name="accountPw">
+								</div>
+								<button class="btn login-form__btn submit w-100" id="addShoppingAccount">로그인</button>
+							</form>
+						
 						</div><!-- card body end -->
 					</div><!-- modal body end -->
 				</div><!-- modal content end -->
@@ -676,7 +687,19 @@
 
 		//쇼핑몰계정 추가
 		$("#addShoppingAccount").on("click", function(){
-			alert("쇼핑몰계정 로그인!")
+			alert("쇼핑몰계정 로그인!");
+
+			//ajax보내기전에  이 쇼핑몰에  account가 이미 등록되어있는지 확인
+			//account가 이미있으면 alert창으로 계정이 이미존재합니다. 재등록을 원한다면 계정 해제를 한후 새로 등록해주세요.
+			//없으면 ajax통신으로 계정 add
+			
+			$.ajax({ //ajax통신해서 보내고 
+
+				
+		
+			});
+
+			
 		});	
 
 		//sns계정 추가
