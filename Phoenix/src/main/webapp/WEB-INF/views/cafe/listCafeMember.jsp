@@ -231,8 +231,11 @@ $(function() {
 
 	$(".memberGrade").on("click" , function() {
 		var count = $(".memberGrade").index(this);
-		 $("#memberGrade").val(count);
-		 $("#memberListingForm").attr("method" , "POST").attr("action" , "/cafe/"+"${cafeURL}"+"/manage/getCafeMemberList").submit();
+		if (count != 0){
+			count = Number($(this).attr("name").substring(4)) + 1;
+			}
+		$("#memberGrade").val(count);
+		$("#memberListingForm").attr("method" , "POST").attr("action" , "/cafe/"+"${cafeURL}"+"/manage/getCafeMemberList").submit();
 	});
 
 	$(".sortCode").on("click" , function() {
@@ -241,12 +244,6 @@ $(function() {
 		 $("#memberListingForm").attr("method" , "POST").attr("action" , "/cafe/"+"${cafeURL}"+"/manage/getCafeMemberList").submit();
 	});
 
-	$(".memberNo").on("click" , function() {
-		//var count = $(".memberNo").index(this);
-		//$("#memberNo").val($($(".memberNo")[count]).text());
-		//$("#memberDetailForm").attr("method" , "POST").attr("action" , "/cafe/"+"${cafeURL}"+"/manage/getCafeMember").submit();
-	});
-	
 	$(".goToMember").on("click" , function() {
 			//alert($(this).attr("id"));
 			$("#memberNo").val($(this).attr("id"));
