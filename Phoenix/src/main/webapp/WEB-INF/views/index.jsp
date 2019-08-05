@@ -34,6 +34,9 @@
 <!-- ToolBar End /////////////////////////////////////-->
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <style type="text/css">
+html, body, .container-fluid {
+	width: 100%; height: 100%;
+}
 	
 	p{
 		
@@ -49,10 +52,6 @@
 		box-shadow : 5px 5px 5px #8080804a;
 	}
 	
-<<<<<<< HEAD
-=======
-	
->>>>>>> refs/remotes/origin/master
 </style>
 
 </head>
@@ -76,9 +75,8 @@
 
 		<!--  화면구성 div Start /////////////////////////////////////-->
 
-	<div class="card">
+	<div class="container-fluid" style='background-color: white;'>
 
-		<div class="card-body">
 		<br/>
 			<p class="text-center" style='color: #f5a142; font-size: 90px; '>Phoenix</p>
 			<div class='d-flex justify-content-center'>
@@ -112,9 +110,7 @@
 			<br/>
 			<br/>
 
-		</div>
 	</div>
-
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
 

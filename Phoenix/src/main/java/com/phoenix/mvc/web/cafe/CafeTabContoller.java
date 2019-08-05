@@ -103,8 +103,7 @@ public class CafeTabContoller {
 		if (session.getAttribute("user") != null) {
 			user = (User) session.getAttribute("user");
 		}
-		System.out.println("커렌트페이지 ㅐㄴ놔라"+search.getCurrentPage());
-		pageSize = 1;
+		pageSize = 6;
 
 		if (search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
