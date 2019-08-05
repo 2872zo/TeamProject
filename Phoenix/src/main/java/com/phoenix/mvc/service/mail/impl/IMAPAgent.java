@@ -98,5 +98,11 @@ public class IMAPAgent extends MailAgent{
 		setUnSeenFlag(getMessage(msgNum));
 	}
 
+	public void setFlagMail(int parseInt) throws MessagingException {
+		getMessage(parseInt).setFlag(Flag.FLAGGED, true);
+	}
 	
+	public void setUnFlagMail(int parseInt) throws MessagingException {
+		getMessage(parseInt).setFlag(Flag.FLAGGED, false);
+	}
 }
