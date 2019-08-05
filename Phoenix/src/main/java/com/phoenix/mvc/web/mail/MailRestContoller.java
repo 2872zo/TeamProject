@@ -1,6 +1,8 @@
 package com.phoenix.mvc.web.mail;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,11 +13,13 @@ import javax.annotation.PreDestroy;
 import javax.mail.Address;
 import javax.mail.BodyPart;
 import javax.mail.Message;
+import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -97,23 +101,35 @@ public class MailRestContoller {
 		return mailService.deleteMailAccount(account);
 	}
 	
-	@RequestMapping("setSeen")
-	public boolean setSeen(@RequestParam int mailNo) {
-		return false;
+	@RequestMapping("setSeenMail")
+	public boolean setSeenMail(@RequestBody List<Map<String, Object>> mailInfoList, HttpServletRequest req) throws FileNotFoundException, MessagingException, IOException {
+		System.out.println(mailInfoList);
+		System.out.println((List<Account>) req.getAttribute("accountList"));
+		
+		return mailService.setSeenMail(mailInfoList, (List<Account>) req.getAttribute("accountList") );
 	}
 
-	@RequestMapping("setSeens")
-	public boolean setSeens(@RequestParam int[] mailNoArray) {
-		return false;
+	@RequestMapping("setUnSeenMail")
+	public boolean setUnSeenMail(@RequestBody List<Map<String, Object>> mailInfoList, HttpServletRequest req) throws FileNotFoundException, MessagingException, IOException {
+		System.out.println(mailInfoList);
+		System.out.println((List<Account>) req.getAttribute("accountList"));
+		
+		return mailService.setUnSeenMail(mailInfoList, (List<Account>) req.getAttribute("accountList") );
 	}
 	
-	@RequestMapping("setUnSeen")
-	public boolean setUnSeen(@RequestParam int mailNo) {
-		return false;
+	@RequestMapping("trashMail")
+	public boolean trashMail(@RequestBody List<Map<String, Object>> mailInfoList, HttpServletRequest req) throws FileNotFoundException, MessagingException, IOException {
+		System.out.println(mailInfoList);
+		System.out.println((List<Account>) req.getAttribute("accountList"));
+		
+		return mailService.trashMail(mailInfoList, (List<Account>) req.getAttribute("accountList") );
 	}
 	
-	@RequestMapping("setUnSeens")
-	public boolean setUnSeens(@RequestParam int[] mailNoArray) {
-		return false;
+	@RequestMapping("deleteMail")
+	public boolean deleteMail(@RequestBody List<Map<String, Object>> mailInfoList, HttpServletRequest req) throws FileNotFoundException, MessagingException, IOException {
+		System.out.println(mailInfoList);
+		System.out.println((List<Account>) req.getAttribute("accountList"));
+		
+		return mailService.deleteMail(mailInfoList, (List<Account>) req.getAttribute("accountList") );
 	}
 }

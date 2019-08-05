@@ -18,15 +18,17 @@
 						<span class="input-group-text bg-transparent border-0 pr-2 pr-sm-3" id="mail" style="padding-top: 10px; font-size: 1rem;">Mail</span>
 					</a>
 					
-					<input type="checkbox" class="form-check-input">
+					<div style="margin:10px; margin-left:20px;">
+						<input type="checkbox" class="form-check-input">
+					</div>
 					
-					<button class="btn btn-primary" id="move">이동</button>
-					
-					<button class="btn btn-primary" id="delete">삭제</button>		
+					<button class="btn btn-primary btn-sm" id="delete" style="margin-right:20px;" name="deleteMailButton">삭제</button>		
 					
 					<div class="btn-group" role="group">
 						<button type="button" class="btn mb-1 btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">읽음표시</button>
-						<div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 37px, 0px);"><a class="dropdown-item" href="#">읽음 표시</a> <a class="dropdown-item" href="#">안 읽음 표시</a>
+						<div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 37px, 0px);">
+							<a class="dropdown-item" href="#" name="setSeenButton">읽음 표시</a> 
+							<a class="dropdown-item" href="#" name="setUnSeenButton">안 읽음 표시</a>
 						</div>
 					</div>		
 					

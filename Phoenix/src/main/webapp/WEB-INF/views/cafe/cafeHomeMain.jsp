@@ -16,7 +16,8 @@
 	href="/images/favicon.png">
 <!-- Custom Stylesheet -->
 <link href="/css/style.css" rel="stylesheet">
-
+<link rel="stylesheet" href="/plugins/sweetalert/css/sweetalert.css">
+<link href="/css/custom/common-toolbar.css" rel="stylesheet">
 <link rel="stylesheet" href="/css/custom/scroll-top.css">
 <!-- 토스터 css -->
 <link rel="stylesheet" href="/plugins/toastr/css/toastr.min.css">
@@ -25,7 +26,9 @@
 <title>CafeTabMain</title>
 <!--셀렉터 사이즈 조절-->
 
+<script src="/plugins/sweetalert/js/sweetalert.min.js"></script>
 <style type="text/css">
+
 .dropdown-toggle{height: 100%; font-size: 16pt;}
 .myCafe:hover {
 	cursor: pointer;
@@ -57,16 +60,16 @@
             Nav header start
         ***********************************-->
            <div class="nav-header">
-            <c:import url="/WEB-INF/views/common/brand-logo.jsp"/>
-        </div>
+            	<c:import url="/WEB-INF/views/common/brand-logo.jsp"/>
+          </div>
         <!--**********************************
             Nav header end
         ***********************************-->
         
         
-<!-- ToolBar Start /////////////////////////////////////-->
-<jsp:include page="../common/toolbar.jsp" />
-<!-- ToolBar End /////////////////////////////////////-->
+		<!-- ToolBar Start /////////////////////////////////////-->
+		<jsp:include page="../common/toolbar.jsp" />
+		<!-- ToolBar End /////////////////////////////////////-->
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<br/>

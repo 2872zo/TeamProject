@@ -94,15 +94,9 @@ public class MailContoller {
 		
 		map.put("mail", resultMap.get("mail"));
 		map.put("fileList", resultMap.get("fileList"));
+		map.put("accountNo", accountNo);
 		
 		return "/mail/getMail";
-	}
-	
-	@RequestMapping("moveMail")
-	public String moveMail(@ModelAttribute Search search) {
-		
-		
-		return "/mail/getMailList";
 	}
 	
 	
@@ -110,7 +104,6 @@ public class MailContoller {
 	public String sendMailView() throws MessagingException {
 		return "/mail/sendMail";
 	}
-	
 	
 	@PostMapping("sendMail")
 	public String sendMail(HttpServletRequest req, @RequestParam int accountNo, @ModelAttribute Mail mail, @RequestParam MultipartFile[] files, @RequestParam String inlineList, Map<String, Object> map) throws MessagingException {
@@ -128,8 +121,9 @@ public class MailContoller {
 		List<Map<String, Object>> attachmentList = null;
 		
 		if(files.length > 0 && !files[0].getOriginalFilename().equals("")) {
+			attachmentList = new ArrayList<Map<String,Object>>();
+			
 			for (MultipartFile file : files) {
-				attachmentList = new ArrayList<Map<String,Object>>();
 				String fileName = file.getOriginalFilename();
 				Map<String, Object> fileMap = new HashMap<String, Object>();
 				
@@ -189,7 +183,10 @@ public class MailContoller {
 				}
 			}
 			
-			returnMap = mailService.getMailList(selectedAccount, currentPage);
+			accountList = new ArrayList<Account>();
+			accountList.add(selectedAccount);
+			
+			returnMap = mailService.getAllAccountSentMailList(accountList, currentPage);
 		}
 		
 		map.put("mailList", returnMap.get("mailList"));
@@ -202,53 +199,79 @@ public class MailContoller {
 		return "/mail/listSentMail";
 	}
 	
-	@RequestMapping("getSentMail")
-	public String getSentMail(Map<String, Object> map, @RequestParam int mailNo, @RequestParam int accountNo, HttpServletRequest req) throws Exception {
-		List<Account> accountList = (List<Account>)req.getAttribute("accountList");
-		
-		Account account = null;
-		
-		for(Account ac : accountList) {
-			if(ac.getAccountNo() == accountNo) {
-				account = ac;
-				break;
-			}
+	@RequestMapping("getFlagMailList")
+	public String getFlagMailList(HttpServletRequest req, @RequestParam(required = false, defaultValue = "0") int accountNo, 
+			@RequestParam(required = false, defaultValue = "1") int currentPage, Map<String, Object> map) throws Exception {
+		if(currentPage == 0) {
+			currentPage = 1;
 		}
 		
-		Map<String, Object> resultMap = mailService.getSentMail(account, mailNo);
+		List<Account> accountList = (List<Account>)req.getAttribute("accountList");
+		Map<String, Object> returnMap = null;
 		
-		map.put("mail", resultMap.get("mail"));
-		map.put("fileList", resultMap.get("fileList"));
+		if(accountNo == 0) {
+			returnMap = mailService.getAllAccountFlagMailList(accountList, currentPage);
+		}else {
+			Account selectedAccount = null;
+			for(Account account : accountList) {
+				if(account.getAccountNo() == accountNo) {
+					selectedAccount = account;
+					break;
+				}
+			}
+			
+			accountList = new ArrayList<Account>();
+			accountList.add(selectedAccount);
+			
+			returnMap = mailService.getAllAccountFlagMailList(accountList, currentPage);
+		}
 		
-		return "/mail/getMail";
+		map.put("mailList", returnMap.get("mailList"));
+		map.put("search", returnMap.get("search"));
+		map.put("page", returnMap.get("page"));
+		map.put("currentPage", currentPage);
+		map.put("accountNo", accountNo);
+		map.put("totalCount", returnMap.get("totalCount"));
+		
+		return "/mail/listFlagMail";
 	}
-
-//	mailAgent.open();  
-//  mailagent.createFolder("newFolder");  
-//  Message[] msg = mailagent.getRecentMessages(5);  
-//  for(Message m : msg) {  
-//      System.out.println("subject: "+m.getSubject());  
-//      System.out.println("MsgNum: "+m.getMessageNumber());  
-//      System.out.println("UID: "+mailagent.getUID(m));  
-//      System.out.println("Sent Date: "+m.getSentDate());  
-////      mailagent.setUnSeenFlag(m);  
-//  }  
-//  mailagent.moveMessage(msg, mailagent.getDefaultFolder(), mailagent.getFolder("newFolder"));  
-
-//  mailagent.getPersonalFolders();
-//  mailagent.getSharedFolders();
-//  mailagent.getUserFolders("newFolder");
-
-//  System.out.println("Count : " + mailagent.getFolder("플스").getMessageCount());
-//  Store store = mailagent.getStore();
-//  
-//  Folder[] f = store.getDefaultFolder().list(); 
-//  for(Folder fd:f) 
-//      System.out.println(">> "+fd.getName()); 
-
-//  Message[] messageList = mailAgent.getDefaultFolder().getMessages();
-//  
-//  List<Mail> mailList = new ArrayList<Mail>();
+	
+	@RequestMapping("getTrashMailList")
+	public String getDeletedMailList(HttpServletRequest req, @RequestParam(required = false, defaultValue = "0") int accountNo, 
+			@RequestParam(required = false, defaultValue = "1") int currentPage, Map<String, Object> map) throws Exception {
+		if(currentPage == 0) {
+			currentPage = 1;
+		}
+		
+		List<Account> accountList = (List<Account>)req.getAttribute("accountList");
+		Map<String, Object> returnMap = null;
+		
+		if(accountNo == 0) {
+			returnMap = mailService.getAllAccountDeletedMailList(accountList, currentPage);
+		}else {
+			Account selectedAccount = null;
+			for(Account account : accountList) {
+				if(account.getAccountNo() == accountNo) {
+					selectedAccount = account;
+					break;
+				}
+			}
+			
+			accountList = new ArrayList<Account>();
+			accountList.add(selectedAccount);
+			
+			returnMap = mailService.getAllAccountDeletedMailList(accountList, currentPage);
+		}
+		
+		map.put("mailList", returnMap.get("mailList"));
+		map.put("search", returnMap.get("search"));
+		map.put("page", returnMap.get("page"));
+		map.put("currentPage", currentPage);
+		map.put("accountNo", accountNo);
+		map.put("totalCount", returnMap.get("totalCount"));
+		
+		return "/mail/listDeletedMail";
+	}
 	
 	@RequestMapping("modalTest")
 	public String modalTest() {

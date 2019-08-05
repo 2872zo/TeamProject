@@ -35,13 +35,16 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/cafe/**")
                 .excludePathPatterns("/cafe/main/**")
                 .excludePathPatterns("/cafe/*/getCafeGrade")                
-                .excludePathPatterns("/user/login")
-                .excludePathPatterns("/user/logout"); //로그인 쪽은 예외처리를 한다.
+                .excludePathPatterns("/user/login")//로그인 쪽은 예외처리를 한다.
+                .excludePathPatterns("/user/logout")
+                .excludePathPatterns("/cafe/*/closedCafe")
+                .excludePathPatterns("/cafe/*/needApply")
+                .excludePathPatterns("/cafe/*/memberBlock")
+                .excludePathPatterns("/cafe/*/accessDenied"); 
         
         registry.addInterceptor(mailInterceptor)
         		.addPathPatterns("/mail/**")
-        		.excludePathPatterns("/mail/modalTest")
-        		.excludePathPatterns("/mail/json/**");
+        		.excludePathPatterns("/mail/modalTest");
         
         registry.addInterceptor(chatInterceptor)
         		.addPathPatterns("/chat/**");
