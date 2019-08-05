@@ -74,7 +74,9 @@
 	<sql id="categoryCafe">
 	 	SELECT
 		url, cafe_no, cafe_icon, cafe_name, 
-		cafe_detail, cafe_type, reg_date, members
+		cafe_detail, cafe_type, 
+		TO_CHAR(reg_date, 'YYYY-MM-DD HH24:MM:SS') reg_date, 
+		members
 		FROM
 		cafe
 		<where>

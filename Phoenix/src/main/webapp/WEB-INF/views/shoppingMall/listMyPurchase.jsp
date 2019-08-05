@@ -68,8 +68,8 @@
     	
     	.row{
     		
-    		margin-left:13%;
-    		height:200px;
+    		margin-left:20%;
+    		
     	}
     	
     
@@ -195,10 +195,22 @@
            			</div>
            		</div>
            		
-           		<div class="row">
-           			<div>구매내역</div>
-           			<div>배송상태</div>
-           		</div>
+           		<div class="row" style="height:50px;">
+     	
+     				<div class="card left" style="background-color:##f5a142; height:30px;"> <!-- 왼쪽카드 -->
+     					<div class="card-body" style="color:white; padding-left:45%; font-size:16px; padding-top:0%;">
+        					구매내역
+       					</div>
+     				</div>
+     				
+     				<div class="card right" style="background-color:##f5a142; height:30px;"> <!-- 오른쪽카드 -->
+     					<div class="card-body" style="color:white; padding-left:45%; font-size:16px; padding-top:0%;">
+        					배송상태
+       					</div>
+     				</div>
+     				
+           		</div><!-- end row -->
+           		
            		<c:forEach var="purchase" items="${totalPurchaseList}">
            			<div class="row">
            			

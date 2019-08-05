@@ -355,7 +355,7 @@
 		    <where>
 		    	p.board_no = b.board_no
 		    	AND p.board_no = #{boardNo}
-		    	AND p.reg_date &gt; SYSDATE - 10
+		    	AND p.reg_date &gt; SYSDATE - b.best_term
 		    	AND p.like_count &gt; b.best_like_count
 		    </where>
 		    ORDER BY p.like_count DESC

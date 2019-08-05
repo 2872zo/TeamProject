@@ -18,12 +18,14 @@ public class Mail {
 	private String senderAddr;
 	private List<Map<String, String>> recipients;
 	private String to;
-	private boolean seen;
 	private String subject;
 	private String content;
 	private List<Map<String, Object>> attachmentList;
 	private String inlineList;
 	private String accountDomain;
+	private boolean seen;
+	private boolean trash;
+	private boolean flag;
 	
 	
 	public int getMailNo() {
@@ -111,11 +113,24 @@ public class Mail {
 	public void setAccountDomain(String accountDomain) {
 		this.accountDomain = accountDomain;
 	}
+	public boolean isTrash() {
+		return trash;
+	}
+	public void setTrash(boolean trash) {
+		this.trash = trash;
+	}
+	public boolean isFlag() {
+		return flag;
+	}
+	public void setFlag(boolean flag) {
+		this.flag = flag;
+	}
 	@Override
 	public String toString() {
 		return "Mail [mailNo=" + mailNo + ", accountNo=" + accountNo + ", folder=" + folder + ", sentDate=" + sentDate
 				+ ", sender=" + sender + ", senderAddr=" + senderAddr + ", recipients=" + recipients + ", to=" + to
-				+ ", seen=" + seen + ", subject=" + subject + ", content=" + content + ", attachmentList="
-				+ attachmentList + ", inlineList=" + inlineList + "]";
+				+ ", subject=" + subject + ", content=" + content + ", attachmentList=" + attachmentList
+				+ ", inlineList=" + inlineList + ", accountDomain=" + accountDomain + ", seen=" + seen + ", trash="
+				+ trash + ", flag=" + flag + "]";
 	}
 }

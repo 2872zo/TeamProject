@@ -131,7 +131,7 @@ img {
 	      <div class="card-body">
 	        <h5 class="card-title chatRoom">${chatRoomInfo.chatRoomName}</h5>
 	        <p class="card-text" style='font-size: large;'id='${chatRoomInfo.chatRoomId}MSG'>
-	        	최근 입력 메시지 :
+	        	최근 메시지 :
 	        	${fn:substring(chatRoomInfo.latestMessage,0,50)}
 	        </p>
 	        <p class="card-text" id='${chatRoomInfo.chatRoomId}Time'>
@@ -139,7 +139,7 @@ img {
 	        	<fmt:formatDate value="${chatRoomInfo.latestMessagingDate}" type="both" pattern="yyyy-MM-dd E a hh:mm:ss"/>
 	        </p>
 	        <p class="card-text">
-	        	참가시간 : 
+	        	최초참가시간 : 
 	        	<fmt:formatDate value="${chatRoomInfo.regDate}" type="both" pattern="yyyy-MM-dd E a hh:mm:ss"/>
 	        </p>
 	        

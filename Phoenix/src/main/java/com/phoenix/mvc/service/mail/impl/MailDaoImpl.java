@@ -15,6 +15,7 @@ import java.util.UUID;
 
 import javax.mail.Address;
 import javax.mail.Flags;
+import javax.mail.Flags.Flag;
 import javax.mail.Folder;
 import javax.mail.Header;
 import javax.mail.Message;
@@ -463,7 +464,7 @@ public class MailDaoImpl implements MailDao {
 				
 				int folderSize = ((IMAPAgent) map.get("mailAgent")).getMessageCount();
 				
-				if(folderSize < i) {
+				if(folderSize < (int) map.get("idx") + 1) {
 					exitOuterLoop = true;
 					break;
 				}
@@ -794,6 +795,12 @@ public class MailDaoImpl implements MailDao {
 	private Map<String, Object> messageToMail(Message message, int accountNo) throws IOException, Exception {
 		Mail mail = new Mail();
 		mail.setAccountNo(accountNo);
+		
+		mail.setFlag(message.isSet(Flag.FLAGGED));
+		mail.setSeen((message.isSet(Flag.SEEN)));
+		if(message.getFolder().getName().contains("휴지통") || message.getFolder().getName().contains("Deleted Message")) {
+			mail.setTrash(true);
+		}
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		

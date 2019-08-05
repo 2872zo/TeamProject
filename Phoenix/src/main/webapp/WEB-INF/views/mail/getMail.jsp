@@ -144,37 +144,42 @@
 				<div class="col-lg-12">
 					<div class="card">
 						<div class="card-body">
-							<h4 class="card-title">${search.boardName }</h4>
 							<div class="table-responsive">
-							
                                     <div class="toolbar" role="toolbar">
                                         <div class="btn-group m-b-20">
-                                            <button type="button" class="btn btn-light"><i class="fa fa-archive"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-light"><i class="fa fa-exclamation-circle"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-light"><i class="fa fa-trash"></i>
-                                            </button>
-                                        </div>
-                                        <div class="btn-group m-b-20">
-                                            <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown"><i class="fa fa-folder"></i>  <b class="caret m-l-5"></b>
-                                            </button>
-                                            <div class="dropdown-menu"><a class="dropdown-item" href="javascript: void(0);">Social</a>  <a class="dropdown-item" href="javascript: void(0);">Promotions</a>  <a class="dropdown-item" href="javascript: void(0);">Updates</a> 
-                                                <a class="dropdown-item" href="javascript: void(0);">Forums</a>
-                                            </div>
-                                        </div>
-                                        <div class="btn-group m-b-20">
-                                            <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown"><i class="fa fa-tag"></i>  <b class="caret m-l-5"></b>
-                                            </button>
-                                            <div class="dropdown-menu"><a class="dropdown-item" href="javascript: void(0);">Updates</a>  <a class="dropdown-item" href="javascript: void(0);">Promotions</a> 
-                                                <a class="dropdown-item" href="javascript: void(0);">Forums</a>
-                                            </div>
-                                        </div>
-                                        <div class="btn-group m-b-20">
-                                            <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">More <span class="caret m-l-5"></span>
-                                            </button>
-                                            <div class="dropdown-menu"><a class="dropdown-item" href="javascript: void(0);">Mark as Unread</a>  <a class="dropdown-item" href="javascript: void(0);">Add to Tasks</a>  <a class="dropdown-item" href="javascript: void(0);">Add Star</a>  <a class="dropdown-item" href="javascript: void(0);">Mute</a>
-                                            </div>
+                                        	<!-- 읽음 표시 -->
+                                        	<c:if test="${!mail.seen }">
+	                                            <button type="button" class="btn btn-light" name="setSeen"><i class="mdi mdi-email"></i>
+	                                            </button>
+                                        	</c:if>
+                                        	<c:if test="${mail.seen }">
+	                                            <button type="button" class="btn btn-light" name="setUnSeen"><i class="mdi mdi-email-open"></i>
+	                                            </button>
+                                        	</c:if>
+                                        	
+                                        	<!-- 중요메일 표시 -->
+                                        	<c:if test="${!mail.flag }">
+	                                            <button type="button" class="btn btn-light" name="setFlag"><i class="far fa-star"></i>
+	                                            </button>
+                                        	</c:if>
+                                        	<c:if test="${mail.flag }">
+	                                            <button type="button" class="btn btn-light" name="setUnFlag"><i class="fas fa-star"></i>
+	                                            </button>
+                                        	</c:if>
+                                        	
+                                        	<!-- 휴지통에 있는 메일 표시 -->
+                                        	<c:if test="${!mail.trash }">
+	                                            <button type="button" class="btn btn-light" name="trash"><i class="fa fa-trash"></i>
+                                            	</button>
+                                        	</c:if>
+                                        	<c:if test="${mail.trash }">
+                                        		<button type="button" class="btn btn-light" name="inbox"><i class="fa fa-inbox"></i>
+                                            	</button>
+	                                            <button type="button" class="btn btn-light" name="delete"><i class="mdi mdi-close-box" style="font-size:20px;"></i>
+                                            	</button>
+                                        	</c:if>
+                                        	
+                                            
                                         </div>
                                     </div>
                                     
@@ -296,7 +301,172 @@
 	</script>
 
 	<!-- 이 페이지 전용 script -->
+	<script>
+		//휴지통으로 이동
+		$(function(){
+			$(document).on("click", "[name=trash]", function(){
+				var thisButton = $(this);
+				
+				swal({
+					title:"삭제 확인",
+					text:"메일을 휴지통으로 이동하시겠습니까?",
+					type:"warning",
+					showCancelButton:!0,
+					confirmButtonColor:"#DD6B55",
+					confirmButtonText:"네",
+					cancelButtonText:"아니오",
+					closeOnConfirm:!1},
+					function(){
+						var mailInfoList = new Array();
+						
+						mailInfoList.push({"mailNo" : "${mail.mailNo}", "accountNo" : "${mail.accountNo}"});
+
+						console.log(mailInfoList);
+
+						$.ajax({
+							type : "POST",
+							contentType: "application/json",
+							url : "/mail/json/deleteMail",
+							dataType : "JSON",
+							data: JSON.stringify(mailInfoList),
+							beforeSend : function(){
+								$("#preloader").attr("style", "display:none; background:rgba(255,245,217,0.5);");
+								$("#preloader").fadeIn(300);
+							},
+							complete : function(){
+								$("#preloader").fadeOut(300);
+								$("#preloader").attr("style", "disply:none; background:white;");
+							},
+							success : function(data) {
+								swal("변경 완료", "정상적으로 변경되었습니다.", "success");
+								
+								thisButton.replaceWith(
+										'<button type="button" class="btn btn-light" name="inbox"><i class="fa fa-inbox"></i>'
+                                    	+  '</button>'
+                                        +  '<button type="button" class="btn btn-light" name="delete"><i class="mdi mdi-close-box" style="font-size:20px;"></i>'
+                                    	+  '</button>');		
+								
+							},
+							error : function(data) {
+								alert("error : " + data)
+							}
+						});//ajax end
+					}//function end
+				);//swal end
+			});	//.on end
+
+			//완전 삭제
+			$(document).on("click", "[name=delete]", function(){
+				swal({
+					title:"삭제 확인",
+					text:"선택한 메일을 완전 삭제하시겠습니까?",
+					type:"warning",
+					showCancelButton:!0,
+					confirmButtonColor:"#DD6B55",
+					confirmButtonText:"네",
+					cancelButtonText:"아니오",
+					closeOnConfirm:!1},
+					function(){
+							var mailInfoList = new Array();
+							
+							mailInfoList.push({"mailNo" : "${mail.mailNo}", "accountNo" : "${mail.accountNo}"});
+
+							console.log(mailInfoList);
+
+							$.ajax({
+								type : "POST",
+								contentType: "application/json",
+								url : "/mail/json/trashMail",
+								dataType : "JSON",
+								data: JSON.stringify(mailInfoList),
+								beforeSend : function(){
+									$("#preloader").fadeIn(300);
+								},
+								success : function(data) {
+									location.href = "/mail/getMailList";
+								},
+								error : function(data) {
+									$("#preloader").fadeOut(300);
+									swal("삭제 실패", "", "error");
+								}
+							});//ajax end
+							
+					}//function end
+				);//swal end
+			});//.on end
+
+		});//jquery end
+
+
+
+		
+		//메읽 읽음 표시 변경
+		$(function(){
+			$(document).on("click", "[name=setSeen]", function(){
+				var mailInfoList = [{"mailNo" : "${mail.mailNo}", "accountNo" : "${mail.accountNo}"}];
+				var thisButton = $(this);
+				
+				$.ajax({
+					type : "POST",
+					contentType: "application/json",
+					url : "/mail/json/setSeenMail",
+					dataType : "JSON",
+					data: JSON.stringify(mailInfoList),
+					beforeSend : function(){
+						$("#preloader").attr("style", "display:none; background:rgba(255,245,217,0.5);");
+						$("#preloader").fadeIn(300);
+					},
+					complete : function(){
+						$("#preloader").fadeOut(300);
+						$("#preloader").attr("style", "display:none; background:white");
+					},
+					success : function(data) {
+						thisButton.replaceWith(
+								'<button type="button" class="btn btn-light" name="setUnSeen"><i class="mdi mdi-email-open"></i>'
+                                +'</button>');
+					},
+					error : function(data) {
+						alert("error : " + data)
+					}
+				});//ajax end
+			});
+		});
+
 	
+		//메읽 읽음 표시 변경
+		$(function(){
+			$(document).on("click", "[name=setUnSeen]", function(){
+				var mailInfoList = [{"mailNo" : "${mail.mailNo}", "accountNo" : "${mail.accountNo}"}];
+				var thisButton = $(this);
+				
+				$.ajax({
+					type : "POST",
+					contentType: "application/json",
+					url : "/mail/json/setUnSeenMail",
+					dataType : "JSON",
+					data: JSON.stringify(mailInfoList),
+					beforeSend : function(){
+						$("#preloader").attr("style", "display:none; background:rgba(255,245,217,0.5);");
+						$("#preloader").fadeIn(300);
+					},
+					complete : function(){
+						$("#preloader").fadeOut(300);
+						$("#preloader").attr("style", "display:none; background:white");
+					},
+					success : function(data) {
+						thisButton.replaceWith(
+								'<button type="button" class="btn btn-light" name="setSeen"><i class="mdi mdi-email"></i>'
+                                +'</button>');
+					},
+					error : function(data) {
+						alert("error : " + data);
+					}
+				});//ajax end
+			});
+		});
+
+		
+	</script>
 
 </body>
 

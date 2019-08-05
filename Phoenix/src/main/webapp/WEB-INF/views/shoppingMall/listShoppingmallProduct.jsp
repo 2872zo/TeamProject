@@ -134,6 +134,10 @@
     		font-size:10px;
     	}
     	
+    	hr{
+    		width:80%;
+    	}
+    	
     	.loader-ellips {
 		  display : none;
 		  font-size: 20px; /* change size here */
@@ -408,7 +412,7 @@
 	           				
 	           				</div>
 	           				<div class="context col-lg-10">
-	           					<div class="context-head">
+	           					<div class="context-head" style="width:80%;">
 	           						<div class="result-info">
 	           							<strong>
 	           								<span>'${search.searchKeyword}'에 대한 검색 결과</span>

@@ -22,7 +22,6 @@
 <link rel="stylesheet" href="/plugins/toastr/css/toastr.min.css">
 <!-- 토스터 css -->
 
-
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <style type="text/css">
 .friends {
@@ -59,8 +58,6 @@ img {
     ***********************************-->
 	<div id="main-wrapper">
     
-
-
  <!--**********************************
             Nav header start
         ***********************************-->
@@ -71,11 +68,9 @@ img {
             Nav header end
         ***********************************-->
         
-        
 <!-- ToolBar Start /////////////////////////////////////-->
 <jsp:include page="../common/toolbar.jsp" />
 <!-- ToolBar End /////////////////////////////////////-->
-
 
 <!--**********************************
             Sidebar start
@@ -163,7 +158,7 @@ img {
 											
 											
 											</div>
-											<div class='col-lg-7'>
+											<div class='col-lg-5'>
 												<h5 class="card-title" id='${chatFriend.chatFriendNo}nickName'>
 												<c:if test="${!empty chatFriend.friendNickname}">${chatFriend.friendNickname}</c:if>
 												<c:if test="${empty chatFriend.friendNickname}">${chatFriend.userNickname}</c:if>
@@ -171,7 +166,7 @@ img {
 												<p class="card-text">원래 닉네임 : ${chatFriend.userNickname}</p>
 											</div>
 											<div class='col-lg-2'>
-											<i class="mdi mdi-tag-text-outline updateFriendName" style='font-size: 25pt;' name='${chatFriend.chatFriendNo}'></i>
+											<i class="mdi mdi-rename-box updateFriendName" style='font-size: 25pt;' name='${chatFriend.chatFriendNo}'></i>
 											</div>
 											<div class='col-lg-1 d-flex align-items-start' name='${chatFriend.userNo}'>
 											<i class="mdi mdi-account-minus friendAlready friending" name='${chatFriend.chatFriendNo}' style='font-size: 25pt;'></i>
@@ -367,8 +362,7 @@ var checkSessionUser = ${empty sessionScope.user};
 		
 		$("#explore").on("click", function() {
 			var keyword = $("#searchKeyword").val()
-			$("form").attr("method", "POST").attr("action",
-			"/chat/searchChatFriend").submit();
+			$("form").attr("method", "POST").attr("action", "/chat/searchChatFriend").submit();
 		});
 
 		$("#searchKeyword").on("keydown", function (){
@@ -379,7 +373,7 @@ var checkSessionUser = ${empty sessionScope.user};
 		
 		$(".updateFriendName").on("click", function() {
 			var thisChatFriendNo = $(this).attr("name");
-			 var engkornum = /[^가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9]/gi;
+			 var engkornum = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\*]+$/;
 			 var emptyOnly = /^\s*\s*$/;
 			   
 			swal({
@@ -398,7 +392,7 @@ var checkSessionUser = ${empty sessionScope.user};
 							 swal.showInputError("공백만 넣으시면 안됩니다.");
 							   return false;
 							 }
-						if (engkornum.test(inputValue)) {
+						if (!engkornum.test(inputValue)) {
 							 swal.showInputError("영어숫자한글만사용해주세요");
 							   return false;
 						   }

@@ -44,6 +44,9 @@ public class ShoppingmallDaoImpl implements ShoppingmallDao
 	@Value("${tmonMyOrderlistURL}")
 	private String tmonMyOrderlistURL;
 	
+	@Value("${accountType.tmon}")
+	private String tmonCode;
+	
 	
 	@Autowired
 	@Qualifier("sqlSessionTemplate")
@@ -176,11 +179,12 @@ public class ShoppingmallDaoImpl implements ShoppingmallDao
 		
 		WebDriver driver = this.connectToSelenium(); //드라이버연결
 		this.tmonLogin(driver, account);//로그인
+		System.out.println("로그인성공");
 		driver.get(tmonMyOrderlistURL); //내가 구매한 상품목록으로 이동
-		
+		System.out.println("상품으로 이동");
 		WebElement webElement = wait.until(ExpectedConditions.presenceOfElementLocated(By.className("all"))); //1년
 		webElement.click();
-		
+		System.out.println("클릭성공");
 		////////////////////////////////////////////////////////////////ajax통신 기다린다////////////////
 		WebDriverWait wait = new WebDriverWait(driver, 5000);
 	    wait.until(new ExpectedCondition<Boolean>() {
@@ -208,7 +212,7 @@ public class ShoppingmallDaoImpl implements ShoppingmallDao
 	    }
 	    
 	    /////////////////////////////////////////////////////////////////////////////////////////////
-	    
+	    System.out.println("ajax 끝");
 	    
 		//본격적으로 가져오기(테이블)
 		List<Purchase> purchaseList = new ArrayList<Purchase>();
@@ -286,11 +290,40 @@ public class ShoppingmallDaoImpl implements ShoppingmallDao
 			
 		}
 		
+		driver.quit();
 		
 		returnMap.put("purchaseList", purchaseList);
 		
 		return returnMap;
 	}
+	
+	@Override
+	public int login(Account account, User user) {
+		// TODO Auto-generated method stub
+		
+		int result=0;
+		
+		WebDriver webDriver = this.connectToSelenium();
+		if(account.getAccountType().equals(tmonCode)) {
+			
+			result = this.tmonLogin(webDriver, account);
+		}
+		
+		webDriver.quit(); //연결 끊어버림
+		
+		return result;
+	}
+	
+	@Override
+	public void addShoppingmallAccount(Account account, User user) {
+		
+		Map map = new HashMap();
+		map.put("account", account);
+		map.put("user",user);
+		
+		sqlSession.insert("addShoppingmallAccount", map);
+	}
+
 	
 	
 	private void tmonSearchProduct(WebDriver driver, ShoppingmallSearch search) //티몬상품검색
@@ -298,31 +331,38 @@ public class ShoppingmallDaoImpl implements ShoppingmallDao
 		driver.get("http://search.tmon.co.kr/search/?keyword="+search.getSearchKeyword()+"&thr=ts");
 	}
 	
-	private void tmonLogin(WebDriver driver, Account account)//티몬 로그인
+	private int tmonLogin(WebDriver driver, Account account)//티몬 로그인
 	{
-		//브라우저에 url주소창에 치고 request받은거랑 같음
-		driver.get(tmonLoginURL);
-		//11번가 iframe 안씀
-		
-		WebElement webElement = driver.findElement(By.id("userid"));
-		String id11st = account.getAccountId();
-		webElement.sendKeys(id11st);
-		
-		webElement = driver.findElement(By.id("pwd"));
-		String password11st = account.getAccountPw();
-		webElement.sendKeys(password11st);
-		
-		webElement = driver.findElement(By.className("btn_login"));
-		webElement.click();
+		int result = 0;
 		
 		try {
+			
+			//브라우저에 url주소창에 치고 request받은거랑 같음
+			driver.get(tmonLoginURL);
+			//11번가 iframe 안씀
+			
+			WebElement webElement = driver.findElement(By.id("userid"));
+			String id11st = account.getAccountId();
+			webElement.sendKeys(id11st);
+			
+			webElement = driver.findElement(By.id("pwd"));
+			String password11st = account.getAccountPw();
+			webElement.sendKeys(password11st);
+			
+			webElement = driver.findElement(By.className("btn_login"));
+			webElement.click();
+			
+		
 			Thread.sleep(2000); //왜기달림 로그인 되는 시간 보다, orderList 가는 시간이 더 빠르면 안된다고 생각함 그래서 해줌.
-		} catch (InterruptedException e) {
+			result= 100;
+			
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
+			result = 400;
 			e.printStackTrace();
 		}
 		
-		
+		return result;
 	}
 	
 	private WebDriver connectToSelenium() //셀레니움 크롬 드라이버 연결
@@ -339,6 +379,8 @@ public class ShoppingmallDaoImpl implements ShoppingmallDao
 		return driver;
 	}
 
+	
+	
 	
 
 	

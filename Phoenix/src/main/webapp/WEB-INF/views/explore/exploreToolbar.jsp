@@ -18,7 +18,7 @@
 		<!--**********************************
             Header start
         ***********************************-->
-		<div class="header" style="margin-left:0px; width:1310px;">
+		<div class="header" style="margin-left:0px; width:100%;">
 			
 			<div class="form-inline">
 				<a href="/">
