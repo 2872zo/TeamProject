@@ -29,128 +29,139 @@
 </head>
 
 <style type="text/css">
-#accountText{
-	color: orange;
-	font-family
-}
-
-#profile {
-    margin-bottom: 5%;
-    }
-
-
-i{
-	-webkit-transition:color 0.3s;
-    transition:color 0.3s;
-}
-
-i:hover {
-	cursor: pointer;
-	color: #f5a142;
-}
-
-#div_menu {
-	width: 20%;
-	height: 500px;
-	float: left;
-	background-color: #82FA58;
-}
-
-#div_con {
-	width: 80%;
-}
-
-.cursor {
-	cursor: pointer;
-}
-
-.cursor:hover {
-	text-decoration: underline;
-}
-
-.member {
-	font-size: 50px;
-	text-shadow: 0 0 10px #666;
-	color: #fff;
-	margin: 0 auto;
-	text-align: left;
-	text-transform: capitalize;
-	font-family: "맑은 고딕";
-	font-style: italic;
-}
-
-body {
-	font-family: "맑은 고딕";
-	font-size: 12px;
-}
-
-.form {
-	max-width: 100%;
-	width: auto;
-	display: table;
-	border-radius: 25px;
-	border: 5px double #999;
-	margin: center;
-}
-
-.form2 {
-	width: 380px;
-	min-width: 320px;
-	height: 200px;
-	margin: 60px auto;
-	margin-left: 20px;
-}
-
-.form3 {
-	float: left;
-	/*   background:#f00;  */
-}
-
-.form3 label {
-	width: 100px;
-	height: 20px;
-	/*  display: block; */
-	float: left;
-}
-
-.form4 {
-	padding: 0px 0px 0px 70px;
-}
-
-#wrap {
-	width: 600px;
-	height: 500px;
-	margin: 0 auto;
-}
-
-.clear {
-	clear: both;
-}
-
-input[type="submit"] {
-	float: left;
-	/*  display:block; */
-	height: 50px;
-	background: #FFBB00;
-	border-radius: 5px;
-	border: none;
-	font-family: "맑은 고딕";
-}
-
-input[type="button"] {
-	height: 30px;
-	background: gray;
-	border-radius: 5px;
-	/*  width: 140px; */
-	font-family: "맑은 고딕";
-	margin-top: 10px;
-	margin-right: 20px;
-}
-
-input[type="checkbox"] {
-	margin-top: 20px;
-}
-
+	#accountText{
+		color: orange;
+		font-family
+	}
+	
+	#profile {
+	    margin-bottom: 5%;
+	    }
+	
+	
+	i{
+		-webkit-transition:color 0.3s;
+	    transition:color 0.3s;
+	}
+	
+	i:hover {
+		cursor: pointer;
+		color: #f5a142;
+	}
+	
+	#div_menu {
+		width: 20%;
+		height: 500px;
+		float: left;
+		background-color: #82FA58;
+	}
+	
+	#div_con {
+		width: 80%;
+	}
+	
+	.cursor {
+		cursor: pointer;
+	}
+	
+	.cursor:hover {
+		text-decoration: underline;
+	}
+	
+	.member {
+		font-size: 50px;
+		text-shadow: 0 0 10px #666;
+		color: #fff;
+		margin: 0 auto;
+		text-align: left;
+		text-transform: capitalize;
+		font-family: "맑은 고딕";
+		font-style: italic;
+	}
+	
+	body {
+		font-family: "맑은 고딕";
+		font-size: 12px;
+	}
+	
+	.form {
+		max-width: 100%;
+		width: auto;
+		display: table;
+		border-radius: 25px;
+		border: 5px double #999;
+		margin: center;
+	}
+	
+	.form2 {
+		width: 380px;
+		min-width: 320px;
+		height: 200px;
+		margin: 60px auto;
+		margin-left: 20px;
+	}
+	
+	.form3 {
+		float: left;
+		/*   background:#f00;  */
+	}
+	
+	.form3 label {
+		width: 100px;
+		height: 20px;
+		/*  display: block; */
+		float: left;
+	}
+	
+	.form4 {
+		padding: 0px 0px 0px 70px;
+	}
+	
+	#wrap {
+		width: 600px;
+		height: 500px;
+		margin: 0 auto;
+	}
+	
+	.clear {
+		clear: both;
+	}
+	
+	input[type="submit"] {
+		float: left;
+		/*  display:block; */
+		height: 50px;
+		background: #FFBB00;
+		border-radius: 5px;
+		border: none;
+		font-family: "맑은 고딕";
+	}
+	
+	input[type="button"] {
+		height: 30px;
+		background: gray;
+		border-radius: 5px;
+		/*  width: 140px; */
+		font-family: "맑은 고딕";
+		margin-top: 10px;
+		margin-right: 20px;
+	}
+	
+	input[type="checkbox"] {
+		margin-top: 20px;
+	}
+	
+	.shoppingmall_button{
+		
+		width:100px;
+		height:40px;
+		border: 1px solid black;
+	}
+	
+	.shoppingmall_button:hover{
+		
+		background-color: black;
+	}
     
     
 </style>
@@ -454,19 +465,17 @@ input[type="checkbox"] {
 					<div class="modal-body">
 						<div class="card-body pt-5">
 							<a class="text-center">
-								<h4>불사조</h4>
+								<h4>쇼핑몰 연동</h4>
 							</a>
 
-							<form class="mt-5 mb-5 login-input">
-								<div class="form-group">
-									<input type="text" class="form-control" placeholder="ID"
-										name="userId">
-								</div>
-								<div class="form-group">
-									<input type="password" class="form-control"
-										placeholder="PASSWORD" name="password">
-								</div>
-								<button class="btn login-form__btn submit w-100" id="addShoppingAccount">로그인</button>
+							<form class="mt-5 mb-5 login-input form-inline">
+								<div  id="11stIcon" value="0"><img class="shoppingmall_button" src="/images/uploadfiles/shoppingmall/11st.jpg" /></div>
+								<div value="1"><img id="coupangIcon" class="shoppingmall_button" src="/images/uploadfiles/shoppingmall/coupang.jpg" /></div>
+								<div value="2"><img id="gmarketIcon" class="shoppingmall_button" src="/images/uploadfiles/shoppingmall/gmarket.jpg" /></div>
+								<div value="3"><img id="tmonIcon"  class="shoppingmall_button" src="/images/uploadfiles/shoppingmall/tmon.jpg" /></div>
+								
+								<input type="hidden" id="selected_shoppingmall" name="selected_shoppingmall" value="-1"/>
+								
 							</form>
 							
 						</div><!-- card body end -->
@@ -670,7 +679,32 @@ input[type="checkbox"] {
 		});		
 	});
 
+/////////////////////////////////////////////////////////쇼핑몰계정시작////////////////////////
+	
+	$(function(){
 
+		$("#addShoppingAccount").on("click",function(){
+			//1. hidden value값 확인한다 . -1이면 선택해 달라고 action
+			//2. 아이디 비번창 비었는지 확인.
+			//3. 끝나면 hidden값,아이디+비번 가지고 날라간다.
+			//if()
+			
+		});// 계정로그인버튼 클릭했을때.
+
+		$(".shoppingmall_button").on("click",function(){
+
+			alert($(this).val());
+			$("#selected_shoppingmall").val($(this).val());
+			alert($("#selected_shoppingmall").val());
+			
+		});
+
+	});
+		
+
+
+
+/////////////////////////////////////////////////////쇼핑몰계정끝///////////////////////
 
 	
 ////////////////////////////////////////////////////////////////////////////////////	

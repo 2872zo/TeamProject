@@ -176,7 +176,7 @@ input[type="checkbox"] {
 
 							<div>
 								<h5>
-									쇼핑몰 계정 
+									쇼핑몰 계정 ㅇㅁㄹ
 									<i class="mdi mdi-plus-box" 
 										style="font-size:20px; position:relative; top:2px;"
 										data-toggle="modal" data-target="#shoppingLogin">
@@ -276,19 +276,24 @@ input[type="checkbox"] {
 					<div class="modal-body">
 						<div class="card-body pt-5">
 							<a class="text-center">
-								<h4>불사조</h4>
+								<h4>쇼핑몰 연동</h4>
 							</a>
 
 							<form class="mt-5 mb-5 login-input">
+								<button class="" id="11stIcon"><img src="/images/uploadfiles/shoppingmall/11st.jpg" /></button>
+								<button class="" id="coupangIcon"><img src="/images/uploadfiles/shoppingmall/coupang.jpg" /></button>
+								<button class="" id="gmarketIcon"><img src="/images/uploadfiles/shoppingmall/gmarket.jpg" /></button>
+								<button class="" id="tmonIcon"><img src="/images/uploadfiles/shoppingmall/tmon.jpg" /></button>
+								
+								<!--  
 								<div class="form-group">
-									<input type="text" class="form-control" placeholder="ID"
-										name="userId" id="shopUserId">
+									<input type="text" class="form-control" placeholder="ID" name="userId" id="shopUserId">
 								</div>
 								<div class="form-group">
-									<input type="password" class="form-control"
-										placeholder="PASSWORD" name="password" id="shopPassword">
+									<input type="password" class="form-control" placeholder="PASSWORD" name="password" id="shopPassword">
 								</div>
 								<button class="btn login-form__btn submit w-100" id="addShoppingAccount">로그인</button>
+								-->
 							</form>
 							
 						</div><!-- card body end -->

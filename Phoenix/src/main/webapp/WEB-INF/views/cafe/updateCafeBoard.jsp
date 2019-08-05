@@ -21,6 +21,7 @@
  
     <link href="/css/style.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     
     <style>
     
@@ -55,6 +56,7 @@
     	
     
     </style>
+    
     
 	<script type="text/javascript">
 
@@ -145,8 +147,8 @@
 					//게시판 추가하면  밑에 input type text추가하고 
 						//alert("새로운게시판")
 					 	appendBoardDetail = "<div class ='boardDetail"+totalBoardSize+"'> <br/><br/>"
-						+"<label>메뉴명</label>   <input type='text' class='form-control input-default' name='newBoardName"+count+"'  value='새로운게시판' maxlength='6' required /><hr/> "
-						+"<label>메뉴설명</label> <input type='text'  class='form-control input-default' name='newBoardDetail"+count+"' width='50' value='새로운게시판 입니다.' required >"
+						+"<label>게시판명</label>   <input type='text' class='form-control input-default' name='newBoardName"+count+"'  value='새로운게시판' maxlength='6' required /><hr/> "
+						+"<label>게시판설명</label> <input type='text'  class='form-control input-default' name='newBoardDetail"+count+"' width='50' value='새로운게시판 입니다.' required >"
 						+"<br/><hr/><label>공개설정</label>"
 						+"<div class='radio'><label class='radio-inline'>"
   						+"<input type='radio' value='0' name='newBoardPrivate"+count+"' checked> 전체공개 </label>"
@@ -285,34 +287,89 @@
 
 			$("#save").on("click",function(){
 
+
+				swal({
+					  title: "저장하기",
+					  text: "변경사항을 저장하시겠습니까?",
+					  icon: "info",
+					  buttons: ['취소','확인'],
+					})
+					.then((willDelete) => {
+					  if (willDelete) { //확인누르면 유효성 체크
+
+						  var elements = $('[type=text][name*="newBoardName"],[type=text][name*="boardName"]' );
+						  var returnNow = false;
+							
+						  elements.each(function(){ //유효성체크 -> 유효성체크
+							//debugger;
+							if($(this).val()==null || $(this).val()==""){ //value값이 null이거나 nullString일때
+
+									swal({title:"게시판명은 빈칸일 수 없습니다.",icon:"warning",button:'확인',});
+									returnNow = true;
+									return false;
+
+								}
+							});
+
+							if(returnNow){ //each 끝나고 return 시켜버림
+								return;
+							} //일단 확인눌렀을때 유효성 체크하는것 -> 메뉴칸 빈칸있으면 swal창
+
+						  
+					    swal({
+						    title : "저장되었습니다!",
+						    icon: "success"
+						}).then(function(){
+
+							AllSelect();
+							$("form").attr("method","POST").attr("action","/cafe/${cafeURL}/manage/updateCafeBoard").submit();
+
+						});
+					  } else {
+					    //swal("Your imaginary file is safe!");
+						 return;
+					  }
+					});
+
+				
 				//유효성체크
 				
-				var elements = $('[type=text][name*="newBoardName"],[type=text][name*="boardName"]' );
-				var returnNow = false;
 				
-				elements.each(function(){
-				debugger;
-					if($(this).val()==null || $(this).val()==""){ //value값이 null이거나 nullString일때
-						alert("메뉴명은 빈칸일 수 없습니다.");
-						returnNow = true;
-						return false;
-					}
-				});
 
-				if(returnNow){
-					return;
-				}
-					
-				AllSelect();
-				$("form").attr("method","POST").attr("action","/cafe/${cafeURL}/manage/updateCafeBoard").submit();
+
+				
+				
+				
 				
 			});
 
 			$("#cancel").on("click",function(){
 				
-					alert("지금까지 편집한 내용을 취소합니다.");
-					self.location = "/cafe/${cafeURL}/manage/updateCafeBoardView";
-			});
+					//alert("지금까지 편집한 내용을 취소합니다.");
+					swal({
+						  title: "작성취소",
+						  text: "지금까지 편집한 내용을 취소하시겠습니까?",
+						  icon: "warning",
+						  buttons: ['취소','확인'],
+						  dangerMode: true,
+						})
+						.then((willDelete) => {
+						  if (willDelete) {
+						    swal({
+							    title : "작성이 취소 되었습니다.",
+							    icon: "success"
+							}).then(function(){
+
+								   self.location = "/cafe/${cafeURL}/manage/updateCafeBoardView";
+
+							});
+						  } else {
+						    //swal("Your imaginary file is safe!");
+							 return;
+						  }
+						});
+					
+			}); //end of cancel click function
 
 		});
 
@@ -401,7 +458,7 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">메뉴관리</h4>
+                                <h4 class="card-title">게시판관리</h4>
                                 <!--   <p class="text-muted m-b-15 f-s-12"> 카페의 게시판을 <code>추가, 삭제, 수정 </code> 할 수 있습니다.</p> -->
                                 
                                 <div class="basic-form">
@@ -409,11 +466,12 @@
        			 						<button type="button" class="btn btn-outline-primary" id="cancel">취소</button>
 				 						<button type="button" class="btn btn-primary" id="save" >저장하기</button>
        		 	 					 </div>
-       		 	 					 <hr/>
+       		 	 				 <hr/>
+       		 	 				 
 									<div class ="form-row">
 									
 									<div class="form-group col-md-2">
-										<label>추가메뉴</label>
+										<label>추가게시판</label>
 										<br /> <br /> 
 										<select name="addableBoard" size="10" class="form-control">
 											<option value="새로운게시판" selected="selected">새로운게시판</option>
@@ -474,12 +532,12 @@
 
 												<div class="boardDetail${j}">
 													<c:if test="${board.boardType=='cb100' || board.boardType=='cb101' || board.boardType=='cb103'}">
-													   
-														<label>메뉴명</label>
+													   	 <br/><br/>
+														<label>게시판명</label>
 														<input type="text" class="form-control input-default" name="boardName/${board.boardNo}" value="${board.boardName}" maxlength="6" required />
 														<hr />
 														
-														<label>메뉴설명</label>
+														<label>게시판설명</label>
 														<input type="text" class="form-control input-default"
 															name="boardDetail/${board.boardNo}" width="50"
 															value="${board.boardDetail}" required>
