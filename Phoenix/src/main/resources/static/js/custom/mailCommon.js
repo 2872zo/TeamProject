@@ -112,6 +112,62 @@ $(function(){
 });
 
 
+//메읽 중요 표시 변경
+$(function(){
+	$(".importantFlag").on("click", function(){
+		var mailInfoList = [{"mailNo" : $(this).parent().parent().find(".mailNo").val(), "accountNo" : $(this).parent().parent().find(".accountNo").val() }]
+		var targetIcon = $(this).find("i");
+		
+		if(targetIcon.hasClass("mdi-star-outline")){
+			$.ajax({
+				type : "POST",
+				contentType: "application/json",
+				url : "/mail/json/setFlagMail",
+				dataType : "JSON",
+				data: JSON.stringify(mailInfoList),
+				beforeSend : function(){
+					$("#preloader").attr("style", "display:none; background:rgba(255,245,217,0.5);");
+					$("#preloader").fadeIn(300);
+				},
+				complete : function(){
+					$("#preloader").fadeOut(300);
+					$("#preloader").attr("style", "display:none; background:white");
+				},
+				success : function(data) {
+					targetIcon.removeClass("mdi-star-outline").addClass("mdi-star");
+				},
+				error : function(data) {
+					alert("error : " + data)
+				}
+			});//ajax end
+		}else{
+			$.ajax({
+				type : "POST",
+				contentType: "application/json",
+				url : "/mail/json/setUnFlagMail",
+				dataType : "JSON",
+				data: JSON.stringify(mailInfoList),
+				beforeSend : function(){
+					$("#preloader").attr("style", "display:none; background:rgba(255,245,217,0.5);");
+					$("#preloader").fadeIn(300);
+				},
+				complete : function(){
+					$("#preloader").fadeOut(300);
+					$("#preloader").attr("style", "display:none; background:white");
+				},
+				success : function(data) {
+					targetIcon.removeClass("mdi-star").addClass("mdi-star-outline");
+				},
+				error : function(data) {
+					alert("error : " + data)
+				}
+			});//ajax end
+		}	
+	});
+	
+});
+
+
 //체크된 메일 삭제
 $(function(){
 	$("[name=deleteMailButton]").on("click", function(){
@@ -272,7 +328,7 @@ $(function(){
 							swal("변경 완료", "정상적으로 변경되었습니다.", "success");
 
 							for(var i = 0; i < checked.length; i++){
-								checked.eq(i).parent().parent().find("a").find("i").removeClass("mdi-email").addClass("mdi-email-open");
+								checked.eq(i).parent().parent().find("a.seenFlag").find("i").removeClass("mdi-email").addClass("mdi-email-open");
 							}
 							
 // 							debugger;
@@ -337,7 +393,137 @@ $(function(){
 							swal("변경 완료", "정상적으로 변경되었습니다.", "success");
 
 							for(var i = 0; i < checked.length; i++){
-								checked.eq(i).parent().parent().find("a").find("i").removeClass("mdi-email-open").addClass("mdi-email");
+								checked.eq(i).parent().parent().find("a.seenFlag").find("i").removeClass("mdi-email-open").addClass("mdi-email");
+							}
+							
+// 							debugger;
+							
+						},
+						error : function(data) {
+							alert("error : " + data)
+// 							debugger;
+						}
+					});//ajax end
+					
+				}//else end
+			}//function end
+		);//swal end
+	});	//.on end
+});//jquery end
+
+//체크된 메일 중요 표시 변경
+$(function(){
+	$("[name=setFlagButton]").on("click", function(){
+
+		swal({
+			title:"중요 표시 변경 확인",
+			text:"선택한 메일을 중요 표시로 변경하시겠습니까?",
+			type:"warning",
+			showCancelButton:!0,
+			confirmButtonColor:"#DD6B55",
+			confirmButtonText:"네",
+			cancelButtonText:"아니오",
+			closeOnConfirm:!1},
+			function(){
+				checked = $(":checkbox").not(":checkbox:first").filter(":checkbox:checked");
+				
+				if(checked.length < 1){
+					sweetAlert("중요 표시 변경 실패","변경할 메일을 선택하십시오.","error");
+					return;
+				}else{
+					var mailInfoList = new Array();
+					
+					for(var i = 0; i < checked.length; i++){
+						mailInfoList.push({"mailNo" : checked.eq(i).parent().parent().find(".mailNo").val(), "accountNo" : checked.eq(i).parent().parent().find(".accountNo").val()});
+					}
+
+					console.log(mailInfoList);
+
+					$.ajax({
+						type : "POST",
+						contentType: "application/json",
+						url : "/mail/json/setFlagMail",
+						dataType : "JSON",
+						data: JSON.stringify(mailInfoList),
+						beforeSend : function(){
+							$("#preloader").attr("style", "display:none; background:rgba(255,245,217,0.5);");
+							$("#preloader").fadeIn(300);
+						},
+						complete : function(){
+							$("#preloader").fadeOut(300);
+							$("#preloader").attr("style", "display:none; background:white");
+						},
+						success : function(data) {
+//	 							alert("success");
+							swal("변경 완료", "정상적으로 변경되었습니다.", "success");
+
+							for(var i = 0; i < checked.length; i++){
+								checked.eq(i).parent().parent().find("a.importantFlag").find("i").removeClass("mdi-star-outline").addClass("mdi-star");
+							}
+							
+// 							debugger;
+							
+						},
+						error : function(data) {
+							alert("error : " + data)
+// 							debugger;
+						}
+					});//ajax end
+					
+				}//else end
+			}//function end
+		);//swal end
+	});	//.on end
+});//jquery end
+
+//체크된 메일 중요 표시 해제
+$(function(){
+	$("[name=setUnFlagButton]").on("click", function(){
+
+		swal({
+			title:"중요 표시 변경 확인",
+			text:"선택한 메일을 중요 표시 해제하시겠습니까?",
+			type:"warning",
+			showCancelButton:!0,
+			confirmButtonColor:"#DD6B55",
+			confirmButtonText:"네",
+			cancelButtonText:"아니오",
+			closeOnConfirm:!1},
+			function(){
+				checked = $(":checkbox").not(":checkbox:first").filter(":checkbox:checked");
+				
+				if(checked.length < 1){
+					sweetAlert("중요 표시 변경 실패","변경할 메일을 선택하십시오.","error");
+					return;
+				}else{
+					var mailInfoList = new Array();
+					
+					for(var i = 0; i < checked.length; i++){
+						mailInfoList.push({"mailNo" : checked.eq(i).parent().parent().find(".mailNo").val(), "accountNo" : checked.eq(i).parent().parent().find(".accountNo").val()});
+					}
+
+					console.log(mailInfoList);
+
+					$.ajax({
+						type : "POST",
+						contentType: "application/json",
+						url : "/mail/json/setUnFlagMail",
+						dataType : "JSON",
+						data: JSON.stringify(mailInfoList),
+						beforeSend : function(){
+							$("#preloader").attr("style", "display:none; background:rgba(255,245,217,0.5);");
+							$("#preloader").fadeIn(300);
+						},
+						complete : function(){
+							$("#preloader").fadeOut(300);
+							$("#preloader").attr("style", "display:none; background:white");
+						},
+						success : function(data) {
+//	 							alert("success");
+							swal("변경 완료", "정상적으로 변경되었습니다.", "success");
+
+							for(var i = 0; i < checked.length; i++){
+								checked.eq(i).parent().parent().find("a.importantFlag").find("i").removeClass("mdi-star").addClass("mdi-star-outline");
 							}
 							
 // 							debugger;

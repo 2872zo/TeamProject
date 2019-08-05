@@ -223,6 +223,18 @@
 														</a>
 													</c:if>
 												</td>
+												<td>
+													<c:if test="${mail.flag}">
+														<a class="importantFlag" onclick="event.cancelBubble = true;">
+															<i class="mdi mdi-star"></i>
+														</a>
+													</c:if>
+													<c:if test="${!mail.flag}">
+														<a class="importantFlag" onclick="event.cancelBubble = true;">
+															<i class="mdi mdi-star-outline"></i>
+														</a>
+													</c:if>
+												</td>
 												<td>${mail.folder.fullName }</td>
 												<td>${mail.sender }&nbsp;<xmp>${mail.senderAddr }</xmp></td>
 												<td>${mail.subject }</td>
