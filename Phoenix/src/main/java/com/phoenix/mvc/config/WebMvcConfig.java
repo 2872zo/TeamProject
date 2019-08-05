@@ -44,6 +44,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         
         registry.addInterceptor(mailInterceptor)
         		.addPathPatterns("/mail/**")
+        		.excludePathPatterns("/mail/json/addMailAccount")
         		.excludePathPatterns("/mail/modalTest");
         
         registry.addInterceptor(chatInterceptor)
@@ -56,7 +57,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/user/logout")
                 .excludePathPatterns("/user/addUserView")
                 .excludePathPatterns("/user/oauth")
-                .excludePathPatterns("/user/callback");
+                .excludePathPatterns("/user/callback")
+                .excludePathPatterns("/user/json/add*Account");
         
     }
     
