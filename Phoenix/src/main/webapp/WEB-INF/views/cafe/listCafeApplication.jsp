@@ -230,7 +230,7 @@
 		$(function() {
 
 			$("#search").on("click", function() {
-				alert("검색");
+				//alert("검색");
 				fncGetList(1);
 			});
 		});//검색
