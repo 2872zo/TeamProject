@@ -409,8 +409,8 @@
 									<c:forEach items="${shoppingmallAccountList }" var="account">
 										<div class="alert alert-dark d-flex justify-content-between" role="alert" style="margin-bottom:5px; background-color:rgba(128, 128, 128, 0.15); ">
 											<input type="hidden" name="accountType" class="shoppingmallAccountType" value="${account.accountType}">
-											<span style="margin-top:5px;">${account.accountDomain }</span>
 											<span style="margin-top:5px;">${account.accountId }</span>
+											<span style="margin-top:5px;">${account.accountDomain }</span>
 											<button type="button" class="btn btn-danger btn-sm deleteAccount">연동해제</button>
 										</div> 	
 									</c:forEach>
@@ -544,6 +544,7 @@
 								</div>
 								<button class="btn login-form__btn submit w-100" id="addShoppingAccount">로그인</button>
 							</form>
+							
 						
 						</div><!-- card body end -->
 					</div><!-- modal body end -->
@@ -646,6 +647,7 @@
 	<!-- 메뉴바 이용을 위한 스크립트 -->
 	<script src="/js/custom/scroll-top.js"></script>
 	<script src="/plugins/sweetalert/js/sweetalert.min.js"></script>
+	
 	<script type="text/javascript">
 
 
@@ -688,6 +690,7 @@
 					if(data == 100){
 						$("#mailAccountList").append('<div class="alert alert-dark d-flex justify-content-between" role="alert"' 
 														+ 'style="margin-bottom:5px; background-color:rgba(128, 128, 128, 0.15); ">'
+														//+'<input type="hidden" name="accountType" value="'++'">'
 														+ '<span style="margin-top:5px;">' + formObject.accountId + formObject.accountType  + '</span>'
 														+ '<button type="button" class="btn btn-danger btn-sm deleteAccount">연동해제</button>'
 														+ '</div>');
@@ -747,7 +750,7 @@
 		$("#addShoppingAccount").on("click", function(e){
 
 			e.preventDefault();
-			
+			//debugger;
 			alert("쇼핑몰계정 로그인!");
 
 			var addType =  $("input[name=shoppingmallAcountType]").val();
@@ -788,10 +791,7 @@
 
 					url : "/shopping/json/addShoppingmallAccount",
 					method : "POST",
-					append	 : {
-						"Accept" : "application/json",
-						"Content-Type" : "application/json ; charset=UTF-8"
-					},
+					contentType: "application/json",
 					data : JSON.stringify({ //보내는 data jsonString 화
 
 						accountType : $("input[name=shoppingmallAcountType]").val(),
@@ -800,6 +800,12 @@
 						accountDomain : domain
 						
 					}),
+					beforeSend : function(){
+						$("#preloader").attr("style", "background:rgba(255,245,217,0.5);");
+					},
+					complete : function(){
+						$("#preloader").attr("style", "display:none;");
+					}, 
 					dataType : "text",
 					success : function(serverData){
 
@@ -812,8 +818,9 @@
 							
 							$("#shoppingAccountList").append('<div class="alert alert-dark d-flex justify-content-between" role="alert"' 
 																+ 'style="margin-bottom:5px; background-color:rgba(128, 128, 128, 0.15); ">'
-																+'<span style="margin-top:5px;">'+domain+'</span>'
+																+'<input type="hidden" name="accountType" class="shoppingmallAccountType" value="'+addType+'">'
 																+ '<span style="margin-top:5px;">' +insertId + '</span>'
+																+'<span style="margin-top:5px;">'+domain+'</span>'
 																+ '<button type="button" class="btn btn-danger btn-sm deleteAccount">연동해제</button>'
 																+ '</div>');
 							$("#shoppingLogin").modal("hide");	
@@ -821,7 +828,7 @@
 							sweetAlert("계정연동 성공", insertId + " 계정이 연동되었습니다.","success");
 						
 						}
-						else(data.loginResult =='400'){
+						else if(data.loginResult =='400'){
 							//실패
 							sweetAlert("계정연동 해제 실패","아아디, 비밀번호를 확인해 주세요","error");
 						}
@@ -831,7 +838,7 @@
 
 
 				});//ajax끝
-
+		});
 		
 		});	
 
@@ -908,7 +915,7 @@
 	$(function() {
 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 		$("button.btn.btn-success").on("click", function() {
-			self.location = "/user/updateUserView?userNo=${user.userNo}"	
+			self.location = "/user/updateUserView?userNo=${user.userNo}";
 		});
 	});
 
@@ -916,10 +923,12 @@
 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 		$("a[href='#' ]").on("click", function() {
 			//$("form")[0].reset();
-			self.location = "/"
+			self.location = "/";
 		});
 	});
+	
 </script>
+
 <script src="/js/custom/userCommon.js"></script>
 <script src="/js/custom/toolbarScript.js"></script>
 </body>

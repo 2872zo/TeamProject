@@ -17,14 +17,6 @@ public interface MailService {
 	
 	public Map<String, Object> getMail(Account account, int mailNo) throws Exception;
 	
-	public boolean setSeenFlag(int mailNo);
-	
-	public boolean setSeenFlags(int[] mailNoArray);
-	
-	public boolean setUnSeenFlag(int mailNo);
-	
-	public boolean setUnSeenFlags(int[] mailNoArray);
-
 	public boolean deleteMail(List<Map<String, Object>> mailInfoList, List<Account> accountList) throws FileNotFoundException, MessagingException, IOException;
 
 	public boolean addMailAccount(Account account) throws Exception;
@@ -41,6 +33,10 @@ public interface MailService {
 
 	public boolean setUnSeenMail(List<Map<String, Object>> mailInfoList, List<Account> accountList) throws FileNotFoundException, MessagingException, IOException;
 
+	public boolean setFlagMail(List<Map<String, Object>> mailInfoList, List<Account> accountList) throws FileNotFoundException, MessagingException, IOException;
+
+	public boolean setUnFlagMail(List<Map<String, Object>> mailInfoList, List<Account> accountList) throws FileNotFoundException, MessagingException, IOException;
+	
 	public boolean trashMail(List<Map<String, Object>> mailInfoList, List<Account> accountList) throws FileNotFoundException, MessagingException, IOException;
 
 	public Map<String, Object> getBoxMailCount(List<Account> accountList) throws MessagingException, FileNotFoundException, IOException;

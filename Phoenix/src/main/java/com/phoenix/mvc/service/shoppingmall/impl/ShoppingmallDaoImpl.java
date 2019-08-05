@@ -171,7 +171,7 @@ public class ShoppingmallDaoImpl implements ShoppingmallDao
 	@Override //account 계정 다 가져오긔
 	public List<Account> getShoppingmallAccount(int userNo) {
 		
-		return sqlSession.selectList("getMailAccount", userNo);
+		return sqlSession.selectList("getShoppingmallAccount", userNo);
 	}
 	
 	@Override 
@@ -307,6 +307,14 @@ public class ShoppingmallDaoImpl implements ShoppingmallDao
 		if(account.getAccountType().equals(tmonCode)) {
 			
 			result = this.tmonLogin(webDriver, account);
+			if(webDriver.findElements(By.id("userid")).size()==0){
+				//메인페이지
+				result=100;
+			}
+			else {
+				//로그인 못함
+				result=400;
+			}
 		}
 		
 		webDriver.quit(); //연결 끊어버림
@@ -317,11 +325,8 @@ public class ShoppingmallDaoImpl implements ShoppingmallDao
 	@Override
 	public void addShoppingmallAccount(Account account, User user) {
 		
-		Map map = new HashMap();
-		map.put("account", account);
-		map.put("user",user);
-		
-		sqlSession.insert("addShoppingmallAccount", map);
+		account.setUserNo(user.getUserNo());
+		sqlSession.insert("addShoppingmallAccount", account);
 	}
 
 	

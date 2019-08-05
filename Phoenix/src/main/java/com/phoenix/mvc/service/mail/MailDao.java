@@ -31,13 +31,17 @@ public interface MailDao {
 
 	public Map<String, Object> getAllAccountDeletedMailList(List<Account> accountList, int currentPage) throws FileNotFoundException, MessagingException, IOException;
 
-	public boolean deleteMail(List<Map<String, Object>> mailInfoList, List<Account> accountList) throws FileNotFoundException, MessagingException, IOException;
-
 	public boolean setSeenMail(List<Map<String, Object>> mailInfoList, List<Account> accountList) throws FileNotFoundException, MessagingException, IOException;
 
 	public boolean setUnSeenMail(List<Map<String, Object>> mailInfoList, List<Account> accountList) throws FileNotFoundException, MessagingException, IOException;
+	
+	public boolean setFlagMail(List<Map<String, Object>> mailInfoList, List<Account> accountList) throws MessagingException, FileNotFoundException, IOException;
+	
+	public boolean setUnFlagMail(List<Map<String, Object>> mailInfoList, List<Account> accountList) throws MessagingException, FileNotFoundException, IOException;
 
 	public boolean trashMail(List<Map<String, Object>> mailInfoList, List<Account> accountList) throws FileNotFoundException, MessagingException, IOException;
+	
+	public boolean deleteMail(List<Map<String, Object>> mailInfoList, List<Account> accountList) throws FileNotFoundException, MessagingException, IOException;
 
 	public Map<String, Object> getBoxMailCount(List<Account> accountList) throws MessagingException, FileNotFoundException, IOException;
 }
