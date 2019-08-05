@@ -117,7 +117,7 @@ public class SnsServiceImpl implements SnsService {
 			
 		ChromeOptions options = new ChromeOptions();
 		options.setCapability("ignoreProtectedModeSettings", true);
-		//options.addArguments("headless");//창안켜줭~
+		options.addArguments("headless");//창안켜줭~
 		driver = new ChromeDriver(options);
 		wait = new WebDriverWait(driver, 20);
 		
@@ -162,7 +162,7 @@ public class SnsServiceImpl implements SnsService {
 
 
 	@Override
-	public Map<String, Object> getFaceBookTimeLineList(Search search) {
+	public Map<String, Object> getFaceBookTimeLineList(Search search) throws InterruptedException {
 		
 		try {
 
@@ -174,7 +174,7 @@ public class SnsServiceImpl implements SnsService {
 			prefs.put("profile.default_content_setting_values.notifications", 2);
 			ChromeOptions options = new ChromeOptions();
 			options.setExperimentalOption("prefs", prefs);
-			//options.addArguments("headless");//창안켜줭~
+			options.addArguments("headless");//창안켜줭~
 			options.setCapability("ignoreProtectedModeSettings", true);
 			driver = new ChromeDriver(options);
 			wait = new WebDriverWait(driver, 40);
@@ -245,7 +245,7 @@ public class SnsServiceImpl implements SnsService {
 		}
 		
 		
-		
+		Thread.sleep(2000);
 		
 		//List<WebElement> each = feed.findElements(By.cssSelector("div[class='_5pcr userContentWrapper']"));
 		
@@ -276,8 +276,8 @@ public class SnsServiceImpl implements SnsService {
 					System.out.println(i + " 번째 포스트 "); // 포스트 수
 					List<WebElement> postId = check.get(i).findElements(By.cssSelector("h5[class='_7tae _14f3 _14f5 _5pbw _5vra']"));
 					
-					if(postId.size() != 0) {//일반작성아이디
-						wait.until(ExpectedConditions.textToBePresentInElement(check.get(i).findElement(By.cssSelector("h5[class='_7tae _14f3 _14f5 _5pbw _5vra']")), ""));
+					if(postId.size() != 0) {//일반작성아이디)
+						wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("h5[class='_7tae _14f3 _14f5 _5pbw _5vra']")));
 						System.out.println("작성자ID "+ (check.get(i).findElement(By.cssSelector("h5[class='_7tae _14f3 _14f5 _5pbw _5vra']")).getText()));
 						newTimeLine.setPostId(check.get(i).findElement(By.cssSelector("h5[class='_7tae _14f3 _14f5 _5pbw _5vra']")).getText());
 					}
@@ -286,15 +286,16 @@ public class SnsServiceImpl implements SnsService {
 					List<WebElement> reactionId = check.get(i).findElements(By.cssSelector("h6[class='_7tae _14f3 _14f5 _5pbw _5vra']"));
 					
 					if(reactionId.size() != 0) {//공유한경우의아이디
-						wait.until(ExpectedConditions.textToBePresentInElement(check.get(i).findElement(By.cssSelector("h6[class='_7tae _14f3 _14f5 _5pbw _5vra']")), ""));
+						wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("h6[class='_7tae _14f3 _14f5 _5pbw _5vra']")));
 						System.out.println("작성자ID "+ (check.get(i).findElement(By.cssSelector("h6[class='_7tae _14f3 _14f5 _5pbw _5vra']")).getText()));
 						newTimeLine.setPostId(check.get(i).findElement(By.cssSelector("h6[class='_7tae _14f3 _14f5 _5pbw _5vra']")).getText());
 					}
 					
 					List<WebElement> post = check.get(i).findElements(By.cssSelector("[data-testid='post_message']"));
 					
+					newTimeLine.setPost(" ");
 					if(post.size()!=0) {//포스트가 없는경우도 존재
-						wait.until(ExpectedConditions.textToBePresentInElement(check.get(i).findElement(By.cssSelector("[data-testid='post_message']")), ""));
+						wait.until(ExpectedConditions.invisibilityOfElementWithText(By.cssSelector("[data-testid='post_message']"), ""));
 						System.out.println("내용 " + (check.get(i).findElement(By.cssSelector("[data-testid='post_message']")).getText()));
 						newTimeLine.setPost(check.get(i).findElement(By.cssSelector("[data-testid='post_message']")).getText());
 						
@@ -302,7 +303,7 @@ public class SnsServiceImpl implements SnsService {
 						WebElement commonPost = check.get(i).findElement(By.cssSelector("[data-testid='post_message']") );
 					
 						if(post.size()!=0 && morePost.size()!=0) {//더보기 경우
-						
+							
 							WebElement seeMore=commonPost.findElement(By.className("see_more_link"));
 							JavascriptExecutor jse=(JavascriptExecutor)driver;
 							jse.executeScript("arguments[0].click();",seeMore);
@@ -314,16 +315,10 @@ public class SnsServiceImpl implements SnsService {
 		
 						}
 						
-						
-						if(newTimeLine.getPost() == null) {
-							newTimeLine.setPost(" ");
-						}else if(newTimeLine.getPost()!= null) {
-							newTimeLine.setPost(newTimeLine.getPost().replaceAll("  ", ""));
-						}
 							
 					}
 					
-					wait.until(ExpectedConditions.textToBePresentInElement(check.get(i).findElement(By.cssSelector("span[class='fsm fwn fcg']")), ""));
+					wait.until(ExpectedConditions.invisibilityOfElementWithText(By.cssSelector("span[class='fsm fwn fcg']"), ""));
 					System.out.println("작성일 " + (check.get(i).findElement(By.cssSelector("span[class='fsm fwn fcg']")).getText()));
 					newTimeLine.setRegDate(check.get(i).findElement(By.cssSelector("span[class='fsm fwn fcg']")).getText());
 					
@@ -382,8 +377,7 @@ public class SnsServiceImpl implements SnsService {
 						
 								//System.out.println(videoLink.getAttribute("value"));
 								
-								
-								
+					
 								videoList.add(videoImg.get(j).getAttribute("src"));
 								videoLinkList.add(videoLink.getAttribute("value"));
 								newTimeLine.setVideoList(videoList);
@@ -559,7 +553,7 @@ public class SnsServiceImpl implements SnsService {
 	 */
 
 	@Override
-	public Map<String, Object> getInstaTimeLineList(Search search) {
+	public Map<String, Object> getInstaTimeLineList(Search search) throws InterruptedException {
 		
 		try {
 		
@@ -568,7 +562,7 @@ public class SnsServiceImpl implements SnsService {
 		//옵션설정
 		ChromeOptions options = new ChromeOptions();
 		options.setCapability("ignoreProtectedModeSettings", true);
-		//options.addArguments("headless");//창안켜줭~
+		options.addArguments("headless");//창안켜줭~
 		driver = new ChromeDriver(options);
 		
 		//로그인
@@ -614,13 +608,13 @@ public class SnsServiceImpl implements SnsService {
 			while(eachSize<value+4) {//조건은 후하게주세욤..
 				System.out.println("pagesize존재하니까 그만큼 while문 반복해줭");
 				
-				((JavascriptExecutor)driver).executeScript("window.scrollBy(0,400)");
+				((JavascriptExecutor)driver).executeScript("window.scrollBy(0,300)");
 	
 				article= feed.findElements(By.tagName("article"));
 				System.out.println("3while문 안에 사이즈 체크 "+ article.size());
 				size++;
 				System.out.println("size값은?" +size);
-				if(size>=value*3*search.getStatus()) {//아휴...ㅅㅂ
+				if(size>=value*2*search.getStatus()) {//아휴...ㅅㅂ
 					break;
 				}
 			}
@@ -631,6 +625,8 @@ public class SnsServiceImpl implements SnsService {
 		System.out.println("search값 세팅 "+search.getPageSize());
 		
 		System.out.println(" 인스타 포스트수 : " +article.size()); // 포스트 수
+		
+		Thread.sleep(1000);
 		
 		
 		for (int i = search.getStatus(); i < article.size(); i++) {

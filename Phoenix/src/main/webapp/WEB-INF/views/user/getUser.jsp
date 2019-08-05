@@ -432,6 +432,7 @@
 										<div class="alert alert-dark d-flex justify-content-between" role="alert" style="margin-bottom:5px; background-color:rgba(128, 128, 128, 0.15); ">
 											<input type="hidden" name="accountType" value="${snsAccount.accountType }">
 											<span style="margin-top:5px;">${snsAccount.accountId }</span>
+											<span style="margin-top:5px;">${account.accountDomain }</span>
 											<button type="button" class="btn btn-danger btn-sm deleteAccount">연동해제</button>
 										</div> 	
 									</c:forEach>
@@ -857,11 +858,21 @@
 	
 	
 	$(function(){
-
+	
 		//sns계정 추가
 		$("#addSnsAccount").on("click", function(e){
 			e.preventDefault();
+			var domain  ="";
+			var accountType= $("input[name=accountType]:checked").val();
+			var accountId= $("#snsId").val();
+			var accountPw= $("#snsPw").val();
+			//alert(accountType= $("input[name=accountType]:checked").val())
 
+			if(accountType == 'ua109'){
+				domain ="instagram";
+			}else if(accountType == 'ua110'){
+				domain ="faceBook";
+			}
 			$.ajax({
 					url: "/sns/json/addSns",
 					type : "POST",
@@ -869,7 +880,8 @@
 						userNo : $("#userNo").val(),
 						accountType : $("input[name=accountType]:checked").val(),
 						accountId : $("#snsId").val(),
-						accountPw : $("#snsPw").val()
+						accountPw : $("#snsPw").val(),
+						accountDomain : domain
 
 					}),
 					dataType : "json",
@@ -887,8 +899,16 @@
 						//alert("success "+data)
 	
 						if(data ==true){
+					
+							$("#snsAccountList").append('<div class="alert alert-dark d-flex justify-content-between" role="alert"' 
+									+ 'style="margin-bottom:5px; background-color:rgba(128, 128, 128, 0.15); ">'
+									+'<input type="hidden" name="accountType" value="'+accountType+'">'
+									+'<span style="margin-top:5px;">'+domain+'</span>'
+									+'<span style="margin-top:5px;">' +accountId + '</span>'
+									+ '<button type="button" class="btn btn-danger btn-sm deleteAccount">연동해제</button>'
+									+ '</div>');
 							$("#snsLogin").modal("hide");
-							sweetAlert("계정연동 성공"," 계정이 연동되었습니다.","success");
+							sweetAlert("계정연동 성공",accountId+" 계정이 연동되었습니다.","success");
 						}else if (data == false){
 							sweetAlert("계정연동 실패","아이디와 비밀번호를 확인해 주십시오.","error");
 						}

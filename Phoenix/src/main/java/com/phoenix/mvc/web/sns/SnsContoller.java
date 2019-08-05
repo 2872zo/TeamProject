@@ -32,7 +32,7 @@ public class SnsContoller {
 	}
 
 	@GetMapping(value = "/getTimeLine")
-	public String getTimeLine(Model model, @ModelAttribute("search") Search search, HttpServletRequest request) {
+	public String getTimeLine(Model model, @ModelAttribute("search") Search search, HttpServletRequest request) throws InterruptedException {
 
 		System.out.println("sns/getTimeLine");
 		
