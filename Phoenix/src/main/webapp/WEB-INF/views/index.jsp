@@ -34,6 +34,9 @@
 <!-- ToolBar End /////////////////////////////////////-->
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <style type="text/css">
+html, body, .container-fluid {
+	width: 100%; height: 100%;
+}
 	
 	p{
 		
@@ -41,18 +44,16 @@
 	}
 	
 	.input-group-append{
-		box-shadow : 5px 5px 5px #8080804a;
+		
+		border-radius :50%;
+		box-shadow : 1px 1px 18px 5px #8080804a;
 	}
 	
 	#searchKeyword{
 		
-		box-shadow : 5px 5px 5px #8080804a;
+		box-shadow : 1px 1px 15px 1px #8080804a;
 	}
 	
-<<<<<<< HEAD
-=======
-	
->>>>>>> refs/remotes/origin/master
 </style>
 
 </head>
@@ -76,16 +77,15 @@
 
 		<!--  화면구성 div Start /////////////////////////////////////-->
 
-	<div class="card">
+	<div class="container-fluid" style='background-color: white;'>
 
-		<div class="card-body">
 		<br/>
 			<p class="text-center" style='color: #f5a142; font-size: 90px; '>Phoenix</p>
 			<div class='d-flex justify-content-center'>
 				<div class="input-group mb-3 " style='width: 50%;'>
 					<input type="text" class="form-control input-rounded form-control-lg " id='searchKeyword'>
 					<div class="input-group-append">
-						<button class="btn btn-lg btn-outline-primary" type="button" id="explore">
+						<button class="btn btn-lg btn-rounded btn-primary" type="button" id="explore">
 							<i class="mdi mdi-magnify" style='font-size: 18pt;'></i>
 						</button>
 					</div>
@@ -112,9 +112,7 @@
 			<br/>
 			<br/>
 
-		</div>
 	</div>
-
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
 

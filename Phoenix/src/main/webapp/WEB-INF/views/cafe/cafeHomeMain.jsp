@@ -85,7 +85,7 @@
 <div class='card'>
 <div class='card-body'>
 
-<div class="input-group d-flex justify-content-center"  style='width: 100%'>
+<div class="input-group d-flex justify-content-center">
   		<select class="form-control valid" name='searchCondition' id='searchCondition'>
 			<option class='searchCondition' value="0">카페+게시글</option>
 			<option class='searchCondition' value="1">카페</option>

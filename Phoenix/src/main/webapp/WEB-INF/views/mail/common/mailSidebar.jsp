@@ -23,20 +23,30 @@
 							<div class="mail-list mt-4">
 								<a href="javascript:fncGetMailMain(${currentPage })" class="list-group-item border-0 text-primary p-r-0"> 
 									<i class="fa fa-inbox font-18 align-middle mr-2"></i> <b>Inbox</b> 
-									<span class="badge badge-primary badge-sm float-right m-t-5">198</span>
+									<c:if test="${!empty inboxTotalCount && inboxTotalCount ne 0 }">
+										<span class="badge badge-primary badge-sm float-right m-t-5">${inboxTotalCount }</span>
+									</c:if>
 								</a> 
 								
-								<a href="javascript:fncGetSentMailList(${currentPage })" class="list-group-item border-0 p-r-0"> <i
-									class="fa fa-paper-plane font-18 align-middle mr-2"></i>Sent
+								<a href="javascript:fncGetSentMailList(${currentPage })" class="list-group-item border-0 p-r-0"> 
+									<i class="fa fa-paper-plane font-18 align-middle mr-2"></i> <b>Sent</b>
+									<c:if test="${!empty sentTotalCount && sentTotalCount ne 0 }">
+										<span class="badge badge-success badge-sm float-right m-t-5">${sentTotalCount }</span>
+									</c:if>
 								</a> 
 								
 								<a href="javascript:fncGetImportantMailList(${currentPage })" class="list-group-item border-0 p-r-0"> 
-									<i class="fa fa-star-o font-18 align-middle mr-2"></i>Important 
-									<span class="badge badge-danger badge-sm float-right m-t-5">47</span>
+									<i class="fa fa-star-o font-18 align-middle mr-2"></i>Important
+									<c:if test="${!empty importantTotalCount && importantTotalCount ne 0 }">
+										<span class="badge badge-info badge-sm float-right m-t-5">${importantTotalCount }</span>
+									</c:if> 
 								</a> 
 								
 								<a href="javascript:fncGetTrashMailList(${currentPage })" class="list-group-item border-0 p-r-0">
 									<i class="fa fa-trash font-18 align-middle mr-2"></i>Trash
+									<c:if test="${!empty trashTotalCount && trashTotalCount ne 0 }">
+										<span class="badge badge-danger badge-sm float-right m-t-5">${trashTotalCount }</span>
+									</c:if> 
 								</a>
 							</div>
 						

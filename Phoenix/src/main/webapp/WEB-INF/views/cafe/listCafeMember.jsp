@@ -7,8 +7,6 @@
 
 <html lang="ko">
 
-
-
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -30,7 +28,6 @@ cursor: pointer;
 
 <body>
 
-
 <!--*******************
         Preloader start
     ********************-->
@@ -46,24 +43,20 @@ cursor: pointer;
         Preloader end
     ********************-->
 
-
-
-<br/>	
-
 <div id="main-wrapper">
 
 		<!-- ToolBar Start /////////////////////////////////////-->
 		<jsp:include page="../common/cafeManageTollbar.jsp" />
 		<!-- ToolBar End /////////////////////////////////////-->
 
-
-
 		<!--**********************************
             Sidebar start
         ***********************************-->
+        
 		<div class="nk-sidebar">
 			<c:import url="/WEB-INF/views/common/cafeManageMenubar.jsp"></c:import>
 		</div>
+		
 		<!--**********************************
             Sidebar end
         ***********************************-->
@@ -84,11 +77,9 @@ cursor: pointer;
 				</div>
 			</div>
 
-<div class="container">
+<div class="container-fluid">
 <div class='card'>
 <div class='card-body'>
-
-<br/>
 
 <form id='memberListingForm'>
 <input type="hidden" name='currentPage' 	value='0' id='memberCurrentPage' >
@@ -96,8 +87,6 @@ cursor: pointer;
 <input type="hidden" name='memberGrade' 	value='${search.memberGrade}' id='memberGrade'>		
 <input type="hidden" name='status' 			value='${search.status}' id='status'>
 <input type="hidden" name='sortCode' 		value='${search.sortCode}' id='sortCode'>
-	    
-<br/>
 
 <div class='row'>
 <div class="col-lg-4">
@@ -190,15 +179,6 @@ cursor: pointer;
 
     </tbody>
 </table>
-	
-<br/>
-<br/>
-
-
-<br/>
-
-
-
   
   <jsp:include page="../common/pageNavigator.jsp" />
  

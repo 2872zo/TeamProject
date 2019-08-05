@@ -6,7 +6,6 @@
 
 <!DOCTYPE html>
 
-
 <html lang="ko">
 
 <style type="text/css">
@@ -127,9 +126,6 @@ input[type="checkbox"] {
 	<!--**********************************
         Main wrapper start
     ***********************************-->
-
-
-
    
 <!--**********************************
             Header start
@@ -155,10 +151,11 @@ input[type="checkbox"] {
 							
 							<c:if test='${fn:startsWith(URI,"/WEB-INF/views/cafe/cafeHomeMain.jsp")
 							 || fn:startsWith(URI,"/WEB-INF/views/cafe/listCafeNewsFeed.jsp") 
-							 || fn:startsWith(URI,"/WEB-INF/views/cafe/listUserCafeApplication.jsp")}'>
+							 || fn:startsWith(URI,"/WEB-INF/views/cafe/listUserCafeApplication.jsp")
+							 || fn:startsWith(URI,"/WEB-INF/views/cafe/listCafeSearch.jsp")}'>
 								<c:if test="${!empty sessionScope.user}">
-									<i class="mdi mdi-clipboard-outline" id='newsFeeding' style='font-size: 30pt'></i>
-									<i class="mdi mdi-library-books" id='myApplications' style='font-size: 30pt'></i>
+								<i class="mdi mdi-library-books" id='newsFeeding' style='font-size: 30pt'></i>
+								<i class="mdi mdi-clipboard-outline" id='myApplications' style='font-size: 30pt'></i>
 								</c:if>
 							</c:if>
 					</div>
@@ -203,7 +200,6 @@ input[type="checkbox"] {
                         <!-- 회원관리부분 -->
                         <!-- 채팅부분 -->
                          </c:if>
-					<ul class="clearfix d-flex align-items-center">
 
 						<c:if test="${!empty sessionScope.user}">
 
@@ -232,12 +228,6 @@ input[type="checkbox"] {
 		<!--**********************************
             Header end ti-comment-alt
         ***********************************-->
-
-
-
-
-	
-
 
 		<!-- Modal 내용 시작 -->
 		<div class="modal fade" id="exampleModalCenter" style="display: none;"
@@ -286,8 +276,6 @@ input[type="checkbox"] {
 		<!--**********************************
             Header end ti-comment-alt
         ***********************************-->
-
-
 
 	<!--**********************************
         Main wrapper end

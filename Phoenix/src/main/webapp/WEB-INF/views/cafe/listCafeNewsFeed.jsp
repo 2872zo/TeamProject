@@ -61,34 +61,41 @@
 		<c:forEach var = 'post' items='${newsFeed}'>
 		<input type='hidden' class='cafeURL' value='${post.cafeURL}'>
 		<input type='hidden' class='postNo'  value='${post.postNo}'>
-		<div class="card w-85 goToPost" style=" border: 1px solid #F7790A; ">
+		<div class="card goToPost" style=" border: 1px solid #F7790A; height: 50%;">
+			<div class="card-body" style='padding: 1%;'>
 			<div class='row'>
-			<div class='col-lg-2'>
-			<div class="card-body">
-			<img src="/images/common/16by9.png" class="card-img" alt="..."
-			style="background: url('/images/uploadFiles/cafeicon/${post.cafeIcon}');
-      no-repeat center center; background-size:cover; height:100px; width:auto;">
-			${post.cafeName} 
-			</div>
-			</div>
-			<div class='col-lg-8'>
-			<div class="card-body">
-				<h5 class="card-title">${post.postTitle}</h5>
-				<p class="card-text">
-			
-				</p>
-				
+				<div class='col-lg-2'>
+				<div class="card-body">
+				<h5>${post.cafeName}</h5>
 				</div>
-			</div>
-			<div class='col-lg-2'>
-			 작성자 : ${post.memberNickname}
-			 <br/>
-			 ${post.regDate}
+				</div>
+				<div class='col-lg-2'>
+					<img src="/images/common/16by9.png" class="card-img"
+					style="background: url('/images/uploadFiles/cafeicon/${post.cafeIcon}');
+		     		background-size: cover; 
+					background-repeat: no-repeat; 
+					background-position: center;
+		     		height:auto; width:100%;">
+				</div>
+				<div class='col-lg-3'>
+					<div class="card-body">
+					<h5 class="card-title">${post.postTitle}</h5>
+					</div>
+				</div>
+				<div class='col-lg-2'>
+					<div class="card-body">
+					<h5>${post.memberNickname}</h5>
+					</div>
+				</div>
+				<div class='col-lg-3'>
+					<div class="card-body">
+					<h5>${post.regDate}</h5>
+					</div>
+				</div>
 			</div>
 			</div>
 		</div>
 		</c:forEach>
-		
 		
 		</div>
 		</div>
@@ -96,7 +103,6 @@
 	</div>
 	</div>
 	<!--  화면구성 div Start /////////////////////////////////////-->
-	
 	
 	<!--**********************************
         Scripts
@@ -107,34 +113,18 @@
 	<script src="/js/gleek.js"></script>
 	<script src="/js/styleSwitcher.js"></script>
 
-	<script src="/plugins/sweetalert/js/sweetalert.min.js"></script>
-	<script src="/plugins/sweetalert/js/sweetalert.init.js"></script>
-
 	<!-- 메뉴바 이용을 위한 스크립트 -->
 	<script src="/js/custom/scroll-top.js"></script>
 	
 	<!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
-var checkSessionUser = ${empty sessionScope.user};
 
-
-$(".goToPost").on(
-		"click",
-		function() {
-			var countNo=$(".goToPost").index(this);
-			var cafeURL = $($(".cafeURL")[countNo]).val();
-			var postNo = $($(".postNo")[countNo]).val();
-			//alert(cafeURL);
-			//alert(postNo);
-			$(self.location).attr("href", "/cafe/"+cafeURL+"/getPost/"+postNo);
-
-			// /cafe/cafeURL/getPost/postNo
-			//var count = $(".cafeCategory").index(this);
-			//$("#cafeType").val(count);
-			//$("#cafeHomeForm").attr("method", "POST").attr("action",
-				//	"/cafe/main").submit();
-		});
-
+$(".goToPost").on("click", function() {
+	var countNo=$(".goToPost").index(this);
+	var cafeURL = $($(".cafeURL")[countNo]).val();
+	var postNo = $($(".postNo")[countNo]).val();
+	$(self.location).attr("href", "/cafe/"+cafeURL+"/getPost/"+postNo);
+});
 
 </script>
 

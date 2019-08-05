@@ -8,7 +8,7 @@
 
 
 
-<div class="brand-logo" style='background-color: white;'>
+<div class="brand-logo" style='background-color: white;border: solid white 1px;'>
 	<a href="/" style='background-color: white;'> 
 		<b class="logo-abbr" style='background-color: white;'> 
 			<b class="align-middle font-weight-bolder text-center" style='color: white; font-size: x-large; '>&nbsp;</b>
