@@ -49,6 +49,10 @@
 		box-shadow : 5px 5px 5px #8080804a;
 	}
 	
+<<<<<<< HEAD
+=======
+	
+>>>>>>> refs/remotes/origin/master
 </style>
 
 </head>
