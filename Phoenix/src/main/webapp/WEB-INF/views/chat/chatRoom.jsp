@@ -804,11 +804,7 @@ $(function() {
 		var top = $("#chat_box").scrollTop();
 		//스크롤바 전체 길이
 		var totalHeight= $("#chat_box").prop('scrollHeight');
-		//아래쪽 보고 있을 때 메시지 뜨면 당기게끔
-		//alert(top+":::"+totalHeight);
-		if(top>(totalHeight*0.50)){
 			 $("#chat_box").scrollTop($("#chat_box").prop('scrollHeight'));
-			}
 		
 	});
 

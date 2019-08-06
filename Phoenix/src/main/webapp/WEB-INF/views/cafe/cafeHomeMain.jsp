@@ -55,13 +55,14 @@
         Preloader end
     ********************-->
 
-
  <!--**********************************
             Nav header start
         ***********************************-->
+        
            <div class="nav-header">
             	<c:import url="/WEB-INF/views/common/brand-logo.jsp"/>
           </div>
+          
         <!--**********************************
             Nav header end
         ***********************************-->
@@ -77,10 +78,11 @@
 		<form class="form-inline justify-content-center" id='cafeSearch'>
 			<input type="hidden" id="currentPage" name="currentPage" value="0" />
 			<input type="hidden" name='cafeURL'
-				value='${ !empty search.cafeURL ? search.cafeURL : "" }'> <input
-				type="hidden" name='boardName'
+				value='${ !empty search.cafeURL ? search.cafeURL : "" }'> 
+				<input type="hidden" name='boardName'
 				value='${ !empty search.boardName ? search.boardName : "" }'>
-				<input type='hidden' id="condtioner" value='${search.searchCondition}'>
+				<input type='hidden' id="condtioner" 
+				value='${search.searchCondition}'>
 <div class='card'>
 <div class='card-body'>
 
@@ -138,7 +140,10 @@
 			</div>
 			
 			<br/>
-
+<c:if test="${empty myCafelist}">
+<br/><br/><br/>
+<div class='d-flex justify-content-center'><h3>해당 항목에 해당하는 카페가 없습니다.</h3></div>
+</c:if>
 			<c:if test="${!empty myCafelist}">
 
 				<div class="row d-flex justify-content-between">

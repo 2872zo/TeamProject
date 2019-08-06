@@ -135,10 +135,14 @@ img {
 						</form>
 						</c:if>
 						<!-- 친구검색창임 -->
-								
-								
 						
 						<!-- 기본 친구목록화면 시작 -->
+						<c:if test="${search.positionIndex==0 && empty friendsList}">
+						<div class='d-flex justify-content-center'><h3>친구 목록에 등록된 친구가 없습니다.</h3></div>
+						<div class='d-flex justify-content-center'><h4><i class="chatButtons mdi mdi-account-search" id='goFriendSearch' style='font-size:;'>
+							</i>
+							버튼을 눌러 친구를 검색해보세요</h4></div>
+						</c:if>
 						<c:if test="${!empty friendsList}">
 							<c:forEach items='${friendsList}' var='chatFriend'>
 
@@ -154,8 +158,6 @@ img {
 										     background-repeat: no-repeat; 
 										     background-position: center;
 										     width:100%; margin: 1%; padding:0%;">
-											
-											
 											
 											</div>
 											<div class='col-lg-5'>
@@ -185,6 +187,9 @@ img {
 
 
 <!-- 친구되고싶어하는 사람들 나오는 화면 시작 -->
+<c:if test="${search.positionIndex==1 && empty wannaBeFreindList}">
+					<div class='d-flex justify-content-center'><h1>추천친구목록이 비었습니다.</h1></div>
+						</c:if>
 								<c:if test="${!empty wannaBeFreindList}">
 
 									<c:forEach items='${wannaBeFreindList}' var='chatFriend'>
@@ -550,11 +555,13 @@ var checkSessionUser = ${empty sessionScope.user};
 					alert("에러남 : " + error);
 				}
 			});//ajax 끝
-
 			
 			}
 		
 	});
+	$("#goFriendSearch").on("click", function() {
+		$("#friendSearching").click();
+		});
 </script>
 
 	<!-- 공통 툴바용 스크립트 -->
