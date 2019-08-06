@@ -145,6 +145,8 @@ public class CafeManageServiceImpl implements CafeManageService {
 
 		return cafeManageDao.getCafeBoardList(search);
 	}
+	
+	
 
 	@Override
 	public boolean checkCafePost(String cafeURL, int boardNo) { // false이면 게시글 없음, true 이면 게시글 존재
@@ -193,8 +195,8 @@ public class CafeManageServiceImpl implements CafeManageService {
 			{
 				newBoard.get(i).setBoardType("cb102");
 				newBoard.get(i).setPrivateFlag('0');
-				newBoard.get(i).setAccessGrade("10002");
-// newBoard.get(i).setBoardName("------------");
+				//newBoard.get(i).setAccessGrade("10002");
+				// newBoard.get(i).setBoardName("------------");
 			} else // 자유게시판이면
 			{
 				newBoard.get(i).setBoardType("cb103"); // 자유게시판
@@ -218,7 +220,7 @@ public class CafeManageServiceImpl implements CafeManageService {
 			if (existBoardList.get(i).getBoardDetail() == null) // 구분선
 			{
 // existBoardList.get(i).setBoardName("-------------"); //디테일로 수정
-				existBoardList.get(i).setAccessGrade("10002");
+				//existBoardList.get(i).setAccessGrade("10002");
 				existBoardList.get(i).setPrivateFlag('0');
 				existBoardList.get(i).setBoardType("cb102");
 			} else if (existBoardList.get(i).getBoardName().contains("신고")) // 근데 신고는 아예 고칠수 없게할거임

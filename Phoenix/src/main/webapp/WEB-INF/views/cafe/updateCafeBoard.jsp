@@ -475,7 +475,7 @@
 										<br /> <br /> 
 										<select name="addableBoard" size="10" class="form-control">
 											<option value="새로운게시판" selected="selected">새로운게시판</option>
-											<option value="--------------------">구분선</option>
+											<option value="----------------">구분선</option>
 										</select>
 									</div>
 

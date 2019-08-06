@@ -293,5 +293,7 @@
    		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
    	<!-- 검색 공통 스크립트 -->
    		<script src="/js/custom/exploreCommon.js"></script>
+   	<!-- 공통 툴바용 스크립트 -->	
+		<script src="/js/custom/toolbarScript.js"></script>
 	</body>
 </html>
