@@ -7,34 +7,28 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
-import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.http.HttpRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.phoenix.mvc.common.Page;
 import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.cafe.CafeManageService;
-import com.phoenix.mvc.service.cafe.CafeMemberService;
 import com.phoenix.mvc.service.cafe.CafePostService;
 import com.phoenix.mvc.service.domain.Board;
 import com.phoenix.mvc.service.domain.CafeMember;
 import com.phoenix.mvc.service.domain.Post;
 import com.phoenix.mvc.service.domain.Reply;
-import com.phoenix.mvc.service.domain.User;
 
 import oracle.net.aso.n;
 
@@ -62,10 +56,6 @@ public class CafePostContoller {
 	@Autowired
 	@Qualifier("cafeManageServiceImpl")
 	private CafeManageService cafeManageService;
-
-	@Autowired
-	@Qualifier("cafeMemberServiceImpl")
-	private CafeMemberService cafeMemberService;
 
 	public CafePostContoller() {
 		System.out.println(getClass().getName() + "default Constuctor");
@@ -291,8 +281,7 @@ public class CafePostContoller {
 	}
 
 	@GetMapping("/cafe/{cafeURL}/movePost/{boardNo}")
-	public String movePostView(@PathVariable String cafeURL, @PathVariable int boardNo, @ModelAttribute Search search,
-			@RequestParam String targetPostList, Map<String, Object> map) {
+	public String movePostView(@PathVariable String cafeURL, @PathVariable int boardNo, @ModelAttribute Search search, @RequestParam String targetPostList, Map<String, Object> map) {
 		System.out.println("[movePostView] : " + targetPostList);
 
 		map.put("boardList", cafeManageService.getCafeBoardList(search));

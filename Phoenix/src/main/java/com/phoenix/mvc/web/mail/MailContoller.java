@@ -332,12 +332,6 @@ public class MailContoller {
 		return "/mail/listDeletedMail";
 	}
 	
-	@RequestMapping("modalTest")
-	public String modalTest() {
-		return "/common/accountModal";
-	}
-	
-	
 	
 	@PreDestroy
     public void onDestroy() throws Exception {

@@ -9,9 +9,9 @@ import com.phoenix.mvc.service.domain.Post;
 import com.phoenix.mvc.service.domain.Reply;
 
 public interface CafePostService {
-	public Map<String, Object> getPostListByBoard(Search search);
-	
 	public Map<String, Object> getPostListBySearch(Search search);
+
+	public Map<String, Object> getPostListByBoard(Search search);
 	
 	public boolean addPost(Post post) throws Exception;
 	
