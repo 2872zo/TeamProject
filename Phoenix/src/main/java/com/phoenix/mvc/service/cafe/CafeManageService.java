@@ -30,6 +30,8 @@ public interface CafeManageService {
 	
 	public boolean checkBlockExpired(int memberNo) throws Exception;
 	
+	public CafeMemberBlock getLatestBlockReason(int memberNo) throws Exception;
+	
 /////////////////////////////////기황끝/////////////////////////////
 	
 /////////////////////////////////지니//////////////////////////////
@@ -48,6 +50,8 @@ public void updateCafeGrade(CafeGrade cafeGrade);
 public List checkCafeGrade(int cafeNo);
 
 public boolean dropCafe(Cafe cafe, String cafeURL);
+
+
 
 ////////////////////////////////지니끝//////////////////////////////////
 

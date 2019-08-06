@@ -196,7 +196,10 @@
 	<select id = "getLatestBlock" parameterType="int" resultMap="cafeMemberBlcokMap">
 	
 		SELECT 
+			start_date,
 			TO_CHAR(end_date, 'YYYY-MM-DD HH24:MM:SS') end_date,
+			period,
+			reason,
 			block_no,
 			member_no
 		FROM 

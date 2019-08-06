@@ -9,9 +9,9 @@ import com.phoenix.mvc.service.domain.TimeLine;
 
 public interface SnsService {
 
-	public Map<String, Object> getFaceBookTimeLineList(Search search);
+	public Map<String, Object> getFaceBookTimeLineList(Search search) throws InterruptedException;
 	
-	public Map<String, Object> getInstaTimeLineList(Search search);
+	public Map<String, Object> getInstaTimeLineList(Search search) throws InterruptedException;
 	
 	public TimeLine writeFb(Search search);
 	
