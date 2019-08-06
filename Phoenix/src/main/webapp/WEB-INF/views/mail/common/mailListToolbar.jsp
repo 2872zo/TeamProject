@@ -25,8 +25,8 @@
 					<button type="button" class="btn btn-primary btn-sm" id="delete" name="deleteMailButton" style="border-radius: 0.25rem; height:37px; margin-right:10px;">삭제</button>
 <!-- 					<button type="button" class="btn btn-primary btn-sm" >삭제</button>		 -->
 					
-					<div class="btn-group" role="group">
-						<button type="button" class="btn mb-1 btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">중요표시</button>
+					<div class="btn-group" role="group" style="margin-right:10px;">
+						<button type="button" class="btn mb-1 btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">중요</button>
 						<div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 37px, 1px);">
 							<a class="dropdown-item" href="#" name="setFlagButton">중요 표시</a> 
 							<a class="dropdown-item" href="#" name="setUnFlagButton">중요 표시 해제</a>
@@ -34,7 +34,7 @@
 					</div>	
 					
 					<div class="btn-group" role="group">
-						<button type="button" class="btn mb-1 btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">읽음표시</button>
+						<button type="button" class="btn mb-1 btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">읽음</button>
 						<div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 37px, 1px);">
 							<a class="dropdown-item" href="#" name="setSeenButton">읽음 표시</a> 
 							<a class="dropdown-item" href="#" name="setUnSeenButton">안 읽음 표시</a>

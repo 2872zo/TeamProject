@@ -143,59 +143,70 @@
 
 								<hr />
 
+							<c:if test="${! empty cafeApplication.question1 }">
 								<div class="row">
 									<div class="col-xs-4 col-md-2">
 										<strong>질문1</strong>
 									</div>
 									<div class="col-xs-8 col-md-4">${cafeApplication.question1}</div>
 								</div>
-
 								<hr />
+							</c:if>
 
+								
+							<c:if test="${! empty cafeApplication.question2 }">
 								<div class="row">
 									<div class="col-xs-4 col-md-2">
 										<strong>질문2</strong>
 									</div>
 									<div class="col-xs-8 col-md-4">${cafeApplication.question2}</div>
 								</div>
-
 								<hr />
-
+							</c:if>
+								
+								
+							<c:if test="${! empty cafeApplication.question3 }">
 								<div class="row">
 									<div class="col-xs-4 col-md-2">
 										<strong>질문3</strong>
 									</div>
 									<div class="col-xs-8 col-md-4">${cafeApplication.question3}</div>
 								</div>
-
 								<hr />
-
+							</c:if>
+								
+				
+							<c:if test="${! empty cafeApplication.answer1 }">
 								<div class="row">
 									<div class="col-xs-4 col-md-2">
 										<strong>답변1</strong>
 									</div>
 									<div class="col-xs-8 col-md-4">${cafeApplication.answer1}</div>
 								</div>
-
 								<hr />
-
+							</c:if>
+								
+							
+							<c:if test="${! empty cafeApplication.answer2 }">
 								<div class="row">
 									<div class="col-xs-4 col-md-2">
 										<strong>답변2</strong>
 									</div>
 									<div class="col-xs-8 col-md-4">${cafeApplication.answer2}</div>
 								</div>
-
 								<hr />
-
+							</c:if>
+								
+							<c:if test="${! empty cafeApplication.answer3 }">
 								<div class="row">
 									<div class="col-xs-4 col-md-2">
 										<strong>답변3</strong>
 									</div>
 									<div class="col-xs-8 col-md-4">${cafeApplication.answer3}</div>
 								</div>
-
 								<hr />
+							</c:if>
+								
 
 								<div class="row">
 									<div class="col-xs-4 col-md-2">
@@ -256,7 +267,7 @@
 			$("#accept").on(
 					"click",
 					function() {
-						alert($("#applicationNo").text())
+						//alert($("#applicationNo").text())
 						var whether = "true" + $("#applicationNo").text();
 						$("#boardName").val(whether);
 						$("#whether").attr("method", "POST").attr(
@@ -269,7 +280,7 @@
 			$("#reject").on(
 					"click",
 					function() {
-						alert($("#applicationNo").text())
+						//alert($("#applicationNo").text())
 						var whether = "false" + $("#applicationNo").text();
 						$("#boardName").val(whether);
 						$("#whether").attr("method", "POST").attr(

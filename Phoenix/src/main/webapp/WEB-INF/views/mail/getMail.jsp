@@ -326,7 +326,7 @@
 						$.ajax({
 							type : "POST",
 							contentType: "application/json",
-							url : "/mail/json/deleteMail",
+							url : "/mail/json/trashMail",
 							dataType : "JSON",
 							data: JSON.stringify(mailInfoList),
 							beforeSend : function(){
@@ -376,7 +376,7 @@
 							$.ajax({
 								type : "POST",
 								contentType: "application/json",
-								url : "/mail/json/trashMail",
+								url : "/mail/json/deleteMail",
 								dataType : "JSON",
 								data: JSON.stringify(mailInfoList),
 								beforeSend : function(){
@@ -394,6 +394,60 @@
 					}//function end
 				);//swal end
 			});//.on end
+		});//jquery end
+
+			//inbox로 이동
+			$(function(){
+				$(document).on("click", "[name=inbox]", function(){
+					var thisButton = $(this);
+					
+					swal({
+						title:"복구 확인",
+						text:"메일을 복구하시겠습니까?",
+						type:"warning",
+						showCancelButton:!0,
+						confirmButtonColor:"#DD6B55",
+						confirmButtonText:"네",
+						cancelButtonText:"아니오",
+						closeOnConfirm:!1},
+						function(){
+							var mailInfoList = new Array();
+							
+							mailInfoList.push({"mailNo" : "${mail.mailNo}", "accountNo" : "${mail.accountNo}"});
+
+							console.log(mailInfoList);
+
+							$.ajax({
+								type : "POST",
+								contentType: "application/json",
+								url : "/mail/json/inboxMail",
+								dataType : "JSON",
+								data: JSON.stringify(mailInfoList),
+								beforeSend : function(){
+									$("#preloader").attr("style", "display:none; background:rgba(255,245,217,0.5);");
+									$("#preloader").fadeIn(300);
+								},
+								complete : function(){
+									$("#preloader").fadeOut(300);
+									$("#preloader").attr("style", "disply:none; background:white;");
+								},
+								success : function(data) {
+									swal("변경 완료", "정상적으로 변경되었습니다.", "success");
+
+									thisButton.next().remove();
+									
+									thisButton.replaceWith(
+											'<button type="button" class="btn btn-light" name="trash"><i class="fa fa-trash"></i>'
+                                            + '</button>');		
+									
+								},
+								error : function(data) {
+									alert("error : " + data)
+								}
+							});//ajax end
+						}//function end
+					);//swal end
+				});	//.on end
 
 		});//jquery end
 
@@ -421,6 +475,7 @@
 						$("#preloader").attr("style", "display:none; background:white");
 					},
 					success : function(data) {
+						swal("변경 완료", "정상적으로 변경되었습니다.", "success");
 						thisButton.replaceWith(
 								'<button type="button" class="btn btn-light" name="setUnSeen"><i class="mdi mdi-email-open"></i>'
                                 +'</button>');
@@ -454,6 +509,7 @@
 						$("#preloader").attr("style", "display:none; background:white");
 					},
 					success : function(data) {
+						swal("변경 완료", "정상적으로 변경되었습니다.", "success");
 						thisButton.replaceWith(
 								'<button type="button" class="btn btn-light" name="setSeen"><i class="mdi mdi-email"></i>'
                                 +'</button>');
@@ -465,7 +521,75 @@
 			});
 		});
 
-		
+
+		//체크된 메일 중요 표시 변경
+		$(function(){
+			$(document).on("click", "[name=setFlag]", function(){
+				var mailInfoList = [{"mailNo" : "${mail.mailNo}", "accountNo" : "${mail.accountNo}"}];
+				var thisButton = $(this);
+				
+				$.ajax({
+					type : "POST",
+					contentType: "application/json",
+					url : "/mail/json/setFlagMail",
+					dataType : "JSON",
+					data: JSON.stringify(mailInfoList),
+					beforeSend : function(){
+						$("#preloader").attr("style", "display:none; background:rgba(255,245,217,0.5);");
+						$("#preloader").fadeIn(300);
+					},
+					complete : function(){
+						$("#preloader").fadeOut(300);
+						$("#preloader").attr("style", "display:none; background:white");
+					},
+					success : function(data) {
+						swal("변경 완료", "정상적으로 변경되었습니다.", "success");
+						thisButton.replaceWith(
+								'<button type="button" class="btn btn-light" name="setUnFlag"><i class="fas fa-star"></i>'
+                                +'</button>');
+					},
+					error : function(data) {
+						alert("error : " + data)
+					}
+				});//ajax end
+							
+			});	//.on end
+		});//jquery end
+
+		//체크된 메일 중요 표시 해제
+		$(function(){
+			$(document).on("click", "[name=setUnFlag]", function(){
+				var mailInfoList = [{"mailNo" : "${mail.mailNo}", "accountNo" : "${mail.accountNo}"}];
+				var thisButton = $(this);
+
+				$.ajax({
+					type : "POST",
+					contentType: "application/json",
+					url : "/mail/json/setUnFlagMail",
+					dataType : "JSON",
+					data: JSON.stringify(mailInfoList),
+					beforeSend : function(){
+						$("#preloader").attr("style", "display:none; background:rgba(255,245,217,0.5);");
+						$("#preloader").fadeIn(300);
+					},
+					complete : function(){
+						$("#preloader").fadeOut(300);
+						$("#preloader").attr("style", "display:none; background:white");
+					},
+					success : function(data) {
+						swal("변경 완료", "정상적으로 변경되었습니다.", "success");
+						thisButton.replaceWith(
+								'<button type="button" class="btn btn-light" name="setFlag"><i class="far fa-star"></i>'
+                                +'</button>');
+					},
+					error : function(data) {
+						alert("error : " + data)
+					}
+				});//ajax end
+							
+			});	//.on end
+		});//jquery end
+
 	</script>
 
 </body>

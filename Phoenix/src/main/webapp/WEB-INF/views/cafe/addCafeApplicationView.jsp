@@ -419,7 +419,7 @@
 			$("button[name=button]").on(
 					"click",
 					function() {
-						alert("가입");
+						//alert("가입");
 						$("form").attr("method", "POST").attr("action",
 								"/cafe/" + cafeURL + "/addCafeApplication")
 								.submit();

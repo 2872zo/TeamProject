@@ -88,12 +88,11 @@
 									<form>
 										<div class="form-group">
 											<label>폐쇄 이유를 입력해주세요</label>
-											<textarea class="form-control h-150px" rows="6" id="comment"></textarea>
+											<textarea class="form-control h-150px" rows="6" id="comment" name="closeReason"></textarea>
 										</div>
 									</form>
 								</div>
-								<input type="hidden" name="cafeNo" class="cafeNo"
-									value="${cafe.cafeNo }" />
+								<input type="hidden" name="cafeNo" class="cafeNo" value="${cafe.cafeNo }" />
 								<div align="center">
 									<button type="button" name="button"
 										class="btn mb-1 btn-outline-warning">카페폐쇄하기</button>
@@ -127,13 +126,10 @@
 			$("button[name=button]").on(
 					"click",
 					function() {
-						alert($(".cafeNo").val())
-						alert('${cafe.cafeURL}')
+						//alert($(".cafeNo").val())
+						//alert('${cafe.cafeURL}')
 
-						$("form").attr("method", "POST").attr(
-								"action",
-								"/cafe/" + '${cafe.cafeURL}'
-										+ "/manage/dropCafe").submit();
+						$("form").attr("method", "POST").attr("action","/cafe/" + '${cafe.cafeURL}'+ "/manage/dropCafe").submit();
 					});
 		});
 	</script>

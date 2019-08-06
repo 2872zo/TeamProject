@@ -61,7 +61,7 @@
 					        <div class="tab-pane fade" id="profile8" role="tabpanel">
 					        	<c:if test="${!empty cafeMember }">
 	                                <div class="media align-items-center mb-4">
-	                                    <img class="mr-3" src="/images/default-profile.jpg" width="80" height="80" style="object-fit: cover; border-radius: 50%;" alt="">
+	                                    <img class="mr-3" src="/images/uploadfiles/profileimg/${user.profileImg }" width="80" height="80" style="object-fit: cover; border-radius: 50%;" alt="">
 	                                    <div class="media-body">
 	                                        <h3 class="mb-0">${cafeMember.memberNickname}</h3>
 	                                        <p class="text-muted mb-0">${cafeMember.gradeName}</p>

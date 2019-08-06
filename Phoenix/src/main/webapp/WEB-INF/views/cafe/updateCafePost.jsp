@@ -146,7 +146,7 @@
 				<div class="col-lg-12">
 					<div class="card">
 						<div class="card-body">
-							<h4 class="card-title">게시글 작성</h4>
+							<h4 class="card-title">게시글 수정</h4>
 							<div>
 
 								<form class="needs-validation" novalidate>
@@ -166,10 +166,12 @@
 											</select>
 										</div>
 						
-										<div class="custom-control custom-checkbox">
-											<input type="checkbox" class="custom-control-input"	id="postNoticeFlag" name="postNoticeFlag"> 
-											<label	class="custom-control-label" for="postNoticeFlag">공지로 등록</label>
-										</div>
+										<c:if test="${cafeMember.memberGrade eq 'cg100' or cafeMember.memberGrade eq 'cg101'}">
+											<div class="custom-control custom-checkbox">
+												<input type="checkbox" class="custom-control-input"	id="postNoticeFlag" name="postNoticeFlag"> 
+												<label	class="custom-control-label" for="postNoticeFlag">공지로 등록</label>
+											</div>
+										</c:if>
 									</div>
 						
 										<label for="postTitle">제목</label> 
