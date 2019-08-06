@@ -99,6 +99,16 @@ public class MailServiceImpl implements MailService {
 	public Map<String, Object> getAllAccountDeletedMailList(List<Account> accountList, int currentPage)	throws FileNotFoundException, MessagingException, IOException {
 		return mailDao.getAllAccountDeletedMailList(accountList, currentPage);
 	}
+	
+	@Override
+	public Map<String, Object> getSentMail(Account account, int mailNo) throws Exception {
+		return mailDao.getSentMail(account, mailNo);
+	}
+	
+	@Override
+	public Map<String, Object> getTrashMail(Account account, int mailNo) throws Exception {
+		return mailDao.getTrashMail(account, mailNo);
+	}
 
 	@Override
 	public boolean setSeenMail(List<Map<String, Object>> mailInfoList, List<Account> accountList)	throws FileNotFoundException, MessagingException, IOException {
@@ -135,5 +145,8 @@ public class MailServiceImpl implements MailService {
 		return mailDao.getBoxMailCount(accountList);
 	}
 
-	
+	@Override
+	public boolean inboxMail(List<Map<String, Object>> mailInfoList, List<Account> accountList) throws MessagingException, FileNotFoundException, IOException {
+		return mailDao.inboxMail(mailInfoList, accountList);
+	}
 }

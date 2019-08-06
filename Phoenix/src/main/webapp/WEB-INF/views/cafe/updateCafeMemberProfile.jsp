@@ -20,9 +20,12 @@
 <link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
 <!-- 스위트얼럿 css -->
 
-
 <title>멤버프로필상세조회</title>
 
+<style type="text/css">
+body {
+background-color: white;}
+</style>
 
 </head>
 <body>
@@ -31,10 +34,8 @@
 		<h4>멤버프로필</h4>
 		<br />
 
-
 		<form class="form-horizontal" name="updateProfile">
 			<input type="hidden" name="memberNo" value="${cafeMember.memberNo }">
-
 
 			<div class="form-group">
 				<label for="memberNickname"

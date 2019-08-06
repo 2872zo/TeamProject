@@ -221,7 +221,7 @@
 	<script>
 		$(function(){
 			$("tr").not("tr:last").on("click", function(){
-				location.href = "/mail/getMail?mailNo=" + $(this).find(".mailNo").val() + "&accountNo=" + $(this).find(".accountNo").val();
+				location.href = "/mail/getTrashMail?mailNo=" + $(this).find(".mailNo").val() + "&accountNo=" + $(this).find(".accountNo").val();
 			});
 		});
 	</script>

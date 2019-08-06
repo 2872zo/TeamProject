@@ -154,11 +154,8 @@ public class CafePostContoller {
 
 		//작성할수있는 게시판 등급 처리
 		CafeMember cafeMember = (CafeMember)req.getAttribute("cafeMember");
-		int cafeMemberGrade = Integer.parseInt(cafeMember.getMemberGrade().substring(2));
-		if(cafeMemberGrade > 101) {
-			Predicate<Board> gradeCondition = board -> Integer.parseInt(board.getAccessGrade().substring(2)) > cafeMemberGrade;
-			boardOption.removeIf(gradeCondition);
-		}
+		condition = board -> board.getBoardType().equals("cb100") && Integer.parseInt(cafeMember.getMemberGrade().substring(2)) > 101;
+		boardOption.removeIf(condition);
 		
 		map.put("boardOption", boardOption);
 
@@ -223,6 +220,11 @@ public class CafePostContoller {
 		boardOption.addAll(boardList);
 		// 구분선 모두 처리
 		Predicate<Board> condition = board -> board.getBoardType().equals("cb102");
+		boardOption.removeIf(condition);
+		
+		//매니저나 스탭이 아니라면 공지게시판 제외
+		CafeMember cafeMember = (CafeMember)req.getAttribute("cafeMember");
+		condition = board -> board.getBoardType().equals("cb100") && Integer.parseInt(cafeMember.getMemberGrade().substring(2)) > 101;
 		boardOption.removeIf(condition);
 
 		map.put("post", post);
@@ -499,9 +501,6 @@ public class CafePostContoller {
 		boardOption.addAll(boardList);
 		// 구분선 모두 처리
 		Predicate<Board> condition = board -> board.getBoardType().equals("cb102");
-		boardOption.removeIf(condition);
-		
-		condition = board -> Integer.parseInt(board.getAccessGrade().substring(2)) > Integer.parseInt(cafeMember.getMemberGrade().substring(2));
 		boardOption.removeIf(condition);
 		
 		System.out.println(replyPage);

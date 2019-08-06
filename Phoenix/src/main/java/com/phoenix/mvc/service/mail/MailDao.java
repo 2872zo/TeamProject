@@ -31,6 +31,10 @@ public interface MailDao {
 
 	public Map<String, Object> getAllAccountDeletedMailList(List<Account> accountList, int currentPage) throws FileNotFoundException, MessagingException, IOException;
 
+	public Map<String, Object> getSentMail(Account account, int mailNo) throws Exception;
+	
+	public Map<String, Object> getTrashMail(Account account, int mailNo) throws Exception;
+	
 	public boolean setSeenMail(List<Map<String, Object>> mailInfoList, List<Account> accountList) throws FileNotFoundException, MessagingException, IOException;
 
 	public boolean setUnSeenMail(List<Map<String, Object>> mailInfoList, List<Account> accountList) throws FileNotFoundException, MessagingException, IOException;
@@ -42,6 +46,8 @@ public interface MailDao {
 	public boolean trashMail(List<Map<String, Object>> mailInfoList, List<Account> accountList) throws FileNotFoundException, MessagingException, IOException;
 	
 	public boolean deleteMail(List<Map<String, Object>> mailInfoList, List<Account> accountList) throws FileNotFoundException, MessagingException, IOException;
+	
+	public boolean inboxMail(List<Map<String, Object>> mailInfoList, List<Account> accountList) throws FileNotFoundException, MessagingException, IOException;
 
 	public Map<String, Object> getBoxMailCount(List<Account> accountList) throws MessagingException, FileNotFoundException, IOException;
 }

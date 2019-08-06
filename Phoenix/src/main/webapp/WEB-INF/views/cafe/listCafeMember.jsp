@@ -82,11 +82,11 @@ cursor: pointer;
 <div class='card-body'>
 
 <form id='memberListingForm'>
-<input type="hidden" name='currentPage' 	value='0' id='memberCurrentPage' >
-<input type="hidden" name='cafeNo' 			value='${search.cafeNo}'>
-<input type="hidden" name='memberGrade' 	value='${search.memberGrade}' id='memberGrade'>		
-<input type="hidden" name='status' 			value='${search.status}' id='status'>
-<input type="hidden" name='sortCode' 		value='${search.sortCode}' id='sortCode'>
+<input type="hidden" name='currentPage' value='0' id='memberCurrentPage' >
+<input type="hidden" name='cafeNo' 		value='${search.cafeNo}'>
+<input type="hidden" name='memberGrade' value='${search.memberGrade}' id='memberGrade'>		
+<input type="hidden" name='status' 		value='${search.status}' id='status'>
+<input type="hidden" name='sortCode' 	value='${search.sortCode}' id='sortCode'>
 
 <div class='row'>
 <div class="col-lg-4">
@@ -118,7 +118,7 @@ cursor: pointer;
    <c:set var="i" value="0" />
    <c:forEach var="cafeGrade" items="${gradeList}">
    <c:set var="i" value="${ i+1 }" />
-  <button type="button" class='memberGrade btn btn-${ search.memberGrade == i ? "" : "outline-" }info'>
+  <button type="button" name='${cafeGrade.memberGradeCode}' class='memberGrade btn btn-${ search.memberGrade == i ? "" : "outline-" }info'>
   ${cafeGrade.gradeName}
   </button>
   </c:forEach>
@@ -231,8 +231,11 @@ $(function() {
 
 	$(".memberGrade").on("click" , function() {
 		var count = $(".memberGrade").index(this);
-		 $("#memberGrade").val(count);
-		 $("#memberListingForm").attr("method" , "POST").attr("action" , "/cafe/"+"${cafeURL}"+"/manage/getCafeMemberList").submit();
+		if (count != 0){
+			count = Number($(this).attr("name").substring(4)) + 1;
+			}
+		$("#memberGrade").val(count);
+		$("#memberListingForm").attr("method" , "POST").attr("action" , "/cafe/"+"${cafeURL}"+"/manage/getCafeMemberList").submit();
 	});
 
 	$(".sortCode").on("click" , function() {
@@ -241,12 +244,6 @@ $(function() {
 		 $("#memberListingForm").attr("method" , "POST").attr("action" , "/cafe/"+"${cafeURL}"+"/manage/getCafeMemberList").submit();
 	});
 
-	$(".memberNo").on("click" , function() {
-		//var count = $(".memberNo").index(this);
-		//$("#memberNo").val($($(".memberNo")[count]).text());
-		//$("#memberDetailForm").attr("method" , "POST").attr("action" , "/cafe/"+"${cafeURL}"+"/manage/getCafeMember").submit();
-	});
-	
 	$(".goToMember").on("click" , function() {
 			//alert($(this).attr("id"));
 			$("#memberNo").val($(this).attr("id"));
