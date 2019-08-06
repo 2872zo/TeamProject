@@ -105,13 +105,13 @@
 		<!--**********************************
             Sidebar end
         ***********************************-->
-
+<div class="content-body">
 		<div class="row page-titles mx-0">
 			<div class="col p-md-0">
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="javascript:void(0)">카페</a></li>
 					<li class="breadcrumb-item active"><a
-						href="javascript:void(0)">카페가입</a></li>
+						href="javascript:void(0)">정지 멤버</a></li>
 				</ol>
 			</div>
 		</div>
@@ -142,8 +142,8 @@
 				</div>
 			</div>
 		</div>
-
 	</div>
+</div>
 	<!--**********************************
         Main wrapper end
     ***********************************-->

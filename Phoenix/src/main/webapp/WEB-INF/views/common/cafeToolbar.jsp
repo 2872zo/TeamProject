@@ -15,7 +15,7 @@
 			<div class="input-group icons">
 				<div class="input-group-prepend">
 					<a href="javascript:fncGetCafeMain('${cafeURL}')"> 
-						<span class="input-group-text bg-transparent border-0 pr-2 pr-sm-3" id="cafeName" style="padding-top: 10px; font-size: 1rem;">${cafeURL}</span>
+						<span class="input-group-text bg-transparent border-0 pr-2 pr-sm-3" id="cafeName" style="padding-top: 10px; font-size: 1rem;">${cafe.cafeName}</span>
 					</a>
 				</div>
 			</div>
@@ -43,7 +43,7 @@
                                           
                                       </li>
                                       <hr class="my-2">
-                                    <c:if test="${user.userRoleCode=='ur101'}">
+                                    <c:if test="${user.userRoleCode=='ur100'}">
                                       <li>
                                           <a href=/user/listUser><i class="icon-list"></i> <span>회원목록</span></a>
                                       </li>
