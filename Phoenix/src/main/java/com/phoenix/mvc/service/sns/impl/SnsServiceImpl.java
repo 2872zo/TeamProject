@@ -60,7 +60,7 @@ public class SnsServiceImpl implements SnsService {
 		ChromeOptions options = new ChromeOptions();
 		options.setExperimentalOption("prefs", prefs);
 		options.setCapability("ignoreProtectedModeSettings", true);
-		options.addArguments("headless");//창안켜줭~
+		//options.addArguments("headless");//창안켜줭~
 		driver = new ChromeDriver(options);
 		wait = new WebDriverWait(driver, 20);
 		
@@ -117,7 +117,7 @@ public class SnsServiceImpl implements SnsService {
 			
 		ChromeOptions options = new ChromeOptions();
 		options.setCapability("ignoreProtectedModeSettings", true);
-		options.addArguments("headless");//창안켜줭~
+		//options.addArguments("headless");//창안켜줭~
 		driver = new ChromeDriver(options);
 		wait = new WebDriverWait(driver, 20);
 		
@@ -174,7 +174,7 @@ public class SnsServiceImpl implements SnsService {
 			prefs.put("profile.default_content_setting_values.notifications", 2);
 			ChromeOptions options = new ChromeOptions();
 			options.setExperimentalOption("prefs", prefs);
-			options.addArguments("headless");//창안켜줭~
+			//options.addArguments("headless");//창안켜줭~
 			options.setCapability("ignoreProtectedModeSettings", true);
 			driver = new ChromeDriver(options);
 			wait = new WebDriverWait(driver, 40);
@@ -562,7 +562,7 @@ public class SnsServiceImpl implements SnsService {
 		//옵션설정
 		ChromeOptions options = new ChromeOptions();
 		options.setCapability("ignoreProtectedModeSettings", true);
-		options.addArguments("headless");//창안켜줭~
+		//options.addArguments("headless");//창안켜줭~
 		driver = new ChromeDriver(options);
 		
 		//로그인
