@@ -1,6 +1,7 @@
 package com.phoenix.mvc.web.sns;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -64,25 +65,30 @@ public class SnsRestController {
 	}
 
 	@RequestMapping(value = "/json/getTimeLine")
-	public Map getTimeLine(@RequestBody Search search) throws Exception {
+	public Map getTimeLine(@RequestBody Search search,  HttpServletRequest request) throws Exception {
 
 		System.out.println("/json/getTimeLine 시작!");
-
-		if (search.getFace() == 100) {
-
-			search.setFbId("wlsgml1416@naver.com");
-			search.setFbPw("011!wlslgogo");
-
-		}
-
-		if (search.getInsta() == 200) {
-
-			search.setIgId("rlawlsgml1416");
-			search.setIgPw("011!wlslgogo");
-
-			// search.setIgId("andaralamira");
-			// search.setIgPw("011wlslgogo");
-
+		
+		User user = (User) request.getSession().getAttribute("user");
+		search.setUserNo(user.getUserNo());
+		
+		List accountList = snsService.getSnsAccount(search);
+		
+		System.out.println(accountList);
+		
+		for(int i = 0; i<accountList.size(); i++) {
+			Account account =(Account) accountList.get(i);
+			if(account.getAccountType().equals("ua109")) {
+				search.setIgId(account.getAccountId());
+				search.setIgPw(account.getAccountPw());
+				search.setInsta(100);
+			}else if(account.getAccountType().equals("ua110")) {
+				search.setFbId(account.getAccountId());
+				search.setFbPw(account.getAccountPw());
+				search.setFace(200);
+				
+			}
+			
 		}
 
 		System.out.println("+search+ " + search);
