@@ -133,6 +133,11 @@ public class CafeManageServiceImpl implements CafeManageService {
 	public int updateCafeMemeberGrade(CafeMember cafeMember) throws Exception {
 		return cafeManageDao.updateCafeMemeberGrade(cafeMember);
 	}
+	
+	@Override
+	public CafeMemberBlock getLatestBlockReason(int memberNo) throws Exception {
+		return cafeManageDao.getLatestBlock(memberNo);
+	}
 
 	/////////////////////////////기황끝/////////////////////////////
 	
@@ -413,6 +418,8 @@ public class CafeManageServiceImpl implements CafeManageService {
 		return cafeManageDao.getCafeNoNo(cafeName);
 
 	}
+
+
 
 
 	/////////////////////////////// 준호끝///////////////////////////////////////

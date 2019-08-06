@@ -69,7 +69,6 @@ public class CafeManageDaoImpl implements CafeManageDao {
 	public List getCafeMemberBlocks(Search search) throws Exception {
 		return sqlSession.selectList("CafeMemberMapper.getCafeMemeberBlock", search);
 	}
-	
 
 	@Override
 	public CafeMemberBlock getLatestBlock(int memberNo) throws Exception {
