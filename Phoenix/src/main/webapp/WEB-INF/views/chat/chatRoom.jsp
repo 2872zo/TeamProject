@@ -86,7 +86,6 @@ display : none;
 <jsp:include page="../common/toolbar.jsp" />
 <!-- ToolBar End /////////////////////////////////////-->
     
-    
            	<!--**********************************
             Sidebar start
         ***********************************-->
@@ -94,18 +93,13 @@ display : none;
 		<!--**********************************
             Sidebar end
         ***********************************-->
-          
-    
 
-
-    
     <div class="content-body">
 
 <c:forEach items='${nickNameList}' var='chatFriend'>
 <input type='hidden' class='friendNickname' value='${chatFriend.friendNickname}'>
 <input type='hidden' class='friendUserNo' value='${chatFriend.userNo}'>
 </c:forEach>
-
 
 		<div class="container-fluid" style="min-height: 600px;">
 		<form id='fileMultiple' action='/chat/fileUpload' enctype="multipart/form-data" method="post">
