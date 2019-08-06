@@ -115,7 +115,7 @@
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="javascript:void(0)">카페</a></li>
 					<li class="breadcrumb-item active"><a
-						href="javascript:void(0)">카페가입</a></li>
+						href="javascript:void(0)">삭제된게시글</a></li>
 				</ol>
 			</div>
 		</div>
