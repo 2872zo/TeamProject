@@ -231,7 +231,7 @@ checkbox
 								<form id="boardPage">
 									<input type="hidden" name="currentPage">
 								</form>
-								<p>총 ${postTotalCount }개 중 ${search.startRowNum} - ${search.endRowNum }</p>
+								<p>총 ${postTotalCount }개 중 ${search.startRowNum} - <c:if test="${postTotalCount gt search.endRowNum }">${search.endRowNum }</c:if><c:if test="${postTotalCount le search.endRowNum }">${postTotalCount }</c:if></p>
 								<table class="table header-border">
 									<thead class="thead-light">
 										<tr>
@@ -335,78 +335,6 @@ checkbox
     <!-- Date Picker Plugin JavaScript -->
     <script src="/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
     
-	<script>
-			var cafeURL = '${search.cafeURL}';
-
-			//세부검색 시작
-			$(function(){
-				$("#advSubmitButton").on("click", function(){
-					$("[name=currentPage]").val(1);
-				});
-			});
-
-			//세부검색 시작
-			$(function(){
-				$("#submitButton").on("click", function(){
-					location.href = "/cafe/" + "${cafeURL}" + "/search?searchKeyword=" + $("#searchKeyword").val(); 
-				});
-			});
-
-			//페이지 이동
-			function fncGetInnerSearchList(idx){
-				$("[name=currentPage]").val(idx);
-				$("#searchForm").attr("method","GET").attr("action","/cafe/" + cafeURL + "/search").submit();	
-			};
-
-			//datePicker 생성
-			$(function(){
-				$('#termStart').datepicker({
-			    	format:'yy-mm-dd',
-			        autoclose: true,
-			        todayHighlight: true
-			    });
-
-			    $('#termEnd').datepicker({
-			    	format:'yy-mm-dd',
-			        autoclose: true,
-			        todayHighlight: true
-			    });
-			});
-			
-			//검색조건 유지
-			$(function(){
-				$("[name=currentPage]").val(${search.currentPage });
-				$( "#termStart" ).val('${search.termStart}');
-			    $( "#termEnd" ).val('${search.termEnd}');	
-				$("[name=searchKeyword]").val('${search.searchKeyword}');
-				
-				$(".boardOption").each(function(){
-				    if($(this).val()==${search.boardNo}){
-				      $(this).attr("selected","selected");
-				    }
-				});
-				
-				$(".searchOption").each(function(){
-				    if($(this).val()==${empty search.searchCondition? 0 : search.searchCondition}){
-				      $(this).attr("selected","selected");
-				    }
-				});
-			});
-
-			//게시글 조회
-			$(function(){
-				$(".postTitle").on("click", function(){
-					location.href = "/cafe/" + cafeURL + "/getPost/" + 	$(this).parent().find(".postNo").val();				
-				});			
-			});
-
-			//게시판 조회
-			$(function(){
-				$(".boardName").on("click", function(){
-					location.href = "/cafe/" + cafeURL + "/getBoard/" + $(this).parent().find(".boardNo").val();
-				});
-			});
-	</script>
 
 	<!-- 이 페이지에서만 사용하는 스크립트 -->
 	<script>

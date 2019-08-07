@@ -88,8 +88,8 @@
 								</c:if>
 								
 								<c:if test="${empty cafeMember && cafeApplication.acceptStatusCode eq 'ca100' }">
-								<i class="mdi mdi-tumblr-reblog" style="font-size: 19px;" ></i>
-								<strong class="text-dark mr-4" style="margin-left: 10px;">가입 승인 대기중입니다 </strong>
+									<i class="mdi mdi-tumblr-reblog" style="font-size: 19px;" ></i>
+									<strong class="text-dark mr-4" style="margin-left: 10px;">가입 승인 대기중입니다 </strong>
 								</c:if>
 					        
 					        </div>
