@@ -150,7 +150,7 @@ input[type="checkbox"] {
 					</div>
 				</div>
 				
-				<div class="header-right" style="margin-left:5%;">
+				<div class="header-right" >
 					<ul class="clearfix d-flex align-items-center justify-content-around">
 					<!-- 로그인상태시 표시되는 부분 -->
 					<c:if test="${!empty sessionScope.user}">
@@ -162,7 +162,7 @@ input[type="checkbox"] {
                                		<!--   <div role="separator" class="dropdown-divider"></div>-->
                            		 </div>
                        	</div>
-						<li class="icons dropdown" style='position: relative;right: 10%; margin-top:4%;'>
+						<li class="icons dropdown" style='position: relative;right: 6%; margin-top:2%;'>
                             <div class="user-img c-pointer position-relative" data-toggle="dropdown" aria-expanded="false">
                                 <span class="activity active"></span>
                                 <img src="/images/uploadFiles/profileimg/${user.profileImg}" height="40" width="40" alt="" style="position:unset;">
@@ -254,7 +254,12 @@ input[type="checkbox"] {
 									<input type="password" class="form-control"
 										placeholder="PASSWORD" name="password">
 								</div>
-								<button class="btn login-form__btn submit w-100" id="login1">로그인</button>
+								<button class="btn login-form__btn submit w-100" id="login1" style= "margin-bottom:50" >로그인</button>
+								<center>								
+								<a id="kakaos"><img src="/images/uploadFiles/kakao/kakaos.jpg" width=210; height=45;/></a>
+     							<a id="navers"><img src="/images/uploadFiles/naver/navers.jpg" width=210; height=45;/></a>		
+						
+     							</center>
 							</form>
 							<p class="mt-5 login-form__footer">
 								<a href="/user/addUserView" class="text-primary" id="addUser1">회원가입</a>
@@ -266,4 +271,5 @@ input[type="checkbox"] {
 			</div>
 		</div>
 
+		<!-- Modal 내용 끝 -->
 

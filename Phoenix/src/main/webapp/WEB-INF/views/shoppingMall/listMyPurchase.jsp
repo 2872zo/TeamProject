@@ -53,6 +53,10 @@
     	
     		color : black;
     		font-size:23px;
+    		font-weight:bold;
+    		padding-left: 4%;
+    		margin:2%;
+    		text-decoration:underline;
     	}
     	
     	.card.left{
@@ -94,7 +98,20 @@
 	
 	<script type="text/javascript">
 
+	$(function(){
+
+		$(".btn-danger").on("click",function(){ //개인정보수정페이지로 이동
+
+				var userNo = $("#userNo").val();
+				
+				$(self.location).attr("href","/user/getUserInfo?userNo="+userNo);
+				
+		});
+			
 		
+	});
+	
+	
 
 		
 	
@@ -146,72 +163,99 @@
             <!-- row -->
             <div class="container-fluid">
            		<div class="pageTitle">상품구매내역</div>
-           		<div class="row">
-           			<div class="nowDelivery">배송중 </div>
-           			<div class="form-inline">
-	           			<c:forEach var="account" items="${myAccountList}">
-	           				 <div class="form-check form-check-inline">
-                             	<label class="form-check-label">
-                                 <input type="checkbox" class="form-check-input check-all" name="shoppingmallAll" value="true" >전체</label>
-                        	 </div>
+           		
+           			
+           				<c:if test="${empty myAccountList }">
+           					<div class="row">
+           						<div class="card"> <!-- 왼쪽카드 -->
+     								<div class="card-body" style="display:unset; width:800px; height:400px; text-align:center;">
+        								
+           								<p style="color:black; font-size:21px; font-weight:bold; margin-top:15%;">"연동된 쇼핑몰 계정이 없습니다!"</p>
+           								<p style="color:black; font-size:21px; font-weight:bold;">"개인정보 수정페이지에서 계정을 연동해주세요."</p>
+           								<input type="hidden" id="userNo" name="userNo" value="${user.userNo}"/>
+           								
+           								<button type="button" class="btn mb-1 btn-danger">연결 바로가기</button>
+       								</div>
+     							</div>
+           					</div>
+           				</c:if>
+           				
+           				<c:if test="${!empty myAccountList }">
+           					<div class="nowDelivery">배송중 </div>
+           						<div class="form-inline">
+           					<c:forEach var="account" items="${myAccountList}">
+		           				 <div class="form-check form-check-inline">
+	                             	<label class="form-check-label">
+	                                 <input type="checkbox" class="form-check-input check-all" name="shoppingmallAll" value="true" >전체</label>
+	                        	 </div>
 	           			
-	           				<c:if test="${account.accountType eq 'ua103' }">
-	           					 <div class="form-check form-check-inline">
-                            		 <label class="form-check-label">
-                                 	<input type="checkbox" class="form-check-input check-all" name="11stCheckbox" value="true" >11번가</label>
-                        		 </div>
-	           				</c:if>
-	           				<c:if test="${account.accountType eq 'ua104' }">
-	           					<div class="form-check form-check-inline">
-                            		 <label class="form-check-label">
-                                 	<input type="checkbox" class="form-check-input check-all" name="coupangCheckbox" value="true" >쿠팡</label>
-                        		 </div>
-	           				</c:if>
-	           				<c:if test="${account.accountType eq 'ua105' }">
-	           					<div class="form-check form-check-inline">
-                            		 <label class="form-check-label">
-                                 	<input type="checkbox" class="form-check-input check-all" name="tmonCheckbox" value="true" >티몬</label>
-                        		 </div>
-	           				</c:if>
-	           				<c:if test="${account.accountType eq 'ua106' }">
-	           					<div class="form-check form-check-inline">
-                            		 <label class="form-check-label">
-                                 	<input type="checkbox" class="form-check-input check-all" name="gmarketCheckbox" value="true" >G마켓</label>
-                        		 </div>
-	           				</c:if>
-	           				<c:if test="${account.accountType eq 'ua107' }">
-	           					<div class="form-check form-check-inline">
-                            		 <label class="form-check-label">
-                                 	<input type="checkbox" class="form-check-input check-all" name="wmpCheckbox" value="true" >위메프</label>
-                        		 </div>
-	           				</c:if>
-	           				<c:if test="${account.accountType eq 'ua108' }">
-	           					<div class="form-check form-check-inline">
-                            		 <label class="form-check-label">
-                                 	<input type="checkbox" class="form-check-input check-all" name="AuctionCheckbox" value="true" >옥션</label>
-                        		 </div>
-	           				</c:if>
-	           			</c:forEach>
-           			</div>
-           		</div>
+		           				<c:if test="${account.accountType eq 'ua103' }">
+		           					 <div class="form-check form-check-inline">
+	                            		 <label class="form-check-label">
+	                                 	<input type="checkbox" class="form-check-input check-all" name="11stCheckbox" value="true" >11번가</label>
+	                        		 </div>
+		           				</c:if>
+		           				<c:if test="${account.accountType eq 'ua104' }">
+		           					<div class="form-check form-check-inline">
+	                            		 <label class="form-check-label">
+	                                 	<input type="checkbox" class="form-check-input check-all" name="coupangCheckbox" value="true" >쿠팡</label>
+	                        		 </div>
+		           				</c:if>
+		           				<c:if test="${account.accountType eq 'ua105' }">
+		           					<div class="form-check form-check-inline">
+	                            		 <label class="form-check-label">
+	                                 	<input type="checkbox" class="form-check-input check-all" name="tmonCheckbox" value="true" >티몬</label>
+	                        		 </div>
+		           				</c:if>
+		           				<c:if test="${account.accountType eq 'ua106' }">
+		           					<div class="form-check form-check-inline">
+	                            		 <label class="form-check-label">
+	                                 	<input type="checkbox" class="form-check-input check-all" name="gmarketCheckbox" value="true" >G마켓</label>
+	                        		 </div>
+		           				</c:if>
+		           				<c:if test="${account.accountType eq 'ua107' }">
+		           					<div class="form-check form-check-inline">
+	                            		 <label class="form-check-label">
+	                                 	<input type="checkbox" class="form-check-input check-all" name="wmpCheckbox" value="true" >위메프</label>
+	                        		 </div>
+		           				</c:if>
+		           				<c:if test="${account.accountType eq 'ua108' }">
+		           					<div class="form-check form-check-inline">
+	                            		 <label class="form-check-label">
+	                                 	<input type="checkbox" class="form-check-input check-all" name="AuctionCheckbox" value="true" >옥션</label>
+	                        		 </div>
+		           				</c:if>
+	           				</c:forEach>
+           					</div>
+           				
+	           	
            		
            		<div class="row" style="height:50px;">
      	
-     				<div class="card left" style="background-color:##f5a142; height:30px;"> <!-- 왼쪽카드 -->
-     					<div class="card-body" style="color:white; padding-left:45%; font-size:16px; padding-top:0%;">
+     				<div class="card left" style="background-color:#f5a142; height:30px;"> <!-- 왼쪽카드 -->
+     					<div class="card-body" style="color:white; padding-left:45%; font-size:16px; padding-top:4px; font-weight:600;">
         					구매내역
        					</div>
      				</div>
      				
-     				<div class="card right" style="background-color:##f5a142; height:30px;"> <!-- 오른쪽카드 -->
-     					<div class="card-body" style="color:white; padding-left:45%; font-size:16px; padding-top:0%;">
+     				<div class="card right" style="background-color:#f5a142; height:30px;"> <!-- 오른쪽카드 -->
+     					<div class="card-body" style="color:white; padding-left:35%; font-size:16px; padding-top:4px; font-weight:600;">
         					배송상태
        					</div>
      				</div>
      				
            		</div><!-- end row -->
            		
-           		<c:forEach var="purchase" items="${totalPurchaseList}">
+           		<c:if test="${empty totalPurchaseList }">
+           		
+           			<div class="row">
+           				<p>구매 내역이 없습니다.</p>
+           			</div>
+           		
+           		</c:if>
+           		
+           		<c:if test="${!empty totalPurchaseList}">
+           			<c:forEach var="purchase" items="${totalPurchaseList}">
            			<div class="row">
            			
            				<div class="card left"> <!-- 왼쪽카드 -->
@@ -251,14 +295,16 @@
            				</div>
            				
            			</div><!-- end row -->
-           		</c:forEach>
+           			</c:forEach>
+           		</c:if>
            		
            		
-           	</div>
+           		</c:if>
+           	
            		
            		
            
-      
+      	</div>
             <!-- #/ container -->
            
             
@@ -293,5 +339,7 @@
    		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
    	<!-- 검색 공통 스크립트 -->
    		<script src="/js/custom/shoppingmallCommon.js"></script>
+   	<!-- 공통 툴바용 스크립트 -->	
+		<script src="/js/custom/toolbarScript.js"></script>
 	</body>
 </html>

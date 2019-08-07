@@ -50,6 +50,7 @@ public class ShoppingmallController {
 			search.setDetectedItemCount(0); //일단 무한스크롤 위해서..
 		}
 		
+		if(search.getSearchKeyword()!="") {} //널스트링 처리 꼭 해주기
 		Map<String, Object> returnMap = shoppingmallService.getShoppingmallProductList(search);
 		
 		model.addAttribute("productList",returnMap.get("productList"));
@@ -64,11 +65,11 @@ public class ShoppingmallController {
 		System.out.println("shopping/getPurchaseList 컨트롤러");
 		
 		//살려야함
-		//User user = (User)session.getAttribute("user"); //항상 user있음
+		User user = (User)session.getAttribute("user"); //항상 user있음
 		
 		//가짜데이터..
-		User user = new User();
-		user.setUserNo(10000);
+		//User user = new User();
+		//user.setUserNo(10000);
 		Map<String,Object> returnMap = shoppingmallService.getPurchaseList(user, search);
 		
 		
