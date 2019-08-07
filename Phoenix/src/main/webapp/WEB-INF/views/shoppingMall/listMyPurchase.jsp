@@ -86,6 +86,7 @@
     		color:black;
     		font-size:14px;
     		font-weight:800;
+    		margin-top:10%;
     	}
     	
     	.orderTime{
@@ -291,12 +292,12 @@
 				           					<div class="orderTime">${purchase.orderTime}</div>
 				           					<div class="orderNumber">
 				           						<p>주문번호</p>
-				           						<span>${purchase.orderNumber}</span>
+				           						<span style="font-weight:800;">${purchase.orderNumber}</span>
 				           					</div>
 				           					<hr/>
 				           					<div class="totalPrice">
 				           						<p>총 주문금액</p>
-				           						<span>${purchase.totalPrice}</span>
+				           						<span style="color:#f5a142; font-size:17px; font-weight:800;">${purchase.totalPrice}</span>
 				           						
 				           					</div>
 			           					</div>
