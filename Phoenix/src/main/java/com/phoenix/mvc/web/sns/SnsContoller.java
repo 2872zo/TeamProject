@@ -32,7 +32,7 @@ public class SnsContoller {
 	}
 
 	@GetMapping(value = "/getTimeLine")
-	public String getTimeLine(Model model, @ModelAttribute("search") Search search, HttpServletRequest request) {
+	public String getTimeLine(Model model, @ModelAttribute("search") Search search, HttpServletRequest request) throws InterruptedException {
 
 		System.out.println("sns/getTimeLine");
 		
@@ -59,8 +59,8 @@ public class SnsContoller {
 		System.out.println("fb: "+search.getFbId());
 		System.out.println("ig: "+search.getIgId());
 		
-		Map<String, Object> fbMap = snsService.getFaceBookTimeLineList(search);
 		Map<String, Object> igMap = snsService.getInstaTimeLineList(search);
+		Map<String, Object> fbMap = snsService.getFaceBookTimeLineList(search);
 		System.out.println("fbMap이욤 : "+fbMap);
 		System.out.println("igMap이욤 : "+igMap);
 		

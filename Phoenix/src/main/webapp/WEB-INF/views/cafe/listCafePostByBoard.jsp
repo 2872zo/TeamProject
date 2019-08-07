@@ -234,7 +234,13 @@
 												</c:import>
 											</td>
 											<td style="text-align: center;">
-												<span><input type="button" name="addPostButton" class="btn mb-1 btn-outline-dark btn-sm" value="글쓰기"></span>
+												<c:if test="${board.boardType eq 'cb100' and (cafeMember.memberGrade eq 'cg100' or cafeMember.memberGrade eq 'cg101') }">
+													<span><input type="button" name="addPostButton" class="btn mb-1 btn-outline-dark btn-sm" value="글쓰기"></span>
+												</c:if>
+												<c:if test="${board.boardType ne 'cb100'}">
+													<span><input type="button" name="addPostButton" class="btn mb-1 btn-outline-dark btn-sm" value="글쓰기"></span>
+												</c:if>
+												
 												<c:if test="${cafeMember.memberGrade eq 'cg100' or cafeMember.memberGrade eq 'cg101'}">
 													<span><input type="button" name="movePostButton" class="btn mb-1 btn-outline-dark btn-sm" value="이동"></span>
 													<span><input type="button" name="deletePostButton" class="btn mb-1 btn-outline-dark btn-sm" value="삭제"></span>

@@ -14,7 +14,10 @@
 
 <link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
 <link href="/css/style.css" rel="stylesheet">
+<link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
 <link rel="stylesheet" href="/css/custom/scroll-top.css">
+<!-- 스위트얼럿 css -->
+<link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
 <style>
 .form-inline .form-control {
 	width: 45px;
@@ -204,7 +207,7 @@
 	<script src="/js/settings.js"></script>
 	<script src="/js/gleek.js"></script>
 	<script src="/js/styleSwitcher.js"></script>
-	<script src="/plugins/sweetalert/js/sweetalert.init.js"></script>
+	<script src="/plugins/sweetalert/js/sweetalert.min.js"></script>
 
 	<!-- 메뉴바 이용을 위한 스크립트 -->
 	<script src="/js/custom/scroll-top.js"></script>
@@ -255,11 +258,11 @@
 					//alert("nextR "+nextR)
 
 						if(visit>nextV || post>nextP || reply>nextR){
-							alert("다음 등금 기준은 낮은 등급보다 높아야 합니다.")
+							swal("다음 등급 기준은 낮은 등급보다 높아야 합니다.", "", "warning")
 							break;
 							
 						}else if(visit==nextV || post==nextP || reply==nextR){
-							alert("등급 기준이 같을 수는 없습니다.")
+							swal("등급 기준이 같을 수는 없습니다.", "", "warning")
 							break;
 						}else if(visit<nextV && post<nextP && reply<nextR){
 							//alert("ok")

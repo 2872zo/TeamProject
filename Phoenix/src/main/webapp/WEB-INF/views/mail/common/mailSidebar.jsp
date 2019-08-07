@@ -1,12 +1,23 @@
+<%@ page contentType="text/html; charset=utf-8"%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
+<style>
+	.badge.float-right.badge-sm{
+		color:white;
+	}
+	
+	.nk-sidebar .metismenu > li:hover span{
+		color:white;
+	}
+	
+</style>
 
 <div class="nk-nav-scroll">
 	<ul class="metismenu" id="menu">
 		<li>
 			<span class="nav-text">
-<%@ page contentType="text/html; charset=utf-8"%>
-
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 				<div class="card">
 					<div class="card-body">
@@ -21,29 +32,30 @@
 							<a href="javascript:fncSendMail()" class="btn btn-primary btn-block">메일 쓰기</a>
 							
 							<div class="mail-list mt-4">
-								<a href="javascript:fncGetMailMain(${currentPage })" class="list-group-item border-0 text-primary p-r-0"> 
+								<c:set var="URL" value="${pageContext.request.requestURI}" />
+								<a href="javascript:fncGetMailList(${currentPage })" class="list-group-item border-0 <c:if test="${fn:contains(URL, 'listMail') }">text-primary</c:if>  p-r-0"> 
 									<i class="fa fa-inbox font-18 align-middle mr-2"></i> <b>Inbox</b> 
 									<c:if test="${!empty inboxTotalCount && inboxTotalCount ne 0 }">
 										<span class="badge badge-primary badge-sm float-right m-t-5">${inboxTotalCount }</span>
 									</c:if>
 								</a> 
 								
-								<a href="javascript:fncGetSentMailList(${currentPage })" class="list-group-item border-0 p-r-0"> 
+								<a href="javascript:fncGetSentMailList(${currentPage })" class="list-group-item border-0 <c:if test="${fn:contains(URL, 'listSentMail') }">text-primary</c:if> p-r-0"> 
 									<i class="fa fa-paper-plane font-18 align-middle mr-2"></i> <b>Sent</b>
 									<c:if test="${!empty sentTotalCount && sentTotalCount ne 0 }">
 										<span class="badge badge-success badge-sm float-right m-t-5">${sentTotalCount }</span>
 									</c:if>
 								</a> 
 								
-								<a href="javascript:fncGetImportantMailList(${currentPage })" class="list-group-item border-0 p-r-0"> 
-									<i class="fa fa-star-o font-18 align-middle mr-2"></i>Important
+								<a href="javascript:fncGetImportantMailList(${currentPage })" class="list-group-item border-0 <c:if test="${fn:contains(URL, 'listFlagMail') }">text-primary</c:if> p-r-0"> 
+									<i class="fa fa-star-o font-18 align-middle mr-2"></i><b>Important</b>
 									<c:if test="${!empty importantTotalCount && importantTotalCount ne 0 }">
 										<span class="badge badge-info badge-sm float-right m-t-5">${importantTotalCount }</span>
 									</c:if> 
 								</a> 
 								
-								<a href="javascript:fncGetTrashMailList(${currentPage })" class="list-group-item border-0 p-r-0">
-									<i class="fa fa-trash font-18 align-middle mr-2"></i>Trash
+								<a href="javascript:fncGetTrashMailList(${currentPage })" class="list-group-item border-0 <c:if test="${fn:contains(URL, 'listDeletedMail') }">text-primary</c:if> p-r-0">
+									<i class="fa fa-trash font-18 align-middle mr-2"></i><b>Trash</b>
 									<c:if test="${!empty trashTotalCount && trashTotalCount ne 0 }">
 										<span class="badge badge-danger badge-sm float-right m-t-5">${trashTotalCount }</span>
 									</c:if> 

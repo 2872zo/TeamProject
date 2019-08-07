@@ -105,40 +105,82 @@
 		<!--**********************************
             Sidebar end
         ***********************************-->
+		<c:if test="${empty cafeApplication }">
+			<div class="content-body">
+				<div class="row page-titles mx-0">
+					<div class="col p-md-0">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="javascript:void(0)">카페</a></li>
+							<li class="breadcrumb-item active"><a
+								href="javascript:void(0)">카페가입</a></li>
+						</ol>
+					</div>
+				</div>
+				<div class="login-form-bg h-100">
+					<div class="container h-100">
+						<div class="row justify-content-center h-100">
+							<div class="col-xl-8">
+								<div class="error-content">
+									<div class="card mb-0">
+										<div class="card-body text-center">
+											<h1 class="error-text text-primary">카페 멤버에게만 공개된 게시물입니다</h1>
+											<i class="mdi mdi-tooltip-outline-plus" style="font-size: 100px;"></i>
+											<h4 class="mt-4">${cafe.cafeName}카페에 가입해주세요.</h4>
+											
+											<form class="mt-5 mb-5">
 
-		<div class="row page-titles mx-0">
-			<div class="col p-md-0">
-				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a href="javascript:void(0)">카페</a></li>
-					<li class="breadcrumb-item active"><a
-						href="javascript:void(0)">카페가입</a></li>
-				</ol>
-			</div>
-		</div>
-		<div class="login-form-bg h-100">
-			<div class="container h-100">
-				<div class="row justify-content-center h-100">
-					<div class="col-xl-8">
-						<div class="error-content">
-							<div class="card mb-0">
-								<div class="card-body text-center">
-									<h1 class="error-text text-primary">카페 멤버에게만 공개된 게시물입니다</h1>
-									<h4 class="mt-4">${cafe.cafeName}</h4>
-									<p>카페에 가입에보세요!</p>
-									<form class="mt-5 mb-5">
-
-										<div class="text-center mb-4 mt-4">
-											<a href="javascript:fncAddCafeApplication('${cafeURL}')" class="btn btn-primary">카페가입하기</a>
+												<div class="text-center mb-4 mt-4">
+													<a href="javascript:fncAddCafeApplication('${cafeURL}')"
+														class="btn btn-primary">카페가입하기</a>
+												</div>
+											</form>
 										</div>
-									</form>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
 
+			</div>
+		</c:if>
+		<c:if test="${!empty cafeApplication }">
+			<div class="content-body">
+				<div class="row page-titles mx-0">
+					<div class="col p-md-0">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="javascript:void(0)">카페</a></li>
+							<li class="breadcrumb-item active"><a
+								href="javascript:void(0)">카페대기</a></li>
+						</ol>
+					</div>
+				</div>
+				<div class="login-form-bg h-100">
+					<div class="container h-100">
+						<div class="row justify-content-center h-100">
+							<div class="col-xl-8">
+								<div class="error-content">
+									<div class="card mb-0">
+										<div class="card-body text-center">
+											<h1 class="error-text text-primary">카페 멤버에게만 공개된 게시물입니다</h1>
+											<i class="mdi mdi-tumblr-reblog" style="font-size: 100px;" ></i> 
+											<h4 class="mt-4">${cafe.cafeName}카페 가입 승인 대기중입니다.</h4>
+											<br>
+											
+											<form class="mt-5 mb-5">
+
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+		</c:if>
 	</div>
 	<!--**********************************
         Main wrapper end

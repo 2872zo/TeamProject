@@ -78,12 +78,9 @@ public class CafeManageController {
 	@RequestMapping(value = "/{cafeURL}/manage/getCafeMemberList")
 	public String getCafeMemberList(@PathVariable String cafeURL, @ModelAttribute("search") Search search, Model model)
 			throws Exception {
-		System.out.println("서치키워드를 내놔라");
-		System.out.println(search.getSearchKeyword());
 		System.out.println("/cafe/{cafeURL}/getCafeMemberList : URL == " + cafeURL);
 
 		search.setCafeURL(cafeURL);
-		pageSize = 2;
 		if (search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
 		}

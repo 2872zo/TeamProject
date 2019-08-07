@@ -36,7 +36,19 @@
 										}),
 										success : function(JSONData,status){
 											if (JSONData.result == true){
-												swal("카페 탈퇴 완료","탈퇴 되었습니다.","success");
+												swal({
+													title: "카페 탈퇴 완료",
+													text: "탈퇴 되었습니다.",
+													type: "success",
+													confirmButtonClass: "btn-success",
+													confirmButtonText:"확인",
+													},
+													function(isConfirm){
+														if(isConfirm){
+															location.href = "/cafe/main";
+														}//if
+													}//function
+												);
 											}
 										},
 										error : function(){
@@ -47,14 +59,17 @@
 			    				}
 			    			
 		    				});
-		    			}
-	    	});
+	    				}
+		    		});
+	    	
 	    	
 	    	$(function(){//프로필수정
 	    		
 	    		$(".updateProfile").on("click",function(){
 // 	    			alert("여기")
-	    			window.open("/cafe/" + cafeURL + "/updateCafeMemberProfileView?memberNo="+memberNo,"_blank","width=600,height=700","location=no");
+	    			var x =  (document.body.offsetWidth / 2) - (500 / 2);
+	    			var y =  (document.body.offsetHeight / 2) - (400);
+	    			window.open("/cafe/" + cafeURL + "/updateCafeMemberProfileView?memberNo="+memberNo,"_blank","width=500,height=600, left="+ x + ", top="+ y,"location=no");
 	    			});
 	    		
 	    		});
