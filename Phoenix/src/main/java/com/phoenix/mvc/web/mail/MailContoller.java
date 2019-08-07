@@ -93,8 +93,8 @@ public class MailContoller {
 		Map<String, Object> resultMap = mailService.getMail(account, mailNo);
 		
 		Mail mail = (Mail) resultMap.get("mail");
-		if(!mail.getContent().contains("<br/>")) {
-			mail.setContent(mail.getContent().replace("\n", "<br/>"));
+		if(!mail.getContent().contains("<br/>") && !mail.getContent().contains("<table")) {
+			mail.setContent(mail.getContent().replaceAll("\n", "<br/>"));
 		}
 		
 		map.put("mail", mail);

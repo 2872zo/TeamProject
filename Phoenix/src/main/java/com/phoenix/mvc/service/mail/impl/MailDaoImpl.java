@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +36,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Repository;
 
 import com.phoenix.mvc.common.Page;
@@ -252,6 +254,8 @@ public class MailDaoImpl implements MailDao {
 
 		Message message = mailAgent.getDefaultFolder().getMessage(mailNo);
 
+		
+		
 		Map<String, Object> map = messageToMail(message, account.getAccountNo());
 
 		mailAgent.close();
@@ -1217,10 +1221,6 @@ public class MailDaoImpl implements MailDao {
 		
 		System.out.println(mail);
 		
-		if(mail.getContent() != null) {
-			mail.setContent(mail.getContent().replaceAll("\n\r", "<br/>"));
-		}
-		
 		map.put("mail", mail);
 		
 		return map;
@@ -1228,6 +1228,8 @@ public class MailDaoImpl implements MailDao {
 	
 	// 파일을 제외한 모든 내용을 가져옴
 	private List<Map<String, String>> printMessage(Message message, Mail mail) throws Exception {
+		
+		System.out.println("MessageInfo : " + message);
 		
 		// 파일정보를 저장하는 리스트
 		List<Map<String, String>> fileList = new ArrayList<Map<String, String>>();
@@ -1292,6 +1294,16 @@ public class MailDaoImpl implements MailDao {
 						String body = ((MimeMultipart) obj).getBodyPart(0).getContent().toString();
 						
 						System.out.println("multipart 본문 : " + body);
+						
+						if(body.contains("cid")) {
+							
+							String cid = body.substring(body.indexOf("cid"), body.indexOf("\"", body.indexOf("cid")+1));
+							System.out.println("cid : " + cid);
+							System.out.println(cid.substring(4));
+							System.out.println("cid 판별 : " + multiPart.getBodyPart(cid.substring(4))); 
+							
+//							body.replace("cid", ))
+						}
 						
 						mail.setContent(body);
 					}
