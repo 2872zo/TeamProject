@@ -41,38 +41,38 @@
 		</div>
 
 
-		<c:if test='${empty sessionScope.user}'>
-			<div class="header-right">
-				<div class="input-group icons">
-					<div class="input-group-prepend">
-						<a href="javascript:fncLogin()"> <span
-							class="input-group-text bg-transparent border-0 pr-2 pr-sm-3"
-							id="login">login</span>
-						</a>
-					</div>
-				</div>
-			</div>
-		</c:if>
+		<div class="header-right">
+			<ul class="clearfix d-flex align-items-center justify-content-around">
 
-		<c:if test="${!empty sessionScope.user }">
-			<div class="header-right">
-				<div class="input-group icons">
-					<div class="input-group-prepend">
-						<a href="javascript:fncLogout()"> <span
-							class="input-group-text bg-transparent border-0 pr-2 pr-sm-3"
-							id="logout">logout</i></span>
-						</a>
-					</div>
-				</div>
-			</div>
-		</c:if>
 
-	</div>
+				<c:if test="${!empty sessionScope.user}">
 
-	<!--**********************************
+					<i class="mdi mdi-comment-processing-outline" id='goChat'
+						style='font-size: 35pt; position: relative; right: 5%;'></i>
+					<div style='margin-left: 2%; margin-right: 2%;'></div>
+					<!-- 채팅 -->
+					<!-- 로그아웃버튼 -->
+					<button type="button" class="btn btn-primary logout">
+						<i class="icon-key">Logout</i>
+					</button>
+					<!-- 로그아웃버튼 -->
+				</c:if>
+				<!-- 로그인상태시 표시되는 부분 -->
+				<c:if test="${empty sessionScope.user}">
+					<button type="button" class="btn btn-primary login"
+						data-toggle="modal" data-target="#exampleModalCenter">
+						<i class="icon-key">Login</i>
+					</button>
+				</c:if>
+
+			</ul>
+		</div>
+
+		<!--**********************************
             Header end ti-comment-alt
         ***********************************-->
 
+	</div>
 </div>
 <!--**********************************
         Main wrapper end

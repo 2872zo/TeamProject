@@ -240,11 +240,13 @@
 	<script type="text/javascript">
 		$(function() {
 			var cafeURL = '${cafe.cafeURL}'
+				//alert(cafeURL);
 
 			$("button[name=button]").on(
 					"click",
 					function() {
 						//alert("가입");
+						
 						$("form").attr("method", "POST").attr("action",
 								"/cafe/" + cafeURL + "/addCafeApplication")
 								.submit();

@@ -204,7 +204,7 @@ public class CafeInterceptor extends HandlerInterceptorAdapter {
 						return true;
 					}
 					System.out.println(">>> 카페 멤버 아님");
-					response.sendRedirect("/cafe/" + cafeURL + "/needApply");// 이거 수정 ㅠ.ㅠ
+					response.sendRedirect("/cafe/" + cafeURL + "/needApply");
 					return false;
 
 				}

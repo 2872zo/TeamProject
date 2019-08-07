@@ -44,9 +44,8 @@ public class CafeManageServiceImpl implements CafeManageService {
 		System.out.println(this.getClass().getName());
 	}
 
-	
-	////////////////////////////기황시작/////////////////////////////////
-	
+	//////////////////////////// 기황시작/////////////////////////////////
+
 	@Override
 	public Map getCafeMemberList(Search search) throws Exception {
 		// TODO Auto-generated method stub
@@ -106,41 +105,41 @@ public class CafeManageServiceImpl implements CafeManageService {
 
 		return updateCheck;
 	}
-	
+
 	@Override
 	public boolean checkBlockExpired(int memberNo) throws Exception {
 
 		boolean checkResult = false;
-			
+
 		CafeMemberBlock latestBlock = cafeManageDao.getLatestBlock(memberNo);
 		Date dDay = latestBlock.getBlockEndDate();
 		long endTime = dDay.getTime();
 		long rightNow = new Date().getTime();
 		if (endTime <= rightNow) {
 			cafeManageDao.updateBlockExpired(latestBlock.getBlockNo());
-			//멤버도 업데이트 해야됨.
+			// 멤버도 업데이트 해야됨.
 			CafeMember freeMan = new CafeMember();
 			freeMan.setMemberNo(memberNo);
 			freeMan.setMemberStatusCode("cs100");
 			cafeMemberDao.updateCafeMember(freeMan);
 			checkResult = true;
 		}
-		
+
 		return checkResult;
 	}
-	
+
 	@Override
 	public int updateCafeMemeberGrade(CafeMember cafeMember) throws Exception {
 		return cafeManageDao.updateCafeMemeberGrade(cafeMember);
 	}
-	
+
 	@Override
 	public CafeMemberBlock getLatestBlockReason(int memberNo) throws Exception {
 		return cafeManageDao.getLatestBlock(memberNo);
 	}
 
-	/////////////////////////////기황끝/////////////////////////////
-	
+	///////////////////////////// 기황끝/////////////////////////////
+
 /////////////////////////////////////////////////// 예림
 /////////////////////////////////////////////////// 시작/////////////////////////////////
 	@Override
@@ -303,20 +302,20 @@ public class CafeManageServiceImpl implements CafeManageService {
 
 		return memberList;
 	}
-	
-	//만들고있어!
-	
+
+	// 만들고있어!
+
 	@Override
 	public boolean checkAttendance(CafeMember cafeMember, Event event) throws Exception {
-		
+
 		boolean result = false;
-		if(!cafeManageDao.checkCafeTodayVisitLog(event)) { //true 오늘방문 false 안방문
-		
-			cafeManageDao.addEventLog(event); //add되면 true래
+		if (!cafeManageDao.checkCafeTodayVisitLog(event)) { // true 오늘방문 false 안방문
+
+			cafeManageDao.addEventLog(event); // add되면 true래
 			cafeMemberDao.updateVisitCountIncrease(cafeMember.getMemberNo());
 		}
-		
-		return result; //의미없다구
+
+		return result; // 의미없다구
 	}
 
 ///////////////////////////////////////////////////예림끝//////////////////////////////////////////////
@@ -390,6 +389,12 @@ public class CafeManageServiceImpl implements CafeManageService {
 		return cafeManageDao.dropCafe(cafe);
 	}
 
+	@Override
+	public CafeApplication getCafeApplicationForMember(Search search) {
+		
+		return cafeManageDao.getCafeApplicationForMember(search);
+	}
+
 ////////////////////////////////지니끝//////////////////////////////////
 
 	/////////////////////////////// 준호시작///////////////////////////////////////
@@ -412,15 +417,12 @@ public class CafeManageServiceImpl implements CafeManageService {
 	public Cafe getCafeName(String cafeName) throws Exception {
 		return cafeManageDao.getCafeName(cafeName);
 	}
-	
-	public int getCafeNoNo(String cafeName) throws Exception{
+
+	public int getCafeNoNo(String cafeName) throws Exception {
 
 		return cafeManageDao.getCafeNoNo(cafeName);
 
 	}
-
-
-
 
 	/////////////////////////////// 준호끝///////////////////////////////////////
 
