@@ -90,19 +90,19 @@
 			$(self.location).attr("href", "/explore/getUnifiedList?searchKeyword="+searchKeyword);
 		});
 		
-		$("#blogSearch").on("click",function(){ //통합검색 눌렀을때
+		$("#blogSearch").on("click",function(){ //블로그 눌렀을때
 			$(self.location).attr("href", "/explore/getBlogList?searchKeyword="+searchKeyword);
 		});
 		
-		$("#cafeSearch").on("click",function(){ //통합검색 눌렀을때
+		$("#cafeSearch").on("click",function(){ //카페 눌렀을때
 			$(self.location).attr("href", "/explore/getCafeList?searchKeyword="+searchKeyword);
 		});
 		
-		$("#imageSearch").on("click",function(){ //통합검색 눌렀을때
+		$("#imageSearch").on("click",function(){ //이미지검색 눌렀을때
 			$(self.location).attr("href", "/explore/getImageList?searchKeyword="+searchKeyword);
 		});
 		
-		$("#webSearch").on("click",function(){ //통합검색 눌렀을때
+		$("#webSearch").on("click",function(){ //웹검색 눌렀을때
 			$(self.location).attr("href", "/explore/getWebsiteList?searchKeyword="+searchKeyword);
 		});
 		
