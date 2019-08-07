@@ -171,32 +171,4 @@ public class ChattingContoller {
 		return "redirect:/chat/chatRoomList";
 	}
 	
-	@RequestMapping("config")
-	public String getChatConfig() {
-		
-		return "chat/chatConfig";
-	}
-	
-	/////////////////////////jsp 테스트용 페이지들/////////////////////////
-	@RequestMapping("test")
-	public String testpage() {
-		return "chat/test";
-	}
-	
-	@RequestMapping("test1")
-	public String testpage1() {
-		return "chat/test1";
-	}
-	
-	@RequestMapping("test2")
-	public String testpage2() {
-		return "chat/test2";
-	}
-	
-	@RequestMapping("test3")
-	public String testpage3() {
-		return "chat/test3";
-	}
-	/////////////////////////jsp 테스트용 페이지들/////////////////////////
-	
 }

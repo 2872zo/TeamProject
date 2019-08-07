@@ -149,7 +149,9 @@ cursor: pointer;
   </thead>
   <tbody>
   
-  
+  <c:if test="${empty memberList}">
+  <tr><td colspan="7"><h4 class='d-flex justify-content-center'>해당 조건에 맞는 검색 결과가 없습니다.</h4></td></tr>
+  </c:if>
   <c:set var="i" value="0" />
   
   <c:forEach var="cafeMember" items="${memberList}">

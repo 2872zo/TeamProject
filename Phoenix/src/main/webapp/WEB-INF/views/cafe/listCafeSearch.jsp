@@ -86,7 +86,27 @@
   	
 
 			<!--  카페검색창 끝 /////////////////////////////////////-->
-
+  <c:if test="${search.searchCondition==0}">
+  <c:if test="${empty cafeList}">
+    <div class='card'>
+	<div class="card-body">
+	<div class='d-flex justify-content-center'>
+	<h3>검색조건에 해당 하는 카페가 없습니다.</h3>
+	</div>
+	</div>
+	</div>
+  </c:if>
+  <c:if test="${empty postList}">
+   <div class='card'>
+	<div class="card-body">
+	<div class='d-flex justify-content-center'>
+	<h3>검색조건에 해당 하는 글이 없습니다.</h3>
+	</div>
+	</div>
+	</div>
+  </c:if>
+  
+  </c:if>
   <c:if test="${!empty cafeList || search.searchCondition==1}">
   <div class='card'>
 <div class="card-body">
@@ -112,7 +132,14 @@
 		 <br/>
 		총 ${totalCount} 건 입니다.
 		 <br/>
+		 
+		  <c:if test="${empty cafeList}">
+	<div class='d-flex justify-content-center'>
+	<h3>검색조건에 해당 하는 카페가 없습니다.</h3>
+	</div>
+  </c:if>
  	</c:if>
+ 	
    
  <div class="row d-flex justify-content-between">
   <c:forEach var="cafe" items="${cafeList}">
@@ -138,7 +165,7 @@
   </c:forEach>
   </div>
 
-  <c:if test="${ !empty search.searchCondition && search.searchCondition==0}">
+  <c:if test="${ !empty search.searchCondition && search.searchCondition==0 && !empty cafeList}">
   <button type="button" class="btn btn-outline-primary" id='moreCafe'>카페 더보기</button>
   </c:if>
   
@@ -151,6 +178,7 @@
 </div>
   </c:if>
   <br/>
+ 
   <c:if test="${!empty postList ||search.searchCondition==2}">
   <div class='card'>
 <div class="card-body">
@@ -158,7 +186,11 @@
   	 총 ${totalCount} 건 입니다.
  	</c:if>
  	<br/>
-   
+    <c:if test="${empty postList}">
+	<div class='d-flex justify-content-center'>
+	<h3>검색조건에 해당 하는 글이 없습니다.</h3>
+	</div>
+  </c:if>
   <c:forEach var="post" items="${postList}">
 
   <input type='hidden' class='cafeURL' value='${post.cafeURL}'>
@@ -192,9 +224,6 @@
 
   </c:forEach>
 
-  
-  
-  
   <c:if test="${ !empty search.searchCondition && search.searchCondition==0}">
   <button type="button" class="btn btn-outline-success" id='morePost'>게시글 더보기</button>
   </c:if>
