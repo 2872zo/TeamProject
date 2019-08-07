@@ -51,7 +51,7 @@ public class UserInterceptor extends HandlerInterceptorAdapter {
 		User user = (User) request.getSession().getAttribute("user");
 
 		//회원가입
-		if (requestURI.contains("/user/addUser") || requestURI.contains("/user/json/checkUserIdDuplication") || requestURI.contains("/user/json/checkUserPwDuplication") || requestURI.contains("/user/json/sendSms")) {
+		if (requestURI.contains("/user/addUser") || requestURI.contains("/user/json/checkUserIdDuplication") || requestURI.contains("/user/json/checkUserPwDuplication") || requestURI.contains("/user/json/sendSms") || requestURI.contains("/user/json/checkUserNicknameDuplication")) {
 			if(user == null) {
 				return true;
 			}
@@ -71,7 +71,7 @@ public class UserInterceptor extends HandlerInterceptorAdapter {
 				System.out.println(">>>>>비회원이 페이지 접근");
 				response.sendRedirect("/user/loginView");
 				return false;
-			}else if(user.getUserRoleCode().equals("ur101")){
+			}else if(user.getUserRoleCode().equals("ur100")){
 				return true;
 			}else {
 				System.out.println(">>>listUser 관리자 페이지 접근");

@@ -64,7 +64,7 @@ public class UserContoller {
 
 		System.out.println("/user/logon : GET");
 
-		return "user/loginView";
+		return "user/login";
 	}
 
 	@GetMapping("addUserView")
@@ -72,7 +72,7 @@ public class UserContoller {
 
 		System.out.println("/addUser : GET");
 
-		return "user/addUserView";
+		return "user/addUser";
 	}
 
 	@PostMapping("addUser")
@@ -164,7 +164,7 @@ public class UserContoller {
 
 		model.addAttribute("user", user);
 
-		return "user/updateUserView";
+		return "user/updateUser";
 	}
 
 	@PostMapping("updateUser")
@@ -195,11 +195,11 @@ public class UserContoller {
 
 		model.addAttribute("user", user);
 
-		return "user/updateUserView";
+		return "user/updateUser";
 	}
 
 	@RequestMapping(value = "listUser")
-	public String listUser(@ModelAttribute("search") Search search, Model model, HttpServletRequest request)
+	public String getUserList(@ModelAttribute("search") Search search, Model model, HttpServletRequest request)
 			throws Exception {
 
 		System.out.println("/listUser :");

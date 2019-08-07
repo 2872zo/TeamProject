@@ -185,7 +185,7 @@ input[type="checkbox"] {
                                             
                                         </li>
                                         <hr class="my-2">
-                                      <c:if test="${user.userRoleCode=='ur101'}">
+                                      <c:if test="${user.userRoleCode=='ur100'}">
                                         <li>
                                             <a href=/user/listUser><i class="icon-list"></i> <span>회원목록</span></a>
                                         </li>

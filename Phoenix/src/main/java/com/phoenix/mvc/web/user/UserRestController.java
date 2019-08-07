@@ -68,6 +68,20 @@ public class UserRestController {
 		return userService.getUser(userId);
 	}*/
 	
+	@PostMapping(value = "/json/checkUserNicknameDuplication")
+	public boolean checkUserNicknameDuplication(@RequestBody User user)throws Exception{
+		
+		System.out.println("/user/json/checkUserNicknameDuplication : POST");
+		
+		boolean result = userService.checkUserNicknameDuplication(user.getUserNickname());
+
+		System.out.println("이상하ㄴ네."+result);
+		
+		return result;
+		
+	}
+
+	
 	@PostMapping(value = "/json/checkUserIdDuplication")
 	public boolean checkUserIdDuplication(@RequestBody User user)throws Exception{
 		

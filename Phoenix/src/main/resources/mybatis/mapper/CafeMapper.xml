@@ -35,8 +35,8 @@
 	 	<selectKey keyProperty="cafeNo" resultType="int" order="BEFORE">
 	 		SELECT SEQ_CAFE_CAFE_NO.NEXTVAL FROM DUAL
 	 	</selectKey>
-		INSERT INTO CAFE (cafe_no, cafe_name, manage_user_no, reg_date, url, cafe_detail, banner_img, main_img, cafe_type, member_nickname_flag) 
-		VALUES ( #{cafeNo}, #{cafeName:VARCHAR}, #{manageUserNo}, SYSDATE, #{cafeURL:VARCHAR}, #{cafeDetail:VARCHAR}, #{bannerImg:VARCHAR} , #{mainImg:VARCHAR}, #{cafeType:VARCHAR}, #{memberNicknameFlag:CHAR})
+		INSERT INTO CAFE (cafe_no, cafe_name, manage_user_no, reg_date, url, cafe_detail, banner_img, main_img, cafe_type, member_nickname_flag, auto_application_accept_flag) 
+		VALUES ( #{cafeNo}, #{cafeName:VARCHAR}, #{manageUserNo}, SYSDATE, #{cafeURL:VARCHAR}, #{cafeDetail:VARCHAR}, #{bannerImg:VARCHAR} , #{mainImg:VARCHAR}, #{cafeType:VARCHAR}, #{memberNicknameFlag:CHAR}, #{autoApplicationAcceptFlag:CHAR})
 
 	 </insert>
 	 
@@ -90,7 +90,7 @@
 		
 		INTO BOARD(board_no, cafe_no, cafe_url, board_name, access_grade, board_index, board_type, board_detail)	
 		
-		VALUES(GET_SEQ_BOARD_NO(), #{cafeNo:NUMERIC}, #{cafeURL:VARCHAR}, '-------', #{accessGrade:VARCHAR}, '3', 'cb102', '구분선입니다')
+		VALUES(GET_SEQ_BOARD_NO(), #{cafeNo:NUMERIC}, #{cafeURL:VARCHAR}, '----------------', #{accessGrade:VARCHAR}, '3', 'cb102', '구분선입니다')
 		
 		INTO BOARD(board_no, cafe_no, cafe_url, board_name, access_grade, board_index, board_type, board_detail)	
 		
@@ -217,11 +217,6 @@
 		</set>
 	</update>
 	
-	<select id="getCafeNoNo" parameterType ="string" resultType="int">
-		SELECT cafe_no
-		FROM cafe
-		WHERE cafeName = #{value}
-	</select>
 	
 
 </mapper>

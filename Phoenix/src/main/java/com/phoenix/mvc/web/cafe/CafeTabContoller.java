@@ -57,7 +57,7 @@ public class CafeTabContoller {
 
 		System.out.println("/addCafe : GET");
 
-		return "cafe/addCafeView";
+		return "cafe/addCafe";
 	}
 
 	@PostMapping("/addCafe") 

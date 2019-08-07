@@ -330,11 +330,6 @@ public class CafeManageDaoImpl implements CafeManageDao {
 
 	}
 
-	public int getCafeNoNo(String cafeName) throws Exception {
-		System.out.println("getCafeNoNo!!!!!!!!!!!!" + cafeName);
-		return sqlSession.selectOne("CafeMapper.getCafeNoNo", cafeName);
-
-	}
 
 
 

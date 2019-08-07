@@ -16,15 +16,11 @@ public interface ChattingDao {
 	
 	public ChatRoomInfo getMyChatRoomInfo(Search search) throws Exception;
 	
-	public int getMyChatRoomCount(Search search) throws Exception;
-	
 	public List getMyFriendsList(Search search) throws Exception;
 	
 	public List getFriendSearchList(Search search) throws Exception;
 	
 	public List getWannaBeFriendList(Search search) throws Exception;
-	
-	public ChatFriend getFriend(ChatFriend chatFriend) throws Exception;
 	
 	public int addFriend(ChatFriend chatFriend) throws Exception;
 	
@@ -36,8 +32,6 @@ public interface ChattingDao {
 	
 	public void addMyChatRoom(ChatRoomInfo chatRoomInfo) throws Exception;
 	
-	public List getMyChatRoomList(ChatRoomInfo chatRoomInfo) throws Exception;
-	
 	public void updateMyChatRoomName(ChatRoomInfo chatRoomInfo) throws Exception;
 	
 	public void deleteMyChatRoom(ChatRoomInfo chatRoomInfo) throws Exception;
@@ -48,8 +42,6 @@ public interface ChattingDao {
 	
 	public void updateChatRoomRecentMsg(Chat chat) throws Exception;
 	
-	public void testMethod (Chat chat) throws Exception;
-	
 	public void addChat (Chat chat) throws Exception;
 	
 	public long getChatCount(Search search) throws Exception;
@@ -57,8 +49,6 @@ public interface ChattingDao {
 	public List getChatList(Search search) throws Exception;
 	
 	public List getMoreChat(Search search) throws Exception;
-	
-	public int getMyChatCount(Search search) throws Exception;
 	
 	public List getChatRoomUserList(Search search) throws Exception;
 	

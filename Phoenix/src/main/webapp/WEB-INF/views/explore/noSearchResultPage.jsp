@@ -19,9 +19,7 @@
 
 <link rel="stylesheet" href="/css/custom/scroll-top.css">
 
-<!-- ToolBar Start /////////////////////////////////////-->
-<jsp:include page="/WEB-INF/views/explore/exploreToolbar.jsp" />
-<!-- ToolBar End /////////////////////////////////////-->
+
 <!--  ///////////////////////// CSS ////////////////////////// -->
     <style>
     	li{
@@ -29,6 +27,15 @@
     		padding : 10px;
     		
     	}
+    	.brand-title{
+    		
+    		color:#f5a142;
+    		background-color : white;
+    		font-family: 'Ubuntu', sans-serif;
+    		font-size:30px;
+    		margin-left:15px;
+    	}
+    	
     
     </style>
 <!--**********************************
@@ -81,7 +88,9 @@
         <!--**********************************
             Nav header start
         ***********************************-->	
-     	
+     		<!-- ToolBar Start /////////////////////////////////////-->
+		<jsp:include page="/WEB-INF/views/explore/exploreToolbar.jsp" />
+		<!-- ToolBar End /////////////////////////////////////-->
        
         <!--**********************************
             Nav header end
@@ -211,5 +220,7 @@
 		<script src="/js/custom/toolbarScript.js"></script>
    	<!-- 검색 공통 스크립트 -->
    		<script src="/js/custom/exploreCommon.js"></script>
+   	<!-- 공통 툴바용 스크립트 -->	
+		<script src="/js/custom/toolbarScript.js"></script>
 	</body>
 </html>

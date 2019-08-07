@@ -23,7 +23,7 @@
 	$(function(){
 		if(${user==null}){			
 			alert("계정이 없습니다 회원가입");
-		    window.opener.location.href = "/user/addUserView";
+		    window.opener.location.href = "/user/addUser";
 			window.self.close();	  
 		}else{
 			alert("로그인 성공");
