@@ -44,9 +44,8 @@ public class CafeManageServiceImpl implements CafeManageService {
 		System.out.println(this.getClass().getName());
 	}
 
-	
-	////////////////////////////기황시작/////////////////////////////////
-	
+	//////////////////////////// 기황시작/////////////////////////////////
+
 	@Override
 	public Map getCafeMemberList(Search search) throws Exception {
 		// TODO Auto-generated method stub
@@ -106,7 +105,7 @@ public class CafeManageServiceImpl implements CafeManageService {
 
 		return updateCheck;
 	}
-	
+
 	@Override
 	public boolean checkBlockExpired(int memberNo) throws Exception {
 
@@ -198,8 +197,8 @@ public class CafeManageServiceImpl implements CafeManageService {
 			{
 				newBoard.get(i).setBoardType("cb102");
 				newBoard.get(i).setPrivateFlag('0');
-				newBoard.get(i).setAccessGrade("10002");
-// newBoard.get(i).setBoardName("------------");
+				//newBoard.get(i).setAccessGrade("10002");
+				// newBoard.get(i).setBoardName("------------");
 			} else // 자유게시판이면
 			{
 				newBoard.get(i).setBoardType("cb103"); // 자유게시판
@@ -223,7 +222,7 @@ public class CafeManageServiceImpl implements CafeManageService {
 			if (existBoardList.get(i).getBoardDetail() == null) // 구분선
 			{
 // existBoardList.get(i).setBoardName("-------------"); //디테일로 수정
-				existBoardList.get(i).setAccessGrade("10002");
+				//existBoardList.get(i).setAccessGrade("10002");
 				existBoardList.get(i).setPrivateFlag('0');
 				existBoardList.get(i).setBoardType("cb102");
 			} else if (existBoardList.get(i).getBoardName().contains("신고")) // 근데 신고는 아예 고칠수 없게할거임
@@ -303,9 +302,9 @@ public class CafeManageServiceImpl implements CafeManageService {
 
 		return memberList;
 	}
-	
-	//만들고있어!
-	
+
+	// 만들고있어!
+
 	@Override
 	public boolean checkAttendance(CafeMember cafeMember, Event event) throws Exception {
 		
@@ -388,6 +387,12 @@ public class CafeManageServiceImpl implements CafeManageService {
 		cafe.setCafeNo(check);
 
 		return cafeManageDao.dropCafe(cafe);
+	}
+
+	@Override
+	public CafeApplication getCafeApplicationForMember(Search search) {
+		
+		return cafeManageDao.getCafeApplicationForMember(search);
 	}
 
 ////////////////////////////////지니끝//////////////////////////////////

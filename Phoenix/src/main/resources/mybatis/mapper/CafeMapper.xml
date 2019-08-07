@@ -90,7 +90,7 @@
 		
 		INTO BOARD(board_no, cafe_no, cafe_url, board_name, access_grade, board_index, board_type, board_detail)	
 		
-		VALUES(GET_SEQ_BOARD_NO(), #{cafeNo:NUMERIC}, #{cafeURL:VARCHAR}, '-------', #{accessGrade:VARCHAR}, '3', 'cb102', '구분선입니다')
+		VALUES(GET_SEQ_BOARD_NO(), #{cafeNo:NUMERIC}, #{cafeURL:VARCHAR}, '----------------', #{accessGrade:VARCHAR}, '3', 'cb102', '구분선입니다')
 		
 		INTO BOARD(board_no, cafe_no, cafe_url, board_name, access_grade, board_index, board_type, board_detail)	
 		

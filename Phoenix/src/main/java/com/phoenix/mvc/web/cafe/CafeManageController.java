@@ -78,12 +78,9 @@ public class CafeManageController {
 	@RequestMapping(value = "/{cafeURL}/manage/getCafeMemberList")
 	public String getCafeMemberList(@PathVariable String cafeURL, @ModelAttribute("search") Search search, Model model)
 			throws Exception {
-		System.out.println("서치키워드를 내놔라");
-		System.out.println(search.getSearchKeyword());
 		System.out.println("/cafe/{cafeURL}/getCafeMemberList : URL == " + cafeURL);
 
 		search.setCafeURL(cafeURL);
-		pageSize = 2;
 		if (search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
 		}
@@ -198,6 +195,8 @@ public class CafeManageController {
 	@RequestMapping(value = "/{cafeURL}/manage/updateCafeBoard", method = RequestMethod.POST) // 예림예림
 	public String updateCafeBoard(HttpServletRequest request, @PathVariable String cafeURL) {
 
+		
+		String boardAccessGrade="";
 		// System.out.println(request.getParameter("board")); 첫번째값만 받아옴
 		List<Board> existBoard = new ArrayList<Board>();
 		List<Board> newBoard = new ArrayList<Board>();
@@ -256,7 +255,29 @@ public class CafeManageController {
 				}
 			}
 		}
-
+		
+		////////////////////////////////////////////////////////////// accessGrade 추가 2019/08/06
+		for(Board board: existBoard) { //돌면서 getCafeAccessGrade
+			
+			if(board.getAccessGrade()!=null)
+			{
+				boardAccessGrade = board.getAccessGrade();
+				break;
+			}
+		}
+		
+		for(Board board : existBoard) {
+			
+			if(board.getAccessGrade()==null)
+				board.setAccessGrade(boardAccessGrade);
+		}
+		for(Board board : newBoard) {
+			
+			if(board.getAccessGrade()==null)
+				board.setAccessGrade(boardAccessGrade);
+		}
+		
+		////////////////////////////////////////////////////////////////////////////////////
 		for (int i = 0; i < bestPostCount.length; i++) // 베스트게시글개수 설정
 		{
 			String[] bestPostCountValue = bestPostCount[i].split("/");

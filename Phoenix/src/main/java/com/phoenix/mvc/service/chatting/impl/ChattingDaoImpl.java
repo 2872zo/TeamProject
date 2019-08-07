@@ -76,10 +76,6 @@ public class ChattingDaoImpl implements ChattingDao{
 	public List getFriendSearchList(Search search) throws Exception {
 		return sqlSession.selectList("ChatFriendMapper.searchChatFriend", search);
 	}
-	@Override
-	public void testMethod(Chat chat) throws Exception {
-		mongoTemplate.insert(chat);	
-	}
 	
 	@Override
 	public void addChat(Chat chat) throws Exception {
@@ -157,16 +153,6 @@ public class ChattingDaoImpl implements ChattingDao{
 	}
 
 	@Override
-	public int getMyChatRoomCount(Search search) throws Exception {
-		return 0;
-	}
-
-	@Override
-	public ChatFriend getFriend(ChatFriend chatFriend) throws Exception {
-		return null;
-	}
-
-	@Override
 	public int addFriend(ChatFriend chatFriend) throws Exception {
 		return sqlSession.insert("ChatFriendMapper.addFriend",chatFriend);
 	}
@@ -179,11 +165,6 @@ public class ChattingDaoImpl implements ChattingDao{
 	@Override
 	public int deleteFriend(ChatFriend chatFriend) throws Exception {
 		return sqlSession.delete("ChatFriendMapper.deleteFriend", chatFriend);
-	}
-
-	@Override
-	public int getMyChatCount(Search search) throws Exception {
-		return 0;
 	}
 
 	@Override
@@ -206,11 +187,6 @@ public class ChattingDaoImpl implements ChattingDao{
 	@Override
 	public void addMyChatRoom(ChatRoomInfo chatRoomInfo) throws Exception {
 		mongoTemplate.insert(chatRoomInfo);
-	}
-
-	@Override
-	public List getMyChatRoomList(ChatRoomInfo chatRoomInfo) throws Exception {
-		return null;
 	}
 
 	@Override

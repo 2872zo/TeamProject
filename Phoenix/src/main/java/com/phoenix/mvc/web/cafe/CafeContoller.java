@@ -20,6 +20,7 @@ import com.phoenix.mvc.service.cafe.CafeMemberService;
 import com.phoenix.mvc.service.cafe.CafeTabService;
 import com.phoenix.mvc.service.domain.Board;
 import com.phoenix.mvc.service.domain.Cafe;
+import com.phoenix.mvc.service.domain.CafeApplication;
 import com.phoenix.mvc.service.domain.CafeMember;
 import com.phoenix.mvc.service.domain.CafeMemberBlock;
 import com.phoenix.mvc.service.domain.User;
@@ -109,11 +110,15 @@ public class CafeContoller {
 		Search search = new Search();
 		search.setSearchCondition("0");
 		search.setCafeURL(cafeURL);
+		search.setCafeNo(cafe.getCafeNo());
+		search.setUserNo(user.getUserNo());
 		List<Board> boardList = cafeManageService.getCafeBoardList(search);
+		CafeApplication cafeApplication = cafeManageService.getCafeApplicationForMember(search);
 		
 		map.put("cafe", cafe);
 		map.put("boardList", boardList);
 		map.put("cafeURL", cafeURL);
+		map.put("cafeApplication", cafeApplication);
 		
 		return "cafe/common/needApply";
 	}

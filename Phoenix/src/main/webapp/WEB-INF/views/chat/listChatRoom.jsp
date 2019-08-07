@@ -86,10 +86,10 @@ img {
 
 
 		<div class="content-body">
-			
 				
 					<div class='container-fluid'>
 					<div class="row">
+					
 <div class="col-lg-8">
 
 
@@ -102,10 +102,13 @@ img {
 	<div class='card'>
 	<div class='card-body' id='roomListGuide'>
 
-	
-
 	<input type='hidden' id='roomNos' value ='${roomNos}'>
-
+<c:if test="${empty chatRoomList}">
+<div class='d-flex justify-content-center'><h3>참가하신 채팅방이 없습니다.</h3></div>
+<div class='d-flex justify-content-center'>
+<h4>오른쪽의 <i class="mdi mdi-comment-plus-outline" id='emptyAddChat'></i>
+버튼으로 채팅방을 개설해보세요</h4></div>
+</c:if>
 	<c:forEach items="${chatRoomList}" var ='chatRoomInfo'>
 	
 	<div class="card mb-3 enterTheRoom" 
@@ -139,7 +142,7 @@ img {
 	        	<fmt:formatDate value="${chatRoomInfo.latestMessagingDate}" type="both" pattern="yyyy-MM-dd E a hh:mm:ss"/>
 	        </p>
 	        <p class="card-text">
-	        	최초참가시간 : 
+	        	첫 참가시간 : 
 	        	<fmt:formatDate value="${chatRoomInfo.regDate}" type="both" pattern="yyyy-MM-dd E a hh:mm:ss"/>
 	        </p>
 	        
@@ -219,6 +222,10 @@ $(function() {
 	$("#addingChatRoom").on("click" , function() {
 		//alert("채팅방 만들기 버튼입니다.");
 		$(self.location).attr("href", "/chat/addChatRoom");
+	});
+
+	$("#emptyAddChat").on("click" , function() {
+		$("#addingChatRoom").click();
 	});
 	
 	$(".enterTheRoom").on("click" , function() {

@@ -211,11 +211,6 @@ public class ChattingServiceImpl implements ChattingService{
 	}
 
 	@Override
-	public List getMyChatRoomList(ChatRoomInfo chatRoomInfo) throws Exception {
-		return null;
-	}
-
-	@Override
 	public void updateMyChatRoomName(ChatRoomInfo chatRoomInfo) throws Exception {
 		chattingDao.updateMyChatRoomName(chatRoomInfo);
 	}

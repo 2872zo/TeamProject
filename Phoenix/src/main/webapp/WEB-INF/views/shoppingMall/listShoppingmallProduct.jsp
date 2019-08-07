@@ -114,7 +114,8 @@
     		font-size: 10px;
     		
     	}
-    	img{
+    	
+    	.productImage{
     		display : block;
     		width:250px;
     		height:250px;
@@ -270,7 +271,7 @@
 						},
 						dataType : "text",
 						success : function(serverData){
-							alert("serverData : "+serverData);
+							//alert("serverData : "+serverData);
 							setTimeout(function(){boolsw = true;},500);
 							
 							
@@ -428,7 +429,7 @@
 	           									<dt>연관검색어</dt>
 		           								<c:set var="i" value="0"/>
 		           								<c:forEach var="relativeKeyword" items="${search.relativeKeyword}">
-		           									<dd><a href="${search.relativeKeywordLink[i]}">${relativeKeyword}</a></dd>
+		           									<dd><a href="${search.relativeKeywordLink[i]}" target="_blank">${relativeKeyword}</a></dd>
 		           									<c:set var="i" value="${i+1}"/>
 		           								</c:forEach>
 	           								</c:if>
@@ -448,8 +449,8 @@
 	           							<c:if test="${j%3!=2}">
 	           								<div class="thumbnail">
 	           							</c:if>
-	           							<a href="${product.detailPageLink}"> <!-- 썸네일 클릭하면 이동하도록  묶어버림 -->
-	           								<img src="${product.productImage}" alt="" />
+	           							<a href="${product.detailPageLink}" target="_blank"> <!-- 썸네일 클릭하면 이동하도록  묶어버림 -->
+	           								<img class="productImage" src="${product.productImage}" alt="" />
 	           								<div class="caption">
 	           									<div class="title">
 	           										${product.productName}
@@ -536,5 +537,7 @@
    		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script> -->
    	<!-- 검색 공통 스크립트-->
    		<script src="/js/custom/shoppingmallCommon.js"></script>
+   	<!-- 공통 툴바용 스크립트 -->	
+		<script src="/js/custom/toolbarScript.js"></script>
 	</body>
 </html>

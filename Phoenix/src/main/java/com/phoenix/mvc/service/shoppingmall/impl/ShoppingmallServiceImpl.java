@@ -51,11 +51,11 @@ public class ShoppingmallServiceImpl implements ShoppingmallService
 		
 		//accountList를 확인하고 + search조건확인해서 dao실행.
 		//가짜데이터
-		Account testAccount = new Account();
-		testAccount.setAccountType("ua105");
-		testAccount.setAccountId("blueberriii");
-		testAccount.setAccountPw("123abc!@#");
-		myAccountList.add(testAccount);
+		//Account testAccount = new Account();
+		//testAccount.setAccountType("ua105");
+		//testAccount.setAccountId("blueberriii");
+		//testAccount.setAccountPw("123abc!@#");
+		//myAccountList.add(testAccount);
 		
 		for(Account account : myAccountList) {
 			
