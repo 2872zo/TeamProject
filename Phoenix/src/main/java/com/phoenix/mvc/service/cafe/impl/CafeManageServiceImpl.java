@@ -413,11 +413,6 @@ public class CafeManageServiceImpl implements CafeManageService {
 		return cafeManageDao.getCafeName(cafeName);
 	}
 	
-	public int getCafeNoNo(String cafeName) throws Exception{
-
-		return cafeManageDao.getCafeNoNo(cafeName);
-
-	}
 
 
 

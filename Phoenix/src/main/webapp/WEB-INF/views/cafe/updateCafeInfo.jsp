@@ -88,7 +88,7 @@ code {
                                             <label class="col-lg-4 col-form-label" for="val-cafeURL"><h5>카페 URL</h5>
                                             </label>
                                             <div class="col-lg-6">
-                                                <h3>http://localhost:8080/<span style="color:orange">${cafe.cafeURL}</span></h3>
+                                                <h3><span style="color:orange">${cafe.cafeURL}</span></h3>
                                             </div>
                                         </div> <hr>
 

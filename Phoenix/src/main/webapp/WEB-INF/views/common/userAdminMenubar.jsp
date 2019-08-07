@@ -12,7 +12,7 @@
 
 	<ul class="metismenu" id="menu">
 	<br>
-		<c:if test="${user.userRoleCode=='ur101'}">
+		<c:if test="${user.userRoleCode=='ur100'}">
 		<li><a id="statistics"
 			href="javascript:fncUserList()"
 			aria-expanded="false"> <i class="icon-note menu-icon"></i>

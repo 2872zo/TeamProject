@@ -719,7 +719,7 @@ public class CafeManageController {
 		model.addAttribute("cafe", cafe);
 		model.addAttribute("cafeURL", cafe.getCafeURL());
 
-		return "cafe/updateCafeInfoView";
+		return "cafe/updateCafeInfo";
 	}
 
 //준호
@@ -766,7 +766,7 @@ public class CafeManageController {
 
 		model.addAttribute("cafeURL", cafe.getCafeURL());
 
-		return "cafe/updateCafeInfoView";
+		return "cafe/updateCafeInfo";
 	}
 
 // 준호

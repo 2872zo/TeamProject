@@ -18,6 +18,8 @@ public interface UserDao {
 
 	public User getUser(String userId) throws Exception;
 	
+	public User getUserNickname(String userNickname) throws Exception;
+	
 	public User getUserInfo(int userNo) throws Exception;
 
 	public List<User>getUserList(Search search) throws Exception;

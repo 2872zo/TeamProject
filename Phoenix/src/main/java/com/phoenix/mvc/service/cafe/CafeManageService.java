@@ -84,6 +84,5 @@ public boolean dropCafe(Cafe cafe, String cafeURL);
 
 	public Cafe getCafeName(String cafeName) throws Exception;
 	
-	public int getCafeNoNo(String cafeName) throws Exception;
 	/////////////////////////////// 준호끝///////////////////////////////////////
 }
