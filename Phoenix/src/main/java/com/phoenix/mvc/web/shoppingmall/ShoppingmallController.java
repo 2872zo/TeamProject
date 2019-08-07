@@ -67,9 +67,6 @@ public class ShoppingmallController {
 		//살려야함
 		User user = (User)session.getAttribute("user"); //항상 user있음
 		
-		//가짜데이터..
-		//User user = new User();
-		//user.setUserNo(10000);
 		Map<String,Object> returnMap = shoppingmallService.getPurchaseList(user, search);
 		
 		
