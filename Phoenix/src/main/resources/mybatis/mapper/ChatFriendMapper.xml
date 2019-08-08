@@ -76,6 +76,8 @@
 							chat_friends
 							WHERE user_no=#{userNo}
 							)
+		AND
+			user_no != #{userNo}
 
 	</select>
 	
