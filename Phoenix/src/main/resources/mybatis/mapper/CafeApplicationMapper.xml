@@ -61,7 +61,7 @@
 												</if>
 											</if>	
 											</where>
-											ORDER BY application_no ) inner_table
+											ORDER BY c.accept_status_code ) inner_table
 						WHERE ROWNUM &lt;= #{endRowNum} )
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
 	 </select>

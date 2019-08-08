@@ -36,7 +36,19 @@
 										}),
 										success : function(JSONData,status){
 											if (JSONData.result == true){
-												swal("카페 탈퇴 완료","탈퇴 되었습니다.","success");
+												swal({
+													title: "카페 탈퇴 완료",
+													text: "탈퇴 되었습니다.",
+													type: "success",
+													confirmButtonClass: "btn-success",
+													confirmButtonText:"확인",
+													},
+													function(isConfirm){
+														if(isConfirm){
+															location.href = "/cafe/main";
+														}//if
+													}//function
+												);
 											}
 										},
 										error : function(){
@@ -47,8 +59,9 @@
 			    				}
 			    			
 		    				});
-		    			}
-	    	});
+	    				}
+		    		});
+	    	
 	    	
 	    	$(function(){//프로필수정
 	    		

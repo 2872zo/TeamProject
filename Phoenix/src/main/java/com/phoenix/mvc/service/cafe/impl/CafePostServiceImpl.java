@@ -42,7 +42,6 @@ public class CafePostServiceImpl implements CafePostService {
 	public Map<String, Object> getPostListBySearch(Search search) {
 		Map<String, Object> map = new HashMap<String, Object>();
 
-//		map.put("boardList", cafeManageDaoImpl.getBoardList(search.getCafeURL()) );
 		map.put("postList", cafePostDao.getPostListBySearch(search));
 		map.put("postTotalCount", cafePostDao.searchTotalCount(search));
 

@@ -18,7 +18,6 @@ public interface CafeTabService {
 	
 	public boolean checkCafeURLDuplication(String CafeURL) throws Exception;
 	
-	//public CafeGrade getChangeGrade(CafeGrade cafeGrade)throws Exception;
 	///////////////////////////////준호끝///////////////////////////////////////
 	
 	//////////////////////////////기황시작//////////////////////////////

@@ -409,8 +409,8 @@
 									<c:forEach items="${shoppingmallAccountList }" var="account">
 										<div class="alert alert-dark d-flex justify-content-between" role="alert" style="margin-bottom:5px; background-color:rgba(128, 128, 128, 0.15); ">
 											<input type="hidden" name="accountType" class="shoppingmallAccountType" value="${account.accountType}">
-											<span style="margin-top:5px;">${account.accountId }</span>
 											<span style="margin-top:5px;">${account.accountDomain }</span>
+											<span style="margin-top:5px;">${account.accountId }</span>
 											<button type="button" class="btn btn-danger btn-sm deleteAccount">연동해제</button>
 										</div> 	
 									</c:forEach>
@@ -761,7 +761,7 @@
 
 			e.preventDefault();
 			//debugger;
-			alert("쇼핑몰계정 로그인!");
+			//alert("쇼핑몰계정 로그인!");
 
 			var addType =  $("input[name=shoppingmallAcountType]").val();
 			var insertId = $("input[name=shoppingmallAccountId]").val();
@@ -819,7 +819,7 @@
 					dataType : "text",
 					success : function(serverData){
 
-						alert(serverData);
+						//alert(serverData);
 						var data = JSON.parse(serverData);
 
 						if(data.loginResult =='100'){

@@ -13,9 +13,9 @@ import com.phoenix.mvc.service.domain.CafeMemberBlock;
 import com.phoenix.mvc.service.domain.Cafe;
 
 public interface CafeManageService {
-	
+
 /////////////////////////////////기황시작//////////////////////////////
-	
+
 	public Map getCafeMemberList(Search search) throws Exception;
 
 	public CafeMember getCafeMember(Search search) throws Exception;
@@ -27,31 +27,31 @@ public interface CafeManageService {
 	public int updateCafeMemberBlock(CafeMemberBlock cafeMemberBlock) throws Exception;
 
 	public int updateCafeMemeberGrade(CafeMember cafeMember) throws Exception;
-	
+
 	public boolean checkBlockExpired(int memberNo) throws Exception;
-	
+
 	public CafeMemberBlock getLatestBlockReason(int memberNo) throws Exception;
-	
+
 /////////////////////////////////기황끝/////////////////////////////
-	
+
 /////////////////////////////////지니//////////////////////////////
-public Map<String, Object> getCafeApplicationList(Search search);
+	public Map<String, Object> getCafeApplicationList(Search search);
 
-public void updateAcceptStatusCode(CafeApplication cafeApplication);
+	public void updateAcceptStatusCode(CafeApplication cafeApplication);
 
-public CafeApplication getCafeApplication2(int applicationNo);
+	public CafeApplication getCafeApplication2(int applicationNo);
 
-public List getCafeGrade(int cafeNo);
+	public List getCafeGrade(int cafeNo);
 
-public void addCafeGrade(CafeGrade cafeGrade);
+	public void addCafeGrade(CafeGrade cafeGrade);
 
-public void updateCafeGrade(CafeGrade cafeGrade);
+	public void updateCafeGrade(CafeGrade cafeGrade);
 
-public List checkCafeGrade(int cafeNo);
+	public List checkCafeGrade(int cafeNo);
 
-public boolean dropCafe(Cafe cafe, String cafeURL);
+	public boolean dropCafe(Cafe cafe, String cafeURL);
 
-
+	public CafeApplication getCafeApplicationForMember(Search search);
 
 ////////////////////////////////지니끝//////////////////////////////////
 
@@ -65,13 +65,13 @@ public boolean dropCafe(Cafe cafe, String cafeURL);
 	public boolean addCafeBoard(List<Board> newBoard);
 
 	public boolean updateCafeBoard(List<Board> existBoard);
-	
+
 	public List getCafeGrade(String cafeURL);
-	
+
 	public Cafe getCafeInfo(String cafeURL) throws Exception;
-	
+
 	public List getCafeMemberAutocomplete(String cafeURL) throws Exception;
-	
+
 	public boolean checkAttendance(CafeMember cafeMember, Event event) throws Exception;
 /////////////////////////////예림끝///////////////////////////////////////////
 
@@ -83,7 +83,6 @@ public boolean dropCafe(Cafe cafe, String cafeURL);
 	public void updateCafeApplicationForm(Cafe cafe) throws Exception;
 
 	public Cafe getCafeName(String cafeName) throws Exception;
-	
-	public int getCafeNoNo(String cafeName) throws Exception;
+
 	/////////////////////////////// 준호끝///////////////////////////////////////
 }

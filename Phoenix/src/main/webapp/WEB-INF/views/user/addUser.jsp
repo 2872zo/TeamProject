@@ -37,7 +37,7 @@
 <!--*******************
         Preloader start
     ********************-->
-	<div id="preloader" style="display: none;">
+	<div id="preloader">
 		<div class="loader">
 			<svg class="circular" viewBox="25 25 50 50">
                 <circle class="path" cx="50" cy="50" r="20" fill="none"
@@ -65,20 +65,20 @@
 		<!--**********************************
             Content body start
         ***********************************-->
-<div class="content-body" style="min-height: 743px;">
+<div class="content-body " style="min-height: 743px;">
 
 
 
-		<div class="container-fluid">
+		<div class="container-fluid ">
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="card">
 						<div class="card-body">			
 							<h2 class="text-center">회원가입</h2>
 							<hr style="border: solid 1px gray;">		
-								<div class="basic-form">			
+								<div class="basic-form " >			
 								<br>
-									<form id="adduser">
+									<form id="addusers">
 
 								<input type="hidden" name="userNo" value="${user.userNo }"/>
 
@@ -131,10 +131,13 @@
                                     
                                         <hr>
                                         <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="userNickname1"><h5>닉네임<span class="text-danger">*</span></h5>
+                                            <label class="col-lg-4 col-form-label" for="usernickname"><h5>닉네임<span class="text-danger">*</span></h5>
                                              </label>
                                             <div class="col-lg-6">
-                                             <input type="text" class="form-control" id="userNickname1" name="userNickname">
+                                             <input type="text" class="form-control" id="usernickname" name="userNickname">
+                                                <span id="nick"> <strong>닉네임을 입력해주세요</strong>
+													</span>
+                                             
                                             </div>
                                        	   </div><hr>
       	
@@ -142,7 +145,7 @@
                                             <label class="col-lg-4 col-form-label" for="phone1"><h5>전화번호 <span class="text-danger">*</span></h5>
                                             </label>
                                             <div class="col-lg-6">
-                                            	<input type="text" class="form-control" id="phone1" name="phone" placeholder="-없이 숫자만 입력하세요"><button type="button" class="btn btn-primary">전송</button>                                               
+                                            	<input type="text" class="form-control" id="phone1" name="phone" placeholder="-없이 숫자만 입력하세요"><button type="button" class="btn btn-primary" id="click">전송</button>                                               
                                             	</div>
                                        		   </div>
                                        		   <div class="form-group">
@@ -363,6 +366,42 @@
 	}
 
 	$(function() {
+
+		$("#add").on("click", function() {
+
+				var inputed = $("input[id='usernickname']").val();
+				// alert("입력  : "+inputed);
+
+					$.ajax({
+							url : "/cafe/json/checkUserNicknameDuplication",
+							method : "POST",
+							dataType : "json",
+							headers : {
+										"Accept" : "application/json",
+										"Content-Type" : "application/json"
+								},
+							data : JSON.stringify({
+							userNickname : inputed,
+							}),
+
+							success : function(JSONData) {
+							//alert(JSONData); 
+							//alert(typeof(JSONData));								
+								if(JSONData == false){
+									
+									sweetAlert("닉네임이 중복되었습니다.","","error");
+									
+									return false;
+								}else{
+									$("#addusers").attr("method", "POST").attr("action","/user/addUser").attr("enctype","multipart/form-data").submit();
+									}				
+						}
+					});
+				});
+			});
+	
+
+	$(function() {
 		  
 	  	
  		var rand = "";
@@ -421,6 +460,7 @@
 				phone.readOnly = true;
 				$("#pij").hide();
 			   	cch = 1;
+			   	$("#click").hide();
 			   	//alert(cch);
 				
 		   } else { 
@@ -493,6 +533,63 @@
 												$("#check").children("strong")
 														.remove();
 												$("#check")
+														.append(
+																"<strong class=\"text-muted\">아이디를 입력해주세요.</strong>");
+	
+											}											
+										}
+									});
+		  						  });
+								});
+	
+	$(function() {
+
+		$("input[id='usernickname']").on('keyup',function() {
+					
+							inputed = $("input[id='usernickname']").val();
+							//alert("입력  : "+inputed);
+
+									$.ajax({
+										url : "/user/json/checkUserNicknameDuplication",
+										method : "POST",
+										dataType : "json",
+										headers : {
+											"Accept" : "application/json",
+											"Content-Type" : "application/json"
+										},
+										data : JSON.stringify({
+											userNickname : inputed,
+										}),
+
+										success : function(JSONData) {
+											//alert(JSONData); 
+											//alert(typeof(JSONData));
+
+											if (JSONData && inputed != "") {
+												$("#nick").children("strong")
+														.remove();
+												$("#nick")
+														.append(
+																"<strong class=\"text-success\">사용 가능합니다.</strong>");	
+																							
+											}else {
+												$("#nick").children("strong")
+														.remove();
+												$("#nick")
+														.append(
+																"<strong  class=\"text-danger\">사용 불가능합니다.</strong>");
+											}
+											if ((inputed < "0" || inputed > "9") && (inputed < "A" || inputed > "Z") && (inputed < "a" || inputed > "z")) {
+												$("#nick").children("strong")
+														.remove();
+												$("#nick")
+														.append(
+																"<strong class=\"text-danger\">사용 불가능합니다.</strong>");
+											}
+											if (inputed == "") {
+												$("#nick").children("strong")
+														.remove();
+												$("#nick")
 														.append(
 																"<strong class=\"text-muted\">아이디를 입력해주세요.</strong>");
 	

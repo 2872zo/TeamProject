@@ -69,6 +69,18 @@ public class UserServiceImpl implements UserService{
 		}
 		return result;
 	}
+
+	public boolean checkUserNicknameDuplication(String userNickname) throws Exception {
+		
+		boolean result=true;
+		
+		User user = userDao.getUserNickname(userNickname);
+		
+		if(user != null) {
+			result=false;
+		}
+		return result;
+	}
 	
 	public boolean checkUserPwDuplication(String userId) throws Exception {
 		

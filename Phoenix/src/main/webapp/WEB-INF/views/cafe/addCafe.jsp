@@ -94,7 +94,7 @@
                                             <label class="col-lg-2 col-form-label" for="val-username"><h5>카페주소 <span class="text-danger">*</span></h5>
                                             </label>
                                             <div class="col-lg-2">
-                                            <h4>http://localhost:8080/</h4>
+                                            
                                             </div>
                                             <div class="col-lg-6">
                                                 <input type="text" class="form-control" id="val-username" name="cafeURL">
@@ -254,8 +254,7 @@
 				}				
 			}
 		});//ajax
-        }else{								
-					//$("form").attr("method", "POST").attr("action","/cafe/addCafe").submit();				
+        }else{							
 					$("#addCafe").attr("method", "POST").attr("action","/cafe/addCafe").submit();						
 				}							
 			}

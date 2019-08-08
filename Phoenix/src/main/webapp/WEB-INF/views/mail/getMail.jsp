@@ -232,13 +232,13 @@
                                         
                                         
                                         <!-- 빠른 답장 기능을 위한 textarea -->
-                                        <div class="form-group p-t-15">
-                                            <textarea class="w-100 p-20 l-border-1" name="" id="" cols="30" rows="5" placeholder="빠른 답장"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="text-right">
-                                        <button class="btn btn-primaryw-md m-b-30" type="button">Send</button>
-                                    </div>
+<!--                                         <div class="form-group p-t-15"> -->
+<!--                                             <textarea class="w-100 p-20 l-border-1" name="" id="" cols="30" rows="5" placeholder="빠른 답장"></textarea> -->
+<!--                                         </div> -->
+<!--                                     </div> -->
+<!--                                     <div class="text-right"> -->
+<!--                                         <button class="btn btn-primaryw-md m-b-30" type="button">Send</button> -->
+<!--                                     </div> -->
                                     <!-- 빠른 답장 기능 끝 -->
 							
 							</div>

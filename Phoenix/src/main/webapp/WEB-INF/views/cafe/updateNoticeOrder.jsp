@@ -206,13 +206,6 @@
 						url : "/cafe/" + cafeURL + "/json/updateNoticeOrder",
 						dataType : "JSON",
 						data: JSON.stringify(jsonData),
-						xhr: function() {
-					        var xhr = $.ajaxSettings.xhr();
-					        xhr.upload.onprogress = function(e) {
-					            console.log(Math.floor(e.loaded / e.total *100) + '%');
-					        };
-					        return xhr;
-					    },
 						success : function(data) {
 							swal("공지 순서 저장 성공","","success");
 							console.log(data);

@@ -93,8 +93,8 @@
 											value="${search.status }" />
 										<div class="form-group">
 											<select class="form-control" name="searchCondition">
-												<option value="0">별명</option>
-												<option value="1">userId</option>
+												<option value="0">카페별명</option>
+												<option value="1">아이디</option>
 
 											</select>
 										</div>
@@ -105,18 +105,21 @@
 										</div>
 										&nbsp;&nbsp;
 										<button type="button" id="search"class="btn btn-outline-success">검색</button>
-										<input type="hidden" id="currentPage" name="currentPage"value="" /> &nbsp;&nbsp; 필터: &nbsp;&nbsp;
-										<button type="button" value="100" id="ing"class="btn mb-1 btn-outline-warning btn-xs">처리중</button>
+										<input type="hidden" id="currentPage" name="currentPage"value="" /> 
 										&nbsp;&nbsp;&nbsp;
-										<button type="button" value="101" id="end"class="btn mb-1 btn-outline-warning btn-xs">처리완료</button>
-
+										<button type="button" id="accept"class="btn btn-outline-secondary">가입승인</button>
+										&nbsp;&nbsp;&nbsp;
+										<button type="button" id="reject"class="btn btn-outline-secondary">가입거절</button>
+										
+										
 									</form>
 								</div>
 								<br> &nbsp;&nbsp;&nbsp;
-								<button type="button" id="accept"class="btn btn-outline-secondary">가입승인</button>
-								&nbsp;&nbsp;&nbsp;
-								<button type="button" id="reject"class="btn btn-outline-secondary">가입거절</button>
-
+								
+								
+								<button type="button" value="100" id="ing"class="btn mb-1 btn-outline-warning btn-xs">처리중</button>
+										&nbsp;&nbsp;
+								<button type="button" value="101" id="end"class="btn mb-1 btn-outline-warning btn-xs">처리완료</button>
 
 								<br> <br>
 
@@ -138,13 +141,24 @@
 											<th align="left">처리결과</th>
 										</tr>
 									</thead>
+									
+									
 
 									<tbody>
-
+									
+									<c:if test="${empty list }">
+									<thead class="thead-light">
+										<tr>
+											<td colspan="6" align="center">가입신청 내역이 없습니다.</td>
+										
+										</tr>
+									</c:if>
+									
 										<c:set var="i" value="0" />
 										<c:forEach var="cafeApplication" items="${list}">
 										
 											<tr>
+										
 											<c:if test="${cafeApplication.acceptStatusCode eq 'ca100' }">
 												<td><input type="checkbox" name ="each" class="applicationCheck" ></td>
 											</c:if>	
