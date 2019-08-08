@@ -106,9 +106,9 @@
 										&nbsp;&nbsp;
 										<button type="button" id="search"class="btn btn-outline-success">검색</button>
 										<input type="hidden" id="currentPage" name="currentPage"value="" /> 
-										&nbsp;&nbsp;&nbsp;
+										&nbsp;&nbsp;
 										<button type="button" id="accept"class="btn btn-outline-secondary">가입승인</button>
-										&nbsp;&nbsp;&nbsp;
+										&nbsp;&nbsp;
 										<button type="button" id="reject"class="btn btn-outline-secondary">가입거절</button>
 										
 										
@@ -164,13 +164,12 @@
 											</c:if>	
 											<c:if test="${cafeApplication.acceptStatusCode ne 'ca100' }">
 												<td><input type="checkbox"  class="applicationCheck" disabled="disabled"></td>
-											</c:if>	
-												<input type="hidden" class = "applicationNo" value="${cafeApplication.applicationNo}">
+											</c:if>
 												
 												<td align="left" class = "userId">${cafeApplication.userId}
 													<input type="hidden" class = "applicationNo" value="${cafeApplication.applicationNo}">
 												</td>
-												<td align="left" class="nickname"value="${cafeApplication.memberNickname}">${cafeApplication.memberNickname}</td>
+												<td align="left" class="nickname" value="${cafeApplication.memberNickname}">${cafeApplication.memberNickname}</td>
 												<td align="left">${cafeApplication.regDate}</td>
 												<td align="left">
 												<c:if test="${cafeApplication.acceptStatusCode eq 'ca100' }">가입대기</c:if>
@@ -247,8 +246,11 @@
 		$(function() {
 
 			$("#search").on("click", function() {
-				//alert("검색");
-				fncGetList(1);
+				var searchKeyword = $("#searchKeyword").val();
+				//alert(searchKeyword)
+				if(searchKeyword!="" && searchKeyword !=null){
+					fncGetList(1);
+				}
 			});
 		});//검색
 
@@ -278,9 +280,7 @@
 			$("#accept").on("click",function() {//승인
 						var application = "";
 						var num = $('#allCheck:checked').length;
-						//alert(num)
-						
-						
+					
 						if(num>0){
 								//alert("1")
 							$("input[type=checkbox]:checked").not("input[type=checkbox]:first").each(
@@ -324,8 +324,9 @@
 						//alert(application);
 						var cafeURL = '${search.cafeURL}'
 						$("#boardName").val(application);
+						if(application!=""){
 						$("#checkBox").attr("method", "POST").attr("action","/cafe/" + cafeURL+ "/manage/updateCafeApplication").submit();
-
+						}
 					});
 
 			$("#reject").on(
@@ -333,6 +334,7 @@
 					function() {//거절
 						var reject = '';
 						var num = $('#allCheck:checked').length;
+						
 						if(num>0){
 							$("input[type=checkbox]:checked").not("input[type=checkbox]:first").each(function() {
 								var count = $(".applicationCheck").index(this);
@@ -343,7 +345,7 @@
 						}else if(num==0){
 							$("input[type=checkbox]:checked").each(function() {
 								var count = $(".applicationCheck").index(this);
-								reject += $($(".applicationNo")[count]).text();
+								reject += $($(".applicationNo")[count]).val();
 								reject += ",";
 
 							});
@@ -351,8 +353,9 @@
 						//alert(reject);
 						var cafeURL = '${search.cafeURL}'
 						$("#boardName").val(reject);
+						if(reject!=""){
 						$("#checkBox").attr("method", "POST").attr("action","/cafe/" + cafeURL+ "/manage/updateCafeApplication").submit();
-
+						}
 					});//거절
 
 		});//끝

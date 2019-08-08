@@ -116,6 +116,8 @@
 	<script src="/js/settings.js"></script>
 	<script src="/js/gleek.js"></script>
 	<script src="/js/styleSwitcher.js"></script>
+	<script src="/plugins/sweetalert/js/sweetalert.min.js"></script>
+	<script src="/plugins/sweetalert/js/sweetalert.init.js"></script>
 
 	<!-- 메뉴바 이용을 위한 스크립트 -->
 	<script src="/js/custom/scroll-top.js"></script>
@@ -126,10 +128,16 @@
 			$("button[name=button]").on(
 					"click",
 					function() {
+						var reason = $("#comment").val();
+						//alert(reason)
 						//alert($(".cafeNo").val())
 						//alert('${cafe.cafeURL}')
-
-						$("form").attr("method", "POST").attr("action","/cafe/" + '${cafe.cafeURL}'+ "/manage/dropCafe").submit();
+						
+						if(reason !="" $$ reason != null){
+							$("form").attr("method", "POST").attr("action","/cafe/" + '${cafe.cafeURL}'+ "/manage/dropCafe").submit();
+						}else{
+							swal("폐쇄 이유를 입력해주세요.", "", "warning")
+						}
 					});
 		});
 	</script>
