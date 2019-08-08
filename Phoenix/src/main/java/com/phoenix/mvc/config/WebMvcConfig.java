@@ -28,6 +28,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	@Autowired
 	@Qualifier(value = "userInterceptor")
 	private HandlerInterceptor userInterceptor;
+	
+	@Autowired
+	@Qualifier(value = "snsInterceptor")
+	private HandlerInterceptor snsInterceptor;
 		
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -59,6 +63,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/user/oauth")
                 .excludePathPatterns("/user/callback")
                 .excludePathPatterns("/user/json/add*Account");
+        
+        registry.addInterceptor(snsInterceptor)
+				.addPathPatterns("/sns/getTimeLine");
         
     }
     

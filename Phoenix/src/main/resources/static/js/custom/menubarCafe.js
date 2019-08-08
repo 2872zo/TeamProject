@@ -67,9 +67,9 @@
 	    		
 	    		$(".updateProfile").on("click",function(){
 // 	    			alert("여기")
-	    			var x =  (document.body.offsetWidth / 2) - (500 / 2);
-	    			var y =  (document.body.offsetHeight / 2) - (400);
-	    			window.open("/cafe/" + cafeURL + "/updateCafeMemberProfileView?memberNo="+memberNo,"_blank","width=500,height=600, left="+ x + ", top="+ y,"location=no");
+	    			var x =  600;
+	    			var y =  100;
+	    			window.open("/cafe/" + cafeURL + "/updateCafeMemberProfileView?memberNo="+memberNo,"_blank","width=400,height=600, left="+ x + ", top="+ y,"location=no");
 	    			});
 	    		
 	    		});
