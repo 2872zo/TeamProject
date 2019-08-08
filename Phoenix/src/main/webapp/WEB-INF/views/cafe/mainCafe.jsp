@@ -127,7 +127,7 @@
                             	   	</div>
                             	   </c:if>
                             	   <c:if test="${!empty cafe.mainImg}"> <!-- 대문있을경우 -->
-                                   	 	<img class="mr-3" src="/images/uploadfiles/mainImg/${cafe.mainImg}" width="910" height="auto" alt="">
+                                   	 	<img src="/images/uploadfiles/mainImg/${cafe.mainImg}" width="100%" height="auto" alt="">
                             	   </c:if>
                             	   
                            </div>
@@ -147,6 +147,16 @@
                                        	   </tr>
                                        </thead>
                                        <tbody>
+                                       	   
+										   <c:if test="${empty noticePostList }" >
+										   		<tr></tr>
+										   		<tr>
+										   			<td colspan="4" style="text-align: center; font-size: 20px; height: 80px;">
+										   				<b>게시글이 없습니다.</b>
+										   			</td>
+										   		</tr>
+										   </c:if>
+                                       
                                        	   <c:forEach var="post" items="${noticePostList}" > <!-- 링크이어야함 -->
 												<tr>
 													<input type="hidden" class="postNo" value="${post.postNo }">

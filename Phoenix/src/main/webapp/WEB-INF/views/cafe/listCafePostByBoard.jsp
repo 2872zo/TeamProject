@@ -148,7 +148,7 @@
 								<form id="boardPage">
 									<input type="hidden" name="currentPage">
 								</form>
-								<p>총 ${postTotalCount }개 중 ${search.startRowNum} - ${search.endRowNum }</p>
+								<p>총 ${postTotalCount }개 중 ${search.startRowNum} - <c:if test="${postTotalCount gt search.endRowNum }">${search.endRowNum }</c:if><c:if test="${postTotalCount le search.endRowNum }">${postTotalCount }</c:if></p>
 								<table class="table header-border">
 									<thead class="thead-light">
 										<tr>
@@ -358,7 +358,13 @@
 
 						var url = "/cafe/${cafeURL}/movePost/${search.boardNo}?targetPostList=" + targetPostList;
 			            var name = "게시글 이동";
-			            var option = "width = 280, height = 135, top = 100, left = 200, location = no"
+			            //팝업창 중앙 정렬
+			            var top = Math.ceil((window.screen.height - 135)/2);
+			            var left = Math.ceil((window.screen.width - 280)/2);
+
+						console.log(top, left);
+			            
+			            var option = "status = no, width = 280, height = 135, top = " + top + ", left=" + left;
 			            openWin = window.open(url, name, option);
 			            $("#targetPostList").val(targetPostList);
 					}

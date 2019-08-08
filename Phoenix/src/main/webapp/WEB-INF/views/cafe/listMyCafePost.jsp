@@ -158,7 +158,6 @@ checkbox
 												<form id="boardPage">
 													<input type="hidden" name="currentPage">
 												</form>
-												<p>총 ${postTotalCount }개 중 ${search.startRowNum} - ${search.endRowNum }</p>
 												<table class="table header-border">
 													<thead class="thead-light">
 														<tr>
@@ -259,7 +258,6 @@ checkbox
 												<form id="boardPage">
 													<input type="hidden" name="currentPage">
 												</form>
-												<p>총 ${postTotalCount }개 중 ${search.startRowNum} - ${search.endRowNum }</p>
 												<table class="table header-border">
 													<thead class="thead-light">
 														<tr>

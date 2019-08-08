@@ -72,12 +72,6 @@
 					                <div class="d-sm-flex justify-content-between mb-2">
 					                    <h5 class="mb-sm-0">${bestReply.memberNickname } <small class="text-muted ml-3">${bestReply.regDate }</small></h5>
 					                    
-					                    <!-- 아이콘 부분 -->
-					                    <div class="media-reply__link">
-											<i class="mdi mdi-alert" name="addReport"></i>
-					                    </div>
-					                    <!-- 아이콘 끝 -->
-					                    
 					                </div>
 					                
 					                <div style="color:black; overflow:hidden;" class="replyContent flex-row">
@@ -129,12 +123,11 @@
 						                    
 						                    <!-- 아이콘 부분 -->
 						                    <div class="media-reply__link">
-						                    	<c:if test="${cafeMember.memberNo eq reply.memberNo or cafeMember.memberGrade eq 'cg100' or cafeMember.memberGrade eq 'cg101'}">
+						                    	<c:if test="${cafeMember.memberNo eq reply.memberNo or cafeMember.memberGrade eq 'cg100' or cafeMember.memberGrade eq 'cg101' or user.userRoleCode eq 'ur100'}">
 													<i class="mdi mdi-border-color" name="updateReplyButton" style="position: relative; top:3px;"></i>
 													<i class="mdi mdi-delete" name="deleteReplyButton"></i>
 												</c:if>
 												<i class="mdi mdi-reply" name="addReReplyForm"></i>
-												<i class="mdi mdi-alert" name="addReport"></i>
 						                    </div>
 						                    <!-- 아이콘 끝 -->
 						                    
@@ -158,7 +151,6 @@
 											<input type="hidden" name="postNo" value="${reply.postNo }">
 											<input type="hidden" name="targetReplyNo" value="${reply.replyNo }">
 											<input type="hidden" name="targetReplyMember" value="${reply.memberNickname }">
-											<input type="hidden" name="postNo" value="${reply.postNo }">
 											<input type="hidden" name="currentPage" value="${search.currentPage }">
 										</form>
 						            </div>
@@ -184,12 +176,11 @@
 							                    
 							                    <!-- 아이콘 부분 -->
 							                    <div class="media-reply__link">
-													<c:if test="${cafeMember.memberNo eq reReply.memberNo }">
+													<c:if test="${cafeMember.memberNo eq reply.memberNo or cafeMember.memberGrade eq 'cg100' or cafeMember.memberGrade eq 'cg101' or user.userRoleCode eq 'ur100'}">
 														<i class="mdi mdi-border-color" name="updateReplyButton" style="position: relative; top:3px;"></i>
 														<i class="mdi mdi-delete" name="deleteReplyButton"></i>
 													</c:if>
 													<i class="mdi mdi-reply" name="addReReplyForm"></i>
-													<i class="mdi mdi-alert" name="addReport"></i>
 							                    </div>
 							                    <!-- 아이콘 끝 -->
 							                    
@@ -212,7 +203,6 @@
 												<input type="hidden" name="postNo" value="${reReply.postNo }">
 												<input type="hidden" name="targetReplyNo" value="${reReply.targetReplyNo }">
 												<input type="hidden" name="targetReplyMember" value="${reReply.memberNickname }">
-												<input type="hidden" name="postNo" value="${reReply.postNo }">
 												<input type="hidden" name="currentPage" value="${search.currentPage }">
 											</form>
 							            </div>
@@ -240,7 +230,7 @@
 		<div class="input-group">
 			<div class="wrap form-control" >
 				<textarea class="form-control" name="addReplyContent"  maxlength="300"></textarea>
-			    <span class="counter">###</span>
+			    <span class="counter">0/300</span>
 			</div>
 			
 			<div class="input-group-append">

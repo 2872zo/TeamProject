@@ -51,10 +51,6 @@
 
 					opener.document.body.appendChild(tmpForm);
 					tmpForm.submit();
-					
-// 					opener.document.getElementById("targetPostList").value = $("#targetPostList").val();
-// 					opener.document.getElementById("targetBoardNo").value = $("#targetBoardNo").val();
-// 					$(opener.document.forms.movePostData).attr("method", "POST").attr("action", "/cafe/${cafeURL}/movePost").submit();
 
 					debugger;
 					self.close();
@@ -77,15 +73,15 @@
 	                <h4>게시글 이동</h1>
 	        </div>
 	        <div id="content" style="text-align: center; margin-top:10px; margin-bottom:10px;">
-	                <input type="hidden" id="targetPostList" name="targetPostList">
-	                <span>게시판 선택</span>
-					<select name="targetBoardNo" id="targetBoardNo">
-						<c:forEach items="${boardList }" var="board">
-							<c:if test="${board.boardType != 'cb102' }">
-								<option value="${board.boardNo }">${board.boardName }</option>
-							</c:if>
-						</c:forEach>
-					</select>
+                <input type="hidden" id="targetPostList" name="targetPostList">
+                <span>게시판 선택</span>
+				<select name="targetBoardNo" id="targetBoardNo">
+					<c:forEach items="${boardList }" var="board">
+						<c:if test="${board.boardType != 'cb102' }">
+							<option value="${board.boardNo }">${board.boardName }</option>
+						</c:if>
+					</c:forEach>
+				</select>
 	        </div>
 			<div style="text-align: center; margin-top:10px; margin-bottom:10px;">
 				<button id="movePost">이동</button>

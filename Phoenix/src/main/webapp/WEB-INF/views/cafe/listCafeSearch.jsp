@@ -155,6 +155,10 @@
       <div class="card-body">
         <h5 class="card-title">${cafe.cafeName}</h5>
         <p class="card-text">${cafe.cafeDetail}</p>
+        <p class="card-text">
+		<i class="mdi mdi-account-multiple-outline" style='font-size: 15pt;'></i>
+		${cafe.members}
+		</p>
         <p class="card-text"><small class="text-muted">${cafe.regDate}</small></p>
       </div>
     </div>

@@ -75,7 +75,9 @@
 	총 ${totalCount} 건 
 
 	
-
+<c:if test="${empty applicationList}">
+<div class='d-flex justify-content-center'><h3>카페 가입신청 내역이 없습니다.</h3></div>
+</c:if>
 	
 	<c:if test="${!empty applicationList}">
 
@@ -93,7 +95,7 @@
 	<c:forEach var="cafeApplication" items="${applicationList}">
 	<tr>
 	 <th scope="row" style='width:50%;'>
-		 <div class="row" style='border: 1px solid black;'>
+		 <div class="row" >
 		 <div class="col-lg-4">
 		 <img src="/images/common/700by700.png" class="card-img" alt="..."
 		style=" width:50%; border:thin; border-color=red; 

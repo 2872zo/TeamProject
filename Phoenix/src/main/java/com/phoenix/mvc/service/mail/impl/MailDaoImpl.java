@@ -734,16 +734,22 @@ public class MailDaoImpl implements MailDao {
 				
 				int folderSize = ((IMAPAgent) map.get("mailAgent")).getMessageCount();
 				
-				if(folderSize < (int)map.get("idx")) {
-					exitOuterLoop = true;
-					break;
-				}
-				
-				Message currentMessage = ((IMAPAgent) map.get("mailAgent")).getMessage(folderSize - (int) map.get("idx") + 1);
-
-				if (recentMessage == null || recentMessage.getSentDate().compareTo(currentMessage.getSentDate()) < 0) {
-					recentMessage = currentMessage;
-					getMessageIdx = j;
+				//계정의 폴더사이즈를 넘는지 체크해줌
+				if(folderSize >= (int) map.get("idx")) {
+					System.out.println("폴더사이즈 안넘음");
+					
+					//폴더의 메일 개수와 현재 index가 같다면 리스트가 1부터 시작하므로 1을 더해줌
+					if(folderSize == (int) map.get("idx")) {
+						folderSize++;
+					}
+					Message currentMessage = ((IMAPAgent) map.get("mailAgent")).getMessage(folderSize - (int) map.get("idx"));
+					
+					if (recentMessage == null || recentMessage.getSentDate().compareTo(currentMessage.getSentDate()) < 0) {
+						recentMessage = currentMessage;
+						getMessageIdx = j;
+					}
+				}else {
+					System.out.println("사이즈 넘음");
 				}
 			}
 			
@@ -1028,9 +1034,17 @@ public class MailDaoImpl implements MailDao {
 		
 		for(Account account : accountList) {
 			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("mailAgent",new IMAPAgent("imap." + account.getAccountDomain(), account.getAccountId(), account.getAccountPw()));
+			String folder = null;
+			
+			if(account.getAccountDomain().contains("gmail")) {
+				folder = "[Gmail]/휴지통";
+			} else {
+				folder = "Deleted Messages";
+			}
+			
+			map.put("mailAgent",new IMAPAgent("imap." + account.getAccountDomain(), account.getAccountId(), account.getAccountPw(), folder));
 			map.put("account", account);
-			((IMAPAgent)map.get("mailAgent")).open();
+			((IMAPAgent)map.get("mailAgent")).openFolder();
 			
 			mailAgentList.add(map);
 		}
@@ -1049,6 +1063,8 @@ public class MailDaoImpl implements MailDao {
 				mailAgent.setDeleteMail(Integer.parseInt((String) mailInfo.get("mailNo")));
 			}
 		}
+		
+		
 		
 		
 		return true;
@@ -1295,14 +1311,21 @@ public class MailDaoImpl implements MailDao {
 						
 						System.out.println("multipart 본문 : " + body);
 						
-						if(body.contains("cid")) {
+						System.out.println("content Counter : " + ((MimeMultipart) obj).getCount());
+						
+						for(int j = 1; j < ((MimeMultipart) obj).getCount(); j++) {
+							MimeBodyPart contentBp = (MimeBodyPart)((MimeMultipart) obj).getBodyPart(j);
 							
-							String cid = body.substring(body.indexOf("cid"), body.indexOf("\"", body.indexOf("cid")+1));
-							System.out.println("cid : " + cid);
-							System.out.println(cid.substring(4));
-							System.out.println("cid 판별 : " + multiPart.getBodyPart(cid.substring(4))); 
+							System.out.println(j + "번째 ContentType : " + contentBp.getContentType());
+							String fileName = contentBp.getHeader("Content-ID")[0].substring(1, contentBp.getHeader("Content-ID")[0].length() - 1);
+							System.out.println("FileName : " + fileName);
 							
-//							body.replace("cid", ))
+							File file = new File(tmpUploadDir + "/" + fileName);
+							
+							// 현재 Part의 정보를 파일에 저장
+							contentBp.saveFile(file);
+							
+							body = body.replace("cid:", "/tmpfiles/");
 						}
 						
 						mail.setContent(body);
