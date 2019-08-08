@@ -107,7 +107,6 @@
 				<div class="col-lg-12">
 					<div class="card">
 						<div class="card-body">
-							<h4 class="card-title">${search.boardName }</h4>
 							<div class="table-responsive">
 								<form id="boardPage">
 									<input type="hidden" name="currentPage">
@@ -146,6 +145,18 @@
 														</a>
 													</c:if>
 												</td>
+												<td>
+													<c:if test="${mail.flag}">
+														<a class="importantFlag" onclick="event.cancelBubble = true;">
+															<i class="mdi mdi-star"></i>
+														</a>
+													</c:if>
+													<c:if test="${!mail.flag}">
+														<a class="importantFlag" onclick="event.cancelBubble = true;">
+															<i class="mdi mdi-star-outline"></i>
+														</a>
+													</c:if>
+												</td>
 												<td>${mail.folder.fullName }</td>
 												<td>${mail.sender }&nbsp;<xmp>${mail.senderAddr }</xmp></td>
 												<td>${mail.subject }</td>
@@ -156,7 +167,7 @@
 										</c:forEach>
 										
 										<tr>
-											<td colspan="6">
+											<td colspan="8">
 												<c:import url="/WEB-INF/views/common/pageNavigator.jsp">
 													<c:param name="subject" value="SentMail"/>		
 												</c:import>

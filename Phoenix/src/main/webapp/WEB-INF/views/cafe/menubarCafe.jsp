@@ -4,7 +4,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-	
+	<style>
+	.card-profile__info{
+		background: white !important;
+	}
+	</style>
 	<div class="nk-nav-scroll">
 		<ul class="metismenu" id="menu">
 		<li>
@@ -51,7 +55,7 @@
 	                                    
 	                                </ul>
 	                                <c:if test="${empty cafeMember && cafeApplication.acceptStatusCode ne 'ca100' }">
-										<div class="media align-items-center mb-4" style= "margin:auto;">
+										<div class="media mb-4" style="margin-left: 47px;">
 											<button class="btn mb-1 btn-rounded btn-outline-dark addMember">카페가입</button>
 										</div>
 									</c:if>
@@ -82,7 +86,7 @@
                                 </c:if>
 													        
 								<c:if test="${empty cafeMember && cafeApplication.acceptStatusCode ne 'ca100'}">
-									<div class="media align-items-center mb-4">
+									<div class="media mb-4"  style="margin-left: 47px;">
 										<button class="btn mb-1 btn-rounded btn-outline-dark addMember">카페가입</button>
 									</div>
 								</c:if>
@@ -110,13 +114,19 @@
 			</span>
 		</li>
 			
-			
-			
 			<c:forEach var="board" items="${boardList}">
 				<li style="text-align: center;">
 					<c:if test="${board.boardType != 'cb102'}">
 		         		<a href="javascript:fncGetBoardPostList('${board.boardNo}','${cafeURL }')" aria-expanded="false">
-			            	<i class="icon-note menu-icon"></i>
+		         			<c:if test="${board.boardType == 'cb100' }">
+		         				<i class="mdi mdi-bell-outline" style="font-size:19px;"></i>
+		         			</c:if>
+		         			<c:if test="${board.boardType == 'cb101' }">
+		         				<i class="mdi mdi-alert" style="font-size:19px;"></i>
+		         			</c:if>
+		         			<c:if test="${board.boardType != 'cb100' and board.boardType != 'cb101'}">
+		         				<i class="icon-note menu-icon"></i>
+		         			</c:if>
 			            	<span class="nav-text">
 								${board.boardName}
 							</span>
@@ -128,11 +138,10 @@
 		         		</a>
 		         	</c:if>
 			     </li>
-			
 			</c:forEach>
 
 			
-			<c:if test="${!empty cafeMember.memberNo && user.userNo!= cafe.manageUserNo }">
+			<c:if test="${!empty cafeMember && user.userNo != cafe.manageUserNo }">
 				<!-- /# column -->
 				<li>
 					<span class="nav-text">
@@ -140,7 +149,7 @@
 			                <div class="card-body">
 			                    <div class="card-content">
 			                        <div class="sweetalert m-t-30" style="text-align: center;">
-			                            <button class="btn btn-primary sweet-withdraw">카페 탈퇴</button>
+			                            <button class="btn btn-primary sweet-withdraw" id="deleteCafeMember">카페 탈퇴</button>
 			                        </div>
 			                    </div>
 			                </div>
