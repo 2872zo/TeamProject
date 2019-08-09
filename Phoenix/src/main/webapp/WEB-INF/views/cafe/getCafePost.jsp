@@ -138,7 +138,7 @@
 			<div class="row page-titles mx-0" style="margin:0px;">
                 <div class="col p-md-0">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item">${cafeURL }</li>
+                        <li class="breadcrumb-item">${cafe.cafeName }</li>
                         <li class="breadcrumb-item active">${post.boardName }</li>
                     </ol>
                 </div>
@@ -265,7 +265,7 @@
 				var tmpForm = document.createElement("form");
 				tmpForm.setAttribute("charset", "UTF-8");
 				tmpForm.setAttribute("method", "Post");
-				tmpForm.setAttribute("action", "/cafe/${cafeURL}/getPostByMember");
+				tmpForm.setAttribute("action", "/cafe/${cafeURL}/getPostListByMember");
 
 				var tmpInputCafeURL = document.createElement("input");
 				tmpInputCafeURL.setAttribute("type", "hidden");

@@ -70,9 +70,9 @@
 			<div class="row page-titles mx-0">
 				<div class="col p-md-0">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="javascript:void(0)">manage</a></li>
+						<li class="breadcrumb-item"><a href="javascript:void(0)">관리페이지</a></li>
 						<li class="breadcrumb-item active"><a
-							href="javascript:void(0)">application</a></li>
+							href="javascript:void(0)">가입신청상세조회</a></li>
 					</ol>
 				</div>
 			</div>
@@ -98,32 +98,19 @@
 									<input type="hidden" name="boardName" id="boardName" value="" />
 								</form>
 
-								<div class="row">
-									<div class="col-xs-4 col-md-2">
-										<strong>가입신청번호</strong>
-									</div>
-									<div class="col-xs-8 col-md-4" id="applicationNo">${cafeApplication.applicationNo}</div>
-								</div>
-
-								<hr />
 
 								<div class="row">
 									<div class="col-xs-4 col-md-2">
-										<strong>회원번호</strong>
+										<strong>별명</strong>
 									</div>
-									<div class="col-xs-8 col-md-4">${cafeApplication.userNo}</div>
+									<div class="col-xs-8 col-md-4">${cafeApplication.memberNickname}</div>
 								</div>
 
 								<hr />
+								
+								<input type ="hidden" id="applicationNo" value ="${cafeApplication.applicationNo}">
+								
 
-								<div class="row">
-									<div class="col-xs-4 col-md-2">
-										<strong>카페번호</strong>
-									</div>
-									<div class="col-xs-8 col-md-4">${cafeApplication.cafeNo}</div>
-								</div>
-
-								<hr />
 
 								<div class="row">
 									<div class="col-xs-4 col-md-2">
@@ -134,21 +121,25 @@
 
 								<hr />
 
-								<div class="row">
-									<div class="col-xs-4 col-md-2">
-										<strong>멤버닉네임</strong>
-									</div>
-									<div class="col-xs-8 col-md-4">${cafeApplication.memberNickname}</div>
-								</div>
 
-								<hr />
 
 							<c:if test="${! empty cafeApplication.question1 }">
 								<div class="row">
 									<div class="col-xs-4 col-md-2">
-										<strong>질문1</strong>
+										<strong>질문</strong>
 									</div>
 									<div class="col-xs-8 col-md-4">${cafeApplication.question1}</div>
+								</div>
+								<br>
+							</c:if>
+							
+							
+							<c:if test="${! empty cafeApplication.answer1 }">
+								<div class="row">
+									<div class="col-xs-4 col-md-2">
+										<strong>답변</strong>
+									</div>
+									<div class="col-xs-8 col-md-4">${cafeApplication.answer1}</div>
 								</div>
 								<hr />
 							</c:if>
@@ -157,50 +148,39 @@
 							<c:if test="${! empty cafeApplication.question2 }">
 								<div class="row">
 									<div class="col-xs-4 col-md-2">
-										<strong>질문2</strong>
+										<strong>질문</strong>
 									</div>
 									<div class="col-xs-8 col-md-4">${cafeApplication.question2}</div>
 								</div>
-								<hr />
+								<br>
 							</c:if>
 								
-								
-							<c:if test="${! empty cafeApplication.question3 }">
-								<div class="row">
-									<div class="col-xs-4 col-md-2">
-										<strong>질문3</strong>
-									</div>
-									<div class="col-xs-8 col-md-4">${cafeApplication.question3}</div>
-								</div>
-								<hr />
-							</c:if>
-								
-				
-							<c:if test="${! empty cafeApplication.answer1 }">
-								<div class="row">
-									<div class="col-xs-4 col-md-2">
-										<strong>답변1</strong>
-									</div>
-									<div class="col-xs-8 col-md-4">${cafeApplication.answer1}</div>
-								</div>
-								<hr />
-							</c:if>
-								
-							
 							<c:if test="${! empty cafeApplication.answer2 }">
 								<div class="row">
 									<div class="col-xs-4 col-md-2">
-										<strong>답변2</strong>
+										<strong>답변</strong>
 									</div>
 									<div class="col-xs-8 col-md-4">${cafeApplication.answer2}</div>
 								</div>
 								<hr />
 							</c:if>
 								
+							<c:if test="${! empty cafeApplication.question3 }">
+								<div class="row">
+									<div class="col-xs-4 col-md-2">
+										<strong>질문</strong>
+									</div>
+									<div class="col-xs-8 col-md-4">${cafeApplication.question3}</div>
+								</div>
+								<br>
+							</c:if>
+								
+		
+								
 							<c:if test="${! empty cafeApplication.answer3 }">
 								<div class="row">
 									<div class="col-xs-4 col-md-2">
-										<strong>답변3</strong>
+										<strong>답변</strong>
 									</div>
 									<div class="col-xs-8 col-md-4">${cafeApplication.answer3}</div>
 								</div>
@@ -264,11 +244,12 @@
 
 		$(function() {
 			var cafeURL = '${cafeApplication.cafeIcon}'
+				//alert($("#applicationNo").val())
 			$("#accept").on(
 					"click",
 					function() {
-						//alert($("#applicationNo").text())
-						var whether = "true" + $("#applicationNo").text();
+						
+						var whether = "true" + $("#applicationNo").val();
 						$("#boardName").val(whether);
 						$("#whether").attr("method", "POST").attr(
 								"action",
@@ -281,7 +262,7 @@
 					"click",
 					function() {
 						//alert($("#applicationNo").text())
-						var whether = "false" + $("#applicationNo").text();
+						var whether = "false" + $("#applicationNo").val();
 						$("#boardName").val(whether);
 						$("#whether").attr("method", "POST").attr(
 								"action",

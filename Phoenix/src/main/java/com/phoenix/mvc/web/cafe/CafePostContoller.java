@@ -26,6 +26,7 @@ import com.phoenix.mvc.common.Search;
 import com.phoenix.mvc.service.cafe.CafeManageService;
 import com.phoenix.mvc.service.cafe.CafePostService;
 import com.phoenix.mvc.service.domain.Board;
+import com.phoenix.mvc.service.domain.Cafe;
 import com.phoenix.mvc.service.domain.CafeMember;
 import com.phoenix.mvc.service.domain.Post;
 import com.phoenix.mvc.service.domain.Reply;
@@ -153,8 +154,7 @@ public class CafePostContoller {
 	}
 
 	@PostMapping("/cafe/{cafeURL}/addPost")
-	public String addPost(@ModelAttribute Search search, @ModelAttribute Post post, @RequestParam String fileList)
-			throws Exception {
+	public String addPost(@ModelAttribute Search search, @ModelAttribute Post post, @RequestParam String fileList, HttpServletRequest req) throws Exception {
 		System.out.println("[addPost] POST : " + post);
 
 		System.out.println(">>>>>>>>>>>>>>>>>>>fileList : " + fileList);
@@ -183,8 +183,10 @@ public class CafePostContoller {
 			}
 		}
 
+		Cafe cafe = (Cafe) req.getAttribute("cafe");
+		
 		post.setPostContent(post.getPostContent().replaceAll(System.getProperty("line.separator"), ""));
-		System.out.println("Post Insert 결과 : " + cafePostService.addPost(post));
+		System.out.println("Post Insert 결과 : " + cafePostService.addPost(post, cafe.getCafeNo()));
 
 		return "redirect:/cafe/" + post.getCafeURL() + "/getPost/" + post.getPostNo();
 	}
@@ -261,8 +263,7 @@ public class CafePostContoller {
 	}
 
 	@GetMapping("/cafe/{cafeURL}/deletePost")
-	public String deletePost(@PathVariable String cafeURL, @RequestParam int postNo, @RequestParam int boardNo)
-			throws Exception {
+	public String deletePost(@PathVariable String cafeURL, @RequestParam int postNo, @RequestParam int boardNo)	throws Exception {
 		System.out.println("[deletePost] postNo : " + postNo);
 
 		System.out.println("[deletePost 결과 : " + cafePostService.deletePost(postNo));
@@ -271,8 +272,7 @@ public class CafePostContoller {
 	}
 
 	@PostMapping("/cafe/{cafeURL}/deletePostList")
-	public String deletePostList(@PathVariable String cafeURL, @RequestParam String postNoList,
-			@RequestParam int boardNo) throws Exception {
+	public String deletePostList(@PathVariable String cafeURL, @RequestParam String postNoList,	@RequestParam int boardNo) throws Exception {
 		System.out.println("[deletePostList] postNoList : " + postNoList);
 
 		System.out.println("[deletePostList 결과 : " + cafePostService.deletePostList(postNoList));
@@ -314,7 +314,7 @@ public class CafePostContoller {
 		
 		System.out.println("[addReply] : " + reply);
 
-		System.out.println("[addReply 결과] : " + cafePostService.addReply(reply));
+		System.out.println("[addReply 결과] : " + cafePostService.addReply(reply, cafeMember.getCafeNo()));
 		
 		req.setAttribute("searchCondition", "1");
 		return "forward:/cafe/" + cafeURL + "/getReplyList/" + reply.getPostNo();
@@ -328,7 +328,7 @@ public class CafePostContoller {
 
 		System.out.println("[addReply] : " + reply);
 
-		System.out.println("[addReply 결과] : " + cafePostService.addReReply(reply));
+		System.out.println("[addReply 결과] : " + cafePostService.addReReply(reply, cafeMember.getCafeNo()));
 		
 		req.setAttribute("currentPage", search.getCurrentPage());
 		return "forward:/cafe/" + cafeURL + "/getReplyList/" + reply.getPostNo();
@@ -407,7 +407,7 @@ public class CafePostContoller {
 		return "/cafe/updateNoticeOrder";
 	}
 
-	@PostMapping("/cafe/{cafeURL}/getPostByMember")
+	@PostMapping("/cafe/{cafeURL}/getPostListByMember")
 	public String getPostByMember(@ModelAttribute Search search, @PathVariable String cafeURL, Map<String, Object> map,
 			HttpServletRequest req) throws Exception {
 

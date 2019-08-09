@@ -171,8 +171,8 @@ $(function(){
 //체크된 메일 삭제
 $(function(){
 	$("[name=deleteMailButton]").on("click", function(){
-
-		if(window.location.href.indexOf("trashMailList") != -1){
+		debugger;
+		if(window.location.href.indexOf("TrashMailList") == -1){
 			swal({
 				title:"삭제 확인",
 				text:"선택한 메일을 휴지통으로 이동하시겠습니까?",
@@ -200,23 +200,18 @@ $(function(){
 						$.ajax({
 							type : "POST",
 							contentType: "application/json",
-							url : "/mail/json/deleteMail",
+							url : "/mail/json/trashMail",
 							dataType : "JSON",
 							data: JSON.stringify(mailInfoList),
 							beforeSend : function(){
 								$("#preloader").attr("style", "background:rgba(255,245,217,0.5);");
 							},
 							success : function(data) {
-//		 							alert("success");
-//									swal("변경 완료", "정상적으로 변경되었습니다.", "success");
-								
 								window.location.reload();
-//	 							debugger;
-								
 							},
 							error : function(data) {
-								alert("error : " + data)
-//	 							debugger;
+								$("#preloader").attr("style", "display:none;");
+								swal("삭제 실패", "삭제 시도중 오류가 발생했습니다.\n잠시후 다시 시도해 주십시오.", "error");
 							}
 						});//ajax end
 						
@@ -251,23 +246,18 @@ $(function(){
 						$.ajax({
 							type : "POST",
 							contentType: "application/json",
-							url : "/mail/json/trashMail",
+							url : "/mail/json/deleteMail",
 							dataType : "JSON",
 							data: JSON.stringify(mailInfoList),
 							beforeSend : function(){
 								$("#preloader").attr("style", "background:rgba(255,245,217,0.5);");
 							},
 							success : function(data) {
-//		 							alert("success");
-//									swal("변경 완료", "정상적으로 변경되었습니다.", "success");
-								
 								window.location.reload();
-//	 							debugger;
 								
 							},
 							error : function(data) {
-								alert("error : " + data)
-//	 							debugger;
+								swal("삭제 실패", "삭제 시도중 오류가 발생했습니다.\n잠시후 다시 시도해 주십시오.", "error");
 							}
 						});//ajax end
 						
@@ -288,7 +278,7 @@ $(function(){
 		swal({
 			title:"읽음 표시 변경 확인",
 			text:"선택한 메일을 읽음 표시로 변경하시겠습니까?",
-			type:"warning",
+			type:"info",
 			showCancelButton:!0,
 			confirmButtonColor:"#DD6B55",
 			confirmButtonText:"네",
@@ -324,19 +314,13 @@ $(function(){
 							$("#preloader").attr("style", "display:none; background:white");
 						},
 						success : function(data) {
-//	 							alert("success");
 							swal("변경 완료", "정상적으로 변경되었습니다.", "success");
-
 							for(var i = 0; i < checked.length; i++){
 								checked.eq(i).parent().parent().find("a.seenFlag").find("i").removeClass("mdi-email").addClass("mdi-email-open");
 							}
-							
-// 							debugger;
-							
 						},
 						error : function(data) {
 							alert("error : " + data)
-// 							debugger;
 						}
 					});//ajax end
 					
@@ -353,7 +337,7 @@ $(function(){
 		swal({
 			title:"읽음 표시 변경 확인",
 			text:"선택한 메일을 안 읽음 표시로 변경하시겠습니까?",
-			type:"warning",
+			type:"info",
 			showCancelButton:!0,
 			confirmButtonColor:"#DD6B55",
 			confirmButtonText:"네",
@@ -418,7 +402,7 @@ $(function(){
 		swal({
 			title:"중요 표시 변경 확인",
 			text:"선택한 메일을 중요 표시로 변경하시겠습니까?",
-			type:"warning",
+			type:"info",
 			showCancelButton:!0,
 			confirmButtonColor:"#DD6B55",
 			confirmButtonText:"네",
@@ -483,7 +467,7 @@ $(function(){
 		swal({
 			title:"중요 표시 변경 확인",
 			text:"선택한 메일을 중요 표시 해제하시겠습니까?",
-			type:"warning",
+			type:"info",
 			showCancelButton:!0,
 			confirmButtonColor:"#DD6B55",
 			confirmButtonText:"네",

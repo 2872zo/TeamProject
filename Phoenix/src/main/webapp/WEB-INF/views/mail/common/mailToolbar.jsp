@@ -43,7 +43,7 @@
                                            
                                        </li>
                                        <hr class="my-2">
-                                     <c:if test="${user.userRoleCode=='ur101'}">
+                                     <c:if test="${user.userRoleCode=='ur100'}">
                                        <li>
                                            <a href=/user/listUser><i class="icon-list"></i> <span>회원목록</span></a>
                                        </li>
@@ -56,28 +56,18 @@
                        </li>
 
                        <!-- 회원관리부분 -->
-                       <!-- 채팅부분 -->
                         </c:if>
-
-					<c:if test="${!empty sessionScope.user}">
-
-						<i class="mdi mdi-comment-processing-outline" id='goChat'
-							style='font-size: 35pt; position: relative; right: 5%;'></i>
-							 <div style='margin-left: 2%;margin-right: 2%;'></div>
+                        
+                       <!-- 채팅부분 -->
+						<i class="mdi mdi-comment-processing-outline" id='goChat' style='font-size: 35pt; position: relative; right: 5%;'></i>
+						<div style='margin-left: 2%;margin-right: 2%;'></div>
 						<!-- 채팅 -->
+						
 						<!-- 로그아웃버튼 -->
 						<button type="button" class="btn btn-primary logout">
 							<i class="icon-key">Logout</i>
 						</button>
 						<!-- 로그아웃버튼 -->
-					</c:if>
-					<!-- 로그인상태시 표시되는 부분 -->
-					<c:if test="${empty sessionScope.user}">
-						<button type="button" class="btn btn-primary login"
-							data-toggle="modal" data-target="#exampleModalCenter">
-							<i class="icon-key">Login</i>
-						</button>
-					</c:if>
 	
 				</ul>
 			</div>

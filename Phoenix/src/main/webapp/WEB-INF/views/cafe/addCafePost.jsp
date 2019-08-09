@@ -15,9 +15,6 @@
 <link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
 <link href="/css/style.css" rel="stylesheet">
 
-<!-- Date picker plugins css -->
-<link href="/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet">
-
 <link rel="stylesheet" href="/css/custom/scroll-top.css">
 <link rel="stylesheet" href="/css/custom/advenced-search.css">
 <script src="https://kit.fontawesome.com/e589319d43.js"></script>
@@ -246,11 +243,6 @@
 	<script src="/js/custom/cafeCommon.js"></script>
 
 	<!-- 이 페이지 전용 script -->
-	<script src="/plugins/moment/moment.js"></script>
-    <script src="/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
-    <!-- Date Picker Plugin JavaScript -->
-    <script src="/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
-    
 	<script src="/ckeditor/ckeditor.js"></script>
 	<script src="/js/custom/form-validation.js"></script>
 	

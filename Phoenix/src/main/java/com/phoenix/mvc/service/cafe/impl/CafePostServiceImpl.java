@@ -63,7 +63,13 @@ public class CafePostServiceImpl implements CafePostService {
 	}
 
 	@Override
-	public boolean addPost(Post post) throws Exception {
+	public boolean addPost(Post post, int cafeNo) throws Exception {
+		Event event = new Event();
+		event.setEventType("et103");
+		event.setEventUserNo(post.getMemberNo());
+		event.setCafeNo(cafeNo);
+		cafeManageDao.addEventLog(event);
+		
 		cafeMemberDao.updatePostCountIncrease(post.getMemberNo());
 		return cafePostDao.addPost(post);
 	}
@@ -91,8 +97,15 @@ public class CafePostServiceImpl implements CafePostService {
 	}
 
 	@Override
-	public boolean addReply(Reply reply) throws Exception {
+	public boolean addReply(Reply reply, int cafeNo) throws Exception {
 		cafeMemberDao.updateReplyCountIncrease(reply.getMemberNo());
+		
+		Event event = new Event();
+		event.setEventType("et104");
+		event.setEventUserNo(reply.getMemberNo());
+		event.setCafeNo(cafeNo);
+		cafeManageDao.addEventLog(event);
+		
 		return cafePostDao.addReply(reply);
 	}
 	
@@ -135,8 +148,15 @@ public class CafePostServiceImpl implements CafePostService {
 	}
 
 	@Override
-	public boolean addReReply(Reply reply) throws Exception {
+	public boolean addReReply(Reply reply, int cafeNo) throws Exception {
+		Event event = new Event();
+		event.setEventType("et104");
+		event.setEventUserNo(reply.getMemberNo());
+		event.setCafeNo(cafeNo);
+		cafeManageDao.addEventLog(event);
+		
 		cafeMemberDao.updateReplyCountIncrease(reply.getMemberNo());
+		
 		return cafePostDao.addReReply(reply);
 	}
 

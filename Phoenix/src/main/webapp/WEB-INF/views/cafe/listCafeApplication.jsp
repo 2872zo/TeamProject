@@ -70,9 +70,9 @@
 			<div class="row page-titles mx-0">
 				<div class="col p-md-0">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="javascript:void(0)">manage</a></li>
+						<li class="breadcrumb-item"><a href="javascript:void(0)">관리페이지</a></li>
 						<li class="breadcrumb-item active"><a
-							href="javascript:void(0)">application</a></li>
+							href="javascript:void(0)">가입신청목록조회</a></li>
 					</ol>
 				</div>
 			</div>
@@ -106,9 +106,9 @@
 										&nbsp;&nbsp;
 										<button type="button" id="search"class="btn btn-outline-success">검색</button>
 										<input type="hidden" id="currentPage" name="currentPage"value="" /> 
-										&nbsp;&nbsp;&nbsp;
+										&nbsp;&nbsp;
 										<button type="button" id="accept"class="btn btn-outline-secondary">가입승인</button>
-										&nbsp;&nbsp;&nbsp;
+										&nbsp;&nbsp;
 										<button type="button" id="reject"class="btn btn-outline-secondary">가입거절</button>
 										
 										
@@ -134,7 +134,7 @@
 									<thead class="thead-light">
 										<tr>
 											<th><input type="checkbox" id="allCheck"/></th>
-											<th align="center">가입신청번호</th>
+											
 											<th align="left">회원아이디</th>
 											<th align="left">별명</th>
 											<th align="left">가입신청일</th>
@@ -164,10 +164,12 @@
 											</c:if>	
 											<c:if test="${cafeApplication.acceptStatusCode ne 'ca100' }">
 												<td><input type="checkbox"  class="applicationCheck" disabled="disabled"></td>
-											</c:if>	
-												<td align="left" class="applicationNo"value="${cafeApplication.applicationNo}">${cafeApplication.applicationNo}</td>
-												<td align="left">${cafeApplication.userId}</td>
-												<td align="left" class="nickname"value="${cafeApplication.memberNickname}">${cafeApplication.memberNickname}</td>
+											</c:if>
+												
+												<td align="left" class = "userId">${cafeApplication.userId}
+													<input type="hidden" class = "applicationNo" value="${cafeApplication.applicationNo}">
+												</td>
+												<td align="left" class="nickname" value="${cafeApplication.memberNickname}">${cafeApplication.memberNickname}</td>
 												<td align="left">${cafeApplication.regDate}</td>
 												<td align="left">
 												<c:if test="${cafeApplication.acceptStatusCode eq 'ca100' }">가입대기</c:if>
@@ -244,18 +246,22 @@
 		$(function() {
 
 			$("#search").on("click", function() {
-				//alert("검색");
-				fncGetList(1);
+				var searchKeyword = $("#searchKeyword").val();
+				//alert(searchKeyword)
+				if(searchKeyword!="" && searchKeyword !=null){
+					fncGetList(1);
+				}
 			});
 		});//검색
 
 		$(function() {
-			$(".applicationNo").on("click",function() {
+			$(".userId").on("click",function() {
+				//alert($(this).children("input").val())
 						//alert($(this).text());
 						var cafeURL = '${search.cafeURL}'
 						self.location = "/cafe/" + cafeURL
 								+ "/manage/getCafeApplication?applicationNo="
-								+ $(this).text().trim();
+								+ $(this).children("input").val();
 					});
 		});
 
@@ -274,9 +280,7 @@
 			$("#accept").on("click",function() {//승인
 						var application = "";
 						var num = $('#allCheck:checked').length;
-						//alert(num)
-						
-						
+					
 						if(num>0){
 								//alert("1")
 							$("input[type=checkbox]:checked").not("input[type=checkbox]:first").each(
@@ -292,7 +296,7 @@
 												+ $($(".cafeNo")[count]).val()
 												+ "&"
 												+ $($(".applicationNo")[count])
-														.text();
+														.val();
 										application += ",";
 	
 									});
@@ -311,7 +315,7 @@
 												+ $($(".cafeNo")[count]).val()
 												+ "&"
 												+ $($(".applicationNo")[count])
-														.text();
+														.val();
 										application += ",";
 
 									});
@@ -320,8 +324,9 @@
 						//alert(application);
 						var cafeURL = '${search.cafeURL}'
 						$("#boardName").val(application);
+						if(application!=""){
 						$("#checkBox").attr("method", "POST").attr("action","/cafe/" + cafeURL+ "/manage/updateCafeApplication").submit();
-
+						}
 					});
 
 			$("#reject").on(
@@ -329,17 +334,18 @@
 					function() {//거절
 						var reject = '';
 						var num = $('#allCheck:checked').length;
+						
 						if(num>0){
 							$("input[type=checkbox]:checked").not("input[type=checkbox]:first").each(function() {
 								var count = $(".applicationCheck").index(this);
-								reject += $($(".applicationNo")[count]).text();
+								reject += $($(".applicationNo")[count]).val();
 								reject += ",";
 	
 							});
 						}else if(num==0){
 							$("input[type=checkbox]:checked").each(function() {
 								var count = $(".applicationCheck").index(this);
-								reject += $($(".applicationNo")[count]).text();
+								reject += $($(".applicationNo")[count]).val();
 								reject += ",";
 
 							});
@@ -347,8 +353,9 @@
 						//alert(reject);
 						var cafeURL = '${search.cafeURL}'
 						$("#boardName").val(reject);
+						if(reject!=""){
 						$("#checkBox").attr("method", "POST").attr("action","/cafe/" + cafeURL+ "/manage/updateCafeApplication").submit();
-
+						}
 					});//거절
 
 		});//끝

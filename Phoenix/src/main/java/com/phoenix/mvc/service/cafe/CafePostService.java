@@ -13,7 +13,7 @@ public interface CafePostService {
 
 	public Map<String, Object> getPostListByBoard(Search search);
 	
-	public boolean addPost(Post post) throws Exception;
+	public boolean addPost(Post post, int cafeNo) throws Exception;
 	
 	public Post getPost(int postNo);
 	
@@ -23,7 +23,7 @@ public interface CafePostService {
 	
 	public boolean deletePostList(String postNoList) throws Exception;
 	
-	public boolean addReply(Reply reply) throws Exception;
+	public boolean addReply(Reply reply, int cafeNo) throws Exception;
 	
 	public Map<String, Object> getReplyList(Search search);
 	
@@ -33,7 +33,7 @@ public interface CafePostService {
 
 	public Reply getReply(int replyNo);
 
-	public boolean addReReply(Reply reply) throws Exception;
+	public boolean addReReply(Reply reply, int cafeNo) throws Exception;
 
 	public boolean movePost(Map map);
 	

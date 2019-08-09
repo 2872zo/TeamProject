@@ -81,9 +81,9 @@
 			<div class="row page-titles mx-0">
 				<div class="col p-md-0">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="javascript:void(0)">manage</a></li>
+						<li class="breadcrumb-item"><a href="javascript:void(0)">관리페이지</a></li>
 						<li class="breadcrumb-item active"><a
-							href="javascript:void(0)">grade</a></li>
+							href="javascript:void(0)">카페멤버등급관리</a></li>
 					</ol>
 				</div>
 			</div>
@@ -94,7 +94,7 @@
 						<div class="card">
 							<div class="card-body">
 								<h4 class="card-title">>카페등급관리</h4>
-								멤버 등급
+								등급
 								<code>사용안함</code>
 								선택시 해당 등급에 해당하는 모든 멤버는 한단계 아래등급으로 내려갑니다 <br /> <br /> <br />
 
@@ -148,8 +148,16 @@
 														<input type="hidden" class="memberGradeCode"
 															name="gradeList[${j}].memberGradeCode"
 															value="${cafeGrade.memberGradeCode }" />
-
-
+															
+															
+														<select class="form-control" style="width: 12%;"
+															name="gradeList[${j}].autoUpgradeFlag">
+															<option value="1"
+																${cafeGrade.autoUpgradeFlag== "1" ? "selected" : "" }>자동등업승인</option>
+															<option value="0"
+																${cafeGrade.autoUpgradeFlag== "0" ? "selected" : "" }>자동등업거부</option>
+														</select>
+														&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 														<label class="radio-inline mr-3"> <input
 															type="radio" class="dbox"
 															name="gradeList[${j}].gradeFlag" value="1"
@@ -159,15 +167,6 @@
 															type="radio" name="gradeList[${j}].gradeFlag" value="0"
 															<c:if test="${cafeGrade.gradeFlag eq false}">checked</c:if> />사용안함
 														</label>
-
-
-														<select class="form-control" style="width: 12%;"
-															name="gradeList[${j}].autoUpgradeFlag">
-															<option value="1"
-																${cafeGrade.autoUpgradeFlag== "1" ? "selected" : "" }>자동등업승인</option>
-															<option value="0"
-																${cafeGrade.autoUpgradeFlag== "0" ? "selected" : "" }>자동등업거부</option>
-														</select>
 
 
 													</c:if>
