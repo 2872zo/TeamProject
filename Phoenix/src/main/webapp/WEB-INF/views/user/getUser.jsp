@@ -241,7 +241,7 @@
                                     </div>
                                     <div class="card-footer">
                                         <p class="card-text d-inline"><small class="text-muted"></small>
-                                        </p><a href="/user/updateUserView?userNo=${user.userNo}" class="card-link float-right"><small>수정</small></a>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -263,7 +263,7 @@
                                     </div>
                                     <div class="card-footer">
                                         <p class="card-text d-inline"><small class="text-muted"></small>
-                                        </p><a href="/user/updateUserView?userNo=${user.userNo}" class="card-link float-right"><small>수정</small></a>
+                                        
                                     </div>
                                 </div>
                             </div>                            
@@ -447,8 +447,8 @@
 
 										
 				  				<div class="form-group row">
-                                	<div class="col-lg-6 ml-auto">
-                                  		<!--  <button type="button" class="btn btn-primary" id="add">가입</button>-->
+                                	<div class="col-lg-7 ml-auto">
+                                  		<button type="button" class="btn btn-primary" id="Update">수정</button>
                                   		 <a class="btn btn-success btn" href="#" role="button" id="cancle">취&nbsp;소</a>
                                     </div>
                                    </div>
@@ -625,7 +625,7 @@
      							</center>
 							</form>
 							<p class="mt-5 login-form__footer">
-								<a href="/user/addUserView" class="text-primary" id="addUser1">회원가입</a>
+								
 							</p>
 						</div>
 					</div>
@@ -943,7 +943,7 @@
 	
 	$(function() {
 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-		$("button.btn.btn-success").on("click", function() {
+		$("#Update").on("click", function() {
 			self.location = "/user/updateUserView?userNo=${user.userNo}";
 		});
 	});
