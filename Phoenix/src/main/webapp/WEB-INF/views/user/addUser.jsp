@@ -7,26 +7,23 @@
 <html lang="ko">
 
 <head>
-           <div class="nav-header">
-            <c:import url="/WEB-INF/views/common/brand-logo.jsp"/>
-        </div>
-
-		<!-- ToolBar Start /////////////////////////////////////-->
-		<jsp:include page="../common/toolbar.jsp" />
-		<!-- ToolBar End /////////////////////////////////////-->
-
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>회원가입</title>
-
-
-<link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
-<link href="/css/style.css" rel="stylesheet">
-<link rel="stylesheet" href="/css/custom/scroll-top.css">
-<link rel="stylesheet" href="/plugins/sweetalert/css/sweetalert.css">
-
-
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	
+	<link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
+	<link href="/css/style.css" rel="stylesheet">
+	<link rel="stylesheet" href="/css/custom/scroll-top.css">
+	<link rel="stylesheet" href="/plugins/sweetalert/css/sweetalert.css">
+	
+	<style>
+		:disabled:hover{
+			background-color:#FFAF00;
+			boader-color:#FFAF00;
+		}
+	</style>
+	
+	<title>회원가입</title>
 </head>
 
 
@@ -51,10 +48,16 @@
 
 
 <div id="main-wrapper">
+	<div class="nav-header">
+       <c:import url="/WEB-INF/views/common/brand-logo.jsp"/>
+   </div>
+
+	<!-- ToolBar Start /////////////////////////////////////-->
+	<jsp:include page="/WEB-INF/views/common/toolbar.jsp" />
+	<!-- ToolBar End /////////////////////////////////////-->
 
 
-
-<!--**********************************
+		<!--**********************************
             Sidebar start
         ***********************************-->
 		
@@ -65,135 +68,168 @@
 		<!--**********************************
             Content body start
         ***********************************-->
-<div class="content-body " style="min-height: 743px;">
-
-
-
-		<div class="container-fluid ">
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="card">
-						<div class="card-body">			
-							<h2 class="text-center">회원가입</h2>
-							<hr style="border: solid 1px gray;">		
-								<div class="basic-form " >			
-								<br>
-									<form id="addusers">
-
+	<div class="container-fluid" style="min-height: 743px; margin:10px;">
+		<div class="row d-flex justify-content-center">
+			<div class="col-lg-10 ">
+				<div class="card">
+					<div class="card-body">			
+						<h2 class="text-center">회원가입</h2>
+						<hr style="border: solid 1px gray;"/>		
+						
+						<!-- basic-form start -->
+						<div class="basic-form">			
+							<br/>
+							
+							<!-- addUsers form start -->
+							<form id="addusers">
+								<%-- hidden data --%>
 								<input type="hidden" name="userNo" value="${user.userNo }"/>
-
-                                        <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="userId1"><h5>아이디 <span class="text-danger">*</span></h5>
-                                            </label>
-                                            <div class="col-lg-6">
-                                            	<input type="text" class="form-control" id="userid" name="userId">
-                                                <span id="check"> <strong>아이디를 입력해주세요</strong>
-													</span>
-                                            </div>
-                                       	</div>
-                                       	<hr>
-                                        
-                                        <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="userName1"><h5>이름 <span class="text-danger">*</span></h5>
-                                            </label>
-                                            <div class="col-lg-6">
-                                             <input type="text" class="form-control" id="userName1" name="userName">
-                                            </div>
-                                       	   </div><hr>
-                                        
-                                        
-										<div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="password1"><h5>비밀번호 <span class="text-danger">*</span></h5>
-                                             </label>
-                                            <div class="col-lg-6">
-                                             <input type="password" class="form-control" id="passWord" name="password">
-                                            </div>
-                                       	   </div><hr>
-
-                                     
-										<div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="password21"><h5>비밀번호확인<span class="text-danger">*</span></h5>
-                                             </label>
-                                            <div class="col-lg-6">
-                                             <input type="password" class="form-control" id="passwordCheck" name="passwordCheck">
-                                            </div>
-                                       	   </div>
-                                   	   
-									<div class="form-group">
-							  <label class="col-lg-4 col-form-label" for="password3"></label>
-							<!--   <div class="col-sm-4" id="alert-success">비밀번호가 일치합니다.</div> -->
-							  <span id = "alert-success"><Strong class="text-success">비밀번호가 일치합니다.</Strong>
-							      </span>
-								<!-- <div class="col-sm-4" id="alert-danger">비밀번호가 일치하지 않습니다.</div> -->
-								<span id = "alert-danger"><Strong class= "text-danger">비밀번호가 일치하지 않습니다.</Strong>
-							      </span>
-							</div>
-                                    
-                                        <hr>
-                                        <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="usernickname"><h5>닉네임<span class="text-danger">*</span></h5>
-                                             </label>
-                                            <div class="col-lg-6">
-                                             <input type="text" class="form-control" id="usernickname" name="userNickname">
-                                                <span id="nick"> <strong>닉네임을 입력해주세요</strong>
-													</span>
-                                             
-                                            </div>
-                                       	   </div><hr>
-      	
-      								<div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="phone1"><h5>전화번호 <span class="text-danger">*</span></h5>
-                                            </label>
-                                            <div class="col-lg-6">
-                                            	<input type="text" class="form-control" id="phone1" name="phone" placeholder="-없이 숫자만 입력하세요"><button type="button" class="btn btn-primary" id="click">전송</button>                                               
-                                            	</div>
-                                       		   </div>
-                                       		   <div class="form-group">
-												    <label for="ssn" class="col-sm-offset-1 col-sm-3 control-label"></label>
-												    <center>
-												    <div class="col-lg-4" id="inj" style="display:none">												    
-												      <input type="text" class="form-control" id="sms" name="sms" placeholder="인증번호를 입력해주세요.">
-												      <button type="button" class="btn btn-primary">인증</button>
-												    </div>
-												    </center>
-											    </div>
-										                                       		   <hr>
-                                       		   
-                                       <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="email1"><h5>이메일<span class="text-danger">*</span></h5>
-                                             </label>
-                                            <div class="col-lg-6">
-                                             <input type="text" class="form-control" id="email1" name="email">
-                                            </div>
-                                       	   </div><hr>
-                                       	   
-                                       	   <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="val-bannerImg"><h5>회원 프로필 </h5>
-                                            </label>                                           
-                                            <div class="col-lg-6">
-                                               <div><img src="/images/uploadFiles/profileimg/${user.profileImg}" width="100"; height="100px"; id="img"/>
-                                               </div>
-                                                <input type="file" class=""form-control-file"" id="uploadFile" name="uploadFile">
-                                               </div>
-                                        </div> <hr>		   
-                                       		   
-				  				<div class="form-group row">
-                                	<div class="col-lg-8 ml-auto">
-                                  		<button type="button" class="btn btn-primary" id="add">가입</button>
-                                  		 <a class="btn btn-success btn" href="#" role="button" id="cancle">취&nbsp;소</a>
+								
+								<!-- User ID 부분 -->
+                                <div class="form-group row">
+                                	<label class="col-lg-4 col-form-label" for="userId1">
+	    	                            <h5>아이디 <span class="text-danger">*</span></h5>
+    	                            </label>
+                                    <div class="col-lg-6">
+                                  		<input type="text" class="form-control" id="userid" name="userId">
+                                     	<span id="check"> 
+                                     		<strong>아이디를 입력해주세요</strong>
+										</span>
                                     </div>
-                                   </div>
-						  
-	 					</form>
-	 						
-		 			 </div>
-		  			</div>
-		  		   </div>
-		 		  </div>
-		 		 </div>
-		 	    </div>
-		 	   </div>
-			  </div>
+                                 </div>
+                                 <!-- User ID 부분 끝 -->
+                                 
+                                 <hr/>
+                                      
+                                 <!-- User Name 부분 -->
+                                 <div class="form-group row">
+                                     <label class="col-lg-4 col-form-label" for="userName1">
+                                     	<h5>이름 <span class="text-danger">*</span></h5>
+                                     </label>
+                                     <div class="col-lg-6">
+                                      	<input type="text" class="form-control" id="userName1" name="userName">
+                                     </div>
+								</div>
+								<!-- User Name 부분 끝 -->
+								 
+								<hr/>
+								
+                                       
+                                <!-- User Password 부분 -->    
+								<div class="form-group row">
+									<label class="col-lg-4 col-form-label" for="password1">
+										<h5>비밀번호 <span class="text-danger">*</span></h5>
+									</label>
+									<div class="col-lg-6">
+										<input type="password" class="form-control" id="passWord" name="password">
+									</div>
+								</div>
+								<!-- User Password 부분 끝 -->
+								
+								<hr/>
+								
+								<!-- User Password Confirm 부분 -->                  
+								<div class="form-group row">
+									<label class="col-lg-4 col-form-label" for="password21">
+										<h5>비밀번호확인<span class="text-danger">*</span></h5>
+									</label>
+									<div class="col-lg-6">
+										<input type="password" class="form-control" id="passwordCheck" name="passwordCheck">
+										<span id = "alert-success">
+											<Strong class="text-success">비밀번호가 일치합니다.</Strong>
+										</span>
+										<span id = "alert-danger">
+											<Strong class= "text-danger">비밀번호가 일치하지 않습니다.</Strong>
+										</span>
+									</div>
+									
+								</div>
+                                <!-- User Password Confirm 부분 끝 -->	   
+                                
+                                <!-- User Password 일치 확인 부분 시작 -->
+								<!-- User Password 일치 확인 부분 끝 -->
+                                   
+                                <hr/>
+                                       
+								<div class="form-group row">
+									<label class="col-lg-4 col-form-label" for="usernickname">
+										<h5>닉네임<span class="text-danger">*</span></h5>
+									</label>
+									<div class="col-lg-6">
+										<input type="text" class="form-control" id="usernickname" name="userNickname">
+										<span id="nick"> 
+											<strong>닉네임을 입력해주세요</strong>
+										</span>
+									</div>
+								</div>
+								
+								<hr/>
+								
+								<div class="form-group row">
+									<label class="col-lg-4 col-form-label" for="phone1">
+										<h5>전화번호 <span class="text-danger">*</span></h5>
+									</label>
+									<div class="col-lg-5">
+										<input type="text" class="form-control" id="phone1" name="phone" placeholder="-없이 숫자만 입력하세요">                                        
+									</div>
+									<div class="col-lg-1">
+										<button type="button" class="btn btn-primary" id="click">전송</button>       
+									</div>
+								</div>
+								
+								<div class="form-group row" id="inj" style="display:none">
+									<label class="col-lg-4 col-form-label" ></label>
+									<div class="col-lg-5">
+										<input type="text" class="form-control" id="sms" name="sms" placeholder="인증번호를 입력해주세요.">                                        
+									</div>
+									<div class="col-lg-1">
+										<button type="button" class="btn btn-primary">인증</button>  
+									</div>									    
+								</div>
+								
+								<hr/>
+								                             		   
+								<div class="form-group row">
+									<label class="col-lg-4 col-form-label" for="email1">
+										<h5>이메일<span class="text-danger">*</span></h5>
+									</label>
+									<div class="col-lg-6">
+										<input type="text" class="form-control" id="email1" name="email">
+									</div>
+								 </div>
+								 
+								 <hr/>
+									   
+								<div class="form-group row">
+									<label class="col-lg-4 col-form-label" for="val-bannerImg">
+										<h5>회원 프로필 </h5>
+									</label>           
+									<div class="col-lg-6">
+										<div>
+											<img src="/images/uploadFiles/profileimg/default_profile.jpg" width="100"; height="100px"; id="img"/>
+										</div>
+										<br/>
+										<input type="file" class=""form-control-file"" id="uploadFile" name="uploadFile">
+									</div>
+								</div> 
+								
+								<hr/>		   
+								                             		   
+								<div class="form-group row">
+									<div class="col-lg-8 ml-auto">
+										<button class="btn btn-primary" id="add">가&nbsp;입</button>
+										<button class="btn btn-success" id="cancle" style="color:white;">취&nbsp;소</a>
+									</div>
+								</div>
+					  
+ 							</form><!-- form end -->
+						</div><!-- .basic-form end -->
+					</div><!-- card body end -->
+				</div><!-- card end -->
+			</div><!-- col-10 end -->
+		</div><!-- row end -->
+	</div><!-- main container end -->
+</div>
 		  
 		  
 	
@@ -207,77 +243,14 @@
 	<script src="/js/settings.js"></script>
 	<script src="/js/gleek.js"></script>
 	<script src="/js/styleSwitcher.js"></script>
+	
 	<!-- 메뉴바 이용을 위한 스크립트 -->
 	<script src="/js/custom/scroll-top.js"></script>
 	<script src="/plugins/sweetalert/js/sweetalert.min.js"></script>
 	<script type="text/javascript">
 
-	var cch = 0;
-	var checkSessionUser = ${empty sessionScope.user};
-
-	function readURL(input) {
-		 if (input.files && input.files[0]) {
-		  var reader = new FileReader();
-		  
-		  reader.onload = function (e) {
-		   $('#img').attr('src', e.target.result);  
-		  }
-		  
-		  reader.readAsDataURL(input.files[0]);
-		  }
-		}
-		  
-		$("#uploadFile").change(function(){
-		   readURL(this);
-		});
-	
-	$(function() {
-		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-		$("#add").on("click", function() {
-			fncAddUser();
-		});
-	});
-
-
-	$(function() {
-		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-		$("#cancle").on("click", function() {
-			//$("form")[0].reset();
-			
-			
-			self.location = "/";
-			
-		});
-	});
-
-	   $(function(){
-	         $("#alert-success").hide();
-	         $("#alert-danger").hide();
-	         $("input").keyup(function(){
-	             var pwd1=$("#passWord").val();
-	             var pwd2=$("#passwordCheck").val();
-	             if(pwd1 != "" || pwd2 != ""){
-	                 if(pwd1 == pwd2){
-	                	 
-	                 	$("#check1").show();
-	                     $("#alert-success").show();
-	                     $("#alert-danger").hide();
-	                     $("#submit").removeAttr("disabled");
-	                 }else{
-	                	 
-	                	 $("#check1").hide();	
-	                     $("#alert-success").hide();
-	                     $("#alert-danger").show();
-	                     $("#submit").attr("disabled", "disabled");
-	                 }    
-	             }
-	         });
-	     });
-	
 	//유효성 검사
 	function fncAddUser() {
-		
-		
 		var userName = $("input[name='userName']").val();
 		var userId = $("input[id='userid']").val();
 		var password = $("input[id='passWord']").val();
@@ -333,9 +306,8 @@
 			sweetAlert("반드시 휴대전화 인증을 해야함.","","error");
 			return;			
 		}else{
-			//alert("입력  : "+userId);
-			//alert("입력  : "+pw);
-			//alert("입력  : "password);
+			console.log("입력  : " + userId);
+			console.log("입력  : " + password);
 			$.ajax({
 				url : "/user/json/checkUserIdDuplication",
 				method : "POST",
@@ -344,72 +316,128 @@
 					"Accept" : "application/json",
 					"Content-Type" : "application/json"
 				},										
-				data : JSON.stringify({											
-				userId : userId,		
-				}),
-				
+				data : JSON.stringify({	userId : userId	}),
 				success : function(JSONData) {
 					//alert(JSONData); 
 					//alert(typeof(JSONData));
-					
 					if(JSONData == false){
-						
 						sweetAlert("아이디가 중복되었습니다.","","error");
 						return false;
 					}else{								
-						$("#adduser").attr("method", "POST").attr("action","/user/addUser").attr("enctype","multipart/form-data").submit();						
+						$("#addusers").attr("method", "POST").attr("action","/user/addUser").attr("enctype","multipart/form-data").submit();						
 					}							
+				},
+				error : function(){
+					swal("error발생","","error");
 				}
 			});//ajax
 			//return false;
 		}//else
 	}
+	
+	var cch = 0;
+	var checkSessionUser = ${empty sessionScope.user};
+
+	function readURL(input) {
+		 if (input.files && input.files[0]) {
+		  var reader = new FileReader();
+		  
+		  reader.onload = function (e) {
+		   $('#img').attr('src', e.target.result);  
+		  }
+		  
+		  reader.readAsDataURL(input.files[0]);
+		  }
+		}
+		  
+		$("#uploadFile").change(function(){
+		   readURL(this);
+		});
+	
+	$(function() {
+		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		$("#add").on("click", function(e) {
+			e.preventDefault();
+			fncAddUser();
+		});
+	});
+
 
 	$(function() {
+		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		$("#cancle").on("click", function(e) {
+			e.preventDefault();
+			self.location = "/";
+		});
+	});
 
-		$("#add").on("click", function() {
+	   $(function(){
+	         $("#alert-success").hide();
+	         $("#alert-danger").hide();
+	         $("input").keyup(function(){
+	             var pwd1=$("#passWord").val();
+	             var pwd2=$("#passwordCheck").val();
+	             if(pwd1 != "" || pwd2 != ""){
+	                 if(pwd1 == pwd2){
+	                	 
+	                 	$("#check1").show();
+	                     $("#alert-success").show();
+	                     $("#alert-danger").hide();
+	                     $("#submit").removeAttr("disabled");
+	                 }else{
+	                	 
+	                	 $("#check1").hide();	
+	                     $("#alert-success").hide();
+	                     $("#alert-danger").show();
+	                     $("#submit").attr("disabled", "disabled");
+	                 }    
+	             }
+	         });
+	     });
+	
+	
 
-				var inputed = $("input[id='usernickname']").val();
-				// alert("입력  : "+inputed);
+// 	$(function() {
 
-					$.ajax({
-							url : "/cafe/json/checkUserNicknameDuplication",
-							method : "POST",
-							dataType : "json",
-							headers : {
-										"Accept" : "application/json",
-										"Content-Type" : "application/json"
-								},
-							data : JSON.stringify({
-							userNickname : inputed,
-							}),
+// 		$("#add").on("click", function() {
 
-							success : function(JSONData) {
-							//alert(JSONData); 
-							//alert(typeof(JSONData));								
-								if(JSONData == false){
+// 				var inputed = $("input[id='usernickname']").val();
+// 				// alert("입력  : "+inputed);
+
+// 					$.ajax({
+// 							url : "/cafe/json/checkUserNicknameDuplication",
+// 							method : "POST",
+// 							dataType : "json",
+// 							headers : {
+// 										"Accept" : "application/json",
+// 										"Content-Type" : "application/json"
+// 								},
+// 							data : JSON.stringify({
+// 							userNickname : inputed,
+// 							}),
+
+// 							success : function(JSONData) {
+// 							//alert(JSONData); 
+// 							//alert(typeof(JSONData));								
+// 								if(JSONData == false){
 									
-									sweetAlert("닉네임이 중복되었습니다.","","error");
+// 									sweetAlert("닉네임이 중복되었습니다.","","error");
 									
-									return false;
-								}else{
-									$("#addusers").attr("method", "POST").attr("action","/user/addUser").attr("enctype","multipart/form-data").submit();
-									}				
-						}
-					});
-				});
-			});
+// 									return false;
+// 								}else{
+// 									$("#addusers").attr("method", "POST").attr("action","/user/addUser").attr("enctype","multipart/form-data").submit();
+// 								}				
+// 						}
+// 					});
+// 				});
+// 			});
 	
 
 	$(function() {
-		  
-	  	
  		var rand = "";
-		
 		
 		$("button:contains('전송')").on("click" , function() {
 			var phone = $("input[name='phone']").val();
-			//alert("dsada@@@ :"+phone);
 			
 			if (phone == null || phone.length < 1) {
 				sweetAlert("전화번호를 입력하세요.","","error");
@@ -417,7 +445,6 @@
 			}
 
 			$("#inj").show();
-		
 			
 			$.ajax({ 
 				   url: "/user/json/sendSms",
@@ -433,57 +460,39 @@
 							rand = JSONData.rand;
 				   
 				   }  
-		
 				 }); 
-		
 			});
 		
-		   
 			$("button:contains('인증')").on("click" ,function(){ 
-
-				
-		
 				var join = document.getElementById('join');
-
 				var phone = document.getElementById("phone1");
-				
 				var code = $("#sms").val();
-
 				
-				
-			 if (rand == code) { 
-		   
-				 sweetAlert("인증 성공","","success");
-			   
-			   $("#inj").hide();
-				phone.style.border = "3px solid gold";
-				phone.readOnly = true;
-				$("#pij").hide();
-			   	cch = 1;
-			   	$("#click").hide();
-			   	//alert(cch);
-				
-		   } else { 
-			   sweetAlert("인증 실패","","error"); 
-		  	 	} 
-		 	   
+				if (rand == code) { 
+					sweetAlert("인증 성공","","success");
+				    $("#inj").hide();
+				    
+					phone.style.border = "3px solid gold";
+					phone.readOnly = true;
+					
+				   	cch = 1;
+				   	
+					$("#pij").hide();
+					$("#click").attr("disabled","disabled");
+						
+				 } else { 
+				 	sweetAlert("인증 실패","인증번호를 확인해 주십시오.","error"); 
+				 } 
 		   });
-		
 	   });
 
 	//한글 입력못하게
 	$(function() {
 		$("input[name='phone']").on('keyup',function() {
-
-			
-	 $(this).val($(this).val().replace(/[^0-9]/g,""));
-	 //alert("숫자만 입력하셔야 합니다.");
-	 
+			$(this).val($(this).val().replace(/[^0-9]/g,""));
 		});
-	   });
+	 });
 
-
-	   
 	//카페이름 중복확인 
 	$(function() {
 
@@ -543,72 +552,64 @@
 								});
 	
 	$(function() {
-
 		$("input[id='usernickname']").on('keyup',function() {
 					
-							inputed = $("input[id='usernickname']").val();
-							//alert("입력  : "+inputed);
-
-									$.ajax({
-										url : "/user/json/checkUserNicknameDuplication",
-										method : "POST",
-										dataType : "json",
-										headers : {
-											"Accept" : "application/json",
-											"Content-Type" : "application/json"
-										},
-										data : JSON.stringify({
-											userNickname : inputed,
-										}),
-
-										success : function(JSONData) {
-											//alert(JSONData); 
-											//alert(typeof(JSONData));
-
-											if (JSONData && inputed != "") {
-												$("#nick").children("strong")
-														.remove();
-												$("#nick")
-														.append(
-																"<strong class=\"text-success\">사용 가능합니다.</strong>");	
-																							
-											}else {
-												$("#nick").children("strong")
-														.remove();
-												$("#nick")
-														.append(
-																"<strong  class=\"text-danger\">사용 불가능합니다.</strong>");
-											}
-											if ((inputed < "0" || inputed > "9") && (inputed < "A" || inputed > "Z") && (inputed < "a" || inputed > "z")) {
-												$("#nick").children("strong")
-														.remove();
-												$("#nick")
-														.append(
-																"<strong class=\"text-danger\">사용 불가능합니다.</strong>");
-											}
-											if (inputed == "") {
-												$("#nick").children("strong")
-														.remove();
-												$("#nick")
-														.append(
-																"<strong class=\"text-muted\">아이디를 입력해주세요.</strong>");
+			inputed = $("input[id='usernickname']").val();
+			//alert("입력  : "+inputed);
 	
-											}											
-										}
-									});
-		  						  });
-								});
+				$.ajax({
+					url : "/user/json/checkUserNicknameDuplication",
+					method : "POST",
+					dataType : "json",
+					headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					},
+					data : JSON.stringify({
+						userNickname : inputed,
+					}),
 
+					success : function(JSONData) {
+						//alert(JSONData); 
+						//alert(typeof(JSONData));
 
-	
-	   
-	   
-		
-	
-	
+						if (JSONData && inputed != "") {
+							$("#nick").children("strong")
+									.remove();
+							$("#nick")
+									.append(
+											"<strong class=\"text-success\">사용 가능합니다.</strong>");	
+																		
+						}else {
+							$("#nick").children("strong")
+									.remove();
+							$("#nick")
+									.append(
+											"<strong  class=\"text-danger\">사용 불가능합니다.</strong>");
+						}
+						if ((inputed < "0" || inputed > "9") && (inputed < "A" || inputed > "Z") && (inputed < "a" || inputed > "z")) {
+							$("#nick").children("strong")
+									.remove();
+							$("#nick")
+									.append(
+											"<strong class=\"text-danger\">사용 불가능합니다.</strong>");
+						}
+						if (inputed == "") {
+							$("#nick").children("strong")
+									.remove();
+							$("#nick")
+									.append(
+											"<strong class=\"text-muted\">아이디를 입력해주세요.</strong>");
+
+						}											
+					}
+				});
+			});
+		});
 </script>
-	<script src="/js/custom/userCommon.js"></script>
-	<script src="/js/custom/toolbarScript.js"></script>
+
+<script src="/js/custom/userCommon.js"></script>
+<script src="/js/custom/toolbarScript.js"></script>
 </body>
 
 </html>

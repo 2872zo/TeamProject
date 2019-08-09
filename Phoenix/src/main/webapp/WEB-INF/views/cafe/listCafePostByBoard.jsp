@@ -221,6 +221,28 @@
 													</td>
 												</c:if>
 											</tr>
+											<tr>
+												<c:if test="${cafeMember.memberGrade eq 'cg100' or cafeMember.memberGrade eq 'cg101'}">
+													<td colspan="6" style="text-align: right; font-size:25px;">
+														<c:if test="${board.boardType eq 'cb100' and (cafeMember.memberGrade eq 'cg100' or cafeMember.memberGrade eq 'cg101') }">
+															<span><input type="button" name="addPostButton" class="btn mb-1 btn-outline-dark btn-sm" value="글쓰기"></span>
+														</c:if>
+														<c:if test="${board.boardType ne 'cb100'}">
+															<span><input type="button" name="addPostButton" class="btn mb-1 btn-outline-dark btn-sm" value="글쓰기"></span>
+														</c:if>
+													</td>
+												</c:if>
+												<c:if test="${!(cafeMember.memberGrade eq 'cg100' or cafeMember.memberGrade eq 'cg101')}">
+													<td colspan="5" style="text-align: right; font-size:25px;">
+														<c:if test="${board.boardType eq 'cb100' and (cafeMember.memberGrade eq 'cg100' or cafeMember.memberGrade eq 'cg101') }">
+															<span><input type="button" name="addPostButton" class="btn mb-1 btn-outline-dark btn-sm" value="글쓰기"></span>
+														</c:if>
+														<c:if test="${board.boardType ne 'cb100'}">
+															<span><input type="button" name="addPostButton" class="btn mb-1 btn-outline-dark btn-sm" value="글쓰기"></span>
+														</c:if>
+													</td>
+												</c:if>
+											</tr>
 										</c:if>
 										<!-- 게시글 목록 없을시 시작 -->
 										<!-- 게시글 목록 존재시 출력 부분 시작 -->

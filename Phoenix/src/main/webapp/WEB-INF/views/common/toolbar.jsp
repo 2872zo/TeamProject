@@ -134,31 +134,30 @@ input[type="checkbox"] {
 		<div class="header">
 			<div class="header-content clearfix">
 
-				<div class="nav-control">
 				<c:if test='${fn:startsWith(URI,"/WEB-INF/views/chat/")}'>
-					<div class="hamburger">
-						<span class="toggle-icon"><i class="icon-menu"></i></span>
+					<div class="nav-control">
+							<div class="hamburger">
+								<span class="toggle-icon"><i class="icon-menu"></i></span>
+							</div>
 					</div>
-					</c:if>
-				</div>
+				</c:if>
 				
-					<div class="header-left d-flex align-items-center">
-					
-							<c:if test='${fn:startsWith(URI,"/WEB-INF/views/cafe/")}'>
-							<i class="mdi mdi-coffee" style='font-size: 30pt;' id="cafeHomeButton">
-							</i>
-							</c:if>
-							
-							<c:if test='${fn:startsWith(URI,"/WEB-INF/views/cafe/cafeHomeMain.jsp")
-							 || fn:startsWith(URI,"/WEB-INF/views/cafe/listCafeNewsFeed.jsp") 
-							 || fn:startsWith(URI,"/WEB-INF/views/cafe/listUserCafeApplication.jsp")
-							 || fn:startsWith(URI,"/WEB-INF/views/cafe/listCafeSearch.jsp")}'>
-								<c:if test="${!empty sessionScope.user}">
+				<div class="header-left d-flex align-items-center">
+				
+						<c:if test='${fn:startsWith(URI,"/WEB-INF/views/cafe/")}'>
+							<i class="mdi mdi-coffee" style='font-size: 30pt;' id="cafeHomeButton"></i>
+						</c:if>
+						
+						<c:if test='${fn:startsWith(URI,"/WEB-INF/views/cafe/cafeHomeMain.jsp")
+						 || fn:startsWith(URI,"/WEB-INF/views/cafe/listCafeNewsFeed.jsp") 
+						 || fn:startsWith(URI,"/WEB-INF/views/cafe/listUserCafeApplication.jsp")
+						 || fn:startsWith(URI,"/WEB-INF/views/cafe/listCafeSearch.jsp")}'>
+							<c:if test="${!empty sessionScope.user}">
 								<i class="mdi mdi-library-books" id='newsFeeding' style='font-size: 30pt'></i>
 								<i class="mdi mdi-clipboard-outline" id='myApplications' style='font-size: 30pt'></i>
-								</c:if>
 							</c:if>
-					</div>
+						</c:if>
+				</div>
 						 
 						
 				

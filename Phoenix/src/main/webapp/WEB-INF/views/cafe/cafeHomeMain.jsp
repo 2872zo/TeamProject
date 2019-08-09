@@ -203,6 +203,10 @@
 		</div>
 		
 		<br/>
+	<c:if test="${empty categorizedCafeList}">
+	<br/><br/><br/>
+		<div class='d-flex justify-content-center'><h3>해당 항목에 해당하는 카페가 없습니다.</h3></div>
+	</c:if>
 
 	<c:if test="${!empty categorizedCafeList}">
 
@@ -237,9 +241,9 @@
 			</c:forEach>
 			
 		</div>
+		 <button type="button" class="btn btn-outline-success" id='moreCafe'>카페 더보기</button>
 	</c:if>
 		 
-		 <button type="button" class="btn btn-outline-success" id='moreCafe'>카페 더보기</button>
 		
 	</div>
 		</div>

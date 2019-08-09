@@ -138,7 +138,7 @@
 			<div class="row page-titles mx-0" style="margin:0px;">
                 <div class="col p-md-0">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item">${cafeURL }</li>
+                        <li class="breadcrumb-item">${cafe.cafeName }</li>
                         <li class="breadcrumb-item active">${post.boardName }</li>
                     </ol>
                 </div>
@@ -173,7 +173,7 @@
 								
 								<hr/>
 								
-								<div class="text-center" style="overflow:hidden;">${post.postContent }</div><br/>
+								<div style="overflow:hidden; margin-left:20px; margin-right:20px;">${post.postContent }</div><br/>
 								
 								<div style="text-align: center;">
 									<button type="button" id="postLikeButton" class="btn mb-1 btn-flat btn-outline-dark">
@@ -265,7 +265,7 @@
 				var tmpForm = document.createElement("form");
 				tmpForm.setAttribute("charset", "UTF-8");
 				tmpForm.setAttribute("method", "Post");
-				tmpForm.setAttribute("action", "/cafe/${cafeURL}/getPostByMember");
+				tmpForm.setAttribute("action", "/cafe/${cafeURL}/getPostListByMember");
 
 				var tmpInputCafeURL = document.createElement("input");
 				tmpInputCafeURL.setAttribute("type", "hidden");
