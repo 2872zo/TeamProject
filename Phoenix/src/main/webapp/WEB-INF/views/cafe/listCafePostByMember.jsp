@@ -246,27 +246,42 @@ checkbox
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach items="${postList }" var="post">
+										<!-- 게시글 목록 없을시 시작 -->
+										<c:if test="${empty postList }">
 											<tr>
-												<input type="hidden" class="postNo" value="${post.postNo }"/>
-												<input type="hidden" class="boardNo" value="${post.boardNo }"/>
-												<input type="hidden" class="memberNo" value="${post.memberNo }"/>
-												<td class="boardName">${post.boardName }</td>
-												<td class="postTitle">${post.postTitle }</td>
-												<td>${post.memberNickname }</td>
-												<td>${post.regDate }</td>
-												<td>${post.viewCount }</td>
-												<td>${post.likeCount }</td>
+												<td colspan="6" style="text-align: center; font-size:25px;">
+													<b>게시글이 없습니다.</b>
+												</td>
 											</tr>
-										</c:forEach>
-
-										<tr>
-											<td colspan="6">
-												<c:import url="/WEB-INF/views/common/pageNavigator.jsp">
-													<c:param name="subject" value="InnerSearch" />
-												</c:import>
-											</td>
-										</tr>
+										</c:if>
+										<!-- 게시글 목록 없을시 시작 -->
+										<!-- 게시글 목록 존재시 출력 부분 시작 -->
+										<c:if test="${!empty postList }">
+											<c:forEach items="${postList }" var="post">
+												<tr>
+													<input type="hidden" class="postNo" value="${post.postNo }"/>
+													<input type="hidden" class="boardNo" value="${post.boardNo }"/>
+													<input type="hidden" class="memberNo" value="${post.memberNo }"/>
+													<td class="boardName">${post.boardName }</td>
+													<td class="postTitle">${post.postTitle }</td>
+													<td>${post.memberNickname }</td>
+													<td>${post.regDate }</td>
+													<td>${post.viewCount }</td>
+													<td>${post.likeCount }</td>
+												</tr>
+											</c:forEach>
+	
+											<tr>
+												<td colspan="6">
+													<c:import url="/WEB-INF/views/common/pageNavigator.jsp">
+														<c:param name="subject" value="InnerSearch" />
+													</c:import>
+												</td>
+											</tr>
+										</c:if>
+										<!-- 게시글 목록 존재시 출력 부분 끝 -->
+										
+										
 
 									</tbody>
 								</table>

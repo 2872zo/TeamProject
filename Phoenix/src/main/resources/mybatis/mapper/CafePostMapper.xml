@@ -32,6 +32,7 @@
 		<result property="targetReplyNo"	  column="target_reply_no"		jdbcType="NUMERIC"	/>
 		<result property="targetReplyMember"  column="target_reply_member" 	jdbcType="NUMERIC"	/>
 		<result property="memberNo"       	  column="member_no"			jdbcType="NUMERIC"	/>
+		<result property="memberIcon" 		  column="profile_img"			jdbcType="VARCHAR" 	/>
 		<result property="memberNickname" 	  column="member_nickname"		jdbcType="VARCHAR"	/>
 		<result property="replyContent"  	  column="reply_content"		jdbcType="VARCHAR"	/>
 		<result property="regDate"  		  column="reg_date"				jdbcType="VARCHAR"	/>
@@ -46,6 +47,7 @@
 		<result property="targetReplyNo"	  column="target_reply_no"		jdbcType="NUMERIC"	/>
 		<result property="targetReplyMember"  column="target_reply_member" 	jdbcType="NUMERIC"	/>
 		<result property="memberNo"       	  column="member_no"			jdbcType="NUMERIC"	/>
+		<result property="memberIcon" 		  column="profile_img"			jdbcType="VARCHAR" 	/>
 		<result property="memberNickname" 	  column="member_nickname"		jdbcType="VARCHAR"	/>
 		<result property="replyContent"  	  column="reply_content"		jdbcType="VARCHAR"	/>
 		<result property="regDate"  		  column="reg_date"				jdbcType="VARCHAR"	/>
@@ -154,19 +156,22 @@
 
 	<sql id="select-reply-list">
 		SELECT
-			reply_no,			
-			post_no,			
-			member_no,			
-			member_nickname,
-			reply_content,		
-			TO_CHAR(reg_date,'YYYY-MM-DD HH24:MI:SS') AS reg_date,			
-			like_count,		
-			reply_status_flag
+			r.reply_no,			
+			r.post_no,			
+			r.member_no,		
+			u.profile_img,
+			r.member_nickname,
+			r.reply_content,		
+			TO_CHAR(r.reg_date,'YYYY-MM-DD HH24:MI:SS') AS reg_date,			
+			r.like_count,		
+			r.reply_status_flag
 		FROM 
-			reply
+			reply r, cafe_member m, users u
 		WHERE 
-			post_no = #{postNo}
-			AND target_reply_no IS NULL
+			r.member_no = m.member_no
+			AND m.user_no = u.user_no
+			AND r.post_no = #{postNo}
+			AND r.target_reply_no IS NULL
 		ORDER BY reply_no
 	</sql>
 	
@@ -218,19 +223,22 @@
 
 	<sql id="select-reply-list-member">
 		SELECT
-			reply_no,			
-			post_no,			
-			member_no,			
-			member_nickname,
-			reply_content,		
-			TO_CHAR(reg_date,'YYYY-MM-DD HH24:MI:SS') AS reg_date,			
-			like_count,		
-			reply_status_flag
+			r.reply_no,			
+			r.post_no,			
+			r.member_no,			
+			u.profile_img,
+			r.member_nickname,
+			r.reply_content,		
+			TO_CHAR(r.reg_date,'YYYY-MM-DD HH24:MI:SS') AS reg_date,			
+			r.like_count,		
+			r.reply_status_flag
 		FROM 
-			reply
+			reply r, cafe_member m, users u
 		WHERE 
-			member_no = #{memberNo}
-			AND reply_status_flag = '0'
+			m.member_no = r.member_no
+			AND m.user_no = u.user_no
+			AND r.member_no = #{memberNo}
+			AND r.reply_status_flag = '0'
 		ORDER BY reg_date DESC
 	</sql>
 	
@@ -501,7 +509,7 @@
 		INTO reply 
 			( reply_no,			
 				post_no,			
-				member_no,			
+				member_no,		
 				member_nickname,
 				target_reply_no,
 				target_reply_member,
@@ -537,20 +545,23 @@
 	
 	<select id="getReReplyList" parameterType="int" resultMap="reReplyResultMap">
 		SELECT
-			reply_no,			
-			post_no,			
-			member_no,			
-			member_nickname,
-			target_reply_no,
-			target_reply_Member,
-			reply_content,		
-			TO_CHAR(reg_date,'YYYY-MM-DD HH24:MI:SS') AS reg_date,			
-			like_count,		
-			reply_status_flag
+			r.reply_no,			
+			r.post_no,			
+			r.member_no,	
+			u.profile_img,		
+			r.member_nickname,
+			r.target_reply_no,
+			r.target_reply_Member,
+			r.reply_content,		
+			TO_CHAR(r.reg_date,'YYYY-MM-DD HH24:MI:SS') AS reg_date,			
+			r.like_count,		
+			r.reply_status_flag
 		FROM 
-			reply
+			reply r, cafe_member m, users u
 		WHERE 
-			target_reply_no = #{replyNo}
+			r.target_reply_no = #{replyNo}
+			AND r.member_no = m.member_no
+			AND m.user_no = u.user_no
 		ORDER BY reply_no
 	</select>
 	

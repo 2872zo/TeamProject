@@ -171,83 +171,98 @@ checkbox
 														</tr>
 													</thead>
 													<tbody>
-														<c:forEach items="${postList }" var="post">
+													
+														<!-- 게시글 목록 없을시 시작 -->
+														<c:if test="${empty postList }">
 															<tr>
-																<input type="hidden" class="postNo" value="${post.postNo }"/>
-																<input type="hidden" class="boardNo" value="${post.boardNo }"/>
-																<input type="hidden" class="memberNo" value="${post.memberNo }"/>
-																<td class="boardName">${post.boardName }</td>
-																<td class="postTitle">${post.postTitle }</td>
-																<td>${post.regDate }</td>
-																<td>${post.viewCount }</td>
-																<td>${post.likeCount }</td>
+																<td colspan="6" style="text-align: center; font-size:25px;">
+																	<b>작성한 게시글이 없습니다.</b>
+																</td>
 															</tr>
-														</c:forEach>
-				
-														<tr>
-															<td colspan="6">
-																<div class="container d-flex justify-content-center">
-																	 <nav>
-																	  <!-- 크기조절 :  pagination-lg pagination-sm-->
-																	  <ul class="pagination" style="align-content:  center;">
-																	    
-																	    <!--  <<== 좌측 nav -->
-																	  	<c:if test="${ postPage.currentPage <= postPage.pageUnit }">
-																	 		<li class="page-item disabled">
-																	 			<span class="page-link">&laquo;</span>
-																	 		</li>
-																		</c:if>
-																		<c:if test="${ postPage.currentPage > postPage.pageUnit }">
-																			<li class="page-item">
-																				<a class="page-link" href="javascript:fncGetMyPostList('${ postPage.beginUnitPage-1}')">
-																					<span style='color:#f5a142;'>&laquo;</span>
-																				</a>
-																			</li>
-																		</c:if>
-																	    
-																	    <!--  중앙  -->
-																		<c:forEach var="i"  begin="${postPage.beginUnitPage}" end="${postPage.endUnitPage}" step="1">
-																			
-																			<!--  현재 page 가르킬경우 : active -->
-																			<c:if test="${ postPage.currentPage == i }">
-																			    <li class="page-item active " aria-current="page" 
-																			    >
-																			    	<span class="page-link" style='background-color:#f5a142; border: 1px solid #f5a142'>
-																			    		${ i }
-																			    		<span class="sr-only">(current)</span>
-																			    	</span>
-																			    </li>
-																			</c:if>	
-																			
-																			<!-- 현재 page가 아닐 경우 -->				
-																			<c:if test="${ postPage.currentPage != i}">	
+														</c:if>
+														<!-- 게시글 목록 없을시 시작 -->
+													
+														<!-- 게시글 있을때 출력 시작 -->
+														<c:if test="${!empty postList }">
+															<c:forEach items="${postList }" var="post">
+																<tr>
+																	<input type="hidden" class="postNo" value="${post.postNo }"/>
+																	<input type="hidden" class="boardNo" value="${post.boardNo }"/>
+																	<input type="hidden" class="memberNo" value="${post.memberNo }"/>
+																	<td class="boardName">${post.boardName }</td>
+																	<td class="postTitle">${post.postTitle }</td>
+																	<td>${post.regDate }</td>
+																	<td>${post.viewCount }</td>
+																	<td>${post.likeCount }</td>
+																</tr>
+															</c:forEach>
+					
+															<tr>
+																<td colspan="6">
+																	<div class="container d-flex justify-content-center">
+																		 <nav>
+																		  <!-- 크기조절 :  pagination-lg pagination-sm-->
+																		  <ul class="pagination" style="align-content:  center;">
+																		    
+																		    <!--  <<== 좌측 nav -->
+																		  	<c:if test="${ postPage.currentPage <= postPage.pageUnit }">
+																		 		<li class="page-item disabled">
+																		 			<span class="page-link">&laquo;</span>
+																		 		</li>
+																			</c:if>
+																			<c:if test="${ postPage.currentPage > postPage.pageUnit }">
 																				<li class="page-item">
-																					<a class="page-link" href="javascript:fncGetMyPostList('${ i }');" style='color:#f5a142;'>${ i }</a>
+																					<a class="page-link" href="javascript:fncGetMyPostList('${ postPage.beginUnitPage-1}')">
+																						<span style='color:#f5a142;'>&laquo;</span>
+																					</a>
 																				</li>
 																			</c:if>
-																		</c:forEach>
-																	    
-																	     <!--  우측 nav==>> -->
-																	     <c:if test="${ postPage.endUnitPage >= postPage.maxPage }">
-																	  		<li class="page-item disabled">
-																	  			<span class="page-link">
-																	  				<span>&raquo;</span>
-																	  			</span>
-																	  		</li>
-																		</c:if>
-																		<c:if test="${ postPage.endUnitPage < postPage.maxPage }">
-																			<li class="page-item">
-																				<a class="page-link"  href="javascript:fncGetMyPostList('${postPage.endUnitPage+1}')">
-																		        	<span style='color:#f5a142;'>&raquo;</span>
-																		      	</a>
-																		    </li>
-																		</c:if>
-																	  </ul>
-																	</nav>
-															</div>
-															</td>
-														</tr>
-				
+																		    
+																		    <!--  중앙  -->
+																			<c:forEach var="i"  begin="${postPage.beginUnitPage}" end="${postPage.endUnitPage}" step="1">
+																				
+																				<!--  현재 page 가르킬경우 : active -->
+																				<c:if test="${ postPage.currentPage == i }">
+																				    <li class="page-item active " aria-current="page" 
+																				    >
+																				    	<span class="page-link" style='background-color:#f5a142; border: 1px solid #f5a142'>
+																				    		${ i }
+																				    		<span class="sr-only">(current)</span>
+																				    	</span>
+																				    </li>
+																				</c:if>	
+																				
+																				<!-- 현재 page가 아닐 경우 -->				
+																				<c:if test="${ postPage.currentPage != i}">	
+																					<li class="page-item">
+																						<a class="page-link" href="javascript:fncGetMyPostList('${ i }');" style='color:#f5a142;'>${ i }</a>
+																					</li>
+																				</c:if>
+																			</c:forEach>
+																		    
+																		     <!--  우측 nav==>> -->
+																		     <c:if test="${ postPage.endUnitPage >= postPage.maxPage }">
+																		  		<li class="page-item disabled">
+																		  			<span class="page-link">
+																		  				<span>&raquo;</span>
+																		  			</span>
+																		  		</li>
+																			</c:if>
+																			<c:if test="${ postPage.endUnitPage < postPage.maxPage }">
+																				<li class="page-item">
+																					<a class="page-link"  href="javascript:fncGetMyPostList('${postPage.endUnitPage+1}')">
+																			        	<span style='color:#f5a142;'>&raquo;</span>
+																			      	</a>
+																			    </li>
+																			</c:if>
+																		  </ul>
+																		</nav>
+																	</div>
+																</td>
+															</tr>
+														</c:if>
+														<!-- 게시글 있을때 출력 끝 -->
+														
 													</tbody>
 												</table>
 											</div>
@@ -269,79 +284,94 @@ checkbox
 														</tr>
 													</thead>
 													<tbody>
-														<c:forEach items="${replyList }" var="reply">
+													
+														<!-- 댓글 목록 없을시 시작 -->
+														<c:if test="${empty replyList }">
 															<tr>
-																<input type="hidden" class="postNo" value="${reply.postNo }"/>
-																<input type="hidden" class="memberNo" value="${reply.memberNo }"/>
-																<td class="postTitle">${reply.replyContent }</td>
-																<td>${reply.regDate }</td>
-																<td>${reply.likeCount }</td>
+																<td colspan="3" style="text-align: center; font-size:25px;">
+																	<b>작성한 댓글이 없습니다.</b>
+																</td>
 															</tr>
-														</c:forEach>
-				
-														<tr>
-															<td colspan="6">
-																<div class="container d-flex justify-content-center">
-																	 <nav>
-																	  <!-- 크기조절 :  pagination-lg pagination-sm-->
-																	  <ul class="pagination" style="align-content:  center;">
-																	    
-																	    <!--  <<== 좌측 nav -->
-																	  	<c:if test="${ replyPage.currentPage <= replyPage.pageUnit }">
-																	 		<li class="page-item disabled">
-																	 			<span class="page-link">&laquo;</span>
-																	 		</li>
-																		</c:if>
-																		<c:if test="${ replyPage.currentPage > replyPage.pageUnit }">
-																			<li class="page-item">
-																				<a class="page-link" href="javascript:fncGetMyReplyList('${ replyPage.beginUnitPage-1}')">
-																					<span style='color:#f5a142;'>&laquo;</span>
-																				</a>
-																			</li>
-																		</c:if>
-																	    
-																	    <!--  중앙  -->
-																		<c:forEach var="i"  begin="${replyPage.beginUnitPage}" end="${replyPage.endUnitPage}" step="1">
-																			
-																			<!--  현재 page 가르킬경우 : active -->
-																			<c:if test="${ replyPage.currentPage == i }">
-																			    <li class="page-item active " aria-current="page" 
-																			    >
-																			    	<span class="page-link" style='background-color:#f5a142; border: 1px solid #f5a142'>
-																			    		${ i }
-																			    		<span class="sr-only">(current)</span>
-																			    	</span>
-																			    </li>
-																			</c:if>	
-																			
-																			<!-- 현재 page가 아닐 경우 -->				
-																			<c:if test="${ replyPage.currentPage != i}">	
+														</c:if>
+														<!-- 댓글 목록 없을시 시작 -->
+														
+														<!-- 댓글 목록 없을시 시작 -->
+														<c:if test="${!empty replyList }">
+															<c:forEach items="${replyList }" var="reply">
+																<tr>
+																	<input type="hidden" class="postNo" value="${reply.postNo }"/>
+																	<input type="hidden" class="memberNo" value="${reply.memberNo }"/>
+																	<td class="postTitle">${reply.replyContent }</td>
+																	<td>${reply.regDate }</td>
+																	<td>${reply.likeCount }</td>
+																</tr>
+															</c:forEach>
+					
+															<tr>
+																<td colspan="6">
+																	<div class="container d-flex justify-content-center">
+																		 <nav>
+																		  <!-- 크기조절 :  pagination-lg pagination-sm-->
+																		  <ul class="pagination" style="align-content:  center;">
+																		    
+																		    <!--  <<== 좌측 nav -->
+																		  	<c:if test="${ replyPage.currentPage <= replyPage.pageUnit }">
+																		 		<li class="page-item disabled">
+																		 			<span class="page-link">&laquo;</span>
+																		 		</li>
+																			</c:if>
+																			<c:if test="${ replyPage.currentPage > replyPage.pageUnit }">
 																				<li class="page-item">
-																					<a class="page-link" href="javascript:fncGetMyReplyList('${ i }');" style='color:#f5a142;'>${ i }</a>
+																					<a class="page-link" href="javascript:fncGetMyReplyList('${ replyPage.beginUnitPage-1}')">
+																						<span style='color:#f5a142;'>&laquo;</span>
+																					</a>
 																				</li>
 																			</c:if>
-																		</c:forEach>
-																	    
-																	     <!--  우측 nav==>> -->
-																	     <c:if test="${ replyPage.endUnitPage >= replyPage.maxPage }">
-																	  		<li class="page-item disabled">
-																	  			<span class="page-link">
-																	  				<span>&raquo;</span>
-																	  			</span>
-																	  		</li>
-																		</c:if>
-																		<c:if test="${ replyPage.endUnitPage < replyPage.maxPage }">
-																			<li class="page-item">
-																				<a class="page-link"  href="javascript:fncGetMyReplyList('${replyPage.endUnitPage+1}')">
-																		        	<span style='color:#f5a142;'>&raquo;</span>
-																		      	</a>
-																		    </li>
-																		</c:if>
-																	  </ul>
-																	</nav>
-															</div>
-															</td>
-														</tr>
+																		    
+																		    <!--  중앙  -->
+																			<c:forEach var="i"  begin="${replyPage.beginUnitPage}" end="${replyPage.endUnitPage}" step="1">
+																				
+																				<!--  현재 page 가르킬경우 : active -->
+																				<c:if test="${ replyPage.currentPage == i }">
+																				    <li class="page-item active " aria-current="page" 
+																				    >
+																				    	<span class="page-link" style='background-color:#f5a142; border: 1px solid #f5a142'>
+																				    		${ i }
+																				    		<span class="sr-only">(current)</span>
+																				    	</span>
+																				    </li>
+																				</c:if>	
+																				
+																				<!-- 현재 page가 아닐 경우 -->				
+																				<c:if test="${ replyPage.currentPage != i}">	
+																					<li class="page-item">
+																						<a class="page-link" href="javascript:fncGetMyReplyList('${ i }');" style='color:#f5a142;'>${ i }</a>
+																					</li>
+																				</c:if>
+																			</c:forEach>
+																		    
+																		     <!--  우측 nav==>> -->
+																		     <c:if test="${ replyPage.endUnitPage >= replyPage.maxPage }">
+																		  		<li class="page-item disabled">
+																		  			<span class="page-link">
+																		  				<span>&raquo;</span>
+																		  			</span>
+																		  		</li>
+																			</c:if>
+																			<c:if test="${ replyPage.endUnitPage < replyPage.maxPage }">
+																				<li class="page-item">
+																					<a class="page-link"  href="javascript:fncGetMyReplyList('${replyPage.endUnitPage+1}')">
+																			        	<span style='color:#f5a142;'>&raquo;</span>
+																			      	</a>
+																			    </li>
+																			</c:if>
+																		  </ul>
+																		</nav>
+																	</div>
+																</td>
+															</tr>
+														</c:if>
+														<!-- 댓글 있을때 출력 끝 -->
 													</tbody>
 												</table>
 											</div>

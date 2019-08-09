@@ -207,48 +207,68 @@
 											</tr>
 										</c:forEach>
 
-										<c:forEach items="${postList }" var="post">
+										<!-- 게시글 목록 없을시 시작 -->
+										<c:if test="${empty postList }">
 											<tr>
-												<input type="hidden" class="postNo" value="${post.postNo }" />
-												<input type="hidden" class="boardNo" value="${post.boardNo }" />
-												<input type="hidden" class="memberNo" value="${post.memberNo }" />
-												<input type="hidden" class="boardName" value="${post.boardName }" />
 												<c:if test="${cafeMember.memberGrade eq 'cg100' or cafeMember.memberGrade eq 'cg101'}">
-													<td><input type="checkbox"></td>
+													<td colspan="6" style="text-align: center; font-size:25px;">
+														<b>게시글이 없습니다.</b>
+													</td>
 												</c:if>
-												<td class="postTitle">${post.postTitle }</td>
-												<td>${post.memberNickname }</td>
-												<td>${post.regDate }</td>
-												<td>${post.viewCount }</td>
-												<td>${post.likeCount }</td>
+												<c:if test="${!(cafeMember.memberGrade eq 'cg100' or cafeMember.memberGrade eq 'cg101')}">
+													<td colspan="5" style="text-align: center; font-size:25px;">
+														<b>게시글이 없습니다.</b>
+													</td>
+												</c:if>
 											</tr>
-										</c:forEach>
-
-										<tr>
-											<c:if test="${cafeMember.memberGrade eq 'cg100' or cafeMember.memberGrade eq 'cg101'}">
-												<td></td>
-											</c:if>
-											<td colspan="4">
-												<c:import url="/WEB-INF/views/common/pageNavigator.jsp">
-													<c:param name="subject" value="Post" />
-												</c:import>
-											</td>
-											<td style="text-align: center;">
-												<c:if test="${board.boardType eq 'cb100' and (cafeMember.memberGrade eq 'cg100' or cafeMember.memberGrade eq 'cg101') }">
-													<span><input type="button" name="addPostButton" class="btn mb-1 btn-outline-dark btn-sm" value="글쓰기"></span>
-												</c:if>
-												<c:if test="${board.boardType ne 'cb100'}">
-													<span><input type="button" name="addPostButton" class="btn mb-1 btn-outline-dark btn-sm" value="글쓰기"></span>
-												</c:if>
-												
+										</c:if>
+										<!-- 게시글 목록 없을시 시작 -->
+										<!-- 게시글 목록 존재시 출력 부분 시작 -->
+										<c:if test="${!empty postList }">
+											<c:forEach items="${postList }" var="post">
+												<tr>
+													<input type="hidden" class="postNo" value="${post.postNo }" />
+													<input type="hidden" class="boardNo" value="${post.boardNo }" />
+													<input type="hidden" class="memberNo" value="${post.memberNo }" />
+													<input type="hidden" class="boardName" value="${post.boardName }" />
+													<c:if test="${cafeMember.memberGrade eq 'cg100' or cafeMember.memberGrade eq 'cg101'}">
+														<td><input type="checkbox"></td>
+													</c:if>
+													<td class="postTitle">${post.postTitle }</td>
+													<td>${post.memberNickname }</td>
+													<td>${post.regDate }</td>
+													<td>${post.viewCount }</td>
+													<td>${post.likeCount }</td>
+												</tr>
+											</c:forEach>
+	
+											<tr>
 												<c:if test="${cafeMember.memberGrade eq 'cg100' or cafeMember.memberGrade eq 'cg101'}">
-													<span><input type="button" name="movePostButton" class="btn mb-1 btn-outline-dark btn-sm" value="이동"></span>
-													<span><input type="button" name="deletePostButton" class="btn mb-1 btn-outline-dark btn-sm" value="삭제"></span>
+													<td></td>
 												</c:if>
-												<!-- 게시글 이동을 위한 태그 -->
-												<input type="hidden" id="targetPostList">
-											</td>
-										</tr>
+												<td colspan="4">
+													<c:import url="/WEB-INF/views/common/pageNavigator.jsp">
+														<c:param name="subject" value="Post" />
+													</c:import>
+												</td>
+												<td style="text-align: center;">
+													<c:if test="${board.boardType eq 'cb100' and (cafeMember.memberGrade eq 'cg100' or cafeMember.memberGrade eq 'cg101') }">
+														<span><input type="button" name="addPostButton" class="btn mb-1 btn-outline-dark btn-sm" value="글쓰기"></span>
+													</c:if>
+													<c:if test="${board.boardType ne 'cb100'}">
+														<span><input type="button" name="addPostButton" class="btn mb-1 btn-outline-dark btn-sm" value="글쓰기"></span>
+													</c:if>
+													
+													<c:if test="${cafeMember.memberGrade eq 'cg100' or cafeMember.memberGrade eq 'cg101'}">
+														<span><input type="button" name="movePostButton" class="btn mb-1 btn-outline-dark btn-sm" value="이동"></span>
+														<span><input type="button" name="deletePostButton" class="btn mb-1 btn-outline-dark btn-sm" value="삭제"></span>
+													</c:if>
+													<!-- 게시글 이동을 위한 태그 -->
+													<input type="hidden" id="targetPostList">
+												</td>
+											</tr>
+										</c:if>
+										<!-- 게시글 목록 존재시 출력 부분 끝 -->
 
 									</tbody>
 								</table>

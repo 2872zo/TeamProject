@@ -8,6 +8,7 @@ public class Reply {
 	private int replyNo;
 	private int postNo;
 	private int memberNo;
+	private String memberIcon;
 	private String memberNickname;
 	private int targetReplyNo;
 	private String targetReplyMember;
@@ -34,6 +35,12 @@ public class Reply {
 	}
 	public void setMemberNo(int memberNo) {
 		this.memberNo = memberNo;
+	}
+	public String getMemberIcon() {
+		return memberIcon;
+	}
+	public void setMemberIcon(String memberIcon) {
+		this.memberIcon = memberIcon;
 	}
 	public String getMemberNickname() {
 		return memberNickname;
@@ -87,9 +94,10 @@ public class Reply {
 	
 	@Override
 	public String toString() {
-		return "Reply [replyNo=" + replyNo + ", postNo=" + postNo + ", memberNo=" + memberNo + ", memberNickname="
-				+ memberNickname + ", targetReplyNo=" + targetReplyNo + ", targetReplyMember=" + targetReplyMember
-				+ ", replyContent=" + replyContent + ", regDate=" + regDate + ", likeCount=" + likeCount
-				+ ", replyStatusFlag=" + replyStatusFlag + ", reReplyList=" + reReplyList + "]";
+		return "Reply [replyNo=" + replyNo + ", postNo=" + postNo + ", memberNo=" + memberNo + ", memberIcon="
+				+ memberIcon + ", memberNickname=" + memberNickname + ", targetReplyNo=" + targetReplyNo
+				+ ", targetReplyMember=" + targetReplyMember + ", replyContent=" + replyContent + ", regDate=" + regDate
+				+ ", likeCount=" + likeCount + ", replyStatusFlag=" + replyStatusFlag + ", reReplyList=" + reReplyList
+				+ "]";
 	}
 }

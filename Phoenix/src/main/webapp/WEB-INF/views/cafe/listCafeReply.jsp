@@ -116,7 +116,7 @@
 		        		<c:if test="${reply.replyStatusFlag == '0' }">
 			        		<div class="replyItem">
 					            <div class="media mt-3">
-						            <img class="mr-3 circle-rounded circle-rounded" src="/images/uploadfiles/userIcon.jpg" width="50" height="50" alt="댓글아이콘" onerror="this.src='/images/default-profile.jpg'">
+						            <img class="mr-3 circle-rounded circle-rounded" src="/images/uploadfiles/profileimg/${reply.memberIcon }" width="50" height="50" alt="댓글아이콘" onerror="this.src='/images/default-profile.jpg'">
 						            <div class="media-body" style="padding:0px;">
 						                <div class="d-sm-flex justify-content-between mb-2">
 						                    <h5 class="mb-sm-0">${reply.memberNickname } <small class="text-muted ml-3">${reply.regDate }</small></h5>
@@ -169,7 +169,7 @@
 								<div class="replyItem reReplyItem">
 						            <div style="margin-left:20px; margin-top:5px;">${reReply.targetReplyMember }</div>
 						            <div class="media mt-3" style="margin-left:20px; margin-top:3px !important;">
-							            <img class="mr-3 circle-rounded circle-rounded" src="/images/uploadfiles/userIcon.jpg" width="40" height="40" alt="댓글아이콘" onerror="this.src='/images/default-profile.jpg'">
+							            <img class="mr-3 circle-rounded circle-rounded" src="/images/uploadfiles/profileimg/${reReply.memberIcon }" width="40" height="40" alt="댓글아이콘" onerror="this.src='/images/default-profile.jpg'">
 							            <div class="media-body"  style="padding:0px;">
 							                <div class="d-sm-flex justify-content-between mb-2">
 							                    <h5 class="mb-sm-0">${reReply.memberNickname } <small class="text-muted ml-3">${reReply.regDate }</small></h5>
