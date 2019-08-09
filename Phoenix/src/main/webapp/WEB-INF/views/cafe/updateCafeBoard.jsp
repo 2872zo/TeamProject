@@ -147,7 +147,7 @@
 					//게시판 추가하면  밑에 input type text추가하고 
 						//alert("새로운게시판")
 					 	appendBoardDetail = "<div class ='boardDetail"+totalBoardSize+"'> <br/><br/>"
-						+"<label>게시판명</label>   <input type='text' class='form-control input-default' name='newBoardName"+count+"'  value='새로운게시판' maxlength='6' required /><hr/> "
+						+"<label>게시판명</label>   <input type='text' class='form-control input-default' name='newBoardName"+count+"'  value='새로운게시판' maxlength='11' required /><hr/> "
 						+"<label>게시판설명</label> <input type='text'  class='form-control input-default' name='newBoardDetail"+count+"' width='50' value='새로운게시판 입니다.' required >"
 						+"<br/><hr/><label>공개설정</label>"
 						+"<div class='radio'><label class='radio-inline'>"
@@ -534,7 +534,7 @@
 													<c:if test="${board.boardType=='cb100' || board.boardType=='cb101' || board.boardType=='cb103'}">
 													   	 <br/><br/>
 														<label>게시판명</label>
-														<input type="text" class="form-control input-default" name="boardName/${board.boardNo}" value="${board.boardName}" maxlength="6" required />
+														<input type="text" class="form-control input-default" name="boardName/${board.boardNo}" value="${board.boardName}" maxlength="11" required />
 														<hr />
 														
 														<label>게시판설명</label>

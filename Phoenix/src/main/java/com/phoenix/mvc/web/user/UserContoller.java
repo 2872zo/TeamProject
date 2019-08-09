@@ -1,6 +1,8 @@
 package com.phoenix.mvc.web.user;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -53,6 +55,9 @@ public class UserContoller {
 
 	@Value("${uploadPath}")
 	String uploadPath;
+	
+	@Value("${targetDir}")
+	String targetDir;
 
 	public UserContoller() {
 		System.out.println(getClass().getName() + "default Constuctor");
@@ -99,6 +104,9 @@ public class UserContoller {
 
 		try {
 			uploadFile.transferTo(f);
+			String fileNammmm = uploadPath+fileName;
+			fileCopy(fileNammmm, targetDir + "/profileimg/" + fileName);
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -181,6 +189,8 @@ public class UserContoller {
 
 		try {
 			uploadFile.transferTo(f);
+			String fileNammmm = uploadPath+"/"+fileName;
+			fileCopy(fileNammmm, targetDir + "/profileimg/" + fileName);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -488,4 +498,23 @@ public class UserContoller {
 	}
 
 	//////////////////////////////////// 준호끝///////////////////////////////////
+	
+	// 파일을 복사하는 메소드
+		public static void fileCopy(String inFileName, String outFileName) {
+			try {
+				FileInputStream fis = new FileInputStream(inFileName);
+				FileOutputStream fos = new FileOutputStream(outFileName);
+
+				int data = 0;
+				while ((data = fis.read()) != -1) {
+					fos.write(data);
+				}
+				fis.close();
+				fos.close();
+
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 }

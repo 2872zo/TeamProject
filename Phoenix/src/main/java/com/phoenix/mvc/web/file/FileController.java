@@ -38,6 +38,9 @@ public class FileController {
 	@Value("${uploadDir}")
 	private String uploadDir;
 
+	@Value("${targetDir}")
+	private String targetDir;
+	
 	@Autowired
 	@Qualifier("chattingServiceImpl")
 	private ChattingService chattingService;
@@ -74,10 +77,12 @@ public class FileController {
 			String fileUrl = "/images/uploadfiles/" + uid + "_" + originFileName;
 			System.out.println("fileUrl = " + fileUrl);
 
+			fileCopy(uploadPath, targetDir + "/" + uid + "_" + originFileName);
+			
 			int timeCount = 0;
 			while (!isExists("http://localhost:8080" + fileUrl) && timeCount < 20) {
 				System.out.println(">>>>>>>>>>>>>>>>>> " + fileUrl + " 파일 로딩중");
-				Thread.sleep(500);
+				Thread.sleep(50);
 				timeCount++;
 			}
 
@@ -201,4 +206,24 @@ public class FileController {
 			return false;
 		}
 	}
+	
+	// 파일을 복사하는 메소드
+	public static void fileCopy(String inFileName, String outFileName) {
+		try {
+			FileInputStream fis = new FileInputStream(inFileName);
+			FileOutputStream fos = new FileOutputStream(outFileName);
+
+			int data = 0;
+			while ((data = fis.read()) != -1) {
+				fos.write(data);
+			}
+			fis.close();
+			fos.close();
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 }

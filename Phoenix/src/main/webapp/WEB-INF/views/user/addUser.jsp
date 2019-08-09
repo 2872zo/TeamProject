@@ -247,6 +247,9 @@
 	<!-- 메뉴바 이용을 위한 스크립트 -->
 	<script src="/js/custom/scroll-top.js"></script>
 	<script src="/plugins/sweetalert/js/sweetalert.min.js"></script>
+	
+	<!-- 현재 페이지 스크립트 -->
+	<script src="/js/custom/util.js"></script>
 	<script type="text/javascript">
 
 	//유효성 검사
@@ -265,7 +268,7 @@
 			return;
 		}
 		if((userId < "0" || userId > "9") && (userId < "A" || userId > "Z") && (userId < "a" || userId > "z")){ 
-             alert("한글 및 특수문자는 아이디로 사용하실 수 없습니다.");
+             sweetAlert("한글 및 특수문자는 아이디로 사용하실 수 없습니다.","","error");
              return false;
          }
 		if(name == null || name.length <1){
@@ -302,8 +305,8 @@
 			return;
 		}
 		if(cch !=1 ){
-			alert(cch);
-			sweetAlert("반드시 휴대전화 인증을 해야함.","","error");
+// 			alert(cch);
+			sweetAlert("반드시 휴대전화 인증을 하셔야합니다..","","error");
 			return;			
 		}else{
 			console.log("입력  : " + userId);
@@ -498,112 +501,108 @@
 
 		$("input[id='userid']").on('keyup',function() {
 					
-							inputed = $("input[id='userid']").val();
-							//alert("입력  : "+inputed);
-
-									$.ajax({
-										url : "/user/json/checkUserIdDuplication",
-										method : "POST",
-										dataType : "json",
-										headers : {
-											"Accept" : "application/json",
-											"Content-Type" : "application/json"
-										},
-										data : JSON.stringify({
-											userId : inputed,
-										}),
-
-										success : function(JSONData) {
-											//alert(JSONData); 
-											//alert(typeof(JSONData));
-
-											if (JSONData && inputed != "") {
-												$("#check").children("strong")
-														.remove();
-												$("#check")
-														.append(
-																"<strong class=\"text-success\">사용 가능합니다.</strong>");	
-																							
-											}else {
-												$("#check").children("strong")
-														.remove();
-												$("#check")
-														.append(
-																"<strong  class=\"text-danger\">사용 불가능합니다.</strong>");
-											}
-											if ((inputed < "0" || inputed > "9") && (inputed < "A" || inputed > "Z") && (inputed < "a" || inputed > "z")) {
-												$("#check").children("strong")
-														.remove();
-												$("#check")
-														.append(
-																"<strong class=\"text-danger\">사용 불가능합니다.</strong>");
-											}
-											if (inputed == "") {
-												$("#check").children("strong")
-														.remove();
-												$("#check")
-														.append(
-																"<strong class=\"text-muted\">아이디를 입력해주세요.</strong>");
+			inputed = $("input[id='userid']").val();
+			//alert("입력  : "+inputed);
 	
-											}											
-										}
-									});
-		  						  });
-								});
+					$.ajax({
+						url : "/user/json/checkUserIdDuplication",
+						method : "POST",
+						dataType : "json",
+						headers : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+						},
+						data : JSON.stringify({
+							userId : inputed,
+						}),
+	
+						success : function(JSONData) {
+							//alert(JSONData); 
+							//alert(typeof(JSONData));
+	
+							if (JSONData && inputed != "") {
+								$("#check").children("strong")
+										.remove();
+								$("#check")
+										.append(
+												"<strong class=\"text-success\">사용 가능합니다.</strong>");	
+																			
+							}else {
+								$("#check").children("strong")
+										.remove();
+								$("#check")
+										.append(
+												"<strong  class=\"text-danger\">사용 불가능합니다.</strong>");
+							}
+							if ((inputed < "0" || inputed > "9") && (inputed < "A" || inputed > "Z") && (inputed < "a" || inputed > "z")) {
+								$("#check").children("strong")
+										.remove();
+								$("#check")
+										.append(
+												"<strong class=\"text-danger\">사용 불가능합니다.</strong>");
+							}
+							if (inputed == "") {
+								$("#check").children("strong")
+										.remove();
+								$("#check")
+										.append(
+												"<strong class=\"text-muted\">아이디를 입력해주세요.</strong>");
+	
+							}											
+						}
+					});
+			  });
+		});
 	
 	$(function() {
 		$("input[id='usernickname']").on('keyup',function() {
 					
-			inputed = $("input[id='usernickname']").val();
-			//alert("입력  : "+inputed);
-	
-				$.ajax({
-					url : "/user/json/checkUserNicknameDuplication",
-					method : "POST",
-					dataType : "json",
-					headers : {
-						"Accept" : "application/json",
-						"Content-Type" : "application/json"
-					},
-					data : JSON.stringify({
-						userNickname : inputed,
-					}),
+			var tableName = "users";		//사용할 테이블
+			var colum = "user_nickname";			//데이터를 확인할 컬럼
+			var valueColum = "user_nickname";		//조건식을 비교할 컬럼
+			var value = $("input[id='usernickname']").val();		//조건식에 넣을 데이터
 
-					success : function(JSONData) {
-						//alert(JSONData); 
-						//alert(typeof(JSONData));
+			if (value == "") {
+				$("#nick").children("strong").remove();
+				$("#nick").append("<strong class=\"text-muted\">아이디를 입력해주세요.</strong>");
 
-						if (JSONData && inputed != "") {
-							$("#nick").children("strong")
-									.remove();
-							$("#nick")
-									.append(
-											"<strong class=\"text-success\">사용 가능합니다.</strong>");	
-																		
-						}else {
-							$("#nick").children("strong")
-									.remove();
-							$("#nick")
-									.append(
-											"<strong  class=\"text-danger\">사용 불가능합니다.</strong>");
-						}
-						if ((inputed < "0" || inputed > "9") && (inputed < "A" || inputed > "Z") && (inputed < "a" || inputed > "z")) {
-							$("#nick").children("strong")
-									.remove();
-							$("#nick")
-									.append(
-											"<strong class=\"text-danger\">사용 불가능합니다.</strong>");
-						}
-						if (inputed == "") {
-							$("#nick").children("strong")
-									.remove();
-							$("#nick")
-									.append(
-											"<strong class=\"text-muted\">아이디를 입력해주세요.</strong>");
-
-						}											
+			}	
+// 			else if ((value < "0" || value > "9") && (value < "A" || value > "Z") && (value < "a" || value > "z")) {
+// 				$("#nick").children("strong").remove();
+// 				$("#nick").append("<strong class=\"text-danger\">사용 불가능합니다.</strong>");
+// 			}
+			else{
+				ValidationCheck(tableName,colum,valueColum,value,function(output){
+					if(output == "true"){				
+						$("#nick").children("strong").remove();
+						$("#nick").append("<strong class=\"text-success\">사용 가능합니다.</strong>");
+					}else{
+						$("#nick").children("strong").remove();
+						$("#nick").append("<strong  class=\"text-danger\">사용 불가능합니다.</strong>");
 					}
 				});
+			}
+	
+// 					success : function(JSONData) {
+// 						//alert(JSONData); 
+// 						//alert(typeof(JSONData));
+
+// 						if (JSONData && inputed != "") {
+// 							$("#nick").children("strong")
+// 									.remove();
+// 							$("#nick")
+// 									.append(
+// 											"<strong class=\"text-success\">사용 가능합니다.</strong>");	
+																		
+// 						}else {
+// 							$("#nick").children("strong")
+// 									.remove();
+// 							$("#nick")
+// 									.append(
+// 											"<strong  class=\"text-danger\">사용 불가능합니다.</strong>");
+// 						}
+// 																
+// 					}
 			});
 		});
 </script>

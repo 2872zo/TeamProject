@@ -56,6 +56,7 @@ public class CafeInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)	throws Exception {
 		System.out.println("\n\n================================ Interceptor > preHandle START ================================");
+		System.out.println("context Path : " + request.getSession().getServletContext().getResourcePaths("/"));
 		String requestURI = request.getRequestURI();
 		System.out.println(">>>>>>>>>>> 요청URL : " + requestURI);
 

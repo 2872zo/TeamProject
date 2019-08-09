@@ -67,8 +67,8 @@
 	                                <div class="media align-items-center mb-4">
 	                                    <img class="mr-3" src="/images/uploadfiles/profileimg/${user.profileImg }" width="80" height="80" style="object-fit: cover; border-radius: 50%;" alt="">
 	                                    <div class="media-body">
-	                                        <h3 class="mb-0">${cafeMember.memberNickname}</h3>
 	                                        <p class="text-muted mb-0">${cafeMember.gradeName}</p>
+	                                        <p>${cafeMember.memberNickname}</p>
 	                                    </div>
 	                                </div>
 	                                <ul class="card-profile__info">

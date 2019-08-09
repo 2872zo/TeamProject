@@ -144,6 +144,7 @@
 					<div class="card">
 						<div class="card-body">
 							<h4 class="card-title">${board.boardName }</h4>
+							<p>${board.boardDetail }</p>
 							<div class="table-responsive">
 								<form id="boardPage">
 									<input type="hidden" name="currentPage">

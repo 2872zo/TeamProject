@@ -170,6 +170,7 @@
 			url = #{value}
 			AND c.manage_user_no = u.user_no
 			AND m.user_no = u.user_no
+			AND c.cafe_no = m.cafe_no
 	 </select>
 	 
 	 <select 	id="getCafeName"	parameterType= "String"	resultMap="cafeSelectMap">
