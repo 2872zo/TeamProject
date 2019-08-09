@@ -88,7 +88,7 @@ background-color: white;}
 
 
 			<div align="center">
-				<button type="button" class="btn btn-outline-warning">저&nbsp;장</button>
+				<button type="button" class="btn btn-outline-warning">확&nbsp;인</button>
 			</div>
 		</form>
 	</div>

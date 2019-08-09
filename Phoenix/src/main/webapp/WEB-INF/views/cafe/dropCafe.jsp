@@ -71,9 +71,9 @@
 			<div class="row page-titles mx-0">
 				<div class="col p-md-0">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="javascript:void(0)">관리페이지</a></li>
+						<li class="breadcrumb-item"><a href="javascript:void(0)">manage</a></li>
 						<li class="breadcrumb-item active"><a
-							href="javascript:void(0)">카페폐쇄</a></li>
+							href="javascript:void(0)">closed</a></li>
 					</ol>
 				</div>
 			</div>
@@ -116,8 +116,6 @@
 	<script src="/js/settings.js"></script>
 	<script src="/js/gleek.js"></script>
 	<script src="/js/styleSwitcher.js"></script>
-	<script src="/plugins/sweetalert/js/sweetalert.min.js"></script>
-	<script src="/plugins/sweetalert/js/sweetalert.init.js"></script>
 
 	<!-- 메뉴바 이용을 위한 스크립트 -->
 	<script src="/js/custom/scroll-top.js"></script>
@@ -128,16 +126,10 @@
 			$("button[name=button]").on(
 					"click",
 					function() {
-						var reason = $("#comment").val();
-						//alert(reason)
 						//alert($(".cafeNo").val())
 						//alert('${cafe.cafeURL}')
-						
-						if(reason !="" $$ reason != null){
-							$("form").attr("method", "POST").attr("action","/cafe/" + '${cafe.cafeURL}'+ "/manage/dropCafe").submit();
-						}else{
-							swal("폐쇄 이유를 입력해주세요.", "", "warning")
-						}
+
+						$("form").attr("method", "POST").attr("action","/cafe/" + '${cafe.cafeURL}'+ "/manage/dropCafe").submit();
 					});
 		});
 	</script>

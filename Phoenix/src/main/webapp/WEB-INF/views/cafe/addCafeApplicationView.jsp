@@ -12,8 +12,7 @@
 <!-- Custom Stylesheet -->
 <link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
 <link href="/css/style.css" rel="stylesheet">
-<!-- 스위트얼럿 css -->
-<link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
+
 <link rel="stylesheet" href="/css/custom/scroll-top.css">
 
 
@@ -104,9 +103,9 @@
 			<div class="row page-titles mx-0">
 				<div class="col p-md-0">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="javascript:void(0)">카페</a></li>
+						<li class="breadcrumb-item"><a href="javascript:void(0)">Member</a></li>
 						<li class="breadcrumb-item active"><a
-							href="javascript:void(0)">카페가입</a></li>
+							href="javascript:void(0)">application</a></li>
 					</ol>
 				</div>
 			</div>
@@ -242,29 +241,16 @@
 		$(function() {
 			var cafeURL = '${cafe.cafeURL}'
 				//alert(cafeURL);
-			
-			$("button[name=button]").on("click",function() {
+
+			$("button[name=button]").on(
+					"click",
+					function() {
 						//alert("가입");
-					var nickname = $("#memberNickname").val();
-					var answer1 = $("#answer1").val();
-					var answer2 = $("#answer2").val();
-					var answer3 = $("#answer3").val();
-						//alert(answer1);
-						//alert(answer2);
-						//alert(answer3);
 						
-						if(nickname!="" && answer1 !="" && answer2 !="" && answer3 !=""){
-							$("form").attr("method", "POST").attr("action","/cafe/" + cafeURL + "/addCafeApplication").submit();
-						}else if(nickname ==""||nickname==null){
-							swal("별명을 입력해주세요.", "", "warning")
-						}else if(answer1 == "" || answer2 == "" || answer3 == ""||answer1 == null || answer2 == null || answer3 == null){
-							swal("답변을 입력해주세요.", "", "warning")
-						}
-					
-						
-						
-						
-			});
+						$("form").attr("method", "POST").attr("action",
+								"/cafe/" + cafeURL + "/addCafeApplication")
+								.submit();
+					});
 		});
 
 		$(function() {
@@ -312,7 +298,7 @@
 
 		});
 	</script>
-	
+
 	<script src="/js/custom/cafeCommon.js"></script>
 
 </body>
