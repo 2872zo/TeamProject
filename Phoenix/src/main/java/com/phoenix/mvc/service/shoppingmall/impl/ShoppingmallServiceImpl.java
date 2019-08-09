@@ -49,14 +49,6 @@ public class ShoppingmallServiceImpl implements ShoppingmallService
 		
 		List<Account> myAccountList = shoppingmallDao.getShoppingmallAccount(user.getUserNo());
 		
-		//accountList를 확인하고 + search조건확인해서 dao실행.
-		//가짜데이터
-		//Account testAccount = new Account();
-		//testAccount.setAccountType("ua105");
-		//testAccount.setAccountId("blueberriii");
-		//testAccount.setAccountPw("123abc!@#");
-		//myAccountList.add(testAccount);
-		
 		for(Account account : myAccountList) {
 			
 			if(account.getAccountType().equals(tmonCode)) //tmonCode이면 tmondao 실행

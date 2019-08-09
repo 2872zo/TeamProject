@@ -61,7 +61,7 @@
     	
     	.card.left{
     	
-    		width:700px;
+    		width:800px;
     		
     	}
 		.card.right{
@@ -72,13 +72,14 @@
     	
     	.row{
     		
-    		margin-left:23%;
+    		margin-left:10%;
     		
     	}
     	
     	.card{
     	
     		margin-bottom:10%;
+    		margin-left:15%;
     	}
     	
     	.orderDate{
@@ -86,6 +87,7 @@
     		color:black;
     		font-size:14px;
     		font-weight:800;
+    		margin-top:10%;
     	}
     	
     	.orderTime{
@@ -97,10 +99,36 @@
     	.orderNumber{
     		
     		margin-top:10%;
+    		color:black;
+    	}
+    	.orderState{
+    		
+    		margin-top:30%;
+    		color: #5158a4;
+    		text-align :center;
+    		text-decoration : underline;
+    		font-size : 14px;
     	}
     	
     	.totalPrice{
+    		
+    		color:#f5a142; 
+    	}
+    	img{
+    		
+    		width:120px;
+    		
+    	}
+    	.productName{
     	
+    		color:black;
+    		font-weight:800;
+    		font-size:17px;
+    	}
+    	.productDetail{
+    	
+    		margin-left:15px;
+    		background-color:#eaebf0;
     	}
     	
     	
@@ -206,8 +234,16 @@
            				
            				<c:if test="${!empty myAccountList }">
            					
-           					<div class="form-inline" style="margin:2%; display:flex; padding-left:70%;">
-           					<span>연동된 쇼핑몰</span>
+           					
+           		<div class="row">		
+		           	<div class="card" style="margin:0; width:200px; margin-left:15%; color:white; font-size:18px; background-color:gray; padding-left:1%;">
+	           			<div class="row">
+	           				<div class="nowDelivery">배송중 </div>
+	           				<div class="nowDelivery"></div>
+	           			</div>
+	           		</div>
+	           		<div class="form-inline" style=" display:flex;">
+           					
            					<c:forEach var="account" items="${myAccountList}">
 		           				 <div class="form-check form-check-inline">
 	                             	<label class="form-check-label">
@@ -252,9 +288,7 @@
 		           				</c:if>
 	           				</c:forEach>
            					</div>
-           				
-	           	
-           		<div class="nowDelivery">배송중 </div>
+           		</div>
            		<div class="row" style="height:50px;">
      	
      				<div class="card left" style="background-color:#f5a142; height:30px;"> <!-- 왼쪽카드 -->
@@ -281,7 +315,7 @@
            		
            		<c:if test="${!empty totalPurchaseList}">
            			<c:forEach var="purchase" items="${totalPurchaseList}">
-           			<div class="row">
+           			<div class="row" style="height:317px;">
            			
            				<div class="card left"> <!-- 왼쪽카드 -->
            					<div class="card-body">
@@ -290,26 +324,28 @@
 				           					<div class="orderDate">${purchase.orderDate}</div>
 				           					<div class="orderTime">${purchase.orderTime}</div>
 				           					<div class="orderNumber">
-				           						<p>주문번호</p>
-				           						<span>${purchase.orderNumber}</span>
+				           						<p style="margin-bottom:0rem; color:black;">주문번호</p>
+				           						<span style="font-weight:800;">${purchase.orderNumber}</span>
 				           					</div>
 				           					<hr/>
+				           					<p>총 주문금액</p>
 				           					<div class="totalPrice">
-				           						<p>총 주문금액</p>
-				           						<span>${purchase.totalPrice}</span>
-				           						
+				           						<span style="color:#f5a142; font-size:17px; font-weight:800;">${purchase.totalPrice}</span>
+				           						 원
 				           					</div>
 			           					</div>
 			           					<div class="col-lg-9">
-			           						<div class="row">
-			           							<a href="${purchase.originPageLink}"><img src="${purchase.imageSrc}"/></a>
-			           							<div>
+			           						<div class="row" style="margin:0; margin-top:3%;">
+			           							<a class="col-lg-3" href="${purchase.originPageLink}"><img src="${purchase.imageSrc}"/></a>
+			           							<div class="col-lg-8">
 			           								<div class="productName">${purchase.productName}</div>
-			           								<div class="totalPrice">${purchase.totalPrice}</div>
+			           								<div class="totalPrice">
+			           									<span style="color:#f5a142; font-size:17px; font-weight:800;">${purchase.totalPrice}</span>
+			           									원
+			           								</div>
 			           							</div>
-			           							
 			           						</div>
-			           						<div class="productDetail">${purchase.productDetail}</div>
+			           						<div class="productDetail"><pre style="margin-top:8%;">${purchase.productDetail}</pre></div>
 			           					</div>
 			           				</div>
 			           			

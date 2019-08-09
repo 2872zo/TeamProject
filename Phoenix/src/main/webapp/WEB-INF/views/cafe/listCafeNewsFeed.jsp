@@ -58,9 +58,6 @@
 
 <div class='card'>
 <div class='card-body'>
-<c:if test="${empty newsFeed}">
-<div class='d-flex justify-content-center'><h3>카페 가입신청 내역이 없습니다.</h3></div>
-</c:if>
 		<c:forEach var = 'post' items='${newsFeed}'>
 		<input type='hidden' class='cafeURL' value='${post.cafeURL}'>
 		<input type='hidden' class='postNo'  value='${post.postNo}'>

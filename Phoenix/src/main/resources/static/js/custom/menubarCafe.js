@@ -11,7 +11,8 @@
 	    	});
 	
 	    	$(function(){//카페탈퇴
-	    		$("#deleteCafeMember").on("click", function(){
+	    		document.querySelector(".sweet-withdraw").onclick =
+		    		function(){
 		    			swal({
 		    				title:"카페에서 탈퇴하시겠습니까?",
 		    				text:"카페 탈퇴시 작성된 게시글은 자동으로 삭제되지 않습니다.",
@@ -58,8 +59,8 @@
 			    				}
 			    			
 		    				});
+	    				}
 		    		});
-	    	});
 	    	
 	    	
 	    	$(function(){//프로필수정

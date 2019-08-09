@@ -145,7 +145,8 @@ input[type="checkbox"] {
 					<div class="header-left d-flex align-items-center">
 					
 							<c:if test='${fn:startsWith(URI,"/WEB-INF/views/cafe/")}'>
-								<i class="mdi mdi-coffee" style='font-size: 30pt;' id="cafeHomeButton"></i>
+							<i class="mdi mdi-coffee" style='font-size: 30pt;' id="cafeHomeButton">
+							</i>
 							</c:if>
 							
 							<c:if test='${fn:startsWith(URI,"/WEB-INF/views/cafe/cafeHomeMain.jsp")

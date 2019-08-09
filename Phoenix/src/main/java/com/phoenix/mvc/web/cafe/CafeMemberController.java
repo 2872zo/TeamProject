@@ -126,16 +126,6 @@ public class CafeMemberController {
 
 	}
 
-	@RequestMapping(value = "/{cafeURL}/updateCafeMemberProfile", method = RequestMethod.POST)
-	public String updateCafeMemberProfile(@ModelAttribute("cafeMember") CafeMember cafeMember) {
-
-		System.out.println("/cafe/{cafeURL}/updateCafeMemberProfile : POST");
-
-		cafeMemberService.updateCafeMemberProfile(cafeMember);
-
-		return null;// 메인으로 이동
-
-	}
 	//////////////////////////////// 지니끝//////////////////////////////////
 
 }
