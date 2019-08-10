@@ -312,7 +312,7 @@
 			AND post.post_status_flag = '0'
 			AND post.post_notice_flag = '1'
 		</where>
-		ORDER BY notice_index
+		ORDER BY board_no, notice_index
 	</select>
 	
 	<select id="getPostListByNotice" parameterType="Search" resultMap="postResultMap">
