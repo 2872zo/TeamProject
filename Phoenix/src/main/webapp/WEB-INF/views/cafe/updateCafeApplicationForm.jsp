@@ -12,7 +12,7 @@
 <title>가입양식관리</title>
 
 
-<link href="/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
+<link href="/plugins/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
 <link href="/css/style.css" rel="stylesheet">
 <link rel="stylesheet" href="/css/custom/scroll-top.css">
 	
@@ -151,7 +151,7 @@
 	<!-- 메뉴바 이용을 위한 스크립트 -->
 	<script src="/js/custom/scroll-top.js"></script>
 
-	
+	<script src="/plugins/sweetalert2/dist/sweetalert2.min.js"></script>
 		<script type="text/javascript">
 
 		//============= "가입"  Event 연결 =============
@@ -171,18 +171,24 @@
 			 });
 				    
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			 $("button.btn.btn-primary")
-				.on(
-						"click",
-						function() {
-							alert("저장");
-							$("form")
-									.attr("method", "POST")
-									.attr("action",
-											"/cafe/${cafe.cafeURL}/manage/updateCafeApplicationForm")
-									.submit();
-						});
-	});
+			 $("button.btn.btn-primary").on("click",function(e) {
+				 e.preventDefault();
+				 Swal.fire({
+					  title: '수정확인',
+					  text: '변경내용을 저장하시겠습니까?',
+					  type: 'info',
+					  showCancelButton: true,
+					  confirmButtonColor: '#3085d6',
+					  cancelButtonColor: '#d33',
+					  confirmButtonText: '예',
+					  cancelButtonText: '아니오'
+					}).then((result) => {
+					  if (result.value) {
+							$("form").attr("method", "POST").attr("action","/cafe/${cafe.cafeURL}/manage/updateCafeApplicationForm").submit();
+					  }
+					});
+			});
+		 });
 
 		 $(function() {
 				//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)

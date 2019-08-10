@@ -372,6 +372,8 @@ public class CafePostContoller {
 	public String updateReplyView(@PathVariable String cafeURL, @ModelAttribute Search search,
 			Map<String, Object> map) {
 		Reply reply = cafePostService.getReply(search.getReplyNo());
+		
+		reply.setReplyContent(reply.getReplyContent().replaceAll("<br/>", "\n"));
 
 		map.put("reply", reply);
 

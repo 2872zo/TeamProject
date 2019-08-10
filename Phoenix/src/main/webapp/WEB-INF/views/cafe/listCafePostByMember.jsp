@@ -132,8 +132,8 @@ checkbox
 			<div class="row page-titles mx-0" style="margin:0px;">
                 <div class="col p-md-0">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
-                        <li class="breadcrumb-item active"><a href="javascript:void(0)">Home</a></li>
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">${cafe.cafeName }</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0)">작성글검색</a></li>
                     </ol>
                 </div>
             </div>
@@ -362,13 +362,13 @@ checkbox
 
 			//datePicker 생성
 			$(function(){
-				$( "#termStart" ).datepicker({dateFormat:'yy-mm-dd'});
-			    $( "#termEnd" ).datepicker({dateFormat:'yy-mm-dd'});
+				$( "#termStart" ).datepicker({format:'yy-mm-dd'});
+			    $( "#termEnd" ).datepicker({format:'yy-mm-dd'});
 			});
 			
 			//검색조건 유지
 			$(function(){
-				$("#searchForm").attr("method","POST").attr("action","/cafe/${cafeURL}/getPostByMember")
+				$("#searchForm").attr("method","POST").attr("action","/cafe/${cafeURL}/getPostListByMember")
 				
 				$("[name=currentPage]").val(${search.currentPage });
 				$( "#termStart" ).val('${search.termStart}');

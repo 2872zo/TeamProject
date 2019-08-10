@@ -94,7 +94,7 @@
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item"><a href="javascript:void(0)">manage</a></li>
 						<li class="breadcrumb-item active"><a
-							href="javascript:void(0)">application</a></li>
+							href="javascript:void(0)">notice</a></li>
 					</ol>
 				</div>
 			</div>

@@ -321,7 +321,7 @@
 								
 //	 							debugger;
 								if(data.result == false){
-									alert("이미 추천한 댓글입니다.")
+									swal("추천 실패","이미 추천한 댓글입니다.","error");
 								}else{
 									count.text(data.likeCount);
 								}

@@ -229,8 +229,7 @@
 	<script src="/js/styleSwitcher.js"></script>
 
 	<script src="/plugins/sweetalert/js/sweetalert.min.js"></script>
-	<script src="/plugins/sweetalert/js/sweetalert.init.js"></script>
-	
+
 	<!-- 메뉴바 이용을 위한 스크립트 -->
 	<script>
     	var memberNo = '${cafeMember.memberNo}'
@@ -306,7 +305,7 @@
 							
 // 							debugger;
 							if(data.result == false){
-								alert("이미 추천한 게시글입니다.")
+								swal("추천 실패","이미 추천한 게시글입니다.","error");
 							}else{
 								$("#postLikeButton").find(".count").text(data.likeCount);
 							}
