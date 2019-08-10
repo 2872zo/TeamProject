@@ -723,17 +723,29 @@
 		SELECT
 			 inner_table.*, ROWNUM AS row_seq
 		 FROM 
-			 (SELECT
-					*
-				FROM
-					reply
-				WHERE
-					like_count &gt; 0
-					AND reply_status_flag = '0'
-					AND post_no = #{postNo}
-				ORDER BY like_count DESC) inner_table
+			 (
+			 SELECT
+				r.reply_no,			
+				r.post_no,			
+				r.member_no,		
+				u.profile_img,
+				r.member_nickname,
+				r.reply_content,		
+				TO_CHAR(r.reg_date,'YYYY-MM-DD HH24:MI:SS') AS reg_date,			
+				r.like_count,		
+				r.reply_status_flag
+			FROM 
+				reply r, cafe_member m, users u
+			WHERE 
+				r.like_count &gt; 0
+				AND r.reply_status_flag = '0'
+				AND r.member_no = m.member_no
+				AND m.user_no = u.user_no
+				AND r.post_no = #{postNo}
+			ORDER BY like_count DESC
+				) inner_table
 		 <where>
-		 	AND ROWNUM &lt;= 5
+		 	ROWNUM &lt;= 5
 		 </where>
 	</select>
 	

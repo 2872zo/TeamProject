@@ -84,7 +84,7 @@
                                             </label>
                                             <div class="col-lg-6">
                                             	
-                                                <input type="text" class="form-control" id="val-username" name="cafeName">
+                                                <input type="text" class="form-control" id="val-username" name="cafeName" maxlength="20">
                                                 <span id="check"> <strong>카페이름을 입력해주세요</strong>
 													</span>
                                             </div>

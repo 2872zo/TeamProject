@@ -67,7 +67,7 @@
 						<div class="replyItem bestReplyItem">
 				            <div style="margin-left:20px; margin-top:5px;"><span class="badge" style="background:rgba(235, 223, 61, 1);">Best</span></div>
 				            <div class="media mt-3" style="margin-left:20px; margin-top:3px !important;">
-					            <img class="mr-3 circle-rounded circle-rounded" src="/images/uploadfiles/userIcon.jpg" width="40" height="40" alt="댓글아이콘" onerror="this.src='/images/default-profile.jpg'">
+					            <img class="mr-3 circle-rounded circle-rounded" src="/images/uploadfiles/profileimg/${bestReply.memberIcon }" width="40" height="40" alt="댓글아이콘" onerror="this.src='/images/default-profile.jpg'">
 					            <div class="media-body"  style="padding:0px;">
 					                <div class="d-sm-flex justify-content-between mb-2">
 					                    <h5 class="mb-sm-0">${bestReply.memberNickname } <small class="text-muted ml-3">${bestReply.regDate }</small></h5>

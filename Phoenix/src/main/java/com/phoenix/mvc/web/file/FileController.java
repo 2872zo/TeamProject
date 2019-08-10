@@ -77,12 +77,12 @@ public class FileController {
 			String fileUrl = "/images/uploadfiles/" + uid + "_" + originFileName;
 			System.out.println("fileUrl = " + fileUrl);
 
-			fileCopy(uploadPath, targetDir + "/" + uid + "_" + originFileName);
+//			fileCopy(uploadPath, targetDir + "/" + uid + "_" + originFileName);
 			
 			int timeCount = 0;
 			while (!isExists("http://localhost:8080" + fileUrl) && timeCount < 20) {
 				System.out.println(">>>>>>>>>>>>>>>>>> " + fileUrl + " 파일 로딩중");
-				Thread.sleep(50);
+				Thread.sleep(500);
 				timeCount++;
 			}
 

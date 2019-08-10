@@ -22,11 +22,12 @@
 	
 	$(function(){
 		if(${user==null}){			
-			alert("계정이 없습니다 회원가입");
-		    window.opener.location.href = "/user/addUser";
-			window.self.close();	  
+			alert("연동된 포털계정이 존재하지 않습니다.\n회원 가입 페이지로 이동합니다.");
+// 			window.opener.GoToAddUser();  
+		    window.opener.location.href = "/user/addUserView";
+			window.self.close();	
 		}else{
-			alert("로그인 성공");
+// 			alert("로그인 성공");
 			window.opener.location.href = "/";
 			window.self.close(); 
 		}

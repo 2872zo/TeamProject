@@ -251,7 +251,24 @@
 	<!-- 현재 페이지 스크립트 -->
 	<script src="/js/custom/util.js"></script>
 	<script type="text/javascript">
-
+	function GoToAddUser(){
+		swal("소셜 로그인 실패", "연동된 포털 계정이 존재하지 않습니다.\n회원 가입 페이지로 이동합니다.","warning");
+		swal(
+				{
+					title:"소셜 로그인 실패",
+					text:"연동된 포털 계정이 존재하지 않습니다.\n회원 가입 페이지로 이동합니다.",
+					type:"warning",
+					showCancelButton:!0,
+					confirmButtonColor:"#DD6B55",
+					confirmButtonText:"이동",
+					closeOnConfirm:!1
+				},
+				function(){
+					location.href = "/user/addUserView";
+				}
+			);
+	}
+	
 	//유효성 검사
 	function fncAddUser() {
 		var userName = $("input[name='userName']").val();
@@ -605,6 +622,8 @@
 // 					}
 			});
 		});
+
+	
 </script>
 
 <script src="/js/custom/userCommon.js"></script>

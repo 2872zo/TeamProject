@@ -99,7 +99,7 @@
 	   	<set>
 		accept_status_code=#{acceptStatusCode}	
 	   	</set>
-	   	WHERE user_no = #{userNo}
+	   	WHERE application_no = #{applicationNo}
 	 </update>
 	 
 	 <sql id="selectAllFromCafeApplication">

@@ -13,7 +13,7 @@
         </div>
 
 		<!-- ToolBar Start /////////////////////////////////////-->
-		<jsp:include page="../common/toolbar.jsp" />
+			<jsp:include page="../common/toolbar.jsp" />
 		<!-- ToolBar End /////////////////////////////////////-->
 
 <meta charset="utf-8">
@@ -80,13 +80,12 @@
 		<!--**********************************
             Content body start
         ***********************************-->
-<div class="content-body" style="min-height: 743px;">
 
 
 
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-lg-12">
+		<div class="container-fluid" style="min-height: 743px; margin:10px;">
+			<div class="row d-flex justify-content-center">
+				<div class="col-lg-10">
 					<div class="card">
 						<div class="card-body">			
 							<h2 class="text-center">로그인</h2>
@@ -95,39 +94,38 @@
 								<br>
 			     
   
-  <div class="login-form-bg h-100">
-        <div class="container h-100">
-            <div class="row justify-content-center h-100">
-                <div class="col-xl-6">
-                    <div class="form-input-content">
-                        <div class="card login-form mb-0">
-                            <div class="card-body pt-5">
-                                <a class="text-center" href="/"> <h4>Phoenix</h4></a>
-        
-                                <form class="mt-5 mb-5 login-input">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="ID" id="userid" name="userId">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="password" class="form-control" placeholder="Password" id="passWord" name="password">
-                                    </div>
-                                    <button class="btn login-form__btn submit w-100" id = "logon">로그인</button>
-                                    <div class="text-center">
-				     <a id="kakao"><img src="/images/uploadFiles/kakao/kakaos.jpg" width=238; height=45; /></a>
-     				<a id="naver"><img src="/images/uploadFiles/naver/navers.jpg"  width=238; height=45; /></a>		
-									</div>
-                                </form>
-                                <a href="/user/addUserView" class="text-primary" id="addUser1">회원가입</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+							  <div class="login-form-bg h-100">
+							        <div class="container h-100">
+							            <div class="row justify-content-center h-100">
+							                <div class="col-xl-6">
+							                    <div class="form-input-content">
+							                        <div class="card login-form mb-0" style="box-shadow: none;">
+							                            <div class="card-body pt-5">
+							                                <a class="text-center" href="/"> <h4>로그인이 필요한 기능입니다.</h4></a>
+							        
+							                                <form class="mt-5 mb-5 login-input">
+							                                    <div class="form-group">
+							                                        <input type="text" class="form-control" placeholder="ID" id="userid" name="userId">
+							                                    </div>
+							                                    <div class="form-group">
+							                                        <input type="password" class="form-control" placeholder="Password" id="passWord" name="password">
+							                                    </div>
+							                                    <button class="btn login-form__btn submit w-100" id = "logon">로그인</button>
+							                                    <div class="text-center">
+																    <a id="kakao"><img src="/images/uploadFiles/kakao/kakaos.jpg" width=238; height=45; /></a>
+												     				<a id="naver"><img src="/images/uploadFiles/naver/navers.jpg"  width=238; height=45; /></a>		
+																</div>
+							                                </form>
+							                                <a href="/user/addUserView" class="text-primary" id="addUser1">회원가입</a>
+							                            </div>
+							                        </div>
+							                    </div>
+							                </div>
+							            </div>
+							        </div>
+							    </div>
     
-  <input type="hidden" name="targetURL" value="${targetURL }">
-
+  								<input type="hidden" name="targetURL" value="${targetURL }">
 
 	 			 	 </div>
 		  			</div>
@@ -136,7 +134,6 @@
 		 		 </div>
 		 	    </div>
 		 	   </div>
-			  </div>
 		  
 
  	<!--  화면구성 div end /////////////////////////////////////-->
