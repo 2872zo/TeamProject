@@ -119,14 +119,14 @@ public class ExploreServiceImpl implements ExploreService{
 		{
 			naverMap = exploreDao.getNaverCafeExploreList(search);
 			daumMap = exploreDao.getDaumCafeExploreList(search);
-			//phoenixMap = exploreDao.getPhoenixCafeExploreList(search);
+			phoenixMap = exploreDao.getPhoenixCafeExploreList(search);
 			
 			cafeList.addAll((List<CafeExplore>) naverMap.get("cafeList"));
 			cafeList.addAll((List<CafeExplore>)daumMap.get("cafeList"));
-			//cafeList.addAll((List<CafeExplore>)phoenixMap.get("cafeList"));
+			cafeList.addAll((List<CafeExplore>)phoenixMap.get("cafeList"));
 			totalCount += (int)naverMap.get("totalCount");
 			totalCount += (int)daumMap.get("totalCount");
-			//totalCount += (int)phoenixMap.get("totalCount");
+			totalCount += (int)phoenixMap.get("totalCount");
 			
 		}
 		else//엔진부분선택
@@ -148,10 +148,10 @@ public class ExploreServiceImpl implements ExploreService{
 			}
 			if(search.isEnginePhoenix())
 			{
-				//phoenixMap = exploreDao.getPhoenixCafeExploreList(search);
+				phoenixMap = exploreDao.getPhoenixCafeExploreList(search);
 				
-				//cafeList.addAll((List<CafeExplore>)phoenixMap.get("cafeList"));
-				//totalCount += (int)phoenixMap.get("totalCount");
+				cafeList.addAll((List<CafeExplore>)phoenixMap.get("cafeList"));
+				totalCount += (int)phoenixMap.get("totalCount");
 			}
 		}
 		
