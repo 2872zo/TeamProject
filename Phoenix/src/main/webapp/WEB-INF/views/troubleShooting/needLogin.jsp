@@ -51,7 +51,7 @@
                                     </div>
                                 </form>
                                 <div class="text-center">
-                                    <p>Copyright Â© Designed by <a href="https://themeforest.net/user/digitalheaps">Digitalheaps</a>, Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2018</p>
+                                    <p>Copyright Â© Designed by <a href="https://themeforest.net/user/digitalheaps">Digitalheaps</a>, Developed by <a href="https://themeforest.net/user/quixlab">Phoenix</a></p>
                                     <ul class="list-inline">
                                         <li class="list-inline-item"><a href="javascript:void()" class="btn btn-facebook"><i class="fa fa-facebook"></i></a>
                                         </li>

@@ -483,7 +483,7 @@ input[type="checkbox"] {
         ***********************************-->
         <div class="footer">
             <div class="copyright">
-                <p>Copyright © Designed &amp; Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2018</p>
+                <p>Copyright © Designed &amp; Developed by <a href="https://themeforest.net/user/quixlab">Phoenix</a></p>
             </div>
         </div>
         <!--**********************************
