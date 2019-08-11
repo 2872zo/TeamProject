@@ -65,10 +65,14 @@ public class UserContoller {
 
 	//////////////////////////////////// 준호시작///////////////////////////////////
 	@RequestMapping(value = "loginView", method = RequestMethod.GET)
-	public String login() throws Exception {
+	public String login(@RequestParam String targetURL, Model model) throws Exception {
 
 		System.out.println("/user/logon : GET");
-
+		
+		System.out.println("target URL : "+targetURL);
+		
+		model.addAttribute("targetURL", targetURL);
+		
 		return "user/login";
 	}
 

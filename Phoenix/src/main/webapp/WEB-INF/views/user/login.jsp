@@ -125,7 +125,7 @@
 							        </div>
 							    </div>
     
-  								<input type="hidden" name="targetURL" value="${targetURL }">
+  								<input type="hidden" name="targetURL" value="${targetURL}">
 
 	 			 	 </div>
 		  			</div>
@@ -218,7 +218,8 @@
 							return false;
 						}else{
 							//self.location = "?targetURL=${request.getRequestURI()}";							
-						self.location ="/";			
+							
+							self.location = $("input[name=targetURL]").val();			
 						}							
 					}
 				});//ajax

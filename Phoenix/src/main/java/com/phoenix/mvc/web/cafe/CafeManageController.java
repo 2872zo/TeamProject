@@ -1,6 +1,8 @@
 package com.phoenix.mvc.web.cafe;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -70,9 +72,11 @@ public class CafeManageController {
 	}
 
 	@Value("${uploadPath2}")
-	String uploadPath2;
+	private String uploadPath2;
 	@Value("${uploadPath3}")
-	String uploadPath3;
+	private String uploadPath3;
+	@Value("${targetDir}")
+	private String targetDir;
 
 	/////////////////////////////// 기황시작//////////////////////////////////
 	@RequestMapping(value = "/{cafeURL}/manage/getCafeMemberList")
@@ -761,6 +765,7 @@ public class CafeManageController {
 
 		try {
 			uploadFile2.transferTo(f2);
+			fileCopy(uploadPath2 + "/" + fileName2, targetDir + "/" + fileName2);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -775,6 +780,7 @@ public class CafeManageController {
 
 		try {
 			uploadFile3.transferTo(f3);
+			fileCopy(uploadPath3 + "/" + fileName3, targetDir + "/" + fileName3);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -842,4 +848,23 @@ public class CafeManageController {
 	}
 /////////////////////////////// 준호끝///////////////////////////////////////
 
+	
+	// 파일을 복사하는 메소드
+		public static void fileCopy(String inFileName, String outFileName) {
+			try {
+				FileInputStream fis = new FileInputStream(inFileName);
+				FileOutputStream fos = new FileOutputStream(outFileName);
+
+				int data = 0;
+				while ((data = fis.read()) != -1) {
+					fos.write(data);
+				}
+				fis.close();
+				fos.close();
+
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 }
