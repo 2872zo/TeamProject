@@ -77,7 +77,7 @@ public class FileController {
 			String fileUrl = "/images/uploadfiles/" + uid + "_" + originFileName;
 			System.out.println("fileUrl = " + fileUrl);
 
-			fileCopy(uploadPath, targetDir + "/" + uid + "_" + originFileName);
+			//fileCopy(uploadPath, targetDir + "/" + uid + "_" + originFileName);
 			
 			int timeCount = 0;
 			while (!isExists("http://localhost:8080" + fileUrl) && timeCount < 20) {
@@ -134,7 +134,7 @@ public class FileController {
 					lastFileName = fileName;
 					
 					multipartFile.transferTo(new File(chatDir + fileName));
-					fileCopy(chatDir + fileName, targetDir + "/" + fileName);
+					//fileCopy(chatDir + fileName, targetDir + "/" + fileName);
 					
 					/*
 					 * FileInputStream fis = new FileInputStream(fileto);

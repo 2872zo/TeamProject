@@ -133,7 +133,7 @@
 						//alert($(".cafeNo").val())
 						//alert('${cafe.cafeURL}')
 						
-						if(reason !="" $$ reason != null){
+						if(reason !="" && reason != null){
 							$("form").attr("method", "POST").attr("action","/cafe/" + '${cafe.cafeURL}'+ "/manage/dropCafe").submit();
 						}else{
 							swal("폐쇄 이유를 입력해주세요.", "", "warning")

@@ -122,12 +122,16 @@
 						<div class="error-content">
 							<div class="card mb-0">
 								<div class="card-body text-center">
-									<h1 class="error-text text-primary">${cafeMember.memberNickName}님은 정지 회원입니다.</h1>
-									<h4 class="mt-4">정지사유 : ${cafeMemberBlock.blockReason}</h4>
+									<h1 class="error-text text-primary">슈퍼맨님은 정지 회원입니다.</h1>
+									<h4 class="mt-4">정지사유 : <!--  ${cafeMemberBlock.blockReason}--> 광고글 작성</h4>
 									<p>
+									<!-- 
 										<fmt:formatDate value="${cafeMemberBlock.blockStartDate}" pattern="yyyy.MM.dd"/> 부터
 										<fmt:formatDate value="${cafeMemberBlock.blockEndDate}" pattern="yyyy.MM.dd"/> 일까지
 										<strong>${cafeMemberBlock.period}</strong> 일간 해당 카페 접근 불가능 합니다.
+										 -->
+										 2019년 08월 11일 부터 2019년 09월 10일까지
+										<br/><strong>30</strong> 일간 해당 카페 접근 불가능 합니다.
 									</p>
 									<form class="mt-5 mb-5">
 
