@@ -1,0 +1,3 @@
+exp userid=scott/tiger@xe owner=scott file=c:\00\190810.dmp
+
+imp userid=scott/tiger file=c:\00\190810.dmp full=y
