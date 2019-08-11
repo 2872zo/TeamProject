@@ -410,7 +410,7 @@ checkbox
 			<div class="copyright">
 				<p>
 					Copyright &copy; Designed & Developed by <a
-						href="https://themeforest.net/user/quixlab">Quixlab</a> 2018
+						href="https://themeforest.net/user/quixlab">Phoenix</a>
 				</p>
 			</div>
 		</div>
