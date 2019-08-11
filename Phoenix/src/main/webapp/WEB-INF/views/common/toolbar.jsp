@@ -178,6 +178,8 @@ input[type="checkbox"] {
                                         <li>
                                             <a href=/user/getUserInfo?userNo=${user.userNo }><i class="icon-user"></i> <span>회원정보상세</span></a>
                                         </li>
+                                        
+                                        <!-- 
                                         <li>
                                              
                                             <div class="badge gradient-3 badge-pill gradient-1"></div>
@@ -191,6 +193,8 @@ input[type="checkbox"] {
                                         </c:if>
                                         <li><a href="page-login.html"><i class="icon-list"></i> <span>신고목록</span></a></li>
                                         <li><a href="page-login.html"><i class="icon-list"></i> <span>문의목록</span></a></li>
+                                         -->
+                                         
                                     </ul>
                                 </div>
                             </div>

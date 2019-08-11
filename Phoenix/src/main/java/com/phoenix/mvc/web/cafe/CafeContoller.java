@@ -154,6 +154,7 @@ public class CafeContoller {
 		Search search = new Search();
 		search.setSearchCondition("0");
 		search.setCafeURL(cafeURL);
+		search.setUserNo(user.getUserNo());
 		List<Board> boardList = cafeManageService.getCafeBoardList(search);
 		CafeMember cafeMember = cafeMemberService.getCafeMemberByURL(search);
 		

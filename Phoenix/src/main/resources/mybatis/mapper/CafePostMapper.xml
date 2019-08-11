@@ -575,20 +575,23 @@
 	
 	<select id="getReply" parameterType="int" resultMap="replyResultMap">
 		SELECT
-			reply_no,			
-			post_no,			
-			member_no,			
-			member_nickname,
-			reply_content,		
-			TO_CHAR(reg_date,'YYYY-MM-DD HH24:MI:SS') AS reg_date,			
-			like_count,		
-			reply_status_flag,
-			target_reply_no,
-			target_reply_member
+			r.reply_no,			
+			r.post_no,			
+			r.member_no,	
+			u.profile_img,		
+			r.member_nickname,
+			r.target_reply_no,
+			r.target_reply_Member,
+			r.reply_content,		
+			TO_CHAR(r.reg_date,'YYYY-MM-DD HH24:MI:SS') AS reg_date,			
+			r.like_count,		
+			r.reply_status_flag
 		FROM 
-			reply
+			reply r, cafe_member m, users u
 		WHERE 
 			reply_no = #{replyNo}
+			AND r.member_no = m.member_no
+			AND m.user_no = u.user_no
 	</select>
 	
 	<update id="updateReply" parameterType="Reply">

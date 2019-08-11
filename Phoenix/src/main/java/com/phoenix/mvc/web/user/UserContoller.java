@@ -108,8 +108,8 @@ public class UserContoller {
 
 		try {
 			uploadFile.transferTo(f);
-			String fileNammmm = uploadPath+fileName;
-//			fileCopy(fileNammmm, targetDir + "/profileimg/" + fileName);
+			String fileNammmm = uploadPath+"/"+fileName;
+			fileCopy(fileNammmm, targetDir + "/profileimg/" + fileName);
 			
 		} catch (IOException e) {
 			e.printStackTrace();

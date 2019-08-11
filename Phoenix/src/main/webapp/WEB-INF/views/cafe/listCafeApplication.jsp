@@ -86,9 +86,10 @@
 
 								우리 카페에 가입을 신청한 목록입니다. 가입을 승인하거나, 거절할 수 있습니다. <br> <br>
 
-
-								<div class="col-md-6 text-right">
+								<div class='row'>
+								<div class="col-lg-8 text-right">
 									<form class="form-inline" name="detailForm" id="detailFrom">
+									<input type="hidden" id="currentPage" name="currentPage"value="" /> 
 										<input type="hidden" id="status" name="status"
 											value="${search.status }" />
 										<div class="form-group">
@@ -105,7 +106,7 @@
 										</div>
 										&nbsp;&nbsp;
 										<button type="button" id="search"class="btn btn-outline-success">검색</button>
-										<input type="hidden" id="currentPage" name="currentPage"value="" /> 
+										
 										&nbsp;&nbsp;
 										<button type="button" id="accept"class="btn btn-outline-secondary">가입승인</button>
 										&nbsp;&nbsp;
@@ -113,6 +114,7 @@
 										
 										
 									</form>
+								</div>
 								</div>
 								<br> &nbsp;&nbsp;&nbsp;
 								

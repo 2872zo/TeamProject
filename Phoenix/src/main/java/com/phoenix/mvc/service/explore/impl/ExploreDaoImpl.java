@@ -300,7 +300,7 @@ public class ExploreDaoImpl implements ExploreDao{
 			{
 				CafeExplore cafeExplore = new CafeExplore(); //나는 영혼이 없다 왜 ? 영혼이 없으니까ㅁ니ㅏㅇ럼;다지
 				cafeExplore.setTitle(postResult.get(i).getPostTitle());
-				cafeExplore.setResultLink("http://localhost:8080/cafe/"+postResult.get(i).getCafeURL()+"/getPost/"+postResult.get(i).getPostNo());//설정해주세여
+				cafeExplore.setResultLink("http://172.20.10.3:8080/cafe/"+postResult.get(i).getCafeURL()+"/getPost/"+postResult.get(i).getPostNo());//설정해주세여
 				if(postResult.get(i).getPostContent()!=null && postResult.get(i).getPostContent().length()<50) //자르려는 길이보다 작을때
 				{
 					cafeExplore.setContents(postResult.get(i).getPostContent().substring(0,postResult.get(i).getPostContent().length()-1));
@@ -316,7 +316,8 @@ public class ExploreDaoImpl implements ExploreDao{
 				cafeExplore.setCafeName(postResult.get(i).getCafeName()) ;
 				//cafeExplore.setThumbnail(postResult.get(i));//음 썸네일없네
 				cafeExplore.setDateTime(postResult.get(i).getRegDate());
-				cafeExplore.setCafeLink("http://localhost:8080/cafe/"+postResult.get(i).getCafeURL());
+				cafeExplore.setCafeLink("http://172.20.10.3:8080/cafe/"+postResult.get(i).getCafeURL());
+				cafeExplore.setEngineFrom("phoenix");
 				
 				cafeList.add(cafeExplore);
 			}

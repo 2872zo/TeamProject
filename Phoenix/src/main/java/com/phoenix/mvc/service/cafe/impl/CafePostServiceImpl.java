@@ -138,7 +138,7 @@ public class CafePostServiceImpl implements CafePostService {
 
 	@Override
 	public boolean deleteReply(int replyNo) throws Exception {
-		cafeMemberDao.updateReplyCountDecrease(replyNo);
+//		cafeMemberDao.updateReplyCountDecrease(replyNo);
 		return cafePostDao.deleteReply(replyNo);
 	}
 

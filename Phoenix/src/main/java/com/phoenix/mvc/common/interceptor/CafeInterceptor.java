@@ -264,7 +264,7 @@ public class CafeInterceptor extends HandlerInterceptorAdapter {
 						int boardGrade = Integer.parseInt(board.getMemberGradeCode().substring(2));
 
 						// 게시판 접근권한이 모자랄 경우
-						if (!user.getUserRoleCode().equals("ur100") && ( (cafeMemberGrade > 101 && cafeMemberGrade < boardGrade) || (cafeMemberGrade < 102 && cafeMemberGrade > boardGrade)) ) {
+						if (!user.getUserRoleCode().equals("ur100") && ( (cafeMemberGrade > 101 && cafeMemberGrade < boardGrade) || (cafeMemberGrade < 102 && cafeMemberGrade < boardGrade)) ) {
 							
 							System.out.println("CafeInterceptor >>> 권한 부족");
 							response.sendRedirect("/cafe/" + cafeURL + "/accessDenied?boardNo=" + board.getBoardNo());

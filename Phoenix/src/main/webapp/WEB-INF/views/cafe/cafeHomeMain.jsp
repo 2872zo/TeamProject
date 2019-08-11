@@ -153,7 +153,7 @@
 							name='${myCafe.cafeURL}'>
 							<div class="row no-gutters d-flex align-items-center">
 								<div class="col-md-4">
-									<img src="/images/common/16by9.png" class="card-img" alt="..."
+									<img src="/images/common/700by700.png" class="card-img" alt="..."
 										style="background: url('/images/uploadfiles/cafeicon/${myCafe.cafeIcon}');
       									no-repeat center center; background-size:cover;">
 								</div>
@@ -217,7 +217,7 @@
 				<div class="card myCafe col-lg-6" name='${categoryCafe.cafeURL}' style=" border: 1px solid #F7790A; ">
 					<div class="row no-gutters">
 						<div class="col-md-4 d-flex align-items-center">
-						<img src="/images/common/16by9.png" class="card-img" alt="..."
+						<img src="/images/common/700by700.png" class="card-img" alt="..."
 							style=" border:thin; border-color=red; 
 									background: url('/images/uploadFiles/cafeicon/${categoryCafe.cafeIcon}');
 										no-repeat center center; background-size:cover;">

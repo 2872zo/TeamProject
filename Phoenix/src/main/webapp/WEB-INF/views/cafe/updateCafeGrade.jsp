@@ -212,10 +212,11 @@
 	<script src="/js/custom/scroll-top.js"></script>
 
 	<script type="text/javascript">
+
 		$(function() {
 
 			$("#save").on("click", function() {//update
-
+	//alert("버튼눌림");
 				var count;
 				var num = $('.dbox:checked').length;
 
@@ -232,43 +233,50 @@
 					index += 1
 					//alert("어레이에 값 담음"+array)
 
-					
 				});
-				for(var i =0; i<array.length-1; i++){
-					//alert("어레이의 길이만큼 돌릴거에요~i "+i);
 
-					var front = array[i]
-					var afer = array[i+1]
-
-					//alert("front"+front)
-					//alert("afer"+afer)
-
-					var visit = $($(".abox")[front]).val();
-					var nextV = $($(".abox")[afer]).val();
-					//alert("visit "+visit)
-					//alert("nextV "+nextV)
-					var post = $($(".bbox")[front]).val();
-					var nextP = $($(".bbox")[afer]).val();
-					//alert("post "+post)
-					//alert("nextP "+nextP)
-					var reply = $($(".cbox")[front]).val();
-					var nextR = $($(".cbox")[afer]).val();
-					//alert("reply "+reply)
-					//alert("nextR "+nextR)
-
-						if(visit>nextV || post>nextP || reply>nextR){
-							swal("다음 등급 기준은 낮은 등급보다 높아야 합니다.", "", "warning")
-							break;
-							
-						}else if(visit==nextV || post==nextP || reply==nextR){
-							swal("등급 기준이 같을 수는 없습니다.", "", "warning")
-							break;
-						}else if(visit<nextV && post<nextP && reply<nextR){
-							//alert("ok")
-							$("form").attr("method", "POST").attr("action","/cafe/" + '${cafeURL}'+ "/manage/updateCafeGrade?CafeNo="+ $(".cafeNo").val()).submit();
-						}
-		
+				if(array.length==1){
+					$("form").attr("method", "POST").attr("action","/cafe/" + '${cafeURL}'+ "/manage/updateCafeGrade?CafeNo="+ $(".cafeNo").val()).submit();
 				}
+				
+				else{
+					for(var i =0; i<array.length-1; i++){
+						//alert("어레이의 길이만큼 돌릴거에요~i "+i);
+	
+						var front = array[i]
+						var afer = array[i+1]
+	
+						//alert("front"+front)
+						//alert("afer"+afer)
+	
+						var visit = $($(".abox")[front]).val();
+						var nextV = $($(".abox")[afer]).val();
+						//alert("visit "+visit)
+						//alert("nextV "+nextV)
+						var post = $($(".bbox")[front]).val();
+						var nextP = $($(".bbox")[afer]).val();
+						//alert("post "+post)
+						//alert("nextP "+nextP)
+						var reply = $($(".cbox")[front]).val();
+						var nextR = $($(".cbox")[afer]).val();
+						//alert("reply "+reply)
+						//alert("nextR "+nextR)
+	
+							if(visit>nextV || post>nextP || reply>nextR){
+								swal("다음 등급 기준은 낮은 등급보다 높아야 합니다.", "", "warning")
+								break;
+								
+							}else if(visit==nextV || post==nextP || reply==nextR){
+								swal("등급 기준이 같을 수는 없습니다.", "", "warning")
+								break;
+							}else if(visit<nextV && post<nextP && reply<nextR){
+								//alert("ok")
+								$("form").attr("method", "POST").attr("action","/cafe/" + '${cafeURL}'+ "/manage/updateCafeGrade?CafeNo="+ $(".cafeNo").val()).submit();
+							}
+			
+					}
+				}
+				
 			
 
 			});

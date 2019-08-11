@@ -345,6 +345,12 @@
 										<div class="form-inline">
 											<a href="${blog.blogLink}" id="blogName">${blog.blogName}</a>
 											<a href="${blog.blogLink}" id="blogLink">${blog.blogLink}</a>
+											<c:if test="${blog.engineFrom eq 'naver'}">
+												<img alt="" src="/images/naver.ico" style="width:20px; height:20px; margin-left: 20%;">
+											</c:if>
+											<c:if test="${blog.engineFrom eq 'daum'}">
+												<img alt="" src="/images/daum.ico" style="width:20px; height:20px; margin-left: 20%;">
+											</c:if>
 										</div>
 										
 									</div>           					
@@ -380,6 +386,15 @@
 										<div class="form-inline">
 											<a href="${cafe.cafeLink}" id="cafeName">${cafe.cafeName}</a>
 											<a href="${cafe.cafeLink}" id="cafeLink">${cafe.cafeLink}</a>
+											<c:if test="${cafe.engineFrom eq 'naver'}">
+												<img alt="" src="/images/naver.ico" style="width:20px; height:20px; margin-left: 20%;">
+											</c:if>
+											<c:if test="${cafe.engineFrom eq 'daum'}">
+												<img alt="" src="/images/daum.ico" style="width:20px; height:20px; margin-left: 20%;">
+											</c:if>
+											<c:if test="${cafe.engineFrom eq 'phoenix'}">
+												<img alt="" src="/images/favicon.png" style="width:20px; height:20px; margin-left: 20%;">
+											</c:if>
 										</div>
 									</div>           					
 	           					</li>

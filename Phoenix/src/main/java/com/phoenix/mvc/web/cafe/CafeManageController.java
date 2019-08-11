@@ -765,7 +765,7 @@ public class CafeManageController {
 
 		try {
 			uploadFile2.transferTo(f2);
-			fileCopy(uploadPath2 + "/" + fileName2, targetDir + "/" + fileName2);
+			fileCopy(uploadPath2 + "/" + fileName2, targetDir + "/mainImg/" + fileName2);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -780,7 +780,7 @@ public class CafeManageController {
 
 		try {
 			uploadFile3.transferTo(f3);
-			fileCopy(uploadPath3 + "/" + fileName3, targetDir + "/" + fileName3);
+			fileCopy(uploadPath3 + "/" + fileName3, targetDir + "/cafeIcon/" + fileName3);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -17,12 +17,6 @@
 <link href="/css/style.css" rel="stylesheet">
 
 <link rel="stylesheet" href="/css/custom/scroll-top.css">
-
-<!-- ToolBar Start /////////////////////////////////////-->
-<jsp:include page="/WEB-INF/views/common/toolbar.jsp" />
-<!-- ToolBar End /////////////////////////////////////-->
-<!--  ///////////////////////// CSS ////////////////////////// -->
-
 <link rel="stylesheet" href="/plugins/sweetalert/css/sweetalert.css">
 
 <style type="text/css">
@@ -50,6 +44,13 @@
 <div id="main-wrapper">
 
 
+	<div class="nav-header">
+		<c:import url="/WEB-INF/views/common/brand-logo.jsp"/>
+	</div>
+	<!-- ToolBar Start /////////////////////////////////////-->
+	<jsp:include page="/WEB-INF/views/common/toolbar.jsp" />
+	<!-- ToolBar End /////////////////////////////////////-->
+	<!--  ///////////////////////// CSS ////////////////////////// -->
 
 <!--**********************************
             Sidebar start
@@ -62,13 +63,12 @@
 		<!--**********************************
             Content body start
         ***********************************-->
-<div class="content-body" style="min-height: 743px;">
 
 
 
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-lg-12">
+		<div class="container-fluid"  style="min-height: 743px; margin:10px;">
+			<div class="row d-flex justify-content-center">
+				<div class="col-lg-10">
 					<div class="card">
 						<div class="card-body">			
 							<h2 class="text-center">카페만들기</h2>
@@ -167,7 +167,6 @@
 		 		 </div>
 		 	    </div>
 		 	   </div>
-			  </div>
 		  
 		  
 	

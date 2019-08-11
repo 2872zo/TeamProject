@@ -176,7 +176,7 @@
 							                    
 							                    <!-- 아이콘 부분 -->
 							                    <div class="media-reply__link">
-													<c:if test="${cafeMember.memberNo eq reply.memberNo or cafeMember.memberGrade eq 'cg100' or cafeMember.memberGrade eq 'cg101' or user.userRoleCode eq 'ur100'}">
+													<c:if test="${cafeMember.memberNo eq reReply.memberNo or cafeMember.memberGrade eq 'cg100' or cafeMember.memberGrade eq 'cg101' or user.userRoleCode eq 'ur100'}">
 														<i class="mdi mdi-border-color" name="updateReplyButton" style="position: relative; top:3px;"></i>
 														<i class="mdi mdi-delete" name="deleteReplyButton"></i>
 													</c:if>
