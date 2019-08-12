@@ -103,6 +103,9 @@ public class CafeInterceptor extends HandlerInterceptorAdapter {
 				return false;
 			}
 			
+			//카페 등급 정보 삽입
+			List cafeGradeList = cafeManageService.getCafeGrade(cafeURL);
+			request.setAttribute("cafeGradeList", cafeGradeList);
 			
 			// 메뉴바용 게시판 목록 - 컨디션 "0"(구분선 가져옴 / 1일때 구분선 안가져옴), 카페URL 사용
 			Search search = new Search();
@@ -138,10 +141,7 @@ public class CafeInterceptor extends HandlerInterceptorAdapter {
 
 					CafeGrade myGrade = cafeManageDao.getNextGrade(myGradeNo);
 
-					if (!myGrade.getMemberGradeCode().equals("cg100")
-							&& !myGrade.getMemberGradeCode().equals("cg101")) {// 카페멤버만 자동등업 매니저,스탭제외
-
-						List cafeGradeList = cafeManageDao.getCafeGrade(cafe.getCafeNo());
+					if (!myGrade.getMemberGradeCode().equals("cg100") && !myGrade.getMemberGradeCode().equals("cg101")) {// 카페멤버만 자동등업 매니저,스탭제외
 
 						for (int i = 0; i < cafeGradeList.size(); i++) {
 							CafeGrade next = (CafeGrade) cafeGradeList.get(i);
@@ -235,13 +235,10 @@ public class CafeInterceptor extends HandlerInterceptorAdapter {
 					if (request.getRequestURI().contains("manage")) {
 						System.out.println("CafeInterceptor >>> 매니저 메뉴 접근");
 
-						if (cafe.getManageUserNo() == user.getUserNo()) {
-
-						} else {
+						if (cafe.getManageUserNo() != user.getUserNo()) {
 							response.sendRedirect("/cafe/" + cafeURL + "/accessDenied");
 							return false;
 						}
-
 					}
 
 					// 게시판 조회
@@ -263,13 +260,26 @@ public class CafeInterceptor extends HandlerInterceptorAdapter {
 						int cafeMemberGrade = Integer.parseInt(cafeMember.getMemberGrade().substring(2));
 						int boardGrade = Integer.parseInt(board.getMemberGradeCode().substring(2));
 
-						// 게시판 접근권한이 모자랄 경우
-						if (!user.getUserRoleCode().equals("ur100") && ( (cafeMemberGrade > 101 && cafeMemberGrade < boardGrade) || (cafeMemberGrade < 102 && cafeMemberGrade < boardGrade)) ) {
-							
-							System.out.println("CafeInterceptor >>> 권한 부족");
-							response.sendRedirect("/cafe/" + cafeURL + "/accessDenied?boardNo=" + board.getBoardNo());
-							return false;
+						System.out.println("멤버 등급 : " + cafeMemberGrade);
+						System.out.println("게시판 등급 : " + boardGrade);
+						
+						// 해당 게시글이 있는 게시판의 접근권한이 모자랄 경우
+						if (!user.getUserRoleCode().equals("ur100")) {
+							//매니저나 스탭이 아닐경우 높은것만 체크하면 됨
+							if(cafeMemberGrade > 101 && (cafeMemberGrade < boardGrade || boardGrade < 102)){
+									System.out.println("CafeInterceptor >>> 게시판 접근 권한 부족");
+									response.sendRedirect("/cafe/" + cafeURL + "/accessDenied?boardNo=" + board.getBoardNo());
+									return false;
+							//매니저나 스탭일 경우
+							}else if(cafeMemberGrade < 102 && boardGrade < 102 && cafeMemberGrade < boardGrade) {
+								System.out.println("CafeInterceptor >>> 게시판 접근 권한 부족");
+								response.sendRedirect("/cafe/" + cafeURL + "/accessDenied?boardNo=" + board.getBoardNo());
+								return false;
+							}
 						}
+						System.out.println("CafeInterceptor >>>>>>>>>> 게시글 접근 권한 부족");
+						response.sendRedirect("/cafe/" + cafeURL + "/accessDenied?boardNo=" + board.getBoardNo());
+						return false;
 					}
 
 					// 게시글 조회
@@ -300,12 +310,23 @@ public class CafeInterceptor extends HandlerInterceptorAdapter {
 							response.sendRedirect("/cafe/" + cafeURL + "/deletedPost");
 							return false;
 						}
+						
+						System.out.println("멤버 등급 : " + cafeMemberGrade);
+						System.out.println("게시판 등급 : " + boardGrade);
 
 						// 해당 게시글이 있는 게시판의 접근권한이 모자랄 경우
-						if (!user.getUserRoleCode().equals("ur100") && ( (cafeMemberGrade > 101 && cafeMemberGrade < boardGrade) || (cafeMemberGrade < 102 && cafeMemberGrade > boardGrade)) ) {
-							System.out.println("CafeInterceptor >>>>>>>>>> 권한 부족");
-							response.sendRedirect("/cafe/" + cafeURL + "/accessDenied&boardNo=" + board.getBoardNo());
-							return false;
+						if (!user.getUserRoleCode().equals("ur100")) {
+							//매니저나 스탭이 아닐경우 높은것만 체크하면 됨
+							if(cafeMemberGrade > 101 && (cafeMemberGrade < boardGrade || boardGrade < 102)){
+								System.out.println("CafeInterceptor >>>>>>>>>> 게시글 접근 권한 부족");
+								response.sendRedirect("/cafe/" + cafeURL + "/accessDenied?boardNo=" + board.getBoardNo());
+								return false;
+							//매니저나 스탭일 경우
+							}else if(cafeMemberGrade < 102 && boardGrade < 102 && cafeMemberGrade < boardGrade) {
+								System.out.println("CafeInterceptor >>>>>>>>>> 게시글 접근 권한 부족");
+								response.sendRedirect("/cafe/" + cafeURL + "/accessDenied?boardNo=" + board.getBoardNo());
+								return false;
+							}
 						}
 					}
 				} // 기본권한 확인 후 세부권한 사용 끝

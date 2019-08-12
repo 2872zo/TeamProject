@@ -145,7 +145,7 @@ input[type="checkbox"] {
 				<div class="header-left d-flex align-items-center">
 				
 						<c:if test='${fn:startsWith(URI,"/WEB-INF/views/cafe/")}'>
-							<i class="mdi mdi-coffee" style='font-size: 30pt;' id="cafeHomeButton"></i>
+							<i class="mdi mdi-coffee" style='font-size: 30pt;' id="cafeHomeButton"  data-toggle="tooltip" data-placement="bottom" title="카페홈"></i>
 						</c:if>
 						
 						<c:if test='${fn:startsWith(URI,"/WEB-INF/views/cafe/cafeHomeMain.jsp")
@@ -153,8 +153,8 @@ input[type="checkbox"] {
 						 || fn:startsWith(URI,"/WEB-INF/views/cafe/listUserCafeApplication.jsp")
 						 || fn:startsWith(URI,"/WEB-INF/views/cafe/listCafeSearch.jsp")}'>
 							<c:if test="${!empty sessionScope.user}">
-								<i class="mdi mdi-library-books" id='newsFeeding' style='font-size: 30pt'></i>
-								<i class="mdi mdi-clipboard-outline" id='myApplications' style='font-size: 30pt'></i>
+								<i class="mdi mdi-library-books" id='newsFeeding' style='font-size: 30pt'  data-toggle="tooltip" data-placement="bottom" title="뉴스피드"></i>
+								<i class="mdi mdi-clipboard-outline" id='myApplications' style='font-size: 30pt'  data-toggle="tooltip" data-placement="bottom" title="가입신청내역"></i>
 							</c:if>
 						</c:if>
 				</div>

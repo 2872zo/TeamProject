@@ -97,11 +97,11 @@ img {
 						<!-- 상단 친구 종류 선택 버튼 메뉴 -->
 						<div class="d-flex justify-content-around">
 
-							<i class="chatButtons mdi mdi-account-multiple-outline" id='chatFriendsListing'style='font-size: 30pt;'>
+							<i class="chatButtons mdi mdi-account-multiple-outline" id='chatFriendsListing'style='font-size: 30pt;' data-toggle="tooltip" data-placement="bottom" title="친구목록">
 							</i>
-							<i class="chatButtons mdi mdi-account-check" id='wannaBeFriend' style='font-size: 30pt;'>
+							<i class="chatButtons mdi mdi-account-check" id='wannaBeFriend' style='font-size: 30pt;' data-toggle="tooltip" data-placement="bottom" title="추천친구">
 							</i>
-							<i class="chatButtons mdi mdi-account-search" id='friendSearching' style='font-size: 30pt;'>
+							<i class="chatButtons mdi mdi-account-search" id='friendSearching' style='font-size: 30pt;' data-toggle="tooltip" data-placement="bottom" title="친구찾기">
 							</i>
 							
 							<!--  

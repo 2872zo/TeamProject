@@ -43,6 +43,8 @@ public interface CafeMemberService {
 	
 	public CafeMember getCafeMemberByURL(Search search) throws Exception;
 
+	public CafeMemberBlock getCafeMemberBlockInfo(int memberNo) throws Exception;
+
 	//////////////////////////// 기황끝///////////////////////////////
 
 

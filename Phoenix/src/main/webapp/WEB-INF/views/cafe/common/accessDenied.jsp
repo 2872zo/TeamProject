@@ -126,8 +126,8 @@
 						<div class="error-content">
 							<div class="card mb-0">
 								<div class="card-body text-center">
-									<h1 class="error-text text-primary"><strong>일반</strong>등급이 되시면<br/> 접근 가능한 게시판입니다.</h1>
-									<h4 class="mt-4">현재  <strong>${cafeMember.memberNickname}</strong> 님은  <strong>새싹</strong> 등급 입니다.</h4>
+									<h1 class="error-text text-primary"><strong>${board.memberGradeName }</strong>등급이 되시면<br/> 접근 가능한 게시판입니다.</h1>
+									<h4 class="mt-4">현재  <strong>${cafeMember.memberNickname}</strong> 님은  <strong>${cafeMember.gradeName }</strong> 등급 입니다.</h4>
 									<p>${cafe.cafeName}</p>
 <%-- 									<c:forEach var="grade" items="${cafeGradeList}"> --%>
 <%-- 										<p><strong>${grade.gradeName}</strong> 설명</p> --%>

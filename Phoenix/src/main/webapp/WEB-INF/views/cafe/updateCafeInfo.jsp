@@ -118,7 +118,7 @@ code {
                                             <label class="col-lg-4 col-form-label" for="val-bannerImg"><h5>메인 이미지 </h5>
                                             </label>                                           
                                             <div class="col-lg-6">
-                                               <div><img src="/images/uploadFiles/mainImg/${cafe.mainImg}" id="main" width="150"; height="150px"; id="main"/>
+                                               <div><img src="/images/uploadFiles/mainImg/${cafe.mainImg}" id="main" width="150"; height="150px"; id="main" onerror="this.src='/images/no_image.gif'"/>
                                                </div>
                                                 <input type="file" class="form-control-file" id="uploadFile2" name="uploadFile2" >
                                                </div>
@@ -127,7 +127,7 @@ code {
                                             <label class="col-lg-4 col-form-label" for="val-bannerImg"><h5>카페 아이콘 </h5>
                                             </label>                                           
                                             <div class="col-lg-6">
-                                               <div><img src="/images/uploadFiles/cafeIcon/${cafe.cafeIcon}" id="icon" width="150"; height="150px"; id="icon"/>
+                                               <div><img src="/images/uploadFiles/cafeIcon/${cafe.cafeIcon}" id="icon" width="150"; height="150px"; id="icon" onerror="this.src='/images/no_image.gif'"/>
                                                </div>
                                                 <input type="file" class="form-control-file" id="uploadFile3" name="uploadFile3">
                                                </div>

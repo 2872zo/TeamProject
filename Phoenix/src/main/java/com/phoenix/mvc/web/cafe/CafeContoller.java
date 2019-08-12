@@ -66,27 +66,27 @@ public class CafeContoller {
 	}
 	
 	///////////////////////////////예림시작///////////////////////////////////
-	@RequestMapping("{cafeURL}/getCafeGrade")
-	public String getCafeGrade(@PathVariable String cafeURL, Model model, HttpSession session) throws Exception
-	{
-		System.out.println("/{cafeURL}/manage/updateCafeGradeView : GET");
-
-		//int cafeNo = cafeMemberService.getCafeNo(cafeURL);
-		List cafeGrade = cafeManageService.getCafeGrade(cafeURL) ;
-		
-		if(session.getAttribute("user")!=null)
-		{
-			User user = (User) session.getAttribute("user");
-			Map map = cafeTabService.getCafeMain(user, cafeURL); //getCafemember랑 비교 해서 cafeMember정보 심으세여
-			model.addAttribute("cafe",map.get("cafe"));
-			model.addAttribute("cafeMember", map.get("cafeMember"));// 내정보
-		}
-		
-		model.addAttribute("cafeGradeList", cafeGrade);
-		model.addAttribute("cafeURL", cafeURL);
-		
-		return "cafe/getCafeGrade";
-	}
+//	@RequestMapping("{cafeURL}/getCafeGrade")
+//	public String getCafeGrade(@PathVariable String cafeURL, Model model, HttpSession session) throws Exception
+//	{
+//		System.out.println("/{cafeURL}/manage/updateCafeGradeView : GET");
+//
+//		//int cafeNo = cafeMemberService.getCafeNo(cafeURL);
+//		
+//		
+//		if(session.getAttribute("user")!=null)
+//		{
+//			User user = (User) session.getAttribute("user");
+//			Map map = cafeTabService.getCafeMain(user, cafeURL); //getCafemember랑 비교 해서 cafeMember정보 심으세여
+//			model.addAttribute("cafe",map.get("cafe"));
+//			model.addAttribute("cafeMember", map.get("cafeMember"));// 내정보
+//		}
+//		
+//		model.addAttribute("cafeGradeList", cafeGrade);
+//		model.addAttribute("cafeURL", cafeURL);
+//		
+//		return "cafe/getCafeGrade";
+//	}
 	
 	//////////////////////////////예림끝/////////////////////////////////////
 	
@@ -133,15 +133,17 @@ public class CafeContoller {
 		search.setCafeURL(cafeURL);
 		List<Board> boardList = cafeManageService.getCafeBoardList(search);
 		
+		search.setUserNo(user.getUserNo());
 		CafeMember cafeMember = cafeMemberService.getCafeMemberByURL(search);
 		
 		//해당 카페 멤버의 정지 내역 출력이 필요함
-		//CafeMemberBlock cafeMemberBlock = cafeMemberService.getCafeMemberBlockInfo(cafeMember.getMemberNo);
+		CafeMemberBlock cafeMemberBlock = cafeMemberService.getCafeMemberBlockInfo(cafeMember.getMemberNo());
 		
 		map.put("cafe", cafe);
 		map.put("boardList", boardList);
 		map.put("cafeURL", cafeURL);
 		map.put("cafeMember", cafeMember);
+		map.put("cafeMemberBlock", cafeMemberBlock);
 		
 		return "cafe/common/memberBlock";
 	}

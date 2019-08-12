@@ -278,7 +278,7 @@ public class MailDaoImpl implements MailDao {
 			}else if(e.getMessage().contains("405")) {
 				throw new Exception("405");
 			}
-			else if (e.getMessage().contains("not authorized for this service") || e.getMessage().contains("imap")) {
+			else if (e != null && (e.getMessage().toLowerCase().contains("not authorized for this service") || e.getMessage().toLowerCase().contains("imap") || e.getMessage().toLowerCase().contains("Invalid credentials"))) {
 				throw new Exception("400");
 			} else {
 				throw new Exception("500");

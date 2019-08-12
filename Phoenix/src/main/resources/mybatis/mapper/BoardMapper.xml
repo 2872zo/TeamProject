@@ -22,6 +22,7 @@
 		<result property="bestPostCount" 	column="best_post_count" 				jdbcType="NUMERIC"  />
 		<result property="memberGradeCode"  column="member_grade_code"					jdbcType="VARCHAR"/>
 		<result property="memberGradeName"  column="grade_name"					jdbcType="VARCHAR"/>
+		
 	</resultMap>
 	
 	<resultMap id="postSelectMap" type="com.phoenix.mvc.service.domain.Post">

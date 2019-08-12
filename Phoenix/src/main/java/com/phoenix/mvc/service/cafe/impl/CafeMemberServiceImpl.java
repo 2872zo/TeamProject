@@ -185,6 +185,11 @@ public class CafeMemberServiceImpl implements CafeMemberService {
 		return cafeMemberDao.getCafeMemberByURL(search);
 	}
 
+	@Override
+	public CafeMemberBlock getCafeMemberBlockInfo(int memberNo) throws Exception {
+		return cafeManageDao.getLatestBlock(memberNo);
+	}
+
 	////////////////////////////////// 기황끝///////////////////////////////////////
 
 }

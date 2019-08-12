@@ -8,6 +8,10 @@
 	.card-profile__info{
 		background: white !important;
 	}
+	
+	.getCafeGrade{
+		cursor:pointer;
+	}
 	</style>
 	<div class="nk-nav-scroll">
 		<ul class="metismenu" id="menu">
@@ -46,8 +50,52 @@
 	                                    </li>
 	                                    <li class="mb-1"><strong class="text-dark mr-4" style="margin-left: 10px;"><i class="fa fa-users"></i></strong> <span style="float: right; margin-right: 10px;">${cafe.members}</span></li>
 	                                    <li class="mb-1 getCafeGrade">
+	                                    
 	                                    	<strong class="text-dark mr-4" style="margin-left: 10px;"><i class="icon-grid"></i></strong>
-	                                    	<h6 style="float: right; margin-right: 10px;">멤버등급안내</h6>
+	                                    	<h6 style="float: right; margin-right: 10px;" data-toggle="modal" data-target="#cafeGradeInfo" data-backdrop="false">멤버등급안내</h6>
+	                                    	
+		                                    <!-- Modal -->
+		                                    <div class="modal fade" id="cafeGradeInfo">
+		                                        <div class="modal-dialog modal-dialog-centered" role="document">
+		                                            <div class="modal-content">
+		                                                <div class="modal-header">
+		                                                    <h5 class="modal-title">카페 등급 안내</h5>
+		                                                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+		                                                    </button>
+		                                                </div>
+		                                                <div class="modal-body">
+	                                                    	<table class="table table-bordered table-striped verticle-middle" style="text-align:center;">
+	                                                    		<thead>
+	                                                    			<tr>
+	                                                    				<th>등급명</th>
+	                                                    				<th>요구 출석수</th>
+	                                                    				<th>요구 게시글수</th>
+	                                                    				<th>요구 댓글수</th>
+	                                                    			</tr>
+	                                                    		</thead>
+	                                                    		
+	                                                    		<tbody>
+	                                                    			<c:forEach items="${cafeGradeList }" var="cafeGradeInfo">
+	                                                    				<c:if test='${cafeGradeInfo.memberGradeCode ne "cg100" and cafeGradeInfo.memberGradeCode ne "cg101"}'>
+		                                                    				<tr>
+		                                                    					<td>${cafeGradeInfo.gradeName }</td>
+		                                                    					<td>${cafeGradeInfo.requiredVisitCount }</td>
+		                                                    					<td>${cafeGradeInfo.requiredPostCount }</td>
+		                                                    					<td>${cafeGradeInfo.requiredReplyCount }</td>
+		                                                    				</tr>
+	                                                    				</c:if>
+	                                                    			</c:forEach>
+	                                                    		</tbody>
+	                                                    	</table>
+		                                                </div>
+		                                                <div class="modal-footer">
+		                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+		                                                </div>
+		                                            </div>
+		                                        </div>
+		                                    </div>
+			                                <!-- modal end -->
+			                                
 	                                    </li>
 	                                    <c:if test="${!empty cafeMember && cafeMember.userNo == cafe.manageUserNo}">
 	                                    	<li class="mb-1"><strong class="text-dark mr-4 manage cursor" style="margin-left: 10px;"><i class="icon-settings"></i>&nbsp;카페설정</strong></li>
@@ -168,3 +216,4 @@
 			<i class="fa fa-2x fa-arrow-circle-up"></i>
 		</span>
 	</div>
+	

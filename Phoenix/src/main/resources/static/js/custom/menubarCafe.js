@@ -88,11 +88,10 @@
 	    	});
 	    	
 	    	$(function(){ //카페등급확인
-	    		$(".getCafeGrade").on("click",function(){
-	    			//alert("등급확인이여!");
-	    			window.open("/cafe/" + cafeURL + "/getCafeGrade", 'width=100,height=100' ,"location=no");
-
-	    		});
+//	    		$(".getCafeGrade").on("click",function(){
+//	    			//alert("등급확인이여!");
+//	    			window.open("/cafe/" + cafeURL + "/getCafeGrade", 'width=100,height=100' ,"location=no");
+//	    		});
 	    		
 	    	});
 	    	

@@ -41,10 +41,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/cafe/*/getCafeGrade")                
                 .excludePathPatterns("/user/login")//로그인 쪽은 예외처리를 한다.
                 .excludePathPatterns("/user/logout")
-                .excludePathPatterns("/cafe/*/closedCafe")
-                .excludePathPatterns("/cafe/*/needApply")
-                .excludePathPatterns("/cafe/*/memberBlock")
-                .excludePathPatterns("/cafe/*/accessDenied"); 
+                .excludePathPatterns("/cafe/*/closedCafe**")
+                .excludePathPatterns("/cafe/*/needApply**")
+                .excludePathPatterns("/cafe/*/memberBlock**")
+                .excludePathPatterns("/cafe/*/accessDenied**"); 
         
         registry.addInterceptor(mailInterceptor)
         		.addPathPatterns("/mail/**")

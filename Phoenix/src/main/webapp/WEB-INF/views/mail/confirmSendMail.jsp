@@ -69,6 +69,16 @@
 	background: #F1795E;
 	border-color: #F1795E;
 }
+
+.svrMsg {
+    background-image: url(https://ssl.pstatic.net/static/pwe/nm/sp_works_8f76e9f2.png);
+    background-size: 539px 528px;
+    background-position: -174px -70px;
+    background-repeat: no-repeat;
+    width: 81px;
+    height: 81px;
+    display: inline-block;
+}
 </style>
 
 <title>${search.cafeURL}</title>
@@ -133,24 +143,29 @@
 			<div class="row page-titles mx-0" style="margin:0px;">
                 <div class="col p-md-0">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
-                        <li class="breadcrumb-item active"><a href="javascript:void(0)">Home</a></li>
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Mail</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0)">메일전송확인</a></li>
                     </ol>
                 </div>
             </div>
 			
-				<div class="col-lg-12">
+			<div class="row d-flex justify-content-center">
+				<div class="col-lg-10">
 					<div class="card">
-						<div class="card-body">
+						<div class="card-body justify-content-center" style="text-align: center;">
+							<i class="svrMsg"></i>
 							<div>
-								${account.accountId }로
-								${mail.to }에
-								메일 보냈다!
+								<h4>
+									<strong>${account.accountId }</strong> 계정으로<br/>
+									<strong style="color: #FFAF00">${mail.to }</strong>에<br/>
+									메일을 전송했습니다.
+								</h4>
 							</div>
 	                        
 						</div>
 					</div>
 				</div>
+			</div>
 
 			</div>
 			<!-- row -->
