@@ -27,6 +27,7 @@
 			cf.target_user_no = u.user_no
 		AND cf.friend_status = #{status}
 		AND cf.user_no = #{userNo}
+		ORDER BY cf.friend_nickname
 	</select>
 	
 	<select id="getWannaBeFriendList" parameterType="Search" resultMap="chatFriendSelectMap">
@@ -126,6 +127,7 @@
 			open="(" separator=", " close=")">
 	        #{targetUserNo}
 	  		</foreach>
+	  	ORDER BY c.friend_nickname
 	</select>
 	
 	<select id="getFriendNickNameList" parameterType="Search" resultMap="chatFriendSelectMap">
