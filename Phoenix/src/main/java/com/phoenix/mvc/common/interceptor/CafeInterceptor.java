@@ -277,9 +277,6 @@ public class CafeInterceptor extends HandlerInterceptorAdapter {
 								return false;
 							}
 						}
-						System.out.println("CafeInterceptor >>>>>>>>>> 게시글 접근 권한 부족");
-						response.sendRedirect("/cafe/" + cafeURL + "/accessDenied?boardNo=" + board.getBoardNo());
-						return false;
 					}
 
 					// 게시글 조회
